@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": true,
+    "moduleResolution": "bundler",
+    "module": "ESNext",
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "useDefineForClassFields": false,
+    "experimentalDecorators": true,
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": false,
+    "skipLibCheck": true,
+    "paths": {
+      "@ui-core/foundations": ["packages/foundations/src/index.ts"],
+      "@ui-core/icons": ["packages/icons/src/index.ts"],
+      "@ui-core/icons/react": ["packages/icons/src/react/index.ts"],
+      "@ui-core/wc": ["packages/web-components/src/index.ts"],
+      "@ui-core/react": ["packages/react/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

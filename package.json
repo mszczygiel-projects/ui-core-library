@@ -1,0 +1,34 @@
+{
+  "name": "ui-core-library",
+  "version": "0.0.0",
+  "private": true,
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  },
+  "scripts": {
+    "storybook": "nx run storybook:storybook",
+    "foundations:build": "nx run foundations:build",
+    "icons:build": "nx run icons:build",
+    "build": "nx run-many --target=build",
+    "publish": "nx run-many --target=publish",
+    "lint": "nx run-many --target=lint",
+    "lint:fix": "nx run-many --target=lint --configuration=fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "nx run-many --target=test",
+    "test:foundations": "nx run foundations:test",
+    "test:react": "nx run react:test",
+    "test:wc": "nx run wc:test",
+    "chromatic": "nx run storybook:chromatic"
+  },
+  "devDependencies": {
+    "@nx/eslint": "^20.0.0",
+    "@nx/js": "^20.0.0",
+    "@nx/vite": "^20.0.0",
+    "eslint": "^9.0.0",
+    "nx": "^20.0.0",
+    "prettier": "^3.0.0",
+    "typescript": "^5.5.0"
+  }
+}
