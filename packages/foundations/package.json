@@ -1,0 +1,36 @@
+{
+  "name": "@ui-core/foundations",
+  "version": "0.1.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./tokens.css": "./src/tokens.css",
+    "./tailwind.css": "./src/tailwind.css",
+    "./reset.css": "./src/reset.css",
+    "./typography.css": "./src/typography.css",
+    "./base.css": "./src/base.css",
+    "./fonts/default.css": "./src/fonts/default.css"
+  },
+  "files": [
+    "dist",
+    "src/**/*.css",
+    "src/tokens.ts"
+  ],
+  "scripts": {
+    "build": "tsx scripts/build-tokens.ts && tsx scripts/build-typography.ts && tsc --project tsconfig.build.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint src scripts"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "devDependencies": {
+    "tsx": "^4.0.0",
+    "vitest": "^2.0.0"
+  }
+}

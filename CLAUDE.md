@@ -103,7 +103,7 @@ Consumers choose exactly what they need:
 @import '@ui-core/foundations/base.css';        /* reset + typography (shortcut) */
 ```
 
-**Font loading** is a consumer responsibility. The library only consumes `var(--font-family-base)`. `fonts/default.css` is for Storybook and local development only — never auto-imported, never for production.
+**Font loading** is a consumer responsibility. The library only consumes `var(--typography-body-font-family)`, etc. `fonts/default.css` is for Storybook and local development only — never auto-imported, never for production.
 
 ---
 

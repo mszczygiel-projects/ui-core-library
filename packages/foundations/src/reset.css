@@ -1,0 +1,96 @@
+/* Box model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Root defaults */
+:root {
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-font-size);
+  font-weight: var(--typography-body-font-weight);
+  letter-spacing: var(--typography-body-letter-spacing);
+  line-height: var(--typography-body-line-height);
+  color: var(--themes-color-text-primary);
+  background-color: var(--themes-color-background-default);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Typography */
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Media */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Form elements */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* Text overflow */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+a {
+  color: inherit;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: var(--sizes-stroke-ring) var(--themes-ring-style) var(--surfaces-color-ring-default);
+  outline-offset: var(--themes-ring-offset);
+  border-radius: var(--sizes-control-radius);
+}
+
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--themes-color-selection-background);
+  color: var(--themes-color-selection-text);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,178 @@
+{
+  "textStyles": [
+    {
+      "id": "S:cf1d5f9cacbf60854df6db387c90b80e306df18d,",
+      "name": "Body",
+      "description": "",
+      "fontFamily": "{typography.body.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.body.font-size}",
+      "letterSpacing": "{typography.body.letter-spacing}",
+      "lineHeight": "{typography.body.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:5ff883c3a56f03fc536be610f6611bc5876aa5ec,",
+      "name": "Caption",
+      "description": "",
+      "fontFamily": "{typography.caption.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.caption.font-size}",
+      "letterSpacing": "{typography.caption.letter-spacing}",
+      "lineHeight": "{typography.caption.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:51554ce69c6d0d82fe2fbde0315f6f1826c69cc6,",
+      "name": "Heading/Display",
+      "description": "",
+      "fontFamily": "{typography.heading.display.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.heading.display.font-size}",
+      "letterSpacing": "{typography.heading.display.letter-spacing}",
+      "lineHeight": "{typography.heading.display.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:0889d9deb66f716559662862f455c7bcccec07f5,",
+      "name": "Heading/Title",
+      "description": "",
+      "fontFamily": "{typography.heading.title.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.heading.title.font-size}",
+      "letterSpacing": "{typography.heading.title.letter-spacing}",
+      "lineHeight": "{typography.heading.title.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:d088dfa6f1e2bf8ced4deec0f559af8a57f82e22,",
+      "name": "Heading/Subtitle",
+      "description": "",
+      "fontFamily": "{typography.heading.subtitle.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.heading.subtitle.font-size}",
+      "letterSpacing": "{typography.heading.subtitle.letter-spacing}",
+      "lineHeight": "{typography.heading.subtitle.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:149084932920251bfa1c1bd8f83d44f0e17f1ae6,",
+      "name": "Heading/H1",
+      "description": "",
+      "fontFamily": "{typography.heading.h1.font-family}",
+      "fontStyle": "SemiBold",
+      "fontSize": "{typography.heading.h1.font-size}",
+      "letterSpacing": "{typography.heading.h1.letter-spacing}",
+      "lineHeight": "{typography.heading.h1.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:12bcc33fea13cb071909c12b8948c3d02175178d,",
+      "name": "Heading/H2",
+      "description": "",
+      "fontFamily": "{typography.heading.h2.font-family}",
+      "fontStyle": "SemiBold",
+      "fontSize": "{typography.heading.h2.font-size}",
+      "letterSpacing": "{typography.heading.h2.letter-spacing}",
+      "lineHeight": "{typography.heading.h2.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:9d24d5afdb9b120f4783462c167144132e574efb,",
+      "name": "Heading/H3",
+      "description": "",
+      "fontFamily": "{typography.heading.h3.font-family}",
+      "fontStyle": "SemiBold",
+      "fontSize": "{typography.heading.h3.font-size}",
+      "letterSpacing": "{typography.heading.h3.letter-spacing}",
+      "lineHeight": "{typography.heading.h3.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:02037cc3fd449109e4f53f186a6808f7f02e6622,",
+      "name": "Heading/H4",
+      "description": "",
+      "fontFamily": "{typography.heading.h4.font-family}",
+      "fontStyle": "SemiBold",
+      "fontSize": "{typography.heading.h4.font-size}",
+      "letterSpacing": "{typography.heading.h4.letter-spacing}",
+      "lineHeight": "{typography.heading.h4.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:ef9f1da03872f8602e9fa18841c5f14eff927c2d,",
+      "name": "Heading/H5",
+      "description": "",
+      "fontFamily": "{typography.heading.h5.font-family}",
+      "fontStyle": "SemiBold",
+      "fontSize": "{typography.heading.h5.font-size}",
+      "letterSpacing": "{typography.heading.h5.letter-spacing}",
+      "lineHeight": "{typography.heading.h5.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:f6cd008217162c1ef3cd356074d123365dd8355d,",
+      "name": "Heading/H6",
+      "description": "",
+      "fontFamily": "{typography.heading.h6.font-family}",
+      "fontStyle": "SemiBold",
+      "fontSize": "{typography.heading.h6.font-size}",
+      "letterSpacing": "{typography.heading.h6.letter-spacing}",
+      "lineHeight": "{typography.heading.h6.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:e011c1e8596cdf07c64424f7b4314de212e19a6c,",
+      "name": "Heading/Display/Large",
+      "description": "",
+      "fontFamily": "{typography.heading.display.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.heading.display.large.font-size}",
+      "letterSpacing": "{typography.heading.display.large.letter-spacing}",
+      "lineHeight": "{typography.heading.display.large.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:e2efc116543ba594e136ed9cda9076d5806eb3dc,",
+      "name": "Body/Small",
+      "description": "",
+      "fontFamily": "{typography.body.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.body.small.font-size}",
+      "letterSpacing": "{typography.body.small.letter-spacing}",
+      "lineHeight": "{typography.body.small.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    },
+    {
+      "id": "S:f8a1d8c61c8bac3778f231c1a9318dcc25bc83fe,",
+      "name": "Body/Large",
+      "description": "",
+      "fontFamily": "{typography.body.font-family}",
+      "fontStyle": "Regular",
+      "fontSize": "{typography.body.large.font-size}",
+      "letterSpacing": "{typography.body.large.letter-spacing}",
+      "lineHeight": "{typography.body.large.line-height}",
+      "textCase": "ORIGINAL",
+      "textDecoration": "NONE"
+    }
+  ],
+  "metadata": {
+    "exportedAt": "2026-04-29T11:46:28.418Z",
+    "totalStyles": 14,
+    "successfulStyles": 14,
+    "version": "1.0.0"
+  }
+}

@@ -1,0 +1,113 @@
+/* AUTO-GENERATED — do not edit. Run "pnpm foundations:build" to regenerate. */
+
+.text-body {
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-font-size);
+  font-weight: var(--typography-body-font-weight);
+  letter-spacing: var(--typography-body-letter-spacing);
+  line-height: var(--typography-body-line-height);
+}
+
+.text-caption {
+  font-family: var(--typography-caption-font-family);
+  font-size: var(--typography-caption-font-size);
+  font-weight: var(--typography-caption-font-weight);
+  letter-spacing: var(--typography-caption-letter-spacing);
+  line-height: var(--typography-caption-line-height);
+}
+
+.text-heading-display {
+  font-family: var(--typography-heading-display-font-family);
+  font-size: var(--typography-heading-display-font-size);
+  font-weight: var(--typography-heading-display-font-weight);
+  letter-spacing: var(--typography-heading-display-letter-spacing);
+  line-height: var(--typography-heading-display-line-height);
+}
+
+.text-heading-title {
+  font-family: var(--typography-heading-title-font-family);
+  font-size: var(--typography-heading-title-font-size);
+  font-weight: var(--typography-heading-title-font-weight);
+  letter-spacing: var(--typography-heading-title-letter-spacing);
+  line-height: var(--typography-heading-title-line-height);
+}
+
+.text-heading-subtitle {
+  font-family: var(--typography-heading-subtitle-font-family);
+  font-size: var(--typography-heading-subtitle-font-size);
+  font-weight: var(--typography-heading-subtitle-font-weight);
+  letter-spacing: var(--typography-heading-subtitle-letter-spacing);
+  line-height: var(--typography-heading-subtitle-line-height);
+}
+
+.text-heading-h1 {
+  font-family: var(--typography-heading-h1-font-family);
+  font-size: var(--typography-heading-h1-font-size);
+  font-weight: var(--typography-heading-h1-font-weight);
+  letter-spacing: var(--typography-heading-h1-letter-spacing);
+  line-height: var(--typography-heading-h1-line-height);
+}
+
+.text-heading-h2 {
+  font-family: var(--typography-heading-h2-font-family);
+  font-size: var(--typography-heading-h2-font-size);
+  font-weight: var(--typography-heading-h2-font-weight);
+  letter-spacing: var(--typography-heading-h2-letter-spacing);
+  line-height: var(--typography-heading-h2-line-height);
+}
+
+.text-heading-h3 {
+  font-family: var(--typography-heading-h3-font-family);
+  font-size: var(--typography-heading-h3-font-size);
+  font-weight: var(--typography-heading-h3-font-weight);
+  letter-spacing: var(--typography-heading-h3-letter-spacing);
+  line-height: var(--typography-heading-h3-line-height);
+}
+
+.text-heading-h4 {
+  font-family: var(--typography-heading-h4-font-family);
+  font-size: var(--typography-heading-h4-font-size);
+  font-weight: var(--typography-heading-h4-font-weight);
+  letter-spacing: var(--typography-heading-h4-letter-spacing);
+  line-height: var(--typography-heading-h4-line-height);
+}
+
+.text-heading-h5 {
+  font-family: var(--typography-heading-h5-font-family);
+  font-size: var(--typography-heading-h5-font-size);
+  font-weight: var(--typography-heading-h5-font-weight);
+  letter-spacing: var(--typography-heading-h5-letter-spacing);
+  line-height: var(--typography-heading-h5-line-height);
+}
+
+.text-heading-h6 {
+  font-family: var(--typography-heading-h6-font-family);
+  font-size: var(--typography-heading-h6-font-size);
+  font-weight: var(--typography-heading-h6-font-weight);
+  letter-spacing: var(--typography-heading-h6-letter-spacing);
+  line-height: var(--typography-heading-h6-line-height);
+}
+
+.text-heading-display-large {
+  font-family: var(--typography-heading-display-font-family);
+  font-size: var(--typography-heading-display-large-font-size);
+  font-weight: var(--typography-heading-display-font-weight);
+  letter-spacing: var(--typography-heading-display-large-letter-spacing);
+  line-height: var(--typography-heading-display-large-line-height);
+}
+
+.text-body-small {
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-small-font-size);
+  font-weight: var(--typography-body-font-weight);
+  letter-spacing: var(--typography-body-small-letter-spacing);
+  line-height: var(--typography-body-small-line-height);
+}
+
+.text-body-large {
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-large-font-size);
+  font-weight: var(--typography-body-font-weight);
+  letter-spacing: var(--typography-body-large-letter-spacing);
+  line-height: var(--typography-body-large-line-height);
+}

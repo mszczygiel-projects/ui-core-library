@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "foundations",
+  "projectType": "library",
+  "sourceRoot": "packages/foundations/src",
+  "tags": ["scope:foundations"]
+}
