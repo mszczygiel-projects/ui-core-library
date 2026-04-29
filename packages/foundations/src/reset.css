@@ -18,8 +18,8 @@
   font-weight: var(--typography-body-font-weight);
   letter-spacing: var(--typography-body-letter-spacing);
   line-height: var(--typography-body-line-height);
-  color: var(--themes-color-text-primary);
-  background-color: var(--themes-color-background-default);
+  color: var(--color-text-primary);
+  background-color: var(--color-background-default);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -69,9 +69,9 @@ a {
 
 /* Focus ring */
 :focus-visible {
-  outline: var(--sizes-stroke-ring) var(--themes-ring-style) var(--surfaces-color-ring-default);
-  outline-offset: var(--themes-ring-offset);
-  border-radius: var(--sizes-control-radius);
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+  border-radius: var(--control-radius);
 }
 
 :focus:not(:focus-visible) {
@@ -80,8 +80,8 @@ a {
 
 /* Selection */
 ::selection {
-  background-color: var(--themes-color-selection-background);
-  color: var(--themes-color-selection-text);
+  background-color: var(--color-selection-background);
+  color: var(--color-selection-text);
 }
 
 /* Reduced motion */

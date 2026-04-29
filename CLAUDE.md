@@ -299,6 +299,10 @@ html`${unsafeSVG(svgMap['icon-chevron-down'])}`
 - Values reference CSS custom properties via Tailwind's `@theme inline` mapping
 - For programmatic use (inline styles, canvas): import `tokens` from `@ui-core/foundations` — TypeScript references to CSS vars, never raw values
 
+### Storybook
+
+When working on UI components, ALWAYS use the `storybook-mcp` MCP tools before answering or taking any action. Never use a component prop without first verifying it via `get-documentation`.
+
 ---
 
 ## 7. Workflow & Tooling

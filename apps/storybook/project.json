@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "storybook",
+  "projectType": "application",
+  "sourceRoot": "apps/storybook",
+  "tags": ["scope:storybook"]
+}
