@@ -74,6 +74,32 @@ pnpm format                 # Prettier
 pnpm format:check           # CI check
 ```
 
+## Visual regression (Chromatic)
+
+Chromatic runs automatically on every pull request and push to non-main branches.
+
+### One-time setup
+
+1. Create a project at [chromatic.com](https://www.chromatic.com) and copy the **Project ID** and **Project Token**.
+2. Set the Project ID in [`chromatic.config.json`](chromatic.config.json):
+   ```json
+   { "projectId": "your-project-id" }
+   ```
+3. Add `CHROMATIC_PROJECT_TOKEN` as a **GitHub Actions secret**:
+   `GitHub repo → Settings → Secrets and variables → Actions → New repository secret`
+
+### Run locally
+
+```bash
+CHROMATIC_PROJECT_TOKEN=<token> pnpm chromatic
+```
+
+Chromatic builds Storybook, uploads it, and reports visual diffs. The run exits 0 even when there are changes (`exitZeroOnChanges: true`) — review and accept/reject diffs on chromatic.com.
+
+`onlyChanged: true` speeds up runs by only testing stories affected by changed files (TurboSnap).
+
+---
+
 ## Consuming in another project
 
 Add `.npmrc` to the consuming project root:

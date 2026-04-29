@@ -3,5 +3,20 @@
   "name": "storybook",
   "projectType": "application",
   "sourceRoot": "apps/storybook",
-  "tags": ["scope:storybook"]
+  "tags": ["scope:storybook"],
+  "targets": {
+    "storybook": {
+      "command": "storybook dev -p 6006",
+      "options": { "cwd": "apps/storybook" }
+    },
+    "build": {
+      "command": "storybook build",
+      "options": { "cwd": "apps/storybook" }
+    },
+    "chromatic": {
+      "command": "chromatic --config-path ../../chromatic.config.json",
+      "options": { "cwd": "apps/storybook" },
+      "dependsOn": ["build"]
+    }
+  }
 }
