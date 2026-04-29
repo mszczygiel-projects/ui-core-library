@@ -27,7 +27,7 @@ import {
   type Token,
   type Collection,
   type WarningBucket,
-} from '../scripts/tokens-transformer.ts';
+} from './tokens-transformer.ts';
 
 // ─── Test helpers ────────────────────────────────────────────────────────
 
@@ -653,7 +653,7 @@ describe('tokens.css — generated output', () => {
   let css: string;
 
   beforeAll(() => {
-    css = readFileSync(join(import.meta.dirname, 'tokens.css'), 'utf8');
+    css = readFileSync(join(import.meta.dirname, '../src/tokens.css'), 'utf8');
   });
 
   it('has no --themes- prefixed variables', () => {
@@ -728,7 +728,7 @@ describe('tokens.ts — generated output', () => {
   let ts: string;
 
   beforeAll(() => {
-    ts = readFileSync(join(import.meta.dirname, 'tokens.ts'), 'utf8');
+    ts = readFileSync(join(import.meta.dirname, '../src/tokens.ts'), 'utf8');
   });
 
   it('all var() references use unprefixed CSS vars', () => {
@@ -772,7 +772,7 @@ describe('tailwind.css — generated output', () => {
   let tw: string;
 
   beforeAll(() => {
-    tw = readFileSync(join(import.meta.dirname, 'tailwind.css'), 'utf8');
+    tw = readFileSync(join(import.meta.dirname, '../src/tailwind.css'), 'utf8');
   });
 
   it('imports tokens.css', () => {

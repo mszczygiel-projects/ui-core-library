@@ -51,6 +51,7 @@ pnpm icons:build            # Rebuild icon set from src/svg/
 ```bash
 pnpm test                   # All suites
 pnpm test:foundations       # Token build tests (Vitest, Node)
+pnpm test:icons             # Icon build tests (Vitest, Node)
 pnpm test:react             # React component tests (Vitest + jsdom)
 pnpm test:wc                # Web Component tests (@web/test-runner + Playwright)
 ```

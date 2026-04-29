@@ -1,0 +1,7 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "icons",
+  "projectType": "library",
+  "sourceRoot": "packages/icons/src",
+  "tags": ["scope:icons"]
+}

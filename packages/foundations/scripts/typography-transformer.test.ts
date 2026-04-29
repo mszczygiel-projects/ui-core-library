@@ -8,7 +8,7 @@ import {
   buildTypographyCss,
   HEADER,
   type TextStyle,
-} from '../scripts/typography-transformer.ts';
+} from './typography-transformer.ts';
 
 // ─── Test helpers ─────────────────────────────────────────────────────────
 
@@ -207,7 +207,7 @@ describe('typography.css — generated output', () => {
   let css: string;
 
   beforeAll(() => {
-    css = readFileSync(join(import.meta.dirname, 'typography.css'), 'utf8');
+    css = readFileSync(join(import.meta.dirname, '../src/typography.css'), 'utf8');
   });
 
   it('starts with the auto-generated header comment', () => {
