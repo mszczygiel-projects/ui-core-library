@@ -28,6 +28,8 @@ async function buildIcons() {
     entries.push({ iconName, componentName, svg });
   }
 
+  // Ensure deterministic output and remove stale generated files from previous builds.
+  fs.rmSync(DIST_DIR, { recursive: true, force: true });
   fs.mkdirSync(DIST_DIR, { recursive: true });
   fs.mkdirSync(REACT_DIST_DIR, { recursive: true });
 
