@@ -1,6 +1,6 @@
 {
   "$schema": "https://www.chromatic.com/config-file-schema.json",
-  "projectId": "REPLACE_WITH_YOUR_PROJECT_ID",
+  "projectId": "e5dda13b382bea6",
   "buildScriptName": "build",
   "exitZeroOnChanges": true,
   "onlyChanged": true

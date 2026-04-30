@@ -2775,9 +2775,6 @@
   --typography-caption-font-size: var(--text-sm);
   --typography-caption-line-height: var(--text-sm--line-height);
   --typography-caption-letter-spacing: var(--tracking-wider);
-  --radius-sm: var(--radius-sm-mobile);
-  --radius-md: var(--radius-md-mobile);
-  --radius-lg: var(--radius-lg-mobile);
   --radius-pill: var(--radius-full);
   --stroke-border: 0.0625rem;
   --stroke-ring: 0.125rem;
@@ -2892,9 +2889,6 @@
     --typography-body-small-line-height: var(--text-sm--line-height);
     --typography-body-large-font-size: var(--text-lg);
     --typography-body-large-line-height: var(--text-lg--line-height);
-    --radius-sm: var(--radius-sm-desktop);
-    --radius-md: var(--radius-md-desktop);
-    --radius-lg: var(--radius-lg-desktop);
     --layout-container-max-width: 90rem;
     --layout-container-padding-inline: var(--layout-padding-inline-xl);
     --control-radius: var(--radius-md-desktop);

@@ -557,9 +557,20 @@ export function buildTokensCss(
     }
   }
 
+  // CSS var names already claimed by Primitives — Sizes tokens with the same name would
+  // overwrite raw primitive values with aliases that point back to those same primitives,
+  // creating an irresolvable circular reference (e.g. --radius-md → var(--radius-md-mobile)
+  // → var(--radius-md) → ∞). Skip any Sizes token whose var name collides with a primitive.
+  const primitiveSizeVarNames = new Set(
+    [...primSizes, ...primColors, ...primMotion, ...primShadows].map((t) =>
+      cssVarName(t.collection, t.path),
+    ),
+  );
+
   // Sizes — Mobile (default → :root)
   const mobileSizeLines: string[] = [];
   for (const t of sizes) {
+    if (primitiveSizeVarNames.has(cssVarName(t.collection, t.path))) continue;
     const modeValues = valuesByMode(t);
     const entry = modeValues.find((m) => m.mode === 'Mobile') ?? modeValues[0];
     if (!entry) continue;
@@ -576,6 +587,7 @@ export function buildTokensCss(
   const breakpointXlRem = toRem(breakpointXlPx);
   const desktopSizeLines: string[] = [];
   for (const t of sizes) {
+    if (primitiveSizeVarNames.has(cssVarName(t.collection, t.path))) continue;
     const modeValues = valuesByMode(t);
     const mobileEntry = modeValues.find((m) => m.mode === 'Mobile') ?? modeValues[0];
     const desktopEntry = modeValues.find((m) => m.mode === 'Desktop');

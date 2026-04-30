@@ -29,6 +29,7 @@ Output directly in the conversation — no file created.
 ## Step 1 — Gather context
 
 If a Figma link was provided, use the Figma MCP tool to read the component node:
+
 - Component Set properties (variants, sizes, states)
 - Auto Layout structure → maps to flex/grid in CSS
 - Token usage on layers (fill, stroke, typography, spacing, radius)
@@ -43,6 +44,7 @@ Output a structured spec with the following sections. Keep each section tight �
 is a handoff document for implementation, not a design document.
 
 ### 1. Component overview
+
 - Purpose in one sentence
 - Figma Component Set location (file + frame path if known)
 - Package scope: `@ui-core/wc` + `@ui-core/react` (always both unless stated otherwise)
@@ -52,7 +54,7 @@ is a handoff document for implementation, not a design document.
 List all props/attributes. For each:
 
 | Prop/Attr | Type | Default | WC attr name | Notes |
-|---|---|---|---|---|
+| --------- | ---- | ------- | ------------ | ----- |
 
 WC attribute names are always kebab-case. Reflect to DOM attribute only for primitive
 types (string, boolean, number). Complex types (arrays, objects) are property-only.
@@ -67,17 +69,18 @@ Mark which combinations exist in Figma. Flag any that need special CSS treatment
 Exact files to create. Follow the established pattern:
 
 packages/web-components/src/{component-kebab}/
-{component-kebab}.ts          ← Lit element
-{component-kebab}.styles.ts   ← Lit css`` styles
-{component-kebab}.stories.ts  ← Storybook (html tag)
-{component-kebab}.test.ts     ← @web/test-runner + @open-wc/testing
+{component-kebab}.ts ← Lit element
+{component-kebab}.styles.ts ← Lit css`` styles
+{component-kebab}.stories.ts ← Storybook (html tag)
+{component-kebab}.test.ts ← @web/test-runner + @open-wc/testing
 packages/react/src/{ComponentPascal}/
-{ComponentPascal}.tsx         ← React component
-{component-kebab}.css         ← co-located CSS, BEM-like prefix ui-{component}__el--mod
+{ComponentPascal}.tsx ← React component
+{component-kebab}.css ← co-located CSS, BEM-like prefix ui-{component}\_\_el--mod
 {ComponentPascal}.stories.tsx ← Storybook (JSX)
-{ComponentPascal}.test.tsx    ← Vitest + Testing Library
+{ComponentPascal}.test.tsx ← Vitest + Testing Library
 
 Add barrel exports to:
+
 - `packages/web-components/src/index.ts`
 - `packages/react/src/index.ts`
 
@@ -87,13 +90,14 @@ Table: visual property → CSS custom property. Only semantic tokens (Surfaces l
 Never Primitives. Format: `var(--color-{category}-{role}-{state})`.
 
 | Visual property | CSS var | Notes |
-|---|---|---|
+| --------------- | ------- | ----- |
 
 List consumer hooks if any (e.g. `--{component}-color` with fallback pattern).
 
 ### 6. CSS architecture notes
 
 **Lit:**
+
 - `:host` = block element
 - Simple element classes: `.label`, `.icon`, `.track`
 - `:host([attr])` for variant/state modifiers
@@ -102,6 +106,7 @@ List consumer hooks if any (e.g. `--{component}-color` with fallback pattern).
 - Animation: import `motionStyles` mixin if component animates
 
 **React:**
+
 - BEM-like class prefix: `ui-{component}__element--modifier`
 - All styles in co-located `.css` — no inline styles, no Tailwind utilities
 - Forward `style` prop to root element only (consumer positioning hook)
@@ -112,7 +117,7 @@ List consumer hooks if any (e.g. `--{component}-color` with fallback pattern).
 List the stories to create:
 
 | Story name | Description |
-|---|---|
+| ---------- | ----------- |
 
 Default export uses `@ui-core/foundations/base.css` + story-level decorator if needed.
 WC stories use `html` tag. React stories use JSX.
@@ -120,6 +125,7 @@ WC stories use `html` tag. React stories use JSX.
 ### 8. Tests to write
 
 **WC (`{component}.test.ts`):**
+
 - Renders without error
 - Reflects each attribute correctly
 - State transitions (if interactive)
@@ -127,6 +133,7 @@ WC stories use `html` tag. React stories use JSX.
 - Accessibility attributes present
 
 **React (`{ComponentPascal}.test.tsx`):**
+
 - Renders without error
 - Prop → class name mapping
 - Forwards `className` and `style` to root

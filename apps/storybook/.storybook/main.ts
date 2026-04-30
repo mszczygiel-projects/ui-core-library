@@ -20,6 +20,7 @@ const config: StorybookConfig = {
     const { mergeConfig } = await import('vite');
 
     const merged = mergeConfig(config, {
+      base: process.env.CI ? '/ui-core-library/' : '/',
       resolve: {
         alias: {
           '@ui-core/foundations': path.resolve(__dirname, '../../../packages/foundations/src'),
