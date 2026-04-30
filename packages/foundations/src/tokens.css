@@ -1,6 +1,5 @@
 /* AUTO-GENERATED — do not edit. Run "pnpm run tokens:build" to regenerate. */
 
-
 /* === Primitives — Sizes === */
 :root {
   --spacing-0: 0;
@@ -492,12 +491,20 @@
   --color-on-subtle-ring-default: var(--color-ring-default);
   --color-on-subtle-link-default: var(--color-link-default);
   --color-on-subtle-link-hover: var(--color-link-hover);
-  --color-on-subtle-control-outline-background-default: var(--color-control-outline-background-default);
+  --color-on-subtle-control-outline-background-default: var(
+    --color-control-outline-background-default
+  );
   --color-on-subtle-control-outline-background-hover: var(--color-control-outline-background-hover);
-  --color-on-subtle-control-outline-background-active: var(--color-control-outline-background-active);
-  --color-on-subtle-control-outline-background-success: var(--color-control-outline-background-success);
+  --color-on-subtle-control-outline-background-active: var(
+    --color-control-outline-background-active
+  );
+  --color-on-subtle-control-outline-background-success: var(
+    --color-control-outline-background-success
+  );
   --color-on-subtle-control-outline-background-error: var(--color-control-outline-background-error);
-  --color-on-subtle-control-outline-background-disabled: var(--color-control-outline-background-disabled);
+  --color-on-subtle-control-outline-background-disabled: var(
+    --color-control-outline-background-disabled
+  );
   --color-on-subtle-control-outline-border-default: var(--color-control-outline-border-default);
   --color-on-subtle-control-outline-border-hover: var(--color-control-outline-border-hover);
   --color-on-subtle-control-outline-border-active: var(--color-control-outline-border-active);
@@ -510,12 +517,24 @@
   --color-on-subtle-control-outline-text-success: var(--color-control-outline-text-success);
   --color-on-subtle-control-outline-text-error: var(--color-control-outline-text-error);
   --color-on-subtle-control-outline-text-disabled: var(--color-control-outline-text-disabled);
-  --color-on-subtle-control-outline-placeholder-default: var(--color-control-outline-placeholder-default);
-  --color-on-subtle-control-outline-placeholder-hover: var(--color-control-outline-placeholder-hover);
-  --color-on-subtle-control-outline-placeholder-active: var(--color-control-outline-placeholder-active);
-  --color-on-subtle-control-outline-placeholder-success: var(--color-control-outline-placeholder-success);
-  --color-on-subtle-control-outline-placeholder-error: var(--color-control-outline-placeholder-error);
-  --color-on-subtle-control-outline-placeholder-disabled: var(--color-control-outline-placeholder-disabled);
+  --color-on-subtle-control-outline-placeholder-default: var(
+    --color-control-outline-placeholder-default
+  );
+  --color-on-subtle-control-outline-placeholder-hover: var(
+    --color-control-outline-placeholder-hover
+  );
+  --color-on-subtle-control-outline-placeholder-active: var(
+    --color-control-outline-placeholder-active
+  );
+  --color-on-subtle-control-outline-placeholder-success: var(
+    --color-control-outline-placeholder-success
+  );
+  --color-on-subtle-control-outline-placeholder-error: var(
+    --color-control-outline-placeholder-error
+  );
+  --color-on-subtle-control-outline-placeholder-disabled: var(
+    --color-control-outline-placeholder-disabled
+  );
   --color-on-subtle-control-outline-icon-default: var(--color-control-outline-icon-default);
   --color-on-subtle-control-outline-icon-hover: var(--color-control-outline-icon-hover);
   --color-on-subtle-control-outline-icon-active: var(--color-control-outline-icon-active);
@@ -537,10 +556,16 @@
   --color-on-subtle-control-filled-background-default: var(--color-white-1000);
   --color-on-subtle-control-filled-background-hover: var(--color-control-filled-background-hover);
   --color-on-subtle-control-filled-background-active: var(--color-control-filled-background-active);
-  --color-on-subtle-control-filled-background-success: var(--color-control-filled-background-success);
+  --color-on-subtle-control-filled-background-success: var(
+    --color-control-filled-background-success
+  );
   --color-on-subtle-control-filled-background-error: var(--color-control-filled-background-error);
-  --color-on-subtle-control-filled-background-disabled: var(--color-control-filled-background-disabled);
-  --color-on-subtle-control-filled-border-default: var(--color-on-subtle-control-filled-background-default);
+  --color-on-subtle-control-filled-background-disabled: var(
+    --color-control-filled-background-disabled
+  );
+  --color-on-subtle-control-filled-border-default: var(
+    --color-on-subtle-control-filled-background-default
+  );
   --color-on-subtle-control-filled-border-hover: var(--color-control-filled-border-hover);
   --color-on-subtle-control-filled-border-active: var(--color-control-filled-border-active);
   --color-on-subtle-control-filled-border-success: var(--color-control-filled-border-success);
@@ -552,12 +577,20 @@
   --color-on-subtle-control-filled-text-success: var(--color-control-filled-text-success);
   --color-on-subtle-control-filled-text-error: var(--color-control-filled-text-error);
   --color-on-subtle-control-filled-text-disabled: var(--color-control-filled-text-disabled);
-  --color-on-subtle-control-filled-placeholder-default: var(--color-control-filled-placeholder-default);
+  --color-on-subtle-control-filled-placeholder-default: var(
+    --color-control-filled-placeholder-default
+  );
   --color-on-subtle-control-filled-placeholder-hover: var(--color-control-filled-placeholder-hover);
-  --color-on-subtle-control-filled-placeholder-active: var(--color-control-filled-placeholder-active);
-  --color-on-subtle-control-filled-placeholder-success: var(--color-control-filled-placeholder-success);
+  --color-on-subtle-control-filled-placeholder-active: var(
+    --color-control-filled-placeholder-active
+  );
+  --color-on-subtle-control-filled-placeholder-success: var(
+    --color-control-filled-placeholder-success
+  );
   --color-on-subtle-control-filled-placeholder-error: var(--color-control-filled-placeholder-error);
-  --color-on-subtle-control-filled-placeholder-disabled: var(--color-control-filled-placeholder-disabled);
+  --color-on-subtle-control-filled-placeholder-disabled: var(
+    --color-control-filled-placeholder-disabled
+  );
   --color-on-subtle-control-filled-icon-default: var(--color-control-filled-icon-default);
   --color-on-subtle-control-filled-icon-hover: var(--color-control-filled-icon-hover);
   --color-on-subtle-control-filled-icon-active: var(--color-control-filled-icon-active);
@@ -607,7 +640,9 @@
   --color-on-subtle-action-secondary-on-base-hover: var(--color-action-secondary-on-base-hover);
   --color-on-subtle-action-secondary-on-base-focus: var(--color-action-secondary-on-base-focus);
   --color-on-subtle-action-secondary-on-base-active: var(--color-action-secondary-on-base-active);
-  --color-on-subtle-action-secondary-on-base-disabled: var(--color-action-secondary-on-base-disabled);
+  --color-on-subtle-action-secondary-on-base-disabled: var(
+    --color-action-secondary-on-base-disabled
+  );
   --color-on-subtle-action-tertiary-base-default: var(--color-action-primary-base-default);
   --color-on-subtle-action-tertiary-base-hover: var(--color-action-primary-base-hover);
   --color-on-subtle-action-tertiary-base-focus: var(--color-action-primary-base-focus);
@@ -628,51 +663,117 @@
   --color-on-subtle-action-danger-on-base-focus: var(--color-action-danger-on-base-focus);
   --color-on-subtle-action-danger-on-base-active: var(--color-action-danger-on-base-active);
   --color-on-subtle-action-danger-on-base-disabled: var(--color-action-danger-on-base-disabled);
-  --color-on-subtle-button-primary-background-default: var(--color-on-subtle-action-primary-base-default);
-  --color-on-subtle-button-primary-background-hover: var(--color-on-subtle-action-primary-base-hover);
-  --color-on-subtle-button-primary-background-focus: var(--color-on-subtle-action-primary-base-focus);
-  --color-on-subtle-button-primary-background-active: var(--color-on-subtle-action-primary-base-active);
-  --color-on-subtle-button-primary-background-disabled: var(--color-on-subtle-action-primary-base-disabled);
-  --color-on-subtle-button-primary-text-default: var(--color-on-subtle-action-primary-on-base-default);
+  --color-on-subtle-button-primary-background-default: var(
+    --color-on-subtle-action-primary-base-default
+  );
+  --color-on-subtle-button-primary-background-hover: var(
+    --color-on-subtle-action-primary-base-hover
+  );
+  --color-on-subtle-button-primary-background-focus: var(
+    --color-on-subtle-action-primary-base-focus
+  );
+  --color-on-subtle-button-primary-background-active: var(
+    --color-on-subtle-action-primary-base-active
+  );
+  --color-on-subtle-button-primary-background-disabled: var(
+    --color-on-subtle-action-primary-base-disabled
+  );
+  --color-on-subtle-button-primary-text-default: var(
+    --color-on-subtle-action-primary-on-base-default
+  );
   --color-on-subtle-button-primary-text-hover: var(--color-on-subtle-action-primary-on-base-hover);
   --color-on-subtle-button-primary-text-focus: var(--color-on-subtle-action-primary-on-base-focus);
-  --color-on-subtle-button-primary-text-active: var(--color-on-subtle-action-primary-on-base-active);
-  --color-on-subtle-button-primary-text-disabled: var(--color-on-subtle-action-primary-on-base-disabled);
-  --color-on-subtle-button-primary-border-default: var(--color-on-subtle-action-primary-base-default);
+  --color-on-subtle-button-primary-text-active: var(
+    --color-on-subtle-action-primary-on-base-active
+  );
+  --color-on-subtle-button-primary-text-disabled: var(
+    --color-on-subtle-action-primary-on-base-disabled
+  );
+  --color-on-subtle-button-primary-border-default: var(
+    --color-on-subtle-action-primary-base-default
+  );
   --color-on-subtle-button-primary-border-hover: var(--color-on-subtle-action-primary-base-hover);
   --color-on-subtle-button-primary-border-focus: var(--color-on-subtle-action-primary-base-focus);
   --color-on-subtle-button-primary-border-active: var(--color-on-subtle-action-primary-base-active);
-  --color-on-subtle-button-primary-border-disabled: var(--color-on-subtle-action-primary-base-disabled);
-  --color-on-subtle-button-secondary-background-default: var(--color-on-subtle-action-secondary-base-default);
-  --color-on-subtle-button-secondary-background-hover: var(--color-on-subtle-action-secondary-base-hover);
-  --color-on-subtle-button-secondary-background-focus: var(--color-on-subtle-action-secondary-base-focus);
-  --color-on-subtle-button-secondary-background-active: var(--color-on-subtle-action-secondary-base-active);
-  --color-on-subtle-button-secondary-background-disabled: var(--color-on-subtle-action-secondary-base-disabled);
-  --color-on-subtle-button-secondary-text-default: var(--color-on-subtle-action-secondary-on-base-default);
-  --color-on-subtle-button-secondary-text-hover: var(--color-on-subtle-action-secondary-on-base-hover);
-  --color-on-subtle-button-secondary-text-focus: var(--color-on-subtle-action-secondary-on-base-focus);
-  --color-on-subtle-button-secondary-text-active: var(--color-on-subtle-action-secondary-on-base-active);
-  --color-on-subtle-button-secondary-text-disabled: var(--color-on-subtle-action-secondary-on-base-disabled);
-  --color-on-subtle-button-secondary-border-default: var(--color-on-subtle-action-secondary-base-default);
-  --color-on-subtle-button-secondary-border-hover: var(--color-on-subtle-action-secondary-base-hover);
-  --color-on-subtle-button-secondary-border-focus: var(--color-on-subtle-action-secondary-base-focus);
-  --color-on-subtle-button-secondary-border-active: var(--color-on-subtle-action-secondary-base-active);
-  --color-on-subtle-button-secondary-border-disabled: var(--color-on-subtle-action-secondary-base-disabled);
+  --color-on-subtle-button-primary-border-disabled: var(
+    --color-on-subtle-action-primary-base-disabled
+  );
+  --color-on-subtle-button-secondary-background-default: var(
+    --color-on-subtle-action-secondary-base-default
+  );
+  --color-on-subtle-button-secondary-background-hover: var(
+    --color-on-subtle-action-secondary-base-hover
+  );
+  --color-on-subtle-button-secondary-background-focus: var(
+    --color-on-subtle-action-secondary-base-focus
+  );
+  --color-on-subtle-button-secondary-background-active: var(
+    --color-on-subtle-action-secondary-base-active
+  );
+  --color-on-subtle-button-secondary-background-disabled: var(
+    --color-on-subtle-action-secondary-base-disabled
+  );
+  --color-on-subtle-button-secondary-text-default: var(
+    --color-on-subtle-action-secondary-on-base-default
+  );
+  --color-on-subtle-button-secondary-text-hover: var(
+    --color-on-subtle-action-secondary-on-base-hover
+  );
+  --color-on-subtle-button-secondary-text-focus: var(
+    --color-on-subtle-action-secondary-on-base-focus
+  );
+  --color-on-subtle-button-secondary-text-active: var(
+    --color-on-subtle-action-secondary-on-base-active
+  );
+  --color-on-subtle-button-secondary-text-disabled: var(
+    --color-on-subtle-action-secondary-on-base-disabled
+  );
+  --color-on-subtle-button-secondary-border-default: var(
+    --color-on-subtle-action-secondary-base-default
+  );
+  --color-on-subtle-button-secondary-border-hover: var(
+    --color-on-subtle-action-secondary-base-hover
+  );
+  --color-on-subtle-button-secondary-border-focus: var(
+    --color-on-subtle-action-secondary-base-focus
+  );
+  --color-on-subtle-button-secondary-border-active: var(
+    --color-on-subtle-action-secondary-base-active
+  );
+  --color-on-subtle-button-secondary-border-disabled: var(
+    --color-on-subtle-action-secondary-base-disabled
+  );
   --color-on-subtle-button-outline-background-default: var(--color-transparent);
-  --color-on-subtle-button-outline-background-hover: var(--color-on-subtle-action-primary-base-hover);
-  --color-on-subtle-button-outline-background-focus: var(--color-on-subtle-action-primary-base-focus);
-  --color-on-subtle-button-outline-background-active: var(--color-on-subtle-action-primary-base-active);
-  --color-on-subtle-button-outline-background-disabled: var(--color-on-subtle-action-primary-base-disabled);
+  --color-on-subtle-button-outline-background-hover: var(
+    --color-on-subtle-action-primary-base-hover
+  );
+  --color-on-subtle-button-outline-background-focus: var(
+    --color-on-subtle-action-primary-base-focus
+  );
+  --color-on-subtle-button-outline-background-active: var(
+    --color-on-subtle-action-primary-base-active
+  );
+  --color-on-subtle-button-outline-background-disabled: var(
+    --color-on-subtle-action-primary-base-disabled
+  );
   --color-on-subtle-button-outline-text-default: var(--color-on-subtle-action-primary-base-default);
   --color-on-subtle-button-outline-text-hover: var(--color-on-subtle-action-primary-on-base-hover);
   --color-on-subtle-button-outline-text-focus: var(--color-on-subtle-action-primary-on-base-focus);
-  --color-on-subtle-button-outline-text-active: var(--color-on-subtle-action-primary-on-base-active);
-  --color-on-subtle-button-outline-text-disabled: var(--color-on-subtle-action-primary-on-base-disabled);
-  --color-on-subtle-button-outline-border-default: var(--color-on-subtle-action-primary-base-default);
+  --color-on-subtle-button-outline-text-active: var(
+    --color-on-subtle-action-primary-on-base-active
+  );
+  --color-on-subtle-button-outline-text-disabled: var(
+    --color-on-subtle-action-primary-on-base-disabled
+  );
+  --color-on-subtle-button-outline-border-default: var(
+    --color-on-subtle-action-primary-base-default
+  );
   --color-on-subtle-button-outline-border-hover: var(--color-on-subtle-action-primary-base-hover);
   --color-on-subtle-button-outline-border-focus: var(--color-on-subtle-action-primary-base-focus);
   --color-on-subtle-button-outline-border-active: var(--color-on-subtle-action-primary-base-active);
-  --color-on-subtle-button-outline-border-disabled: var(--color-on-subtle-action-primary-base-disabled);
+  --color-on-subtle-button-outline-border-disabled: var(
+    --color-on-subtle-action-primary-base-disabled
+  );
   --color-on-subtle-button-ghost-background-default: var(--color-transparent);
   --color-on-subtle-button-ghost-background-hover: var(--color-transparent);
   --color-on-subtle-button-ghost-background-focus: var(--color-transparent);
@@ -688,21 +789,35 @@
   --color-on-subtle-button-ghost-border-focus: var(--color-transparent);
   --color-on-subtle-button-ghost-border-active: var(--color-transparent);
   --color-on-subtle-button-ghost-border-disabled: var(--color-transparent);
-  --color-on-subtle-button-danger-background-default: var(--color-on-subtle-action-danger-base-default);
+  --color-on-subtle-button-danger-background-default: var(
+    --color-on-subtle-action-danger-base-default
+  );
   --color-on-subtle-button-danger-background-hover: var(--color-on-subtle-action-danger-base-hover);
   --color-on-subtle-button-danger-background-focus: var(--color-on-subtle-action-danger-base-focus);
-  --color-on-subtle-button-danger-background-active: var(--color-on-subtle-action-danger-base-active);
-  --color-on-subtle-button-danger-background-disabled: var(--color-on-subtle-action-danger-base-disabled);
-  --color-on-subtle-button-danger-text-default: var(--color-on-subtle-action-danger-on-base-default);
+  --color-on-subtle-button-danger-background-active: var(
+    --color-on-subtle-action-danger-base-active
+  );
+  --color-on-subtle-button-danger-background-disabled: var(
+    --color-on-subtle-action-danger-base-disabled
+  );
+  --color-on-subtle-button-danger-text-default: var(
+    --color-on-subtle-action-danger-on-base-default
+  );
   --color-on-subtle-button-danger-text-hover: var(--color-on-subtle-action-danger-on-base-hover);
   --color-on-subtle-button-danger-text-focus: var(--color-on-subtle-action-danger-on-base-focus);
   --color-on-subtle-button-danger-text-active: var(--color-on-subtle-action-danger-on-base-active);
-  --color-on-subtle-button-danger-text-disabled: var(--color-on-subtle-action-danger-on-base-disabled);
+  --color-on-subtle-button-danger-text-disabled: var(
+    --color-on-subtle-action-danger-on-base-disabled
+  );
   --color-on-subtle-button-danger-border-default: var(--color-on-subtle-action-danger-base-default);
   --color-on-subtle-button-danger-border-hover: var(--color-on-subtle-action-danger-on-base-hover);
   --color-on-subtle-button-danger-border-focus: var(--color-on-subtle-action-danger-on-base-focus);
-  --color-on-subtle-button-danger-border-active: var(--color-on-subtle-action-danger-on-base-active);
-  --color-on-subtle-button-danger-border-disabled: var(--color-on-subtle-action-danger-on-base-disabled);
+  --color-on-subtle-button-danger-border-active: var(
+    --color-on-subtle-action-danger-on-base-active
+  );
+  --color-on-subtle-button-danger-border-disabled: var(
+    --color-on-subtle-action-danger-on-base-disabled
+  );
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -721,12 +836,24 @@
   --color-on-inverse-ring-default: var(--color-ring-default);
   --color-on-inverse-link-default: var(--color-link-default);
   --color-on-inverse-link-hover: var(--color-link-hover);
-  --color-on-inverse-control-outline-background-default: var(--color-control-outline-background-default);
-  --color-on-inverse-control-outline-background-hover: var(--color-control-outline-background-hover);
-  --color-on-inverse-control-outline-background-active: var(--color-control-outline-background-active);
-  --color-on-inverse-control-outline-background-success: var(--color-control-outline-background-success);
-  --color-on-inverse-control-outline-background-error: var(--color-control-outline-background-error);
-  --color-on-inverse-control-outline-background-disabled: var(--color-control-outline-background-disabled);
+  --color-on-inverse-control-outline-background-default: var(
+    --color-control-outline-background-default
+  );
+  --color-on-inverse-control-outline-background-hover: var(
+    --color-control-outline-background-hover
+  );
+  --color-on-inverse-control-outline-background-active: var(
+    --color-control-outline-background-active
+  );
+  --color-on-inverse-control-outline-background-success: var(
+    --color-control-outline-background-success
+  );
+  --color-on-inverse-control-outline-background-error: var(
+    --color-control-outline-background-error
+  );
+  --color-on-inverse-control-outline-background-disabled: var(
+    --color-control-outline-background-disabled
+  );
   --color-on-inverse-control-outline-border-default: var(--color-on-inverse-border-default);
   --color-on-inverse-control-outline-border-hover: var(--color-gray-200);
   --color-on-inverse-control-outline-border-active: var(--color-gray-200);
@@ -740,11 +867,21 @@
   --color-on-inverse-control-outline-text-error: var(--color-control-outline-text-error);
   --color-on-inverse-control-outline-text-disabled: var(--color-control-outline-text-disabled);
   --color-on-inverse-control-outline-placeholder-default: var(--color-on-inverse-text-secondary);
-  --color-on-inverse-control-outline-placeholder-hover: var(--color-control-outline-placeholder-hover);
-  --color-on-inverse-control-outline-placeholder-active: var(--color-control-outline-placeholder-active);
-  --color-on-inverse-control-outline-placeholder-success: var(--color-control-outline-placeholder-success);
-  --color-on-inverse-control-outline-placeholder-error: var(--color-control-outline-placeholder-error);
-  --color-on-inverse-control-outline-placeholder-disabled: var(--color-control-outline-placeholder-disabled);
+  --color-on-inverse-control-outline-placeholder-hover: var(
+    --color-control-outline-placeholder-hover
+  );
+  --color-on-inverse-control-outline-placeholder-active: var(
+    --color-control-outline-placeholder-active
+  );
+  --color-on-inverse-control-outline-placeholder-success: var(
+    --color-control-outline-placeholder-success
+  );
+  --color-on-inverse-control-outline-placeholder-error: var(
+    --color-control-outline-placeholder-error
+  );
+  --color-on-inverse-control-outline-placeholder-disabled: var(
+    --color-control-outline-placeholder-disabled
+  );
   --color-on-inverse-control-outline-icon-default: var(--color-on-inverse-text-secondary);
   --color-on-inverse-control-outline-icon-hover: var(--color-control-outline-icon-hover);
   --color-on-inverse-control-outline-icon-active: var(--color-control-outline-icon-active);
@@ -765,10 +902,16 @@
   --color-on-inverse-control-outline-hint-disabled: var(--color-control-outline-hint-disabled);
   --color-on-inverse-control-filled-background-default: var(--color-on-inverse-background-sunken);
   --color-on-inverse-control-filled-background-hover: var(--color-control-filled-background-hover);
-  --color-on-inverse-control-filled-background-active: var(--color-control-filled-background-active);
-  --color-on-inverse-control-filled-background-success: var(--color-control-filled-background-success);
+  --color-on-inverse-control-filled-background-active: var(
+    --color-control-filled-background-active
+  );
+  --color-on-inverse-control-filled-background-success: var(
+    --color-control-filled-background-success
+  );
   --color-on-inverse-control-filled-background-error: var(--color-control-filled-background-error);
-  --color-on-inverse-control-filled-background-disabled: var(--color-control-filled-background-disabled);
+  --color-on-inverse-control-filled-background-disabled: var(
+    --color-control-filled-background-disabled
+  );
   --color-on-inverse-control-filled-border-default: var(--color-on-inverse-background-sunken);
   --color-on-inverse-control-filled-border-hover: var(--color-control-filled-border-hover);
   --color-on-inverse-control-filled-border-active: var(--color-control-filled-border-active);
@@ -782,11 +925,21 @@
   --color-on-inverse-control-filled-text-error: var(--color-control-filled-text-error);
   --color-on-inverse-control-filled-text-disabled: var(--color-control-filled-text-disabled);
   --color-on-inverse-control-filled-placeholder-default: var(--color-on-inverse-text-secondary);
-  --color-on-inverse-control-filled-placeholder-hover: var(--color-control-filled-placeholder-hover);
-  --color-on-inverse-control-filled-placeholder-active: var(--color-control-filled-placeholder-active);
-  --color-on-inverse-control-filled-placeholder-success: var(--color-control-filled-placeholder-success);
-  --color-on-inverse-control-filled-placeholder-error: var(--color-control-filled-placeholder-error);
-  --color-on-inverse-control-filled-placeholder-disabled: var(--color-control-filled-placeholder-disabled);
+  --color-on-inverse-control-filled-placeholder-hover: var(
+    --color-control-filled-placeholder-hover
+  );
+  --color-on-inverse-control-filled-placeholder-active: var(
+    --color-control-filled-placeholder-active
+  );
+  --color-on-inverse-control-filled-placeholder-success: var(
+    --color-control-filled-placeholder-success
+  );
+  --color-on-inverse-control-filled-placeholder-error: var(
+    --color-control-filled-placeholder-error
+  );
+  --color-on-inverse-control-filled-placeholder-disabled: var(
+    --color-control-filled-placeholder-disabled
+  );
   --color-on-inverse-control-filled-icon-default: var(--color-on-inverse-text-secondary);
   --color-on-inverse-control-filled-icon-hover: var(--color-control-filled-icon-hover);
   --color-on-inverse-control-filled-icon-active: var(--color-control-filled-icon-active);
@@ -836,7 +989,9 @@
   --color-on-inverse-action-secondary-on-base-hover: var(--color-action-secondary-base-hover);
   --color-on-inverse-action-secondary-on-base-focus: var(--color-action-secondary-base-focus);
   --color-on-inverse-action-secondary-on-base-active: var(--color-action-secondary-base-active);
-  --color-on-inverse-action-secondary-on-base-disabled: var(--color-action-secondary-on-base-disabled);
+  --color-on-inverse-action-secondary-on-base-disabled: var(
+    --color-action-secondary-on-base-disabled
+  );
   --color-on-inverse-action-tertiary-base-default: var(--color-action-primary-base-default);
   --color-on-inverse-action-tertiary-base-hover: var(--color-action-primary-base-hover);
   --color-on-inverse-action-tertiary-base-focus: var(--color-action-primary-base-focus);
@@ -857,24 +1012,52 @@
   --color-on-inverse-action-danger-on-base-focus: var(--color-action-danger-on-base-focus);
   --color-on-inverse-action-danger-on-base-active: var(--color-action-danger-on-base-active);
   --color-on-inverse-action-danger-on-base-disabled: var(--color-action-danger-on-base-disabled);
-  --color-on-inverse-button-danger-background-active: var(--color-on-inverse-action-danger-base-active);
-  --color-on-inverse-button-danger-background-default: var(--color-on-inverse-action-danger-base-default);
-  --color-on-inverse-button-danger-background-disabled: var(--color-on-inverse-action-danger-base-disabled);
-  --color-on-inverse-button-danger-background-focus: var(--color-on-inverse-action-danger-base-focus);
-  --color-on-inverse-button-danger-background-hover: var(--color-on-inverse-action-danger-base-hover);
-  --color-on-inverse-button-danger-border-active: var(--color-on-inverse-action-danger-on-base-active);
-  --color-on-inverse-button-danger-border-default: var(--color-on-inverse-action-danger-base-default);
-  --color-on-inverse-button-danger-border-disabled: var(--color-on-inverse-action-danger-on-base-disabled);
-  --color-on-inverse-button-danger-border-focus: var(--color-on-inverse-action-danger-on-base-focus);
-  --color-on-inverse-button-danger-border-hover: var(--color-on-inverse-action-danger-on-base-hover);
-  --color-on-inverse-button-danger-text-active: var(--color-on-inverse-action-danger-on-base-active);
-  --color-on-inverse-button-danger-text-default: var(--color-on-inverse-action-danger-on-base-default);
-  --color-on-inverse-button-danger-text-disabled: var(--color-on-inverse-action-danger-on-base-disabled);
+  --color-on-inverse-button-danger-background-active: var(
+    --color-on-inverse-action-danger-base-active
+  );
+  --color-on-inverse-button-danger-background-default: var(
+    --color-on-inverse-action-danger-base-default
+  );
+  --color-on-inverse-button-danger-background-disabled: var(
+    --color-on-inverse-action-danger-base-disabled
+  );
+  --color-on-inverse-button-danger-background-focus: var(
+    --color-on-inverse-action-danger-base-focus
+  );
+  --color-on-inverse-button-danger-background-hover: var(
+    --color-on-inverse-action-danger-base-hover
+  );
+  --color-on-inverse-button-danger-border-active: var(
+    --color-on-inverse-action-danger-on-base-active
+  );
+  --color-on-inverse-button-danger-border-default: var(
+    --color-on-inverse-action-danger-base-default
+  );
+  --color-on-inverse-button-danger-border-disabled: var(
+    --color-on-inverse-action-danger-on-base-disabled
+  );
+  --color-on-inverse-button-danger-border-focus: var(
+    --color-on-inverse-action-danger-on-base-focus
+  );
+  --color-on-inverse-button-danger-border-hover: var(
+    --color-on-inverse-action-danger-on-base-hover
+  );
+  --color-on-inverse-button-danger-text-active: var(
+    --color-on-inverse-action-danger-on-base-active
+  );
+  --color-on-inverse-button-danger-text-default: var(
+    --color-on-inverse-action-danger-on-base-default
+  );
+  --color-on-inverse-button-danger-text-disabled: var(
+    --color-on-inverse-action-danger-on-base-disabled
+  );
   --color-on-inverse-button-danger-text-focus: var(--color-on-inverse-action-danger-on-base-focus);
   --color-on-inverse-button-danger-text-hover: var(--color-on-inverse-action-danger-on-base-hover);
   --color-on-inverse-button-ghost-text-active: var(--color-on-inverse-action-primary-base-active);
   --color-on-inverse-button-ghost-text-default: var(--color-on-inverse-action-primary-base-default);
-  --color-on-inverse-button-ghost-text-disabled: var(--color-on-inverse-action-primary-base-disabled);
+  --color-on-inverse-button-ghost-text-disabled: var(
+    --color-on-inverse-action-primary-base-disabled
+  );
   --color-on-inverse-button-ghost-text-focus: var(--color-on-inverse-action-primary-base-focus);
   --color-on-inverse-button-ghost-text-hover: var(--color-on-inverse-action-primary-base-hover);
   --color-on-inverse-button-ghost-background-active: var(--color-transparent);
@@ -887,51 +1070,131 @@
   --color-on-inverse-button-ghost-border-disabled: var(--color-transparent);
   --color-on-inverse-button-ghost-border-focus: var(--color-transparent);
   --color-on-inverse-button-ghost-border-hover: var(--color-transparent);
-  --color-on-inverse-button-outline-background-active: var(--color-on-inverse-action-primary-base-active);
-  --color-on-inverse-button-outline-background-disabled: var(--color-on-inverse-action-primary-base-disabled);
-  --color-on-inverse-button-outline-background-focus: var(--color-on-inverse-action-primary-base-focus);
-  --color-on-inverse-button-outline-background-hover: var(--color-on-inverse-action-primary-base-hover);
+  --color-on-inverse-button-outline-background-active: var(
+    --color-on-inverse-action-primary-base-active
+  );
+  --color-on-inverse-button-outline-background-disabled: var(
+    --color-on-inverse-action-primary-base-disabled
+  );
+  --color-on-inverse-button-outline-background-focus: var(
+    --color-on-inverse-action-primary-base-focus
+  );
+  --color-on-inverse-button-outline-background-hover: var(
+    --color-on-inverse-action-primary-base-hover
+  );
   --color-on-inverse-button-outline-background-default: var(--color-transparent);
-  --color-on-inverse-button-outline-border-active: var(--color-on-inverse-action-primary-base-active);
-  --color-on-inverse-button-outline-border-default: var(--color-on-inverse-action-primary-base-default);
-  --color-on-inverse-button-outline-border-disabled: var(--color-on-inverse-action-primary-base-disabled);
+  --color-on-inverse-button-outline-border-active: var(
+    --color-on-inverse-action-primary-base-active
+  );
+  --color-on-inverse-button-outline-border-default: var(
+    --color-on-inverse-action-primary-base-default
+  );
+  --color-on-inverse-button-outline-border-disabled: var(
+    --color-on-inverse-action-primary-base-disabled
+  );
   --color-on-inverse-button-outline-border-focus: var(--color-on-inverse-action-primary-base-focus);
   --color-on-inverse-button-outline-border-hover: var(--color-on-inverse-action-primary-base-hover);
-  --color-on-inverse-button-outline-text-active: var(--color-on-inverse-action-primary-on-base-active);
-  --color-on-inverse-button-outline-text-default: var(--color-on-inverse-action-primary-base-default);
-  --color-on-inverse-button-outline-text-disabled: var(--color-on-inverse-action-primary-on-base-disabled);
-  --color-on-inverse-button-outline-text-focus: var(--color-on-inverse-action-primary-on-base-focus);
-  --color-on-inverse-button-outline-text-hover: var(--color-on-inverse-action-primary-on-base-hover);
-  --color-on-inverse-button-primary-background-active: var(--color-on-inverse-action-primary-base-active);
-  --color-on-inverse-button-primary-background-default: var(--color-on-inverse-action-primary-base-default);
-  --color-on-inverse-button-primary-background-disabled: var(--color-on-inverse-action-primary-base-disabled);
-  --color-on-inverse-button-primary-background-focus: var(--color-on-inverse-action-primary-base-focus);
-  --color-on-inverse-button-primary-background-hover: var(--color-on-inverse-action-primary-base-hover);
-  --color-on-inverse-button-primary-border-active: var(--color-on-inverse-action-primary-base-active);
-  --color-on-inverse-button-primary-border-default: var(--color-on-inverse-action-primary-base-default);
-  --color-on-inverse-button-primary-border-disabled: var(--color-on-inverse-action-primary-base-disabled);
+  --color-on-inverse-button-outline-text-active: var(
+    --color-on-inverse-action-primary-on-base-active
+  );
+  --color-on-inverse-button-outline-text-default: var(
+    --color-on-inverse-action-primary-base-default
+  );
+  --color-on-inverse-button-outline-text-disabled: var(
+    --color-on-inverse-action-primary-on-base-disabled
+  );
+  --color-on-inverse-button-outline-text-focus: var(
+    --color-on-inverse-action-primary-on-base-focus
+  );
+  --color-on-inverse-button-outline-text-hover: var(
+    --color-on-inverse-action-primary-on-base-hover
+  );
+  --color-on-inverse-button-primary-background-active: var(
+    --color-on-inverse-action-primary-base-active
+  );
+  --color-on-inverse-button-primary-background-default: var(
+    --color-on-inverse-action-primary-base-default
+  );
+  --color-on-inverse-button-primary-background-disabled: var(
+    --color-on-inverse-action-primary-base-disabled
+  );
+  --color-on-inverse-button-primary-background-focus: var(
+    --color-on-inverse-action-primary-base-focus
+  );
+  --color-on-inverse-button-primary-background-hover: var(
+    --color-on-inverse-action-primary-base-hover
+  );
+  --color-on-inverse-button-primary-border-active: var(
+    --color-on-inverse-action-primary-base-active
+  );
+  --color-on-inverse-button-primary-border-default: var(
+    --color-on-inverse-action-primary-base-default
+  );
+  --color-on-inverse-button-primary-border-disabled: var(
+    --color-on-inverse-action-primary-base-disabled
+  );
   --color-on-inverse-button-primary-border-focus: var(--color-on-inverse-action-primary-base-focus);
   --color-on-inverse-button-primary-border-hover: var(--color-on-inverse-action-primary-base-hover);
-  --color-on-inverse-button-primary-text-active: var(--color-on-inverse-action-primary-on-base-active);
-  --color-on-inverse-button-primary-text-default: var(--color-on-inverse-action-primary-on-base-default);
-  --color-on-inverse-button-primary-text-disabled: var(--color-on-inverse-action-primary-on-base-disabled);
-  --color-on-inverse-button-primary-text-focus: var(--color-on-inverse-action-primary-on-base-focus);
-  --color-on-inverse-button-primary-text-hover: var(--color-on-inverse-action-primary-on-base-hover);
-  --color-on-inverse-button-secondary-background-active: var(--color-on-inverse-action-secondary-base-active);
-  --color-on-inverse-button-secondary-background-default: var(--color-on-inverse-action-secondary-base-default);
-  --color-on-inverse-button-secondary-background-disabled: var(--color-on-inverse-action-secondary-base-disabled);
-  --color-on-inverse-button-secondary-background-focus: var(--color-on-inverse-action-secondary-base-focus);
-  --color-on-inverse-button-secondary-background-hover: var(--color-on-inverse-action-secondary-base-hover);
-  --color-on-inverse-button-secondary-border-active: var(--color-on-inverse-action-secondary-base-active);
-  --color-on-inverse-button-secondary-border-default: var(--color-on-inverse-action-secondary-base-default);
-  --color-on-inverse-button-secondary-border-disabled: var(--color-on-inverse-action-secondary-base-disabled);
-  --color-on-inverse-button-secondary-border-focus: var(--color-on-inverse-action-secondary-base-focus);
-  --color-on-inverse-button-secondary-border-hover: var(--color-on-inverse-action-secondary-base-hover);
-  --color-on-inverse-button-secondary-text-active: var(--color-on-inverse-action-secondary-on-base-active);
-  --color-on-inverse-button-secondary-text-default: var(--color-on-inverse-action-secondary-on-base-default);
-  --color-on-inverse-button-secondary-text-disabled: var(--color-on-inverse-action-secondary-on-base-disabled);
-  --color-on-inverse-button-secondary-text-focus: var(--color-on-inverse-action-secondary-on-base-focus);
-  --color-on-inverse-button-secondary-text-hover: var(--color-on-inverse-action-secondary-on-base-hover);
+  --color-on-inverse-button-primary-text-active: var(
+    --color-on-inverse-action-primary-on-base-active
+  );
+  --color-on-inverse-button-primary-text-default: var(
+    --color-on-inverse-action-primary-on-base-default
+  );
+  --color-on-inverse-button-primary-text-disabled: var(
+    --color-on-inverse-action-primary-on-base-disabled
+  );
+  --color-on-inverse-button-primary-text-focus: var(
+    --color-on-inverse-action-primary-on-base-focus
+  );
+  --color-on-inverse-button-primary-text-hover: var(
+    --color-on-inverse-action-primary-on-base-hover
+  );
+  --color-on-inverse-button-secondary-background-active: var(
+    --color-on-inverse-action-secondary-base-active
+  );
+  --color-on-inverse-button-secondary-background-default: var(
+    --color-on-inverse-action-secondary-base-default
+  );
+  --color-on-inverse-button-secondary-background-disabled: var(
+    --color-on-inverse-action-secondary-base-disabled
+  );
+  --color-on-inverse-button-secondary-background-focus: var(
+    --color-on-inverse-action-secondary-base-focus
+  );
+  --color-on-inverse-button-secondary-background-hover: var(
+    --color-on-inverse-action-secondary-base-hover
+  );
+  --color-on-inverse-button-secondary-border-active: var(
+    --color-on-inverse-action-secondary-base-active
+  );
+  --color-on-inverse-button-secondary-border-default: var(
+    --color-on-inverse-action-secondary-base-default
+  );
+  --color-on-inverse-button-secondary-border-disabled: var(
+    --color-on-inverse-action-secondary-base-disabled
+  );
+  --color-on-inverse-button-secondary-border-focus: var(
+    --color-on-inverse-action-secondary-base-focus
+  );
+  --color-on-inverse-button-secondary-border-hover: var(
+    --color-on-inverse-action-secondary-base-hover
+  );
+  --color-on-inverse-button-secondary-text-active: var(
+    --color-on-inverse-action-secondary-on-base-active
+  );
+  --color-on-inverse-button-secondary-text-default: var(
+    --color-on-inverse-action-secondary-on-base-default
+  );
+  --color-on-inverse-button-secondary-text-disabled: var(
+    --color-on-inverse-action-secondary-on-base-disabled
+  );
+  --color-on-inverse-button-secondary-text-focus: var(
+    --color-on-inverse-action-secondary-on-base-focus
+  );
+  --color-on-inverse-button-secondary-text-hover: var(
+    --color-on-inverse-action-secondary-on-base-hover
+  );
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -950,72 +1213,144 @@
   --color-on-brand-primary-ring-default: var(--color-ring-default);
   --color-on-brand-primary-link-default: var(--color-link-default);
   --color-on-brand-primary-link-hover: var(--color-link-hover);
-  --color-on-brand-primary-control-outline-background-default: var(--color-control-outline-background-default);
-  --color-on-brand-primary-control-outline-background-hover: var(--color-control-outline-background-hover);
-  --color-on-brand-primary-control-outline-background-active: var(--color-control-outline-background-active);
-  --color-on-brand-primary-control-outline-background-success: var(--color-control-outline-background-success);
-  --color-on-brand-primary-control-outline-background-error: var(--color-control-outline-background-error);
-  --color-on-brand-primary-control-outline-background-disabled: var(--color-control-outline-background-disabled);
+  --color-on-brand-primary-control-outline-background-default: var(
+    --color-control-outline-background-default
+  );
+  --color-on-brand-primary-control-outline-background-hover: var(
+    --color-control-outline-background-hover
+  );
+  --color-on-brand-primary-control-outline-background-active: var(
+    --color-control-outline-background-active
+  );
+  --color-on-brand-primary-control-outline-background-success: var(
+    --color-control-outline-background-success
+  );
+  --color-on-brand-primary-control-outline-background-error: var(
+    --color-control-outline-background-error
+  );
+  --color-on-brand-primary-control-outline-background-disabled: var(
+    --color-control-outline-background-disabled
+  );
   --color-on-brand-primary-control-outline-border-default: var(--color-gray-50);
   --color-on-brand-primary-control-outline-border-hover: var(--color-control-outline-border-hover);
-  --color-on-brand-primary-control-outline-border-active: var(--color-control-outline-border-active);
-  --color-on-brand-primary-control-outline-border-success: var(--color-control-outline-border-success);
+  --color-on-brand-primary-control-outline-border-active: var(
+    --color-control-outline-border-active
+  );
+  --color-on-brand-primary-control-outline-border-success: var(
+    --color-control-outline-border-success
+  );
   --color-on-brand-primary-control-outline-border-error: var(--color-control-outline-border-error);
-  --color-on-brand-primary-control-outline-border-disabled: var(--color-control-outline-border-disabled);
+  --color-on-brand-primary-control-outline-border-disabled: var(
+    --color-control-outline-border-disabled
+  );
   --color-on-brand-primary-control-outline-text-default: var(--color-control-outline-text-default);
   --color-on-brand-primary-control-outline-text-hover: var(--color-control-outline-text-hover);
   --color-on-brand-primary-control-outline-text-active: var(--color-control-outline-text-active);
   --color-on-brand-primary-control-outline-text-success: var(--color-control-outline-text-success);
   --color-on-brand-primary-control-outline-text-error: var(--color-control-outline-text-error);
-  --color-on-brand-primary-control-outline-text-disabled: var(--color-control-outline-text-disabled);
-  --color-on-brand-primary-control-outline-placeholder-default: var(--color-control-outline-placeholder-default);
-  --color-on-brand-primary-control-outline-placeholder-hover: var(--color-control-outline-placeholder-hover);
-  --color-on-brand-primary-control-outline-placeholder-active: var(--color-control-outline-placeholder-active);
-  --color-on-brand-primary-control-outline-placeholder-success: var(--color-control-outline-placeholder-success);
-  --color-on-brand-primary-control-outline-placeholder-error: var(--color-control-outline-placeholder-error);
-  --color-on-brand-primary-control-outline-placeholder-disabled: var(--color-control-outline-placeholder-disabled);
+  --color-on-brand-primary-control-outline-text-disabled: var(
+    --color-control-outline-text-disabled
+  );
+  --color-on-brand-primary-control-outline-placeholder-default: var(
+    --color-control-outline-placeholder-default
+  );
+  --color-on-brand-primary-control-outline-placeholder-hover: var(
+    --color-control-outline-placeholder-hover
+  );
+  --color-on-brand-primary-control-outline-placeholder-active: var(
+    --color-control-outline-placeholder-active
+  );
+  --color-on-brand-primary-control-outline-placeholder-success: var(
+    --color-control-outline-placeholder-success
+  );
+  --color-on-brand-primary-control-outline-placeholder-error: var(
+    --color-control-outline-placeholder-error
+  );
+  --color-on-brand-primary-control-outline-placeholder-disabled: var(
+    --color-control-outline-placeholder-disabled
+  );
   --color-on-brand-primary-control-outline-icon-default: var(--color-control-outline-icon-default);
   --color-on-brand-primary-control-outline-icon-hover: var(--color-control-outline-icon-hover);
   --color-on-brand-primary-control-outline-icon-active: var(--color-control-outline-icon-active);
   --color-on-brand-primary-control-outline-icon-success: var(--color-control-outline-icon-success);
   --color-on-brand-primary-control-outline-icon-error: var(--color-control-outline-icon-error);
-  --color-on-brand-primary-control-outline-icon-disabled: var(--color-control-outline-icon-disabled);
-  --color-on-brand-primary-control-outline-label-default: var(--color-control-outline-label-default);
+  --color-on-brand-primary-control-outline-icon-disabled: var(
+    --color-control-outline-icon-disabled
+  );
+  --color-on-brand-primary-control-outline-label-default: var(
+    --color-control-outline-label-default
+  );
   --color-on-brand-primary-control-outline-label-hover: var(--color-control-outline-label-hover);
   --color-on-brand-primary-control-outline-label-active: var(--color-control-outline-label-active);
-  --color-on-brand-primary-control-outline-label-success: var(--color-control-outline-label-success);
+  --color-on-brand-primary-control-outline-label-success: var(
+    --color-control-outline-label-success
+  );
   --color-on-brand-primary-control-outline-label-error: var(--color-control-outline-label-error);
-  --color-on-brand-primary-control-outline-label-disabled: var(--color-control-outline-label-disabled);
+  --color-on-brand-primary-control-outline-label-disabled: var(
+    --color-control-outline-label-disabled
+  );
   --color-on-brand-primary-control-outline-hint-default: var(--color-control-outline-hint-default);
   --color-on-brand-primary-control-outline-hint-hover: var(--color-control-outline-hint-hover);
   --color-on-brand-primary-control-outline-hint-active: var(--color-control-outline-hint-active);
   --color-on-brand-primary-control-outline-hint-success: var(--color-control-outline-hint-success);
   --color-on-brand-primary-control-outline-hint-error: var(--color-control-outline-hint-error);
-  --color-on-brand-primary-control-outline-hint-disabled: var(--color-control-outline-hint-disabled);
-  --color-on-brand-primary-control-filled-background-default: var(--color-control-filled-background-default);
-  --color-on-brand-primary-control-filled-background-hover: var(--color-control-filled-background-hover);
-  --color-on-brand-primary-control-filled-background-active: var(--color-control-filled-background-active);
-  --color-on-brand-primary-control-filled-background-success: var(--color-control-filled-background-success);
-  --color-on-brand-primary-control-filled-background-error: var(--color-control-filled-background-error);
-  --color-on-brand-primary-control-filled-background-disabled: var(--color-control-filled-background-disabled);
-  --color-on-brand-primary-control-filled-border-default: var(--color-control-filled-border-default);
+  --color-on-brand-primary-control-outline-hint-disabled: var(
+    --color-control-outline-hint-disabled
+  );
+  --color-on-brand-primary-control-filled-background-default: var(
+    --color-control-filled-background-default
+  );
+  --color-on-brand-primary-control-filled-background-hover: var(
+    --color-control-filled-background-hover
+  );
+  --color-on-brand-primary-control-filled-background-active: var(
+    --color-control-filled-background-active
+  );
+  --color-on-brand-primary-control-filled-background-success: var(
+    --color-control-filled-background-success
+  );
+  --color-on-brand-primary-control-filled-background-error: var(
+    --color-control-filled-background-error
+  );
+  --color-on-brand-primary-control-filled-background-disabled: var(
+    --color-control-filled-background-disabled
+  );
+  --color-on-brand-primary-control-filled-border-default: var(
+    --color-control-filled-border-default
+  );
   --color-on-brand-primary-control-filled-border-hover: var(--color-control-filled-border-hover);
   --color-on-brand-primary-control-filled-border-active: var(--color-control-filled-border-active);
-  --color-on-brand-primary-control-filled-border-success: var(--color-control-filled-border-success);
+  --color-on-brand-primary-control-filled-border-success: var(
+    --color-control-filled-border-success
+  );
   --color-on-brand-primary-control-filled-border-error: var(--color-control-filled-border-error);
-  --color-on-brand-primary-control-filled-border-disabled: var(--color-control-filled-border-disabled);
+  --color-on-brand-primary-control-filled-border-disabled: var(
+    --color-control-filled-border-disabled
+  );
   --color-on-brand-primary-control-filled-text-default: var(--color-control-filled-text-default);
   --color-on-brand-primary-control-filled-text-hover: var(--color-control-filled-text-hover);
   --color-on-brand-primary-control-filled-text-active: var(--color-control-filled-text-active);
   --color-on-brand-primary-control-filled-text-success: var(--color-control-filled-text-success);
   --color-on-brand-primary-control-filled-text-error: var(--color-control-filled-text-error);
   --color-on-brand-primary-control-filled-text-disabled: var(--color-control-filled-text-disabled);
-  --color-on-brand-primary-control-filled-placeholder-default: var(--color-control-filled-placeholder-default);
-  --color-on-brand-primary-control-filled-placeholder-hover: var(--color-control-filled-placeholder-hover);
-  --color-on-brand-primary-control-filled-placeholder-active: var(--color-control-filled-placeholder-active);
-  --color-on-brand-primary-control-filled-placeholder-success: var(--color-control-filled-placeholder-success);
-  --color-on-brand-primary-control-filled-placeholder-error: var(--color-control-filled-placeholder-error);
-  --color-on-brand-primary-control-filled-placeholder-disabled: var(--color-control-filled-placeholder-disabled);
+  --color-on-brand-primary-control-filled-placeholder-default: var(
+    --color-control-filled-placeholder-default
+  );
+  --color-on-brand-primary-control-filled-placeholder-hover: var(
+    --color-control-filled-placeholder-hover
+  );
+  --color-on-brand-primary-control-filled-placeholder-active: var(
+    --color-control-filled-placeholder-active
+  );
+  --color-on-brand-primary-control-filled-placeholder-success: var(
+    --color-control-filled-placeholder-success
+  );
+  --color-on-brand-primary-control-filled-placeholder-error: var(
+    --color-control-filled-placeholder-error
+  );
+  --color-on-brand-primary-control-filled-placeholder-disabled: var(
+    --color-control-filled-placeholder-disabled
+  );
   --color-on-brand-primary-control-filled-icon-default: var(--color-control-filled-icon-default);
   --color-on-brand-primary-control-filled-icon-hover: var(--color-control-filled-icon-hover);
   --color-on-brand-primary-control-filled-icon-active: var(--color-control-filled-icon-active);
@@ -1027,7 +1362,9 @@
   --color-on-brand-primary-control-filled-label-active: var(--color-control-filled-label-active);
   --color-on-brand-primary-control-filled-label-success: var(--color-control-filled-label-success);
   --color-on-brand-primary-control-filled-label-error: var(--color-control-filled-label-error);
-  --color-on-brand-primary-control-filled-label-disabled: var(--color-control-filled-label-disabled);
+  --color-on-brand-primary-control-filled-label-disabled: var(
+    --color-control-filled-label-disabled
+  );
   --color-on-brand-primary-control-filled-hint-default: var(--color-control-filled-hint-default);
   --color-on-brand-primary-control-filled-hint-hover: var(--color-control-filled-hint-hover);
   --color-on-brand-primary-control-filled-hint-active: var(--color-control-filled-hint-active);
@@ -1055,57 +1392,121 @@
   --color-on-brand-primary-action-primary-on-base-hover: var(--color-action-primary-base-hover);
   --color-on-brand-primary-action-primary-on-base-focus: var(--color-action-primary-base-focus);
   --color-on-brand-primary-action-primary-on-base-active: var(--color-action-primary-base-active);
-  --color-on-brand-primary-action-primary-on-base-disabled: var(--color-action-primary-on-base-disabled);
-  --color-on-brand-primary-action-secondary-base-default: var(--color-action-secondary-on-base-default);
+  --color-on-brand-primary-action-primary-on-base-disabled: var(
+    --color-action-primary-on-base-disabled
+  );
+  --color-on-brand-primary-action-secondary-base-default: var(
+    --color-action-secondary-on-base-default
+  );
   --color-on-brand-primary-action-secondary-base-hover: var(--color-action-secondary-on-base-hover);
   --color-on-brand-primary-action-secondary-base-focus: var(--color-action-secondary-on-base-focus);
-  --color-on-brand-primary-action-secondary-base-active: var(--color-action-secondary-on-base-active);
-  --color-on-brand-primary-action-secondary-base-disabled: var(--color-action-secondary-base-disabled);
-  --color-on-brand-primary-action-secondary-on-base-default: var(--color-action-secondary-base-default);
+  --color-on-brand-primary-action-secondary-base-active: var(
+    --color-action-secondary-on-base-active
+  );
+  --color-on-brand-primary-action-secondary-base-disabled: var(
+    --color-action-secondary-base-disabled
+  );
+  --color-on-brand-primary-action-secondary-on-base-default: var(
+    --color-action-secondary-base-default
+  );
   --color-on-brand-primary-action-secondary-on-base-hover: var(--color-action-secondary-base-hover);
   --color-on-brand-primary-action-secondary-on-base-focus: var(--color-action-secondary-base-focus);
-  --color-on-brand-primary-action-secondary-on-base-active: var(--color-action-secondary-base-active);
-  --color-on-brand-primary-action-secondary-on-base-disabled: var(--color-action-secondary-on-base-disabled);
+  --color-on-brand-primary-action-secondary-on-base-active: var(
+    --color-action-secondary-base-active
+  );
+  --color-on-brand-primary-action-secondary-on-base-disabled: var(
+    --color-action-secondary-on-base-disabled
+  );
   --color-on-brand-primary-action-tertiary-base-default: var(--color-action-primary-base-default);
   --color-on-brand-primary-action-tertiary-base-hover: var(--color-action-primary-base-hover);
   --color-on-brand-primary-action-tertiary-base-focus: var(--color-action-primary-base-focus);
   --color-on-brand-primary-action-tertiary-base-active: var(--color-action-primary-base-active);
   --color-on-brand-primary-action-tertiary-base-disabled: var(--color-action-primary-base-disabled);
-  --color-on-brand-primary-action-tertiary-on-base-default: var(--color-action-primary-on-base-default);
+  --color-on-brand-primary-action-tertiary-on-base-default: var(
+    --color-action-primary-on-base-default
+  );
   --color-on-brand-primary-action-tertiary-on-base-hover: var(--color-action-primary-on-base-hover);
   --color-on-brand-primary-action-tertiary-on-base-focus: var(--color-action-primary-on-base-focus);
-  --color-on-brand-primary-action-tertiary-on-base-active: var(--color-action-primary-on-base-active);
-  --color-on-brand-primary-action-tertiary-on-base-disabled: var(--color-action-primary-on-base-disabled);
+  --color-on-brand-primary-action-tertiary-on-base-active: var(
+    --color-action-primary-on-base-active
+  );
+  --color-on-brand-primary-action-tertiary-on-base-disabled: var(
+    --color-action-primary-on-base-disabled
+  );
   --color-on-brand-primary-action-danger-base-default: var(--color-action-danger-base-default);
   --color-on-brand-primary-action-danger-base-hover: var(--color-action-danger-base-hover);
   --color-on-brand-primary-action-danger-base-focus: var(--color-action-danger-base-focus);
   --color-on-brand-primary-action-danger-base-active: var(--color-action-danger-base-active);
   --color-on-brand-primary-action-danger-base-disabled: var(--color-action-danger-base-disabled);
-  --color-on-brand-primary-action-danger-on-base-default: var(--color-action-danger-on-base-default);
+  --color-on-brand-primary-action-danger-on-base-default: var(
+    --color-action-danger-on-base-default
+  );
   --color-on-brand-primary-action-danger-on-base-hover: var(--color-action-danger-on-base-hover);
   --color-on-brand-primary-action-danger-on-base-focus: var(--color-action-danger-on-base-focus);
   --color-on-brand-primary-action-danger-on-base-active: var(--color-action-danger-on-base-active);
-  --color-on-brand-primary-action-danger-on-base-disabled: var(--color-action-danger-on-base-disabled);
-  --color-on-brand-primary-button-danger-background-active: var(--color-on-brand-primary-action-danger-base-active);
-  --color-on-brand-primary-button-danger-background-default: var(--color-on-brand-primary-action-danger-base-default);
-  --color-on-brand-primary-button-danger-background-disabled: var(--color-on-brand-primary-action-danger-base-disabled);
-  --color-on-brand-primary-button-danger-background-focus: var(--color-on-brand-primary-action-danger-base-focus);
-  --color-on-brand-primary-button-danger-background-hover: var(--color-on-brand-primary-action-danger-base-hover);
-  --color-on-brand-primary-button-danger-border-active: var(--color-on-brand-primary-action-danger-on-base-active);
-  --color-on-brand-primary-button-danger-border-default: var(--color-on-brand-primary-action-danger-base-default);
-  --color-on-brand-primary-button-danger-border-disabled: var(--color-on-brand-primary-action-danger-on-base-disabled);
-  --color-on-brand-primary-button-danger-border-focus: var(--color-on-brand-primary-action-danger-on-base-focus);
-  --color-on-brand-primary-button-danger-border-hover: var(--color-on-brand-primary-action-danger-on-base-hover);
-  --color-on-brand-primary-button-danger-text-active: var(--color-on-brand-primary-action-danger-on-base-active);
-  --color-on-brand-primary-button-danger-text-default: var(--color-on-brand-primary-action-danger-on-base-default);
-  --color-on-brand-primary-button-danger-text-disabled: var(--color-on-brand-primary-action-danger-on-base-disabled);
-  --color-on-brand-primary-button-danger-text-focus: var(--color-on-brand-primary-action-danger-on-base-focus);
-  --color-on-brand-primary-button-danger-text-hover: var(--color-on-brand-primary-action-danger-on-base-hover);
-  --color-on-brand-primary-button-ghost-text-active: var(--color-on-brand-primary-action-primary-base-active);
-  --color-on-brand-primary-button-ghost-text-default: var(--color-on-brand-primary-action-primary-base-default);
-  --color-on-brand-primary-button-ghost-text-disabled: var(--color-on-brand-primary-action-primary-base-disabled);
-  --color-on-brand-primary-button-ghost-text-focus: var(--color-on-brand-primary-action-primary-base-focus);
-  --color-on-brand-primary-button-ghost-text-hover: var(--color-on-brand-primary-action-primary-base-hover);
+  --color-on-brand-primary-action-danger-on-base-disabled: var(
+    --color-action-danger-on-base-disabled
+  );
+  --color-on-brand-primary-button-danger-background-active: var(
+    --color-on-brand-primary-action-danger-base-active
+  );
+  --color-on-brand-primary-button-danger-background-default: var(
+    --color-on-brand-primary-action-danger-base-default
+  );
+  --color-on-brand-primary-button-danger-background-disabled: var(
+    --color-on-brand-primary-action-danger-base-disabled
+  );
+  --color-on-brand-primary-button-danger-background-focus: var(
+    --color-on-brand-primary-action-danger-base-focus
+  );
+  --color-on-brand-primary-button-danger-background-hover: var(
+    --color-on-brand-primary-action-danger-base-hover
+  );
+  --color-on-brand-primary-button-danger-border-active: var(
+    --color-on-brand-primary-action-danger-on-base-active
+  );
+  --color-on-brand-primary-button-danger-border-default: var(
+    --color-on-brand-primary-action-danger-base-default
+  );
+  --color-on-brand-primary-button-danger-border-disabled: var(
+    --color-on-brand-primary-action-danger-on-base-disabled
+  );
+  --color-on-brand-primary-button-danger-border-focus: var(
+    --color-on-brand-primary-action-danger-on-base-focus
+  );
+  --color-on-brand-primary-button-danger-border-hover: var(
+    --color-on-brand-primary-action-danger-on-base-hover
+  );
+  --color-on-brand-primary-button-danger-text-active: var(
+    --color-on-brand-primary-action-danger-on-base-active
+  );
+  --color-on-brand-primary-button-danger-text-default: var(
+    --color-on-brand-primary-action-danger-on-base-default
+  );
+  --color-on-brand-primary-button-danger-text-disabled: var(
+    --color-on-brand-primary-action-danger-on-base-disabled
+  );
+  --color-on-brand-primary-button-danger-text-focus: var(
+    --color-on-brand-primary-action-danger-on-base-focus
+  );
+  --color-on-brand-primary-button-danger-text-hover: var(
+    --color-on-brand-primary-action-danger-on-base-hover
+  );
+  --color-on-brand-primary-button-ghost-text-active: var(
+    --color-on-brand-primary-action-primary-base-active
+  );
+  --color-on-brand-primary-button-ghost-text-default: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
+  --color-on-brand-primary-button-ghost-text-disabled: var(
+    --color-on-brand-primary-action-primary-base-disabled
+  );
+  --color-on-brand-primary-button-ghost-text-focus: var(
+    --color-on-brand-primary-action-primary-base-focus
+  );
+  --color-on-brand-primary-button-ghost-text-hover: var(
+    --color-on-brand-primary-action-primary-base-hover
+  );
   --color-on-brand-primary-button-ghost-background-active: var(--color-transparent);
   --color-on-brand-primary-button-ghost-background-default: var(--color-transparent);
   --color-on-brand-primary-button-ghost-background-disabled: var(--color-transparent);
@@ -1116,54 +1517,142 @@
   --color-on-brand-primary-button-ghost-border-disabled: var(--color-transparent);
   --color-on-brand-primary-button-ghost-border-focus: var(--color-transparent);
   --color-on-brand-primary-button-ghost-border-hover: var(--color-transparent);
-  --color-on-brand-primary-button-outline-background-active: var(--color-on-brand-primary-action-primary-base-active);
-  --color-on-brand-primary-button-outline-background-disabled: var(--color-on-brand-primary-action-primary-base-disabled);
-  --color-on-brand-primary-button-outline-background-focus: var(--color-on-brand-primary-action-primary-base-focus);
-  --color-on-brand-primary-button-outline-background-hover: var(--color-on-brand-primary-action-primary-base-hover);
+  --color-on-brand-primary-button-outline-background-active: var(
+    --color-on-brand-primary-action-primary-base-active
+  );
+  --color-on-brand-primary-button-outline-background-disabled: var(
+    --color-on-brand-primary-action-primary-base-disabled
+  );
+  --color-on-brand-primary-button-outline-background-focus: var(
+    --color-on-brand-primary-action-primary-base-focus
+  );
+  --color-on-brand-primary-button-outline-background-hover: var(
+    --color-on-brand-primary-action-primary-base-hover
+  );
   --color-on-brand-primary-button-outline-background-default: var(--color-transparent);
-  --color-on-brand-primary-button-outline-border-active: var(--color-on-brand-primary-action-primary-base-active);
-  --color-on-brand-primary-button-outline-border-default: var(--color-on-brand-primary-action-primary-base-default);
-  --color-on-brand-primary-button-outline-border-disabled: var(--color-on-brand-primary-action-primary-base-disabled);
-  --color-on-brand-primary-button-outline-border-focus: var(--color-on-brand-primary-action-primary-base-focus);
-  --color-on-brand-primary-button-outline-border-hover: var(--color-on-brand-primary-action-primary-base-hover);
-  --color-on-brand-primary-button-outline-text-active: var(--color-on-brand-primary-action-primary-on-base-active);
-  --color-on-brand-primary-button-outline-text-default: var(--color-on-brand-primary-action-primary-base-default);
-  --color-on-brand-primary-button-outline-text-disabled: var(--color-on-brand-primary-action-primary-on-base-disabled);
-  --color-on-brand-primary-button-outline-text-focus: var(--color-on-brand-primary-action-primary-on-base-focus);
-  --color-on-brand-primary-button-outline-text-hover: var(--color-on-brand-primary-action-primary-on-base-hover);
-  --color-on-brand-primary-button-primary-background-active: var(--color-on-brand-primary-action-primary-base-active);
-  --color-on-brand-primary-button-primary-background-default: var(--color-on-brand-primary-action-primary-base-default);
-  --color-on-brand-primary-button-primary-background-disabled: var(--color-on-brand-primary-action-primary-base-disabled);
-  --color-on-brand-primary-button-primary-background-focus: var(--color-on-brand-primary-action-primary-base-focus);
-  --color-on-brand-primary-button-primary-background-hover: var(--color-on-brand-primary-action-primary-base-hover);
-  --color-on-brand-primary-button-primary-border-active: var(--color-on-brand-primary-action-primary-base-active);
-  --color-on-brand-primary-button-primary-border-default: var(--color-on-brand-primary-action-primary-base-default);
-  --color-on-brand-primary-button-primary-border-disabled: var(--color-on-brand-primary-action-primary-base-disabled);
-  --color-on-brand-primary-button-primary-border-focus: var(--color-on-brand-primary-action-primary-base-focus);
-  --color-on-brand-primary-button-primary-border-hover: var(--color-on-brand-primary-action-primary-base-hover);
-  --color-on-brand-primary-button-primary-text-active: var(--color-on-brand-primary-action-primary-on-base-active);
-  --color-on-brand-primary-button-primary-text-default: var(--color-on-brand-primary-action-primary-on-base-default);
-  --color-on-brand-primary-button-primary-text-disabled: var(--color-on-brand-primary-action-primary-on-base-disabled);
-  --color-on-brand-primary-button-primary-text-focus: var(--color-on-brand-primary-action-primary-on-base-focus);
-  --color-on-brand-primary-button-primary-text-hover: var(--color-on-brand-primary-action-primary-on-base-hover);
-  --color-on-brand-primary-button-secondary-background-active: var(--color-on-brand-primary-action-secondary-base-active);
-  --color-on-brand-primary-button-secondary-background-default: var(--color-on-brand-primary-action-secondary-base-default);
-  --color-on-brand-primary-button-secondary-background-disabled: var(--color-on-brand-primary-action-secondary-base-disabled);
-  --color-on-brand-primary-button-secondary-background-focus: var(--color-on-brand-primary-action-secondary-base-focus);
-  --color-on-brand-primary-button-secondary-background-hover: var(--color-on-brand-primary-action-secondary-base-hover);
-  --color-on-brand-primary-button-secondary-border-active: var(--color-on-brand-primary-action-secondary-base-active);
-  --color-on-brand-primary-button-secondary-border-default: var(--color-on-brand-primary-action-secondary-base-default);
-  --color-on-brand-primary-button-secondary-border-disabled: var(--color-on-brand-primary-action-secondary-base-disabled);
-  --color-on-brand-primary-button-secondary-border-focus: var(--color-on-brand-primary-action-secondary-base-focus);
-  --color-on-brand-primary-button-secondary-border-hover: var(--color-on-brand-primary-action-secondary-base-hover);
-  --color-on-brand-primary-button-secondary-text-active: var(--color-on-brand-primary-action-secondary-on-base-active);
-  --color-on-brand-primary-button-secondary-text-default: var(--color-on-brand-primary-action-secondary-on-base-default);
-  --color-on-brand-primary-button-secondary-text-disabled: var(--color-on-brand-primary-action-secondary-on-base-disabled);
-  --color-on-brand-primary-button-secondary-text-focus: var(--color-on-brand-primary-action-secondary-on-base-focus);
-  --color-on-brand-primary-button-secondary-text-hover: var(--color-on-brand-primary-action-secondary-on-base-hover);
+  --color-on-brand-primary-button-outline-border-active: var(
+    --color-on-brand-primary-action-primary-base-active
+  );
+  --color-on-brand-primary-button-outline-border-default: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
+  --color-on-brand-primary-button-outline-border-disabled: var(
+    --color-on-brand-primary-action-primary-base-disabled
+  );
+  --color-on-brand-primary-button-outline-border-focus: var(
+    --color-on-brand-primary-action-primary-base-focus
+  );
+  --color-on-brand-primary-button-outline-border-hover: var(
+    --color-on-brand-primary-action-primary-base-hover
+  );
+  --color-on-brand-primary-button-outline-text-active: var(
+    --color-on-brand-primary-action-primary-on-base-active
+  );
+  --color-on-brand-primary-button-outline-text-default: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
+  --color-on-brand-primary-button-outline-text-disabled: var(
+    --color-on-brand-primary-action-primary-on-base-disabled
+  );
+  --color-on-brand-primary-button-outline-text-focus: var(
+    --color-on-brand-primary-action-primary-on-base-focus
+  );
+  --color-on-brand-primary-button-outline-text-hover: var(
+    --color-on-brand-primary-action-primary-on-base-hover
+  );
+  --color-on-brand-primary-button-primary-background-active: var(
+    --color-on-brand-primary-action-primary-base-active
+  );
+  --color-on-brand-primary-button-primary-background-default: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
+  --color-on-brand-primary-button-primary-background-disabled: var(
+    --color-on-brand-primary-action-primary-base-disabled
+  );
+  --color-on-brand-primary-button-primary-background-focus: var(
+    --color-on-brand-primary-action-primary-base-focus
+  );
+  --color-on-brand-primary-button-primary-background-hover: var(
+    --color-on-brand-primary-action-primary-base-hover
+  );
+  --color-on-brand-primary-button-primary-border-active: var(
+    --color-on-brand-primary-action-primary-base-active
+  );
+  --color-on-brand-primary-button-primary-border-default: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
+  --color-on-brand-primary-button-primary-border-disabled: var(
+    --color-on-brand-primary-action-primary-base-disabled
+  );
+  --color-on-brand-primary-button-primary-border-focus: var(
+    --color-on-brand-primary-action-primary-base-focus
+  );
+  --color-on-brand-primary-button-primary-border-hover: var(
+    --color-on-brand-primary-action-primary-base-hover
+  );
+  --color-on-brand-primary-button-primary-text-active: var(
+    --color-on-brand-primary-action-primary-on-base-active
+  );
+  --color-on-brand-primary-button-primary-text-default: var(
+    --color-on-brand-primary-action-primary-on-base-default
+  );
+  --color-on-brand-primary-button-primary-text-disabled: var(
+    --color-on-brand-primary-action-primary-on-base-disabled
+  );
+  --color-on-brand-primary-button-primary-text-focus: var(
+    --color-on-brand-primary-action-primary-on-base-focus
+  );
+  --color-on-brand-primary-button-primary-text-hover: var(
+    --color-on-brand-primary-action-primary-on-base-hover
+  );
+  --color-on-brand-primary-button-secondary-background-active: var(
+    --color-on-brand-primary-action-secondary-base-active
+  );
+  --color-on-brand-primary-button-secondary-background-default: var(
+    --color-on-brand-primary-action-secondary-base-default
+  );
+  --color-on-brand-primary-button-secondary-background-disabled: var(
+    --color-on-brand-primary-action-secondary-base-disabled
+  );
+  --color-on-brand-primary-button-secondary-background-focus: var(
+    --color-on-brand-primary-action-secondary-base-focus
+  );
+  --color-on-brand-primary-button-secondary-background-hover: var(
+    --color-on-brand-primary-action-secondary-base-hover
+  );
+  --color-on-brand-primary-button-secondary-border-active: var(
+    --color-on-brand-primary-action-secondary-base-active
+  );
+  --color-on-brand-primary-button-secondary-border-default: var(
+    --color-on-brand-primary-action-secondary-base-default
+  );
+  --color-on-brand-primary-button-secondary-border-disabled: var(
+    --color-on-brand-primary-action-secondary-base-disabled
+  );
+  --color-on-brand-primary-button-secondary-border-focus: var(
+    --color-on-brand-primary-action-secondary-base-focus
+  );
+  --color-on-brand-primary-button-secondary-border-hover: var(
+    --color-on-brand-primary-action-secondary-base-hover
+  );
+  --color-on-brand-primary-button-secondary-text-active: var(
+    --color-on-brand-primary-action-secondary-on-base-active
+  );
+  --color-on-brand-primary-button-secondary-text-default: var(
+    --color-on-brand-primary-action-secondary-on-base-default
+  );
+  --color-on-brand-primary-button-secondary-text-disabled: var(
+    --color-on-brand-primary-action-secondary-on-base-disabled
+  );
+  --color-on-brand-primary-button-secondary-text-focus: var(
+    --color-on-brand-primary-action-secondary-on-base-focus
+  );
+  --color-on-brand-primary-button-secondary-text-hover: var(
+    --color-on-brand-primary-action-secondary-on-base-hover
+  );
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
-  --typography-heading-font-family: "Playifair Display";
+  --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
   --radius-sm-mobile: var(--radius-sm);
@@ -1183,7 +1672,8 @@
   --shadow-inset-subtle: var(--shadow-shape-xs);
   --button-text-transform-uppercase: none;
   --ring-style: solid;
-  --ring-offset: -0.3125rem;
+  --ring-offset: 0.3125rem;
+  --link-text-decoration-underline: false;
 }
 
 /* === Themes (Dark) === */
@@ -1216,12 +1706,20 @@
   --color-ring-default: var(--color-on-subtle-ring-default);
   --color-link-default: var(--color-on-subtle-link-default);
   --color-link-hover: var(--color-on-subtle-link-hover);
-  --color-control-outline-background-default: var(--color-on-subtle-control-outline-background-default);
+  --color-control-outline-background-default: var(
+    --color-on-subtle-control-outline-background-default
+  );
   --color-control-outline-background-hover: var(--color-on-subtle-control-outline-background-hover);
-  --color-control-outline-background-active: var(--color-on-subtle-control-outline-background-active);
-  --color-control-outline-background-success: var(--color-on-subtle-control-outline-background-success);
+  --color-control-outline-background-active: var(
+    --color-on-subtle-control-outline-background-active
+  );
+  --color-control-outline-background-success: var(
+    --color-on-subtle-control-outline-background-success
+  );
   --color-control-outline-background-error: var(--color-on-subtle-control-outline-background-error);
-  --color-control-outline-background-disabled: var(--color-on-subtle-control-outline-background-disabled);
+  --color-control-outline-background-disabled: var(
+    --color-on-subtle-control-outline-background-disabled
+  );
   --color-control-outline-border-default: var(--color-on-subtle-control-outline-border-default);
   --color-control-outline-border-hover: var(--color-on-subtle-control-outline-border-hover);
   --color-control-outline-border-active: var(--color-on-subtle-control-outline-border-active);
@@ -1234,12 +1732,24 @@
   --color-control-outline-text-success: var(--color-on-subtle-control-outline-text-success);
   --color-control-outline-text-error: var(--color-on-subtle-control-outline-text-error);
   --color-control-outline-text-disabled: var(--color-on-subtle-control-outline-text-disabled);
-  --color-control-outline-placeholder-default: var(--color-on-subtle-control-outline-placeholder-default);
-  --color-control-outline-placeholder-hover: var(--color-on-subtle-control-outline-placeholder-hover);
-  --color-control-outline-placeholder-active: var(--color-on-subtle-control-outline-placeholder-active);
-  --color-control-outline-placeholder-success: var(--color-on-subtle-control-outline-placeholder-success);
-  --color-control-outline-placeholder-error: var(--color-on-subtle-control-outline-placeholder-error);
-  --color-control-outline-placeholder-disabled: var(--color-on-subtle-control-outline-placeholder-disabled);
+  --color-control-outline-placeholder-default: var(
+    --color-on-subtle-control-outline-placeholder-default
+  );
+  --color-control-outline-placeholder-hover: var(
+    --color-on-subtle-control-outline-placeholder-hover
+  );
+  --color-control-outline-placeholder-active: var(
+    --color-on-subtle-control-outline-placeholder-active
+  );
+  --color-control-outline-placeholder-success: var(
+    --color-on-subtle-control-outline-placeholder-success
+  );
+  --color-control-outline-placeholder-error: var(
+    --color-on-subtle-control-outline-placeholder-error
+  );
+  --color-control-outline-placeholder-disabled: var(
+    --color-on-subtle-control-outline-placeholder-disabled
+  );
   --color-control-outline-icon-default: var(--color-on-subtle-control-outline-icon-default);
   --color-control-outline-icon-hover: var(--color-on-subtle-control-outline-icon-hover);
   --color-control-outline-icon-active: var(--color-on-subtle-control-outline-icon-active);
@@ -1258,12 +1768,18 @@
   --color-control-outline-hint-success: var(--color-on-subtle-control-outline-hint-success);
   --color-control-outline-hint-error: var(--color-on-subtle-control-outline-hint-error);
   --color-control-outline-hint-disabled: var(--color-on-subtle-control-outline-hint-disabled);
-  --color-control-filled-background-default: var(--color-on-subtle-control-filled-background-default);
+  --color-control-filled-background-default: var(
+    --color-on-subtle-control-filled-background-default
+  );
   --color-control-filled-background-hover: var(--color-on-subtle-control-filled-background-hover);
   --color-control-filled-background-active: var(--color-on-subtle-control-filled-background-active);
-  --color-control-filled-background-success: var(--color-on-subtle-control-filled-background-success);
+  --color-control-filled-background-success: var(
+    --color-on-subtle-control-filled-background-success
+  );
   --color-control-filled-background-error: var(--color-on-subtle-control-filled-background-error);
-  --color-control-filled-background-disabled: var(--color-on-subtle-control-filled-background-disabled);
+  --color-control-filled-background-disabled: var(
+    --color-on-subtle-control-filled-background-disabled
+  );
   --color-control-filled-border-default: var(--color-on-subtle-control-filled-border-default);
   --color-control-filled-border-hover: var(--color-on-subtle-control-filled-border-hover);
   --color-control-filled-border-active: var(--color-on-subtle-control-filled-border-active);
@@ -1276,12 +1792,20 @@
   --color-control-filled-text-success: var(--color-on-subtle-control-filled-text-success);
   --color-control-filled-text-error: var(--color-on-subtle-control-filled-text-error);
   --color-control-filled-text-disabled: var(--color-on-subtle-control-filled-text-disabled);
-  --color-control-filled-placeholder-default: var(--color-on-subtle-control-filled-placeholder-default);
+  --color-control-filled-placeholder-default: var(
+    --color-on-subtle-control-filled-placeholder-default
+  );
   --color-control-filled-placeholder-hover: var(--color-on-subtle-control-filled-placeholder-hover);
-  --color-control-filled-placeholder-active: var(--color-on-subtle-control-filled-placeholder-active);
-  --color-control-filled-placeholder-success: var(--color-on-subtle-control-filled-placeholder-success);
+  --color-control-filled-placeholder-active: var(
+    --color-on-subtle-control-filled-placeholder-active
+  );
+  --color-control-filled-placeholder-success: var(
+    --color-on-subtle-control-filled-placeholder-success
+  );
   --color-control-filled-placeholder-error: var(--color-on-subtle-control-filled-placeholder-error);
-  --color-control-filled-placeholder-disabled: var(--color-on-subtle-control-filled-placeholder-disabled);
+  --color-control-filled-placeholder-disabled: var(
+    --color-on-subtle-control-filled-placeholder-disabled
+  );
   --color-control-filled-icon-default: var(--color-on-subtle-control-filled-icon-default);
   --color-control-filled-icon-hover: var(--color-on-subtle-control-filled-icon-hover);
   --color-control-filled-icon-active: var(--color-on-subtle-control-filled-icon-active);
@@ -1331,7 +1855,9 @@
   --color-action-secondary-on-base-hover: var(--color-on-subtle-action-secondary-on-base-hover);
   --color-action-secondary-on-base-focus: var(--color-on-subtle-action-secondary-on-base-focus);
   --color-action-secondary-on-base-active: var(--color-on-subtle-action-secondary-on-base-active);
-  --color-action-secondary-on-base-disabled: var(--color-on-subtle-action-secondary-on-base-disabled);
+  --color-action-secondary-on-base-disabled: var(
+    --color-on-subtle-action-secondary-on-base-disabled
+  );
   --color-action-tertiary-base-default: var(--color-on-subtle-action-tertiary-base-default);
   --color-action-tertiary-base-hover: var(--color-on-subtle-action-tertiary-base-hover);
   --color-action-tertiary-base-focus: var(--color-on-subtle-action-tertiary-base-focus);
@@ -1354,7 +1880,9 @@
   --color-action-danger-on-base-disabled: var(--color-on-subtle-action-danger-on-base-disabled);
   --color-button-danger-background-active: var(--color-on-subtle-button-danger-background-active);
   --color-button-danger-background-default: var(--color-on-subtle-button-danger-background-default);
-  --color-button-danger-background-disabled: var(--color-on-subtle-button-danger-background-disabled);
+  --color-button-danger-background-disabled: var(
+    --color-on-subtle-button-danger-background-disabled
+  );
   --color-button-danger-background-focus: var(--color-on-subtle-button-danger-background-focus);
   --color-button-danger-background-hover: var(--color-on-subtle-button-danger-background-hover);
   --color-button-danger-border-active: var(--color-on-subtle-button-danger-border-active);
@@ -1383,8 +1911,12 @@
   --color-button-ghost-text-focus: var(--color-on-subtle-button-ghost-text-focus);
   --color-button-ghost-text-hover: var(--color-on-subtle-button-ghost-text-hover);
   --color-button-outline-background-active: var(--color-on-subtle-button-outline-background-active);
-  --color-button-outline-background-default: var(--color-on-subtle-button-outline-background-default);
-  --color-button-outline-background-disabled: var(--color-on-subtle-button-outline-background-disabled);
+  --color-button-outline-background-default: var(
+    --color-on-subtle-button-outline-background-default
+  );
+  --color-button-outline-background-disabled: var(
+    --color-on-subtle-button-outline-background-disabled
+  );
   --color-button-outline-background-focus: var(--color-on-subtle-button-outline-background-focus);
   --color-button-outline-background-hover: var(--color-on-subtle-button-outline-background-hover);
   --color-button-outline-border-active: var(--color-on-subtle-button-outline-border-active);
@@ -1398,8 +1930,12 @@
   --color-button-outline-text-focus: var(--color-on-subtle-button-outline-text-focus);
   --color-button-outline-text-hover: var(--color-on-subtle-button-outline-text-hover);
   --color-button-primary-background-active: var(--color-on-subtle-button-primary-background-active);
-  --color-button-primary-background-default: var(--color-on-subtle-button-primary-background-default);
-  --color-button-primary-background-disabled: var(--color-on-subtle-button-primary-background-disabled);
+  --color-button-primary-background-default: var(
+    --color-on-subtle-button-primary-background-default
+  );
+  --color-button-primary-background-disabled: var(
+    --color-on-subtle-button-primary-background-disabled
+  );
   --color-button-primary-background-focus: var(--color-on-subtle-button-primary-background-focus);
   --color-button-primary-background-hover: var(--color-on-subtle-button-primary-background-hover);
   --color-button-primary-border-active: var(--color-on-subtle-button-primary-border-active);
@@ -1412,11 +1948,21 @@
   --color-button-primary-text-disabled: var(--color-on-subtle-button-primary-text-disabled);
   --color-button-primary-text-focus: var(--color-on-subtle-button-primary-text-focus);
   --color-button-primary-text-hover: var(--color-on-subtle-button-primary-text-hover);
-  --color-button-secondary-background-active: var(--color-on-subtle-button-secondary-background-active);
-  --color-button-secondary-background-default: var(--color-on-subtle-button-secondary-background-default);
-  --color-button-secondary-background-disabled: var(--color-on-subtle-button-secondary-background-disabled);
-  --color-button-secondary-background-focus: var(--color-on-subtle-button-secondary-background-focus);
-  --color-button-secondary-background-hover: var(--color-on-subtle-button-secondary-background-hover);
+  --color-button-secondary-background-active: var(
+    --color-on-subtle-button-secondary-background-active
+  );
+  --color-button-secondary-background-default: var(
+    --color-on-subtle-button-secondary-background-default
+  );
+  --color-button-secondary-background-disabled: var(
+    --color-on-subtle-button-secondary-background-disabled
+  );
+  --color-button-secondary-background-focus: var(
+    --color-on-subtle-button-secondary-background-focus
+  );
+  --color-button-secondary-background-hover: var(
+    --color-on-subtle-button-secondary-background-hover
+  );
   --color-button-secondary-border-active: var(--color-on-subtle-button-secondary-border-active);
   --color-button-secondary-border-default: var(--color-on-subtle-button-secondary-border-default);
   --color-button-secondary-border-disabled: var(--color-on-subtle-button-secondary-border-disabled);
@@ -1449,12 +1995,24 @@
   --color-ring-default: var(--color-on-inverse-ring-default);
   --color-link-default: var(--color-on-inverse-link-default);
   --color-link-hover: var(--color-on-inverse-link-hover);
-  --color-control-outline-background-default: var(--color-on-inverse-control-outline-background-default);
-  --color-control-outline-background-hover: var(--color-on-inverse-control-outline-background-hover);
-  --color-control-outline-background-active: var(--color-on-inverse-control-outline-background-active);
-  --color-control-outline-background-success: var(--color-on-inverse-control-outline-background-success);
-  --color-control-outline-background-error: var(--color-on-inverse-control-outline-background-error);
-  --color-control-outline-background-disabled: var(--color-on-inverse-control-outline-background-disabled);
+  --color-control-outline-background-default: var(
+    --color-on-inverse-control-outline-background-default
+  );
+  --color-control-outline-background-hover: var(
+    --color-on-inverse-control-outline-background-hover
+  );
+  --color-control-outline-background-active: var(
+    --color-on-inverse-control-outline-background-active
+  );
+  --color-control-outline-background-success: var(
+    --color-on-inverse-control-outline-background-success
+  );
+  --color-control-outline-background-error: var(
+    --color-on-inverse-control-outline-background-error
+  );
+  --color-control-outline-background-disabled: var(
+    --color-on-inverse-control-outline-background-disabled
+  );
   --color-control-outline-border-default: var(--color-on-inverse-control-outline-border-default);
   --color-control-outline-border-hover: var(--color-on-inverse-control-outline-border-hover);
   --color-control-outline-border-active: var(--color-on-inverse-control-outline-border-active);
@@ -1467,12 +2025,24 @@
   --color-control-outline-text-success: var(--color-on-inverse-control-outline-text-success);
   --color-control-outline-text-error: var(--color-on-inverse-control-outline-text-error);
   --color-control-outline-text-disabled: var(--color-on-inverse-control-outline-text-disabled);
-  --color-control-outline-placeholder-default: var(--color-on-inverse-control-outline-placeholder-default);
-  --color-control-outline-placeholder-hover: var(--color-on-inverse-control-outline-placeholder-hover);
-  --color-control-outline-placeholder-active: var(--color-on-inverse-control-outline-placeholder-active);
-  --color-control-outline-placeholder-success: var(--color-on-inverse-control-outline-placeholder-success);
-  --color-control-outline-placeholder-error: var(--color-on-inverse-control-outline-placeholder-error);
-  --color-control-outline-placeholder-disabled: var(--color-on-inverse-control-outline-placeholder-disabled);
+  --color-control-outline-placeholder-default: var(
+    --color-on-inverse-control-outline-placeholder-default
+  );
+  --color-control-outline-placeholder-hover: var(
+    --color-on-inverse-control-outline-placeholder-hover
+  );
+  --color-control-outline-placeholder-active: var(
+    --color-on-inverse-control-outline-placeholder-active
+  );
+  --color-control-outline-placeholder-success: var(
+    --color-on-inverse-control-outline-placeholder-success
+  );
+  --color-control-outline-placeholder-error: var(
+    --color-on-inverse-control-outline-placeholder-error
+  );
+  --color-control-outline-placeholder-disabled: var(
+    --color-on-inverse-control-outline-placeholder-disabled
+  );
   --color-control-outline-icon-default: var(--color-on-inverse-control-outline-icon-default);
   --color-control-outline-icon-hover: var(--color-on-inverse-control-outline-icon-hover);
   --color-control-outline-icon-active: var(--color-on-inverse-control-outline-icon-active);
@@ -1491,12 +2061,20 @@
   --color-control-outline-hint-success: var(--color-on-inverse-control-outline-hint-success);
   --color-control-outline-hint-error: var(--color-on-inverse-control-outline-hint-error);
   --color-control-outline-hint-disabled: var(--color-on-inverse-control-outline-hint-disabled);
-  --color-control-filled-background-default: var(--color-on-inverse-control-filled-background-default);
+  --color-control-filled-background-default: var(
+    --color-on-inverse-control-filled-background-default
+  );
   --color-control-filled-background-hover: var(--color-on-inverse-control-filled-background-hover);
-  --color-control-filled-background-active: var(--color-on-inverse-control-filled-background-active);
-  --color-control-filled-background-success: var(--color-on-inverse-control-filled-background-success);
+  --color-control-filled-background-active: var(
+    --color-on-inverse-control-filled-background-active
+  );
+  --color-control-filled-background-success: var(
+    --color-on-inverse-control-filled-background-success
+  );
   --color-control-filled-background-error: var(--color-on-inverse-control-filled-background-error);
-  --color-control-filled-background-disabled: var(--color-on-inverse-control-filled-background-disabled);
+  --color-control-filled-background-disabled: var(
+    --color-on-inverse-control-filled-background-disabled
+  );
   --color-control-filled-border-default: var(--color-on-inverse-control-filled-border-default);
   --color-control-filled-border-hover: var(--color-on-inverse-control-filled-border-hover);
   --color-control-filled-border-active: var(--color-on-inverse-control-filled-border-active);
@@ -1509,12 +2087,24 @@
   --color-control-filled-text-success: var(--color-on-inverse-control-filled-text-success);
   --color-control-filled-text-error: var(--color-on-inverse-control-filled-text-error);
   --color-control-filled-text-disabled: var(--color-on-inverse-control-filled-text-disabled);
-  --color-control-filled-placeholder-default: var(--color-on-inverse-control-filled-placeholder-default);
-  --color-control-filled-placeholder-hover: var(--color-on-inverse-control-filled-placeholder-hover);
-  --color-control-filled-placeholder-active: var(--color-on-inverse-control-filled-placeholder-active);
-  --color-control-filled-placeholder-success: var(--color-on-inverse-control-filled-placeholder-success);
-  --color-control-filled-placeholder-error: var(--color-on-inverse-control-filled-placeholder-error);
-  --color-control-filled-placeholder-disabled: var(--color-on-inverse-control-filled-placeholder-disabled);
+  --color-control-filled-placeholder-default: var(
+    --color-on-inverse-control-filled-placeholder-default
+  );
+  --color-control-filled-placeholder-hover: var(
+    --color-on-inverse-control-filled-placeholder-hover
+  );
+  --color-control-filled-placeholder-active: var(
+    --color-on-inverse-control-filled-placeholder-active
+  );
+  --color-control-filled-placeholder-success: var(
+    --color-on-inverse-control-filled-placeholder-success
+  );
+  --color-control-filled-placeholder-error: var(
+    --color-on-inverse-control-filled-placeholder-error
+  );
+  --color-control-filled-placeholder-disabled: var(
+    --color-on-inverse-control-filled-placeholder-disabled
+  );
   --color-control-filled-icon-default: var(--color-on-inverse-control-filled-icon-default);
   --color-control-filled-icon-hover: var(--color-on-inverse-control-filled-icon-hover);
   --color-control-filled-icon-active: var(--color-on-inverse-control-filled-icon-active);
@@ -1560,11 +2150,15 @@
   --color-action-secondary-base-focus: var(--color-on-inverse-action-secondary-base-focus);
   --color-action-secondary-base-active: var(--color-on-inverse-action-secondary-base-active);
   --color-action-secondary-base-disabled: var(--color-on-inverse-action-secondary-base-disabled);
-  --color-action-secondary-on-base-default: var(--color-on-inverse-action-secondary-on-base-default);
+  --color-action-secondary-on-base-default: var(
+    --color-on-inverse-action-secondary-on-base-default
+  );
   --color-action-secondary-on-base-hover: var(--color-on-inverse-action-secondary-on-base-hover);
   --color-action-secondary-on-base-focus: var(--color-on-inverse-action-secondary-on-base-focus);
   --color-action-secondary-on-base-active: var(--color-on-inverse-action-secondary-on-base-active);
-  --color-action-secondary-on-base-disabled: var(--color-on-inverse-action-secondary-on-base-disabled);
+  --color-action-secondary-on-base-disabled: var(
+    --color-on-inverse-action-secondary-on-base-disabled
+  );
   --color-action-tertiary-base-default: var(--color-on-inverse-action-tertiary-base-default);
   --color-action-tertiary-base-hover: var(--color-on-inverse-action-tertiary-base-hover);
   --color-action-tertiary-base-focus: var(--color-on-inverse-action-tertiary-base-focus);
@@ -1574,7 +2168,9 @@
   --color-action-tertiary-on-base-hover: var(--color-on-inverse-action-tertiary-on-base-hover);
   --color-action-tertiary-on-base-focus: var(--color-on-inverse-action-tertiary-on-base-focus);
   --color-action-tertiary-on-base-active: var(--color-on-inverse-action-tertiary-on-base-active);
-  --color-action-tertiary-on-base-disabled: var(--color-on-inverse-action-tertiary-on-base-disabled);
+  --color-action-tertiary-on-base-disabled: var(
+    --color-on-inverse-action-tertiary-on-base-disabled
+  );
   --color-action-danger-base-default: var(--color-on-inverse-action-danger-base-default);
   --color-action-danger-base-hover: var(--color-on-inverse-action-danger-base-hover);
   --color-action-danger-base-focus: var(--color-on-inverse-action-danger-base-focus);
@@ -1586,8 +2182,12 @@
   --color-action-danger-on-base-active: var(--color-on-inverse-action-danger-on-base-active);
   --color-action-danger-on-base-disabled: var(--color-on-inverse-action-danger-on-base-disabled);
   --color-button-danger-background-active: var(--color-on-inverse-button-danger-background-active);
-  --color-button-danger-background-default: var(--color-on-inverse-button-danger-background-default);
-  --color-button-danger-background-disabled: var(--color-on-inverse-button-danger-background-disabled);
+  --color-button-danger-background-default: var(
+    --color-on-inverse-button-danger-background-default
+  );
+  --color-button-danger-background-disabled: var(
+    --color-on-inverse-button-danger-background-disabled
+  );
   --color-button-danger-background-focus: var(--color-on-inverse-button-danger-background-focus);
   --color-button-danger-background-hover: var(--color-on-inverse-button-danger-background-hover);
   --color-button-danger-border-active: var(--color-on-inverse-button-danger-border-active);
@@ -1602,7 +2202,9 @@
   --color-button-danger-text-hover: var(--color-on-inverse-button-danger-text-hover);
   --color-button-ghost-background-active: var(--color-on-inverse-button-ghost-background-active);
   --color-button-ghost-background-default: var(--color-on-inverse-button-ghost-background-default);
-  --color-button-ghost-background-disabled: var(--color-on-inverse-button-ghost-background-disabled);
+  --color-button-ghost-background-disabled: var(
+    --color-on-inverse-button-ghost-background-disabled
+  );
   --color-button-ghost-background-focus: var(--color-on-inverse-button-ghost-background-focus);
   --color-button-ghost-background-hover: var(--color-on-inverse-button-ghost-background-hover);
   --color-button-ghost-border-active: var(--color-on-inverse-button-ghost-border-active);
@@ -1615,9 +2217,15 @@
   --color-button-ghost-text-disabled: var(--color-on-inverse-button-ghost-text-disabled);
   --color-button-ghost-text-focus: var(--color-on-inverse-button-ghost-text-focus);
   --color-button-ghost-text-hover: var(--color-on-inverse-button-ghost-text-hover);
-  --color-button-outline-background-active: var(--color-on-inverse-button-outline-background-active);
-  --color-button-outline-background-default: var(--color-on-inverse-button-outline-background-default);
-  --color-button-outline-background-disabled: var(--color-on-inverse-button-outline-background-disabled);
+  --color-button-outline-background-active: var(
+    --color-on-inverse-button-outline-background-active
+  );
+  --color-button-outline-background-default: var(
+    --color-on-inverse-button-outline-background-default
+  );
+  --color-button-outline-background-disabled: var(
+    --color-on-inverse-button-outline-background-disabled
+  );
   --color-button-outline-background-focus: var(--color-on-inverse-button-outline-background-focus);
   --color-button-outline-background-hover: var(--color-on-inverse-button-outline-background-hover);
   --color-button-outline-border-active: var(--color-on-inverse-button-outline-border-active);
@@ -1630,9 +2238,15 @@
   --color-button-outline-text-disabled: var(--color-on-inverse-button-outline-text-disabled);
   --color-button-outline-text-focus: var(--color-on-inverse-button-outline-text-focus);
   --color-button-outline-text-hover: var(--color-on-inverse-button-outline-text-hover);
-  --color-button-primary-background-active: var(--color-on-inverse-button-primary-background-active);
-  --color-button-primary-background-default: var(--color-on-inverse-button-primary-background-default);
-  --color-button-primary-background-disabled: var(--color-on-inverse-button-primary-background-disabled);
+  --color-button-primary-background-active: var(
+    --color-on-inverse-button-primary-background-active
+  );
+  --color-button-primary-background-default: var(
+    --color-on-inverse-button-primary-background-default
+  );
+  --color-button-primary-background-disabled: var(
+    --color-on-inverse-button-primary-background-disabled
+  );
   --color-button-primary-background-focus: var(--color-on-inverse-button-primary-background-focus);
   --color-button-primary-background-hover: var(--color-on-inverse-button-primary-background-hover);
   --color-button-primary-border-active: var(--color-on-inverse-button-primary-border-active);
@@ -1645,14 +2259,26 @@
   --color-button-primary-text-disabled: var(--color-on-inverse-button-primary-text-disabled);
   --color-button-primary-text-focus: var(--color-on-inverse-button-primary-text-focus);
   --color-button-primary-text-hover: var(--color-on-inverse-button-primary-text-hover);
-  --color-button-secondary-background-active: var(--color-on-inverse-button-secondary-background-active);
-  --color-button-secondary-background-default: var(--color-on-inverse-button-secondary-background-default);
-  --color-button-secondary-background-disabled: var(--color-on-inverse-button-secondary-background-disabled);
-  --color-button-secondary-background-focus: var(--color-on-inverse-button-secondary-background-focus);
-  --color-button-secondary-background-hover: var(--color-on-inverse-button-secondary-background-hover);
+  --color-button-secondary-background-active: var(
+    --color-on-inverse-button-secondary-background-active
+  );
+  --color-button-secondary-background-default: var(
+    --color-on-inverse-button-secondary-background-default
+  );
+  --color-button-secondary-background-disabled: var(
+    --color-on-inverse-button-secondary-background-disabled
+  );
+  --color-button-secondary-background-focus: var(
+    --color-on-inverse-button-secondary-background-focus
+  );
+  --color-button-secondary-background-hover: var(
+    --color-on-inverse-button-secondary-background-hover
+  );
   --color-button-secondary-border-active: var(--color-on-inverse-button-secondary-border-active);
   --color-button-secondary-border-default: var(--color-on-inverse-button-secondary-border-default);
-  --color-button-secondary-border-disabled: var(--color-on-inverse-button-secondary-border-disabled);
+  --color-button-secondary-border-disabled: var(
+    --color-on-inverse-button-secondary-border-disabled
+  );
   --color-button-secondary-border-focus: var(--color-on-inverse-button-secondary-border-focus);
   --color-button-secondary-border-hover: var(--color-on-inverse-button-secondary-border-hover);
   --color-button-secondary-text-active: var(--color-on-inverse-button-secondary-text-active);
@@ -1682,72 +2308,146 @@
   --color-ring-default: var(--color-on-brand-primary-ring-default);
   --color-link-default: var(--color-on-brand-primary-link-default);
   --color-link-hover: var(--color-on-brand-primary-link-hover);
-  --color-control-outline-background-default: var(--color-on-brand-primary-control-outline-background-default);
-  --color-control-outline-background-hover: var(--color-on-brand-primary-control-outline-background-hover);
-  --color-control-outline-background-active: var(--color-on-brand-primary-control-outline-background-active);
-  --color-control-outline-background-success: var(--color-on-brand-primary-control-outline-background-success);
-  --color-control-outline-background-error: var(--color-on-brand-primary-control-outline-background-error);
-  --color-control-outline-background-disabled: var(--color-on-brand-primary-control-outline-background-disabled);
-  --color-control-outline-border-default: var(--color-on-brand-primary-control-outline-border-default);
+  --color-control-outline-background-default: var(
+    --color-on-brand-primary-control-outline-background-default
+  );
+  --color-control-outline-background-hover: var(
+    --color-on-brand-primary-control-outline-background-hover
+  );
+  --color-control-outline-background-active: var(
+    --color-on-brand-primary-control-outline-background-active
+  );
+  --color-control-outline-background-success: var(
+    --color-on-brand-primary-control-outline-background-success
+  );
+  --color-control-outline-background-error: var(
+    --color-on-brand-primary-control-outline-background-error
+  );
+  --color-control-outline-background-disabled: var(
+    --color-on-brand-primary-control-outline-background-disabled
+  );
+  --color-control-outline-border-default: var(
+    --color-on-brand-primary-control-outline-border-default
+  );
   --color-control-outline-border-hover: var(--color-on-brand-primary-control-outline-border-hover);
-  --color-control-outline-border-active: var(--color-on-brand-primary-control-outline-border-active);
-  --color-control-outline-border-success: var(--color-on-brand-primary-control-outline-border-success);
+  --color-control-outline-border-active: var(
+    --color-on-brand-primary-control-outline-border-active
+  );
+  --color-control-outline-border-success: var(
+    --color-on-brand-primary-control-outline-border-success
+  );
   --color-control-outline-border-error: var(--color-on-brand-primary-control-outline-border-error);
-  --color-control-outline-border-disabled: var(--color-on-brand-primary-control-outline-border-disabled);
+  --color-control-outline-border-disabled: var(
+    --color-on-brand-primary-control-outline-border-disabled
+  );
   --color-control-outline-text-default: var(--color-on-brand-primary-control-outline-text-default);
   --color-control-outline-text-hover: var(--color-on-brand-primary-control-outline-text-hover);
   --color-control-outline-text-active: var(--color-on-brand-primary-control-outline-text-active);
   --color-control-outline-text-success: var(--color-on-brand-primary-control-outline-text-success);
   --color-control-outline-text-error: var(--color-on-brand-primary-control-outline-text-error);
-  --color-control-outline-text-disabled: var(--color-on-brand-primary-control-outline-text-disabled);
-  --color-control-outline-placeholder-default: var(--color-on-brand-primary-control-outline-placeholder-default);
-  --color-control-outline-placeholder-hover: var(--color-on-brand-primary-control-outline-placeholder-hover);
-  --color-control-outline-placeholder-active: var(--color-on-brand-primary-control-outline-placeholder-active);
-  --color-control-outline-placeholder-success: var(--color-on-brand-primary-control-outline-placeholder-success);
-  --color-control-outline-placeholder-error: var(--color-on-brand-primary-control-outline-placeholder-error);
-  --color-control-outline-placeholder-disabled: var(--color-on-brand-primary-control-outline-placeholder-disabled);
+  --color-control-outline-text-disabled: var(
+    --color-on-brand-primary-control-outline-text-disabled
+  );
+  --color-control-outline-placeholder-default: var(
+    --color-on-brand-primary-control-outline-placeholder-default
+  );
+  --color-control-outline-placeholder-hover: var(
+    --color-on-brand-primary-control-outline-placeholder-hover
+  );
+  --color-control-outline-placeholder-active: var(
+    --color-on-brand-primary-control-outline-placeholder-active
+  );
+  --color-control-outline-placeholder-success: var(
+    --color-on-brand-primary-control-outline-placeholder-success
+  );
+  --color-control-outline-placeholder-error: var(
+    --color-on-brand-primary-control-outline-placeholder-error
+  );
+  --color-control-outline-placeholder-disabled: var(
+    --color-on-brand-primary-control-outline-placeholder-disabled
+  );
   --color-control-outline-icon-default: var(--color-on-brand-primary-control-outline-icon-default);
   --color-control-outline-icon-hover: var(--color-on-brand-primary-control-outline-icon-hover);
   --color-control-outline-icon-active: var(--color-on-brand-primary-control-outline-icon-active);
   --color-control-outline-icon-success: var(--color-on-brand-primary-control-outline-icon-success);
   --color-control-outline-icon-error: var(--color-on-brand-primary-control-outline-icon-error);
-  --color-control-outline-icon-disabled: var(--color-on-brand-primary-control-outline-icon-disabled);
-  --color-control-outline-label-default: var(--color-on-brand-primary-control-outline-label-default);
+  --color-control-outline-icon-disabled: var(
+    --color-on-brand-primary-control-outline-icon-disabled
+  );
+  --color-control-outline-label-default: var(
+    --color-on-brand-primary-control-outline-label-default
+  );
   --color-control-outline-label-hover: var(--color-on-brand-primary-control-outline-label-hover);
   --color-control-outline-label-active: var(--color-on-brand-primary-control-outline-label-active);
-  --color-control-outline-label-success: var(--color-on-brand-primary-control-outline-label-success);
+  --color-control-outline-label-success: var(
+    --color-on-brand-primary-control-outline-label-success
+  );
   --color-control-outline-label-error: var(--color-on-brand-primary-control-outline-label-error);
-  --color-control-outline-label-disabled: var(--color-on-brand-primary-control-outline-label-disabled);
+  --color-control-outline-label-disabled: var(
+    --color-on-brand-primary-control-outline-label-disabled
+  );
   --color-control-outline-hint-default: var(--color-on-brand-primary-control-outline-hint-default);
   --color-control-outline-hint-hover: var(--color-on-brand-primary-control-outline-hint-hover);
   --color-control-outline-hint-active: var(--color-on-brand-primary-control-outline-hint-active);
   --color-control-outline-hint-success: var(--color-on-brand-primary-control-outline-hint-success);
   --color-control-outline-hint-error: var(--color-on-brand-primary-control-outline-hint-error);
-  --color-control-outline-hint-disabled: var(--color-on-brand-primary-control-outline-hint-disabled);
-  --color-control-filled-background-default: var(--color-on-brand-primary-control-filled-background-default);
-  --color-control-filled-background-hover: var(--color-on-brand-primary-control-filled-background-hover);
-  --color-control-filled-background-active: var(--color-on-brand-primary-control-filled-background-active);
-  --color-control-filled-background-success: var(--color-on-brand-primary-control-filled-background-success);
-  --color-control-filled-background-error: var(--color-on-brand-primary-control-filled-background-error);
-  --color-control-filled-background-disabled: var(--color-on-brand-primary-control-filled-background-disabled);
-  --color-control-filled-border-default: var(--color-on-brand-primary-control-filled-border-default);
+  --color-control-outline-hint-disabled: var(
+    --color-on-brand-primary-control-outline-hint-disabled
+  );
+  --color-control-filled-background-default: var(
+    --color-on-brand-primary-control-filled-background-default
+  );
+  --color-control-filled-background-hover: var(
+    --color-on-brand-primary-control-filled-background-hover
+  );
+  --color-control-filled-background-active: var(
+    --color-on-brand-primary-control-filled-background-active
+  );
+  --color-control-filled-background-success: var(
+    --color-on-brand-primary-control-filled-background-success
+  );
+  --color-control-filled-background-error: var(
+    --color-on-brand-primary-control-filled-background-error
+  );
+  --color-control-filled-background-disabled: var(
+    --color-on-brand-primary-control-filled-background-disabled
+  );
+  --color-control-filled-border-default: var(
+    --color-on-brand-primary-control-filled-border-default
+  );
   --color-control-filled-border-hover: var(--color-on-brand-primary-control-filled-border-hover);
   --color-control-filled-border-active: var(--color-on-brand-primary-control-filled-border-active);
-  --color-control-filled-border-success: var(--color-on-brand-primary-control-filled-border-success);
+  --color-control-filled-border-success: var(
+    --color-on-brand-primary-control-filled-border-success
+  );
   --color-control-filled-border-error: var(--color-on-brand-primary-control-filled-border-error);
-  --color-control-filled-border-disabled: var(--color-on-brand-primary-control-filled-border-disabled);
+  --color-control-filled-border-disabled: var(
+    --color-on-brand-primary-control-filled-border-disabled
+  );
   --color-control-filled-text-default: var(--color-on-brand-primary-control-filled-text-default);
   --color-control-filled-text-hover: var(--color-on-brand-primary-control-filled-text-hover);
   --color-control-filled-text-active: var(--color-on-brand-primary-control-filled-text-active);
   --color-control-filled-text-success: var(--color-on-brand-primary-control-filled-text-success);
   --color-control-filled-text-error: var(--color-on-brand-primary-control-filled-text-error);
   --color-control-filled-text-disabled: var(--color-on-brand-primary-control-filled-text-disabled);
-  --color-control-filled-placeholder-default: var(--color-on-brand-primary-control-filled-placeholder-default);
-  --color-control-filled-placeholder-hover: var(--color-on-brand-primary-control-filled-placeholder-hover);
-  --color-control-filled-placeholder-active: var(--color-on-brand-primary-control-filled-placeholder-active);
-  --color-control-filled-placeholder-success: var(--color-on-brand-primary-control-filled-placeholder-success);
-  --color-control-filled-placeholder-error: var(--color-on-brand-primary-control-filled-placeholder-error);
-  --color-control-filled-placeholder-disabled: var(--color-on-brand-primary-control-filled-placeholder-disabled);
+  --color-control-filled-placeholder-default: var(
+    --color-on-brand-primary-control-filled-placeholder-default
+  );
+  --color-control-filled-placeholder-hover: var(
+    --color-on-brand-primary-control-filled-placeholder-hover
+  );
+  --color-control-filled-placeholder-active: var(
+    --color-on-brand-primary-control-filled-placeholder-active
+  );
+  --color-control-filled-placeholder-success: var(
+    --color-on-brand-primary-control-filled-placeholder-success
+  );
+  --color-control-filled-placeholder-error: var(
+    --color-on-brand-primary-control-filled-placeholder-error
+  );
+  --color-control-filled-placeholder-disabled: var(
+    --color-on-brand-primary-control-filled-placeholder-disabled
+  );
   --color-control-filled-icon-default: var(--color-on-brand-primary-control-filled-icon-default);
   --color-control-filled-icon-hover: var(--color-on-brand-primary-control-filled-icon-hover);
   --color-control-filled-icon-active: var(--color-on-brand-primary-control-filled-icon-active);
@@ -1759,7 +2459,9 @@
   --color-control-filled-label-active: var(--color-on-brand-primary-control-filled-label-active);
   --color-control-filled-label-success: var(--color-on-brand-primary-control-filled-label-success);
   --color-control-filled-label-error: var(--color-on-brand-primary-control-filled-label-error);
-  --color-control-filled-label-disabled: var(--color-on-brand-primary-control-filled-label-disabled);
+  --color-control-filled-label-disabled: var(
+    --color-on-brand-primary-control-filled-label-disabled
+  );
   --color-control-filled-hint-default: var(--color-on-brand-primary-control-filled-hint-default);
   --color-control-filled-hint-hover: var(--color-on-brand-primary-control-filled-hint-hover);
   --color-control-filled-hint-active: var(--color-on-brand-primary-control-filled-hint-active);
@@ -1783,49 +2485,97 @@
   --color-action-primary-base-focus: var(--color-on-brand-primary-action-primary-base-focus);
   --color-action-primary-base-active: var(--color-on-brand-primary-action-primary-base-active);
   --color-action-primary-base-disabled: var(--color-on-brand-primary-action-primary-base-disabled);
-  --color-action-primary-on-base-default: var(--color-on-brand-primary-action-primary-on-base-default);
+  --color-action-primary-on-base-default: var(
+    --color-on-brand-primary-action-primary-on-base-default
+  );
   --color-action-primary-on-base-hover: var(--color-on-brand-primary-action-primary-on-base-hover);
   --color-action-primary-on-base-focus: var(--color-on-brand-primary-action-primary-on-base-focus);
-  --color-action-primary-on-base-active: var(--color-on-brand-primary-action-primary-on-base-active);
-  --color-action-primary-on-base-disabled: var(--color-on-brand-primary-action-primary-on-base-disabled);
-  --color-action-secondary-base-default: var(--color-on-brand-primary-action-secondary-base-default);
+  --color-action-primary-on-base-active: var(
+    --color-on-brand-primary-action-primary-on-base-active
+  );
+  --color-action-primary-on-base-disabled: var(
+    --color-on-brand-primary-action-primary-on-base-disabled
+  );
+  --color-action-secondary-base-default: var(
+    --color-on-brand-primary-action-secondary-base-default
+  );
   --color-action-secondary-base-hover: var(--color-on-brand-primary-action-secondary-base-hover);
   --color-action-secondary-base-focus: var(--color-on-brand-primary-action-secondary-base-focus);
   --color-action-secondary-base-active: var(--color-on-brand-primary-action-secondary-base-active);
-  --color-action-secondary-base-disabled: var(--color-on-brand-primary-action-secondary-base-disabled);
-  --color-action-secondary-on-base-default: var(--color-on-brand-primary-action-secondary-on-base-default);
-  --color-action-secondary-on-base-hover: var(--color-on-brand-primary-action-secondary-on-base-hover);
-  --color-action-secondary-on-base-focus: var(--color-on-brand-primary-action-secondary-on-base-focus);
-  --color-action-secondary-on-base-active: var(--color-on-brand-primary-action-secondary-on-base-active);
-  --color-action-secondary-on-base-disabled: var(--color-on-brand-primary-action-secondary-on-base-disabled);
+  --color-action-secondary-base-disabled: var(
+    --color-on-brand-primary-action-secondary-base-disabled
+  );
+  --color-action-secondary-on-base-default: var(
+    --color-on-brand-primary-action-secondary-on-base-default
+  );
+  --color-action-secondary-on-base-hover: var(
+    --color-on-brand-primary-action-secondary-on-base-hover
+  );
+  --color-action-secondary-on-base-focus: var(
+    --color-on-brand-primary-action-secondary-on-base-focus
+  );
+  --color-action-secondary-on-base-active: var(
+    --color-on-brand-primary-action-secondary-on-base-active
+  );
+  --color-action-secondary-on-base-disabled: var(
+    --color-on-brand-primary-action-secondary-on-base-disabled
+  );
   --color-action-tertiary-base-default: var(--color-on-brand-primary-action-tertiary-base-default);
   --color-action-tertiary-base-hover: var(--color-on-brand-primary-action-tertiary-base-hover);
   --color-action-tertiary-base-focus: var(--color-on-brand-primary-action-tertiary-base-focus);
   --color-action-tertiary-base-active: var(--color-on-brand-primary-action-tertiary-base-active);
-  --color-action-tertiary-base-disabled: var(--color-on-brand-primary-action-tertiary-base-disabled);
-  --color-action-tertiary-on-base-default: var(--color-on-brand-primary-action-tertiary-on-base-default);
-  --color-action-tertiary-on-base-hover: var(--color-on-brand-primary-action-tertiary-on-base-hover);
-  --color-action-tertiary-on-base-focus: var(--color-on-brand-primary-action-tertiary-on-base-focus);
-  --color-action-tertiary-on-base-active: var(--color-on-brand-primary-action-tertiary-on-base-active);
-  --color-action-tertiary-on-base-disabled: var(--color-on-brand-primary-action-tertiary-on-base-disabled);
+  --color-action-tertiary-base-disabled: var(
+    --color-on-brand-primary-action-tertiary-base-disabled
+  );
+  --color-action-tertiary-on-base-default: var(
+    --color-on-brand-primary-action-tertiary-on-base-default
+  );
+  --color-action-tertiary-on-base-hover: var(
+    --color-on-brand-primary-action-tertiary-on-base-hover
+  );
+  --color-action-tertiary-on-base-focus: var(
+    --color-on-brand-primary-action-tertiary-on-base-focus
+  );
+  --color-action-tertiary-on-base-active: var(
+    --color-on-brand-primary-action-tertiary-on-base-active
+  );
+  --color-action-tertiary-on-base-disabled: var(
+    --color-on-brand-primary-action-tertiary-on-base-disabled
+  );
   --color-action-danger-base-default: var(--color-on-brand-primary-action-danger-base-default);
   --color-action-danger-base-hover: var(--color-on-brand-primary-action-danger-base-hover);
   --color-action-danger-base-focus: var(--color-on-brand-primary-action-danger-base-focus);
   --color-action-danger-base-active: var(--color-on-brand-primary-action-danger-base-active);
   --color-action-danger-base-disabled: var(--color-on-brand-primary-action-danger-base-disabled);
-  --color-action-danger-on-base-default: var(--color-on-brand-primary-action-danger-on-base-default);
+  --color-action-danger-on-base-default: var(
+    --color-on-brand-primary-action-danger-on-base-default
+  );
   --color-action-danger-on-base-hover: var(--color-on-brand-primary-action-danger-on-base-hover);
   --color-action-danger-on-base-focus: var(--color-on-brand-primary-action-danger-on-base-focus);
   --color-action-danger-on-base-active: var(--color-on-brand-primary-action-danger-on-base-active);
-  --color-action-danger-on-base-disabled: var(--color-on-brand-primary-action-danger-on-base-disabled);
-  --color-button-danger-background-active: var(--color-on-brand-primary-button-danger-background-active);
-  --color-button-danger-background-default: var(--color-on-brand-primary-button-danger-background-default);
-  --color-button-danger-background-disabled: var(--color-on-brand-primary-button-danger-background-disabled);
-  --color-button-danger-background-focus: var(--color-on-brand-primary-button-danger-background-focus);
-  --color-button-danger-background-hover: var(--color-on-brand-primary-button-danger-background-hover);
+  --color-action-danger-on-base-disabled: var(
+    --color-on-brand-primary-action-danger-on-base-disabled
+  );
+  --color-button-danger-background-active: var(
+    --color-on-brand-primary-button-danger-background-active
+  );
+  --color-button-danger-background-default: var(
+    --color-on-brand-primary-button-danger-background-default
+  );
+  --color-button-danger-background-disabled: var(
+    --color-on-brand-primary-button-danger-background-disabled
+  );
+  --color-button-danger-background-focus: var(
+    --color-on-brand-primary-button-danger-background-focus
+  );
+  --color-button-danger-background-hover: var(
+    --color-on-brand-primary-button-danger-background-hover
+  );
   --color-button-danger-border-active: var(--color-on-brand-primary-button-danger-border-active);
   --color-button-danger-border-default: var(--color-on-brand-primary-button-danger-border-default);
-  --color-button-danger-border-disabled: var(--color-on-brand-primary-button-danger-border-disabled);
+  --color-button-danger-border-disabled: var(
+    --color-on-brand-primary-button-danger-border-disabled
+  );
   --color-button-danger-border-focus: var(--color-on-brand-primary-button-danger-border-focus);
   --color-button-danger-border-hover: var(--color-on-brand-primary-button-danger-border-hover);
   --color-button-danger-text-active: var(--color-on-brand-primary-button-danger-text-active);
@@ -1833,11 +2583,21 @@
   --color-button-danger-text-disabled: var(--color-on-brand-primary-button-danger-text-disabled);
   --color-button-danger-text-focus: var(--color-on-brand-primary-button-danger-text-focus);
   --color-button-danger-text-hover: var(--color-on-brand-primary-button-danger-text-hover);
-  --color-button-ghost-background-active: var(--color-on-brand-primary-button-ghost-background-active);
-  --color-button-ghost-background-default: var(--color-on-brand-primary-button-ghost-background-default);
-  --color-button-ghost-background-disabled: var(--color-on-brand-primary-button-ghost-background-disabled);
-  --color-button-ghost-background-focus: var(--color-on-brand-primary-button-ghost-background-focus);
-  --color-button-ghost-background-hover: var(--color-on-brand-primary-button-ghost-background-hover);
+  --color-button-ghost-background-active: var(
+    --color-on-brand-primary-button-ghost-background-active
+  );
+  --color-button-ghost-background-default: var(
+    --color-on-brand-primary-button-ghost-background-default
+  );
+  --color-button-ghost-background-disabled: var(
+    --color-on-brand-primary-button-ghost-background-disabled
+  );
+  --color-button-ghost-background-focus: var(
+    --color-on-brand-primary-button-ghost-background-focus
+  );
+  --color-button-ghost-background-hover: var(
+    --color-on-brand-primary-button-ghost-background-hover
+  );
   --color-button-ghost-border-active: var(--color-on-brand-primary-button-ghost-border-active);
   --color-button-ghost-border-default: var(--color-on-brand-primary-button-ghost-border-default);
   --color-button-ghost-border-disabled: var(--color-on-brand-primary-button-ghost-border-disabled);
@@ -1848,14 +2608,28 @@
   --color-button-ghost-text-disabled: var(--color-on-brand-primary-button-ghost-text-disabled);
   --color-button-ghost-text-focus: var(--color-on-brand-primary-button-ghost-text-focus);
   --color-button-ghost-text-hover: var(--color-on-brand-primary-button-ghost-text-hover);
-  --color-button-outline-background-active: var(--color-on-brand-primary-button-outline-background-active);
-  --color-button-outline-background-default: var(--color-on-brand-primary-button-outline-background-default);
-  --color-button-outline-background-disabled: var(--color-on-brand-primary-button-outline-background-disabled);
-  --color-button-outline-background-focus: var(--color-on-brand-primary-button-outline-background-focus);
-  --color-button-outline-background-hover: var(--color-on-brand-primary-button-outline-background-hover);
+  --color-button-outline-background-active: var(
+    --color-on-brand-primary-button-outline-background-active
+  );
+  --color-button-outline-background-default: var(
+    --color-on-brand-primary-button-outline-background-default
+  );
+  --color-button-outline-background-disabled: var(
+    --color-on-brand-primary-button-outline-background-disabled
+  );
+  --color-button-outline-background-focus: var(
+    --color-on-brand-primary-button-outline-background-focus
+  );
+  --color-button-outline-background-hover: var(
+    --color-on-brand-primary-button-outline-background-hover
+  );
   --color-button-outline-border-active: var(--color-on-brand-primary-button-outline-border-active);
-  --color-button-outline-border-default: var(--color-on-brand-primary-button-outline-border-default);
-  --color-button-outline-border-disabled: var(--color-on-brand-primary-button-outline-border-disabled);
+  --color-button-outline-border-default: var(
+    --color-on-brand-primary-button-outline-border-default
+  );
+  --color-button-outline-border-disabled: var(
+    --color-on-brand-primary-button-outline-border-disabled
+  );
   --color-button-outline-border-focus: var(--color-on-brand-primary-button-outline-border-focus);
   --color-button-outline-border-hover: var(--color-on-brand-primary-button-outline-border-hover);
   --color-button-outline-text-active: var(--color-on-brand-primary-button-outline-text-active);
@@ -1863,14 +2637,28 @@
   --color-button-outline-text-disabled: var(--color-on-brand-primary-button-outline-text-disabled);
   --color-button-outline-text-focus: var(--color-on-brand-primary-button-outline-text-focus);
   --color-button-outline-text-hover: var(--color-on-brand-primary-button-outline-text-hover);
-  --color-button-primary-background-active: var(--color-on-brand-primary-button-primary-background-active);
-  --color-button-primary-background-default: var(--color-on-brand-primary-button-primary-background-default);
-  --color-button-primary-background-disabled: var(--color-on-brand-primary-button-primary-background-disabled);
-  --color-button-primary-background-focus: var(--color-on-brand-primary-button-primary-background-focus);
-  --color-button-primary-background-hover: var(--color-on-brand-primary-button-primary-background-hover);
+  --color-button-primary-background-active: var(
+    --color-on-brand-primary-button-primary-background-active
+  );
+  --color-button-primary-background-default: var(
+    --color-on-brand-primary-button-primary-background-default
+  );
+  --color-button-primary-background-disabled: var(
+    --color-on-brand-primary-button-primary-background-disabled
+  );
+  --color-button-primary-background-focus: var(
+    --color-on-brand-primary-button-primary-background-focus
+  );
+  --color-button-primary-background-hover: var(
+    --color-on-brand-primary-button-primary-background-hover
+  );
   --color-button-primary-border-active: var(--color-on-brand-primary-button-primary-border-active);
-  --color-button-primary-border-default: var(--color-on-brand-primary-button-primary-border-default);
-  --color-button-primary-border-disabled: var(--color-on-brand-primary-button-primary-border-disabled);
+  --color-button-primary-border-default: var(
+    --color-on-brand-primary-button-primary-border-default
+  );
+  --color-button-primary-border-disabled: var(
+    --color-on-brand-primary-button-primary-border-disabled
+  );
   --color-button-primary-border-focus: var(--color-on-brand-primary-button-primary-border-focus);
   --color-button-primary-border-hover: var(--color-on-brand-primary-button-primary-border-hover);
   --color-button-primary-text-active: var(--color-on-brand-primary-button-primary-text-active);
@@ -1878,19 +2666,43 @@
   --color-button-primary-text-disabled: var(--color-on-brand-primary-button-primary-text-disabled);
   --color-button-primary-text-focus: var(--color-on-brand-primary-button-primary-text-focus);
   --color-button-primary-text-hover: var(--color-on-brand-primary-button-primary-text-hover);
-  --color-button-secondary-background-active: var(--color-on-brand-primary-button-secondary-background-active);
-  --color-button-secondary-background-default: var(--color-on-brand-primary-button-secondary-background-default);
-  --color-button-secondary-background-disabled: var(--color-on-brand-primary-button-secondary-background-disabled);
-  --color-button-secondary-background-focus: var(--color-on-brand-primary-button-secondary-background-focus);
-  --color-button-secondary-background-hover: var(--color-on-brand-primary-button-secondary-background-hover);
-  --color-button-secondary-border-active: var(--color-on-brand-primary-button-secondary-border-active);
-  --color-button-secondary-border-default: var(--color-on-brand-primary-button-secondary-border-default);
-  --color-button-secondary-border-disabled: var(--color-on-brand-primary-button-secondary-border-disabled);
-  --color-button-secondary-border-focus: var(--color-on-brand-primary-button-secondary-border-focus);
-  --color-button-secondary-border-hover: var(--color-on-brand-primary-button-secondary-border-hover);
+  --color-button-secondary-background-active: var(
+    --color-on-brand-primary-button-secondary-background-active
+  );
+  --color-button-secondary-background-default: var(
+    --color-on-brand-primary-button-secondary-background-default
+  );
+  --color-button-secondary-background-disabled: var(
+    --color-on-brand-primary-button-secondary-background-disabled
+  );
+  --color-button-secondary-background-focus: var(
+    --color-on-brand-primary-button-secondary-background-focus
+  );
+  --color-button-secondary-background-hover: var(
+    --color-on-brand-primary-button-secondary-background-hover
+  );
+  --color-button-secondary-border-active: var(
+    --color-on-brand-primary-button-secondary-border-active
+  );
+  --color-button-secondary-border-default: var(
+    --color-on-brand-primary-button-secondary-border-default
+  );
+  --color-button-secondary-border-disabled: var(
+    --color-on-brand-primary-button-secondary-border-disabled
+  );
+  --color-button-secondary-border-focus: var(
+    --color-on-brand-primary-button-secondary-border-focus
+  );
+  --color-button-secondary-border-hover: var(
+    --color-on-brand-primary-button-secondary-border-hover
+  );
   --color-button-secondary-text-active: var(--color-on-brand-primary-button-secondary-text-active);
-  --color-button-secondary-text-default: var(--color-on-brand-primary-button-secondary-text-default);
-  --color-button-secondary-text-disabled: var(--color-on-brand-primary-button-secondary-text-disabled);
+  --color-button-secondary-text-default: var(
+    --color-on-brand-primary-button-secondary-text-default
+  );
+  --color-button-secondary-text-disabled: var(
+    --color-on-brand-primary-button-secondary-text-disabled
+  );
   --color-button-secondary-text-focus: var(--color-on-brand-primary-button-secondary-text-focus);
   --color-button-secondary-text-hover: var(--color-on-brand-primary-button-secondary-text-hover);
 }
@@ -2053,7 +2865,6 @@
   --button-large-padding-inline: var(--spacing-4);
   --button-large-padding-stack: var(--control-large-padding-stack);
   --button-large-icon-size: var(--control-large-icon-size);
-  --extension-menu-item-icon-size: var(--icon-sm);
 }
 
 /* === Sizes (Desktop) === */
@@ -2092,6 +2903,5 @@
     --button-padding-inline: var(--spacing-8);
     --button-small-padding-inline: var(--spacing-8);
     --button-large-padding-inline: var(--spacing-8);
-    --extension-menu-item-icon-size: var(--icon-md);
   }
 }

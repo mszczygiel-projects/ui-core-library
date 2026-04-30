@@ -1226,18 +1226,5 @@
         }
       }
     }
-  },
-  "extension": {
-    "menu-item": {
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Sizes.icon.sm}",
-            "Desktop": "{Sizes.icon.md}"
-          },
-          "$type": "number"
-        }
-      }
-    }
   }
 }

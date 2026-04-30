@@ -1111,10 +1111,10 @@ export const tokens = {
         strong: 'var(--shadow-color-strong)',
       },
       elevation: {
-        "1": 'var(--shadow-elevation-1)',
-        "2": 'var(--shadow-elevation-2)',
-        "3": 'var(--shadow-elevation-3)',
-        "4": 'var(--shadow-elevation-4)',
+        '1': 'var(--shadow-elevation-1)',
+        '2': 'var(--shadow-elevation-2)',
+        '3': 'var(--shadow-elevation-3)',
+        '4': 'var(--shadow-elevation-4)',
       },
       interactive: {
         default: 'var(--shadow-interactive-default)',
@@ -1134,6 +1134,11 @@ export const tokens = {
     ring: {
       style: 'var(--ring-style)',
       offset: 'var(--ring-offset)',
+    },
+    link: {
+      textDecoration: {
+        underline: 'var(--link-text-decoration-underline)',
+      },
     },
   },
   surfaces: {
@@ -1761,13 +1766,6 @@ export const tokens = {
         },
         icon: {
           size: 'var(--button-large-icon-size)',
-        },
-      },
-    },
-    extension: {
-      menuItem: {
-        icon: {
-          size: 'var(--extension-menu-item-icon-size)',
         },
       },
     },

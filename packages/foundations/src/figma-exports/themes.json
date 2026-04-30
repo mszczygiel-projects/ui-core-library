@@ -6951,8 +6951,8 @@
     "heading": {
       "font-family": {
         "$value": {
-          "Default": "Playifair Display",
-          "Dark": "Playifair Display"
+          "Default": "Playfair Display",
+          "Dark": "Playfair Display"
         },
         "$type": "string"
       }
@@ -7149,10 +7149,21 @@
     },
     "offset": {
       "$value": {
-        "Default": -5,
-        "Dark": -5
+        "Default": 5,
+        "Dark": 5
       },
       "$type": "number"
+    }
+  },
+  "link": {
+    "text-decoration": {
+      "underline": {
+        "$value": {
+          "Default": false,
+          "Dark": false
+        },
+        "$type": "boolean"
+      }
     }
   }
 }
