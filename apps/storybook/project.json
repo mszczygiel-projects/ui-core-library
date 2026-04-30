@@ -16,7 +16,8 @@
     "chromatic": {
       "command": "chromatic --config-path ../../chromatic.config.json",
       "options": { "cwd": "apps/storybook" },
-      "dependsOn": ["build"]
+      "dependsOn": ["build"],
+      "cache": false
     }
   }
 }
