@@ -120,7 +120,8 @@ List the stories to create:
 | ---------- | ----------- |
 
 Default export uses `@ui-core/foundations/base.css` + story-level decorator if needed.
-WC stories use `html` tag. React stories use JSX.
+WC stories use `createElement` from React (Storybook framework is `react-vite` — no `html`
+template tag). React stories use JSX (`.stories.tsx`).
 
 ### 8. Tests to write
 
@@ -151,6 +152,59 @@ WC stories use `html` tag. React stories use JSX.
 
 List anything that needs design or product decision before implementation can start.
 If Figma link was provided and all questions are answered, write "None."
+
+---
+
+## Known Figma → CSS pitfalls (check during token mapping in §5)
+
+These are systematic issues discovered during Button implementation. Verify each one
+when reading Figma tokens for a new component.
+
+### 1. Line-height: unitless ratio ≠ fixed px
+
+CSS line-height tokens are emitted as **unitless ratios** (Tailwind-style):
+`--text-base--line-height: calc(1.5 / 1)`. The browser multiplies the ratio by the
+element's own `font-size`, so the same ratio produces different pixel values at different
+sizes:
+
+| Size | font-size | ratio 1.5 | result |
+|---|---|---|---|
+| Small | 14px | 1.5 | **21px** ✗ |
+| Default | 16px | 1.5 | **24px** ✓ |
+| Large | 18px | 1.5 | **27px** ✗ |
+
+**Rule**: If Figma shows the same px line-height for all sizes of a component, do **not**
+use a size-specific line-height token (ratio). Use a fixed-length token instead.
+`--size-{n}` tokens express lengths in rem — `--size-6 = 1.5rem = 24px` is the most
+common match for button/control line-heights. Verify with: `padding-block×2 + line-height
+= total height from Figma`.
+
+### 2. Component-specific tokens vs generic control tokens
+
+Foundations defines **component-specific tokens** (e.g. `--button-small-padding-inline`,
+`--button-large-padding-inline`) alongside generic control tokens (`--control-small-padding-inline`).
+Always use the component-specific token when it exists — they may carry responsive
+overrides in the `@media (min-width: …)` block that the generic token lacks.
+
+**Rule**: Before using a `--control-*` token in a component, grep `tokens.css` for a
+matching `--{component}-*` token. If found, prefer it.
+
+### 3. Circular references in tokens.css from the Sizes collection
+
+The Sizes Figma collection sometimes emits tokens with the **same CSS var name** as
+Primitives (e.g. `--radius-md`, `--radius-sm`). This overwrites the raw primitive value
+with an alias that points back to it, creating a circular reference that makes the
+variable resolve to `unset`.
+
+This was fixed in `build-tokens.ts` (Sizes tokens that collide with Primitive var names
+are now skipped). But if after a `pnpm foundations:build` you see `⚠ CIRCULAR` warnings,
+or a visual property is unexpectedly unstyled, check whether the token chain contains
+a Sizes → Primitive → Sizes cycle. The fix is always in the build script, not in
+component CSS.
+
+**Quick diagnostic**: trace the chain manually in `tokens.css`:
+`--button-radius → --control-radius → --radius-md-mobile → --radius-md → ???`
+If the last step points back to an earlier var in the chain, it's circular.
 
 ---
 
