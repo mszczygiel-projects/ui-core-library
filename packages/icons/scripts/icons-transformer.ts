@@ -6,7 +6,10 @@ import path from 'node:path';
 // ─── Naming ───────────────────────────────────────────────────────────────────
 
 export function toPascalCase(name: string): string {
-  return name.split('-').map(s => s.charAt(0).toUpperCase() + s.slice(1)).join('');
+  return name
+    .split('-')
+    .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
+    .join('');
 }
 
 // ─── SVGO ─────────────────────────────────────────────────────────────────────
@@ -78,7 +81,10 @@ export async function buildReactComponent(svg: string, componentName: string): P
 // ─── Filesystem ───────────────────────────────────────────────────────────────
 
 export function ensureIconPrefixInSvgFilenames(dir: string): void {
-  const svgFiles = fs.readdirSync(dir).filter(f => f.endsWith('.svg')).sort();
+  const svgFiles = fs
+    .readdirSync(dir)
+    .filter((f) => f.endsWith('.svg'))
+    .sort();
 
   for (const file of svgFiles) {
     if (file.startsWith('icon-')) {

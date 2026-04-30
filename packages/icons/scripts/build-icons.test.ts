@@ -247,7 +247,10 @@ describe('buildIcons integration — dist output', async () => {
 
   async function runBuild() {
     ensureIconPrefixInSvgFilenames(svgDir);
-    const files = fs.readdirSync(svgDir).filter(f => f.endsWith('.svg')).sort();
+    const files = fs
+      .readdirSync(svgDir)
+      .filter((f) => f.endsWith('.svg'))
+      .sort();
 
     const entries: { iconName: string; componentName: string; svg: string }[] = [];
     for (const file of files) {
@@ -258,11 +261,19 @@ describe('buildIcons integration — dist output', async () => {
       entries.push({ iconName, componentName, svg });
     }
 
-    const iconNamesUnion = entries.map(e => `'${e.iconName}'`).join(' | ');
-    fs.writeFileSync(path.join(distDir, 'icon-names.d.ts'), `export type IconName = ${iconNamesUnion};\n`);
+    const iconNamesUnion = entries.map((e) => `'${e.iconName}'`).join(' | ');
+    fs.writeFileSync(
+      path.join(distDir, 'icon-names.d.ts'),
+      `export type IconName = ${iconNamesUnion};\n`,
+    );
 
-    const mapEntries = entries.map(e => `  ${JSON.stringify(e.iconName)}: ${JSON.stringify(e.svg)},`).join('\n');
-    fs.writeFileSync(path.join(distDir, 'svg-map.js'), `export const svgMap = {\n${mapEntries}\n};\n`);
+    const mapEntries = entries
+      .map((e) => `  ${JSON.stringify(e.iconName)}: ${JSON.stringify(e.svg)},`)
+      .join('\n');
+    fs.writeFileSync(
+      path.join(distDir, 'svg-map.js'),
+      `export const svgMap = {\n${mapEntries}\n};\n`,
+    );
     fs.writeFileSync(
       path.join(distDir, 'svg-map.d.ts'),
       `import type { IconName } from './icon-names.js';\nexport declare const svgMap: Record<IconName, string>;\n`,
@@ -280,7 +291,9 @@ describe('buildIcons integration — dist output', async () => {
     }
 
     fs.writeFileSync(path.join(reactDistDir, 'index.js'), barrelExports.join('\n') + '\n');
-    const dtsExports = entries.map(e => `export { ${e.componentName} } from './${e.componentName}.js';`).join('\n');
+    const dtsExports = entries
+      .map((e) => `export { ${e.componentName} } from './${e.componentName}.js';`)
+      .join('\n');
     fs.writeFileSync(path.join(reactDistDir, 'index.d.ts'), dtsExports + '\n');
 
     return entries;

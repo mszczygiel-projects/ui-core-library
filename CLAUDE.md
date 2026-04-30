@@ -1,5 +1,7 @@
 # UI Core Library — Project Summary
-> Generated: 2026-04-28  
+
+> Generated: 2026-04-28
+
 ---
 
 ## 1. What This Project Is
@@ -30,18 +32,18 @@ ui-core-library/              ← Nx monorepo, pnpm workspace
 
 ### Tech stack
 
-| Layer | Technology |
-|---|---|
-| Monorepo | Nx + pnpm |
-| Web Components | Lit (Shadow DOM) |
-| React | React 18+ (light DOM) |
-| Foundations (code) | TypeScript + CSS custom properties |
-| Tailwind | v4 — configured via `@theme inline` in `tailwind.css` |
-| Documentation | Storybook |
-| Testing (WC) | @web/test-runner + Playwright (Chromium) + @open-wc/testing |
-| Testing (React) | Vitest + jsdom + Testing Library |
-| Testing (tokens) | Vitest (node) |
-| Visual regression | Chromatic |
+| Layer              | Technology                                                  |
+| ------------------ | ----------------------------------------------------------- |
+| Monorepo           | Nx + pnpm                                                   |
+| Web Components     | Lit (Shadow DOM)                                            |
+| React              | React 18+ (light DOM)                                       |
+| Foundations (code) | TypeScript + CSS custom properties                          |
+| Tailwind           | v4 — configured via `@theme inline` in `tailwind.css`       |
+| Documentation      | Storybook                                                   |
+| Testing (WC)       | @web/test-runner + Playwright (Chromium) + @open-wc/testing |
+| Testing (React)    | Vitest + jsdom + Testing Library                            |
+| Testing (tokens)   | Vitest (node)                                               |
+| Visual regression  | Chromatic                                                   |
 
 ### Nx configuration notes
 
@@ -96,11 +98,11 @@ packages/foundations/   @ui-core/foundations
 Consumers choose exactly what they need:
 
 ```css
-@import '@ui-core/foundations/tokens.css';      /* only tokens — e.g. Tailwind project with own reset */
-@import '@ui-core/foundations/tailwind.css';    /* tokens + Tailwind theme mapping */
-@import '@ui-core/foundations/reset.css';       /* reset only */
-@import '@ui-core/foundations/typography.css';  /* typography classes only */
-@import '@ui-core/foundations/base.css';        /* reset + typography (shortcut) */
+@import '@ui-core/foundations/tokens.css'; /* only tokens — e.g. Tailwind project with own reset */
+@import '@ui-core/foundations/tailwind.css'; /* tokens + Tailwind theme mapping */
+@import '@ui-core/foundations/reset.css'; /* reset only */
+@import '@ui-core/foundations/typography.css'; /* typography classes only */
+@import '@ui-core/foundations/base.css'; /* reset + typography (shortcut) */
 ```
 
 **Font loading** is a consumer responsibility. The library only consumes `var(--typography-body-font-family)`, etc. `fonts/default.css` is for Storybook and local development only — never auto-imported, never for production.
@@ -147,11 +149,11 @@ Themes also contains non-color tokens: `--typography-*`, `--radius-*`, `--ring-*
 
 Override `--color-*` variables per surface context. Activated via HTML attribute.
 
-| Attribute | Selector | Context |
-|---|---|---|
-| *(none)* | `:root` | Default white |
-| `data-surface="subtle"` | `[data-surface="subtle"]` | Subtle/gray |
-| `data-surface="inverse"` | `[data-surface="inverse"]` | Dark/inverse |
+| Attribute                | Selector                   | Context       |
+| ------------------------ | -------------------------- | ------------- |
+| _(none)_                 | `:root`                    | Default white |
+| `data-surface="subtle"`  | `[data-surface="subtle"]`  | Subtle/gray   |
+| `data-surface="inverse"` | `[data-surface="inverse"]` | Dark/inverse  |
 | `data-surface="primary"` | `[data-surface="primary"]` | Brand primary |
 
 All child components adapt automatically — no component-level changes required.
@@ -172,11 +174,11 @@ Two separate scripts, one shared `pnpm foundations:build` command that runs both
 2. Drop 4 files into `src/figma-exports/`: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json`.
 3. Run `pnpm foundations:build` — generates:
 
-| Output file | Purpose |
-|---|---|
-| `tokens.css` | `:root { --color-brand-primary: #…; }` — raw values, all collections, all modes |
+| Output file    | Purpose                                                                                    |
+| -------------- | ------------------------------------------------------------------------------------------ |
+| `tokens.css`   | `:root { --color-brand-primary: #…; }` — raw values, all collections, all modes            |
 | `tailwind.css` | `@import "./tokens.css"` + `@theme inline { … }` — thin Tailwind v4 adapter, no raw values |
-| `tokens.ts` | TypeScript references to CSS vars (semantic tokens only, Surfaces-over-Themes precedence) |
+| `tokens.ts`    | TypeScript references to CSS vars (semantic tokens only, Surfaces-over-Themes precedence)  |
 
 **Script 2 — `build-typography.ts`** (Text Styles → CSS utility classes)
 
@@ -188,10 +190,10 @@ Luckino exports Text Styles as JSON with Variable references (`{typography.body.
 
 **Class naming convention:**
 
-| Figma name | CSS class |
-|---|---|
-| `Body` | `.text-body` |
-| `Caption` | `.text-caption` |
+| Figma name   | CSS class          |
+| ------------ | ------------------ |
+| `Body`       | `.text-body`       |
+| `Caption`    | `.text-caption`    |
 | `Heading/H1` | `.text-heading-h1` |
 | `Heading/H2` | `.text-heading-h2` |
 | `Body Small` | `.text-body-small` |
@@ -204,21 +206,21 @@ Transformation rule: `name.toLowerCase().replace(/\//g, '-').replace(/\s+/g, '-'
 
 ### Token reference rules — quick guide
 
-| What you're styling | Token to use | Example |
-|---|---|---|
-| Component color | `--color-{semantic}` (Surfaces layer) | `var(--color-button-primary-background-default)` |
-| Typography | `--typography-*` (Themes/Sizes) | `var(--typography-body-font-size)` |
-| Spacing / layout | `--spacing-*` / `--size-*` | `var(--spacing-4)` |
-| Border radius | `--radius-*` | `var(--radius-md)` |
-| Shadow | `--shadow-*` (composite) | `var(--shadow-md)` |
+| What you're styling | Token to use                          | Example                                          |
+| ------------------- | ------------------------------------- | ------------------------------------------------ |
+| Component color     | `--color-{semantic}` (Surfaces layer) | `var(--color-button-primary-background-default)` |
+| Typography          | `--typography-*` (Themes/Sizes)       | `var(--typography-body-font-size)`               |
+| Spacing / layout    | `--spacing-*` / `--size-*`            | `var(--spacing-4)`                               |
+| Border radius       | `--radius-*`                          | `var(--radius-md)`                               |
+| Shadow              | `--shadow-*` (composite)              | `var(--shadow-md)`                               |
 
 **Do not use directly in components:**
 
-| ❌ Avoid | Why |
-|---|---|
-| `--color-{palette}-{shade}` | Primitive — bypasses all semantic and surface context |
+| ❌ Avoid                                                                    | Why                                                                          |
+| --------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| `--color-{palette}-{shade}`                                                 | Primitive — bypasses all semantic and surface context                        |
 | `--color-on-subtle-*`, `--color-on-inverse-*`, `--color-on-brand-primary-*` | Internal Themes variables used by the surface system — not for component use |
-| Raw values (`#fff`, `1rem`, `400`) | Breaks theming entirely |
+| Raw values (`#fff`, `1rem`, `400`)                                          | Breaks theming entirely                                                      |
 
 ### Unit conversion rules
 
@@ -265,11 +267,11 @@ SVG optimization (svgo): removes Figma metadata, preserves `viewBox`, replaces h
 ```tsx
 // React
 import { IconChevronDown } from '@ui-core/icons/react';
-<IconChevronDown style={{ color: 'var(--color-feedback-error-base)', width: 24 }} />
+<IconChevronDown style={{ color: 'var(--color-feedback-error-base)', width: 24 }} />;
 
 // Lit / vanilla
 import { svgMap } from '@ui-core/icons';
-html`${unsafeSVG(svgMap['icon-chevron-down'])}`
+html`${unsafeSVG(svgMap['icon-chevron-down'])}`;
 ```
 
 ---
@@ -295,13 +297,95 @@ html`${unsafeSVG(svgMap['icon-chevron-down'])}`
 
 ### React — CSS architecture
 
-- Styles as Tailwind utility classes (variant/size maps)
-- Values reference CSS custom properties via Tailwind's `@theme inline` mapping
-- For programmatic use (inline styles, canvas): import `tokens` from `@ui-core/foundations` — TypeScript references to CSS vars, never raw values
+React components render in the **light DOM** — no style isolation. The styling strategy reflects this:
 
-### Storybook
+**Co-located CSS file — primary approach:**
 
-When working on UI components, ALWAYS use the `storybook-mcp` MCP tools before answering or taking any action. Never use a component prop without first verifying it via `get-documentation`.
+Every React component has a `component.css` file next to it. All visual styles live there — never as inline styles, never as Tailwind utilities inside component internals.
+
+```
+packages/react/src/loader/
+  Loader.tsx       ← imports ./loader.css, applies class names only
+  loader.css       ← all visual styles: layout, color, animation, states
+  Loader.stories.tsx
+  Loader.test.tsx
+```
+
+Class naming uses a BEM-like prefix (`ui-{component}__element--modifier`) to avoid collisions in the light DOM:
+
+```css
+/* loader.css */
+.ui-loader { ... }
+.ui-loader__spinner { ... }
+.ui-loader__spinner--small { ... }
+.ui-loader__spinner--large { ... }
+```
+
+The component applies classes only — no style objects:
+
+```tsx
+// Loader.tsx
+import './loader.css';
+
+<span className={['ui-loader', className].filter(Boolean).join(' ')} style={style}>
+  <span className={`ui-loader__spinner ui-loader__spinner--${size}`} />
+</span>;
+```
+
+**Why not inline styles:**
+
+Inline styles (`style={{ ... }}`) have the highest CSS specificity — consumers cannot override them via cascade or utility classes. They also cannot express `@keyframes`, `@media`, or pseudo-classes. **Inline styles are forbidden inside component internals.**
+
+The only exception: the `style` prop passed by the consumer is forwarded to the root element as-is. This allows consumers to set positioning (`position`, `margin`, `top`) without requiring wrapper elements. It must never be used to apply component-owned visual styles.
+
+**Why not Tailwind inside components:**
+
+Tailwind utility classes are for **page layout and consumer-side composition** — not for component internals. Inside a component, utilities like `flex`, `rounded-full`, or `animate-spin` create tight coupling to Tailwind's output and make overriding harder. Use CSS custom properties directly in the co-located CSS file instead.
+
+**Token usage in CSS files:**
+
+All values must reference CSS custom properties from `@ui-core/foundations`. Never hardcode colors, sizes, or durations:
+
+```css
+/* ✅ correct */
+.ui-loader {
+  color: var(--loader-color, var(--color-icon-default));
+}
+.ui-loader__spinner {
+  animation-duration: var(--duration-700);
+}
+
+/* ❌ wrong */
+.ui-loader {
+  color: #174ba0;
+}
+.ui-loader__spinner {
+  animation-duration: 700ms;
+}
+```
+
+Acceptable hardcoded values: sub-pixel geometry (e.g. `border-width: 1.5px`, `2px`, `2.5px`) where no token exists at that precision.
+
+**Consumer hook pattern:**
+
+Components expose CSS custom property hooks (e.g. `--loader-color`) that consumers can set without touching internal class names. The hook has no definition in the library — its absence causes automatic fallback to the semantic token default:
+
+```css
+.ui-loader {
+  /* --loader-color is undefined by default → fallback to semantic token */
+  color: var(--loader-color, var(--color-icon-default));
+}
+```
+
+Consumer override:
+
+```css
+:root {
+  --loader-color: var(--color-brand-secondary);
+}
+```
+
+**For programmatic use (canvas, dynamic inline values):** import `tokens` from `@ui-core/foundations` — TypeScript references to CSS var names, never raw values.
 
 ---
 
@@ -341,7 +425,7 @@ packages/react/src/button/
 stories: [
   '../../packages/web-components/src/**/*.stories.ts',
   '../../packages/react/src/**/*.stories.tsx',
-]
+];
 ```
 
 **No watchers needed — Vite aliases resolve packages from source:**
@@ -351,12 +435,12 @@ stories: [
 viteFinal: (config) => {
   config.resolve.alias = {
     '@ui-core/foundations': path.resolve(__dirname, '../../../packages/foundations/src'),
-    '@ui-core/wc':          path.resolve(__dirname, '../../../packages/web-components/src'),
-    '@ui-core/react':       path.resolve(__dirname, '../../../packages/react/src'),
-    '@ui-core/icons':       path.resolve(__dirname, '../../../packages/icons/src'),
+    '@ui-core/wc': path.resolve(__dirname, '../../../packages/web-components/src'),
+    '@ui-core/react': path.resolve(__dirname, '../../../packages/react/src'),
+    '@ui-core/icons': path.resolve(__dirname, '../../../packages/icons/src'),
   };
   return config;
-}
+};
 ```
 
 Vite watches source files directly — changes to components are reflected immediately via HMR, no intermediate build step needed.

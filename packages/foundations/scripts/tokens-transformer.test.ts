@@ -11,9 +11,7 @@ import {
   resolveCssLine,
   detectCycles,
   buildTokensCss,
-  buildTailwindCss,
   buildTsTree,
-  buildTokensTs,
   isAlias,
   parseAlias,
   normalizeSegment,
@@ -41,9 +39,7 @@ function freshWarnings(): WarningBucket {
   return { circular: [], violations: [], broken: [] };
 }
 
-function prim(
-  ...pathAndValue: [...string[], string]
-): Token {
+function prim(...pathAndValue: [...string[], string]): Token {
   const value = pathAndValue[pathAndValue.length - 1] as string;
   const path = pathAndValue.slice(0, -1) as string[];
   return { collection: 'Primitives Colors', path, type: 'color', value };
@@ -68,7 +64,9 @@ describe('cssVarName', () => {
   describe('Primitives Colors → --color-{palette}-{shade}', () => {
     it('basic palette + shade', () => {
       expect(cssVarName('Primitives Colors', ['gray', '500'])).toBe('--color-gray-500');
-      expect(cssVarName('Primitives Colors', ['brand', 'primary', '500'])).toBe('--color-brand-primary-500');
+      expect(cssVarName('Primitives Colors', ['brand', 'primary', '500'])).toBe(
+        '--color-brand-primary-500',
+      );
     });
 
     it('alpha-scale palette', () => {
@@ -77,10 +75,16 @@ describe('cssVarName', () => {
   });
 
   describe('Primitives Sizes → unprefixed', () => {
-    it('spacing', () => expect(cssVarName('Primitives Sizes', ['spacing', '4'])).toBe('--spacing-4'));
-    it('radius', () => expect(cssVarName('Primitives Sizes', ['radius', 'md'])).toBe('--radius-md'));
-    it('font-weight', () => expect(cssVarName('Primitives Sizes', ['font-weight', 'normal'])).toBe('--font-weight-normal'));
-    it('tracking', () => expect(cssVarName('Primitives Sizes', ['tracking', 'wide'])).toBe('--tracking-wide'));
+    it('spacing', () =>
+      expect(cssVarName('Primitives Sizes', ['spacing', '4'])).toBe('--spacing-4'));
+    it('radius', () =>
+      expect(cssVarName('Primitives Sizes', ['radius', 'md'])).toBe('--radius-md'));
+    it('font-weight', () =>
+      expect(cssVarName('Primitives Sizes', ['font-weight', 'normal'])).toBe(
+        '--font-weight-normal',
+      ));
+    it('tracking', () =>
+      expect(cssVarName('Primitives Sizes', ['tracking', 'wide'])).toBe('--tracking-wide'));
 
     it('text size → --text-{name}', () => {
       expect(cssVarName('Primitives Sizes', ['text', 'sm'])).toBe('--text-sm');
@@ -89,7 +93,9 @@ describe('cssVarName', () => {
 
     it('line-height uses Tailwind v4 -- convention', () => {
       // The double-dash separates font-size name from the line-height modifier
-      expect(cssVarName('Primitives Sizes', ['text', 'sm--line-height'])).toBe('--text-sm--line-height');
+      expect(cssVarName('Primitives Sizes', ['text', 'sm--line-height'])).toBe(
+        '--text-sm--line-height',
+      );
     });
   });
 
@@ -105,19 +111,27 @@ describe('cssVarName', () => {
   });
 
   describe('Primitives Shadows → --{path}', () => {
-    it('shape', () => expect(cssVarName('Primitives Shadows', ['shadow-shape', 'sm'])).toBe('--shadow-shape-sm'));
-    it('color', () => expect(cssVarName('Primitives Shadows', ['shadow-color', 'default'])).toBe('--shadow-color-default'));
+    it('shape', () =>
+      expect(cssVarName('Primitives Shadows', ['shadow-shape', 'sm'])).toBe('--shadow-shape-sm'));
+    it('color', () =>
+      expect(cssVarName('Primitives Shadows', ['shadow-color', 'default'])).toBe(
+        '--shadow-color-default',
+      ));
   });
 
   describe('Themes — no collection prefix', () => {
     it('color path', () => {
       expect(cssVarName('Themes', ['color', 'brand', 'primary'])).toBe('--color-brand-primary');
-      expect(cssVarName('Themes', ['color', 'button', 'primary', 'background', 'default'])).toBe('--color-button-primary-background-default');
+      expect(cssVarName('Themes', ['color', 'button', 'primary', 'background', 'default'])).toBe(
+        '--color-button-primary-background-default',
+      );
     });
 
     it('non-color path', () => {
       expect(cssVarName('Themes', ['ring', 'style'])).toBe('--ring-style');
-      expect(cssVarName('Themes', ['typography', 'body', 'font-family'])).toBe('--typography-body-font-family');
+      expect(cssVarName('Themes', ['typography', 'body', 'font-family'])).toBe(
+        '--typography-body-font-family',
+      );
     });
   });
 
@@ -131,8 +145,12 @@ describe('cssVarName', () => {
 
   describe('Sizes — no collection prefix', () => {
     it('typography path', () => {
-      expect(cssVarName('Sizes', ['typography', 'body', 'font-size'])).toBe('--typography-body-font-size');
-      expect(cssVarName('Sizes', ['typography', 'heading', 'display', 'font-weight'])).toBe('--typography-heading-display-font-weight');
+      expect(cssVarName('Sizes', ['typography', 'body', 'font-size'])).toBe(
+        '--typography-body-font-size',
+      );
+      expect(cssVarName('Sizes', ['typography', 'heading', 'display', 'font-weight'])).toBe(
+        '--typography-heading-display-font-weight',
+      );
     });
   });
 });
@@ -348,7 +366,13 @@ describe('resolveCssLine — circular var detection', () => {
     const surfToken = surfaceColor(['color', 'brand', 'primary'], {
       Subtle: '{Themes.color.on-subtle.brand.primary}',
     });
-    const result = resolveCssLine(surfToken, '{Themes.color.on-subtle.brand.primary}', 'Subtle', reg, w);
+    const result = resolveCssLine(
+      surfToken,
+      '{Themes.color.on-subtle.brand.primary}',
+      'Subtle',
+      reg,
+      w,
+    );
     expect(result).toBe('  --color-brand-primary: var(--color-on-subtle-brand-primary);');
   });
 
@@ -356,7 +380,10 @@ describe('resolveCssLine — circular var detection', () => {
     const primToken = prim('brand', 'primary', '500', '#256ce1');
     const reg = makeRegistry([primToken]);
     const w = freshWarnings();
-    const themeToken = themeColor(['color', 'brand', 'primary'], '{Primitives Colors.brand.primary.500}');
+    const themeToken = themeColor(
+      ['color', 'brand', 'primary'],
+      '{Primitives Colors.brand.primary.500}',
+    );
     const result = resolveCssLine(
       themeToken,
       '{Primitives Colors.brand.primary.500}',
@@ -406,7 +433,12 @@ describe('detectCycles', () => {
   });
 
   it('does not warn for a valid acyclic alias chain', () => {
-    const prim = { collection: 'Primitives Colors' as Collection, path: ['gray', '500'], type: 'color' as const, value: '#aaa' };
+    const prim = {
+      collection: 'Primitives Colors' as Collection,
+      path: ['gray', '500'],
+      type: 'color' as const,
+      value: '#aaa',
+    };
     const theme = themeColor(['color', 'text', 'primary'], '{Primitives Colors.gray.500}');
     const tokens = [prim, theme];
     const reg = makeRegistry(tokens);
@@ -482,8 +514,14 @@ describe('buildTokensCss — dark mode block', () => {
 describe('buildTokensCss — Surfaces block structure', () => {
   function buildWithSurfaces(): string {
     const prim500: Token = prim('brand', 'primary', '500', '#256ce1');
-    const theme = themeColor(['color', 'brand', 'primary'], '{Primitives Colors.brand.primary.500}');
-    const onSubtle = themeColor(['color', 'on-subtle', 'brand', 'primary'], '{Primitives Colors.brand.primary.500}');
+    const theme = themeColor(
+      ['color', 'brand', 'primary'],
+      '{Primitives Colors.brand.primary.500}',
+    );
+    const onSubtle = themeColor(
+      ['color', 'on-subtle', 'brand', 'primary'],
+      '{Primitives Colors.brand.primary.500}',
+    );
     const surface = surfaceColor(['color', 'brand', 'primary'], {
       Default: '{Themes.color.brand.primary}',
       Subtle: '{Themes.color.on-subtle.brand.primary}',
@@ -512,8 +550,14 @@ describe('buildTokensCss — Surfaces block structure', () => {
 
 describe('buildTsTree — Surfaces precedence', () => {
   const prim500 = prim('brand', 'primary', '500', '#256ce1');
-  const themeBrand = themeColor(['color', 'brand', 'primary'], '{Primitives Colors.brand.primary.500}');
-  const themeOnSubtle = themeColor(['color', 'on-subtle', 'brand', 'primary'], '{Primitives Colors.brand.primary.500}');
+  const themeBrand = themeColor(
+    ['color', 'brand', 'primary'],
+    '{Primitives Colors.brand.primary.500}',
+  );
+  const themeOnSubtle = themeColor(
+    ['color', 'on-subtle', 'brand', 'primary'],
+    '{Primitives Colors.brand.primary.500}',
+  );
   const surfBrand = surfaceColor(['color', 'brand', 'primary'], {
     Default: '{Themes.color.brand.primary}',
     Subtle: '{Themes.color.on-subtle.brand.primary}',
@@ -562,8 +606,16 @@ describe('walk', () => {
     const out: Token[] = [];
     walk(json, 'Primitives Colors', [], out);
     expect(out).toHaveLength(2);
-    expect(out[0]).toMatchObject({ collection: 'Primitives Colors', path: ['brand', 'primary'], value: '#256ce1' });
-    expect(out[1]).toMatchObject({ collection: 'Primitives Colors', path: ['brand', 'secondary'], value: '#1e5ac8' });
+    expect(out[0]).toMatchObject({
+      collection: 'Primitives Colors',
+      path: ['brand', 'primary'],
+      value: '#256ce1',
+    });
+    expect(out[1]).toMatchObject({
+      collection: 'Primitives Colors',
+      path: ['brand', 'secondary'],
+      value: '#1e5ac8',
+    });
   });
 
   it('handles multi-mode leaf values', () => {
@@ -705,8 +757,8 @@ describe('tokens.css — generated output', () => {
 
   it('Primitives are still emitted with their own naming conventions', () => {
     expect(css).toContain('--color-gray-'); // Primitives Colors
-    expect(css).toContain('--spacing-');    // Primitives Sizes
-    expect(css).toContain('--radius-');     // Primitives Sizes
+    expect(css).toContain('--spacing-'); // Primitives Sizes
+    expect(css).toContain('--radius-'); // Primitives Sizes
     expect(css).toContain('--shadow-shape-'); // Primitives Shadows
   });
 
@@ -732,9 +784,9 @@ describe('tokens.ts — generated output', () => {
   });
 
   it('all var() references use unprefixed CSS vars', () => {
-    expect(ts).not.toContain("var(--themes-");
-    expect(ts).not.toContain("var(--surfaces-");
-    expect(ts).not.toContain("var(--sizes-");
+    expect(ts).not.toContain('var(--themes-');
+    expect(ts).not.toContain('var(--surfaces-');
+    expect(ts).not.toContain('var(--sizes-');
   });
 
   it('surfaces section has brand.primary referencing --color-brand-primary', () => {
@@ -747,7 +799,7 @@ describe('tokens.ts — generated output', () => {
 
   it('themes section does NOT have a direct top-level color.brand group (Surfaces precedence)', () => {
     // Find where themes: { color: { starts — brand should NOT be the first key
-    const themesColorMatch = ts.match(/themes:\s*\{[\s\S]*?color:\s*\{([\s\S]*?)(?=\n  \})/);
+    const themesColorMatch = ts.match(/themes:\s*\{[\s\S]*?color:\s*\{([\s\S]*?)(?=\n {2}\})/);
     if (themesColorMatch) {
       // The color section should start with onSubtle/onInverse/onBrandPrimary groups, not brand
       const colorSection = themesColorMatch[1]!;
@@ -757,7 +809,7 @@ describe('tokens.ts — generated output', () => {
   });
 
   it('typography sizes are exported with unprefixed references', () => {
-    expect(ts).toContain("var(--typography-");
+    expect(ts).toContain('var(--typography-');
   });
 
   it('file exports tokens const and Tokens type', () => {

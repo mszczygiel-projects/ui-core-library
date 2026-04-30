@@ -33,7 +33,11 @@ const config: StorybookConfig = {
     // react-docgen (Babel) can't parse Lit's legacy decorator syntax (@decorator before export).
     // Skip plain .ts files — only .tsx and .stories.ts files need docgen.
     merged.plugins = (merged.plugins as Plugin[]).map((plugin) => {
-      if (!plugin || typeof plugin !== 'object' || plugin.name !== 'storybook:react-docgen-plugin') {
+      if (
+        !plugin ||
+        typeof plugin !== 'object' ||
+        plugin.name !== 'storybook:react-docgen-plugin'
+      ) {
         return plugin;
       }
       const original = plugin.transform as Plugin['transform'];

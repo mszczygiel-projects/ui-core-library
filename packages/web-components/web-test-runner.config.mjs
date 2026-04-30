@@ -4,9 +4,7 @@ import { esbuildPlugin } from '@web/dev-server-esbuild';
 export default {
   files: 'src/**/*.test.ts',
   nodeResolve: true,
-  browsers: [
-    playwrightLauncher({ product: 'chromium' }),
-  ],
+  browsers: [playwrightLauncher({ product: 'chromium' })],
   plugins: [
     esbuildPlugin({
       ts: true,

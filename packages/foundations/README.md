@@ -50,6 +50,7 @@ pnpm --filter @ui-core/foundations run build
 ```
 
 Build pipeline:
+
 - `scripts/build-tokens.ts` generates token artifacts from `src/figma-exports`
 - `scripts/build-typography.ts` generates typography utilities
 - TypeScript compilation runs with `tsconfig.build.json`

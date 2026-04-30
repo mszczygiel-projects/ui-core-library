@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Loader > matches snapshot 1`] = `
+<span
+  aria-label="Loading"
+  aria-live="polite"
+  class="ui-loader"
+  role="status"
+>
+  <span
+    aria-hidden="true"
+    class="ui-loader__spinner ui-loader__spinner--default"
+  />
+</span>
+`;

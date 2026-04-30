@@ -59,14 +59,18 @@ function buildClass(style: TextStyle, warnings: string[]): string {
   if (fontFamilyVar) {
     lines.push(`  font-family: ${fontFamilyVar};`);
   } else {
-    warnings.push(`${style.name}: fontFamily is not a variable reference — skipped: ${style.fontFamily}`);
+    warnings.push(
+      `${style.name}: fontFamily is not a variable reference — skipped: ${style.fontFamily}`,
+    );
   }
 
   const fontSizeVar = resolveRef(style.fontSize);
   if (fontSizeVar) {
     lines.push(`  font-size: ${fontSizeVar};`);
   } else {
-    warnings.push(`${style.name}: fontSize is not a variable reference — skipped: ${style.fontSize}`);
+    warnings.push(
+      `${style.name}: fontSize is not a variable reference — skipped: ${style.fontSize}`,
+    );
   }
 
   const fontWeightVar = deriveFontWeightVar(style.fontFamily);

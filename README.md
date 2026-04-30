@@ -4,12 +4,12 @@ Framework-agnostic UI component library published as private npm packages to Git
 
 ## Packages
 
-| Package | Description |
-|---|---|
+| Package                | Description                                                                  |
+| ---------------------- | ---------------------------------------------------------------------------- |
 | `@ui-core/foundations` | Design tokens — CSS custom properties, Tailwind theme, TypeScript references |
-| `@ui-core/icons` | SVG icon set — Web Component map + React components |
-| `@ui-core/wc` | Web Components (Lit, Shadow DOM) |
-| `@ui-core/react` | React components (React 18+, light DOM) |
+| `@ui-core/icons`       | SVG icon set — Web Component map + React components                          |
+| `@ui-core/wc`          | Web Components (Lit, Shadow DOM)                                             |
+| `@ui-core/react`       | React components (React 18+, light DOM)                                      |
 
 ## Requirements
 

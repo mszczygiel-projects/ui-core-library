@@ -11,7 +11,6 @@
 import { readFileSync, writeFileSync } from 'fs';
 import { join } from 'path';
 import {
-  type Collection,
   type Token,
   walk,
   buildTokensCss,

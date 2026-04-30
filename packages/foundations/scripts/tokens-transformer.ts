@@ -58,7 +58,6 @@ export const SURFACE_MODE_SELECTOR: Record<string, string> = {
   Primary: '[data-surface="primary"]',
 };
 
-
 export const ALLOWED_DEPS: Record<Collection, Set<Collection>> = {
   'Primitives Colors': new Set(),
   'Primitives Sizes': new Set(),

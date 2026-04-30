@@ -1,0 +1,43 @@
+.ui-loader {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--loader-color, var(--color-icon-default));
+}
+
+.ui-loader__spinner {
+  display: block;
+  border-radius: var(--radius-full);
+  border-style: solid;
+  border-color: color-mix(in srgb, currentColor 20%, transparent);
+  border-top-color: currentColor;
+  animation: ui-loader-spin var(--duration-700) var(--ease-linear) infinite;
+}
+
+.ui-loader__spinner--small {
+  width: var(--size-5);
+  height: var(--size-5);
+  border-width: var(--size-1);
+}
+.ui-loader__spinner--default {
+  width: var(--size-6);
+  height: var(--size-6);
+  border-width: var(--size-1);
+}
+.ui-loader__spinner--large {
+  width: var(--size-8);
+  height: var(--size-8);
+  border-width: var(--size-1);
+}
+
+@keyframes ui-loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-loader__spinner {
+    animation: none;
+  }
+}

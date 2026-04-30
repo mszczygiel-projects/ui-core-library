@@ -175,7 +175,11 @@ describe('buildTypographyCss', () => {
 
   it('generates multiple classes separated by a blank line', () => {
     const a = makeStyle({ name: 'Body' });
-    const b = makeStyle({ name: 'Caption', fontFamily: '{typography.caption.font-family}', fontSize: '{typography.caption.font-size}' });
+    const b = makeStyle({
+      name: 'Caption',
+      fontFamily: '{typography.caption.font-family}',
+      fontSize: '{typography.caption.font-size}',
+    });
     const { css } = buildTypographyCss([a, b]);
     expect(css).toContain('.text-body {');
     expect(css).toContain('.text-caption {');
@@ -234,9 +238,7 @@ describe('typography.css — generated output', () => {
   });
 
   it('has no hardcoded font-family values — only var() references', () => {
-    const fontFamilyLines = css
-      .split('\n')
-      .filter((l) => l.trim().startsWith('font-family:'));
+    const fontFamilyLines = css.split('\n').filter((l) => l.trim().startsWith('font-family:'));
     expect(fontFamilyLines.length).toBeGreaterThan(0);
     for (const line of fontFamilyLines) {
       expect(line).toMatch(/font-family:\s*var\(--/);

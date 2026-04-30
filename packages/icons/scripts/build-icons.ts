@@ -16,7 +16,10 @@ const REACT_DIST_DIR = path.join(DIST_DIR, 'react');
 async function buildIcons() {
   ensureIconPrefixInSvgFilenames(SVG_DIR);
 
-  const files = fs.readdirSync(SVG_DIR).filter(f => f.endsWith('.svg')).sort();
+  const files = fs
+    .readdirSync(SVG_DIR)
+    .filter((f) => f.endsWith('.svg'))
+    .sort();
 
   const entries: { iconName: string; componentName: string; svg: string }[] = [];
 
@@ -34,14 +37,16 @@ async function buildIcons() {
   fs.mkdirSync(REACT_DIST_DIR, { recursive: true });
 
   // dist/icon-names.d.ts
-  const iconNamesUnion = entries.map(e => `'${e.iconName}'`).join(' | ');
+  const iconNamesUnion = entries.map((e) => `'${e.iconName}'`).join(' | ');
   fs.writeFileSync(
     path.join(DIST_DIR, 'icon-names.d.ts'),
     `export type IconName = ${iconNamesUnion};\n`,
   );
 
   // dist/svg-map.js
-  const mapEntries = entries.map(e => `  ${JSON.stringify(e.iconName)}: ${JSON.stringify(e.svg)},`).join('\n');
+  const mapEntries = entries
+    .map((e) => `  ${JSON.stringify(e.iconName)}: ${JSON.stringify(e.svg)},`)
+    .join('\n');
   fs.writeFileSync(
     path.join(DIST_DIR, 'svg-map.js'),
     `export const svgMap = {\n${mapEntries}\n};\n`,
@@ -74,14 +79,14 @@ async function buildIcons() {
 
   // dist/react/index.d.ts
   const dtsExports = entries
-    .map(e => `export { ${e.componentName} } from './${e.componentName}.js';`)
+    .map((e) => `export { ${e.componentName} } from './${e.componentName}.js';`)
     .join('\n');
   fs.writeFileSync(path.join(REACT_DIST_DIR, 'index.d.ts'), dtsExports + '\n');
 
   console.log(`✓ Built ${entries.length} icons`);
 }
 
-buildIcons().catch(err => {
+buildIcons().catch((err) => {
   console.error(err);
   process.exit(1);
 });
