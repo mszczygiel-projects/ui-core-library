@@ -41,6 +41,9 @@ jobs:
       - name: Build foundations
         run: pnpm foundations:build
 
+      - name: Build icons
+        run: pnpm icons:build
+
       - name: Build Storybook
         run: pnpm --filter @ui-core/storybook run build-storybook --output-dir storybook-static
         working-directory: apps/storybook
