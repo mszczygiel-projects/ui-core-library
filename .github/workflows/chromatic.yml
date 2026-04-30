@@ -28,6 +28,9 @@ jobs:
       - name: Build foundations
         run: pnpm foundations:build
 
+      - name: Build icons
+        run: pnpm icons:build
+
       - name: Run Chromatic
         run: pnpm chromatic
         env:
