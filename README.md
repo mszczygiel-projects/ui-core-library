@@ -5,7 +5,7 @@ Framework-agnostic UI component library published as private npm packages to Git
 | | |
 | --- | --- |
 | Storybook | https://mszczygiel-projects.github.io/ui-core-library/ |
-| Chromatic | https://www.chromatic.com/library?appId=69f357f4fd00c35ca47a1781&branch=main |
+| Chromatic | https://www.chromatic.com/library?appId=69f357f4fd00c35ca47a1781 |
 
 ## Packages
 

@@ -47,6 +47,8 @@ jobs:
       - name: Build Storybook
         run: pnpm --filter @ui-core/storybook run build-storybook --output-dir storybook-static
         working-directory: apps/storybook
+        env:
+          GITHUB_PAGES: true
 
       - uses: actions/configure-pages@v5
 
