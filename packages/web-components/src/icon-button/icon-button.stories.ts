@@ -40,7 +40,7 @@ type IconButtonArgs = {
 
 const iconSpan = (name: keyof typeof svgMap) =>
   createElement('span', {
-    style: { display: 'inline-flex', width: '1.25rem', height: '1.25rem' },
+    style: { display: 'inline-flex' },
     dangerouslySetInnerHTML: { __html: svgMap[name] },
   });
 

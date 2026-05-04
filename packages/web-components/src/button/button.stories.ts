@@ -54,7 +54,7 @@ const btn = (text: string, props: ButtonArgs = {}, ...children: unknown[]) =>
 const iconSpan = (slot: 'icon-left' | 'icon-right', name: keyof typeof svgMap) =>
   createElement('span', {
     slot,
-    style: { display: 'inline-flex', width: '1.25rem', height: '1.25rem' },
+    style: { display: 'inline-flex' },
     dangerouslySetInnerHTML: { __html: svgMap[name] },
   });
 

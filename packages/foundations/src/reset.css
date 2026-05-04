@@ -11,8 +11,13 @@
   padding: 0;
 }
 
-/* Root defaults */
-:root {
+/* Typography */
+html {
+  -webkit-text-size-adjust: 100%;
+  tab-size: 4;
+}
+
+body {
   font-family: var(--typography-body-font-family);
   font-size: var(--typography-body-font-size);
   font-weight: var(--typography-body-font-weight);
@@ -21,16 +26,6 @@
   color: var(--color-text-primary);
   background-color: var(--color-background-default);
   -webkit-font-smoothing: antialiased;
-}
-
-/* Typography */
-html {
-  -webkit-text-size-adjust: 100%;
-  tab-size: 4;
-}
-
-body {
-  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -72,7 +67,6 @@ a {
 :focus-visible {
   outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
   outline-offset: var(--ring-offset);
-  border-radius: var(--control-radius);
 }
 
 :focus:not(:focus-visible) {

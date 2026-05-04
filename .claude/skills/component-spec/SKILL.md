@@ -167,11 +167,11 @@ CSS line-height tokens are emitted as **unitless ratios** (Tailwind-style):
 element's own `font-size`, so the same ratio produces different pixel values at different
 sizes:
 
-| Size | font-size | ratio 1.5 | result |
-|---|---|---|---|
-| Small | 14px | 1.5 | **21px** ✗ |
-| Default | 16px | 1.5 | **24px** ✓ |
-| Large | 18px | 1.5 | **27px** ✗ |
+| Size    | font-size | ratio 1.5 | result     |
+| ------- | --------- | --------- | ---------- |
+| Small   | 14px      | 1.5       | **21px** ✗ |
+| Default | 16px      | 1.5       | **24px** ✓ |
+| Large   | 18px      | 1.5       | **27px** ✗ |
 
 **Rule**: If Figma shows the same px line-height for all sizes of a component, do **not**
 use a size-specific line-height token (ratio). Use a fixed-length token instead.

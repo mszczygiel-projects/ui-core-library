@@ -5,4 +5,13 @@ export const focusStyles = css`
     outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
     outline-offset: var(--ring-offset);
   }
+
+  :focus-visible {
+    outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+    outline-offset: var(--ring-offset);
+  }
+
+  :host(:focus-visible) :focus-visible {
+    outline: none;
+  }
 `;

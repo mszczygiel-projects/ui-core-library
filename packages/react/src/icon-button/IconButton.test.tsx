@@ -48,9 +48,7 @@ describe('IconButton', () => {
   });
 
   it('loading renders Loader and hides icon', () => {
-    const { container } = render(
-      <IconButton loading aria-label="Action" icon={<span>★</span>} />,
-    );
+    const { container } = render(<IconButton loading aria-label="Action" icon={<span>★</span>} />);
     expect(container.querySelector('.ui-loader')).not.toBeNull();
     expect(container.querySelector('.ui-icon-button__icon')).toBeNull();
   });
@@ -71,9 +69,7 @@ describe('IconButton', () => {
   });
 
   it('forwards style to root <button>', () => {
-    const { container } = render(
-      <IconButton aria-label="Action" style={{ marginTop: '8px' }} />,
-    );
+    const { container } = render(<IconButton aria-label="Action" style={{ marginTop: '8px' }} />);
     expect((container.querySelector('button') as HTMLElement).style.marginTop).toBe('8px');
   });
 
@@ -86,9 +82,7 @@ describe('IconButton', () => {
 
   it('does not call onClick when disabled', () => {
     const handleClick = vi.fn();
-    const { container } = render(
-      <IconButton disabled aria-label="Action" onClick={handleClick} />,
-    );
+    const { container } = render(<IconButton disabled aria-label="Action" onClick={handleClick} />);
     fireEvent.click(container.querySelector('button')!);
     expect(handleClick).not.toHaveBeenCalled();
   });

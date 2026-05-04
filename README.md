@@ -2,9 +2,9 @@
 
 Framework-agnostic UI component library published as private npm packages to GitHub Packages. Implements design tokens and components for both Web Components (Lit) and React.
 
-| | |
-| --- | --- |
-| Storybook | https://mszczygiel-projects.github.io/ui-core-library/ |
+|           |                                                                  |
+| --------- | ---------------------------------------------------------------- |
+| Storybook | https://mszczygiel-projects.github.io/ui-core-library/           |
 | Chromatic | https://www.chromatic.com/library?appId=69f357f4fd00c35ca47a1781 |
 
 ## Packages

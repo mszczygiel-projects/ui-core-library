@@ -26,11 +26,6 @@
   text-align: center;
 }
 
-.ui-button:focus-visible {
-  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
-  outline-offset: var(--ring-offset);
-}
-
 .ui-button:hover:not(:disabled) {
   background-color: var(--_bg-hover);
   color: var(--_text-hover);
