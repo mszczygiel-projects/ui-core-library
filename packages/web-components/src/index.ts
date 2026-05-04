@@ -5,3 +5,5 @@ export { UiLoader } from './loader/loader.js';
 export type { LoaderVariant } from './loader/loader.js';
 export { UiButton } from './button/button.js';
 export type { ButtonVariant, ButtonSize } from './button/button.js';
+export { UiIconButton } from './icon-button/icon-button.js';
+export type { IconButtonVariant, IconButtonSize } from './icon-button/icon-button.js';

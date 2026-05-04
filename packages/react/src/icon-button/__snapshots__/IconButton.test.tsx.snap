@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`IconButton > matches snapshot 1`] = `
+<button
+  aria-label="Action"
+  class="ui-icon-button ui-icon-button--primary"
+  type="button"
+>
+  <span
+    class="ui-icon-button__icon"
+  >
+    <span>
+      ★
+    </span>
+  </span>
+</button>
+`;
