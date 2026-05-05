@@ -27,12 +27,16 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
+  "dependencies": {
+    "@ui-core/icons": "workspace:*"
+  },
   "devDependencies": {
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
     "@ui-core/foundations": "workspace:*",
+    "@ui-core/icons": "workspace:*",
     "@vitejs/plugin-react": "^4.0.0",
     "jsdom": "^29.1.0",
     "react": "^18.0.0",

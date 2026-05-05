@@ -25,6 +25,7 @@
     "@ui-core/foundations": "workspace:*"
   },
   "dependencies": {
+    "@ui-core/icons": "workspace:*",
     "lit": "^3.0.0"
   },
   "devDependencies": {
