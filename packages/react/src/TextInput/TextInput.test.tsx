@@ -154,15 +154,13 @@ describe('TextInput', () => {
 
   it('applies has-leading-icon class when leadingIcon is provided', () => {
     const { container } = render(<TextInput leadingIcon={<span />} />);
-    expect(
-      container.firstElementChild!.classList.contains('ui-text-input--has-leading-icon'),
-    ).toBe(true);
+    expect(container.firstElementChild!.classList.contains('ui-text-input--has-leading-icon')).toBe(
+      true,
+    );
   });
 
   it('floating label is inside field-wrapper', () => {
-    const { container } = render(
-      <TextInput labelPlacement="floating" label="Name" />,
-    );
+    const { container } = render(<TextInput labelPlacement="floating" label="Name" />);
     const wrapper = container.querySelector('.ui-text-input__field-wrapper');
     expect(wrapper!.querySelector('.ui-text-input__label')).toBeTruthy();
   });

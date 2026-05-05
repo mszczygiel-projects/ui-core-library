@@ -6,8 +6,10 @@ export type TextInputSize = 'small' | 'default' | 'large';
 export type TextInputState = 'default' | 'success' | 'error' | 'disabled';
 export type TextInputLabelPlacement = 'top' | 'floating';
 
-export interface TextInputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size' | 'onChange'> {
+export interface TextInputProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'size' | 'onChange'
+> {
   variant?: TextInputVariant;
   size?: TextInputSize;
   label?: string;

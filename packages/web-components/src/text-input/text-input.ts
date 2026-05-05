@@ -15,7 +15,8 @@ export class UiTextInput extends LitElement {
   static override styles = [resetStyles, motionStyles, textInputStyles];
 
   @property({ type: String, reflect: true }) variant: TextInputVariant = 'outline';
-  @property({ type: String, reflect: true, attribute: 'data-size' }) size: TextInputSize = 'default';
+  @property({ type: String, reflect: true, attribute: 'data-size' }) size: TextInputSize =
+    'default';
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: String, reflect: true, attribute: 'label-placement' })
   labelPlacement: TextInputLabelPlacement = 'top';
@@ -61,7 +62,11 @@ export class UiTextInput extends LitElement {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
     this.dispatchEvent(
-      new CustomEvent('ui-change', { detail: { value: this.value }, bubbles: true, composed: true }),
+      new CustomEvent('ui-change', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+      }),
     );
   }
 

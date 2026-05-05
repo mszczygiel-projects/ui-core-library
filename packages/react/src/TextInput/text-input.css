@@ -183,6 +183,7 @@
   position: relative;
   display: flex;
   align-items: center;
+  gap: var(--spacing-2);
 
   background-color: var(--_bg);
   border: var(--_border-width) solid var(--_border);
@@ -331,21 +332,25 @@
 .ui-text-input--floating .ui-text-input__label {
   position: absolute;
   inset-inline-start: var(--_padding-inline);
-  top: var(--_padding-stack);
+  top: calc(var(--size-3) * -1);
+  transform: translateY(0);
   margin: 0;
   font-size: var(--control-label-floating-font-size);
   line-height: var(--control-label-floating-line-height);
   font-weight: var(--control-label-floating-font-weight);
   color: var(--_label);
+  padding: 0 var(--size-1);
+  left: var(--size-2);
+  background-color: var(--color-background-default);
   pointer-events: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   transition:
-    top 150ms ease,
-    font-size 150ms ease,
-    color 150ms ease,
-    transform 150ms ease;
+    top var(--duration-150) ease,
+    font-size var(--duration-150) ease,
+    color var(--duration-150) ease,
+    transform var(--duration-150) ease;
 }
 
 /* Leading icon shifts floating label */
@@ -359,23 +364,29 @@
   transform: translateY(-50%);
   font-size: var(--_font-size);
   color: var(--_placeholder);
+  padding: 0;
+  background: var(--_bg);
+  left: var(--_padding-inline);
 }
 
 /* Focused: label shrunken */
 .ui-text-input--floating .ui-text-input__field-wrapper:focus-within .ui-text-input__label {
-  top: var(--_padding-stack);
+  top: calc(var(--size-3) * -1);
   transform: translateY(0);
   font-size: var(--control-label-floating-font-size);
   color: var(--_label-active);
+  padding: 0 var(--size-1);
+  background-color: var(--color-background-default);
+  left: var(--size-2);
 }
 
 /* Floating input: extra top padding for shrunken label */
-.ui-text-input--floating .ui-text-input__input {
+/* .ui-text-input--floating .ui-text-input__input {
   padding-block-start: calc(
     var(--_padding-stack) + var(--control-label-floating-line-height) + var(--spacing-2)
   );
   padding-block-end: var(--_padding-stack);
-}
+} */
 
 /* Floating label state colors when filled */
 

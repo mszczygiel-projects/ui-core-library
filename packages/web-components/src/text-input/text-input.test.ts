@@ -96,7 +96,11 @@ describe('UiTextInput', () => {
 
   it('variant=filled always uses top label', async () => {
     const el = await fixture<UiTextInput>(
-      html`<ui-text-input variant="filled" label="Name" label-placement="floating"></ui-text-input>`,
+      html`<ui-text-input
+        variant="filled"
+        label="Name"
+        label-placement="floating"
+      ></ui-text-input>`,
     );
     const shadow = el.shadowRoot!;
     const fieldWrapper = shadow.querySelector('.field-wrapper');
@@ -105,9 +109,7 @@ describe('UiTextInput', () => {
   });
 
   it('renders hint when provided', async () => {
-    const el = await fixture<UiTextInput>(
-      html`<ui-text-input hint="Helper text"></ui-text-input>`,
-    );
+    const el = await fixture<UiTextInput>(html`<ui-text-input hint="Helper text"></ui-text-input>`);
     const hint = el.shadowRoot!.querySelector('.hint');
     expect(hint).to.not.equal(null);
     expect(hint!.textContent).to.equal('Helper text');
@@ -124,9 +126,7 @@ describe('UiTextInput', () => {
   });
 
   it('input aria-describedby points to hint when hint is set', async () => {
-    const el = await fixture<UiTextInput>(
-      html`<ui-text-input hint="Some hint"></ui-text-input>`,
-    );
+    const el = await fixture<UiTextInput>(html`<ui-text-input hint="Some hint"></ui-text-input>`);
     expect(el.shadowRoot!.querySelector('input')!.getAttribute('aria-describedby')).to.equal(
       'hint',
     );
