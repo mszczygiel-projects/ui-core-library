@@ -75,7 +75,6 @@ export const States: Story = {
         label="Error"
         placeholder="Error state"
         hint="This field is required."
-        trailingIcon={<IconDanger />}
       />
       <TextInput state="disabled" label="Disabled" placeholder="Disabled state" />
     </div>
@@ -100,28 +99,3 @@ export const WithTrailingIcon: Story = {
   },
 };
 
-export const AllVariants: Story = {
-  render: () => (
-    <div
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '1.5rem',
-        maxWidth: 720,
-      }}
-    >
-      {(['small', 'default', 'large'] as const).flatMap((size) =>
-        (['outline', 'filled', 'underlined'] as const).map((variant) => (
-          <TextInput
-            key={`${variant}-${size}`}
-            variant={variant}
-            size={size}
-            labelPlacement={variant === 'underlined' ? 'floating' : 'top'}
-            label={`${variant} / ${size}`}
-            placeholder="Placeholder"
-          />
-        )),
-      )}
-    </div>
-  ),
-};

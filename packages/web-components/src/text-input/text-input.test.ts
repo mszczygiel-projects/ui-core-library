@@ -152,6 +152,46 @@ describe('UiTextInput', () => {
     expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
   });
 
+  it('renders default danger trailing icon in error state', async () => {
+    const el = await fixture<UiTextInput>(html`<ui-text-input state="error"></ui-text-input>`);
+    await el.updateComplete;
+
+    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="trailing-icon"]');
+    const fallbackIcon = trailingSlot!.querySelector('.icon-content svg');
+
+    expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
+    expect(fallbackIcon).to.not.equal(null);
+  });
+
+  it('does not render default danger icon when custom trailing icon is provided', async () => {
+    const el = await fixture<UiTextInput>(html`
+      <ui-text-input state="error">
+        <span slot="trailing-icon">custom</span>
+      </ui-text-input>
+    `);
+    await el.updateComplete;
+
+    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="trailing-icon"]');
+    const fallbackIcon = trailingSlot!.querySelector('.icon-content');
+
+    expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
+    expect(fallbackIcon).to.equal(null);
+  });
+
+  it('removes default danger trailing icon outside error state', async () => {
+    const el = await fixture<UiTextInput>(html`<ui-text-input state="error"></ui-text-input>`);
+    await el.updateComplete;
+
+    el.state = 'default';
+    await el.updateComplete;
+
+    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="trailing-icon"]');
+    const fallbackIcon = trailingSlot!.querySelector('.icon-content');
+
+    expect(el.hasAttribute('has-trailing-icon')).to.equal(false);
+    expect(fallbackIcon).to.equal(null);
+  });
+
   it('dispatches ui-input event with value on input', async () => {
     const el = await fixture<UiTextInput>(html`<ui-text-input></ui-text-input>`);
     const nativeInput = el.shadowRoot!.querySelector('input')!;

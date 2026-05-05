@@ -1,5 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
+import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { svgMap } from '@ui-core/icons';
 import { textInputStyles } from './text-input.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
@@ -30,6 +32,9 @@ export class UiTextInput extends LitElement {
   @property({ type: Boolean, reflect: true }) required = false;
   @property({ type: Boolean, reflect: true }) readonly = false;
 
+  @state() private _hasLeadingIcon = false;
+  @state() private _hasTrailingIcon = false;
+
   private get _isFloating(): boolean {
     if (this.variant === 'filled') return false;
     if (this.variant === 'underlined') return true;
@@ -40,14 +45,23 @@ export class UiTextInput extends LitElement {
     return this.disabled || this.state === 'disabled';
   }
 
+  private get _showsErrorTrailingIcon(): boolean {
+    return this.state === 'error' && !this._hasTrailingIcon;
+  }
+
+  protected override updated(): void {
+    this.toggleAttribute('has-leading-icon', this._hasLeadingIcon);
+    this.toggleAttribute('has-trailing-icon', this._hasTrailingIcon || this._showsErrorTrailingIcon);
+  }
+
   private _onLeadingSlotChange(e: Event) {
     const slot = e.target as HTMLSlotElement;
-    this.toggleAttribute('has-leading-icon', slot.assignedElements().length > 0);
+    this._hasLeadingIcon = slot.assignedElements().length > 0;
   }
 
   private _onTrailingSlotChange(e: Event) {
     const slot = e.target as HTMLSlotElement;
-    this.toggleAttribute('has-trailing-icon', slot.assignedElements().length > 0);
+    this._hasTrailingIcon = slot.assignedElements().length > 0;
   }
 
   private _onInput(e: Event) {
@@ -108,7 +122,11 @@ export class UiTextInput extends LitElement {
           name="trailing-icon"
           class="icon icon--trailing"
           @slotchange=${this._onTrailingSlotChange}
-        ></slot>
+        >
+          ${this._showsErrorTrailingIcon
+            ? html`<span class="icon-content" aria-hidden="true">${unsafeSVG(svgMap['icon-danger'])}</span>`
+            : nothing}
+        </slot>
       </div>
       ${this.hint ? html`<p id=${hintId} class="hint">${this.hint}</p>` : nothing}
     `;

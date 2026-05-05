@@ -122,6 +122,16 @@ describe('TextInput', () => {
     expect(onChange).toHaveBeenCalledWith('a');
   });
 
+  it('allows typing when used uncontrolled', async () => {
+    const user = userEvent.setup();
+    render(<TextInput label="Email" />);
+
+    const input = screen.getByRole('textbox') as HTMLInputElement;
+    await user.type(input, 'abc');
+
+    expect(input.value).toBe('abc');
+  });
+
   it('forwards className to root element', () => {
     const { container } = render(<TextInput className="custom-class" />);
     expect(container.firstElementChild!.classList.contains('custom-class')).toBe(true);
@@ -150,6 +160,24 @@ describe('TextInput', () => {
   it('renders trailingIcon', () => {
     const { container } = render(<TextInput trailingIcon={<span data-testid="icon" />} />);
     expect(container.querySelector('.ui-text-input__icon--trailing')).toBeTruthy();
+  });
+
+  it('renders default danger trailing icon when state=error', () => {
+    const { container } = render(<TextInput state="error" />);
+    expect(container.querySelector('.ui-text-input__icon--trailing')).toBeTruthy();
+    expect(container.firstElementChild!.classList.contains('ui-text-input--has-trailing-icon')).toBe(true);
+  });
+
+  it('uses custom trailingIcon over default danger icon when state=error', () => {
+    const { container } = render(
+      <TextInput state="error" trailingIcon={<span data-testid="custom" />} />,
+    );
+    expect(container.querySelector('[data-testid="custom"]')).toBeTruthy();
+  });
+
+  it('does not render default trailing icon outside error state', () => {
+    const { container } = render(<TextInput state="default" />);
+    expect(container.querySelector('.ui-text-input__icon--trailing')).toBeNull();
   });
 
   it('applies has-leading-icon class when leadingIcon is provided', () => {

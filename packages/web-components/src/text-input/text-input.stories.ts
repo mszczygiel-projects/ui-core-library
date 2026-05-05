@@ -77,9 +77,7 @@ const iconSpan = (slot: 'leading-icon' | 'trailing-icon', name: keyof typeof svg
 
 export const Outline: Story = {
   args: {
-    labelPlacement: 'floating',
   },
-
   render: (args: InputArgs) => input(args),
 };
 
@@ -146,28 +144,3 @@ export const WithTrailingIcon: Story = {
   render: (args: InputArgs) => input(args, iconSpan('trailing-icon', 'icon-danger')),
 };
 
-export const AllVariants: Story = {
-  render: () =>
-    createElement(
-      'div',
-      {
-        style: {
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '1.5rem',
-          maxWidth: 720,
-        },
-      },
-      ...(['small', 'default', 'large'] as const).flatMap((size) =>
-        (['outline', 'filled', 'underlined'] as const).map((variant) =>
-          input({
-            variant,
-            size,
-            labelPlacement: variant === 'underlined' ? 'floating' : 'top',
-            label: `${variant} / ${size}`,
-            placeholder: 'Placeholder',
-          }),
-        ),
-      ),
-    ),
-};

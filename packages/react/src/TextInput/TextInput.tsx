@@ -1,4 +1,5 @@
 import { useId, type CSSProperties, type ReactNode, type InputHTMLAttributes } from 'react';
+import { IconDanger } from '@ui-core/icons/react';
 import './text-input.css';
 
 export type TextInputVariant = 'outline' | 'filled' | 'underlined';
@@ -29,7 +30,7 @@ export function TextInput({
   label,
   labelPlacement = 'top',
   placeholder = '',
-  value = '',
+  value,
   hint,
   state = 'default',
   leadingIcon,
@@ -47,8 +48,10 @@ export function TextInput({
   const generatedId = useId();
   const inputId = inputProps.id ?? generatedId;
   const hintId = `${inputId}-hint`;
+  const isControlled = value !== undefined;
 
   const isDisabled = disabled || state === 'disabled';
+  const effectiveTrailingIcon = trailingIcon ?? (state === 'error' ? <IconDanger /> : undefined);
 
   const effectivePlacement = (): TextInputLabelPlacement => {
     if (variant === 'filled') return 'top';
@@ -65,7 +68,7 @@ export function TextInput({
     isFloating && 'ui-text-input--floating',
     state !== 'default' && `ui-text-input--state-${state}`,
     leadingIcon && 'ui-text-input--has-leading-icon',
-    trailingIcon && 'ui-text-input--has-trailing-icon',
+    effectiveTrailingIcon && 'ui-text-input--has-trailing-icon',
     className,
   ]
     .filter(Boolean)
@@ -90,7 +93,7 @@ export function TextInput({
           className="ui-text-input__input"
           type={type}
           name={name}
-          value={value}
+          {...(isControlled ? { value } : {})}
           placeholder={isFloating ? ' ' : placeholder}
           disabled={isDisabled}
           required={required}
@@ -101,8 +104,8 @@ export function TextInput({
           onChange={(e) => onChange?.(e.target.value)}
         />
         {isFloating && labelEl}
-        {trailingIcon && (
-          <span className="ui-text-input__icon ui-text-input__icon--trailing">{trailingIcon}</span>
+        {effectiveTrailingIcon && (
+          <span className="ui-text-input__icon ui-text-input__icon--trailing">{effectiveTrailingIcon}</span>
         )}
       </div>
       {hint && (

@@ -482,6 +482,14 @@ export const textInputStyles = css`
     color: inherit;
   }
 
+  .icon-content,
+  .icon-content :where(svg) {
+    display: inline-flex;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    color: inherit;
+  }
+
   /* ---- Hint ---- */
 
   .hint {
