@@ -9,7 +9,7 @@ export const passwordInputStyles = css`
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    padding-inline-end: var(--_padding-inline);
+    margin-left: var(--_padding-inline);
     width: calc(var(--_icon-size) + var(--_padding-inline));
     height: var(--_icon-size);
     color: var(--_icon);
