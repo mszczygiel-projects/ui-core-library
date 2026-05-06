@@ -13,3 +13,5 @@ export type {
   TextInputState,
   TextInputLabelPlacement,
 } from './TextInput/TextInput.js';
+export { PasswordInput } from './PasswordInput/PasswordInput.js';
+export type { PasswordInputProps } from './PasswordInput/PasswordInput.js';
