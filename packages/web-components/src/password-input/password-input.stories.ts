@@ -93,8 +93,18 @@ export const States: Story = {
       'div',
       { style: { display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 } },
       input({ state: 'default', label: 'Default', placeholder: 'Default state' }),
-      input({ state: 'success', label: 'Success', placeholder: 'Success state', hint: 'Password is strong.' }),
-      input({ state: 'error', label: 'Error', placeholder: 'Error state', hint: 'Minimum of 8 characters.' }),
+      input({
+        state: 'success',
+        label: 'Success',
+        placeholder: 'Success state',
+        hint: 'Password is strong.',
+      }),
+      input({
+        state: 'error',
+        label: 'Error',
+        placeholder: 'Error state',
+        hint: 'Minimum of 8 characters.',
+      }),
       input({ state: 'disabled', label: 'Disabled', placeholder: 'Disabled state' }),
     ),
 };

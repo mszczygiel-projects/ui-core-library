@@ -156,7 +156,9 @@ describe('UiTextInput', () => {
     const el = await fixture<UiTextInput>(html`<ui-text-input state="error"></ui-text-input>`);
     await el.updateComplete;
 
-    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="trailing-icon"]');
+    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>(
+      'slot[name="trailing-icon"]',
+    );
     const fallbackIcon = trailingSlot!.querySelector('.icon-content svg');
 
     expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
@@ -171,7 +173,9 @@ describe('UiTextInput', () => {
     `);
     await el.updateComplete;
 
-    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="trailing-icon"]');
+    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>(
+      'slot[name="trailing-icon"]',
+    );
     const fallbackIcon = trailingSlot!.querySelector('.icon-content');
 
     expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
@@ -185,7 +189,9 @@ describe('UiTextInput', () => {
     el.state = 'default';
     await el.updateComplete;
 
-    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="trailing-icon"]');
+    const trailingSlot = el.shadowRoot!.querySelector<HTMLSlotElement>(
+      'slot[name="trailing-icon"]',
+    );
     const fallbackIcon = trailingSlot!.querySelector('.icon-content');
 
     expect(el.hasAttribute('has-trailing-icon')).to.equal(false);

@@ -98,4 +98,3 @@ export const WithTrailingIcon: Story = {
     trailingIcon: <IconDanger />,
   },
 };
-

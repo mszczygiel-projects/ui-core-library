@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { Loader } from '../loader/Loader.js';
-import './button.css';
+import { Loader } from '../Loader/Loader.js';
+import './Button.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'small' | 'default' | 'large';

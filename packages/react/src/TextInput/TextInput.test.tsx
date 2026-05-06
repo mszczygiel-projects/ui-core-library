@@ -165,7 +165,9 @@ describe('TextInput', () => {
   it('renders default danger trailing icon when state=error', () => {
     const { container } = render(<TextInput state="error" />);
     expect(container.querySelector('.ui-text-input__icon--trailing')).toBeTruthy();
-    expect(container.firstElementChild!.classList.contains('ui-text-input--has-trailing-icon')).toBe(true);
+    expect(
+      container.firstElementChild!.classList.contains('ui-text-input--has-trailing-icon'),
+    ).toBe(true);
   });
 
   it('uses custom trailingIcon over default danger icon when state=error', () => {

@@ -1,12 +1,12 @@
 import type { CSSProperties, ReactNode } from 'react';
-import { Loader } from '../loader/Loader.js';
-import './icon-button.css';
+import { Loader } from '../Loader/Loader.js';
+import './IconButton.css';
 
 export type {
   ButtonVariant as IconButtonVariant,
   ButtonSize as IconButtonSize,
-} from '../button/Button.js';
-import type { ButtonVariant, ButtonSize } from '../button/Button.js';
+} from '../Button/Button.js';
+import type { ButtonVariant, ButtonSize } from '../Button/Button.js';
 
 export interface IconButtonProps {
   variant?: ButtonVariant;

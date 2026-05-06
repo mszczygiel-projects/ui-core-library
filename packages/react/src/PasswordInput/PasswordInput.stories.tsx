@@ -56,8 +56,18 @@ export const States: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
       <PasswordInput state="default" label="Default" placeholder="Default state" />
-      <PasswordInput state="success" label="Success" placeholder="Success state" hint="Password is strong." />
-      <PasswordInput state="error" label="Error" placeholder="Error state" hint="Minimum of 8 characters." />
+      <PasswordInput
+        state="success"
+        label="Success"
+        placeholder="Success state"
+        hint="Password is strong."
+      />
+      <PasswordInput
+        state="error"
+        label="Error"
+        placeholder="Error state"
+        hint="Minimum of 8 characters."
+      />
       <PasswordInput state="disabled" label="Disabled" placeholder="Disabled state" />
     </div>
   ),

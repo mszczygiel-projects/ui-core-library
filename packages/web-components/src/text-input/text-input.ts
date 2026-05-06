@@ -51,7 +51,10 @@ export class UiTextInput extends LitElement {
 
   protected override updated(): void {
     this.toggleAttribute('has-leading-icon', this._hasLeadingIcon);
-    this.toggleAttribute('has-trailing-icon', this._hasTrailingIcon || this._showsErrorTrailingIcon);
+    this.toggleAttribute(
+      'has-trailing-icon',
+      this._hasTrailingIcon || this._showsErrorTrailingIcon,
+    );
   }
 
   private _onLeadingSlotChange(e: Event) {
@@ -124,7 +127,9 @@ export class UiTextInput extends LitElement {
           @slotchange=${this._onTrailingSlotChange}
         >
           ${this._showsErrorTrailingIcon
-            ? html`<span class="icon-content" aria-hidden="true">${unsafeSVG(svgMap['icon-danger'])}</span>`
+            ? html`<span class="icon-content" aria-hidden="true"
+                >${unsafeSVG(svgMap['icon-danger'])}</span
+              >`
             : nothing}
         </slot>
       </div>

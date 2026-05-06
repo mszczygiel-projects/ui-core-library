@@ -2,8 +2,13 @@ import { useState, type CSSProperties } from 'react';
 import { IconEye } from '@ui-core/icons/react';
 import { IconEyeSlash } from '@ui-core/icons/react';
 import { TextInput } from '../TextInput/TextInput.js';
-import type { TextInputVariant, TextInputSize, TextInputState, TextInputLabelPlacement } from '../TextInput/TextInput.js';
-import './password-input.css';
+import type {
+  TextInputVariant,
+  TextInputSize,
+  TextInputState,
+  TextInputLabelPlacement,
+} from '../TextInput/TextInput.js';
+import './PasswordInput.css';
 
 export interface PasswordInputProps {
   variant?: TextInputVariant;

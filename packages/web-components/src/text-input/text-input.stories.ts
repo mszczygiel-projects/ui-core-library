@@ -76,8 +76,7 @@ const iconSpan = (slot: 'leading-icon' | 'trailing-icon', name: keyof typeof svg
   });
 
 export const Outline: Story = {
-  args: {
-  },
+  args: {},
   render: (args: InputArgs) => input(args),
 };
 
@@ -143,4 +142,3 @@ export const WithTrailingIcon: Story = {
   args: { state: 'error', label: 'Email', placeholder: 'you@example.com', hint: 'Invalid email.' },
   render: (args: InputArgs) => input(args, iconSpan('trailing-icon', 'icon-danger')),
 };
-

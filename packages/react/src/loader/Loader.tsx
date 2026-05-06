@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 import { getUiCoreConfig } from '@ui-core/foundations';
-import './loader.css';
+import './Loader.css';
 
 export interface LoaderProps {
   size?: 'small' | 'default' | 'large';

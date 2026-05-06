@@ -1,6 +1,6 @@
 import { useId, type CSSProperties, type ReactNode, type InputHTMLAttributes } from 'react';
 import { IconDanger } from '@ui-core/icons/react';
-import './text-input.css';
+import './TextInput.css';
 
 export type TextInputVariant = 'outline' | 'filled' | 'underlined';
 export type TextInputSize = 'small' | 'default' | 'large';
@@ -105,7 +105,9 @@ export function TextInput({
         />
         {isFloating && labelEl}
         {effectiveTrailingIcon && (
-          <span className="ui-text-input__icon ui-text-input__icon--trailing">{effectiveTrailingIcon}</span>
+          <span className="ui-text-input__icon ui-text-input__icon--trailing">
+            {effectiveTrailingIcon}
+          </span>
         )}
       </div>
       {hint && (
