@@ -28,6 +28,9 @@ const config: StorybookConfig = {
           '@ui-core/react': path.resolve(__dirname, '../../../packages/react/src'),
           '@ui-core/icons': path.resolve(__dirname, '../../../packages/icons/src'),
         },
+        extensionAlias: {
+          '.js': ['.tsx', '.ts', '.js'],
+        },
       },
     });
 
