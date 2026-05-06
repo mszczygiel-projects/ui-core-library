@@ -9,8 +9,8 @@ export const passwordInputStyles = css`
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    margin-left: var(--_padding-inline);
-    width: calc(var(--_icon-size) + var(--_padding-inline));
+    margin-inline-end: var(--_padding-inline);
+    width: var(--_icon-size);
     height: var(--_icon-size);
     color: var(--_icon);
   }

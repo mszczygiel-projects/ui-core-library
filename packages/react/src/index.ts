@@ -15,3 +15,5 @@ export type {
 } from './TextInput/TextInput.js';
 export { PasswordInput } from './PasswordInput/PasswordInput.js';
 export type { PasswordInputProps } from './PasswordInput/PasswordInput.js';
+export { SearchInput } from './SearchInput/SearchInput.js';
+export type { SearchInputProps } from './SearchInput/SearchInput.js';

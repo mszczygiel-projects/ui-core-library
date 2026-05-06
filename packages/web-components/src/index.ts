@@ -21,3 +21,5 @@ export type {
   PasswordInputState,
   PasswordInputLabelPlacement,
 } from './password-input/password-input.js';
+export { UiSearchInput } from './search-input/search-input.js';
+export type { SearchInputVariant, SearchInputSize, SearchInputState } from './search-input/search-input.js';
