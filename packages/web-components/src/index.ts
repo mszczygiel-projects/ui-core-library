@@ -14,3 +14,10 @@ export type {
   TextInputState,
   TextInputLabelPlacement,
 } from './text-input/text-input.js';
+export { UiPasswordInput } from './password-input/password-input.js';
+export type {
+  PasswordInputVariant,
+  PasswordInputSize,
+  PasswordInputState,
+  PasswordInputLabelPlacement,
+} from './password-input/password-input.js';
