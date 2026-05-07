@@ -3,7 +3,7 @@ import { IconSearch } from '@ui-core/icons/react';
 import { IconClose } from '@ui-core/icons/react';
 import { TextField } from '../TextField/TextField.js';
 import type { TextFieldVariant, TextFieldSize, TextFieldState } from '../TextField/TextField.js';
-import './search-field.css';
+import './SearchField.css';
 
 export interface SearchFieldProps {
   variant?: TextFieldVariant;

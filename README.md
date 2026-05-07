@@ -7,6 +7,12 @@ Framework-agnostic UI component library published as private npm packages to Git
 | Storybook | https://mszczygiel-projects.github.io/ui-core-library/           |
 | Chromatic | https://www.chromatic.com/library?appId=69f357f4fd00c35ca47a1781 |
 
+|                           |                                                                        |
+| ------------------------- | ---------------------------------------------------------------------- |
+| Figma: [Core] Foundations | https://www.figma.com/design/Xxn0guDvAfyIqEKB6kADE9/-Core--Foundations |
+| Figma: [Core] Icons       | https://www.figma.com/design/lRdwn99eZTt6gCFeqc2Seh/Icons-Default      |
+| Figma: [Core] UI Library  | https://www.figma.com/design/BzqkruN7r8mwWfFReznc83/-Core--UI-Library  |
+
 ## Packages
 
 | Package                | Description                                                                  |
