@@ -473,6 +473,66 @@
   --color-button-danger-border-focus: var(--color-action-danger-on-base-focus);
   --color-button-danger-border-active: var(--color-action-danger-on-base-active);
   --color-button-danger-border-disabled: var(--color-action-danger-on-base-disabled);
+  --color-checkbox-background-default: var(--color-control-outline-background-default);
+  --color-checkbox-background-hover: var(--color-control-outline-background-hover);
+  --color-checkbox-background-active: var(--color-control-outline-background-active);
+  --color-checkbox-background-success: var(--color-control-outline-background-success);
+  --color-checkbox-background-error: var(--color-control-outline-background-error);
+  --color-checkbox-background-disabled: var(--color-control-outline-background-disabled);
+  --color-checkbox-border-default: var(--color-control-outline-border-default);
+  --color-checkbox-border-hover: var(--color-control-outline-border-hover);
+  --color-checkbox-border-active: var(--color-control-outline-border-active);
+  --color-checkbox-border-success: var(--color-control-outline-border-success);
+  --color-checkbox-border-error: var(--color-control-outline-border-error);
+  --color-checkbox-border-disabled: var(--color-control-outline-border-disabled);
+  --color-checkbox-checked-background-default: var(--color-action-primary-base-default);
+  --color-checkbox-checked-background-hover: var(--color-action-primary-base-hover);
+  --color-checkbox-checked-background-active: var(--color-action-primary-base-focus);
+  --color-checkbox-checked-background-success: var(--color-feedback-success-base);
+  --color-checkbox-checked-background-error: var(--color-feedback-error-base);
+  --color-checkbox-checked-background-disabled: var(--color-action-primary-base-disabled);
+  --color-checkbox-checked-border-default: var(--color-action-primary-base-default);
+  --color-checkbox-checked-border-hover: var(--color-action-primary-base-hover);
+  --color-checkbox-checked-border-active: var(--color-action-primary-base-focus);
+  --color-checkbox-checked-border-success: var(--color-feedback-success-base);
+  --color-checkbox-checked-border-error: var(--color-feedback-error-base);
+  --color-checkbox-checked-border-disabled: var(--color-action-primary-base-disabled);
+  --color-checkbox-checked-mark-default: var(--color-action-primary-on-base-default);
+  --color-checkbox-checked-mark-hover: var(--color-action-primary-on-base-hover);
+  --color-checkbox-checked-mark-active: var(--color-action-primary-on-base-focus);
+  --color-checkbox-checked-mark-success: var(--color-feedback-success-on-base);
+  --color-checkbox-checked-mark-error: var(--color-feedback-error-on-base);
+  --color-checkbox-checked-mark-disabled: var(--color-action-primary-on-base-disabled);
+  --color-radio-background-default: var(--color-control-outline-background-default);
+  --color-radio-background-hover: var(--color-control-outline-background-hover);
+  --color-radio-background-active: var(--color-control-outline-background-active);
+  --color-radio-background-success: var(--color-control-outline-background-success);
+  --color-radio-background-error: var(--color-control-outline-background-error);
+  --color-radio-background-disabled: var(--color-control-outline-background-disabled);
+  --color-radio-border-default: var(--color-control-outline-border-default);
+  --color-radio-border-hover: var(--color-control-outline-border-hover);
+  --color-radio-border-active: var(--color-control-outline-border-active);
+  --color-radio-border-success: var(--color-control-outline-border-success);
+  --color-radio-border-error: var(--color-control-outline-border-error);
+  --color-radio-border-disabled: var(--color-control-outline-border-disabled);
+  --color-radio-checked-dot-default: var(--color-action-primary-base-default);
+  --color-radio-checked-dot-hover: var(--color-action-primary-base-hover);
+  --color-radio-checked-dot-active: var(--color-action-primary-base-focus);
+  --color-radio-checked-dot-success: var(--color-feedback-success-base);
+  --color-radio-checked-dot-error: var(--color-feedback-error-base);
+  --color-radio-checked-dot-disabled: var(--color-action-primary-base-disabled);
+  --color-radio-checked-background-default: var(--color-action-primary-on-base-default);
+  --color-radio-checked-background-hover: var(--color-action-primary-on-base-hover);
+  --color-radio-checked-background-active: var(--color-action-primary-on-base-focus);
+  --color-radio-checked-background-success: var(--color-feedback-success-on-base);
+  --color-radio-checked-background-error: var(--color-feedback-error-on-base);
+  --color-radio-checked-background-disabled: var(--color-action-primary-on-base-disabled);
+  --color-radio-checked-border-default: var(--color-action-primary-base-default);
+  --color-radio-checked-border-hover: var(--color-action-primary-base-hover);
+  --color-radio-checked-border-active: var(--color-action-primary-base-focus);
+  --color-radio-checked-border-success: var(--color-feedback-success-base);
+  --color-radio-checked-border-error: var(--color-feedback-error-base);
+  --color-radio-checked-border-disabled: var(--color-action-primary-base-disabled);
   --color-on-subtle-brand-primary: var(--color-brand-primary);
   --color-on-subtle-brand-secondary: var(--color-brand-secondary);
   --color-on-subtle-brand-tertiary: var(--color-brand-tertiary);
@@ -818,6 +878,80 @@
   --color-on-subtle-button-danger-border-disabled: var(
     --color-on-subtle-action-danger-on-base-disabled
   );
+  --color-on-subtle-checkbox-background-default: var(--color-checkbox-background-default);
+  --color-on-subtle-checkbox-background-hover: var(--color-checkbox-background-hover);
+  --color-on-subtle-checkbox-background-active: var(--color-checkbox-background-active);
+  --color-on-subtle-checkbox-background-success: var(--color-checkbox-background-success);
+  --color-on-subtle-checkbox-background-error: var(--color-checkbox-background-error);
+  --color-on-subtle-checkbox-background-disabled: var(--color-checkbox-background-disabled);
+  --color-on-subtle-checkbox-border-default: var(--color-checkbox-border-default);
+  --color-on-subtle-checkbox-border-hover: var(--color-checkbox-border-hover);
+  --color-on-subtle-checkbox-border-active: var(--color-checkbox-border-active);
+  --color-on-subtle-checkbox-border-success: var(--color-checkbox-border-success);
+  --color-on-subtle-checkbox-border-error: var(--color-checkbox-border-error);
+  --color-on-subtle-checkbox-border-disabled: var(--color-checkbox-border-disabled);
+  --color-on-subtle-checkbox-checked-background-default: var(
+    --color-checkbox-checked-background-default
+  );
+  --color-on-subtle-checkbox-checked-background-hover: var(
+    --color-checkbox-checked-background-hover
+  );
+  --color-on-subtle-checkbox-checked-background-active: var(
+    --color-checkbox-checked-background-active
+  );
+  --color-on-subtle-checkbox-checked-background-success: var(
+    --color-checkbox-checked-background-success
+  );
+  --color-on-subtle-checkbox-checked-background-error: var(
+    --color-checkbox-checked-background-error
+  );
+  --color-on-subtle-checkbox-checked-background-disabled: var(
+    --color-checkbox-checked-background-disabled
+  );
+  --color-on-subtle-checkbox-checked-mark-default: var(--color-checkbox-checked-mark-default);
+  --color-on-subtle-checkbox-checked-mark-hover: var(--color-checkbox-checked-mark-hover);
+  --color-on-subtle-checkbox-checked-mark-active: var(--color-checkbox-checked-mark-active);
+  --color-on-subtle-checkbox-checked-mark-success: var(--color-checkbox-checked-mark-success);
+  --color-on-subtle-checkbox-checked-mark-error: var(--color-checkbox-checked-mark-error);
+  --color-on-subtle-checkbox-checked-mark-disabled: var(--color-checkbox-checked-mark-disabled);
+  --color-on-subtle-checkbox-checked-border-default: var(--color-checkbox-checked-border-default);
+  --color-on-subtle-checkbox-checked-border-hover: var(--color-checkbox-checked-border-hover);
+  --color-on-subtle-checkbox-checked-border-active: var(--color-checkbox-checked-border-active);
+  --color-on-subtle-checkbox-checked-border-success: var(--color-checkbox-checked-border-success);
+  --color-on-subtle-checkbox-checked-border-error: var(--color-checkbox-checked-border-error);
+  --color-on-subtle-checkbox-checked-border-disabled: var(--color-checkbox-checked-border-disabled);
+  --color-on-subtle-radio-background-default: var(--color-radio-background-default);
+  --color-on-subtle-radio-background-hover: var(--color-radio-background-hover);
+  --color-on-subtle-radio-background-active: var(--color-radio-background-active);
+  --color-on-subtle-radio-background-success: var(--color-radio-background-success);
+  --color-on-subtle-radio-background-error: var(--color-radio-background-error);
+  --color-on-subtle-radio-background-disabled: var(--color-radio-background-disabled);
+  --color-on-subtle-radio-border-default: var(--color-radio-border-default);
+  --color-on-subtle-radio-border-hover: var(--color-radio-border-hover);
+  --color-on-subtle-radio-border-active: var(--color-radio-border-active);
+  --color-on-subtle-radio-border-success: var(--color-radio-border-success);
+  --color-on-subtle-radio-border-error: var(--color-radio-border-error);
+  --color-on-subtle-radio-border-disabled: var(--color-radio-border-disabled);
+  --color-on-subtle-radio-checked-dot-default: var(--color-radio-checked-dot-default);
+  --color-on-subtle-radio-checked-dot-hover: var(--color-radio-checked-dot-hover);
+  --color-on-subtle-radio-checked-dot-active: var(--color-radio-checked-dot-active);
+  --color-on-subtle-radio-checked-dot-success: var(--color-radio-checked-dot-success);
+  --color-on-subtle-radio-checked-dot-error: var(--color-radio-checked-dot-error);
+  --color-on-subtle-radio-checked-dot-disabled: var(--color-radio-checked-dot-disabled);
+  --color-on-subtle-radio-checked-background-default: var(--color-radio-checked-background-default);
+  --color-on-subtle-radio-checked-background-hover: var(--color-radio-checked-background-hover);
+  --color-on-subtle-radio-checked-background-active: var(--color-radio-checked-background-active);
+  --color-on-subtle-radio-checked-background-success: var(--color-radio-checked-background-success);
+  --color-on-subtle-radio-checked-background-error: var(--color-radio-checked-background-error);
+  --color-on-subtle-radio-checked-background-disabled: var(
+    --color-radio-checked-background-disabled
+  );
+  --color-on-subtle-radio-checked-border-default: var(--color-radio-checked-border-default);
+  --color-on-subtle-radio-checked-border-hover: var(--color-radio-checked-border-hover);
+  --color-on-subtle-radio-checked-border-active: var(--color-radio-checked-border-active);
+  --color-on-subtle-radio-checked-border-success: var(--color-radio-checked-border-success);
+  --color-on-subtle-radio-checked-border-error: var(--color-radio-checked-border-error);
+  --color-on-subtle-radio-checked-border-disabled: var(--color-radio-checked-border-disabled);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -1195,6 +1329,86 @@
   --color-on-inverse-button-secondary-text-hover: var(
     --color-on-inverse-action-secondary-on-base-hover
   );
+  --color-on-inverse-checkbox-background-default: var(--color-checkbox-background-default);
+  --color-on-inverse-checkbox-background-hover: var(--color-checkbox-background-hover);
+  --color-on-inverse-checkbox-background-active: var(--color-checkbox-background-active);
+  --color-on-inverse-checkbox-background-success: var(--color-checkbox-background-success);
+  --color-on-inverse-checkbox-background-error: var(--color-checkbox-background-error);
+  --color-on-inverse-checkbox-background-disabled: var(--color-checkbox-background-disabled);
+  --color-on-inverse-checkbox-border-default: var(--color-checkbox-border-default);
+  --color-on-inverse-checkbox-border-hover: var(--color-checkbox-border-hover);
+  --color-on-inverse-checkbox-border-active: var(--color-checkbox-border-active);
+  --color-on-inverse-checkbox-border-success: var(--color-checkbox-border-success);
+  --color-on-inverse-checkbox-border-error: var(--color-checkbox-border-error);
+  --color-on-inverse-checkbox-border-disabled: var(--color-checkbox-border-disabled);
+  --color-on-inverse-checkbox-checked-background-default: var(
+    --color-checkbox-checked-background-default
+  );
+  --color-on-inverse-checkbox-checked-background-hover: var(
+    --color-checkbox-checked-background-hover
+  );
+  --color-on-inverse-checkbox-checked-background-active: var(
+    --color-checkbox-checked-background-active
+  );
+  --color-on-inverse-checkbox-checked-background-success: var(
+    --color-checkbox-checked-background-success
+  );
+  --color-on-inverse-checkbox-checked-background-error: var(
+    --color-checkbox-checked-background-error
+  );
+  --color-on-inverse-checkbox-checked-background-disabled: var(
+    --color-checkbox-checked-background-disabled
+  );
+  --color-on-inverse-checkbox-checked-mark-default: var(--color-checkbox-checked-mark-default);
+  --color-on-inverse-checkbox-checked-mark-hover: var(--color-checkbox-checked-mark-hover);
+  --color-on-inverse-checkbox-checked-mark-active: var(--color-checkbox-checked-mark-active);
+  --color-on-inverse-checkbox-checked-mark-success: var(--color-checkbox-checked-mark-success);
+  --color-on-inverse-checkbox-checked-mark-error: var(--color-checkbox-checked-mark-error);
+  --color-on-inverse-checkbox-checked-mark-disabled: var(--color-checkbox-checked-mark-disabled);
+  --color-on-inverse-checkbox-checked-border-default: var(--color-checkbox-checked-border-default);
+  --color-on-inverse-checkbox-checked-border-hover: var(--color-checkbox-checked-border-hover);
+  --color-on-inverse-checkbox-checked-border-active: var(--color-checkbox-checked-border-active);
+  --color-on-inverse-checkbox-checked-border-success: var(--color-checkbox-checked-border-success);
+  --color-on-inverse-checkbox-checked-border-error: var(--color-checkbox-checked-border-error);
+  --color-on-inverse-checkbox-checked-border-disabled: var(
+    --color-checkbox-checked-border-disabled
+  );
+  --color-on-inverse-radio-background-default: var(--color-radio-background-default);
+  --color-on-inverse-radio-background-hover: var(--color-radio-background-hover);
+  --color-on-inverse-radio-background-active: var(--color-radio-background-active);
+  --color-on-inverse-radio-background-success: var(--color-radio-background-success);
+  --color-on-inverse-radio-background-error: var(--color-radio-background-error);
+  --color-on-inverse-radio-background-disabled: var(--color-radio-background-disabled);
+  --color-on-inverse-radio-border-default: var(--color-radio-border-default);
+  --color-on-inverse-radio-border-hover: var(--color-radio-border-hover);
+  --color-on-inverse-radio-border-active: var(--color-radio-border-active);
+  --color-on-inverse-radio-border-success: var(--color-radio-border-success);
+  --color-on-inverse-radio-border-error: var(--color-radio-border-error);
+  --color-on-inverse-radio-border-disabled: var(--color-radio-border-disabled);
+  --color-on-inverse-radio-checked-dot-default: var(--color-radio-checked-dot-default);
+  --color-on-inverse-radio-checked-dot-hover: var(--color-radio-checked-dot-hover);
+  --color-on-inverse-radio-checked-dot-active: var(--color-radio-checked-dot-active);
+  --color-on-inverse-radio-checked-dot-success: var(--color-radio-checked-dot-success);
+  --color-on-inverse-radio-checked-dot-error: var(--color-radio-checked-dot-error);
+  --color-on-inverse-radio-checked-dot-disabled: var(--color-radio-checked-dot-disabled);
+  --color-on-inverse-radio-checked-background-default: var(
+    --color-radio-checked-background-default
+  );
+  --color-on-inverse-radio-checked-background-hover: var(--color-radio-checked-background-hover);
+  --color-on-inverse-radio-checked-background-active: var(--color-radio-checked-background-active);
+  --color-on-inverse-radio-checked-background-success: var(
+    --color-radio-checked-background-success
+  );
+  --color-on-inverse-radio-checked-background-error: var(--color-radio-checked-background-error);
+  --color-on-inverse-radio-checked-background-disabled: var(
+    --color-radio-checked-background-disabled
+  );
+  --color-on-inverse-radio-checked-border-default: var(--color-radio-checked-border-default);
+  --color-on-inverse-radio-checked-border-hover: var(--color-radio-checked-border-hover);
+  --color-on-inverse-radio-checked-border-active: var(--color-radio-checked-border-active);
+  --color-on-inverse-radio-checked-border-success: var(--color-radio-checked-border-success);
+  --color-on-inverse-radio-checked-border-error: var(--color-radio-checked-border-error);
+  --color-on-inverse-radio-checked-border-disabled: var(--color-radio-checked-border-disabled);
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -1650,6 +1864,110 @@
   --color-on-brand-primary-button-secondary-text-hover: var(
     --color-on-brand-primary-action-secondary-on-base-hover
   );
+  --color-on-brand-primary-checkbox-background-default: var(--color-checkbox-background-default);
+  --color-on-brand-primary-checkbox-background-hover: var(--color-checkbox-background-hover);
+  --color-on-brand-primary-checkbox-background-active: var(--color-checkbox-background-active);
+  --color-on-brand-primary-checkbox-background-success: var(--color-checkbox-background-success);
+  --color-on-brand-primary-checkbox-background-error: var(--color-checkbox-background-error);
+  --color-on-brand-primary-checkbox-background-disabled: var(--color-checkbox-background-disabled);
+  --color-on-brand-primary-checkbox-border-default: var(--color-checkbox-border-default);
+  --color-on-brand-primary-checkbox-border-hover: var(--color-checkbox-border-hover);
+  --color-on-brand-primary-checkbox-border-active: var(--color-checkbox-border-active);
+  --color-on-brand-primary-checkbox-border-success: var(--color-checkbox-border-success);
+  --color-on-brand-primary-checkbox-border-error: var(--color-checkbox-border-error);
+  --color-on-brand-primary-checkbox-border-disabled: var(--color-checkbox-border-disabled);
+  --color-on-brand-primary-checkbox-checked-background-default: var(
+    --color-checkbox-checked-background-default
+  );
+  --color-on-brand-primary-checkbox-checked-background-hover: var(
+    --color-checkbox-checked-background-hover
+  );
+  --color-on-brand-primary-checkbox-checked-background-active: var(
+    --color-checkbox-checked-background-active
+  );
+  --color-on-brand-primary-checkbox-checked-background-success: var(
+    --color-checkbox-checked-background-success
+  );
+  --color-on-brand-primary-checkbox-checked-background-error: var(
+    --color-checkbox-checked-background-error
+  );
+  --color-on-brand-primary-checkbox-checked-background-disabled: var(
+    --color-checkbox-checked-background-disabled
+  );
+  --color-on-brand-primary-checkbox-checked-mark-default: var(
+    --color-checkbox-checked-mark-default
+  );
+  --color-on-brand-primary-checkbox-checked-mark-hover: var(--color-checkbox-checked-mark-hover);
+  --color-on-brand-primary-checkbox-checked-mark-active: var(--color-checkbox-checked-mark-active);
+  --color-on-brand-primary-checkbox-checked-mark-success: var(
+    --color-checkbox-checked-mark-success
+  );
+  --color-on-brand-primary-checkbox-checked-mark-error: var(--color-checkbox-checked-mark-error);
+  --color-on-brand-primary-checkbox-checked-mark-disabled: var(
+    --color-checkbox-checked-mark-disabled
+  );
+  --color-on-brand-primary-checkbox-checked-border-default: var(
+    --color-checkbox-checked-border-default
+  );
+  --color-on-brand-primary-checkbox-checked-border-hover: var(
+    --color-checkbox-checked-border-hover
+  );
+  --color-on-brand-primary-checkbox-checked-border-active: var(
+    --color-checkbox-checked-border-active
+  );
+  --color-on-brand-primary-checkbox-checked-border-success: var(
+    --color-checkbox-checked-border-success
+  );
+  --color-on-brand-primary-checkbox-checked-border-error: var(
+    --color-checkbox-checked-border-error
+  );
+  --color-on-brand-primary-checkbox-checked-border-disabled: var(
+    --color-checkbox-checked-border-disabled
+  );
+  --color-on-brand-primary-radio-background-default: var(--color-radio-background-default);
+  --color-on-brand-primary-radio-background-hover: var(--color-radio-background-hover);
+  --color-on-brand-primary-radio-background-active: var(--color-radio-background-active);
+  --color-on-brand-primary-radio-background-success: var(--color-radio-background-success);
+  --color-on-brand-primary-radio-background-error: var(--color-radio-background-error);
+  --color-on-brand-primary-radio-background-disabled: var(--color-radio-background-disabled);
+  --color-on-brand-primary-radio-border-default: var(--color-radio-border-default);
+  --color-on-brand-primary-radio-border-hover: var(--color-radio-border-hover);
+  --color-on-brand-primary-radio-border-active: var(--color-radio-border-active);
+  --color-on-brand-primary-radio-border-success: var(--color-radio-border-success);
+  --color-on-brand-primary-radio-border-error: var(--color-radio-border-error);
+  --color-on-brand-primary-radio-border-disabled: var(--color-radio-border-disabled);
+  --color-on-brand-primary-radio-checked-dot-default: var(--color-radio-checked-dot-default);
+  --color-on-brand-primary-radio-checked-dot-hover: var(--color-radio-checked-dot-hover);
+  --color-on-brand-primary-radio-checked-dot-active: var(--color-radio-checked-dot-active);
+  --color-on-brand-primary-radio-checked-dot-success: var(--color-radio-checked-dot-success);
+  --color-on-brand-primary-radio-checked-dot-error: var(--color-radio-checked-dot-error);
+  --color-on-brand-primary-radio-checked-dot-disabled: var(--color-radio-checked-dot-disabled);
+  --color-on-brand-primary-radio-checked-background-default: var(
+    --color-radio-checked-background-default
+  );
+  --color-on-brand-primary-radio-checked-background-hover: var(
+    --color-radio-checked-background-hover
+  );
+  --color-on-brand-primary-radio-checked-background-active: var(
+    --color-radio-checked-background-active
+  );
+  --color-on-brand-primary-radio-checked-background-success: var(
+    --color-radio-checked-background-success
+  );
+  --color-on-brand-primary-radio-checked-background-error: var(
+    --color-radio-checked-background-error
+  );
+  --color-on-brand-primary-radio-checked-background-disabled: var(
+    --color-radio-checked-background-disabled
+  );
+  --color-on-brand-primary-radio-checked-border-default: var(--color-radio-checked-border-default);
+  --color-on-brand-primary-radio-checked-border-hover: var(--color-radio-checked-border-hover);
+  --color-on-brand-primary-radio-checked-border-active: var(--color-radio-checked-border-active);
+  --color-on-brand-primary-radio-checked-border-success: var(--color-radio-checked-border-success);
+  --color-on-brand-primary-radio-checked-border-error: var(--color-radio-checked-border-error);
+  --color-on-brand-primary-radio-checked-border-disabled: var(
+    --color-radio-checked-border-disabled
+  );
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
   --typography-heading-font-family: "Playfair Display";
@@ -1683,6 +2001,7 @@
   --color-background-sunken: var(--color-gray-800);
   --color-background-subtle: var(--color-gray-700);
   --color-background-inverse: var(--color-white-1000);
+  --color-radio-background-hover: var(--color-control-outline-background-hover);
   --color-selection-background: var(--color-button-primary-background-default);
 }
 
@@ -1973,6 +2292,80 @@
   --color-button-secondary-text-disabled: var(--color-on-subtle-button-secondary-text-disabled);
   --color-button-secondary-text-focus: var(--color-on-subtle-button-secondary-text-focus);
   --color-button-secondary-text-hover: var(--color-on-subtle-button-secondary-text-hover);
+  --color-checkbox-background-default: var(--color-on-subtle-checkbox-background-default);
+  --color-checkbox-background-hover: var(--color-on-subtle-checkbox-background-hover);
+  --color-checkbox-background-active: var(--color-on-subtle-checkbox-background-active);
+  --color-checkbox-background-success: var(--color-on-subtle-checkbox-background-success);
+  --color-checkbox-background-error: var(--color-on-subtle-checkbox-background-error);
+  --color-checkbox-background-disabled: var(--color-on-subtle-checkbox-background-disabled);
+  --color-checkbox-border-default: var(--color-on-subtle-checkbox-border-default);
+  --color-checkbox-border-hover: var(--color-on-subtle-checkbox-border-hover);
+  --color-checkbox-border-active: var(--color-on-subtle-checkbox-border-active);
+  --color-checkbox-border-success: var(--color-on-subtle-checkbox-border-success);
+  --color-checkbox-border-error: var(--color-on-subtle-checkbox-border-error);
+  --color-checkbox-border-disabled: var(--color-on-subtle-checkbox-border-disabled);
+  --color-checkbox-checked-background-default: var(
+    --color-on-subtle-checkbox-checked-background-default
+  );
+  --color-checkbox-checked-background-hover: var(
+    --color-on-subtle-checkbox-checked-background-hover
+  );
+  --color-checkbox-checked-background-active: var(
+    --color-on-subtle-checkbox-checked-background-active
+  );
+  --color-checkbox-checked-background-success: var(
+    --color-on-subtle-checkbox-checked-background-success
+  );
+  --color-checkbox-checked-background-error: var(
+    --color-on-subtle-checkbox-checked-background-error
+  );
+  --color-checkbox-checked-background-disabled: var(
+    --color-on-subtle-checkbox-checked-background-disabled
+  );
+  --color-checkbox-checked-mark-default: var(--color-on-subtle-checkbox-checked-mark-default);
+  --color-checkbox-checked-mark-hover: var(--color-on-subtle-checkbox-checked-mark-hover);
+  --color-checkbox-checked-mark-active: var(--color-on-subtle-checkbox-checked-mark-active);
+  --color-checkbox-checked-mark-success: var(--color-on-subtle-checkbox-checked-mark-success);
+  --color-checkbox-checked-mark-error: var(--color-on-subtle-checkbox-checked-mark-error);
+  --color-checkbox-checked-mark-disabled: var(--color-on-subtle-checkbox-checked-mark-disabled);
+  --color-checkbox-checked-border-default: var(--color-on-subtle-checkbox-checked-border-default);
+  --color-checkbox-checked-border-hover: var(--color-on-subtle-checkbox-checked-border-hover);
+  --color-checkbox-checked-border-active: var(--color-on-subtle-checkbox-checked-border-active);
+  --color-checkbox-checked-border-success: var(--color-on-subtle-checkbox-checked-border-success);
+  --color-checkbox-checked-border-error: var(--color-on-subtle-checkbox-checked-border-error);
+  --color-checkbox-checked-border-disabled: var(--color-on-subtle-checkbox-checked-border-disabled);
+  --color-radio-background-default: var(--color-on-subtle-radio-background-default);
+  --color-radio-background-hover: var(--color-on-subtle-radio-background-hover);
+  --color-radio-background-active: var(--color-on-subtle-radio-background-active);
+  --color-radio-background-success: var(--color-on-subtle-radio-background-success);
+  --color-radio-background-error: var(--color-on-subtle-radio-background-error);
+  --color-radio-background-disabled: var(--color-on-subtle-radio-background-disabled);
+  --color-radio-border-default: var(--color-on-subtle-radio-border-default);
+  --color-radio-border-hover: var(--color-on-subtle-radio-border-hover);
+  --color-radio-border-active: var(--color-on-subtle-radio-border-active);
+  --color-radio-border-success: var(--color-on-subtle-radio-border-success);
+  --color-radio-border-error: var(--color-on-subtle-radio-border-error);
+  --color-radio-border-disabled: var(--color-on-subtle-radio-border-disabled);
+  --color-radio-checked-dot-default: var(--color-on-subtle-radio-checked-dot-default);
+  --color-radio-checked-dot-hover: var(--color-on-subtle-radio-checked-dot-hover);
+  --color-radio-checked-dot-active: var(--color-on-subtle-radio-checked-dot-active);
+  --color-radio-checked-dot-success: var(--color-on-subtle-radio-checked-dot-success);
+  --color-radio-checked-dot-error: var(--color-on-subtle-radio-checked-dot-error);
+  --color-radio-checked-dot-disabled: var(--color-on-subtle-radio-checked-dot-disabled);
+  --color-radio-checked-background-default: var(--color-on-subtle-radio-checked-background-default);
+  --color-radio-checked-background-hover: var(--color-on-subtle-radio-checked-background-hover);
+  --color-radio-checked-background-active: var(--color-on-subtle-radio-checked-background-active);
+  --color-radio-checked-background-success: var(--color-on-subtle-radio-checked-background-success);
+  --color-radio-checked-background-error: var(--color-on-subtle-radio-checked-background-error);
+  --color-radio-checked-background-disabled: var(
+    --color-on-subtle-radio-checked-background-disabled
+  );
+  --color-radio-checked-border-default: var(--color-on-subtle-radio-checked-border-default);
+  --color-radio-checked-border-hover: var(--color-on-subtle-radio-checked-border-hover);
+  --color-radio-checked-border-active: var(--color-on-subtle-radio-checked-border-active);
+  --color-radio-checked-border-success: var(--color-on-subtle-radio-checked-border-success);
+  --color-radio-checked-border-error: var(--color-on-subtle-radio-checked-border-error);
+  --color-radio-checked-border-disabled: var(--color-on-subtle-radio-checked-border-disabled);
 }
 
 /* === Surfaces (Inverse) === */
@@ -2286,6 +2679,86 @@
   --color-button-secondary-text-disabled: var(--color-on-inverse-button-secondary-text-disabled);
   --color-button-secondary-text-focus: var(--color-on-inverse-button-secondary-text-focus);
   --color-button-secondary-text-hover: var(--color-on-inverse-button-secondary-text-hover);
+  --color-checkbox-background-default: var(--color-on-inverse-checkbox-background-default);
+  --color-checkbox-background-hover: var(--color-on-inverse-checkbox-background-hover);
+  --color-checkbox-background-active: var(--color-on-inverse-checkbox-background-active);
+  --color-checkbox-background-success: var(--color-on-inverse-checkbox-background-success);
+  --color-checkbox-background-error: var(--color-on-inverse-checkbox-background-error);
+  --color-checkbox-background-disabled: var(--color-on-inverse-checkbox-background-disabled);
+  --color-checkbox-border-default: var(--color-on-inverse-checkbox-border-default);
+  --color-checkbox-border-hover: var(--color-on-inverse-checkbox-border-hover);
+  --color-checkbox-border-active: var(--color-on-inverse-checkbox-border-active);
+  --color-checkbox-border-success: var(--color-on-inverse-checkbox-border-success);
+  --color-checkbox-border-error: var(--color-on-inverse-checkbox-border-error);
+  --color-checkbox-border-disabled: var(--color-on-inverse-checkbox-border-disabled);
+  --color-checkbox-checked-background-default: var(
+    --color-on-inverse-checkbox-checked-background-default
+  );
+  --color-checkbox-checked-background-hover: var(
+    --color-on-inverse-checkbox-checked-background-hover
+  );
+  --color-checkbox-checked-background-active: var(
+    --color-on-inverse-checkbox-checked-background-active
+  );
+  --color-checkbox-checked-background-success: var(
+    --color-on-inverse-checkbox-checked-background-success
+  );
+  --color-checkbox-checked-background-error: var(
+    --color-on-inverse-checkbox-checked-background-error
+  );
+  --color-checkbox-checked-background-disabled: var(
+    --color-on-inverse-checkbox-checked-background-disabled
+  );
+  --color-checkbox-checked-mark-default: var(--color-on-inverse-checkbox-checked-mark-default);
+  --color-checkbox-checked-mark-hover: var(--color-on-inverse-checkbox-checked-mark-hover);
+  --color-checkbox-checked-mark-active: var(--color-on-inverse-checkbox-checked-mark-active);
+  --color-checkbox-checked-mark-success: var(--color-on-inverse-checkbox-checked-mark-success);
+  --color-checkbox-checked-mark-error: var(--color-on-inverse-checkbox-checked-mark-error);
+  --color-checkbox-checked-mark-disabled: var(--color-on-inverse-checkbox-checked-mark-disabled);
+  --color-checkbox-checked-border-default: var(--color-on-inverse-checkbox-checked-border-default);
+  --color-checkbox-checked-border-hover: var(--color-on-inverse-checkbox-checked-border-hover);
+  --color-checkbox-checked-border-active: var(--color-on-inverse-checkbox-checked-border-active);
+  --color-checkbox-checked-border-success: var(--color-on-inverse-checkbox-checked-border-success);
+  --color-checkbox-checked-border-error: var(--color-on-inverse-checkbox-checked-border-error);
+  --color-checkbox-checked-border-disabled: var(
+    --color-on-inverse-checkbox-checked-border-disabled
+  );
+  --color-radio-background-default: var(--color-on-inverse-radio-background-default);
+  --color-radio-background-hover: var(--color-on-inverse-radio-background-hover);
+  --color-radio-background-active: var(--color-on-inverse-radio-background-active);
+  --color-radio-background-success: var(--color-on-inverse-radio-background-success);
+  --color-radio-background-error: var(--color-on-inverse-radio-background-error);
+  --color-radio-background-disabled: var(--color-on-inverse-radio-background-disabled);
+  --color-radio-border-default: var(--color-on-inverse-radio-border-default);
+  --color-radio-border-hover: var(--color-on-inverse-radio-border-hover);
+  --color-radio-border-active: var(--color-on-inverse-radio-border-active);
+  --color-radio-border-success: var(--color-on-inverse-radio-border-success);
+  --color-radio-border-error: var(--color-on-inverse-radio-border-error);
+  --color-radio-border-disabled: var(--color-on-inverse-radio-border-disabled);
+  --color-radio-checked-dot-default: var(--color-on-inverse-radio-checked-dot-default);
+  --color-radio-checked-dot-hover: var(--color-on-inverse-radio-checked-dot-hover);
+  --color-radio-checked-dot-active: var(--color-on-inverse-radio-checked-dot-active);
+  --color-radio-checked-dot-success: var(--color-on-inverse-radio-checked-dot-success);
+  --color-radio-checked-dot-error: var(--color-on-inverse-radio-checked-dot-error);
+  --color-radio-checked-dot-disabled: var(--color-on-inverse-radio-checked-dot-disabled);
+  --color-radio-checked-background-default: var(
+    --color-on-inverse-radio-checked-background-default
+  );
+  --color-radio-checked-background-hover: var(--color-on-inverse-radio-checked-background-hover);
+  --color-radio-checked-background-active: var(--color-on-inverse-radio-checked-background-active);
+  --color-radio-checked-background-success: var(
+    --color-on-inverse-radio-checked-background-success
+  );
+  --color-radio-checked-background-error: var(--color-on-inverse-radio-checked-background-error);
+  --color-radio-checked-background-disabled: var(
+    --color-on-inverse-radio-checked-background-disabled
+  );
+  --color-radio-checked-border-default: var(--color-on-inverse-radio-checked-border-default);
+  --color-radio-checked-border-hover: var(--color-on-inverse-radio-checked-border-hover);
+  --color-radio-checked-border-active: var(--color-on-inverse-radio-checked-border-active);
+  --color-radio-checked-border-success: var(--color-on-inverse-radio-checked-border-success);
+  --color-radio-checked-border-error: var(--color-on-inverse-radio-checked-border-error);
+  --color-radio-checked-border-disabled: var(--color-on-inverse-radio-checked-border-disabled);
 }
 
 /* === Surfaces (Primary) === */
@@ -2705,6 +3178,110 @@
   );
   --color-button-secondary-text-focus: var(--color-on-brand-primary-button-secondary-text-focus);
   --color-button-secondary-text-hover: var(--color-on-brand-primary-button-secondary-text-hover);
+  --color-checkbox-background-default: var(--color-on-brand-primary-checkbox-background-default);
+  --color-checkbox-background-hover: var(--color-on-brand-primary-checkbox-background-hover);
+  --color-checkbox-background-active: var(--color-on-brand-primary-checkbox-background-active);
+  --color-checkbox-background-success: var(--color-on-brand-primary-checkbox-background-success);
+  --color-checkbox-background-error: var(--color-on-brand-primary-checkbox-background-error);
+  --color-checkbox-background-disabled: var(--color-on-brand-primary-checkbox-background-disabled);
+  --color-checkbox-border-default: var(--color-on-brand-primary-checkbox-border-default);
+  --color-checkbox-border-hover: var(--color-on-brand-primary-checkbox-border-hover);
+  --color-checkbox-border-active: var(--color-on-brand-primary-checkbox-border-active);
+  --color-checkbox-border-success: var(--color-on-brand-primary-checkbox-border-success);
+  --color-checkbox-border-error: var(--color-on-brand-primary-checkbox-border-error);
+  --color-checkbox-border-disabled: var(--color-on-brand-primary-checkbox-border-disabled);
+  --color-checkbox-checked-background-default: var(
+    --color-on-brand-primary-checkbox-checked-background-default
+  );
+  --color-checkbox-checked-background-hover: var(
+    --color-on-brand-primary-checkbox-checked-background-hover
+  );
+  --color-checkbox-checked-background-active: var(
+    --color-on-brand-primary-checkbox-checked-background-active
+  );
+  --color-checkbox-checked-background-success: var(
+    --color-on-brand-primary-checkbox-checked-background-success
+  );
+  --color-checkbox-checked-background-error: var(
+    --color-on-brand-primary-checkbox-checked-background-error
+  );
+  --color-checkbox-checked-background-disabled: var(
+    --color-on-brand-primary-checkbox-checked-background-disabled
+  );
+  --color-checkbox-checked-mark-default: var(
+    --color-on-brand-primary-checkbox-checked-mark-default
+  );
+  --color-checkbox-checked-mark-hover: var(--color-on-brand-primary-checkbox-checked-mark-hover);
+  --color-checkbox-checked-mark-active: var(--color-on-brand-primary-checkbox-checked-mark-active);
+  --color-checkbox-checked-mark-success: var(
+    --color-on-brand-primary-checkbox-checked-mark-success
+  );
+  --color-checkbox-checked-mark-error: var(--color-on-brand-primary-checkbox-checked-mark-error);
+  --color-checkbox-checked-mark-disabled: var(
+    --color-on-brand-primary-checkbox-checked-mark-disabled
+  );
+  --color-checkbox-checked-border-default: var(
+    --color-on-brand-primary-checkbox-checked-border-default
+  );
+  --color-checkbox-checked-border-hover: var(
+    --color-on-brand-primary-checkbox-checked-border-hover
+  );
+  --color-checkbox-checked-border-active: var(
+    --color-on-brand-primary-checkbox-checked-border-active
+  );
+  --color-checkbox-checked-border-success: var(
+    --color-on-brand-primary-checkbox-checked-border-success
+  );
+  --color-checkbox-checked-border-error: var(
+    --color-on-brand-primary-checkbox-checked-border-error
+  );
+  --color-checkbox-checked-border-disabled: var(
+    --color-on-brand-primary-checkbox-checked-border-disabled
+  );
+  --color-radio-background-default: var(--color-on-brand-primary-radio-background-default);
+  --color-radio-background-hover: var(--color-on-brand-primary-radio-background-hover);
+  --color-radio-background-active: var(--color-on-brand-primary-radio-background-active);
+  --color-radio-background-success: var(--color-on-brand-primary-radio-background-success);
+  --color-radio-background-error: var(--color-on-brand-primary-radio-background-error);
+  --color-radio-background-disabled: var(--color-on-brand-primary-radio-background-disabled);
+  --color-radio-border-default: var(--color-on-brand-primary-radio-border-default);
+  --color-radio-border-hover: var(--color-on-brand-primary-radio-border-hover);
+  --color-radio-border-active: var(--color-on-brand-primary-radio-border-active);
+  --color-radio-border-success: var(--color-on-brand-primary-radio-border-success);
+  --color-radio-border-error: var(--color-on-brand-primary-radio-border-error);
+  --color-radio-border-disabled: var(--color-on-brand-primary-radio-border-disabled);
+  --color-radio-checked-dot-default: var(--color-on-brand-primary-radio-checked-dot-default);
+  --color-radio-checked-dot-hover: var(--color-on-brand-primary-radio-checked-dot-hover);
+  --color-radio-checked-dot-active: var(--color-on-brand-primary-radio-checked-dot-active);
+  --color-radio-checked-dot-success: var(--color-on-brand-primary-radio-checked-dot-success);
+  --color-radio-checked-dot-error: var(--color-on-brand-primary-radio-checked-dot-error);
+  --color-radio-checked-dot-disabled: var(--color-on-brand-primary-radio-checked-dot-disabled);
+  --color-radio-checked-background-default: var(
+    --color-on-brand-primary-radio-checked-background-default
+  );
+  --color-radio-checked-background-hover: var(
+    --color-on-brand-primary-radio-checked-background-hover
+  );
+  --color-radio-checked-background-active: var(
+    --color-on-brand-primary-radio-checked-background-active
+  );
+  --color-radio-checked-background-success: var(
+    --color-on-brand-primary-radio-checked-background-success
+  );
+  --color-radio-checked-background-error: var(
+    --color-on-brand-primary-radio-checked-background-error
+  );
+  --color-radio-checked-background-disabled: var(
+    --color-on-brand-primary-radio-checked-background-disabled
+  );
+  --color-radio-checked-border-default: var(--color-on-brand-primary-radio-checked-border-default);
+  --color-radio-checked-border-hover: var(--color-on-brand-primary-radio-checked-border-hover);
+  --color-radio-checked-border-active: var(--color-on-brand-primary-radio-checked-border-active);
+  --color-radio-checked-border-success: var(--color-on-brand-primary-radio-checked-border-success);
+  --color-radio-checked-border-error: var(--color-on-brand-primary-radio-checked-border-error);
+  --color-radio-checked-border-disabled: var(
+    --color-on-brand-primary-radio-checked-border-disabled
+  );
 }
 
 /* === Sizes (Mobile — default) === */
@@ -2862,6 +3439,25 @@
   --button-large-padding-inline: var(--spacing-4);
   --button-large-padding-stack: var(--control-large-padding-stack);
   --button-large-icon-size: var(--control-large-icon-size);
+  --checkbox-radius: var(--control-radius);
+  --checkbox-field-gap: var(--spacing-3);
+  --checkbox-field-font-family: var(--control-font-family);
+  --checkbox-field-font-weight: var(--control-label-font-weight);
+  --checkbox-field-font-size: var(--control-label-font-size);
+  --checkbox-field-line-height: var(--checkbox-size-default);
+  --checkbox-field-letter-spacing: var(--control-letter-spacing);
+  --checkbox-border-width: var(--control-border-width);
+  --checkbox-size-default: var(--size-5);
+  --radio-radius: var(--radius-full);
+  --radio-field-gap: var(--spacing-3);
+  --radio-field-font-family: var(--control-font-family);
+  --radio-field-font-weight: var(--control-label-font-weight);
+  --radio-field-font-size: var(--control-label-font-size);
+  --radio-field-line-height: var(--radio-size-default);
+  --radio-field-letter-spacing: var(--control-letter-spacing);
+  --radio-border-width: var(--control-border-width);
+  --radio-border-inner-width: var(--size-1);
+  --radio-size-default: var(--size-5);
 }
 
 /* === Sizes (Desktop) === */
