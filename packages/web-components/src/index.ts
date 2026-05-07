@@ -29,3 +29,5 @@ export type {
 } from './search-input/search-input.js';
 export { UiCheckboxField } from './checkbox-field/checkbox-field.js';
 export type { CheckboxFieldState } from './checkbox-field/checkbox-field.js';
+export { UiRadioField } from './radio-field/radio-field.js';
+export type { RadioFieldState } from './radio-field/radio-field.js';
