@@ -1,10 +1,10 @@
 /* Suppress browser-native search clear button */
-.ui-search-input .ui-text-input__input[type="search"]::-webkit-search-cancel-button {
+.ui-search-field .ui-text-field__input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance: none;
 }
 
 /* Clear button */
-.ui-search-input__clear {
+.ui-search-field__clear {
   all: unset;
   box-sizing: border-box;
   cursor: pointer;
@@ -17,7 +17,7 @@
   flex-shrink: 0;
 }
 
-.ui-search-input__clear svg {
+.ui-search-field__clear svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -26,18 +26,18 @@
 }
 
 /* Hidden when no value — layout preserved via visibility */
-.ui-search-input__clear--hidden {
+.ui-search-field__clear--hidden {
   visibility: hidden;
   pointer-events: none;
 }
 
-.ui-search-input__clear:focus-visible {
+.ui-search-field__clear:focus-visible {
   outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
   outline-offset: var(--ring-offset);
   border-radius: var(--radius-sm);
 }
 
-.ui-search-input__clear:disabled {
+.ui-search-field__clear:disabled {
   cursor: not-allowed;
   pointer-events: none;
 }

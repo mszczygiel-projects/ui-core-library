@@ -1,17 +1,17 @@
 import { useState, type CSSProperties } from 'react';
 import { IconSearch } from '@ui-core/icons/react';
 import { IconClose } from '@ui-core/icons/react';
-import { TextInput } from '../TextInput/TextInput.js';
-import type { TextInputVariant, TextInputSize, TextInputState } from '../TextInput/TextInput.js';
-import './search-input.css';
+import { TextField } from '../TextField/TextField.js';
+import type { TextFieldVariant, TextFieldSize, TextFieldState } from '../TextField/TextField.js';
+import './search-field.css';
 
-export interface SearchInputProps {
-  variant?: TextInputVariant;
-  size?: TextInputSize;
+export interface SearchFieldProps {
+  variant?: TextFieldVariant;
+  size?: TextFieldSize;
   value?: string;
   placeholder?: string;
   hint?: string;
-  state?: TextInputState;
+  state?: TextFieldState;
   name?: string;
   disabled?: boolean;
   required?: boolean;
@@ -22,7 +22,7 @@ export interface SearchInputProps {
   style?: CSSProperties;
 }
 
-export function SearchInput({
+export function SearchField({
   variant = 'outline',
   size = 'default',
   value,
@@ -37,7 +37,7 @@ export function SearchInput({
   onClear,
   className,
   style,
-}: SearchInputProps) {
+}: SearchFieldProps) {
   const isControlled = value !== undefined;
   const [internalValue, setInternalValue] = useState('');
   const effectiveValue = isControlled ? value : internalValue;
@@ -57,7 +57,7 @@ export function SearchInput({
 
   const clearButton = (
     <button
-      className={['ui-search-input__clear', !hasValue && 'ui-search-input__clear--hidden']
+      className={['ui-search-field__clear', !hasValue && 'ui-search-field__clear--hidden']
         .filter(Boolean)
         .join(' ')}
       type="button"
@@ -72,8 +72,8 @@ export function SearchInput({
   );
 
   return (
-    <TextInput
-      className={['ui-search-input', className].filter(Boolean).join(' ')}
+    <TextField
+      className={['ui-search-field', className].filter(Boolean).join(' ')}
       style={style}
       size={size}
       value={effectiveValue}

@@ -1,6 +1,6 @@
 import { css } from 'lit';
 
-export const passwordInputStyles = css`
+export const passwordFieldStyles = css`
   .toggle {
     all: unset;
     box-sizing: border-box;

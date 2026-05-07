@@ -1,34 +1,34 @@
 import { fixture, html, expect } from '@open-wc/testing';
-import type { UiPasswordInput } from './password-input.js';
-import './password-input.js';
+import type { UiPasswordField } from './password-field.js';
+import './password-field.js';
 
-describe('UiPasswordInput', () => {
+describe('UiPasswordField', () => {
   it('renders without error', async () => {
-    const el = await fixture<UiPasswordInput>(
-      html`<ui-password-input label="Password"></ui-password-input>`,
+    const el = await fixture<UiPasswordField>(
+      html`<ui-password-field label="Password"></ui-password-field>`,
     );
     expect(el).to.not.equal(null);
   });
 
   it('renders inner <input> element', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     expect(el.shadowRoot!.querySelector('input')).to.not.equal(null);
   });
 
   it('input type is password by default', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     expect(el.shadowRoot!.querySelector('input')!.type).to.equal('password');
   });
 
   it('input type is text when show-password is set', async () => {
-    const el = await fixture<UiPasswordInput>(
-      html`<ui-password-input show-password></ui-password-input>`,
+    const el = await fixture<UiPasswordField>(
+      html`<ui-password-field show-password></ui-password-field>`,
     );
     expect(el.shadowRoot!.querySelector('input')!.type).to.equal('text');
   });
 
   it('clicking toggle changes input type to text', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     toggle.click();
     await el.updateComplete;
@@ -37,7 +37,7 @@ describe('UiPasswordInput', () => {
   });
 
   it('clicking toggle twice reverts to password type', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     toggle.click();
     await el.updateComplete;
@@ -47,13 +47,13 @@ describe('UiPasswordInput', () => {
   });
 
   it('toggle button has aria-label', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     expect(toggle.getAttribute('aria-label')).to.equal('Show password');
   });
 
   it('toggle aria-label changes after toggle', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     toggle.click();
     await el.updateComplete;
@@ -61,7 +61,7 @@ describe('UiPasswordInput', () => {
   });
 
   it('toggle has aria-pressed reflecting show-password state', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     expect(toggle.getAttribute('aria-pressed')).to.equal('false');
     toggle.click();
@@ -70,23 +70,23 @@ describe('UiPasswordInput', () => {
   });
 
   it('toggle button is disabled when state=disabled', async () => {
-    const el = await fixture<UiPasswordInput>(
-      html`<ui-password-input state="disabled"></ui-password-input>`,
+    const el = await fixture<UiPasswordField>(
+      html`<ui-password-field state="disabled"></ui-password-field>`,
     );
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     expect(toggle.disabled).to.equal(true);
   });
 
   it('toggle button is disabled when disabled attribute is set', async () => {
-    const el = await fixture<UiPasswordInput>(
-      html`<ui-password-input disabled></ui-password-input>`,
+    const el = await fixture<UiPasswordField>(
+      html`<ui-password-field disabled></ui-password-field>`,
     );
     const toggle = el.shadowRoot!.querySelector<HTMLButtonElement>('button.toggle')!;
     expect(toggle.disabled).to.equal(true);
   });
 
   it('dispatches ui-toggle event on click', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     let eventDetail: { showPassword: boolean } | null = null;
     el.addEventListener('ui-toggle', (e) => {
       eventDetail = (e as CustomEvent).detail;
@@ -98,7 +98,7 @@ describe('UiPasswordInput', () => {
   });
 
   it('dispatches ui-input event on typing', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     let fired = false;
     el.addEventListener('ui-input', () => {
       fired = true;
@@ -110,28 +110,28 @@ describe('UiPasswordInput', () => {
   });
 
   it('reflects show-password attribute', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     el.showPassword = true;
     await el.updateComplete;
     expect(el.hasAttribute('show-password')).to.equal(true);
   });
 
   it('always has has-trailing-icon attribute', async () => {
-    const el = await fixture<UiPasswordInput>(html`<ui-password-input></ui-password-input>`);
+    const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
     await el.updateComplete;
     expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
   });
 
   it('reflects variant attribute', async () => {
-    const el = await fixture<UiPasswordInput>(
-      html`<ui-password-input variant="filled"></ui-password-input>`,
+    const el = await fixture<UiPasswordField>(
+      html`<ui-password-field variant="filled"></ui-password-field>`,
     );
     expect(el.getAttribute('variant')).to.equal('filled');
   });
 
   it('reflects state attribute', async () => {
-    const el = await fixture<UiPasswordInput>(
-      html`<ui-password-input state="error"></ui-password-input>`,
+    const el = await fixture<UiPasswordField>(
+      html`<ui-password-field state="error"></ui-password-field>`,
     );
     expect(el.getAttribute('state')).to.equal('error');
   });

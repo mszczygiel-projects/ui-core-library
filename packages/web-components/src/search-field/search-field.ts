@@ -2,27 +2,27 @@ import { LitElement, html, nothing } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { svgMap } from '@ui-core/icons';
-import { textInputStyles } from '../text-input/text-input.styles.js';
-import { searchInputStyles } from './search-input.styles.js';
+import { textFieldStyles } from '../text-field/text-field.styles.js';
+import { searchFieldStyles } from './search-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
 
-export type SearchInputVariant = 'outline' | 'filled' | 'underlined';
-export type SearchInputSize = 'small' | 'default' | 'large';
-export type SearchInputState = 'default' | 'success' | 'error' | 'disabled';
+export type SearchFieldVariant = 'outline' | 'filled' | 'underlined';
+export type SearchFieldSize = 'small' | 'default' | 'large';
+export type SearchFieldState = 'default' | 'success' | 'error' | 'disabled';
 
-@customElement('ui-search-input')
-export class UiSearchInput extends LitElement {
+@customElement('ui-search-field')
+export class UiSearchField extends LitElement {
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-  static override styles = [resetStyles, motionStyles, textInputStyles, searchInputStyles];
+  static override styles = [resetStyles, motionStyles, textFieldStyles, searchFieldStyles];
 
-  @property({ type: String, reflect: true }) variant: SearchInputVariant = 'outline';
-  @property({ type: String, reflect: true, attribute: 'data-size' }) size: SearchInputSize =
+  @property({ type: String, reflect: true }) variant: SearchFieldVariant = 'outline';
+  @property({ type: String, reflect: true, attribute: 'data-size' }) size: SearchFieldSize =
     'default';
   @property({ type: String, reflect: true }) value = '';
   @property({ type: String, reflect: true }) placeholder = 'Search...';
   @property({ type: String, reflect: true }) hint?: string;
-  @property({ type: String, reflect: true }) state: SearchInputState = 'default';
+  @property({ type: String, reflect: true }) state: SearchFieldState = 'default';
   @property({ type: String }) name?: string;
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) required = false;
@@ -109,6 +109,6 @@ export class UiSearchInput extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'ui-search-input': UiSearchInput;
+    'ui-search-field': UiSearchField;
   }
 }

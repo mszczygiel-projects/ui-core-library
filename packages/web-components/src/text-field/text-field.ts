@@ -1,37 +1,39 @@
 import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { svgMap } from '@ui-core/icons';
-import { textInputStyles } from '../text-input/text-input.styles.js';
-import { passwordInputStyles } from './password-input.styles.js';
+import { textFieldStyles } from './text-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
 
-export type PasswordInputVariant = 'outline' | 'filled' | 'underlined';
-export type PasswordInputSize = 'small' | 'default' | 'large';
-export type PasswordInputState = 'default' | 'success' | 'error' | 'disabled';
-export type PasswordInputLabelPlacement = 'top' | 'floating';
+export type TextFieldVariant = 'outline' | 'filled' | 'underlined';
+export type TextFieldSize = 'small' | 'default' | 'large';
+export type TextFieldState = 'default' | 'success' | 'error' | 'disabled';
+export type TextFieldLabelPlacement = 'top' | 'floating';
 
-@customElement('ui-password-input')
-export class UiPasswordInput extends LitElement {
+@customElement('ui-text-field')
+export class UiTextField extends LitElement {
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-  static override styles = [resetStyles, motionStyles, textInputStyles, passwordInputStyles];
+  static override styles = [resetStyles, motionStyles, textFieldStyles];
 
-  @property({ type: String, reflect: true }) variant: PasswordInputVariant = 'outline';
-  @property({ type: String, reflect: true, attribute: 'data-size' }) size: PasswordInputSize =
+  @property({ type: String, reflect: true }) variant: TextFieldVariant = 'outline';
+  @property({ type: String, reflect: true, attribute: 'data-size' }) size: TextFieldSize =
     'default';
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: String, reflect: true, attribute: 'label-placement' })
-  labelPlacement: PasswordInputLabelPlacement = 'top';
+  labelPlacement: TextFieldLabelPlacement = 'top';
   @property({ type: String, reflect: true }) placeholder = '';
   @property({ type: String, reflect: true }) value = '';
   @property({ type: String, reflect: true }) hint?: string;
-  @property({ type: String, reflect: true }) state: PasswordInputState = 'default';
+  @property({ type: String, reflect: true }) state: TextFieldState = 'default';
   @property({ type: String }) name?: string;
+  @property({ type: String }) type: 'text' | 'email' | 'tel' | 'url' = 'text';
   @property({ type: Boolean, reflect: true }) disabled = false;
   @property({ type: Boolean, reflect: true }) required = false;
   @property({ type: Boolean, reflect: true }) readonly = false;
-  @property({ type: Boolean, reflect: true, attribute: 'show-password' }) showPassword = false;
+
+  @state() private _hasLeadingIcon = false;
+  @state() private _hasTrailingIcon = false;
 
   private get _isFloating(): boolean {
     if (this.variant === 'filled') return false;
@@ -43,9 +45,26 @@ export class UiPasswordInput extends LitElement {
     return this.disabled || this.state === 'disabled';
   }
 
+  private get _showsErrorTrailingIcon(): boolean {
+    return this.state === 'error' && !this._hasTrailingIcon;
+  }
+
   protected override updated(): void {
-    this.setAttribute('has-trailing-icon', '');
-    this.removeAttribute('has-leading-icon');
+    this.toggleAttribute('has-leading-icon', this._hasLeadingIcon);
+    this.toggleAttribute(
+      'has-trailing-icon',
+      this._hasTrailingIcon || this._showsErrorTrailingIcon,
+    );
+  }
+
+  private _onLeadingSlotChange(e: Event) {
+    const slot = e.target as HTMLSlotElement;
+    this._hasLeadingIcon = slot.assignedElements().length > 0;
+  }
+
+  private _onTrailingSlotChange(e: Event) {
+    const slot = e.target as HTMLSlotElement;
+    this._hasTrailingIcon = slot.assignedElements().length > 0;
   }
 
   private _onInput(e: Event) {
@@ -68,34 +87,25 @@ export class UiPasswordInput extends LitElement {
     );
   }
 
-  private _onToggle() {
-    this.showPassword = !this.showPassword;
-    this.dispatchEvent(
-      new CustomEvent('ui-toggle', {
-        detail: { showPassword: this.showPassword },
-        bubbles: true,
-        composed: true,
-      }),
-    );
-  }
-
   override render() {
     const isFloating = this._isFloating;
     const isDisabled = this._isDisabled;
     const hintId = 'hint';
-    const inputType = this.showPassword ? 'text' : 'password';
-    const toggleLabel = this.showPassword ? 'Hide password' : 'Show password';
-    const toggleIcon = this.showPassword ? svgMap['icon-eye'] : svgMap['icon-eye-slash'];
 
     return html`
       ${!isFloating && this.label
         ? html`<label class="label" for="input">${this.label}</label>`
         : nothing}
       <div class="field-wrapper">
+        <slot
+          name="leading-icon"
+          class="icon icon--leading"
+          @slotchange=${this._onLeadingSlotChange}
+        ></slot>
         <input
           id="input"
           class="input"
-          type=${inputType}
+          type=${this.type}
           name=${this.name ?? nothing}
           .value=${this.value}
           placeholder=${isFloating ? ' ' : this.placeholder}
@@ -111,16 +121,17 @@ export class UiPasswordInput extends LitElement {
         ${isFloating && this.label
           ? html`<label class="label" for="input">${this.label}</label>`
           : nothing}
-        <button
-          class="toggle icon icon--trailing"
-          type="button"
-          aria-label=${toggleLabel}
-          aria-pressed=${this.showPassword}
-          ?disabled=${isDisabled}
-          @click=${this._onToggle}
+        <slot
+          name="trailing-icon"
+          class="icon icon--trailing"
+          @slotchange=${this._onTrailingSlotChange}
         >
-          ${unsafeSVG(toggleIcon)}
-        </button>
+          ${this._showsErrorTrailingIcon
+            ? html`<span class="icon-content" aria-hidden="true"
+                >${unsafeSVG(svgMap['icon-danger'])}</span
+              >`
+            : nothing}
+        </slot>
       </div>
       ${this.hint ? html`<p id=${hintId} class="hint">${this.hint}</p>` : nothing}
     `;
@@ -129,6 +140,6 @@ export class UiPasswordInput extends LitElement {
 
 declare global {
   interface HTMLElementTagNameMap {
-    'ui-password-input': UiPasswordInput;
+    'ui-text-field': UiTextField;
   }
 }

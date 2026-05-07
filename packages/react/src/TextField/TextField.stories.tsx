@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { IconSearch } from '@ui-core/icons/react';
 import { IconDanger } from '@ui-core/icons/react';
-import { TextInput } from './TextInput.js';
+import { TextField } from './TextField.js';
 
-const meta: Meta<typeof TextInput> = {
-  title: 'React/TextInput',
-  component: TextInput,
+const meta: Meta<typeof TextField> = {
+  title: 'React/TextField',
+  component: TextField,
   argTypes: {
     variant: {
       control: 'select',
@@ -39,7 +39,7 @@ const meta: Meta<typeof TextInput> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof TextInput>;
+type Story = StoryObj<typeof TextField>;
 
 export const Outline: Story = {};
 
@@ -58,9 +58,9 @@ export const FloatingLabel: Story = {
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <TextInput size="small" label="Small" placeholder="Small input" />
-      <TextInput size="default" label="Default" placeholder="Default input" />
-      <TextInput size="large" label="Large" placeholder="Large input" />
+      <TextField size="small" label="Small" placeholder="Small input" />
+      <TextField size="default" label="Default" placeholder="Default input" />
+      <TextField size="large" label="Large" placeholder="Large input" />
     </div>
   ),
 };
@@ -68,15 +68,15 @@ export const Sizes: Story = {
 export const States: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <TextInput state="default" label="Default" placeholder="Default state" />
-      <TextInput state="success" label="Success" placeholder="Success state" hint="Looks good!" />
-      <TextInput
+      <TextField state="default" label="Default" placeholder="Default state" />
+      <TextField state="success" label="Success" placeholder="Success state" hint="Looks good!" />
+      <TextField
         state="error"
         label="Error"
         placeholder="Error state"
         hint="This field is required."
       />
-      <TextInput state="disabled" label="Disabled" placeholder="Disabled state" />
+      <TextField state="disabled" label="Disabled" placeholder="Disabled state" />
     </div>
   ),
 };

@@ -1,4 +1,4 @@
-.ui-text-input {
+.ui-text-field {
   display: block;
   font-family: var(--control-font-family);
   font-weight: var(--control-font-weight);
@@ -15,7 +15,7 @@
 
 /* ---- Sizes ---- */
 
-.ui-text-input--small {
+.ui-text-field--small {
   --_font-size: var(--control-small-font-size);
   --_padding-inline: var(--control-small-padding-inline);
   --_padding-stack: var(--control-small-padding-stack);
@@ -24,7 +24,7 @@
   --_icon-size: var(--control-small-icon-size);
 }
 
-.ui-text-input--large {
+.ui-text-field--large {
   --_font-size: var(--control-large-font-size);
   --_padding-inline: var(--control-large-padding-inline);
   --_padding-stack: var(--control-large-padding-stack);
@@ -35,8 +35,8 @@
 
 /* ---- Variant color aliases: outline + underlined ---- */
 
-.ui-text-input--outline,
-.ui-text-input--underlined {
+.ui-text-field--outline,
+.ui-text-field--underlined {
   --_bg: var(--color-control-outline-background-default);
   --_bg-hover: var(--color-control-outline-background-hover);
   --_bg-active: var(--color-control-outline-background-active);
@@ -91,7 +91,7 @@
 
 /* ---- Variant color aliases: filled ---- */
 
-.ui-text-input--filled {
+.ui-text-field--filled {
   --_bg: var(--color-control-filled-background-default);
   --_bg-hover: var(--color-control-filled-background-hover);
   --_bg-active: var(--color-control-filled-background-active);
@@ -146,7 +146,7 @@
 
 /* ---- Label (top placement) ---- */
 
-.ui-text-input__label {
+.ui-text-field__label {
   display: block;
   margin-block-end: var(--spacing-2);
   font-size: var(--control-label-font-size);
@@ -155,31 +155,31 @@
   color: var(--_label);
 }
 
-.ui-text-input__field-wrapper:hover ~ .ui-text-input__label,
-.ui-text-input__label:has(~ .ui-text-input__field-wrapper:hover) {
+.ui-text-field__field-wrapper:hover ~ .ui-text-field__label,
+.ui-text-field__label:has(~ .ui-text-field__field-wrapper:hover) {
   color: var(--_label-hover);
 }
 
-.ui-text-input__field-wrapper:focus-within ~ .ui-text-input__label,
-.ui-text-input__label:has(~ .ui-text-input__field-wrapper:focus-within) {
+.ui-text-field__field-wrapper:focus-within ~ .ui-text-field__label,
+.ui-text-field__label:has(~ .ui-text-field__field-wrapper:focus-within) {
   color: var(--_label-active);
 }
 
-.ui-text-input--state-success .ui-text-input__label {
+.ui-text-field--state-success .ui-text-field__label {
   color: var(--_label-success);
 }
 
-.ui-text-input--state-error .ui-text-input__label {
+.ui-text-field--state-error .ui-text-field__label {
   color: var(--_label-error);
 }
 
-.ui-text-input--state-disabled .ui-text-input__label {
+.ui-text-field--state-disabled .ui-text-field__label {
   color: var(--_label-disabled);
 }
 
 /* ---- Field wrapper ---- */
 
-.ui-text-input__field-wrapper {
+.ui-text-field__field-wrapper {
   position: relative;
   display: flex;
   align-items: center;
@@ -190,29 +190,29 @@
   border-radius: var(--text-input-border-radius, var(--_radius));
 }
 
-.ui-text-input__field-wrapper:hover {
+.ui-text-field__field-wrapper:hover {
   background-color: var(--_bg-hover);
   border-color: var(--_border-hover);
 }
 
-.ui-text-input__field-wrapper:focus-within {
+.ui-text-field__field-wrapper:focus-within {
   background-color: var(--_bg-active);
   border-color: var(--_border-active);
   outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
   outline-offset: var(--ring-offset);
 }
 
-.ui-text-input--state-success .ui-text-input__field-wrapper {
+.ui-text-field--state-success .ui-text-field__field-wrapper {
   background-color: var(--_bg-success);
   border-color: var(--_border-success);
 }
 
-.ui-text-input--state-error .ui-text-input__field-wrapper {
+.ui-text-field--state-error .ui-text-field__field-wrapper {
   background-color: var(--_bg-error);
   border-color: var(--_border-error);
 }
 
-.ui-text-input--state-disabled .ui-text-input__field-wrapper {
+.ui-text-field--state-disabled .ui-text-field__field-wrapper {
   background-color: var(--_bg-disabled);
   border-color: var(--_border-disabled);
   pointer-events: none;
@@ -220,39 +220,39 @@
 
 /* Underlined: bottom border only, no radius */
 
-.ui-text-input--underlined .ui-text-input__field-wrapper {
+.ui-text-field--underlined .ui-text-field__field-wrapper {
   border: none;
   border-bottom: var(--control-underlined-border-width-default) solid var(--_border);
   border-radius: 0;
 }
 
-.ui-text-input--underlined .ui-text-input__field-wrapper:hover {
+.ui-text-field--underlined .ui-text-field__field-wrapper:hover {
   border-bottom-color: var(--_border-hover);
   border-bottom-width: var(--control-underlined-border-width-hover);
 }
 
-.ui-text-input--underlined .ui-text-input__field-wrapper:focus-within {
+.ui-text-field--underlined .ui-text-field__field-wrapper:focus-within {
   border-bottom-color: var(--_border-active);
   border-bottom-width: var(--control-underlined-border-width-active);
 }
 
-.ui-text-input--underlined.ui-text-input--state-success .ui-text-input__field-wrapper {
+.ui-text-field--underlined.ui-text-field--state-success .ui-text-field__field-wrapper {
   border-bottom-color: var(--_border-success);
   border-bottom-width: var(--control-underlined-border-width-success);
 }
 
-.ui-text-input--underlined.ui-text-input--state-error .ui-text-input__field-wrapper {
+.ui-text-field--underlined.ui-text-field--state-error .ui-text-field__field-wrapper {
   border-bottom-color: var(--_border-error);
   border-bottom-width: var(--control-underlined-border-width-error);
 }
 
-.ui-text-input--underlined.ui-text-input--state-disabled .ui-text-input__field-wrapper {
+.ui-text-field--underlined.ui-text-field--state-disabled .ui-text-field__field-wrapper {
   border-bottom-width: var(--control-underlined-border-width-disabled);
 }
 
 /* ---- Native input ---- */
 
-.ui-text-input__input {
+.ui-text-field__input {
   flex: 1;
   min-width: 0;
   appearance: none;
@@ -269,54 +269,54 @@
   color: var(--_text);
 }
 
-.ui-text-input__input::placeholder {
+.ui-text-field__input::placeholder {
   color: var(--_placeholder);
 }
 
-.ui-text-input__field-wrapper:hover .ui-text-input__input {
+.ui-text-field__field-wrapper:hover .ui-text-field__input {
   color: var(--_text-hover);
 }
 
-.ui-text-input__field-wrapper:hover .ui-text-input__input::placeholder {
+.ui-text-field__field-wrapper:hover .ui-text-field__input::placeholder {
   color: var(--_placeholder-hover);
 }
 
-.ui-text-input__field-wrapper:focus-within .ui-text-input__input {
+.ui-text-field__field-wrapper:focus-within .ui-text-field__input {
   color: var(--_text-active);
 }
 
-.ui-text-input__field-wrapper:focus-within .ui-text-input__input::placeholder {
+.ui-text-field__field-wrapper:focus-within .ui-text-field__input::placeholder {
   color: var(--_placeholder-active);
 }
 
-.ui-text-input--state-success .ui-text-input__input {
+.ui-text-field--state-success .ui-text-field__input {
   color: var(--_text-success);
 }
 
-.ui-text-input--state-error .ui-text-input__input {
+.ui-text-field--state-error .ui-text-field__input {
   color: var(--_text-error);
 }
 
-.ui-text-input--state-error .ui-text-input__input::placeholder {
+.ui-text-field--state-error .ui-text-field__input::placeholder {
   color: var(--_placeholder-error);
 }
 
-.ui-text-input--state-disabled .ui-text-input__input {
+.ui-text-field--state-disabled .ui-text-field__input {
   color: var(--_text-disabled);
   cursor: not-allowed;
 }
 
-.ui-text-input--state-disabled .ui-text-input__input::placeholder {
+.ui-text-field--state-disabled .ui-text-field__input::placeholder {
   color: var(--_placeholder-disabled);
 }
 
 /* Leading icon shifts input left padding */
-.ui-text-input--has-leading-icon .ui-text-input__input {
+.ui-text-field--has-leading-icon .ui-text-field__input {
   padding-inline-start: 0;
 }
 
 /* Trailing icon shifts input right padding */
-.ui-text-input--has-trailing-icon .ui-text-input__input {
+.ui-text-field--has-trailing-icon .ui-text-field__input {
   padding-inline-end: 0;
 }
 
@@ -329,7 +329,7 @@
  * Filled or focused: label shrunken at top.
  */
 
-.ui-text-input--floating .ui-text-input__label {
+.ui-text-field--floating .ui-text-field__label {
   position: absolute;
   inset-inline-start: var(--_padding-inline);
   top: calc(var(--size-3) * -1);
@@ -354,12 +354,12 @@
 }
 
 /* Leading icon shifts floating label */
-.ui-text-input--floating.ui-text-input--has-leading-icon .ui-text-input__label {
+.ui-text-field--floating.ui-text-field--has-leading-icon .ui-text-field__label {
   inset-inline-start: var(--_padding-inline-icon);
 }
 
 /* Empty + unfocused: label centered */
-.ui-text-input--floating .ui-text-input__input:placeholder-shown ~ .ui-text-input__label {
+.ui-text-field--floating .ui-text-field__input:placeholder-shown ~ .ui-text-field__label {
   top: 50%;
   transform: translateY(-50%);
   font-size: var(--_font-size);
@@ -370,7 +370,7 @@
 }
 
 /* Focused: label shrunken */
-.ui-text-input--floating .ui-text-input__field-wrapper:focus-within .ui-text-input__label {
+.ui-text-field--floating .ui-text-field__field-wrapper:focus-within .ui-text-field__label {
   top: calc(var(--size-3) * -1);
   transform: translateY(0);
   font-size: var(--control-label-floating-font-size);
@@ -381,7 +381,7 @@
 }
 
 /* Floating input: extra top padding for shrunken label */
-/* .ui-text-input--floating .ui-text-input__input {
+/* .ui-text-field--floating .ui-text-field__input {
   padding-block-start: calc(
     var(--_padding-stack) + var(--control-label-floating-line-height) + var(--spacing-2)
   );
@@ -390,25 +390,25 @@
 
 /* Floating label state colors when filled */
 
-.ui-text-input--floating.ui-text-input--state-success
-  .ui-text-input__input:not(:placeholder-shown)
-  ~ .ui-text-input__label {
+.ui-text-field--floating.ui-text-field--state-success
+  .ui-text-field__input:not(:placeholder-shown)
+  ~ .ui-text-field__label {
   color: var(--_label-success);
 }
 
-.ui-text-input--floating.ui-text-input--state-error
-  .ui-text-input__input:not(:placeholder-shown)
-  ~ .ui-text-input__label {
+.ui-text-field--floating.ui-text-field--state-error
+  .ui-text-field__input:not(:placeholder-shown)
+  ~ .ui-text-field__label {
   color: var(--_label-error);
 }
 
-.ui-text-input--floating.ui-text-input--state-disabled .ui-text-input__label {
+.ui-text-field--floating.ui-text-field--state-disabled .ui-text-field__label {
   color: var(--_label-disabled);
 }
 
 /* ---- Icons ---- */
 
-.ui-text-input__icon {
+.ui-text-field__icon {
   display: inline-flex;
   flex-shrink: 0;
   align-items: center;
@@ -418,37 +418,37 @@
   color: var(--_icon);
 }
 
-.ui-text-input__icon--leading {
+.ui-text-field__icon--leading {
   margin-inline-start: var(--_padding-inline);
 }
 
-.ui-text-input__icon--trailing {
+.ui-text-field__icon--trailing {
   margin-inline-end: var(--_padding-inline);
 }
 
-.ui-text-input__field-wrapper:hover .ui-text-input__icon {
+.ui-text-field__field-wrapper:hover .ui-text-field__icon {
   color: var(--_icon-hover);
 }
 
-.ui-text-input__field-wrapper:focus-within .ui-text-input__icon {
+.ui-text-field__field-wrapper:focus-within .ui-text-field__icon {
   color: var(--_icon-active);
 }
 
-.ui-text-input--state-success .ui-text-input__icon {
+.ui-text-field--state-success .ui-text-field__icon {
   color: var(--_icon-success);
 }
 
-.ui-text-input--state-error .ui-text-input__icon {
+.ui-text-field--state-error .ui-text-field__icon {
   color: var(--_icon-error);
 }
 
-.ui-text-input--state-disabled .ui-text-input__icon {
+.ui-text-field--state-disabled .ui-text-field__icon {
   color: var(--_icon-disabled);
 }
 
 /* ---- Hint ---- */
 
-.ui-text-input__hint {
+.ui-text-field__hint {
   display: block;
   margin: 0;
   margin-block-start: var(--spacing-2);
@@ -458,22 +458,22 @@
   color: var(--_hint);
 }
 
-.ui-text-input--state-success .ui-text-input__hint {
+.ui-text-field--state-success .ui-text-field__hint {
   color: var(--_hint-success);
 }
 
-.ui-text-input--state-error .ui-text-input__hint {
+.ui-text-field--state-error .ui-text-field__hint {
   color: var(--_hint-error);
 }
 
-.ui-text-input--state-disabled .ui-text-input__hint {
+.ui-text-field--state-disabled .ui-text-field__hint {
   color: var(--_hint-disabled);
 }
 
 /* ---- Reduced motion ---- */
 
 @media (prefers-reduced-motion: reduce) {
-  .ui-text-input--floating .ui-text-input__label {
+  .ui-text-field--floating .ui-text-field__label {
     transition: none;
   }
 }

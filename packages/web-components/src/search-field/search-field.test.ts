@@ -1,37 +1,37 @@
 import { fixture, html, expect } from '@open-wc/testing';
-import type { UiSearchInput } from './search-input.js';
-import './search-input.js';
+import type { UiSearchField } from './search-field.js';
+import './search-field.js';
 
-describe('UiSearchInput', () => {
+describe('UiSearchField', () => {
   it('renders without error', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     expect(el).to.not.equal(null);
   });
 
   it('renders inner <input> element', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     expect(el.shadowRoot!.querySelector('input')).to.not.equal(null);
   });
 
   it('input type is search', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     expect(el.shadowRoot!.querySelector('input')!.type).to.equal('search');
   });
 
   it('always has has-leading-icon attribute', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     await el.updateComplete;
     expect(el.hasAttribute('has-leading-icon')).to.equal(true);
   });
 
   it('always has has-trailing-icon attribute', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     await el.updateComplete;
     expect(el.hasAttribute('has-trailing-icon')).to.equal(true);
   });
 
   it('clear button is hidden when value is empty', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     await el.updateComplete;
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
     const style = window.getComputedStyle(clear);
@@ -39,8 +39,8 @@ describe('UiSearchInput', () => {
   });
 
   it('clear button is visible when value is non-empty', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input value="test query"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field value="test query"></ui-search-field>`,
     );
     await el.updateComplete;
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
@@ -49,21 +49,21 @@ describe('UiSearchInput', () => {
   });
 
   it('clear button has aria-label', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
     expect(clear.getAttribute('aria-label')).to.equal('Clear search');
   });
 
   it('clear button has aria-hidden when value is empty', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     await el.updateComplete;
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
     expect(clear.getAttribute('aria-hidden')).to.equal('true');
   });
 
   it('clear button has no aria-hidden when value is non-empty', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input value="query"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field value="query"></ui-search-field>`,
     );
     await el.updateComplete;
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
@@ -71,8 +71,8 @@ describe('UiSearchInput', () => {
   });
 
   it('clicking clear button resets value to empty string', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input value="hello"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field value="hello"></ui-search-field>`,
     );
     await el.updateComplete;
     el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!.click();
@@ -81,8 +81,8 @@ describe('UiSearchInput', () => {
   });
 
   it('clicking clear button dispatches ui-clear event', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input value="hello"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field value="hello"></ui-search-field>`,
     );
     let fired = false;
     el.addEventListener('ui-clear', () => {
@@ -93,8 +93,8 @@ describe('UiSearchInput', () => {
   });
 
   it('clicking clear button dispatches ui-input with empty value', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input value="hello"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field value="hello"></ui-search-field>`,
     );
     let detail: { value: string } | null = null;
     el.addEventListener('ui-input', (e) => {
@@ -106,7 +106,7 @@ describe('UiSearchInput', () => {
   });
 
   it('dispatches ui-input on typing', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     let fired = false;
     el.addEventListener('ui-input', () => {
       fired = true;
@@ -118,7 +118,7 @@ describe('UiSearchInput', () => {
   });
 
   it('dispatches ui-input with correct value on typing', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     let detail: { value: string } | null = null;
     el.addEventListener('ui-input', (e) => {
       detail = (e as CustomEvent).detail;
@@ -130,36 +130,36 @@ describe('UiSearchInput', () => {
   });
 
   it('clear button is disabled when state=disabled', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input state="disabled" value="test"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field state="disabled" value="test"></ui-search-field>`,
     );
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
     expect(clear.disabled).to.equal(true);
   });
 
   it('clear button is disabled when disabled attribute is set', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input disabled value="test"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field disabled value="test"></ui-search-field>`,
     );
     const clear = el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!;
     expect(clear.disabled).to.equal(true);
   });
 
   it('placeholder defaults to Search...', async () => {
-    const el = await fixture<UiSearchInput>(html`<ui-search-input></ui-search-input>`);
+    const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
     expect(el.shadowRoot!.querySelector('input')!.placeholder).to.equal('Search...');
   });
 
   it('reflects data-size attribute', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input data-size="small"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field data-size="small"></ui-search-field>`,
     );
     expect(el.size).to.equal('small');
   });
 
   it('reflects state attribute', async () => {
-    const el = await fixture<UiSearchInput>(
-      html`<ui-search-input state="error"></ui-search-input>`,
+    const el = await fixture<UiSearchField>(
+      html`<ui-search-field state="error"></ui-search-field>`,
     );
     expect(el.getAttribute('state')).to.equal('error');
   });

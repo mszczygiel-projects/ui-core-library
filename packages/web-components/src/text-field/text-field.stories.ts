@@ -1,10 +1,10 @@
 import { createElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@ui-core/icons';
-import './text-input.js';
+import './text-field.js';
 
 const meta: Meta = {
-  title: 'Web Components/TextInput',
+  title: 'Web Components/TextField',
   argTypes: {
     variant: {
       control: 'select',
@@ -54,7 +54,7 @@ type InputArgs = {
 
 const input = (props: InputArgs = {}, ...children: unknown[]) =>
   createElement(
-    'ui-text-input',
+    'ui-text-field',
     {
       variant: props.variant,
       'data-size': props.size,

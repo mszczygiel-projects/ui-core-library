@@ -1,24 +1,24 @@
 import { useState, type CSSProperties } from 'react';
 import { IconEye } from '@ui-core/icons/react';
 import { IconEyeSlash } from '@ui-core/icons/react';
-import { TextInput } from '../TextInput/TextInput.js';
+import { TextField } from '../TextField/TextField.js';
 import type {
-  TextInputVariant,
-  TextInputSize,
-  TextInputState,
-  TextInputLabelPlacement,
-} from '../TextInput/TextInput.js';
-import './PasswordInput.css';
+  TextFieldVariant,
+  TextFieldSize,
+  TextFieldState,
+  TextFieldLabelPlacement,
+} from '../TextField/TextField.js';
+import './PasswordField.css';
 
-export interface PasswordInputProps {
-  variant?: TextInputVariant;
-  size?: TextInputSize;
+export interface PasswordFieldProps {
+  variant?: TextFieldVariant;
+  size?: TextFieldSize;
   label?: string;
-  labelPlacement?: TextInputLabelPlacement;
+  labelPlacement?: TextFieldLabelPlacement;
   placeholder?: string;
   value?: string;
   hint?: string;
-  state?: TextInputState;
+  state?: TextFieldState;
   name?: string;
   disabled?: boolean;
   required?: boolean;
@@ -30,13 +30,13 @@ export interface PasswordInputProps {
   style?: CSSProperties;
 }
 
-export function PasswordInput({
+export function PasswordField({
   showPassword: controlledShowPassword,
   onToggleVisibility,
   disabled,
   state,
   ...rest
-}: PasswordInputProps) {
+}: PasswordFieldProps) {
   const [internalShowPassword, setInternalShowPassword] = useState(false);
 
   const isControlled = controlledShowPassword !== undefined;
@@ -53,7 +53,7 @@ export function PasswordInput({
 
   const toggleButton = (
     <button
-      className="ui-password-input__toggle"
+      className="ui-password-field__toggle"
       type="button"
       aria-label={showPassword ? 'Hide password' : 'Show password'}
       aria-pressed={showPassword}
@@ -65,7 +65,7 @@ export function PasswordInput({
   );
 
   return (
-    <TextInput
+    <TextField
       {...rest}
       type={showPassword ? 'text' : 'password'}
       disabled={disabled}

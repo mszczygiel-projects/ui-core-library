@@ -1,6 +1,6 @@
 import { css } from 'lit';
 
-export const searchInputStyles = css`
+export const searchFieldStyles = css`
   /* Suppress browser-native search clear button */
   .input::-webkit-search-cancel-button {
     -webkit-appearance: none;

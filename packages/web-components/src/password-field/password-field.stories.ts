@@ -1,9 +1,9 @@
 import { createElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import './password-input.js';
+import './password-field.js';
 
 const meta: Meta = {
-  title: 'Web Components/PasswordInput',
+  title: 'Web Components/PasswordField',
   argTypes: {
     variant: {
       control: 'select',
@@ -42,7 +42,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-type PasswordInputArgs = {
+type PasswordFieldArgs = {
   variant?: string;
   size?: string;
   labelPlacement?: string;
@@ -54,8 +54,8 @@ type PasswordInputArgs = {
   disabled?: boolean;
 };
 
-const input = (props: PasswordInputArgs = {}) =>
-  createElement('ui-password-input', {
+const input = (props: PasswordFieldArgs = {}) =>
+  createElement('ui-password-field', {
     variant: props.variant,
     'data-size': props.size,
     'label-placement': props.labelPlacement,
@@ -68,12 +68,12 @@ const input = (props: PasswordInputArgs = {}) =>
   });
 
 export const Default: Story = {
-  render: (args: PasswordInputArgs) => input(args),
+  render: (args: PasswordFieldArgs) => input(args),
 };
 
 export const ShowPassword: Story = {
   args: { showPassword: true },
-  render: (args: PasswordInputArgs) => input(args),
+  render: (args: PasswordFieldArgs) => input(args),
 };
 
 export const Sizes: Story = {
@@ -111,10 +111,10 @@ export const States: Story = {
 
 export const WithHint: Story = {
   args: { hint: 'Minimum of 8 characters.' },
-  render: (args: PasswordInputArgs) => input(args),
+  render: (args: PasswordFieldArgs) => input(args),
 };
 
 export const FloatingLabel: Story = {
   args: { labelPlacement: 'floating', placeholder: '' },
-  render: (args: PasswordInputArgs) => input(args),
+  render: (args: PasswordFieldArgs) => input(args),
 };

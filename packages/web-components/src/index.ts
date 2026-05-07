@@ -7,26 +7,26 @@ export { UiButton } from './button/button.js';
 export type { ButtonVariant, ButtonSize } from './button/button.js';
 export { UiIconButton } from './icon-button/icon-button.js';
 export type { IconButtonVariant, IconButtonSize } from './icon-button/icon-button.js';
-export { UiTextInput } from './text-input/text-input.js';
+export { UiTextField } from './text-field/text-field.js';
 export type {
-  TextInputVariant,
-  TextInputSize,
-  TextInputState,
-  TextInputLabelPlacement,
-} from './text-input/text-input.js';
-export { UiPasswordInput } from './password-input/password-input.js';
+  TextFieldVariant,
+  TextFieldSize,
+  TextFieldState,
+  TextFieldLabelPlacement,
+} from './text-field/text-field.js';
+export { UiPasswordField } from './password-field/password-field.js';
 export type {
-  PasswordInputVariant,
-  PasswordInputSize,
-  PasswordInputState,
-  PasswordInputLabelPlacement,
-} from './password-input/password-input.js';
-export { UiSearchInput } from './search-input/search-input.js';
+  PasswordFieldVariant,
+  PasswordFieldSize,
+  PasswordFieldState,
+  PasswordFieldLabelPlacement,
+} from './password-field/password-field.js';
+export { UiSearchField } from './search-field/search-field.js';
 export type {
-  SearchInputVariant,
-  SearchInputSize,
-  SearchInputState,
-} from './search-input/search-input.js';
+  SearchFieldVariant,
+  SearchFieldSize,
+  SearchFieldState,
+} from './search-field/search-field.js';
 export { UiCheckboxField } from './checkbox-field/checkbox-field.js';
 export type { CheckboxFieldState } from './checkbox-field/checkbox-field.js';
 export { UiRadioField } from './radio-field/radio-field.js';

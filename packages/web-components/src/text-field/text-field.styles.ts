@@ -1,6 +1,6 @@
 import { css } from 'lit';
 
-export const textInputStyles = css`
+export const textFieldStyles = css`
   /* ---- Host ---- */
 
   :host {

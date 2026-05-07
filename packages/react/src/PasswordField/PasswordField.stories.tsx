@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { PasswordInput } from './PasswordInput.js';
+import { PasswordField } from './PasswordField.js';
 
-const meta: Meta<typeof PasswordInput> = {
-  title: 'React/PasswordInput',
-  component: PasswordInput,
+const meta: Meta<typeof PasswordField> = {
+  title: 'React/PasswordField',
+  component: PasswordField,
   argTypes: {
     variant: {
       control: 'select',
@@ -38,16 +38,16 @@ const meta: Meta<typeof PasswordInput> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof PasswordInput>;
+type Story = StoryObj<typeof PasswordField>;
 
 export const Default: Story = {};
 
 export const Sizes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <PasswordInput size="small" label="Small" placeholder="Small password input" />
-      <PasswordInput size="default" label="Default" placeholder="Default password input" />
-      <PasswordInput size="large" label="Large" placeholder="Large password input" />
+      <PasswordField size="small" label="Small" placeholder="Small password input" />
+      <PasswordField size="default" label="Default" placeholder="Default password input" />
+      <PasswordField size="large" label="Large" placeholder="Large password input" />
     </div>
   ),
 };
@@ -55,20 +55,20 @@ export const Sizes: Story = {
 export const States: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <PasswordInput state="default" label="Default" placeholder="Default state" />
-      <PasswordInput
+      <PasswordField state="default" label="Default" placeholder="Default state" />
+      <PasswordField
         state="success"
         label="Success"
         placeholder="Success state"
         hint="Password is strong."
       />
-      <PasswordInput
+      <PasswordField
         state="error"
         label="Error"
         placeholder="Error state"
         hint="Minimum of 8 characters."
       />
-      <PasswordInput state="disabled" label="Disabled" placeholder="Disabled state" />
+      <PasswordField state="disabled" label="Disabled" placeholder="Disabled state" />
     </div>
   ),
 };
@@ -85,7 +85,7 @@ export const Controlled: Story = {
   render: () => {
     const [showPassword, setShowPassword] = useState(false);
     return (
-      <PasswordInput
+      <PasswordField
         label="Password"
         placeholder="Enter your password"
         hint="Controlled show/hide state."

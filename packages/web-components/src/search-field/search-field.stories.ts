@@ -1,9 +1,9 @@
 import { createElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import './search-input.js';
+import './search-field.js';
 
 const meta: Meta = {
-  title: 'Web Components/SearchInput',
+  title: 'Web Components/SearchField',
   argTypes: {
     variant: {
       control: 'select',
@@ -34,7 +34,7 @@ const meta: Meta = {
 export default meta;
 type Story = StoryObj;
 
-type SearchInputArgs = {
+type SearchFieldArgs = {
   variant?: string;
   size?: string;
   state?: string;
@@ -44,8 +44,8 @@ type SearchInputArgs = {
   disabled?: boolean;
 };
 
-const input = (props: SearchInputArgs = {}) =>
-  createElement('ui-search-input', {
+const input = (props: SearchFieldArgs = {}) =>
+  createElement('ui-search-field', {
     variant: props.variant,
     'data-size': props.size,
     state: props.state,
@@ -56,17 +56,17 @@ const input = (props: SearchInputArgs = {}) =>
   });
 
 export const Default: Story = {
-  render: (args: SearchInputArgs) => input(args),
+  render: (args: SearchFieldArgs) => input(args),
 };
 
 export const WithValue: Story = {
   args: { value: 'Szczygieł Tartt' },
-  render: (args: SearchInputArgs) => input(args),
+  render: (args: SearchFieldArgs) => input(args),
 };
 
 export const WithHint: Story = {
   args: { hint: 'Minimum of 8 characters.' },
-  render: (args: SearchInputArgs) => input(args),
+  render: (args: SearchFieldArgs) => input(args),
 };
 
 export const Sizes: Story = {

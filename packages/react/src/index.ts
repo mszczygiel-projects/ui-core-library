@@ -5,18 +5,18 @@ export { Button } from './Button/Button.js';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button/Button.js';
 export { IconButton } from './IconButton/IconButton.js';
 export type { IconButtonProps } from './IconButton/IconButton.js';
-export { TextInput } from './TextInput/TextInput.js';
+export { TextField } from './TextField/TextField.js';
 export type {
-  TextInputProps,
-  TextInputVariant,
-  TextInputSize,
-  TextInputState,
-  TextInputLabelPlacement,
-} from './TextInput/TextInput.js';
-export { PasswordInput } from './PasswordInput/PasswordInput.js';
-export type { PasswordInputProps } from './PasswordInput/PasswordInput.js';
-export { SearchInput } from './SearchInput/SearchInput.js';
-export type { SearchInputProps } from './SearchInput/SearchInput.js';
+  TextFieldProps,
+  TextFieldVariant,
+  TextFieldSize,
+  TextFieldState,
+  TextFieldLabelPlacement,
+} from './TextField/TextField.js';
+export { PasswordField } from './PasswordField/PasswordField.js';
+export type { PasswordFieldProps } from './PasswordField/PasswordField.js';
+export { SearchField } from './SearchField/SearchField.js';
+export type { SearchFieldProps } from './SearchField/SearchField.js';
 export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';
