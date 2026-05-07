@@ -17,3 +17,5 @@ export { PasswordInput } from './PasswordInput/PasswordInput.js';
 export type { PasswordInputProps } from './PasswordInput/PasswordInput.js';
 export { SearchInput } from './SearchInput/SearchInput.js';
 export type { SearchInputProps } from './SearchInput/SearchInput.js';
+export { CheckboxField } from './CheckboxField/CheckboxField.js';
+export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
