@@ -1228,13 +1228,6 @@
     }
   },
   "checkbox": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
     "field": {
       "gap": {
         "$value": {
@@ -1278,6 +1271,13 @@
         },
         "$type": "number"
       }
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.control.radius}",
+        "Desktop": "{Sizes.control.radius}"
+      },
+      "$type": "number"
     },
     "border": {
       "width": {
@@ -1373,6 +1373,94 @@
           "Desktop": "{Primitives Sizes.size.5}"
         },
         "$type": "number"
+      }
+    }
+  },
+  "select": {
+    "option": {
+      "small": {
+        "padding": {
+          "stack": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.spacing.2}",
+              "Desktop": "{Primitives Sizes.spacing.2}"
+            },
+            "$type": "number"
+          }
+        },
+        "gap": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.1}",
+            "Desktop": "{Primitives Sizes.spacing.1}"
+          },
+          "$type": "number"
+        }
+      },
+      "padding": {
+        "stack": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.3}",
+            "Desktop": "{Primitives Sizes.spacing.3}"
+          },
+          "$type": "number"
+        },
+        "inline": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.2}",
+            "Desktop": "{Primitives Sizes.spacing.2}"
+          },
+          "$type": "number"
+        }
+      },
+      "large": {
+        "padding": {
+          "stack": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.spacing.3}",
+              "Desktop": "{Primitives Sizes.spacing.3}"
+            },
+            "$type": "number"
+          }
+        }
+      },
+      "gap": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "number"
+      },
+      "radius": {
+        "$value": {
+          "Mobile": "{Themes.radius.sm.mobile}",
+          "Desktop": "{Themes.radius.sm.desktop}"
+        },
+        "$type": "number"
+      }
+    },
+    "dropdown": {
+      "padding": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "number"
+      },
+      "radius": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "number"
+      },
+      "border": {
+        "width": {
+          "$value": {
+            "Mobile": 1,
+            "Desktop": 1
+          },
+          "$type": "number"
+        }
       }
     }
   }
