@@ -135,4 +135,92 @@ describe('UiPasswordField', () => {
     );
     expect(el.getAttribute('state')).to.equal('error');
   });
+
+  describe('form-associated', () => {
+    it('submits value via FormData', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-password-field name="password" value="secret"></ui-password-field>
+        </form>
+      `);
+
+      expect(new FormData(form).get('password')).to.equal('secret');
+    });
+
+    it('submits updated value after user input', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-password-field name="password" value="secret"></ui-password-field>
+        </form>
+      `);
+      const el = form.querySelector<UiPasswordField>('ui-password-field')!;
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+
+      nativeInput.value = 'updated-secret';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      await el.updateComplete;
+
+      expect(new FormData(form).get('password')).to.equal('updated-secret');
+    });
+
+    it('resets to initial value on form reset', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-password-field name="password" value="secret"></ui-password-field>
+        </form>
+      `);
+      const el = form.querySelector<UiPasswordField>('ui-password-field')!;
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+
+      nativeInput.value = 'updated-secret';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      await el.updateComplete;
+
+      form.reset();
+      await el.updateComplete;
+
+      expect(el.value).to.equal('secret');
+      expect(new FormData(form).get('password')).to.equal('secret');
+    });
+
+    it('excludes value from FormData when disabled', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-password-field name="password" value="secret" disabled></ui-password-field>
+        </form>
+      `);
+
+      expect(new FormData(form).get('password')).to.equal(null);
+    });
+
+    it('dispatches native input event on user input', async () => {
+      const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      let fired = false;
+
+      el.addEventListener('input', () => {
+        fired = true;
+      });
+
+      nativeInput.value = 'secret';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+
+      expect(fired).to.equal(true);
+    });
+
+    it('dispatches native change event on user change', async () => {
+      const el = await fixture<UiPasswordField>(html`<ui-password-field></ui-password-field>`);
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      let fired = false;
+
+      el.addEventListener('change', () => {
+        fired = true;
+      });
+
+      nativeInput.value = 'secret';
+      nativeInput.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      expect(fired).to.equal(true);
+    });
+  });
 });

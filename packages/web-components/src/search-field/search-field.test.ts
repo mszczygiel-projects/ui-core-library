@@ -163,4 +163,80 @@ describe('UiSearchField', () => {
     );
     expect(el.getAttribute('state')).to.equal('error');
   });
+
+  describe('form-associated', () => {
+    it('submits value via FormData', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-search-field name="q" value="hello"></ui-search-field>
+        </form>
+      `);
+      expect(new FormData(form).get('q')).to.equal('hello');
+    });
+
+    it('submits updated value after user input', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-search-field name="q" value="hello"></ui-search-field>
+        </form>
+      `);
+      const el = form.querySelector<UiSearchField>('ui-search-field')!;
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      nativeInput.value = 'world';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      await el.updateComplete;
+      expect(new FormData(form).get('q')).to.equal('world');
+    });
+
+    it('resets to initial value on form reset', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-search-field name="q" value="hello"></ui-search-field>
+        </form>
+      `);
+      const el = form.querySelector<UiSearchField>('ui-search-field')!;
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      nativeInput.value = 'world';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      await el.updateComplete;
+
+      form.reset();
+      await el.updateComplete;
+      expect(el.value).to.equal('hello');
+      expect(new FormData(form).get('q')).to.equal('hello');
+    });
+
+    it('excludes value from FormData when disabled', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-search-field name="q" value="hello" disabled></ui-search-field>
+        </form>
+      `);
+      expect(new FormData(form).get('q')).to.equal(null);
+    });
+
+    it('dispatches native input event on user input', async () => {
+      const el = await fixture<UiSearchField>(html`<ui-search-field></ui-search-field>`);
+      let fired = false;
+      el.addEventListener('input', () => {
+        fired = true;
+      });
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      nativeInput.value = 'test';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      expect(fired).to.equal(true);
+    });
+
+    it('dispatches native input event on clear', async () => {
+      const el = await fixture<UiSearchField>(
+        html`<ui-search-field value="hello"></ui-search-field>`,
+      );
+      let fired = false;
+      el.addEventListener('input', () => {
+        fired = true;
+      });
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.clear')!.click();
+      expect(fired).to.equal(true);
+    });
+  });
 });

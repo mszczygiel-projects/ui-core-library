@@ -148,4 +148,71 @@ describe('UiCheckboxField', () => {
     input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     expect(el.checked).to.equal(true);
   });
+
+  describe('form-associated', () => {
+    it('submits value via FormData when checked', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-checkbox-field name="agree" value="yes" checked></ui-checkbox-field>
+        </form>
+      `);
+
+      expect(new FormData(form).get('agree')).to.equal('yes');
+    });
+
+    it('does not submit value via FormData when unchecked', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-checkbox-field name="agree" value="yes"></ui-checkbox-field>
+        </form>
+      `);
+
+      expect(new FormData(form).get('agree')).to.equal(null);
+    });
+
+    it('resets checked state on form reset', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-checkbox-field name="agree" value="yes" checked></ui-checkbox-field>
+        </form>
+      `);
+      const el = form.querySelector<UiCheckboxField>('ui-checkbox-field')!;
+      const input = el.shadowRoot!.querySelector<HTMLInputElement>('input')!;
+
+      input.checked = false;
+      input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      await el.updateComplete;
+
+      form.reset();
+      await el.updateComplete;
+
+      expect(el.checked).to.equal(true);
+      expect(new FormData(form).get('agree')).to.equal('yes');
+    });
+
+    it('excludes value from FormData when disabled', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-checkbox-field name="agree" value="yes" checked disabled></ui-checkbox-field>
+        </form>
+      `);
+
+      expect(new FormData(form).get('agree')).to.equal(null);
+    });
+
+    it('dispatches native change event on toggle', async () => {
+      const el = await fixture<UiCheckboxField>(html`<ui-checkbox-field></ui-checkbox-field>`);
+      const input = el.shadowRoot!.querySelector<HTMLInputElement>('input')!;
+      let fired = false;
+
+      el.addEventListener('change', () => {
+        fired = true;
+      });
+
+      input.checked = true;
+      input.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+
+      expect(fired).to.equal(true);
+    });
+  });
 });

@@ -36,6 +36,11 @@ describe('CheckboxField', () => {
     expect((screen.getByRole('checkbox') as HTMLInputElement).checked).toBe(false);
   });
 
+  it('input is checked when defaultChecked=true', () => {
+    render(<CheckboxField label="Accept" defaultChecked />);
+    expect((screen.getByRole('checkbox') as HTMLInputElement).checked).toBe(true);
+  });
+
   it('sets input.indeterminate when indeterminate=true', () => {
     render(<CheckboxField label="Accept" indeterminate />);
     expect((screen.getByRole('checkbox') as HTMLInputElement).indeterminate).toBe(true);
@@ -129,5 +134,34 @@ describe('CheckboxField', () => {
   it('forwards style to root element', () => {
     const { container } = render(<CheckboxField style={{ marginTop: '8px' }} />);
     expect((container.firstElementChild as HTMLElement).style.marginTop).toBe('8px');
+  });
+
+  describe('form integration', () => {
+    it('submits value via FormData when defaultChecked is true', () => {
+      const { container } = render(
+        <form>
+          <CheckboxField name="agree" value="yes" defaultChecked />
+        </form>,
+      );
+
+      expect(new FormData(container.querySelector('form')!).get('agree')).toBe('yes');
+    });
+
+    it('resets to defaultChecked on form reset', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <CheckboxField label="Accept" name="agree" defaultChecked />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+      const input = screen.getByRole('checkbox') as HTMLInputElement;
+
+      await user.click(input);
+      expect(input.checked).toBe(false);
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(input.checked).toBe(true);
+    });
   });
 });

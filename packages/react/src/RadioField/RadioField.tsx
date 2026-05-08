@@ -7,6 +7,7 @@ export interface RadioFieldProps {
   label?: string;
   hint?: string;
   checked?: boolean;
+  defaultChecked?: boolean;
   state?: RadioFieldState;
   disabled?: boolean;
   name?: string;
@@ -22,6 +23,7 @@ export function RadioField({
   label,
   hint,
   checked,
+  defaultChecked,
   state = 'default',
   disabled,
   name,
@@ -60,6 +62,7 @@ export function RadioField({
             type="radio"
             className="ui-radio-field__input"
             {...(isControlled ? { checked } : {})}
+            {...(!isControlled && defaultChecked !== undefined ? { defaultChecked } : {})}
             disabled={isDisabled}
             required={required}
             name={name}

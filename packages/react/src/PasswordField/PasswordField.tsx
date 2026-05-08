@@ -17,6 +17,7 @@ export interface PasswordFieldProps {
   labelPlacement?: TextFieldLabelPlacement;
   placeholder?: string;
   value?: string;
+  defaultValue?: string;
   hint?: string;
   state?: TextFieldState;
   name?: string;

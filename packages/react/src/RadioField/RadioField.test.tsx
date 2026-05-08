@@ -36,6 +36,11 @@ describe('RadioField', () => {
     expect((screen.getByRole('radio') as HTMLInputElement).checked).toBe(false);
   });
 
+  it('input is checked when defaultChecked=true', () => {
+    render(<RadioField label="Accept" defaultChecked />);
+    expect((screen.getByRole('radio') as HTMLInputElement).checked).toBe(true);
+  });
+
   it('applies error class on root when state=error', () => {
     const { container } = render(<RadioField state="error" />);
     expect(container.firstElementChild!.classList.contains('ui-radio-field--error')).toBe(true);
@@ -105,5 +110,38 @@ describe('RadioField', () => {
   it('forwards style to root element', () => {
     const { container } = render(<RadioField style={{ marginTop: '8px' }} />);
     expect((container.firstElementChild as HTMLElement).style.marginTop).toBe('8px');
+  });
+
+  describe('form integration', () => {
+    it('submits value via FormData when defaultChecked is true', () => {
+      const { container } = render(
+        <form>
+          <RadioField name="choice" value="yes" defaultChecked />
+        </form>,
+      );
+
+      expect(new FormData(container.querySelector('form')!).get('choice')).toBe('yes');
+    });
+
+    it('resets to defaultChecked on form reset', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <RadioField label="Accept" name="choice" defaultChecked />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+      const input = screen.getByRole('radio') as HTMLInputElement;
+
+      await user.click(input);
+      expect(input.checked).toBe(true);
+
+      input.checked = false;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+      expect(input.checked).toBe(false);
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(input.checked).toBe(true);
+    });
   });
 });

@@ -228,4 +228,81 @@ describe('UiTextField', () => {
     expect(shadow.querySelector('slot[name="leading-icon"]')).to.not.equal(null);
     expect(shadow.querySelector('slot[name="trailing-icon"]')).to.not.equal(null);
   });
+
+  describe('form-associated', () => {
+    it('submits value via FormData', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-text-field name="username" value="alice"></ui-text-field>
+        </form>
+      `);
+      const data = new FormData(form);
+      expect(data.get('username')).to.equal('alice');
+    });
+
+    it('submits updated value after user input', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-text-field name="username" value="alice"></ui-text-field>
+        </form>
+      `);
+      const el = form.querySelector<UiTextField>('ui-text-field')!;
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      nativeInput.value = 'bob';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      await el.updateComplete;
+      expect(new FormData(form).get('username')).to.equal('bob');
+    });
+
+    it('resets to initial value on form reset', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-text-field name="username" value="alice"></ui-text-field>
+        </form>
+      `);
+      const el = form.querySelector<UiTextField>('ui-text-field')!;
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      nativeInput.value = 'bob';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      await el.updateComplete;
+
+      form.reset();
+      await el.updateComplete;
+      expect(el.value).to.equal('alice');
+      expect(new FormData(form).get('username')).to.equal('alice');
+    });
+
+    it('excludes value from FormData when disabled', async () => {
+      const form = await fixture<HTMLFormElement>(html`
+        <form>
+          <ui-text-field name="username" value="alice" disabled></ui-text-field>
+        </form>
+      `);
+      expect(new FormData(form).get('username')).to.equal(null);
+    });
+
+    it('dispatches native input event on user input', async () => {
+      const el = await fixture<UiTextField>(html`<ui-text-field></ui-text-field>`);
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      let fired = false;
+      el.addEventListener('input', () => {
+        fired = true;
+      });
+      nativeInput.value = 'test';
+      nativeInput.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+      expect(fired).to.equal(true);
+    });
+
+    it('dispatches native change event on change', async () => {
+      const el = await fixture<UiTextField>(html`<ui-text-field></ui-text-field>`);
+      const nativeInput = el.shadowRoot!.querySelector('input')!;
+      let fired = false;
+      el.addEventListener('change', () => {
+        fired = true;
+      });
+      nativeInput.value = 'test';
+      nativeInput.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
+      expect(fired).to.equal(true);
+    });
+  });
 });
