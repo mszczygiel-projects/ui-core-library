@@ -43,3 +43,9 @@ The radio contributes its `value` only when `checked` is `true`.
 | `name`     | `name`     | `string`                             | —           |
 | `value`    | `value`    | `string`                             | `'on'`      |
 | `required` | `required` | `boolean`                            | `false`     |
+
+## Accessibility notes
+
+- Uses a native `<input type="radio">` in shadow DOM.
+- Radios should share the same `name` to behave as an accessible native group.
+- Error state uses `aria-invalid`, and helper text is linked via `aria-describedby`.

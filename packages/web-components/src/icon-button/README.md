@@ -32,3 +32,9 @@ A web component icon-only button with variants and loading state.
 | Name    | Description  |
 | ------- | ------------ |
 | default | Icon content |
+
+## Accessibility notes
+
+- Wraps a native `<button>` in shadow DOM with native keyboard behavior.
+- `label` is required for an accessible name because icon-only content has no visible text.
+- `loading` sets `aria-busy="true"` and disables interaction.

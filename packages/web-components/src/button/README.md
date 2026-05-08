@@ -32,3 +32,9 @@ A web component button with visual variants, optional icon slots, and built-in l
 | default      | Button label content  |
 | `icon-left`  | Icon before the label |
 | `icon-right` | Icon after the label  |
+
+## Accessibility notes
+
+- Wraps a native `<button>` in shadow DOM, preserving native button keyboard and semantic behavior.
+- Use `label` when slot content is icon-only or otherwise lacks an accessible name.
+- `loading` sets `aria-busy="true"` and disables interaction.

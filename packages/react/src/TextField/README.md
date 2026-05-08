@@ -64,3 +64,9 @@ Use `defaultValue` (uncontrolled) to get automatic reset-to-initial-value behavi
 | `style`          | `CSSProperties`                                   | —           | Inline style on root element             |
 
 All other `InputHTMLAttributes` (`name`, `defaultValue`, `value`, `disabled`, `required`, `readOnly`, `type`, `autoComplete`, …) are forwarded directly to the native `<input>`.
+
+## Accessibility notes
+
+- Label uses native `<label htmlFor>` linkage to the input.
+- Error state sets `aria-invalid`, and helper text is linked via `aria-describedby`.
+- Required state is exposed through native input semantics.

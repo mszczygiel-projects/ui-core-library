@@ -42,3 +42,9 @@ Use `defaultChecked` in uncontrolled mode to restore the initial checked state o
 | `className`      | `string`                             | —           | Extra class on root element        |
 | `style`          | `CSSProperties`                      | —           | Inline style on root element       |
 | `id`             | `string`                             | —           | Custom input id                    |
+
+## Accessibility notes
+
+- Uses a native `<input type="radio">`, so keyboard and screen reader semantics are native.
+- Radios should share the same `name` to form an accessible group.
+- Error state applies `aria-invalid`, and `hint` is linked through `aria-describedby`.

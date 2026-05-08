@@ -40,3 +40,9 @@ The checkbox contributes its `value` only when `checked` is `true`.
 | `name`          | `name`          | `string`                             | —           |
 | `value`         | `value`         | `string`                             | `'on'`      |
 | `required`      | `required`      | `boolean`                            | `false`     |
+
+## Accessibility notes
+
+- Uses a native `<input type="checkbox">` in shadow DOM.
+- Error state uses `aria-invalid`, and helper text is linked via `aria-describedby`.
+- Native `change` is emitted from the host alongside `ui-change` for integration compatibility.

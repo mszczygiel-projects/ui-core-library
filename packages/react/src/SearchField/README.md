@@ -45,3 +45,8 @@ Use `defaultValue` in uncontrolled mode to restore the initial value on `form.re
 | `onClear`      | `() => void`                                      | —             | Called when the clear control is activated |
 | `className`    | `string`                                          | —             | Extra class on root element                |
 | `style`        | `CSSProperties`                                   | —             | Inline style on root element               |
+
+## Accessibility notes
+
+- Inherits input semantics from `TextField` and renders a native `<input type="search">`.
+- Clear control is removed from tab order when empty (`tabIndex=-1`) and marked `aria-hidden` until there is a value.

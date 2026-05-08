@@ -21,3 +21,8 @@ A React loading indicator component used by buttons and standalone loading state
 | `label`     | `string`                          | `'Loading'` | Accessible status label      |
 | `className` | `string`                          | —           | Extra class on root element  |
 | `style`     | `CSSProperties`                   | —           | Inline style on root element |
+
+## Accessibility notes
+
+- Exposes `role="status"` with `aria-live="polite"` so assistive tech can announce loading state changes.
+- Set a meaningful `label` when loading context is not obvious from surrounding UI.

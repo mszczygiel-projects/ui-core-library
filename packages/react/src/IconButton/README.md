@@ -28,3 +28,8 @@ A React icon-only button with the same variants and loading behavior as `Button`
 | `onClick`    | `MouseEventHandler<HTMLButtonElement>`                         | —           | Click handler                         |
 | `className`  | `string`                                                       | —           | Extra class on root element           |
 | `style`      | `CSSProperties`                                                | —           | Inline style on root element          |
+
+## Accessibility notes
+
+- Uses a native `<button>` element, so keyboard activation and focus behavior are native.
+- `aria-label` is required and should describe the action because there is no visible text label.

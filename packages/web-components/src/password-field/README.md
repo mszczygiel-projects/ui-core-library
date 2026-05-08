@@ -47,3 +47,9 @@ The current `value` is included in `FormData` under `name`.
 | `required`       | `required`        | `boolean`                                         | `false`     |
 | `readonly`       | `readonly`        | `boolean`                                         | `false`     |
 | `showPassword`   | `show-password`   | `boolean`                                         | `false`     |
+
+## Accessibility notes
+
+- Input error and hint states map to `aria-invalid` and `aria-describedby`.
+- Visibility toggle is a native button with dynamic `aria-label` and `aria-pressed`.
+- Native `input` and `change` events are emitted from the host for integration with external listeners.

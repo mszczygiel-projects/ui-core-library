@@ -47,3 +47,8 @@ Use `defaultValue` in uncontrolled mode to restore the initial value on `form.re
 | `onChange`           | `(value: string) => void`                         | —           | Called with the new value                      |
 | `className`          | `string`                                          | —           | Extra class on root element                    |
 | `style`              | `CSSProperties`                                   | —           | Inline style on root element                   |
+
+## Accessibility notes
+
+- Inherits labeling and hint semantics from `TextField` (`label` linkage and `aria-describedby` for `hint`).
+- Visibility toggle is a native button with dynamic `aria-label` (`Show password`/`Hide password`) and `aria-pressed` state.

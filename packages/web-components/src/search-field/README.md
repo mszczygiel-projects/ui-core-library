@@ -44,3 +44,9 @@ The current `value` is included in `FormData` under `name`.
 | `disabled`    | `disabled`    | `boolean`                                         | `false`       |
 | `required`    | `required`    | `boolean`                                         | `false`       |
 | `readonly`    | `readonly`    | `boolean`                                         | `false`       |
+
+## Accessibility notes
+
+- Uses native `<input type="search">` semantics inside shadow DOM.
+- Clear button is hidden from assistive tech and keyboard navigation when empty (`aria-hidden` and `tabindex=-1`).
+- Emits native `input` and `change` from the host for app-level form/event integration.

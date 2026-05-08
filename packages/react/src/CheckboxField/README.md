@@ -43,3 +43,9 @@ Use `defaultChecked` in uncontrolled mode to restore the initial checked state o
 | `className`      | `string`                             | —           | Extra class on root element        |
 | `style`          | `CSSProperties`                      | —           | Inline style on root element       |
 | `id`             | `string`                             | —           | Custom input id                    |
+
+## Accessibility notes
+
+- Uses a native `<input type="checkbox">`, so keyboard and screen reader semantics are native.
+- Error state applies `aria-invalid`, and `hint` is linked through `aria-describedby`.
+- `indeterminate` is a visual/interaction state and should be paired with clear label text.

@@ -77,3 +77,9 @@ Both the native events and the `ui-*` custom events bubble and are composed (cro
 | --------------- | --------------------------------- |
 | `leading-icon`  | Icon placed before the input text |
 | `trailing-icon` | Icon placed after the input text  |
+
+## Accessibility notes
+
+- Label is linked to the internal input through `for`/`id`.
+- Error state uses `aria-invalid`, and helper text is connected with `aria-describedby`.
+- Native `input` and `change` events are emitted from the host for integration with external listeners.

@@ -30,3 +30,8 @@ A React button component with visual variants, optional icons, and built-in load
 | `className`  | `string`                                                       | —           | Extra class on root element           |
 | `style`      | `CSSProperties`                                                | —           | Inline style on root element          |
 | `aria-label` | `string`                                                       | —           | Accessible label when needed          |
+
+## Accessibility notes
+
+- Uses a native `<button>` element, so keyboard activation (`Enter`, `Space`) and semantics are provided by the browser.
+- `loading` sets `aria-busy="true"` and disables interaction to prevent duplicate actions.
