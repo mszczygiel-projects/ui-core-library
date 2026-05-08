@@ -2756,6 +2756,164 @@
           }
         }
       }
+    },
+    "select": {
+      "dropdown": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.select.dropdown.background}",
+            "Subtle": "{Themes.color.on-subtle.select.dropdown.background}",
+            "Inverse": "{Themes.color.on-inverse.select.dropdown.background}",
+            "Primary": "{Themes.color.on-brand-primary.select.dropdown.background}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.select.dropdown.border}",
+            "Subtle": "{Themes.color.on-subtle.select.dropdown.border}",
+            "Inverse": "{Themes.color.on-inverse.select.dropdown.border}",
+            "Primary": "{Themes.color.on-brand-primary.select.dropdown.border}"
+          },
+          "$type": "color"
+        }
+      },
+      "option": {
+        "background": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.select.option.background.default}",
+              "Subtle": "{Themes.color.on-subtle.select.option.background.default}",
+              "Inverse": "{Themes.color.on-inverse.select.option.background.default}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.background.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.select.option.background.hover}",
+              "Subtle": "{Themes.color.on-subtle.select.option.background.hover}",
+              "Inverse": "{Themes.color.on-inverse.select.option.background.hover}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.background.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.select.option.background.active}",
+              "Subtle": "{Themes.color.on-subtle.select.option.background.active}",
+              "Inverse": "{Themes.color.on-inverse.select.option.background.active}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.background.active}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.select.option.background.disabled}",
+              "Subtle": "{Themes.color.on-subtle.select.option.background.disabled}",
+              "Inverse": "{Themes.color.on-inverse.select.option.background.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.background.disabled}"
+            },
+            "$type": "color"
+          }
+        },
+        "text": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.select.option.text.default}",
+              "Subtle": "{Themes.color.on-subtle.select.option.text.default}",
+              "Inverse": "{Themes.color.on-inverse.select.option.text.default}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.text.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.select.option.text.hover}",
+              "Subtle": "{Themes.color.on-subtle.select.option.text.hover}",
+              "Inverse": "{Themes.color.on-inverse.select.option.text.hover}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.text.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.select.option.text.active}",
+              "Subtle": "{Themes.color.on-subtle.select.option.text.active}",
+              "Inverse": "{Themes.color.on-inverse.select.option.text.active}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.text.active}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.select.option.text.disabled}",
+              "Subtle": "{Themes.color.on-subtle.select.option.text.disabled}",
+              "Inverse": "{Themes.color.on-inverse.select.option.text.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.text.disabled}"
+            },
+            "$type": "color"
+          }
+        },
+        "icon": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.select.option.icon.default}",
+              "Subtle": "{Themes.color.on-subtle.select.option.icon.default}",
+              "Inverse": "{Themes.color.on-inverse.select.option.icon.default}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.icon.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.select.option.icon.hover}",
+              "Subtle": "{Themes.color.on-subtle.select.option.icon.hover}",
+              "Inverse": "{Themes.color.on-inverse.select.option.icon.hover}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.icon.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.select.option.icon.active}",
+              "Subtle": "{Themes.color.on-subtle.select.option.icon.active}",
+              "Inverse": "{Themes.color.on-inverse.select.option.icon.active}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.icon.active}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.select.option.icon.disabled}",
+              "Subtle": "{Themes.color.on-subtle.select.option.icon.disabled}",
+              "Inverse": "{Themes.color.on-inverse.select.option.icon.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.icon.disabled}"
+            },
+            "$type": "color"
+          }
+        },
+        "check": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.select.option.check.default}",
+              "Subtle": "{Themes.color.on-subtle.select.option.check.default}",
+              "Inverse": "{Themes.color.on-inverse.select.option.check.default}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.check.default}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.select.option.check.active}",
+              "Subtle": "{Themes.color.on-subtle.select.option.check.active}",
+              "Inverse": "{Themes.color.on-inverse.select.option.check.active}",
+              "Primary": "{Themes.color.on-brand-primary.select.option.check.active}"
+            },
+            "$type": "color"
+          }
+        }
+      }
     }
   }
 }
