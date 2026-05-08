@@ -150,3 +150,10 @@ Per-client brand overrides go on `:root` after the imports:
   --color-brand-primary-contrast: #ffffff;
 }
 ```
+
+## Component docs
+
+Component-specific behavior is documented next to implementation files:
+
+- [React SelectField](packages/react/src/SelectField/README.md)
+- [Web Components SelectField](packages/web-components/src/select-field/README.md)

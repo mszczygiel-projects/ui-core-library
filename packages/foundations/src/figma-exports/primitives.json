@@ -846,19 +846,19 @@
         "$type": "string"
       },
       "sm": {
-        "$value": "0 1px 3px 0, 0 1px 2px -1px",
+        "$value": "0 1px 2px -1px",
         "$type": "string"
       },
       "md": {
-        "$value": "0 4px 6px -1px, 0 2px 4px -2px",
+        "$value": "0 2px 4px -2px",
         "$type": "string"
       },
       "lg": {
-        "$value": "0 10px 15px -3px, 0 4px 6px -4px",
+        "$value": "0 4px 6px -4px",
         "$type": "string"
       },
       "xl": {
-        "$value": "0 20px 25px -5px, 0 8px 10px -6px",
+        "$value": "0 8px 10px -6px",
         "$type": "string"
       },
       "2xl": {

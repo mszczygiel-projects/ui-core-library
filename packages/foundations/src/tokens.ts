@@ -447,6 +447,36 @@ export const tokens = {
             },
           },
         },
+        select: {
+          dropdown: {
+            background: 'var(--color-on-subtle-select-dropdown-background)',
+            border: 'var(--color-on-subtle-select-dropdown-border)',
+          },
+          option: {
+            background: {
+              default: 'var(--color-on-subtle-select-option-background-default)',
+              hover: 'var(--color-on-subtle-select-option-background-hover)',
+              active: 'var(--color-on-subtle-select-option-background-active)',
+              disabled: 'var(--color-on-subtle-select-option-background-disabled)',
+            },
+            text: {
+              default: 'var(--color-on-subtle-select-option-text-default)',
+              hover: 'var(--color-on-subtle-select-option-text-hover)',
+              active: 'var(--color-on-subtle-select-option-text-active)',
+              disabled: 'var(--color-on-subtle-select-option-text-disabled)',
+            },
+            icon: {
+              default: 'var(--color-on-subtle-select-option-icon-default)',
+              hover: 'var(--color-on-subtle-select-option-icon-hover)',
+              active: 'var(--color-on-subtle-select-option-icon-active)',
+              disabled: 'var(--color-on-subtle-select-option-icon-disabled)',
+            },
+            check: {
+              default: 'var(--color-on-subtle-select-option-check-default)',
+              active: 'var(--color-on-subtle-select-option-check-active)',
+            },
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -892,6 +922,36 @@ export const tokens = {
             },
           },
         },
+        select: {
+          dropdown: {
+            background: 'var(--color-on-inverse-select-dropdown-background)',
+            border: 'var(--color-on-inverse-select-dropdown-border)',
+          },
+          option: {
+            background: {
+              default: 'var(--color-on-inverse-select-option-background-default)',
+              hover: 'var(--color-on-inverse-select-option-background-hover)',
+              active: 'var(--color-on-inverse-select-option-background-active)',
+              disabled: 'var(--color-on-inverse-select-option-background-disabled)',
+            },
+            text: {
+              default: 'var(--color-on-inverse-select-option-text-default)',
+              hover: 'var(--color-on-inverse-select-option-text-hover)',
+              active: 'var(--color-on-inverse-select-option-text-active)',
+              disabled: 'var(--color-on-inverse-select-option-text-disabled)',
+            },
+            icon: {
+              default: 'var(--color-on-inverse-select-option-icon-default)',
+              hover: 'var(--color-on-inverse-select-option-icon-hover)',
+              active: 'var(--color-on-inverse-select-option-icon-active)',
+              disabled: 'var(--color-on-inverse-select-option-icon-disabled)',
+            },
+            check: {
+              default: 'var(--color-on-inverse-select-option-check-default)',
+              active: 'var(--color-on-inverse-select-option-check-active)',
+            },
+          },
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -1334,6 +1394,36 @@ export const tokens = {
               success: 'var(--color-on-brand-primary-radio-checked-border-success)',
               error: 'var(--color-on-brand-primary-radio-checked-border-error)',
               disabled: 'var(--color-on-brand-primary-radio-checked-border-disabled)',
+            },
+          },
+        },
+        select: {
+          dropdown: {
+            background: 'var(--color-on-brand-primary-select-dropdown-background)',
+            border: 'var(--color-on-brand-primary-select-dropdown-border)',
+          },
+          option: {
+            background: {
+              default: 'var(--color-on-brand-primary-select-option-background-default)',
+              hover: 'var(--color-on-brand-primary-select-option-background-hover)',
+              active: 'var(--color-on-brand-primary-select-option-background-active)',
+              disabled: 'var(--color-on-brand-primary-select-option-background-disabled)',
+            },
+            text: {
+              default: 'var(--color-on-brand-primary-select-option-text-default)',
+              hover: 'var(--color-on-brand-primary-select-option-text-hover)',
+              active: 'var(--color-on-brand-primary-select-option-text-active)',
+              disabled: 'var(--color-on-brand-primary-select-option-text-disabled)',
+            },
+            icon: {
+              default: 'var(--color-on-brand-primary-select-option-icon-default)',
+              hover: 'var(--color-on-brand-primary-select-option-icon-hover)',
+              active: 'var(--color-on-brand-primary-select-option-icon-active)',
+              disabled: 'var(--color-on-brand-primary-select-option-icon-disabled)',
+            },
+            check: {
+              default: 'var(--color-on-brand-primary-select-option-check-default)',
+              active: 'var(--color-on-brand-primary-select-option-check-active)',
             },
           },
         },
@@ -1850,6 +1940,36 @@ export const tokens = {
           },
         },
       },
+      select: {
+        dropdown: {
+          background: 'var(--color-select-dropdown-background)',
+          border: 'var(--color-select-dropdown-border)',
+        },
+        option: {
+          background: {
+            default: 'var(--color-select-option-background-default)',
+            hover: 'var(--color-select-option-background-hover)',
+            active: 'var(--color-select-option-background-active)',
+            disabled: 'var(--color-select-option-background-disabled)',
+          },
+          text: {
+            default: 'var(--color-select-option-text-default)',
+            hover: 'var(--color-select-option-text-hover)',
+            active: 'var(--color-select-option-text-active)',
+            disabled: 'var(--color-select-option-text-disabled)',
+          },
+          icon: {
+            default: 'var(--color-select-option-icon-default)',
+            hover: 'var(--color-select-option-icon-hover)',
+            active: 'var(--color-select-option-icon-active)',
+            disabled: 'var(--color-select-option-icon-disabled)',
+          },
+          check: {
+            default: 'var(--color-select-option-check-default)',
+            active: 'var(--color-select-option-check-active)',
+          },
+        },
+      },
     },
   },
   sizes: {
@@ -2122,7 +2242,6 @@ export const tokens = {
       },
     },
     checkbox: {
-      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -2131,6 +2250,7 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
+      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -2154,6 +2274,34 @@ export const tokens = {
       },
       size: {
         default: 'var(--radio-size-default)',
+      },
+    },
+    select: {
+      option: {
+        small: {
+          padding: {
+            stack: 'var(--select-option-small-padding-stack)',
+          },
+          gap: 'var(--select-option-small-gap)',
+        },
+        padding: {
+          stack: 'var(--select-option-padding-stack)',
+          inline: 'var(--select-option-padding-inline)',
+        },
+        large: {
+          padding: {
+            stack: 'var(--select-option-large-padding-stack)',
+          },
+        },
+        gap: 'var(--select-option-gap)',
+        radius: 'var(--select-option-radius)',
+      },
+      dropdown: {
+        padding: 'var(--select-dropdown-padding)',
+        radius: 'var(--select-dropdown-radius)',
+        border: {
+          width: 'var(--select-dropdown-border-width)',
+        },
       },
     },
   },

@@ -214,10 +214,10 @@
   --shadow-shape-none: none;
   --shadow-shape-2xs: 0 1px;
   --shadow-shape-xs: 0 1px 2px 0;
-  --shadow-shape-sm: 0 1px 3px 0, 0 1px 2px -1px;
-  --shadow-shape-md: 0 4px 6px -1px, 0 2px 4px -2px;
-  --shadow-shape-lg: 0 10px 15px -3px, 0 4px 6px -4px;
-  --shadow-shape-xl: 0 20px 25px -5px, 0 8px 10px -6px;
+  --shadow-shape-sm: 0 1px 2px -1px;
+  --shadow-shape-md: 0 2px 4px -2px;
+  --shadow-shape-lg: 0 4px 6px -4px;
+  --shadow-shape-xl: 0 8px 10px -6px;
   --shadow-shape-2xl: 0 25px 50px -12px;
   --inset-shadow-shape-none: none;
   --inset-shadow-shape-2xs: inset 0 1px;
@@ -952,6 +952,34 @@
   --color-on-subtle-radio-checked-border-success: var(--color-radio-checked-border-success);
   --color-on-subtle-radio-checked-border-error: var(--color-radio-checked-border-error);
   --color-on-subtle-radio-checked-border-disabled: var(--color-radio-checked-border-disabled);
+  --color-on-subtle-select-dropdown-background: var(--color-on-subtle-background-default);
+  --color-on-subtle-select-dropdown-border: var(--color-on-subtle-border-default);
+  --color-on-subtle-select-option-background-default: var(
+    --color-on-subtle-control-outline-background-default
+  );
+  --color-on-subtle-select-option-background-hover: var(--color-on-subtle-background-subtle);
+  --color-on-subtle-select-option-background-active: var(
+    --color-on-subtle-action-primary-base-default
+  );
+  --color-on-subtle-select-option-background-disabled: var(
+    --color-on-subtle-control-outline-background-default
+  );
+  --color-on-subtle-select-option-text-default: var(--color-on-subtle-text-primary);
+  --color-on-subtle-select-option-text-hover: var(--color-on-subtle-text-primary);
+  --color-on-subtle-select-option-text-active: var(
+    --color-on-subtle-action-primary-on-base-default
+  );
+  --color-on-subtle-select-option-text-disabled: var(--color-on-subtle-text-muted);
+  --color-on-subtle-select-option-icon-default: var(--color-on-subtle-icon-default);
+  --color-on-subtle-select-option-icon-hover: var(--color-on-subtle-icon-default);
+  --color-on-subtle-select-option-icon-active: var(
+    --color-on-subtle-action-primary-on-base-default
+  );
+  --color-on-subtle-select-option-icon-disabled: var(--color-on-subtle-text-muted);
+  --color-on-subtle-select-option-check-default: var(
+    --color-on-subtle-control-outline-background-default
+  );
+  --color-on-subtle-select-option-check-active: var(--color-on-subtle-action-primary-base-default);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -1409,6 +1437,36 @@
   --color-on-inverse-radio-checked-border-success: var(--color-radio-checked-border-success);
   --color-on-inverse-radio-checked-border-error: var(--color-radio-checked-border-error);
   --color-on-inverse-radio-checked-border-disabled: var(--color-radio-checked-border-disabled);
+  --color-on-inverse-select-dropdown-background: var(--color-on-inverse-background-default);
+  --color-on-inverse-select-dropdown-border: var(--color-on-inverse-border-default);
+  --color-on-inverse-select-option-background-default: var(
+    --color-on-inverse-control-outline-background-default
+  );
+  --color-on-inverse-select-option-background-hover: var(--color-on-inverse-background-subtle);
+  --color-on-inverse-select-option-background-active: var(
+    --color-on-inverse-action-primary-base-default
+  );
+  --color-on-inverse-select-option-background-disabled: var(
+    --color-on-inverse-control-outline-background-default
+  );
+  --color-on-inverse-select-option-text-default: var(--color-on-inverse-text-primary);
+  --color-on-inverse-select-option-text-hover: var(--color-on-inverse-text-primary);
+  --color-on-inverse-select-option-text-active: var(
+    --color-on-inverse-action-primary-on-base-default
+  );
+  --color-on-inverse-select-option-text-disabled: var(--color-on-inverse-text-muted);
+  --color-on-inverse-select-option-icon-default: var(--color-on-inverse-icon-default);
+  --color-on-inverse-select-option-icon-hover: var(--color-on-inverse-icon-default);
+  --color-on-inverse-select-option-icon-active: var(
+    --color-on-inverse-action-primary-on-base-default
+  );
+  --color-on-inverse-select-option-icon-disabled: var(--color-on-inverse-text-muted);
+  --color-on-inverse-select-option-check-default: var(
+    --color-on-inverse-control-outline-background-default
+  );
+  --color-on-inverse-select-option-check-active: var(
+    --color-on-inverse-action-primary-base-default
+  );
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -1968,8 +2026,58 @@
   --color-on-brand-primary-radio-checked-border-disabled: var(
     --color-radio-checked-border-disabled
   );
+  --color-on-brand-primary-select-dropdown-background: var(
+    --color-on-brand-primary-background-default
+  );
+  --color-on-brand-primary-select-dropdown-border: var(--color-on-brand-primary-border-default);
+  --color-on-brand-primary-select-option-background-default: var(
+    --color-on-brand-primary-control-outline-background-default
+  );
+  --color-on-brand-primary-select-option-background-hover: var(
+    --color-on-brand-primary-background-subtle
+  );
+  --color-on-brand-primary-select-option-background-active: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
+  --color-on-brand-primary-select-option-background-disabled: var(
+    --color-on-brand-primary-control-outline-background-default
+  );
+  --color-on-brand-primary-select-option-text-default: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-select-option-text-hover: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-select-option-text-active: var(
+    --color-on-brand-primary-action-primary-on-base-default
+  );
+  --color-on-brand-primary-select-option-text-disabled: var(--color-on-brand-primary-text-muted);
+  --color-on-brand-primary-select-option-icon-default: var(--color-on-brand-primary-icon-default);
+  --color-on-brand-primary-select-option-icon-hover: var(--color-on-brand-primary-icon-default);
+  --color-on-brand-primary-select-option-icon-active: var(
+    --color-on-brand-primary-action-primary-on-base-default
+  );
+  --color-on-brand-primary-select-option-icon-disabled: var(--color-on-brand-primary-text-muted);
+  --color-on-brand-primary-select-option-check-default: var(
+    --color-on-brand-primary-control-outline-background-default
+  );
+  --color-on-brand-primary-select-option-check-active: var(
+    --color-on-brand-primary-action-primary-base-default
+  );
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
+  --color-select-dropdown-background: var(--color-background-default);
+  --color-select-dropdown-border: var(--color-border-default);
+  --color-select-option-background-default: var(--color-control-outline-background-default);
+  --color-select-option-background-hover: var(--color-background-subtle);
+  --color-select-option-background-active: var(--color-action-primary-base-default);
+  --color-select-option-background-disabled: var(--color-control-outline-background-default);
+  --color-select-option-text-default: var(--color-text-primary);
+  --color-select-option-text-hover: var(--color-text-primary);
+  --color-select-option-text-active: var(--color-action-primary-on-base-default);
+  --color-select-option-text-disabled: var(--color-text-muted);
+  --color-select-option-icon-default: var(--color-icon-default);
+  --color-select-option-icon-hover: var(--color-icon-default);
+  --color-select-option-icon-active: var(--color-action-primary-on-base-default);
+  --color-select-option-icon-disabled: var(--color-text-muted);
+  --color-select-option-check-default: var(--color-control-outline-background-default);
+  --color-select-option-check-active: var(--color-action-primary-base-default);
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
@@ -2366,6 +2474,24 @@
   --color-radio-checked-border-success: var(--color-on-subtle-radio-checked-border-success);
   --color-radio-checked-border-error: var(--color-on-subtle-radio-checked-border-error);
   --color-radio-checked-border-disabled: var(--color-on-subtle-radio-checked-border-disabled);
+  --color-select-dropdown-background: var(--color-on-subtle-select-dropdown-background);
+  --color-select-dropdown-border: var(--color-on-subtle-select-dropdown-border);
+  --color-select-option-background-default: var(--color-on-subtle-select-option-background-default);
+  --color-select-option-background-hover: var(--color-on-subtle-select-option-background-hover);
+  --color-select-option-background-active: var(--color-on-subtle-select-option-background-active);
+  --color-select-option-background-disabled: var(
+    --color-on-subtle-select-option-background-disabled
+  );
+  --color-select-option-text-default: var(--color-on-subtle-select-option-text-default);
+  --color-select-option-text-hover: var(--color-on-subtle-select-option-text-hover);
+  --color-select-option-text-active: var(--color-on-subtle-select-option-text-active);
+  --color-select-option-text-disabled: var(--color-on-subtle-select-option-text-disabled);
+  --color-select-option-icon-default: var(--color-on-subtle-select-option-icon-default);
+  --color-select-option-icon-hover: var(--color-on-subtle-select-option-icon-hover);
+  --color-select-option-icon-active: var(--color-on-subtle-select-option-icon-active);
+  --color-select-option-icon-disabled: var(--color-on-subtle-select-option-icon-disabled);
+  --color-select-option-check-default: var(--color-on-subtle-select-option-check-default);
+  --color-select-option-check-active: var(--color-on-subtle-select-option-check-active);
 }
 
 /* === Surfaces (Inverse) === */
@@ -2759,6 +2885,26 @@
   --color-radio-checked-border-success: var(--color-on-inverse-radio-checked-border-success);
   --color-radio-checked-border-error: var(--color-on-inverse-radio-checked-border-error);
   --color-radio-checked-border-disabled: var(--color-on-inverse-radio-checked-border-disabled);
+  --color-select-dropdown-background: var(--color-on-inverse-select-dropdown-background);
+  --color-select-dropdown-border: var(--color-on-inverse-select-dropdown-border);
+  --color-select-option-background-default: var(
+    --color-on-inverse-select-option-background-default
+  );
+  --color-select-option-background-hover: var(--color-on-inverse-select-option-background-hover);
+  --color-select-option-background-active: var(--color-on-inverse-select-option-background-active);
+  --color-select-option-background-disabled: var(
+    --color-on-inverse-select-option-background-disabled
+  );
+  --color-select-option-text-default: var(--color-on-inverse-select-option-text-default);
+  --color-select-option-text-hover: var(--color-on-inverse-select-option-text-hover);
+  --color-select-option-text-active: var(--color-on-inverse-select-option-text-active);
+  --color-select-option-text-disabled: var(--color-on-inverse-select-option-text-disabled);
+  --color-select-option-icon-default: var(--color-on-inverse-select-option-icon-default);
+  --color-select-option-icon-hover: var(--color-on-inverse-select-option-icon-hover);
+  --color-select-option-icon-active: var(--color-on-inverse-select-option-icon-active);
+  --color-select-option-icon-disabled: var(--color-on-inverse-select-option-icon-disabled);
+  --color-select-option-check-default: var(--color-on-inverse-select-option-check-default);
+  --color-select-option-check-active: var(--color-on-inverse-select-option-check-active);
 }
 
 /* === Surfaces (Primary) === */
@@ -3282,6 +3428,30 @@
   --color-radio-checked-border-disabled: var(
     --color-on-brand-primary-radio-checked-border-disabled
   );
+  --color-select-dropdown-background: var(--color-on-brand-primary-select-dropdown-background);
+  --color-select-dropdown-border: var(--color-on-brand-primary-select-dropdown-border);
+  --color-select-option-background-default: var(
+    --color-on-brand-primary-select-option-background-default
+  );
+  --color-select-option-background-hover: var(
+    --color-on-brand-primary-select-option-background-hover
+  );
+  --color-select-option-background-active: var(
+    --color-on-brand-primary-select-option-background-active
+  );
+  --color-select-option-background-disabled: var(
+    --color-on-brand-primary-select-option-background-disabled
+  );
+  --color-select-option-text-default: var(--color-on-brand-primary-select-option-text-default);
+  --color-select-option-text-hover: var(--color-on-brand-primary-select-option-text-hover);
+  --color-select-option-text-active: var(--color-on-brand-primary-select-option-text-active);
+  --color-select-option-text-disabled: var(--color-on-brand-primary-select-option-text-disabled);
+  --color-select-option-icon-default: var(--color-on-brand-primary-select-option-icon-default);
+  --color-select-option-icon-hover: var(--color-on-brand-primary-select-option-icon-hover);
+  --color-select-option-icon-active: var(--color-on-brand-primary-select-option-icon-active);
+  --color-select-option-icon-disabled: var(--color-on-brand-primary-select-option-icon-disabled);
+  --color-select-option-check-default: var(--color-on-brand-primary-select-option-check-default);
+  --color-select-option-check-active: var(--color-on-brand-primary-select-option-check-active);
 }
 
 /* === Sizes (Mobile — default) === */
@@ -3439,13 +3609,13 @@
   --button-large-padding-inline: var(--spacing-4);
   --button-large-padding-stack: var(--control-large-padding-stack);
   --button-large-icon-size: var(--control-large-icon-size);
-  --checkbox-radius: var(--control-radius);
   --checkbox-field-gap: var(--spacing-3);
   --checkbox-field-font-family: var(--control-font-family);
   --checkbox-field-font-weight: var(--control-label-font-weight);
   --checkbox-field-font-size: var(--control-label-font-size);
   --checkbox-field-line-height: var(--checkbox-size-default);
   --checkbox-field-letter-spacing: var(--control-letter-spacing);
+  --checkbox-radius: var(--control-radius);
   --checkbox-border-width: var(--control-border-width);
   --checkbox-size-default: var(--size-5);
   --radio-radius: var(--radius-full);
@@ -3458,6 +3628,16 @@
   --radio-border-width: var(--control-border-width);
   --radio-border-inner-width: var(--size-1);
   --radio-size-default: var(--size-5);
+  --select-option-small-padding-stack: var(--spacing-2);
+  --select-option-small-gap: var(--spacing-1);
+  --select-option-padding-stack: var(--spacing-3);
+  --select-option-padding-inline: var(--spacing-2);
+  --select-option-large-padding-stack: var(--spacing-3);
+  --select-option-gap: var(--spacing-2);
+  --select-option-radius: var(--radius-sm-mobile);
+  --select-dropdown-padding: var(--spacing-1);
+  --select-dropdown-radius: var(--spacing-2);
+  --select-dropdown-border-width: 0.0625rem;
 }
 
 /* === Sizes (Desktop) === */
@@ -3493,5 +3673,6 @@
     --button-padding-inline: var(--spacing-8);
     --button-small-padding-inline: var(--spacing-8);
     --button-large-padding-inline: var(--spacing-8);
+    --select-option-radius: var(--radius-sm-desktop);
   }
 }

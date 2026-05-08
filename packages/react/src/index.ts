@@ -21,3 +21,11 @@ export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';
 export type { RadioFieldProps, RadioFieldState } from './RadioField/RadioField.js';
+export { SelectField } from './SelectField/SelectField.js';
+export type {
+  SelectFieldProps,
+  SelectFieldVariant,
+  SelectFieldSize,
+  SelectFieldState,
+  SelectOption,
+} from './SelectField/SelectField.js';
