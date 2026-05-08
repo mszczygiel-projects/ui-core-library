@@ -31,3 +31,10 @@ export { UiCheckboxField } from './checkbox-field/checkbox-field.js';
 export type { CheckboxFieldState } from './checkbox-field/checkbox-field.js';
 export { UiRadioField } from './radio-field/radio-field.js';
 export type { RadioFieldState } from './radio-field/radio-field.js';
+export { UiSelectField } from './select-field/select-field.js';
+export type {
+  SelectFieldVariant,
+  SelectFieldSize,
+  SelectFieldState,
+  SelectOption,
+} from './select-field/select-field.js';
