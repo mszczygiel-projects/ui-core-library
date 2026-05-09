@@ -1,7 +1,10 @@
 import { createElement } from 'react';
+import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@ui-core/icons';
 import './button.js';
+
+const iconOptions = Object.keys(svgMap) as Array<keyof typeof svgMap>;
 
 const meta: Meta = {
   title: 'Web Components/Button',
@@ -17,12 +20,23 @@ const meta: Meta = {
     loading: { control: 'boolean' },
     disabled: { control: 'boolean' },
     label: { control: 'text' },
+    iconLeft: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
+    iconRight: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'primary',
     size: 'default',
     loading: false,
     disabled: false,
+    label: 'More information',
+    iconLeft: '',
+    iconRight: '',
   },
 };
 
@@ -35,9 +49,11 @@ type ButtonArgs = {
   loading?: boolean;
   disabled?: boolean;
   label?: string;
+  iconLeft?: keyof typeof svgMap | '';
+  iconRight?: keyof typeof svgMap | '';
 };
 
-const btn = (text: string, props: ButtonArgs = {}, ...children: unknown[]) =>
+const btn = (text: string, props: ButtonArgs = {}, ...children: ReactNode[]) =>
   createElement(
     'ui-button',
     {
@@ -58,90 +74,81 @@ const iconSpan = (slot: 'icon-left' | 'icon-right', name: keyof typeof svgMap) =
     dangerouslySetInnerHTML: { __html: svgMap[name] },
   });
 
+const iconChildren = ({ iconLeft, iconRight }: ButtonArgs) => {
+  const children: ReactNode[] = [];
+
+  if (iconLeft) {
+    children.push(iconSpan('icon-left', iconLeft));
+  }
+
+  if (iconRight) {
+    children.push(iconSpan('icon-right', iconRight));
+  }
+
+  return children;
+};
+
 export const Primary: Story = {
-  render: ({ variant, size, loading, disabled }: ButtonArgs) =>
-    btn('Click me', { variant, size, loading, disabled }),
+
+  render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
+    btn(
+      label ?? 'More information',
+      { variant, size, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Secondary: Story = {
   args: { variant: 'secondary' },
-  render: ({ variant, size, loading, disabled }: ButtonArgs) =>
-    btn('Click me', { variant, size, loading, disabled }),
+  render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
+    btn(
+      label ?? 'More information',
+      { variant, size, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Outline: Story = {
   args: { variant: 'outline' },
-  render: ({ variant, size, loading, disabled }: ButtonArgs) =>
-    btn('Click me', { variant, size, loading, disabled }),
+  render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
+    btn(
+      label ?? 'More information',
+      { variant, size, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Ghost: Story = {
   args: { variant: 'ghost' },
-  render: ({ variant, size, loading, disabled }: ButtonArgs) =>
-    btn('Click me', { variant, size, loading, disabled }),
+  render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
+    btn(
+      label ?? 'More information',
+      { variant, size, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Danger: Story = {
   args: { variant: 'danger' },
-  render: ({ variant, size, loading, disabled }: ButtonArgs) =>
-    btn('Click me', { variant, size, loading, disabled }),
-};
-
-export const Sizes: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', gap: '1rem', alignItems: 'center' } },
-      btn('Small', { size: 'small' }),
-      btn('Default', { size: 'default' }),
-      btn('Large', { size: 'large' }),
+  render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
+    btn(
+      label ?? 'More information',
+      { variant, size, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
     ),
 };
 
 export const WithIcons: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', gap: '1rem', alignItems: 'center' } },
-      createElement(
-        'ui-button',
-        {},
-        iconSpan('icon-left', 'icon-search'),
-        'Search',
-        iconSpan('icon-right', 'icon-chevron-right'),
-      ),
-      createElement(
-        'ui-button',
-        { variant: 'outline' },
-        iconSpan('icon-left', 'icon-cart'),
-        'Outline',
-      ),
-    ),
-};
-
-export const Loading: Story = {
-  args: { loading: true },
-  render: ({ variant, size }: ButtonArgs) =>
-    createElement(
-      'div',
-      { style: { display: 'flex', gap: '1rem', alignItems: 'center' } },
-      btn('Saving…', { variant: variant ?? 'primary', size, loading: true }),
-      btn('Saving…', { variant: 'secondary', size, loading: true }),
-      btn('Saving…', { variant: 'outline', size, loading: true }),
-    ),
-};
-
-export const Disabled: Story = {
-  args: { disabled: true },
-  render: ({ size }: ButtonArgs) =>
-    createElement(
-      'div',
-      { style: { display: 'flex', gap: '1rem', alignItems: 'center' } },
-      btn('Primary', { variant: 'primary', size, disabled: true }),
-      btn('Secondary', { variant: 'secondary', size, disabled: true }),
-      btn('Outline', { variant: 'outline', size, disabled: true }),
-      btn('Ghost', { variant: 'ghost', size, disabled: true }),
-      btn('Danger', { variant: 'danger', size, disabled: true }),
+  args: {
+    label: 'Buy ticket',
+    iconLeft: 'icon-ticket',
+    iconRight: 'icon-chevron-right',
+  },
+  render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
+    btn(
+      label ?? 'Buy ticket',
+      { variant, size, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
     ),
 };
 
