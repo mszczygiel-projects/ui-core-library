@@ -11,8 +11,8 @@ A form-associated web component select with custom trigger/listbox UI.
 ```ts
 const el = document.querySelector('ui-select-field');
 el.options = [
-	{ value: 'pl', label: 'Poland' },
-	{ value: 'de', label: 'Germany' },
+  { value: 'pl', label: 'Poland' },
+  { value: 'de', label: 'Germany' },
 ];
 ```
 
@@ -35,11 +35,11 @@ If `name` is provided, value is included in `FormData`. Value sync is handled vi
 
 ## Events
 
-| Event | When | Detail |
-| --- | --- | --- |
-| `input` | On value update | — |
-| `change` | On committed value update | — |
-| `ui-change` | Same as `change` | `{ value: string }` |
+| Event       | When                      | Detail              |
+| ----------- | ------------------------- | ------------------- |
+| `input`     | On value update           | —                   |
+| `change`    | On committed value update | —                   |
+| `ui-change` | Same as `change`          | `{ value: string }` |
 
 Clear action (`Enter`, `Space`, mouse) emits value-change events and does not open the dropdown.
 
@@ -50,26 +50,26 @@ Clear action (`Enter`, `Space`, mouse) emits value-change events and does not op
 
 ## Props
 
-| Property | Attribute | Type | Default |
-| --- | --- | --- | --- |
-| `variant` | `variant` | `'outline' \| 'filled' \| 'underlined'` | `'outline'` |
-| `size` | `data-size` | `'small' \| 'default' \| 'large'` | `'default'` |
-| `label` | `label` | `string` | — |
-| `hint` | `hint` | `string` | — |
-| `state` | `state` | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'` |
-| `placeholder` | `placeholder` | `string` | `'Select option...'` |
-| `value` | `value` | `string` | `''` |
-| `options` | — | `SelectOption[]` | `[]` |
-| `disabled` | `disabled` | `boolean` | `false` |
-| `clearable` | `clearable` | `boolean` | `false` |
-| `name` | `name` | `string` | — |
+| Property      | Attribute     | Type                                              | Default              |
+| ------------- | ------------- | ------------------------------------------------- | -------------------- |
+| `variant`     | `variant`     | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`          |
+| `size`        | `data-size`   | `'small' \| 'default' \| 'large'`                 | `'default'`          |
+| `label`       | `label`       | `string`                                          | —                    |
+| `hint`        | `hint`        | `string`                                          | —                    |
+| `state`       | `state`       | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`          |
+| `placeholder` | `placeholder` | `string`                                          | `'Select option...'` |
+| `value`       | `value`       | `string`                                          | `''`                 |
+| `options`     | —             | `SelectOption[]`                                  | `[]`                 |
+| `disabled`    | `disabled`    | `boolean`                                         | `false`              |
+| `clearable`   | `clearable`   | `boolean`                                         | `false`              |
+| `name`        | `name`        | `string`                                          | —                    |
 
 ## Types
 
 ```ts
 type SelectOption = {
-	value: string;
-	label: string;
-	disabled?: boolean;
+  value: string;
+  label: string;
+  disabled?: boolean;
 };
 ```

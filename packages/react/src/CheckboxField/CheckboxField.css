@@ -81,7 +81,7 @@
 }
 
 .ui-checkbox-field__label-row:hover .ui-checkbox-field__label-text {
-  color: var(--color-control-outline-label-hover);
+  color: var(--color-control-outline-text-hover);
 }
 
 .ui-checkbox-field:hover .ui-checkbox-field__hint {
@@ -112,7 +112,7 @@
 }
 
 .ui-checkbox-field__label-row:focus-within .ui-checkbox-field__label-text {
-  color: var(--color-control-outline-label-active);
+  color: var(--color-control-outline-text-active);
 }
 
 .ui-checkbox-field:focus-within .ui-checkbox-field__hint {
@@ -132,7 +132,7 @@
   flex: 1;
   min-width: 0;
   line-height: var(--checkbox-field-line-height);
-  color: var(--color-control-outline-label-default);
+  color: var(--color-control-outline-text-default);
 }
 
 /* ---- Hint ---- */
@@ -154,7 +154,7 @@
 }
 
 .ui-checkbox-field--error .ui-checkbox-field__label-text {
-  color: var(--color-control-outline-label-error);
+  color: var(--color-control-outline-text-error);
 }
 
 .ui-checkbox-field--error .ui-checkbox-field__hint {
@@ -166,7 +166,7 @@
 }
 
 .ui-checkbox-field--error .ui-checkbox-field__label-row:hover .ui-checkbox-field__label-text {
-  color: var(--color-control-outline-label-error);
+  color: var(--color-control-outline-text-error);
 }
 
 .ui-checkbox-field--error:hover .ui-checkbox-field__hint {
@@ -210,7 +210,7 @@
 }
 
 .ui-checkbox-field--disabled .ui-checkbox-field__label-text {
-  color: var(--color-control-outline-label-disabled);
+  color: var(--color-control-outline-text-disabled);
 }
 
 .ui-checkbox-field--disabled .ui-checkbox-field__hint {

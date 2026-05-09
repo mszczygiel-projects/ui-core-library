@@ -1981,12 +1981,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -2053,16 +2053,16 @@ export const tokens = {
         fontWeightStrong: 'var(--typography-body-font-weight-strong)',
         fontSize: 'var(--typography-body-font-size)',
         lineHeight: 'var(--typography-body-line-height)',
-        letterSpacing: 'var(--typography-body-letter-spacing)',
         small: {
           fontSize: 'var(--typography-body-small-font-size)',
           lineHeight: 'var(--typography-body-small-line-height)',
           letterSpacing: 'var(--typography-body-small-letter-spacing)',
         },
+        letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          lineHeight: 'var(--typography-body-large-line-height)',
           letterSpacing: 'var(--typography-body-large-letter-spacing)',
+          lineHeight: 'var(--typography-body-large-line-height)',
         },
       },
       caption: {
@@ -2130,7 +2130,6 @@ export const tokens = {
       fontSize: 'var(--control-font-size)',
       lineHeight: 'var(--control-line-height)',
       radius: 'var(--control-radius)',
-      letterSpacing: 'var(--control-letter-spacing)',
       border: {
         width: 'var(--control-border-width)',
       },
@@ -2150,6 +2149,7 @@ export const tokens = {
           stack: 'var(--control-large-padding-stack)',
         },
       },
+      letterSpacing: 'var(--control-letter-spacing)',
       small: {
         fontSize: 'var(--control-small-font-size)',
         lineHeight: 'var(--control-small-line-height)',
@@ -2187,8 +2187,14 @@ export const tokens = {
         floating: {
           fontSize: 'var(--control-label-floating-font-size)',
           lineHeight: 'var(--control-label-floating-line-height)',
+          letterSpacing: 'var(--control-label-floating-letter-spacing)',
           fontWeight: 'var(--control-label-floating-font-weight)',
+          fontFamily: 'var(--control-label-floating-font-family)',
+          textTransform: 'var(--control-label-floating-text-transform)',
         },
+        letterSpacing: 'var(--control-label-letter-spacing)',
+        fontFamily: 'var(--control-label-font-family)',
+        textTransform: 'var(--control-label-text-transform)',
       },
       hint: {
         fontSize: 'var(--control-hint-font-size)',

@@ -10,8 +10,8 @@
     "chromatic": "chromatic --exit-zero-on-changes"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^10.3.6",
     "@storybook/react-vite": "^10.0.0",
-    "storybook": "^10.0.0",
     "@ui-core/foundations": "workspace:*",
     "@ui-core/icons": "workspace:*",
     "@ui-core/react": "workspace:*",
@@ -20,6 +20,7 @@
     "lit": "^3.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "storybook": "^10.0.0",
     "vite": "^5.0.0"
   }
 }

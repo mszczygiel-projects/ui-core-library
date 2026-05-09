@@ -98,7 +98,7 @@ export const Danger: Story = {
 
 export const WithIcons: Story = {
   args: {
-    children: 'Buy ticket',
+    children: 'Buy tickets',
     iconLeft: 'icon-ticket',
     iconRight: 'icon-chevron-right',
   },

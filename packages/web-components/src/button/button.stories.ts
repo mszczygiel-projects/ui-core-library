@@ -89,7 +89,6 @@ const iconChildren = ({ iconLeft, iconRight }: ButtonArgs) => {
 };
 
 export const Primary: Story = {
-
   render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
     btn(
       label ?? 'More information',
@@ -140,13 +139,13 @@ export const Danger: Story = {
 
 export const WithIcons: Story = {
   args: {
-    label: 'Buy ticket',
+    label: 'Buy tickets',
     iconLeft: 'icon-ticket',
     iconRight: 'icon-chevron-right',
   },
   render: ({ variant, size, loading, disabled, label, iconLeft, iconRight }: ButtonArgs) =>
     btn(
-      label ?? 'Buy ticket',
+      label ?? 'Buy tickets',
       { variant, size, loading, disabled, label },
       ...iconChildren({ iconLeft, iconRight }),
     ),

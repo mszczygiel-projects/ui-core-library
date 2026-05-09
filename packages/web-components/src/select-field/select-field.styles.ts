@@ -151,6 +151,9 @@ export const selectFieldStyles = css`
     font-size: var(--control-label-font-size);
     line-height: var(--control-label-line-height);
     font-weight: var(--control-label-font-weight);
+    text-transform: var(--control-label-text-transform);
+    font-family: var(--control-label-font-family);
+    letter-spacing: var(--control-label-letter-spacing);
     color: var(--_label);
   }
 
