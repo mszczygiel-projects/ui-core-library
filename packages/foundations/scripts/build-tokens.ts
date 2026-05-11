@@ -5,7 +5,7 @@
  * and writes the generated outputs to src/.
  *
  * Pure transformation logic lives in ./tokens-transformer.ts.
- * Run via: pnpm --filter @ui-core/tokens run tokens:build
+ * Run via: pnpm --filter @mszczygiel-projects/tokens run tokens:build
  */
 
 import { readFileSync, writeFileSync } from 'fs';

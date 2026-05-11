@@ -1,6 +1,6 @@
 {
-  "name": "@ui-core/react",
-  "version": "0.0.3",
+  "name": "@mszczygiel-projects/react",
+  "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": {
@@ -23,20 +23,20 @@
     "access": "restricted"
   },
   "peerDependencies": {
-    "@ui-core/foundations": "workspace:*",
+    "@mszczygiel-projects/foundations": "workspace:*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "@ui-core/icons": "workspace:*"
+    "@mszczygiel-projects/icons": "workspace:*"
   },
   "devDependencies": {
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@ui-core/foundations": "workspace:*",
-    "@ui-core/icons": "workspace:*",
+    "@mszczygiel-projects/foundations": "workspace:*",
+    "@mszczygiel-projects/icons": "workspace:*",
     "@vitejs/plugin-react": "^4.0.0",
     "jsdom": "^29.1.0",
     "react": "^18.0.0",

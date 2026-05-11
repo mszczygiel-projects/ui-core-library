@@ -1,6 +1,6 @@
 {
-  "name": "@ui-core/icons",
-  "version": "0.0.3",
+  "name": "@mszczygiel-projects/icons",
+  "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": {

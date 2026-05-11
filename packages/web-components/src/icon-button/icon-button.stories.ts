@@ -1,6 +1,6 @@
 import { createElement } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { svgMap } from '@ui-core/icons';
+import { svgMap } from '@mszczygiel-projects/icons';
 import './icon-button.js';
 
 const meta: Meta = {

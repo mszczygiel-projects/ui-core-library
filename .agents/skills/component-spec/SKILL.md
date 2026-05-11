@@ -47,7 +47,7 @@ is a handoff document for implementation, not a design document.
 
 - Purpose in one sentence
 - Figma Component Set location (file + frame path if known)
-- Package scope: `@ui-core/wc` + `@ui-core/react` (always both unless stated otherwise)
+- Package scope: `@mszczygiel-projects/wc` + `@mszczygiel-projects/react` (always both unless stated otherwise)
 
 ### 2. API surface
 
@@ -119,7 +119,7 @@ List the stories to create:
 | Story name | Description |
 | ---------- | ----------- |
 
-Default export uses `@ui-core/foundations/base.css` + story-level decorator if needed.
+Default export uses `@mszczygiel-projects/foundations/base.css` + story-level decorator if needed.
 WC stories use `createElement` from React (Storybook framework is `react-vite` — no `html`
 template tag). React stories use JSX (`.stories.tsx`).
 

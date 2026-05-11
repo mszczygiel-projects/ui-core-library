@@ -18,11 +18,11 @@
     "noPropertyAccessFromIndexSignature": false,
     "skipLibCheck": true,
     "paths": {
-      "@ui-core/foundations": ["packages/foundations/src/index.ts"],
-      "@ui-core/icons": ["packages/icons/src/index.ts"],
-      "@ui-core/icons/react": ["packages/icons/src/react/index.ts"],
-      "@ui-core/wc": ["packages/web-components/src/index.ts"],
-      "@ui-core/react": ["packages/react/src/index.ts"]
+      "@mszczygiel-projects/foundations": ["packages/foundations/src/index.ts"],
+      "@mszczygiel-projects/icons": ["packages/icons/src/index.ts"],
+      "@mszczygiel-projects/icons/react": ["packages/icons/src/react/index.ts"],
+      "@mszczygiel-projects/wc": ["packages/web-components/src/index.ts"],
+      "@mszczygiel-projects/react": ["packages/react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -1,4 +1,4 @@
-# @ui-core/icons
+# @mszczygiel-projects/icons
 
 Icon package. Provides React components and a raw SVG map generated from `src/svg`.
 
@@ -6,10 +6,10 @@ Icon package. Provides React components and a raw SVG map generated from `src/sv
 
 ### React components
 
-Named exports from `@ui-core/icons/react`. Each component accepts all standard `SVGProps<SVGSVGElement>` props (`className`, `style`, `aria-label`, etc.) and renders a scalable icon that inherits `color` from the parent via `currentColor`.
+Named exports from `@mszczygiel-projects/icons/react`. Each component accepts all standard `SVGProps<SVGSVGElement>` props (`className`, `style`, `aria-label`, etc.) and renders a scalable icon that inherits `color` from the parent via `currentColor`.
 
 ```tsx
-import { IconAlert, IconSearch, IconUser } from '@ui-core/icons/react';
+import { IconAlert, IconSearch, IconUser } from '@mszczygiel-projects/icons/react';
 
 <IconAlert />
 <IconSearch className="w-5 h-5 text-red-500" />
@@ -21,8 +21,8 @@ Available components: `IconAlert` `IconCart` `IconChevronDown` `IconChevronLeft`
 ### SVG map (framework-agnostic)
 
 ```ts
-import { svgMap } from '@ui-core/icons';
-import type { IconName } from '@ui-core/icons';
+import { svgMap } from '@mszczygiel-projects/icons';
+import type { IconName } from '@mszczygiel-projects/icons';
 
 const svg: string = svgMap['icon-alert']; // raw optimised SVG string
 
@@ -36,7 +36,7 @@ const markup = svgMap[name];
 ## Build
 
 ```bash
-pnpm --filter @ui-core/icons run build
+pnpm --filter @mszczygiel-projects/icons run build
 ```
 
 The build script reads SVG files from `src/svg`, normalizes names to the `icon-*` convention, optimizes SVG content, and regenerates the full `dist` folder.
@@ -44,7 +44,7 @@ The build script reads SVG files from `src/svg`, normalizes names to the `icon-*
 ## Test
 
 ```bash
-pnpm --filter @ui-core/icons run test
+pnpm --filter @mszczygiel-projects/icons run test
 ```
 
 ## Conventions
@@ -52,4 +52,4 @@ pnpm --filter @ui-core/icons run test
 - Add new icons only to `src/svg`.
 - Generated files are written to `dist`.
 - Do not manually edit files in `dist`.
-- React exports are available from `@ui-core/icons/react`.
+- React exports are available from `@mszczygiel-projects/icons/react`.

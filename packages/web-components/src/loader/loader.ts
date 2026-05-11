@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { getUiCoreConfig, type LoaderVariant } from '@ui-core/foundations';
+import { getUiCoreConfig, type LoaderVariant } from '@mszczygiel-projects/foundations';
 import { loaderStyles } from './loader.styles';
 import { motionStyles } from '../styles/motion.styles';
 import { resetStyles } from '../styles/reset.styles';

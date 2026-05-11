@@ -26,10 +26,10 @@ The project consists of two tightly coupled layers:
 ```
 ui-core-library/              ← Nx monorepo, pnpm workspace
 ├── packages/
-│   ├── foundations/          @ui-core/foundations
-│   ├── icons/                @ui-core/icons
-│   ├── web-components/       @ui-core/wc      (Lit + Shadow DOM)
-│   └── react/                @ui-core/react   (React 18+, light DOM)
+│   ├── foundations/          @mszczygiel-projects/foundations
+│   ├── icons/                @mszczygiel-projects/icons
+│   ├── web-components/       @mszczygiel-projects/wc      (Lit + Shadow DOM)
+│   └── react/                @mszczygiel-projects/react   (React 18+, light DOM)
 └── apps/
     └── storybook/            ← documentation + visual development
 ```
@@ -78,7 +78,7 @@ Per client: a separate Figma project with a file **forked** from Core UI Library
 ### Package structure (`packages/foundations`)
 
 ```
-packages/foundations/   @ui-core/foundations
+packages/foundations/   @mszczygiel-projects/foundations
   scripts/
     build-tokens.ts      ← Variables JSON → tokens.css / tailwind.css / tokens.ts
     build-typography.ts  ← Text Styles JSON → typography.css
@@ -102,11 +102,11 @@ packages/foundations/   @ui-core/foundations
 Consumers choose exactly what they need:
 
 ```css
-@import '@ui-core/foundations/tokens.css'; /* only tokens — e.g. Tailwind project with own reset */
-@import '@ui-core/foundations/tailwind.css'; /* tokens + Tailwind theme mapping */
-@import '@ui-core/foundations/reset.css'; /* reset only */
-@import '@ui-core/foundations/typography.css'; /* typography classes only */
-@import '@ui-core/foundations/base.css'; /* reset + typography (shortcut) */
+@import '@mszczygiel-projects/foundations/tokens.css'; /* only tokens — e.g. Tailwind project with own reset */
+@import '@mszczygiel-projects/foundations/tailwind.css'; /* tokens + Tailwind theme mapping */
+@import '@mszczygiel-projects/foundations/reset.css'; /* reset only */
+@import '@mszczygiel-projects/foundations/typography.css'; /* typography classes only */
+@import '@mszczygiel-projects/foundations/base.css'; /* reset + typography (shortcut) */
 ```
 
 **Font loading** is a consumer responsibility. The library only consumes `var(--typography-body-font-family)`, etc. `fonts/default.css` is for Storybook and local development only — never auto-imported, never for production.
@@ -270,11 +270,11 @@ SVG optimization (svgo): removes Figma metadata, preserves `viewBox`, replaces h
 
 ```tsx
 // React
-import { IconChevronDown } from '@ui-core/icons/react';
+import { IconChevronDown } from '@mszczygiel-projects/icons/react';
 <IconChevronDown style={{ color: 'var(--color-feedback-error-base)', width: 24 }} />;
 
 // Lit / vanilla
-import { svgMap } from '@ui-core/icons';
+import { svgMap } from '@mszczygiel-projects/icons';
 html`${unsafeSVG(svgMap['icon-chevron-down'])}`;
 ```
 
@@ -284,7 +284,7 @@ html`${unsafeSVG(svgMap['icon-chevron-down'])}`;
 
 ### Core rules (both Lit and React)
 
-- **Zero hardcoded values** — only CSS custom properties from `@ui-core/foundations`
+- **Zero hardcoded values** — only CSS custom properties from `@mszczygiel-projects/foundations`
 - Every component maps to a Component Set in Figma (Properties: size, variant, state)
 - Auto Layout in Figma = flex/grid in code
 - Naming and comments in English
@@ -348,7 +348,7 @@ Tailwind utility classes are for **page layout and consumer-side composition** �
 
 **Token usage in CSS files:**
 
-All values must reference CSS custom properties from `@ui-core/foundations`. Never hardcode colors, sizes, or durations:
+All values must reference CSS custom properties from `@mszczygiel-projects/foundations`. Never hardcode colors, sizes, or durations:
 
 ```css
 /* ✅ correct */
@@ -389,7 +389,7 @@ Consumer override:
 }
 ```
 
-**For programmatic use (canvas, dynamic inline values):** import `tokens` from `@ui-core/foundations` — TypeScript references to CSS var names, never raw values.
+**For programmatic use (canvas, dynamic inline values):** import `tokens` from `@mszczygiel-projects/foundations` — TypeScript references to CSS var names, never raw values.
 
 ---
 
@@ -438,10 +438,10 @@ stories: [
 // apps/storybook/.storybook/main.ts
 viteFinal: (config) => {
   config.resolve.alias = {
-    '@ui-core/foundations': path.resolve(__dirname, '../../../packages/foundations/src'),
-    '@ui-core/wc': path.resolve(__dirname, '../../../packages/web-components/src'),
-    '@ui-core/react': path.resolve(__dirname, '../../../packages/react/src'),
-    '@ui-core/icons': path.resolve(__dirname, '../../../packages/icons/src'),
+    '@mszczygiel-projects/foundations': path.resolve(__dirname, '../../../packages/foundations/src'),
+    '@mszczygiel-projects/wc': path.resolve(__dirname, '../../../packages/web-components/src'),
+    '@mszczygiel-projects/react': path.resolve(__dirname, '../../../packages/react/src'),
+    '@mszczygiel-projects/icons': path.resolve(__dirname, '../../../packages/icons/src'),
   };
   return config;
 };
@@ -476,15 +476,15 @@ pnpm format:check           # CI check
 
 # Testing
 pnpm test                   # all test suites
-pnpm test:foundations       # @ui-core/foundations — Vitest (node)
-pnpm test:react             # @ui-core/react — Vitest + jsdom
-pnpm test:wc                # @ui-core/wc — @web/test-runner + Playwright
+pnpm test:foundations       # @mszczygiel-projects/foundations — Vitest (node)
+pnpm test:react             # @mszczygiel-projects/react — Vitest + jsdom
+pnpm test:wc                # @mszczygiel-projects/wc — @web/test-runner + Playwright
 
 # Watch modes
-pnpm --filter @ui-core/foundations run test:watch
-pnpm --filter @ui-core/react run test:watch
-pnpm --filter @ui-core/react run test:ui     # Vitest UI
-pnpm --filter @ui-core/wc run test:watch
+pnpm --filter @mszczygiel-projects/foundations run test:watch
+pnpm --filter @mszczygiel-projects/react run test:watch
+pnpm --filter @mszczygiel-projects/react run test:ui     # Vitest UI
+pnpm --filter @mszczygiel-projects/wc run test:watch
 
 # Visual regression
 pnpm chromatic              # requires CHROMATIC_PROJECT_TOKEN env var
@@ -495,7 +495,7 @@ pnpm chromatic              # requires CHROMATIC_PROJECT_TOKEN env var
 Add `.npmrc` at project root and in every consuming project:
 
 ```
-@ui-core:registry=https://npm.pkg.github.com
+@mszczygiel-projects:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
 ```
 
@@ -504,25 +504,25 @@ Set `GITHUB_TOKEN` as an environment variable (never commit it).
 ### Consuming the library in another project
 
 ```bash
-pnpm add @ui-core/foundations @ui-core/react
+pnpm add @mszczygiel-projects/foundations @mszczygiel-projects/react
 # or
-pnpm add @ui-core/foundations @ui-core/wc
+pnpm add @mszczygiel-projects/foundations @mszczygiel-projects/wc
 ```
 
 ```css
 /* global.css */
 
 /* Tailwind projects — tokens + Tailwind theme mapping: */
-@import '@ui-core/foundations/tailwind.css';
+@import '@mszczygiel-projects/foundations/tailwind.css';
 
 /* Non-Tailwind projects — only tokens: */
-/* @import '@ui-core/foundations/tokens.css'; */
+/* @import '@mszczygiel-projects/foundations/tokens.css'; */
 
 /* Add reset + typography classes (optional): */
-@import '@ui-core/foundations/base.css';
+@import '@mszczygiel-projects/foundations/base.css';
 /* or granularly: */
-/* @import '@ui-core/foundations/reset.css'; */
-/* @import '@ui-core/foundations/typography.css'; */
+/* @import '@mszczygiel-projects/foundations/reset.css'; */
+/* @import '@mszczygiel-projects/foundations/typography.css'; */
 
 /* Per-client brand overrides: */
 :root {
@@ -542,13 +542,13 @@ pnpm add @ui-core/foundations @ui-core/wc
 
 ## 8. Key Architectural Principles (Summary)
 
-1. **Zero hardcoded values** — every visual property in every component references a CSS custom property from `@ui-core/foundations`.
+1. **Zero hardcoded values** — every visual property in every component references a CSS custom property from `@mszczygiel-projects/foundations`.
 2. **Semantic tokens in components, never Primitives** — use `--color-button-primary-background-default`, not `--color-brand-primary-500`.
 3. **Surface context is automatic** — place `data-surface` on a container and all children adapt. No per-component changes needed.
 4. **Build pipeline is unidirectional** — Figma → Luckino JSON → build scripts → generated files. `build-tokens.ts` handles Variables; `build-typography.ts` handles Text Styles. Never hand-edit generated files.
 5. **Shadow DOM vs. light DOM requires different strategies** — global CSS doesn't pierce Shadow DOM; Lit components use shared mixins for focus and motion.
 6. **Font loading is a consumer concern** — library provides CSS variable declarations only.
 7. **Lit and React are separate implementations** — they share tokens, not code.
-8. **Figma and code share the same vocabulary** — `[Core] Foundations` in Figma = `@ui-core/foundations` in code. Designers and developers operate on the same mental model.
+8. **Figma and code share the same vocabulary** — `[Core] Foundations` in Figma = `@mszczygiel-projects/foundations` in code. Designers and developers operate on the same mental model.
 9. **Figma forking is copying, not inheriting** — client forks must be manually updated when Core changes. Stable variable naming minimizes propagation overhead.
 10. **Planning happens in chat, implementation in Claude Code** — every planning session should end with a prepared prompt for Claude Code.

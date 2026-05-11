@@ -11,7 +11,7 @@ A React loading indicator component used by buttons and standalone loading state
 ## Behavior
 
 - Renders a status element with `role="status"` and `aria-live="polite"`.
-- The visual variant comes from `@ui-core/foundations` configuration.
+- The visual variant comes from `@mszczygiel-projects/foundations` configuration.
 
 ## Props
 

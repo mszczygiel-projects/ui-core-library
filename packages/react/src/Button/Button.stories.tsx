@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { svgMap } from '@ui-core/icons';
-import * as Icons from '@ui-core/icons/react';
+import { svgMap } from '@mszczygiel-projects/icons';
+import * as Icons from '@mszczygiel-projects/icons/react';
 import { Button } from './Button.js';
 
 type IconName = keyof typeof svgMap;

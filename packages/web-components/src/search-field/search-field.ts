@@ -1,7 +1,7 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { svgMap } from '@ui-core/icons';
+import { svgMap } from '@mszczygiel-projects/icons';
 import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { searchFieldStyles } from './search-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';

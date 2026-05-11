@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { IconChevronDown } from '@ui-core/icons/react';
+import { IconChevronDown } from '@mszczygiel-projects/icons/react';
 import { IconButton } from './IconButton.js';
 
 const meta: Meta<typeof IconButton> = {

@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, type CSSProperties } from 'react';
-import { IconSearch } from '@ui-core/icons/react';
-import { IconClose } from '@ui-core/icons/react';
+import { IconSearch } from '@mszczygiel-projects/icons/react';
+import { IconClose } from '@mszczygiel-projects/icons/react';
 import { TextField } from '../TextField/TextField.js';
 import type { TextFieldVariant, TextFieldSize, TextFieldState } from '../TextField/TextField.js';
 import './SearchField.css';

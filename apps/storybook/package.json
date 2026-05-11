@@ -1,5 +1,5 @@
 {
-  "name": "@ui-core/storybook",
+  "name": "@mszczygiel-projects/storybook",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -12,10 +12,10 @@
   "devDependencies": {
     "@storybook/addon-a11y": "^10.3.6",
     "@storybook/react-vite": "^10.0.0",
-    "@ui-core/foundations": "workspace:*",
-    "@ui-core/icons": "workspace:*",
-    "@ui-core/react": "workspace:*",
-    "@ui-core/wc": "workspace:*",
+    "@mszczygiel-projects/foundations": "workspace:*",
+    "@mszczygiel-projects/icons": "workspace:*",
+    "@mszczygiel-projects/react": "workspace:*",
+    "@mszczygiel-projects/wc": "workspace:*",
     "chromatic": "^16.0.0",
     "lit": "^3.0.0",
     "react": "^18.0.0",

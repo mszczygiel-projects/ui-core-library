@@ -1,6 +1,6 @@
 {
   "name": "ui-core-library",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "private": false,
   "engines": {
     "node": ">=20",
@@ -18,7 +18,7 @@
     "format:check": "prettier --check .",
     "test": "nx run-many --target=test",
     "test:foundations": "nx run foundations:test",
-    "test:icons": "pnpm --filter @ui-core/icons test",
+    "test:icons": "pnpm --filter @mszczygiel-projects/icons test",
     "test:react": "nx run react:test",
     "test:wc": "nx run wc:test",
     "chromatic": "nx run storybook:chromatic"

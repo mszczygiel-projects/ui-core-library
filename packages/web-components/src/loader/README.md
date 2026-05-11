@@ -11,7 +11,7 @@ A web component loading indicator for buttons and standalone loading states.
 ## Behavior
 
 - Renders a status element with `role="status"` and `aria-live="polite"`.
-- The visual variant comes from `@ui-core/foundations` configuration.
+- The visual variant comes from `@mszczygiel-projects/foundations` configuration.
 
 ## Props
 

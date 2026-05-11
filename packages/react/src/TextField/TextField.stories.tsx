@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { IconSearch } from '@ui-core/icons/react';
-import { IconDanger } from '@ui-core/icons/react';
+import { IconSearch } from '@mszczygiel-projects/icons/react';
+import { IconDanger } from '@mszczygiel-projects/icons/react';
 import { TextField } from './TextField.js';
 
 const meta: Meta<typeof TextField> = {

@@ -1,6 +1,6 @@
 {
-  "name": "@ui-core/wc",
-  "version": "0.0.3",
+  "name": "@mszczygiel-projects/wc",
+  "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": {
@@ -22,16 +22,16 @@
     "access": "restricted"
   },
   "peerDependencies": {
-    "@ui-core/foundations": "workspace:*"
+    "@mszczygiel-projects/foundations": "workspace:*"
   },
   "dependencies": {
-    "@ui-core/icons": "workspace:*",
+    "@mszczygiel-projects/icons": "workspace:*",
     "lit": "^3.0.0"
   },
   "devDependencies": {
     "@open-wc/testing": "^4.0.0",
     "@types/react": "^18.0.0",
-    "@ui-core/foundations": "workspace:*",
+    "@mszczygiel-projects/foundations": "workspace:*",
     "@web/dev-server-esbuild": "^1.0.5",
     "@web/test-runner": "^0.19.0",
     "@web/test-runner-playwright": "^0.11.0",

@@ -1,6 +1,6 @@
 {
-  "name": "@ui-core/foundations",
-  "version": "0.0.3",
+  "name": "@mszczygiel-projects/foundations",
+  "version": "0.1.0",
   "type": "module",
   "exports": {
     ".": {
