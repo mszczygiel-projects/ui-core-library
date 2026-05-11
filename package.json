@@ -1,7 +1,7 @@
 {
   "name": "ui-core-library",
-  "version": "0.0.0",
-  "private": true,
+  "version": "0.0.1",
+  "private": false,
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
