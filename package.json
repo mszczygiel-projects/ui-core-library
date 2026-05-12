@@ -1,7 +1,7 @@
 {
   "name": "ui-core-library",
   "version": "0.1.0",
-  "private": false,
+  "private": true,
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
@@ -11,7 +11,12 @@
     "foundations:build": "nx run foundations:build",
     "icons:build": "nx run icons:build",
     "build": "nx run-many --target=build",
-    "publish": "nx run-many --target=publish",
+    "publish": "pnpm -r --filter @mszczygiel-projects/ui-core-foundations --filter @mszczygiel-projects/ui-core-icons --filter @mszczygiel-projects/ui-core-react --filter @mszczygiel-projects/ui-core-wc publish --access restricted --no-git-checks",
+    "release:publish": "pnpm build && pnpm test && pnpm run publish",
+    "release:patch": "node tools/release.mjs patch",
+    "release:minor": "node tools/release.mjs minor",
+    "release:major": "node tools/release.mjs major",
+    "release:version": "node tools/release.mjs",
     "lint": "nx run-many --target=lint",
     "lint:fix": "nx run-many --target=lint --configuration=fix",
     "format": "prettier --write .",
