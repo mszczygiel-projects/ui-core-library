@@ -14,10 +14,18 @@ run(`node tools/release-version.mjs ${releaseType}${dryRun ? ' --dry-run' : ''}`
 
 const nextVersion = dryRun ? resolveNextVersionFromDryRun(releaseType) : readRootVersion();
 const tagName = `v${nextVersion}`;
+const versionFiles = [
+  'package.json',
+  'packages/foundations/package.json',
+  'packages/icons/package.json',
+  'packages/react/package.json',
+  'packages/web-components/package.json',
+];
 
 ensureTagDoesNotExist(tagName);
 
 if (dryRun) {
+  console.log(`dry-run: would commit version files (${versionFiles.join(', ')})`);
   console.log(`dry-run: would create git tag ${tagName}`);
   console.log('dry-run: skipped build, test and publish');
   process.exit(0);
@@ -26,6 +34,8 @@ if (dryRun) {
 run('pnpm build');
 run('pnpm test');
 run('pnpm run publish');
+stageVersionFiles(versionFiles);
+commitVersionChanges(nextVersion);
 run(`git tag -a ${tagName} -m ${tagName}`);
 
 function run(command) {
@@ -45,6 +55,21 @@ function ensureTagDoesNotExist(tagName) {
   } catch {
     // Tag does not exist.
   }
+}
+
+function stageVersionFiles(files) {
+  run(`git add ${files.join(' ')}`);
+}
+
+function commitVersionChanges(version) {
+  const hasStagedChanges = execSync('git diff --cached --quiet; echo $?', { encoding: 'utf8' }).trim() === '1';
+
+  if (!hasStagedChanges) {
+    console.error('No staged version changes to commit.');
+    process.exit(1);
+  }
+
+  run(`git commit -m "chore(release): ${version}"`);
 }
 
 function resolveNextVersionFromDryRun(type) {
