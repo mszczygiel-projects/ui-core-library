@@ -1,5 +1,5 @@
 {
-  "name": "@mszczygiel-projects/icons",
+  "name": "@mszczygiel-projects/ui-core-icons",
   "version": "0.1.0",
   "type": "module",
   "exports": {
@@ -21,6 +21,10 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "lint": "eslint src scripts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mszczygiel-projects/ui-core-library.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",

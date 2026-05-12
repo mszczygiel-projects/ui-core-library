@@ -17,10 +17,10 @@ Framework-agnostic UI component library published as private npm packages to Git
 
 | Package                | Description                                                                  |
 | ---------------------- | ---------------------------------------------------------------------------- |
-| `@mszczygiel-projects/foundations` | Design tokens — CSS custom properties, Tailwind theme, TypeScript references |
-| `@mszczygiel-projects/icons`       | SVG icon set — Web Component map + React components                          |
-| `@mszczygiel-projects/wc`          | Web Components (Lit, Shadow DOM)                                             |
-| `@mszczygiel-projects/react`       | React components (React 18+, light DOM)                                      |
+| `@mszczygiel-projects/ui-core-foundations` | Design tokens — CSS custom properties, Tailwind theme, TypeScript references |
+| `@mszczygiel-projects/ui-core-icons`       | SVG icon set — Web Component map + React components                          |
+| `@mszczygiel-projects/ui-core-wc`          | Web Components (Lit, Shadow DOM)                                             |
+| `@mszczygiel-projects/ui-core-react`       | React components (React 18+, light DOM)                                      |
 
 ## Requirements
 
@@ -123,22 +123,22 @@ Add `.npmrc` to the consuming project root:
 Install packages:
 
 ```bash
-pnpm add @mszczygiel-projects/foundations @mszczygiel-projects/react
+pnpm add @mszczygiel-projects/ui-core-foundations @mszczygiel-projects/ui-core-react
 # or
-pnpm add @mszczygiel-projects/foundations @mszczygiel-projects/wc
+pnpm add @mszczygiel-projects/ui-core-foundations @mszczygiel-projects/ui-core-wc
 ```
 
 Import CSS in your global stylesheet:
 
 ```css
 /* Tailwind project */
-@import '@mszczygiel-projects/foundations/tailwind.css';
+@import '@mszczygiel-projects/ui-core-foundations/tailwind.css';
 
 /* Non-Tailwind project */
-@import '@mszczygiel-projects/foundations/tokens.css';
+@import '@mszczygiel-projects/ui-core-foundations/tokens.css';
 
 /* Optional: reset + typography utility classes */
-@import '@mszczygiel-projects/foundations/base.css';
+@import '@mszczygiel-projects/ui-core-foundations/base.css';
 ```
 
 Per-client brand overrides go on `:root` after the imports:

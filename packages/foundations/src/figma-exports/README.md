@@ -24,4 +24,4 @@ Workflow:
 1. Open the Figma file with the Variables you want to export.
 2. Run the Luckino plugin → export as W3C Design Tokens JSON → one file per collection.
 3. Drop the 4 files here, overwriting the previous versions.
-4. From the repo root: `pnpm --filter @mszczygiel-projects/tokens run tokens:build`.
+4. From the repo root: `pnpm --filter @mszczygiel-projects/ui-core-tokens run tokens:build`.

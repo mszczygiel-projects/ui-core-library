@@ -1,5 +1,5 @@
 {
-  "name": "@mszczygiel-projects/wc",
+  "name": "@mszczygiel-projects/ui-core-wc",
   "version": "0.1.0",
   "type": "module",
   "exports": {
@@ -17,21 +17,25 @@
     "test:watch": "wtr --watch",
     "lint": "eslint src"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mszczygiel-projects/ui-core-library.git"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
   },
   "peerDependencies": {
-    "@mszczygiel-projects/foundations": "workspace:*"
+    "@mszczygiel-projects/ui-core-foundations": "workspace:*"
   },
   "dependencies": {
-    "@mszczygiel-projects/icons": "workspace:*",
+    "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "lit": "^3.0.0"
   },
   "devDependencies": {
     "@open-wc/testing": "^4.0.0",
     "@types/react": "^18.0.0",
-    "@mszczygiel-projects/foundations": "workspace:*",
+    "@mszczygiel-projects/ui-core-foundations": "workspace:*",
     "@web/dev-server-esbuild": "^1.0.5",
     "@web/test-runner": "^0.19.0",
     "@web/test-runner-playwright": "^0.11.0",

@@ -1,5 +1,5 @@
 {
-  "name": "@mszczygiel-projects/react",
+  "name": "@mszczygiel-projects/ui-core-react",
   "version": "0.1.0",
   "type": "module",
   "exports": {
@@ -18,25 +18,29 @@
     "test:ui": "vitest --ui",
     "lint": "eslint src"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mszczygiel-projects/ui-core-library.git"
+  },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
   },
   "peerDependencies": {
-    "@mszczygiel-projects/foundations": "workspace:*",
+    "@mszczygiel-projects/ui-core-foundations": "workspace:*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "@mszczygiel-projects/icons": "workspace:*"
+    "@mszczygiel-projects/ui-core-icons": "workspace:*"
   },
   "devDependencies": {
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@mszczygiel-projects/foundations": "workspace:*",
-    "@mszczygiel-projects/icons": "workspace:*",
+    "@mszczygiel-projects/ui-core-foundations": "workspace:*",
+    "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "@vitejs/plugin-react": "^4.0.0",
     "jsdom": "^29.1.0",
     "react": "^18.0.0",

@@ -1,7 +1,7 @@
 import type { Preview } from '@storybook/react-vite';
-import '@mszczygiel-projects/foundations/fonts/default.css';
-import '@mszczygiel-projects/foundations/tokens.css';
-import '@mszczygiel-projects/foundations/base.css';
+import '@mszczygiel-projects/ui-core-foundations/fonts/default.css';
+import '@mszczygiel-projects/ui-core-foundations/tokens.css';
+import '@mszczygiel-projects/ui-core-foundations/base.css';
 
 const FALLBACK_BG = '#ffffff';
 

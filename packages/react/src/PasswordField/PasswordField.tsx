@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from 'react';
-import { IconEye } from '@mszczygiel-projects/icons/react';
-import { IconEyeSlash } from '@mszczygiel-projects/icons/react';
+import { IconEye } from '@mszczygiel-projects/ui-core-icons/react';
+import { IconEyeSlash } from '@mszczygiel-projects/ui-core-icons/react';
 import { TextField } from '../TextField/TextField.js';
 import type {
   TextFieldVariant,

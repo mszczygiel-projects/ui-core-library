@@ -1,6 +1,6 @@
 export { Loader } from './Loader/Loader.js';
 export type { LoaderProps } from './Loader/Loader.js';
-export type { LoaderVariant } from '@mszczygiel-projects/foundations';
+export type { LoaderVariant } from '@mszczygiel-projects/ui-core-foundations';
 export { Button } from './Button/Button.js';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button/Button.js';
 export { IconButton } from './IconButton/IconButton.js';

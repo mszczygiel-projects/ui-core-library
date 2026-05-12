@@ -5,7 +5,7 @@ import {
   type ReactNode,
   type InputHTMLAttributes,
 } from 'react';
-import { IconDanger } from '@mszczygiel-projects/icons/react';
+import { IconDanger } from '@mszczygiel-projects/ui-core-icons/react';
 import './TextField.css';
 
 export type TextFieldVariant = 'outline' | 'filled' | 'underlined';

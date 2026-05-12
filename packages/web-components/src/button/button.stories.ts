@@ -1,7 +1,7 @@
 import { createElement } from 'react';
 import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import { svgMap } from '@mszczygiel-projects/icons';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import './button.js';
 
 const iconOptions = Object.keys(svgMap) as Array<keyof typeof svgMap>;

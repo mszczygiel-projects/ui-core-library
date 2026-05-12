@@ -2,7 +2,7 @@ import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { svgMap } from '@mszczygiel-projects/icons';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { selectFieldStyles } from './select-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
