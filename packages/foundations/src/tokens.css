@@ -2037,6 +2037,7 @@
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
+  --typography-eyebrow-font-familly: Ubuntu;
   --radius-sm-mobile: var(--radius-sm);
   --radius-sm-desktop: var(--radius-sm);
   --radius-md-mobile: var(--radius-md);
@@ -4245,13 +4246,13 @@
 /* === Sizes (Mobile — default) === */
 :root {
   --typography-heading-display-font-family: var(--typography-heading-font-family);
-  --typography-heading-display-font-weight: var(--font-weight-light);
+  --typography-heading-display-font-weight: var(--font-weight-normal);
   --typography-heading-display-font-weight-strong: var(--font-weight-semibold);
-  --typography-heading-display-font-size: var(--text-2xl);
-  --typography-heading-display-line-height: var(--text-2xl--line-height);
-  --typography-heading-display-large-font-size: var(--text-3xl);
-  --typography-heading-display-large-line-height: var(--text-3xl--line-height);
+  --typography-heading-display-font-size: var(--text-3xl);
+  --typography-heading-display-line-height: var(--text-3xl--line-height);
+  --typography-heading-display-large-font-size: var(--text-4xl);
   --typography-heading-display-large-letter-spacing: var(--tracking-normal);
+  --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
@@ -4304,12 +4305,19 @@
   --typography-body-small-letter-spacing: var(--tracking-normal);
   --typography-body-letter-spacing: var(--tracking-normal);
   --typography-body-large-font-size: var(--text-base);
-  --typography-body-large-letter-spacing: var(--tracking-normal);
   --typography-body-large-line-height: var(--text-base--line-height);
-  --typography-caption-font-weight: var(--font-weight-medium);
+  --typography-body-large-letter-spacing: var(--tracking-normal);
+  --typography-caption-font-weight: var(--font-weight-normal);
   --typography-caption-font-size: var(--text-xs);
   --typography-caption-line-height: var(--text-xs--line-height);
   --typography-caption-letter-spacing: var(--tracking-widest);
+  --typography-caption-text-tranform: none;
+  --typography-eyebrow-font-family: var(--typography-caption-font-family);
+  --typography-eyebrow-font-weight: var(--font-weight-medium);
+  --typography-eyebrow-font-size: var(--text-xs);
+  --typography-eyebrow-line-height: var(--text-xs--line-height);
+  --typography-eyebrow-letter-spacing: var(--tracking-widest);
+  --typography-eyebrow-text-transform: uppercase;
   --radius-pill: var(--radius-full);
   --stroke-border: 0.0625rem;
   --stroke-ring: 0.125rem;
@@ -4366,18 +4374,18 @@
   --control-underlined-border-width-error: 0.125rem;
   --control-underlined-border-width-success: 0.125rem;
   --control-underlined-border-width-disabled: var(--stroke-border);
-  --control-label-font-size: var(--text-xs);
-  --control-label-line-height: var(--text-xs--line-height);
-  --control-label-font-weight: var(--font-weight-medium);
+  --control-label-font-size: var(--typography-eyebrow-font-size);
+  --control-label-line-height: var(--typography-eyebrow-line-height);
+  --control-label-font-weight: var(--typography-eyebrow-font-weight);
   --control-label-floating-font-size: var(--text-sm);
   --control-label-floating-line-height: var(--text-sm);
   --control-label-floating-letter-spacing: var(--tracking-normal);
   --control-label-floating-font-weight: var(--font-weight-normal);
   --control-label-floating-font-family: var(--control-font-family);
   --control-label-floating-text-transform: none;
-  --control-label-letter-spacing: var(--tracking-widest);
-  --control-label-font-family: var(--typography-caption-font-family);
-  --control-label-text-transform: uppercase;
+  --control-label-letter-spacing: var(--typography-eyebrow-letter-spacing);
+  --control-label-font-family: var(--typography-eyebrow-font-familly);
+  --control-label-text-transform: var(--typography-eyebrow-text-transform);
   --control-hint-font-size: var(--text-xs);
   --control-hint-line-height: var(--text-xs--line-height);
   --control-hint-font-weight: var(--font-weight-normal);
@@ -4403,13 +4411,13 @@
   --button-large-padding-inline: var(--spacing-4);
   --button-large-padding-stack: var(--control-large-padding-stack);
   --button-large-icon-size: var(--control-large-icon-size);
+  --checkbox-radius: var(--control-radius);
   --checkbox-field-gap: var(--spacing-3);
   --checkbox-field-font-family: var(--control-font-family);
   --checkbox-field-font-weight: var(--control-font-weight);
   --checkbox-field-font-size: var(--control-font-size);
   --checkbox-field-line-height: var(--checkbox-size-default);
   --checkbox-field-letter-spacing: var(--tracking-normal);
-  --checkbox-radius: var(--control-radius);
   --checkbox-border-width: var(--control-border-width);
   --checkbox-size-default: var(--size-5);
   --radio-radius: var(--radius-full);
@@ -4437,10 +4445,10 @@
 /* === Sizes (Desktop) === */
 @media (min-width: 80rem) {
   :root {
-    --typography-heading-display-font-size: var(--text-3xl);
-    --typography-heading-display-line-height: var(--text-3xl--line-height);
-    --typography-heading-display-large-font-size: var(--text-4xl);
-    --typography-heading-display-large-line-height: var(--text-4xl--line-height);
+    --typography-heading-display-font-size: var(--text-5xl);
+    --typography-heading-display-line-height: var(--text-5xl--line-height);
+    --typography-heading-display-large-font-size: var(--text-7xl);
+    --typography-heading-display-large-line-height: var(--text-7xl--line-height);
     --typography-heading-title-font-size: var(--text-3xl);
     --typography-heading-title-line-height: var(--text-3xl--line-height);
     --typography-heading-subtitle-font-size: var(--text-3xl);
@@ -4466,8 +4474,6 @@
     --control-radius: var(--radius-md-desktop);
     --control-padding-inline: var(--layout-padding-inline-lg);
     --control-padding-inline-has-icon: var(--spacing-12);
-    --control-label-font-size: var(--text-sm);
-    --control-label-line-height: var(--text-sm--line-height);
     --button-padding-inline: var(--spacing-8);
     --button-small-padding-inline: var(--spacing-8);
     --button-large-padding-inline: var(--spacing-8);

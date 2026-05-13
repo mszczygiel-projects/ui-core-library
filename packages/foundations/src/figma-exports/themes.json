@@ -9270,6 +9270,15 @@
         },
         "$type": "string"
       }
+    },
+    "eyebrow": {
+      "font-familly": {
+        "$value": {
+          "Default": "Ubuntu",
+          "Dark": "Ubuntu"
+        },
+        "$type": "string"
+      }
     }
   },
   "radius": {

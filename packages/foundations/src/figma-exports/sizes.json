@@ -11,8 +11,8 @@
         },
         "font-weight": {
           "$value": {
-            "Mobile": "{Primitives Sizes.font-weight.light}",
-            "Desktop": "{Primitives Sizes.font-weight.light}"
+            "Mobile": "{Primitives Sizes.font-weight.normal}",
+            "Desktop": "{Primitives Sizes.font-weight.normal}"
           },
           "$type": "number"
         },
@@ -25,30 +25,23 @@
         },
         "font-size": {
           "$value": {
-            "Mobile": "{Primitives Sizes.text.2xl}",
-            "Desktop": "{Primitives Sizes.text.3xl}"
+            "Mobile": "{Primitives Sizes.text.3xl}",
+            "Desktop": "{Primitives Sizes.text.5xl}"
           },
           "$type": "number"
         },
         "line-height": {
           "$value": {
-            "Mobile": "{Primitives Sizes.text.2xl--line-height}",
-            "Desktop": "{Primitives Sizes.text.3xl--line-height}"
+            "Mobile": "{Primitives Sizes.text.3xl--line-height}",
+            "Desktop": "{Primitives Sizes.text.5xl--line-height}"
           },
           "$type": "number"
         },
         "large": {
           "font-size": {
             "$value": {
-              "Mobile": "{Primitives Sizes.text.3xl}",
-              "Desktop": "{Primitives Sizes.text.4xl}"
-            },
-            "$type": "number"
-          },
-          "line-height": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.text.3xl--line-height}",
-              "Desktop": "{Primitives Sizes.text.4xl--line-height}"
+              "Mobile": "{Primitives Sizes.text.4xl}",
+              "Desktop": "{Primitives Sizes.text.7xl}"
             },
             "$type": "number"
           },
@@ -58,6 +51,13 @@
               "Desktop": "{Primitives Sizes.tracking.normal}"
             },
             "$type": "string"
+          },
+          "line-height": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
+              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
+            },
+            "$type": "number"
           }
         },
         "letter-spacing": {
@@ -453,19 +453,19 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "line-height": {
           "$value": {
             "Mobile": "{Primitives Sizes.text.base--line-height}",
             "Desktop": "{Primitives Sizes.text.lg--line-height}"
           },
           "$type": "number"
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         }
       }
     },
@@ -479,8 +479,8 @@
       },
       "font-weight": {
         "$value": {
-          "Mobile": "{Primitives Sizes.font-weight.medium}",
-          "Desktop": "{Primitives Sizes.font-weight.medium}"
+          "Mobile": "{Primitives Sizes.font-weight.normal}",
+          "Desktop": "{Primitives Sizes.font-weight.normal}"
         },
         "$type": "number"
       },
@@ -502,6 +502,57 @@
         "$value": {
           "Mobile": "{Primitives Sizes.tracking.widest}",
           "Desktop": "{Primitives Sizes.tracking.widest}"
+        },
+        "$type": "string"
+      },
+      "text-tranform": {
+        "$value": {
+          "Mobile": "none",
+          "Desktop": "none"
+        },
+        "$type": "string"
+      }
+    },
+    "eyebrow": {
+      "font-family": {
+        "$value": {
+          "Mobile": "{Themes.typography.caption.font-family}",
+          "Desktop": "{Themes.typography.caption.font-family}"
+        },
+        "$type": "string"
+      },
+      "font-weight": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.font-weight.medium}",
+          "Desktop": "{Primitives Sizes.font-weight.medium}"
+        },
+        "$type": "number"
+      },
+      "font-size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.xs}",
+          "Desktop": "{Primitives Sizes.text.xs}"
+        },
+        "$type": "number"
+      },
+      "line-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.xs--line-height}",
+          "Desktop": "{Primitives Sizes.text.xs--line-height}"
+        },
+        "$type": "number"
+      },
+      "letter-spacing": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.tracking.widest}",
+          "Desktop": "{Primitives Sizes.tracking.widest}"
+        },
+        "$type": "string"
+      },
+      "text-transform": {
+        "$value": {
+          "Mobile": "uppercase",
+          "Desktop": "uppercase"
         },
         "$type": "string"
       }
@@ -977,22 +1028,22 @@
     "label": {
       "font-size": {
         "$value": {
-          "Mobile": "{Primitives Sizes.text.xs}",
-          "Desktop": "{Primitives Sizes.text.sm}"
+          "Mobile": "{Sizes.typography.eyebrow.font-size}",
+          "Desktop": "{Sizes.typography.eyebrow.font-size}"
         },
         "$type": "number"
       },
       "line-height": {
         "$value": {
-          "Mobile": "{Primitives Sizes.text.xs--line-height}",
-          "Desktop": "{Primitives Sizes.text.sm--line-height}"
+          "Mobile": "{Sizes.typography.eyebrow.line-height}",
+          "Desktop": "{Sizes.typography.eyebrow.line-height}"
         },
         "$type": "number"
       },
       "font-weight": {
         "$value": {
-          "Mobile": "{Primitives Sizes.font-weight.medium}",
-          "Desktop": "{Primitives Sizes.font-weight.medium}"
+          "Mobile": "{Sizes.typography.eyebrow.font-weight}",
+          "Desktop": "{Sizes.typography.eyebrow.font-weight}"
         },
         "$type": "number"
       },
@@ -1042,22 +1093,22 @@
       },
       "letter-spacing": {
         "$value": {
-          "Mobile": "{Primitives Sizes.tracking.widest}",
-          "Desktop": "{Primitives Sizes.tracking.widest}"
+          "Mobile": "{Sizes.typography.eyebrow.letter-spacing}",
+          "Desktop": "{Sizes.typography.eyebrow.letter-spacing}"
         },
         "$type": "string"
       },
       "font-family": {
         "$value": {
-          "Mobile": "{Themes.typography.caption.font-family}",
-          "Desktop": "{Themes.typography.caption.font-family}"
+          "Mobile": "{Themes.typography.eyebrow.font-familly}",
+          "Desktop": "{Themes.typography.eyebrow.font-familly}"
         },
         "$type": "string"
       },
       "text-transform": {
         "$value": {
-          "Mobile": "uppercase",
-          "Desktop": "uppercase"
+          "Mobile": "{Sizes.typography.eyebrow.text-transform}",
+          "Desktop": "{Sizes.typography.eyebrow.text-transform}"
         },
         "$type": "string"
       }
@@ -1270,6 +1321,13 @@
     }
   },
   "checkbox": {
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.control.radius}",
+        "Desktop": "{Sizes.control.radius}"
+      },
+      "$type": "number"
+    },
     "field": {
       "gap": {
         "$value": {
@@ -1313,13 +1371,6 @@
         },
         "$type": "string"
       }
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
     },
     "border": {
       "width": {

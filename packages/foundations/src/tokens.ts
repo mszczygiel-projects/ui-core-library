@@ -1443,6 +1443,9 @@ export const tokens = {
       caption: {
         fontFamily: 'var(--typography-caption-font-family)',
       },
+      eyebrow: {
+        fontFamilly: 'var(--typography-eyebrow-font-familly)',
+      },
     },
     radius: {
       sm: {
@@ -1983,8 +1986,8 @@ export const tokens = {
           lineHeight: 'var(--typography-heading-display-line-height)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
@@ -2061,8 +2064,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          letterSpacing: 'var(--typography-body-large-letter-spacing)',
           lineHeight: 'var(--typography-body-large-line-height)',
+          letterSpacing: 'var(--typography-body-large-letter-spacing)',
         },
       },
       caption: {
@@ -2071,6 +2074,15 @@ export const tokens = {
         fontSize: 'var(--typography-caption-font-size)',
         lineHeight: 'var(--typography-caption-line-height)',
         letterSpacing: 'var(--typography-caption-letter-spacing)',
+        textTranform: 'var(--typography-caption-text-tranform)',
+      },
+      eyebrow: {
+        fontFamily: 'var(--typography-eyebrow-font-family)',
+        fontWeight: 'var(--typography-eyebrow-font-weight)',
+        fontSize: 'var(--typography-eyebrow-font-size)',
+        lineHeight: 'var(--typography-eyebrow-line-height)',
+        letterSpacing: 'var(--typography-eyebrow-letter-spacing)',
+        textTransform: 'var(--typography-eyebrow-text-transform)',
       },
     },
     radius: {
@@ -2248,6 +2260,7 @@ export const tokens = {
       },
     },
     checkbox: {
+      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -2256,7 +2269,6 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
-      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
