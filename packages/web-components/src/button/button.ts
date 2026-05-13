@@ -19,6 +19,8 @@ export class UiButton extends LitElement {
   @property({ type: Boolean, reflect: true }) loading = false;
   @property({ type: Boolean }) disabled = false;
   @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
+  @property({ type: String }) name?: string;
+  @property({ type: String }) value = '';
   @property({ type: String }) label?: string;
 
   private internals: ElementInternals;
@@ -34,7 +36,11 @@ export class UiButton extends LitElement {
 
   private handleClick() {
     if (this.type === 'submit') {
+      this.internals.setFormValue(this.name ? this.value : null);
       this.internals.form?.requestSubmit();
+      queueMicrotask(() => {
+        this.internals.setFormValue(null);
+      });
     } else if (this.type === 'reset') {
       this.internals.form?.reset();
     }
@@ -43,7 +49,9 @@ export class UiButton extends LitElement {
   override render() {
     return html`
       <button
-        type="button"
+        type=${this.type}
+        name=${this.name ?? nothing}
+        value=${this.value}
         ?disabled=${this.disabled || this.loading}
         aria-busy=${this.loading ? 'true' : nothing}
         aria-label=${this.label ?? nothing}
