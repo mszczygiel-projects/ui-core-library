@@ -356,7 +356,7 @@ export function valueToCss(
   }
   if (token.type === 'string') return formatString(token.path, String(rawValue));
   if (token.type === 'boolean') {
-    const b = typeof rawValue === 'boolean' ? rawValue : rawValue === 'true';
+    const b = typeof rawValue === 'boolean' ? rawValue : String(rawValue) === 'true';
     return formatBoolean(token.path, b);
   }
   return String(rawValue);

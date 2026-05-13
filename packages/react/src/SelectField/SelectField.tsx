@@ -1,5 +1,9 @@
 import { useId, useRef, useState, useEffect, type CSSProperties, type ReactNode } from 'react';
-import { IconChevronDown, IconChevronUp, IconClose } from '@mszczygiel-projects/ui-core-icons/react';
+import {
+  IconChevronDown,
+  IconChevronUp,
+  IconClose,
+} from '@mszczygiel-projects/ui-core-icons/react';
 import './SelectField.css';
 
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';

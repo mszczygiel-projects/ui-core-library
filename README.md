@@ -15,8 +15,8 @@ Framework-agnostic UI component library published as private npm packages to Git
 
 ## Packages
 
-| Package                | Description                                                                  |
-| ---------------------- | ---------------------------------------------------------------------------- |
+| Package                                    | Description                                                                  |
+| ------------------------------------------ | ---------------------------------------------------------------------------- |
 | `@mszczygiel-projects/ui-core-foundations` | Design tokens — CSS custom properties, Tailwind theme, TypeScript references |
 | `@mszczygiel-projects/ui-core-icons`       | SVG icon set — Web Component map + React components                          |
 | `@mszczygiel-projects/ui-core-wc`          | Web Components (Lit, Shadow DOM)                                             |
@@ -150,6 +150,24 @@ Per-client brand overrides go on `:root` after the imports:
   --color-brand-primary-contrast: #ffffff;
 }
 ```
+
+## Generating your own tokens / icons
+
+Both `@mszczygiel-projects/ui-core-foundations` and `@mszczygiel-projects/ui-core-icons` ship a CLI so a consumer project can regenerate `tokens.css` / `tailwind.css` / `tokens.ts` from its own Luckino export, or build an icon set from its own SVG sources.
+
+```bash
+# Tokens — input dir must contain primitives.json, themes.json, surfaces.json, sizes.json (Luckino exports).
+pnpm exec ui-core-foundations build \
+  --input ./figma-exports \
+  --output ./src/generated/foundations
+
+# Icons — input dir must contain icon-*.svg files.
+pnpm exec ui-core-icons build \
+  --input ./brand-icons \
+  --output ./src/generated/icons
+```
+
+The generated `tokens.css` / `tailwind.css` are drop-in replacements for the versions exported from the package — import them instead when the project needs its own brand tokens. The generated `svg-map.js` and `react/` folder likewise replace the default icon set.
 
 ## Component docs
 

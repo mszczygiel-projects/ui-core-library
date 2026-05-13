@@ -438,8 +438,14 @@ stories: [
 // apps/storybook/.storybook/main.ts
 viteFinal: (config) => {
   config.resolve.alias = {
-    '@mszczygiel-projects/ui-core-foundations': path.resolve(__dirname, '../../../packages/foundations/src'),
-    '@mszczygiel-projects/ui-core-wc': path.resolve(__dirname, '../../../packages/web-components/src'),
+    '@mszczygiel-projects/ui-core-foundations': path.resolve(
+      __dirname,
+      '../../../packages/foundations/src',
+    ),
+    '@mszczygiel-projects/ui-core-wc': path.resolve(
+      __dirname,
+      '../../../packages/web-components/src',
+    ),
     '@mszczygiel-projects/ui-core-react': path.resolve(__dirname, '../../../packages/react/src'),
     '@mszczygiel-projects/ui-core-icons': path.resolve(__dirname, '../../../packages/icons/src'),
   };
@@ -489,6 +495,17 @@ pnpm --filter @mszczygiel-projects/ui-core-wc run test:watch
 # Visual regression
 pnpm chromatic              # requires CHROMATIC_PROJECT_TOKEN env var
 ```
+
+### Consumer CLI
+
+Both `@mszczygiel-projects/ui-core-foundations` and `@mszczygiel-projects/ui-core-icons` expose a `bin` so a downstream project can rerun the same pipelines against its own sources:
+
+```bash
+pnpm exec ui-core-foundations build --input ./figma-exports --output ./src/generated/foundations
+pnpm exec ui-core-icons       build --input ./brand-icons    --output ./src/generated/icons
+```
+
+The CLIs are thin wrappers around `packages/*/scripts/build-*.ts`. Defaults match in-package paths, so `pnpm foundations:build` / `pnpm icons:build` behave exactly as before; the published bin entries are the `tsc`-compiled `dist/scripts/cli.js`. Scripts are compiled by a per-package `tsconfig.scripts.json` (loose strict, `types: ["node"]`) — separate from the source `tsconfig.build.json` so package types stay strict.
 
 ### GitHub Packages — setup
 

@@ -62,7 +62,8 @@ function stageVersionFiles(files) {
 }
 
 function commitVersionChanges(version) {
-  const hasStagedChanges = execSync('git diff --cached --quiet; echo $?', { encoding: 'utf8' }).trim() === '1';
+  const hasStagedChanges =
+    execSync('git diff --cached --quiet; echo $?', { encoding: 'utf8' }).trim() === '1';
 
   if (!hasStagedChanges) {
     console.error('No staged version changes to commit.');
