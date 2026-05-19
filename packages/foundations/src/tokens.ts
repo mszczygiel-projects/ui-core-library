@@ -1986,8 +1986,8 @@ export const tokens = {
           lineHeight: 'var(--typography-heading-display-line-height)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
+            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
@@ -2064,8 +2064,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          lineHeight: 'var(--typography-body-large-line-height)',
           letterSpacing: 'var(--typography-body-large-letter-spacing)',
+          lineHeight: 'var(--typography-body-large-line-height)',
         },
       },
       caption: {
@@ -2083,6 +2083,13 @@ export const tokens = {
         lineHeight: 'var(--typography-eyebrow-line-height)',
         letterSpacing: 'var(--typography-eyebrow-letter-spacing)',
         textTransform: 'var(--typography-eyebrow-text-transform)',
+      },
+      link: {
+        fontWeight: 'var(--typography-link-font-weight)',
+        fontSize: 'var(--typography-link-font-size)',
+        lineHeight: 'var(--typography-link-line-height)',
+        letterSpacing: 'var(--typography-link-letter-spacing)',
+        textTransform: 'var(--typography-link-text-transform)',
       },
     },
     radius: {

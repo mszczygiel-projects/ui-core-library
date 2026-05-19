@@ -1160,7 +1160,7 @@
   --color-on-inverse-select-option-icon-disabled: var(--color-on-inverse-text-muted);
   --color-on-inverse-select-option-check-default: var(--color-on-inverse-control-outline-background-default);
   --color-on-inverse-select-option-check-active: var(--color-on-inverse-action-primary-base-default);
-  --color-on-brand-primary-brand-primary: var(--color-brand-primary);
+  --color-on-brand-primary-brand-primary: var(--color-brand-secondary-300);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
   --color-on-brand-primary-background-default: var(--color-background-brand-primary);
@@ -1172,8 +1172,8 @@
   --color-on-brand-primary-text-primary: var(--color-white-1000);
   --color-on-brand-primary-text-secondary: var(--color-gray-50);
   --color-on-brand-primary-text-muted: var(--color-text-muted);
-  --color-on-brand-primary-text-brand: var(--color-text-brand);
-  --color-on-brand-primary-icon-default: var(--color-gray-50);
+  --color-on-brand-primary-text-brand: var(--color-on-brand-primary-brand-primary);
+  --color-on-brand-primary-icon-default: var(--color-on-brand-primary-brand-primary);
   --color-on-brand-primary-border-default: var(--color-border-default);
   --color-on-brand-primary-ring-default: var(--color-brand-secondary);
   --color-on-brand-primary-link-default: var(--color-action-secondary-base-default);
@@ -1486,10 +1486,10 @@
   --shadow-interactive-active: var(--shadow-shape-2xs);
   --shadow-inset-default: var(--shadow-shape-none);
   --shadow-inset-subtle: var(--shadow-shape-xs);
-  --button-text-transform-uppercase: none;
+  --button-text-transform-uppercase: uppercase;
   --ring-style: solid;
   --ring-offset: 0.3125rem;
-  --link-text-decoration-underline: false;
+  --link-text-decoration-underline: true;
 }
 
 /* === Themes (Dark) === */
@@ -1925,15 +1925,12 @@
     --color-on-inverse-select-option-icon-default: var(--color-on-inverse-icon-default);
     --color-on-inverse-select-option-icon-hover: var(--color-on-inverse-icon-default);
     --color-on-inverse-select-option-icon-active: var(--color-on-inverse-action-primary-on-base-default);
-    --color-on-brand-primary-brand-primary: var(--color-brand-primary);
     --color-on-brand-primary-background-default: var(--color-brand-primary-600);
     --color-on-brand-primary-background-sunken: var(--color-background-sunken);
     --color-on-brand-primary-background-subtle: var(--color-background-subtle);
     --color-on-brand-primary-background-inverse: var(--color-background-inverse);
     --color-on-brand-primary-background-brand-primary: var(--color-background-brand-primary);
     --color-on-brand-primary-text-muted: var(--color-text-muted);
-    --color-on-brand-primary-text-brand: var(--color-text-brand);
-    --color-on-brand-primary-icon-default: var(--color-icon-default);
     --color-on-brand-primary-ring-default: var(--color-ring-default);
     --color-on-brand-primary-link-default: var(--color-link-default);
     --color-on-brand-primary-link-hover: var(--color-link-hover);
@@ -2061,8 +2058,6 @@
     --color-on-brand-primary-select-option-background-hover: var(--color-on-brand-primary-background-subtle);
     --color-on-brand-primary-select-option-text-active: var(--color-on-brand-primary-action-primary-on-base-default);
     --color-on-brand-primary-select-option-text-disabled: var(--color-on-brand-primary-text-muted);
-    --color-on-brand-primary-select-option-icon-default: var(--color-on-brand-primary-icon-default);
-    --color-on-brand-primary-select-option-icon-hover: var(--color-on-brand-primary-icon-default);
     --color-on-brand-primary-select-option-icon-active: var(--color-on-brand-primary-action-primary-on-base-default);
     --color-on-brand-primary-select-option-icon-disabled: var(--color-on-brand-primary-text-muted);
     --color-selection-background: var(--color-button-primary-background-default);
@@ -3004,8 +2999,8 @@
   --typography-heading-display-font-size: var(--text-3xl);
   --typography-heading-display-line-height: var(--text-3xl--line-height);
   --typography-heading-display-large-font-size: var(--text-4xl);
-  --typography-heading-display-large-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-line-height: var(--text-4xl--line-height);
+  --typography-heading-display-large-letter-spacing: var(--tracking-normal);
   --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
@@ -3051,15 +3046,15 @@
   --typography-heading-h6-letter-spacing: var(--tracking-normal);
   --typography-body-font-weight: var(--font-weight-normal);
   --typography-body-font-weight-strong: var(--font-weight-semibold);
-  --typography-body-font-size: var(--text-sm);
-  --typography-body-line-height: var(--text-sm--line-height);
-  --typography-body-small-font-size: var(--text-xs);
-  --typography-body-small-line-height: var(--text-xs--line-height);
+  --typography-body-font-size: var(--text-base);
+  --typography-body-line-height: var(--text-base--line-height);
+  --typography-body-small-font-size: var(--text-sm);
+  --typography-body-small-line-height: var(--text-sm--line-height);
   --typography-body-small-letter-spacing: var(--tracking-normal);
   --typography-body-letter-spacing: var(--tracking-normal);
-  --typography-body-large-font-size: var(--text-base);
-  --typography-body-large-line-height: var(--text-base--line-height);
+  --typography-body-large-font-size: var(--text-lg);
   --typography-body-large-letter-spacing: var(--tracking-normal);
+  --typography-body-large-line-height: var(--text-lg--line-height);
   --typography-caption-font-weight: var(--font-weight-normal);
   --typography-caption-font-size: var(--text-xs);
   --typography-caption-line-height: var(--text-xs--line-height);
@@ -3071,6 +3066,11 @@
   --typography-eyebrow-line-height: var(--text-xs--line-height);
   --typography-eyebrow-letter-spacing: var(--tracking-widest);
   --typography-eyebrow-text-transform: uppercase;
+  --typography-link-font-weight: var(--typography-body-font-weight-strong);
+  --typography-link-font-size: var(--text-xs);
+  --typography-link-line-height: var(--text-xs--line-height);
+  --typography-link-letter-spacing: var(--tracking-widest);
+  --typography-link-text-transform: uppercase;
   --radius-pill: var(--radius-full);
   --stroke-border: 0.0625rem;
   --stroke-ring: 0.125rem;
@@ -3103,7 +3103,7 @@
   --control-radius: var(--radius-md-mobile);
   --control-border-width: var(--stroke-border);
   --control-icon-size: var(--icon-sm);
-  --control-large-font-size: var(--text-lg);
+  --control-large-font-size: var(--text-base);
   --control-large-line-height: var(--text-base--line-height);
   --control-large-radius: var(--control-radius);
   --control-large-icon-size: var(--icon-md);
@@ -3142,7 +3142,7 @@
   --control-hint-font-size: var(--text-xs);
   --control-hint-line-height: var(--text-xs--line-height);
   --control-hint-font-weight: var(--font-weight-normal);
-  --button-font-family: var(--control-font-family);
+  --button-font-family: var(--typography-eyebrow-font-familly);
   --button-font-weight: var(--font-weight-semibold);
   --button-font-size: var(--control-font-size);
   --button-line-height: var(--control-line-height);
@@ -3214,12 +3214,6 @@
     --typography-heading-h3-line-height: var(--text-xl--line-height);
     --typography-heading-h4-font-size: var(--text-lg);
     --typography-heading-h4-line-height: var(--text-lg--line-height);
-    --typography-body-font-size: var(--text-base);
-    --typography-body-line-height: var(--text-base--line-height);
-    --typography-body-small-font-size: var(--text-sm);
-    --typography-body-small-line-height: var(--text-sm--line-height);
-    --typography-body-large-font-size: var(--text-lg);
-    --typography-body-large-line-height: var(--text-lg--line-height);
     --typography-caption-font-size: var(--text-sm);
     --typography-caption-line-height: var(--text-sm--line-height);
     --layout-container-max-width: 90rem;
