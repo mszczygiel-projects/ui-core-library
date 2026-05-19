@@ -200,4 +200,48 @@ describe('TextField', () => {
     const wrapper = container.querySelector('.ui-text-field__field-wrapper');
     expect(wrapper!.querySelector('.ui-text-field__label')).toBeNull();
   });
+
+  describe('form integration', () => {
+    it('submits value via FormData', () => {
+      const { container } = render(
+        <form>
+          <TextField name="username" defaultValue="alice" />
+        </form>,
+      );
+      const form = container.querySelector('form')!;
+      expect(new FormData(form).get('username')).toBe('alice');
+    });
+
+    it('excludes value from FormData when disabled', () => {
+      const { container } = render(
+        <form>
+          <TextField name="username" defaultValue="alice" disabled />
+        </form>,
+      );
+      const form = container.querySelector('form')!;
+      expect(new FormData(form).get('username')).toBeNull();
+    });
+
+    it('resets to default value on form reset (uncontrolled)', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <TextField name="username" defaultValue="alice" label="Username" />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+      const input = screen.getByRole('textbox') as HTMLInputElement;
+      await user.clear(input);
+      await user.type(input, 'bob');
+      expect(input.value).toBe('bob');
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(input.value).toBe('alice');
+    });
+
+    it('required attribute is forwarded to native input', () => {
+      render(<TextField name="username" required label="Username" />);
+      expect((screen.getByRole('textbox') as HTMLInputElement).required).toBe(true);
+    });
+  });
 });

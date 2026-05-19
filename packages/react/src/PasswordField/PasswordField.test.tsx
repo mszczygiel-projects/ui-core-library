@@ -87,4 +87,61 @@ describe('PasswordField', () => {
     expect(onChange).toHaveBeenCalled();
     expect(onChange).toHaveBeenLastCalledWith('secret');
   });
+
+  describe('form integration', () => {
+    it('submits value via FormData', () => {
+      const { container } = render(
+        <form>
+          <PasswordField name="password" defaultValue="secret" />
+        </form>,
+      );
+
+      expect(new FormData(container.querySelector('form')!).get('password')).toBe('secret');
+    });
+
+    it('excludes value from FormData when disabled', () => {
+      const { container } = render(
+        <form>
+          <PasswordField name="password" defaultValue="secret" disabled />
+        </form>,
+      );
+
+      expect(new FormData(container.querySelector('form')!).get('password')).toBeNull();
+    });
+
+    it('resets to defaultValue on form reset', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <PasswordField label="Password" defaultValue="secret" />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+      const input = screen.getByLabelText('Password') as HTMLInputElement;
+
+      await user.clear(input);
+      await user.type(input, 'updated-secret');
+      expect(input.value).toBe('updated-secret');
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(input.value).toBe('secret');
+    });
+
+    it('keeps form reset independent from visibility toggle', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <PasswordField label="Password" defaultValue="secret" />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+
+      await user.click(screen.getByRole('button', { name: 'Show password' }));
+      expect(screen.getByLabelText('Password')).toHaveProperty('type', 'text');
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(screen.getByLabelText('Password')).toHaveProperty('type', 'text');
+      expect((screen.getByLabelText('Password') as HTMLInputElement).value).toBe('secret');
+    });
+  });
 });

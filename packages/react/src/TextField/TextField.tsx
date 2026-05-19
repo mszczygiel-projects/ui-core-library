@@ -1,5 +1,11 @@
-import { useId, type CSSProperties, type ReactNode, type InputHTMLAttributes } from 'react';
-import { IconDanger } from '@ui-core/icons/react';
+import {
+  forwardRef,
+  useId,
+  type CSSProperties,
+  type ReactNode,
+  type InputHTMLAttributes,
+} from 'react';
+import { IconDanger } from '@mszczygiel-projects/ui-core-icons/react';
 import './TextField.css';
 
 export type TextFieldVariant = 'outline' | 'filled' | 'underlined';
@@ -24,27 +30,30 @@ export interface TextFieldProps extends Omit<
   style?: CSSProperties;
 }
 
-export function TextField({
-  variant = 'outline',
-  size = 'default',
-  label,
-  labelPlacement = 'top',
-  placeholder = '',
-  value,
-  hint,
-  state = 'default',
-  leadingIcon,
-  trailingIcon,
-  onChange,
-  name,
-  type = 'text',
-  disabled,
-  required,
-  readOnly,
-  className,
-  style,
-  ...inputProps
-}: TextFieldProps) {
+export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function TextField(
+  {
+    variant = 'outline',
+    size = 'default',
+    label,
+    labelPlacement = 'top',
+    placeholder = '',
+    value,
+    hint,
+    state = 'default',
+    leadingIcon,
+    trailingIcon,
+    onChange,
+    name,
+    type = 'text',
+    disabled,
+    required,
+    readOnly,
+    className,
+    style,
+    ...inputProps
+  }: TextFieldProps,
+  ref,
+) {
   const generatedId = useId();
   const inputId = inputProps.id ?? generatedId;
   const hintId = `${inputId}-hint`;
@@ -90,6 +99,7 @@ export function TextField({
         <input
           {...inputProps}
           id={inputId}
+          ref={ref}
           className="ui-text-field__input"
           type={type}
           name={name}
@@ -117,4 +127,4 @@ export function TextField({
       )}
     </div>
   );
-}
+});

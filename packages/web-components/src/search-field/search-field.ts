@@ -1,7 +1,7 @@
-import { LitElement, html, nothing } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, html, nothing, type PropertyValues } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { svgMap } from '@ui-core/icons';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { searchFieldStyles } from './search-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
@@ -13,6 +13,7 @@ export type SearchFieldState = 'default' | 'success' | 'error' | 'disabled';
 
 @customElement('ui-search-field')
 export class UiSearchField extends LitElement {
+  static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, textFieldStyles, searchFieldStyles];
 
@@ -28,18 +29,59 @@ export class UiSearchField extends LitElement {
   @property({ type: Boolean, reflect: true }) required = false;
   @property({ type: Boolean, reflect: true }) readonly = false;
 
-  private get _isDisabled(): boolean {
-    return this.disabled || this.state === 'disabled';
+  @state() private _formDisabled = false;
+
+  private _defaultValue = '';
+  private _internals: ElementInternals;
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
   }
 
-  protected override updated(): void {
+  override connectedCallback() {
+    super.connectedCallback();
+    this._defaultValue = this.value;
+    this._syncFormValue();
+  }
+
+  private get _isDisabled(): boolean {
+    return this.disabled || this.state === 'disabled' || this._formDisabled;
+  }
+
+  protected override updated(changedProperties: PropertyValues<this>): void {
+    if (
+      changedProperties.has('value') ||
+      changedProperties.has('disabled') ||
+      changedProperties.has('state')
+    ) {
+      this._syncFormValue();
+    }
     this.setAttribute('has-leading-icon', '');
     this.setAttribute('has-trailing-icon', '');
+  }
+
+  formDisabledCallback(disabled: boolean) {
+    this._formDisabled = disabled;
+    this._syncFormValue();
+  }
+
+  formResetCallback() {
+    this.value = this._defaultValue;
+  }
+
+  formStateRestoreCallback(state: unknown) {
+    if (typeof state === 'string') this.value = state;
+  }
+
+  private _syncFormValue() {
+    this._internals.setFormValue(this._isDisabled ? null : this.value);
   }
 
   private _onInput(e: Event) {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.dispatchEvent(
       new CustomEvent('ui-input', { detail: { value: this.value }, bubbles: true, composed: true }),
     );
@@ -48,6 +90,7 @@ export class UiSearchField extends LitElement {
   private _onChange(e: Event) {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     this.dispatchEvent(
       new CustomEvent('ui-change', {
         detail: { value: this.value },
@@ -60,6 +103,7 @@ export class UiSearchField extends LitElement {
   private _onClear() {
     this.value = '';
     this.shadowRoot?.querySelector('input')?.focus();
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.dispatchEvent(new CustomEvent('ui-clear', { bubbles: true, composed: true }));
     this.dispatchEvent(
       new CustomEvent('ui-input', { detail: { value: '' }, bubbles: true, composed: true }),

@@ -2,10 +2,12 @@
  * Token build pipeline entry point.
  *
  * Reads 4 W3C Design Tokens JSON files exported from Figma (Luckino plugin)
- * and writes the generated outputs to src/.
+ * and writes tokens.css / tailwind.css / tokens.ts to the output directory.
  *
  * Pure transformation logic lives in ./tokens-transformer.ts.
- * Run via: pnpm --filter @ui-core/tokens run tokens:build
+ *
+ * In the monorepo: invoked via `pnpm foundations:build` (defaults).
+ * For consumers: invoked via the `ui-core-foundations` bin (custom input/output).
  */
 
 import { readFileSync, writeFileSync } from 'fs';
@@ -19,25 +21,26 @@ import {
   detectCycles,
   tokenKey,
   normalizedPath,
-} from './tokens-transformer.ts';
+} from './tokens-transformer.js';
 
-// ─── Paths ───────────────────────────────────────────────────────────────
+export interface BuildTokensOptions {
+  inputDir: string;
+  outputDir: string;
+}
 
-const ROOT = join(import.meta.dirname, '..');
-const INPUT_DIR = join(ROOT, 'src', 'figma-exports');
-const OUTPUT_DIR = join(ROOT, 'src');
+export const DEFAULT_FOUNDATIONS_ROOT = join(import.meta.dirname, '..');
+export const DEFAULT_INPUT_DIR = join(DEFAULT_FOUNDATIONS_ROOT, 'src', 'figma-exports');
+export const DEFAULT_OUTPUT_DIR = join(DEFAULT_FOUNDATIONS_ROOT, 'src');
 
-// ─── I/O ─────────────────────────────────────────────────────────────────
-
-function loadJson(filename: string): unknown {
-  const path = join(INPUT_DIR, filename);
+function loadJson(inputDir: string, filename: string): unknown {
+  const path = join(inputDir, filename);
   try {
     return JSON.parse(readFileSync(path, 'utf8'));
   } catch (err) {
     if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
       console.error(
         `✗ Missing input file: ${path}\n` +
-          `  See src/figma-exports/README.md for how to produce it (Luckino plugin export).`,
+          `  Export it from Figma using the Luckino plugin and place it in the input directory.`,
       );
     } else {
       console.error(`✗ Failed to read ${path}:`, err);
@@ -46,11 +49,11 @@ function loadJson(filename: string): unknown {
   }
 }
 
-function loadAllTokens(): Token[] {
-  const primitives = loadJson('primitives.json') as Record<string, unknown>;
-  const themes = loadJson('themes.json') as Record<string, unknown>;
-  const surfaces = loadJson('surfaces.json') as Record<string, unknown>;
-  const sizes = loadJson('sizes.json') as Record<string, unknown>;
+function loadAllTokens(inputDir: string): Token[] {
+  const primitives = loadJson(inputDir, 'primitives.json') as Record<string, unknown>;
+  const themes = loadJson(inputDir, 'themes.json') as Record<string, unknown>;
+  const surfaces = loadJson(inputDir, 'surfaces.json') as Record<string, unknown>;
+  const sizes = loadJson(inputDir, 'sizes.json') as Record<string, unknown>;
 
   const tokens: Token[] = [];
   for (const key of [
@@ -67,10 +70,14 @@ function loadAllTokens(): Token[] {
   return tokens;
 }
 
-// ─── Main ────────────────────────────────────────────────────────────────
-
-function main(): void {
-  const tokens = loadAllTokens();
+export function buildTokens(
+  options: BuildTokensOptions = {
+    inputDir: DEFAULT_INPUT_DIR,
+    outputDir: DEFAULT_OUTPUT_DIR,
+  },
+): void {
+  const { inputDir, outputDir } = options;
+  const tokens = loadAllTokens(inputDir);
 
   const registry = new Map<string, Token>();
   for (const t of tokens) registry.set(tokenKey(t.collection, normalizedPath(t.path)), t);
@@ -81,7 +88,7 @@ function main(): void {
   if (!bpXlToken || typeof bpXlToken.value !== 'number') {
     console.error(
       `✗ Missing token: Primitives Sizes → breakpoint/xl\n` +
-        `  Add "breakpoint": { "xl": { "$value": 1280, "$type": "number" } } to src/figma-exports/primitives.json\n` +
+        `  Add "breakpoint": { "xl": { "$value": 1280, "$type": "number" } } to primitives.json\n` +
         `  This value is used as the @media (min-width: …) threshold for Desktop Sizes overrides.`,
     );
     process.exit(1);
@@ -94,20 +101,25 @@ function main(): void {
   const tailwindCss = buildTailwindCss(tokens);
   const tokensTs = buildTokensTs(tokens);
 
-  writeFileSync(join(OUTPUT_DIR, 'tokens.css'), tokensCss);
-  writeFileSync(join(OUTPUT_DIR, 'tailwind.css'), tailwindCss);
-  writeFileSync(join(OUTPUT_DIR, 'tokens.ts'), tokensTs);
+  writeFileSync(join(outputDir, 'tokens.css'), tokensCss);
+  writeFileSync(join(outputDir, 'tailwind.css'), tailwindCss);
+  writeFileSync(join(outputDir, 'tokens.ts'), tokensTs);
 
   for (const c of warnings.circular) console.warn(`⚠ CIRCULAR: ${c}`);
   for (const v of warnings.violations) console.warn(`⚠ VIOLATION: ${v}`);
   for (const b of warnings.broken) console.warn(`⚠ BROKEN REF: ${b}`);
 
   const total = warnings.circular.length + warnings.violations.length + warnings.broken.length;
-  console.log(`\n✓ Generated tokens.css, tailwind.css, tokens.ts`);
+  console.log(`\n✓ Generated tokens.css, tailwind.css, tokens.ts in ${outputDir}`);
   console.log(`  — ${tokens.length} tokens processed`);
   console.log(
     `  — ${total} warnings (${warnings.circular.length} circular, ${warnings.violations.length} violations, ${warnings.broken.length} broken)`,
   );
 }
 
-main();
+// Allow direct execution: `tsx scripts/build-tokens.ts` (monorepo default paths).
+const isDirectRun =
+  process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+if (isDirectRun) {
+  buildTokens();
+}

@@ -459,22 +459,22 @@ describe('buildTokensCss — dark mode block', () => {
     return buildTokensCss(tokens, reg, freshWarnings());
   }
 
-  it('emits [data-theme="dark"] block when at least one token has Dark ≠ Default', () => {
+  it('emits @media (prefers-color-scheme: dark) block when at least one token has Dark ≠ Default', () => {
     const differs = themeColor(
       ['color', 'brand', 'primary'],
       '{Primitives Colors.brand.primary.500}',
       '{Primitives Colors.brand.primary.600}',
     );
-    expect(buildWithThemes([differs])).toContain('[data-theme="dark"]');
+    expect(buildWithThemes([differs])).toContain('@media (prefers-color-scheme: dark)');
   });
 
-  it('omits [data-theme="dark"] block when all tokens have Dark = Default', () => {
+  it('omits @media (prefers-color-scheme: dark) block when all tokens have Dark = Default', () => {
     const same = themeColor(
       ['color', 'brand', 'primary'],
       '{Primitives Colors.brand.primary.500}',
       '{Primitives Colors.brand.primary.500}',
     );
-    expect(buildWithThemes([same])).not.toContain('[data-theme="dark"]');
+    expect(buildWithThemes([same])).not.toContain('@media (prefers-color-scheme: dark)');
   });
 
   it('dark block contains only the token whose Dark value differs', () => {
@@ -489,7 +489,7 @@ describe('buildTokensCss — dark mode block', () => {
       '{Primitives Colors.brand.primary.500}',
     );
     const css = buildWithThemes([differs, same]);
-    const darkStart = css.indexOf('[data-theme="dark"]');
+    const darkStart = css.indexOf('@media (prefers-color-scheme: dark)');
     const darkEnd = css.indexOf('}', darkStart);
     const darkBlock = css.slice(darkStart, darkEnd + 1);
 
@@ -506,6 +506,36 @@ describe('buildTokensCss — dark mode block', () => {
     const css = buildWithThemes([differs]);
     expect(css).not.toContain('--themes-');
     expect(css).toContain('--color-brand-primary: var(--color-brand-primary-600)');
+  });
+
+  it('dark block also includes aliases that depend on dark-overridden tokens', () => {
+    const gray700 = prim('gray', '700', '#374151');
+    const gray200 = prim('gray', '200', '#e5e7eb');
+
+    const textSecondary = themeColor(
+      ['color', 'text', 'secondary'],
+      '{Primitives Colors.gray.700}',
+      '{Primitives Colors.gray.200}',
+    );
+
+    const outlineLabel = themeColor(
+      ['color', 'control', 'outline', 'label', 'default'],
+      '{Themes.color.text.secondary}',
+      '{Themes.color.text.secondary}',
+    );
+
+    const tokens = [gray700, gray200, textSecondary, outlineLabel];
+    const reg = makeRegistry(tokens);
+    const css = buildTokensCss(tokens, reg, freshWarnings());
+
+    const darkStart = css.indexOf('@media (prefers-color-scheme: dark)');
+    const darkEnd = css.indexOf('}', darkStart);
+    const darkBlock = css.slice(darkStart, darkEnd + 1);
+
+    expect(darkBlock).toContain('--color-text-secondary: var(--color-gray-200);');
+    expect(darkBlock).toContain(
+      '--color-control-outline-label-default: var(--color-text-secondary);',
+    );
   });
 });
 
@@ -720,12 +750,14 @@ describe('tokens.css — generated output', () => {
     expect(css).not.toMatch(/--sizes-/);
   });
 
-  it('contains [data-theme="dark"] block', () => {
-    expect(css).toContain('[data-theme="dark"]');
+  it('contains @media (prefers-color-scheme: dark) block', () => {
+    expect(css).toContain('@media (prefers-color-scheme: dark)');
   });
 
   it('dark block contains fewer declarations than the Themes :root block', () => {
-    const darkMatch = css.match(/\[data-theme="dark"\]\s*\{([^}]+)\}/);
+    const darkMatch = css.match(
+      /@media \(prefers-color-scheme: dark\) \{\s*:root \{([\s\S]*?)\}\s*\}/,
+    );
     const themesMatch = css.match(/\/\* === Themes === \*\/\n:root \{([\s\S]*?)\n\}/);
     expect(darkMatch).not.toBeNull();
     expect(themesMatch).not.toBeNull();

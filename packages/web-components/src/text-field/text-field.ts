@@ -1,7 +1,7 @@
-import { LitElement, html, nothing } from 'lit';
+import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
-import { svgMap } from '@ui-core/icons';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { textFieldStyles } from './text-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
@@ -13,6 +13,7 @@ export type TextFieldLabelPlacement = 'top' | 'floating';
 
 @customElement('ui-text-field')
 export class UiTextField extends LitElement {
+  static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, textFieldStyles];
 
@@ -34,6 +35,21 @@ export class UiTextField extends LitElement {
 
   @state() private _hasLeadingIcon = false;
   @state() private _hasTrailingIcon = false;
+  @state() private _formDisabled = false;
+
+  private _defaultValue = '';
+  private _internals: ElementInternals;
+
+  constructor() {
+    super();
+    this._internals = this.attachInternals();
+  }
+
+  override connectedCallback() {
+    super.connectedCallback();
+    this._defaultValue = this.value;
+    this._syncFormValue();
+  }
 
   private get _isFloating(): boolean {
     if (this.variant === 'filled') return false;
@@ -42,19 +58,43 @@ export class UiTextField extends LitElement {
   }
 
   private get _isDisabled(): boolean {
-    return this.disabled || this.state === 'disabled';
+    return this.disabled || this.state === 'disabled' || this._formDisabled;
   }
 
   private get _showsErrorTrailingIcon(): boolean {
     return this.state === 'error' && !this._hasTrailingIcon;
   }
 
-  protected override updated(): void {
+  protected override updated(changedProperties: PropertyValues<this>): void {
+    if (
+      changedProperties.has('value') ||
+      changedProperties.has('disabled') ||
+      changedProperties.has('state')
+    ) {
+      this._syncFormValue();
+    }
     this.toggleAttribute('has-leading-icon', this._hasLeadingIcon);
     this.toggleAttribute(
       'has-trailing-icon',
       this._hasTrailingIcon || this._showsErrorTrailingIcon,
     );
+  }
+
+  formDisabledCallback(disabled: boolean) {
+    this._formDisabled = disabled;
+    this._syncFormValue();
+  }
+
+  formResetCallback() {
+    this.value = this._defaultValue;
+  }
+
+  formStateRestoreCallback(state: unknown) {
+    if (typeof state === 'string') this.value = state;
+  }
+
+  private _syncFormValue() {
+    this._internals.setFormValue(this._isDisabled ? null : this.value);
   }
 
   private _onLeadingSlotChange(e: Event) {
@@ -70,6 +110,7 @@ export class UiTextField extends LitElement {
   private _onInput(e: Event) {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
+    this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.dispatchEvent(
       new CustomEvent('ui-input', { detail: { value: this.value }, bubbles: true, composed: true }),
     );
@@ -78,6 +119,7 @@ export class UiTextField extends LitElement {
   private _onChange(e: Event) {
     const input = e.target as HTMLInputElement;
     this.value = input.value;
+    this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
     this.dispatchEvent(
       new CustomEvent('ui-change', {
         detail: { value: this.value },

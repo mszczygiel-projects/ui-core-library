@@ -165,6 +165,9 @@ export const textFieldStyles = css`
     font-size: var(--control-label-font-size);
     line-height: var(--control-label-line-height);
     font-weight: var(--control-label-font-weight);
+    text-transform: var(--control-label-text-transform);
+    font-family: var(--control-label-font-family);
+    letter-spacing: var(--control-label-letter-spacing);
     color: var(--_label);
   }
 
@@ -355,6 +358,9 @@ export const textFieldStyles = css`
     font-size: var(--control-label-floating-font-size);
     line-height: var(--control-label-floating-line-height);
     font-weight: var(--control-label-floating-font-weight);
+    font-family: var(--control-label-floating-font-family);
+    text-transform: var(--control-label-floating-text-transform);
+    letter-spacing: var(--control-label-floating-letter-spacing);
     color: var(--_label);
     padding: 0 var(--size-1);
     left: var(--size-2);
@@ -400,13 +406,6 @@ export const textFieldStyles = css`
     background-color: var(--color-background-default);
     left: var(--size-2);
   }
-
-  /* Floating label: input needs top padding to leave room for the shrunken label */
-  /* :host([label-placement='floating']) .input,
-  :host([variant='underlined']) .input {
-    padding-block-start: calc(var(--_padding-stack) + var(--control-label-floating-line-height) + var(--spacing-2));
-    padding-block-end: var(--_padding-stack);
-  } */
 
   /* Floating label state colors */
 

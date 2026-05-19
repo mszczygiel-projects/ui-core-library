@@ -1,6 +1,6 @@
-import { useState, type CSSProperties } from 'react';
-import { IconSearch } from '@ui-core/icons/react';
-import { IconClose } from '@ui-core/icons/react';
+import { useRef, useState, useEffect, type CSSProperties } from 'react';
+import { IconSearch } from '@mszczygiel-projects/ui-core-icons/react';
+import { IconClose } from '@mszczygiel-projects/ui-core-icons/react';
 import { TextField } from '../TextField/TextField.js';
 import type { TextFieldVariant, TextFieldSize, TextFieldState } from '../TextField/TextField.js';
 import './SearchField.css';
@@ -9,6 +9,7 @@ export interface SearchFieldProps {
   variant?: TextFieldVariant;
   size?: TextFieldSize;
   value?: string;
+  defaultValue?: string;
   placeholder?: string;
   hint?: string;
   state?: TextFieldState;
@@ -26,6 +27,7 @@ export function SearchField({
   variant = 'outline',
   size = 'default',
   value,
+  defaultValue,
   placeholder = 'Search...',
   hint,
   state = 'default',
@@ -39,10 +41,22 @@ export function SearchField({
   style,
 }: SearchFieldProps) {
   const isControlled = value !== undefined;
-  const [internalValue, setInternalValue] = useState('');
+  const initialUncontrolledValueRef = useRef(defaultValue ?? '');
+  const [internalValue, setInternalValue] = useState(() => defaultValue ?? '');
   const effectiveValue = isControlled ? value : internalValue;
   const hasValue = effectiveValue !== '';
   const isDisabled = disabled || state === 'disabled';
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const formElement = inputRef.current?.closest('form');
+    if (!formElement) return;
+    const handleFormReset = () => {
+      if (!isControlled) setInternalValue(initialUncontrolledValueRef.current);
+    };
+    formElement.addEventListener('reset', handleFormReset);
+    return () => formElement.removeEventListener('reset', handleFormReset);
+  }, [isControlled]);
 
   const handleChange = (v: string) => {
     if (!isControlled) setInternalValue(v);
@@ -73,6 +87,7 @@ export function SearchField({
 
   return (
     <TextField
+      ref={inputRef}
       className={['ui-search-field', className].filter(Boolean).join(' ')}
       style={style}
       size={size}

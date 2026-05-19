@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { getUiCoreConfig } from '@ui-core/foundations';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 import './Loader.css';
 
 export interface LoaderProps {

@@ -11,7 +11,7 @@ const config: StorybookConfig = {
     `${root}/packages/web-components/src/**/*.stories.ts`,
     `${root}/packages/react/src/**/*.stories.tsx`,
   ],
-  addons: [],
+  addons: ['@storybook/addon-a11y'],
   framework: {
     name: '@storybook/react-vite',
     options: {},
@@ -23,10 +23,22 @@ const config: StorybookConfig = {
       base: process.env.GITHUB_PAGES ? '/ui-core-library/' : '/',
       resolve: {
         alias: {
-          '@ui-core/foundations': path.resolve(__dirname, '../../../packages/foundations/src'),
-          '@ui-core/wc': path.resolve(__dirname, '../../../packages/web-components/src'),
-          '@ui-core/react': path.resolve(__dirname, '../../../packages/react/src'),
-          '@ui-core/icons': path.resolve(__dirname, '../../../packages/icons/src'),
+          '@mszczygiel-projects/ui-core-foundations': path.resolve(
+            __dirname,
+            '../../../packages/foundations/src',
+          ),
+          '@mszczygiel-projects/ui-core-wc': path.resolve(
+            __dirname,
+            '../../../packages/web-components/src',
+          ),
+          '@mszczygiel-projects/ui-core-react': path.resolve(
+            __dirname,
+            '../../../packages/react/src',
+          ),
+          '@mszczygiel-projects/ui-core-icons': path.resolve(
+            __dirname,
+            '../../../packages/icons/src',
+          ),
         },
         extensionAlias: {
           '.js': ['.tsx', '.ts', '.js'],

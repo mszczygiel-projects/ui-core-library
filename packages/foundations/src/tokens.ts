@@ -447,6 +447,36 @@ export const tokens = {
             },
           },
         },
+        select: {
+          dropdown: {
+            background: 'var(--color-on-subtle-select-dropdown-background)',
+            border: 'var(--color-on-subtle-select-dropdown-border)',
+          },
+          option: {
+            background: {
+              default: 'var(--color-on-subtle-select-option-background-default)',
+              hover: 'var(--color-on-subtle-select-option-background-hover)',
+              active: 'var(--color-on-subtle-select-option-background-active)',
+              disabled: 'var(--color-on-subtle-select-option-background-disabled)',
+            },
+            text: {
+              default: 'var(--color-on-subtle-select-option-text-default)',
+              hover: 'var(--color-on-subtle-select-option-text-hover)',
+              active: 'var(--color-on-subtle-select-option-text-active)',
+              disabled: 'var(--color-on-subtle-select-option-text-disabled)',
+            },
+            icon: {
+              default: 'var(--color-on-subtle-select-option-icon-default)',
+              hover: 'var(--color-on-subtle-select-option-icon-hover)',
+              active: 'var(--color-on-subtle-select-option-icon-active)',
+              disabled: 'var(--color-on-subtle-select-option-icon-disabled)',
+            },
+            check: {
+              default: 'var(--color-on-subtle-select-option-check-default)',
+              active: 'var(--color-on-subtle-select-option-check-active)',
+            },
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -889,6 +919,36 @@ export const tokens = {
               success: 'var(--color-on-inverse-radio-checked-border-success)',
               error: 'var(--color-on-inverse-radio-checked-border-error)',
               disabled: 'var(--color-on-inverse-radio-checked-border-disabled)',
+            },
+          },
+        },
+        select: {
+          dropdown: {
+            background: 'var(--color-on-inverse-select-dropdown-background)',
+            border: 'var(--color-on-inverse-select-dropdown-border)',
+          },
+          option: {
+            background: {
+              default: 'var(--color-on-inverse-select-option-background-default)',
+              hover: 'var(--color-on-inverse-select-option-background-hover)',
+              active: 'var(--color-on-inverse-select-option-background-active)',
+              disabled: 'var(--color-on-inverse-select-option-background-disabled)',
+            },
+            text: {
+              default: 'var(--color-on-inverse-select-option-text-default)',
+              hover: 'var(--color-on-inverse-select-option-text-hover)',
+              active: 'var(--color-on-inverse-select-option-text-active)',
+              disabled: 'var(--color-on-inverse-select-option-text-disabled)',
+            },
+            icon: {
+              default: 'var(--color-on-inverse-select-option-icon-default)',
+              hover: 'var(--color-on-inverse-select-option-icon-hover)',
+              active: 'var(--color-on-inverse-select-option-icon-active)',
+              disabled: 'var(--color-on-inverse-select-option-icon-disabled)',
+            },
+            check: {
+              default: 'var(--color-on-inverse-select-option-check-default)',
+              active: 'var(--color-on-inverse-select-option-check-active)',
             },
           },
         },
@@ -1337,6 +1397,36 @@ export const tokens = {
             },
           },
         },
+        select: {
+          dropdown: {
+            background: 'var(--color-on-brand-primary-select-dropdown-background)',
+            border: 'var(--color-on-brand-primary-select-dropdown-border)',
+          },
+          option: {
+            background: {
+              default: 'var(--color-on-brand-primary-select-option-background-default)',
+              hover: 'var(--color-on-brand-primary-select-option-background-hover)',
+              active: 'var(--color-on-brand-primary-select-option-background-active)',
+              disabled: 'var(--color-on-brand-primary-select-option-background-disabled)',
+            },
+            text: {
+              default: 'var(--color-on-brand-primary-select-option-text-default)',
+              hover: 'var(--color-on-brand-primary-select-option-text-hover)',
+              active: 'var(--color-on-brand-primary-select-option-text-active)',
+              disabled: 'var(--color-on-brand-primary-select-option-text-disabled)',
+            },
+            icon: {
+              default: 'var(--color-on-brand-primary-select-option-icon-default)',
+              hover: 'var(--color-on-brand-primary-select-option-icon-hover)',
+              active: 'var(--color-on-brand-primary-select-option-icon-active)',
+              disabled: 'var(--color-on-brand-primary-select-option-icon-disabled)',
+            },
+            check: {
+              default: 'var(--color-on-brand-primary-select-option-check-default)',
+              active: 'var(--color-on-brand-primary-select-option-check-active)',
+            },
+          },
+        },
       },
       selection: {
         background: 'var(--color-selection-background)',
@@ -1352,6 +1442,9 @@ export const tokens = {
       },
       caption: {
         fontFamily: 'var(--typography-caption-font-family)',
+      },
+      eyebrow: {
+        fontFamilly: 'var(--typography-eyebrow-font-familly)',
       },
     },
     radius: {
@@ -1375,10 +1468,10 @@ export const tokens = {
         strong: 'var(--shadow-color-strong)',
       },
       elevation: {
-        '1': 'var(--shadow-elevation-1)',
-        '2': 'var(--shadow-elevation-2)',
-        '3': 'var(--shadow-elevation-3)',
-        '4': 'var(--shadow-elevation-4)',
+        "1": 'var(--shadow-elevation-1)',
+        "2": 'var(--shadow-elevation-2)',
+        "3": 'var(--shadow-elevation-3)',
+        "4": 'var(--shadow-elevation-4)',
       },
       interactive: {
         default: 'var(--shadow-interactive-default)',
@@ -1850,6 +1943,36 @@ export const tokens = {
           },
         },
       },
+      select: {
+        dropdown: {
+          background: 'var(--color-select-dropdown-background)',
+          border: 'var(--color-select-dropdown-border)',
+        },
+        option: {
+          background: {
+            default: 'var(--color-select-option-background-default)',
+            hover: 'var(--color-select-option-background-hover)',
+            active: 'var(--color-select-option-background-active)',
+            disabled: 'var(--color-select-option-background-disabled)',
+          },
+          text: {
+            default: 'var(--color-select-option-text-default)',
+            hover: 'var(--color-select-option-text-hover)',
+            active: 'var(--color-select-option-text-active)',
+            disabled: 'var(--color-select-option-text-disabled)',
+          },
+          icon: {
+            default: 'var(--color-select-option-icon-default)',
+            hover: 'var(--color-select-option-icon-hover)',
+            active: 'var(--color-select-option-icon-active)',
+            disabled: 'var(--color-select-option-icon-disabled)',
+          },
+          check: {
+            default: 'var(--color-select-option-check-default)',
+            active: 'var(--color-select-option-check-active)',
+          },
+        },
+      },
     },
   },
   sizes: {
@@ -1861,12 +1984,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -1933,12 +2056,12 @@ export const tokens = {
         fontWeightStrong: 'var(--typography-body-font-weight-strong)',
         fontSize: 'var(--typography-body-font-size)',
         lineHeight: 'var(--typography-body-line-height)',
-        letterSpacing: 'var(--typography-body-letter-spacing)',
         small: {
           fontSize: 'var(--typography-body-small-font-size)',
           lineHeight: 'var(--typography-body-small-line-height)',
           letterSpacing: 'var(--typography-body-small-letter-spacing)',
         },
+        letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
           lineHeight: 'var(--typography-body-large-line-height)',
@@ -1951,6 +2074,15 @@ export const tokens = {
         fontSize: 'var(--typography-caption-font-size)',
         lineHeight: 'var(--typography-caption-line-height)',
         letterSpacing: 'var(--typography-caption-letter-spacing)',
+        textTranform: 'var(--typography-caption-text-tranform)',
+      },
+      eyebrow: {
+        fontFamily: 'var(--typography-eyebrow-font-family)',
+        fontWeight: 'var(--typography-eyebrow-font-weight)',
+        fontSize: 'var(--typography-eyebrow-font-size)',
+        lineHeight: 'var(--typography-eyebrow-line-height)',
+        letterSpacing: 'var(--typography-eyebrow-letter-spacing)',
+        textTransform: 'var(--typography-eyebrow-text-transform)',
       },
     },
     radius: {
@@ -2010,7 +2142,6 @@ export const tokens = {
       fontSize: 'var(--control-font-size)',
       lineHeight: 'var(--control-line-height)',
       radius: 'var(--control-radius)',
-      letterSpacing: 'var(--control-letter-spacing)',
       border: {
         width: 'var(--control-border-width)',
       },
@@ -2030,6 +2161,7 @@ export const tokens = {
           stack: 'var(--control-large-padding-stack)',
         },
       },
+      letterSpacing: 'var(--control-letter-spacing)',
       small: {
         fontSize: 'var(--control-small-font-size)',
         lineHeight: 'var(--control-small-line-height)',
@@ -2067,8 +2199,14 @@ export const tokens = {
         floating: {
           fontSize: 'var(--control-label-floating-font-size)',
           lineHeight: 'var(--control-label-floating-line-height)',
+          letterSpacing: 'var(--control-label-floating-letter-spacing)',
           fontWeight: 'var(--control-label-floating-font-weight)',
+          fontFamily: 'var(--control-label-floating-font-family)',
+          textTransform: 'var(--control-label-floating-text-transform)',
         },
+        letterSpacing: 'var(--control-label-letter-spacing)',
+        fontFamily: 'var(--control-label-font-family)',
+        textTransform: 'var(--control-label-text-transform)',
       },
       hint: {
         fontSize: 'var(--control-hint-font-size)',
@@ -2154,6 +2292,34 @@ export const tokens = {
       },
       size: {
         default: 'var(--radio-size-default)',
+      },
+    },
+    select: {
+      option: {
+        small: {
+          padding: {
+            stack: 'var(--select-option-small-padding-stack)',
+          },
+          gap: 'var(--select-option-small-gap)',
+        },
+        padding: {
+          stack: 'var(--select-option-padding-stack)',
+          inline: 'var(--select-option-padding-inline)',
+        },
+        large: {
+          padding: {
+            stack: 'var(--select-option-large-padding-stack)',
+          },
+        },
+        gap: 'var(--select-option-gap)',
+        radius: 'var(--select-option-radius)',
+      },
+      dropdown: {
+        padding: 'var(--select-dropdown-padding)',
+        radius: 'var(--select-dropdown-radius)',
+        border: {
+          width: 'var(--select-dropdown-border-width)',
+        },
       },
     },
   },

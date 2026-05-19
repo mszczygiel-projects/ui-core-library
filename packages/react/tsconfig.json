@@ -5,6 +5,7 @@
     "rootDir": "src",
     "composite": true,
     "declarationDir": "dist",
+    "ignoreDeprecations": "5.0",
     "jsx": "react-jsx"
   },
   "include": ["src/**/*"],

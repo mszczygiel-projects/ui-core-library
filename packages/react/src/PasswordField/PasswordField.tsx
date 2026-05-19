@@ -1,6 +1,6 @@
 import { useState, type CSSProperties } from 'react';
-import { IconEye } from '@ui-core/icons/react';
-import { IconEyeSlash } from '@ui-core/icons/react';
+import { IconEye } from '@mszczygiel-projects/ui-core-icons/react';
+import { IconEyeSlash } from '@mszczygiel-projects/ui-core-icons/react';
 import { TextField } from '../TextField/TextField.js';
 import type {
   TextFieldVariant,
@@ -17,6 +17,7 @@ export interface PasswordFieldProps {
   labelPlacement?: TextFieldLabelPlacement;
   placeholder?: string;
   value?: string;
+  defaultValue?: string;
   hint?: string;
   state?: TextFieldState;
   name?: string;

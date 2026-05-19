@@ -6,18 +6,30 @@ import {
   optimizeSvg,
   buildReactComponent,
   ensureIconPrefixInSvgFilenames,
-} from './icons-transformer.ts';
+} from './icons-transformer.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const SVG_DIR = path.resolve(__dirname, '../src/svg');
-const DIST_DIR = path.resolve(__dirname, '../dist');
-const REACT_DIST_DIR = path.join(DIST_DIR, 'react');
+export const DEFAULT_SVG_DIR = path.resolve(__dirname, '../src/svg');
+export const DEFAULT_DIST_DIR = path.resolve(__dirname, '../dist');
 
-async function buildIcons() {
-  ensureIconPrefixInSvgFilenames(SVG_DIR);
+export interface BuildIconsOptions {
+  inputDir: string;
+  outputDir: string;
+}
+
+export async function buildIcons(
+  options: BuildIconsOptions = {
+    inputDir: DEFAULT_SVG_DIR,
+    outputDir: DEFAULT_DIST_DIR,
+  },
+): Promise<void> {
+  const { inputDir, outputDir } = options;
+  const reactOutputDir = path.join(outputDir, 'react');
+
+  ensureIconPrefixInSvgFilenames(inputDir);
 
   const files = fs
-    .readdirSync(SVG_DIR)
+    .readdirSync(inputDir)
     .filter((f) => f.endsWith('.svg'))
     .sort();
 
@@ -26,67 +38,65 @@ async function buildIcons() {
   for (const file of files) {
     const iconName = file.replace(/\.svg$/, '');
     const componentName = toPascalCase(iconName);
-    const raw = fs.readFileSync(path.join(SVG_DIR, file), 'utf8');
-    const svg = optimizeSvg(raw, path.join(SVG_DIR, file));
+    const raw = fs.readFileSync(path.join(inputDir, file), 'utf8');
+    const svg = optimizeSvg(raw, path.join(inputDir, file));
     entries.push({ iconName, componentName, svg });
   }
 
   // Ensure deterministic output and remove stale generated files from previous builds.
-  fs.rmSync(DIST_DIR, { recursive: true, force: true });
-  fs.mkdirSync(DIST_DIR, { recursive: true });
-  fs.mkdirSync(REACT_DIST_DIR, { recursive: true });
+  fs.rmSync(outputDir, { recursive: true, force: true });
+  fs.mkdirSync(outputDir, { recursive: true });
+  fs.mkdirSync(reactOutputDir, { recursive: true });
 
-  // dist/icon-names.d.ts
   const iconNamesUnion = entries.map((e) => `'${e.iconName}'`).join(' | ');
   fs.writeFileSync(
-    path.join(DIST_DIR, 'icon-names.d.ts'),
+    path.join(outputDir, 'icon-names.d.ts'),
     `export type IconName = ${iconNamesUnion};\n`,
   );
 
-  // dist/svg-map.js
   const mapEntries = entries
     .map((e) => `  ${JSON.stringify(e.iconName)}: ${JSON.stringify(e.svg)},`)
     .join('\n');
   fs.writeFileSync(
-    path.join(DIST_DIR, 'svg-map.js'),
+    path.join(outputDir, 'svg-map.js'),
     `export const svgMap = {\n${mapEntries}\n};\n`,
   );
 
-  // dist/svg-map.d.ts
   fs.writeFileSync(
-    path.join(DIST_DIR, 'svg-map.d.ts'),
+    path.join(outputDir, 'svg-map.d.ts'),
     `import type { IconName } from './icon-names.js';\nexport declare const svgMap: Record<IconName, string>;\n`,
   );
 
-  // React components
   const barrelExports: string[] = [];
 
   for (const { componentName, svg } of entries) {
     const jsx = await buildReactComponent(svg, componentName);
 
-    fs.writeFileSync(path.join(REACT_DIST_DIR, `${componentName}.jsx`), jsx);
+    fs.writeFileSync(path.join(reactOutputDir, `${componentName}.jsx`), jsx);
 
     fs.writeFileSync(
-      path.join(REACT_DIST_DIR, `${componentName}.d.ts`),
+      path.join(reactOutputDir, `${componentName}.d.ts`),
       `import * as React from 'react';\nexport declare function ${componentName}(props: React.SVGProps<SVGSVGElement>): React.JSX.Element;\n`,
     );
 
     barrelExports.push(`export { ${componentName} } from './${componentName}.jsx';`);
   }
 
-  // dist/react/index.js
-  fs.writeFileSync(path.join(REACT_DIST_DIR, 'index.js'), barrelExports.join('\n') + '\n');
+  fs.writeFileSync(path.join(reactOutputDir, 'index.js'), barrelExports.join('\n') + '\n');
 
-  // dist/react/index.d.ts
   const dtsExports = entries
     .map((e) => `export { ${e.componentName} } from './${e.componentName}.js';`)
     .join('\n');
-  fs.writeFileSync(path.join(REACT_DIST_DIR, 'index.d.ts'), dtsExports + '\n');
+  fs.writeFileSync(path.join(reactOutputDir, 'index.d.ts'), dtsExports + '\n');
 
-  console.log(`✓ Built ${entries.length} icons`);
+  console.log(`✓ Built ${entries.length} icons in ${outputDir}`);
 }
 
-buildIcons().catch((err) => {
-  console.error(err);
-  process.exit(1);
-});
+const isDirectRun =
+  process.argv[1] && import.meta.url === new URL(`file://${process.argv[1]}`).href;
+if (isDirectRun) {
+  buildIcons().catch((err) => {
+    console.error(err);
+    process.exit(1);
+  });
+}

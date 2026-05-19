@@ -356,7 +356,7 @@ export function valueToCss(
   }
   if (token.type === 'string') return formatString(token.path, String(rawValue));
   if (token.type === 'boolean') {
-    const b = typeof rawValue === 'boolean' ? rawValue : rawValue === 'true';
+    const b = typeof rawValue === 'boolean' ? rawValue : String(rawValue) === 'true';
     return formatBoolean(token.path, b);
   }
   return String(rawValue);
@@ -519,23 +519,72 @@ export function buildTokensCss(
     chunks.push('}\n');
   }
 
-  // Themes — Dark mode (only tokens where Dark value differs from Default)
-  const darkThemes = themes.filter((t) => {
-    if (typeof t.value !== 'object' || t.value === null || Array.isArray(t.value)) return false;
-    const vals = t.value as Record<string, Primitive>;
-    return 'Dark' in vals && 'Default' in vals && vals['Dark'] !== vals['Default'];
-  });
+  // Themes — Dark mode
+  // Include direct dark overrides and aliases that depend on those overrides.
+  const directDarkOverrideKeys = new Set(
+    themes
+      .filter((t) => {
+        if (typeof t.value !== 'object' || t.value === null || Array.isArray(t.value)) return false;
+        const vals = t.value as Record<string, Primitive>;
+        return 'Dark' in vals && 'Default' in vals && vals['Dark'] !== vals['Default'];
+      })
+      .map((t) => tokenKey(t.collection, normalizedPath(t.path))),
+  );
+
+  const themeKeys = new Set(themes.map((t) => tokenKey(t.collection, normalizedPath(t.path))));
+  const reverseThemeDeps = new Map<string, Set<string>>();
+
+  const addThemeDependencyEdge = (fromKey: string, raw: Primitive) => {
+    if (!isAlias(raw)) return;
+    const parsed = parseAlias(raw);
+    if (!parsed || parsed.collection !== 'Themes') return;
+    const targetKey = tokenKey(parsed.collection, normalizedPath(parsed.path));
+    if (!themeKeys.has(targetKey)) return;
+    const dependents = reverseThemeDeps.get(targetKey) ?? new Set<string>();
+    dependents.add(fromKey);
+    reverseThemeDeps.set(targetKey, dependents);
+  };
+
+  for (const t of themes) {
+    const fromKey = tokenKey(t.collection, normalizedPath(t.path));
+    const values = valuesByMode(t);
+    for (const entry of values) addThemeDependencyEdge(fromKey, entry.raw);
+  }
+
+  const darkThemeKeys = new Set(directDarkOverrideKeys);
+  const queue = [...directDarkOverrideKeys];
+  while (queue.length > 0) {
+    const key = queue.shift();
+    if (!key) continue;
+    const dependents = reverseThemeDeps.get(key);
+    if (!dependents) continue;
+    for (const dependent of dependents) {
+      if (darkThemeKeys.has(dependent)) continue;
+      darkThemeKeys.add(dependent);
+      queue.push(dependent);
+    }
+  }
+
+  const darkThemes = themes.filter((t) =>
+    darkThemeKeys.has(tokenKey(t.collection, normalizedPath(t.path))),
+  );
+
   if (darkThemes.length > 0) {
     const darkLines: string[] = [];
     for (const t of darkThemes) {
-      const raw = (t.value as Record<string, Primitive>)['Dark'] as Primitive;
+      const raw =
+        typeof t.value === 'object' && t.value !== null && !Array.isArray(t.value)
+          ? ((t.value as Record<string, Primitive>)['Dark'] ??
+            (t.value as Record<string, Primitive>)['Default'] ??
+            (Object.values(t.value as Record<string, Primitive>)[0] as Primitive))
+          : (t.value as Primitive);
       const line = resolveCssLine(t, raw, 'Dark', registry, warnings);
       if (line !== null) darkLines.push(line);
     }
     if (darkLines.length > 0) {
-      chunks.push('/* === Themes (Dark) === */\n[data-theme="dark"] {');
-      chunks.push(...darkLines);
-      chunks.push('}\n');
+      chunks.push('/* === Themes (Dark) === */\n@media (prefers-color-scheme: dark) {\n  :root {');
+      chunks.push(...darkLines.map((l) => '  ' + l));
+      chunks.push('  }\n}\n');
     }
   }
 

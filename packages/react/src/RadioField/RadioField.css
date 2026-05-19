@@ -64,7 +64,7 @@
 }
 
 .ui-radio-field__label-row:hover .ui-radio-field__label-text {
-  color: var(--color-control-outline-label-hover);
+  color: var(--color-control-outline-text-hover);
 }
 
 .ui-radio-field:hover .ui-radio-field__hint {
@@ -100,7 +100,7 @@
 }
 
 .ui-radio-field__label-row:focus-within .ui-radio-field__label-text {
-  color: var(--color-control-outline-label-active);
+  color: var(--color-control-outline-text-active);
 }
 
 .ui-radio-field:focus-within .ui-radio-field__hint {
@@ -122,7 +122,7 @@
   flex: 1;
   min-width: 0;
   line-height: var(--radio-field-line-height);
-  color: var(--color-control-outline-label-default);
+  color: var(--color-control-outline-text-default);
 }
 
 /* ---- Hint ---- */
@@ -144,7 +144,7 @@
 }
 
 .ui-radio-field--error .ui-radio-field__label-text {
-  color: var(--color-control-outline-label-error);
+  color: var(--color-control-outline-text-error);
 }
 
 .ui-radio-field--error .ui-radio-field__hint {
@@ -156,7 +156,7 @@
 }
 
 .ui-radio-field--error .ui-radio-field__label-row:hover .ui-radio-field__label-text {
-  color: var(--color-control-outline-label-error);
+  color: var(--color-control-outline-text-error);
 }
 
 .ui-radio-field--error:hover .ui-radio-field__hint {
@@ -199,7 +199,7 @@
 }
 
 .ui-radio-field--disabled .ui-radio-field__label-text {
-  color: var(--color-control-outline-label-disabled);
+  color: var(--color-control-outline-text-disabled);
 }
 
 .ui-radio-field--disabled .ui-radio-field__hint {

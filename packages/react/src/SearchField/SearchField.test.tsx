@@ -121,4 +121,55 @@ describe('SearchField', () => {
     const { container } = render(<SearchField style={{ marginTop: '8px' }} />);
     expect((container.firstElementChild as HTMLElement).style.marginTop).toBe('8px');
   });
+
+  describe('form integration', () => {
+    it('submits value via FormData', () => {
+      const { container } = render(
+        <form>
+          <SearchField name="q" defaultValue="hello" />
+        </form>,
+      );
+      expect(new FormData(container.querySelector('form')!).get('q')).toBe('hello');
+    });
+
+    it('excludes value from FormData when disabled', () => {
+      const { container } = render(
+        <form>
+          <SearchField name="q" defaultValue="hello" disabled />
+        </form>,
+      );
+      expect(new FormData(container.querySelector('form')!).get('q')).toBeNull();
+    });
+
+    it('resets to defaultValue on form reset (uncontrolled)', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <SearchField defaultValue="hello" />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+      const input = screen.getByPlaceholderText('Search...') as HTMLInputElement;
+      await user.clear(input);
+      await user.type(input, 'world');
+      expect(input.value).toBe('world');
+
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(input.value).toBe('hello');
+    });
+
+    it('resets to empty on form reset when no defaultValue', async () => {
+      const user = userEvent.setup();
+      render(
+        <form>
+          <SearchField />
+          <button type="reset">Reset</button>
+        </form>,
+      );
+      const input = screen.getByPlaceholderText('Search...') as HTMLInputElement;
+      await user.type(input, 'world');
+      await user.click(screen.getByRole('button', { name: 'Reset' }));
+      expect(input.value).toBe('');
+    });
+  });
 });

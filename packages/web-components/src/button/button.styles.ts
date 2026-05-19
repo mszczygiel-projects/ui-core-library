@@ -114,6 +114,7 @@ export const buttonStyles = css`
 
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--layout-gap-inline-lg);
     padding-inline: var(--button-padding-inline);
     padding-block: var(--button-padding-stack);

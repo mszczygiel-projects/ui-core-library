@@ -1,6 +1,6 @@
 export { Loader } from './Loader/Loader.js';
 export type { LoaderProps } from './Loader/Loader.js';
-export type { LoaderVariant } from '@ui-core/foundations';
+export type { LoaderVariant } from '@mszczygiel-projects/ui-core-foundations';
 export { Button } from './Button/Button.js';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './Button/Button.js';
 export { IconButton } from './IconButton/IconButton.js';
@@ -21,3 +21,11 @@ export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';
 export type { RadioFieldProps, RadioFieldState } from './RadioField/RadioField.js';
+export { SelectField } from './SelectField/SelectField.js';
+export type {
+  SelectFieldProps,
+  SelectFieldVariant,
+  SelectFieldSize,
+  SelectFieldState,
+  SelectOption,
+} from './SelectField/SelectField.js';

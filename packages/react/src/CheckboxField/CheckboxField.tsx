@@ -7,6 +7,7 @@ export interface CheckboxFieldProps {
   label?: string;
   hint?: string;
   checked?: boolean;
+  defaultChecked?: boolean;
   indeterminate?: boolean;
   state?: CheckboxFieldState;
   disabled?: boolean;
@@ -23,6 +24,7 @@ export function CheckboxField({
   label,
   hint,
   checked,
+  defaultChecked,
   indeterminate = false,
   state = 'default',
   disabled,
@@ -71,6 +73,7 @@ export function CheckboxField({
             type="checkbox"
             className="ui-checkbox-field__input"
             {...(isControlled ? { checked } : {})}
+            {...(!isControlled && defaultChecked !== undefined ? { defaultChecked } : {})}
             disabled={isDisabled}
             required={required}
             name={name}

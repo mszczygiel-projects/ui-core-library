@@ -1,7 +1,38 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { IconSearch } from '@ui-core/icons/react';
-import { IconChevronRight } from '@ui-core/icons/react';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
+import * as Icons from '@mszczygiel-projects/ui-core-icons/react';
 import { Button } from './Button.js';
+
+type IconName = keyof typeof svgMap;
+
+const iconOptions = Object.keys(svgMap) as IconName[];
+
+type ButtonStoryArgs = React.ComponentProps<typeof Button> & {
+  iconLeft?: IconName | '';
+  iconRight?: IconName | '';
+};
+
+const toIconExportName = (name: IconName) =>
+  name
+    .split('-')
+    .map((part: string) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+
+const renderIcon = (name?: IconName | '') => {
+  if (!name) {
+    return undefined;
+  }
+
+  const IconComponent = Icons[toIconExportName(name) as keyof typeof Icons];
+
+  return IconComponent ? <IconComponent /> : undefined;
+};
+
+const renderButton = ({ children, iconLeft, iconRight, ...args }: ButtonStoryArgs) => (
+  <Button {...args} iconLeft={renderIcon(iconLeft)} iconRight={renderIcon(iconRight)}>
+    {children}
+  </Button>
+);
 
 const meta: Meta<typeof Button> = {
   title: 'React/Button',
@@ -17,101 +48,61 @@ const meta: Meta<typeof Button> = {
     },
     loading: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    children: { control: 'text' },
+    iconLeft: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
+    iconRight: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'primary',
     size: 'default',
     loading: false,
     disabled: false,
-    children: 'Click me',
+    children: 'More information',
+    iconLeft: '',
+    iconRight: '',
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Button>;
+type Story = StoryObj<ButtonStoryArgs>;
 
-export const Primary: Story = {};
+export const Primary: Story = {
+  render: renderButton,
+};
 
 export const Secondary: Story = {
   args: { variant: 'secondary' },
+  render: renderButton,
 };
 
 export const Outline: Story = {
   args: { variant: 'outline' },
+  render: renderButton,
 };
 
 export const Ghost: Story = {
   args: { variant: 'ghost' },
+  render: renderButton,
 };
 
 export const Danger: Story = {
   args: { variant: 'danger' },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Button size="small">Small</Button>
-      <Button size="default">Default</Button>
-      <Button size="large">Large</Button>
-    </div>
-  ),
+  render: renderButton,
 };
 
 export const WithIcons: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Button iconLeft={<IconSearch />} iconRight={<IconChevronRight />}>
-        Search
-      </Button>
-      <Button variant="outline" iconLeft={<IconSearch />}>
-        Outline
-      </Button>
-      <Button variant="ghost" iconRight={<IconChevronRight />}>
-        Ghost
-      </Button>
-    </div>
-  ),
-};
-
-export const Loading: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Button loading>Saving…</Button>
-      <Button variant="secondary" loading>
-        Saving…
-      </Button>
-      <Button variant="outline" loading>
-        Saving…
-      </Button>
-      <Button variant="ghost" loading>
-        Saving…
-      </Button>
-      <Button variant="danger" loading>
-        Deleting…
-      </Button>
-    </div>
-  ),
-};
-
-export const Disabled: Story = {
-  render: () => (
-    <div style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-      <Button disabled>Primary</Button>
-      <Button variant="secondary" disabled>
-        Secondary
-      </Button>
-      <Button variant="outline" disabled>
-        Outline
-      </Button>
-      <Button variant="ghost" disabled>
-        Ghost
-      </Button>
-      <Button variant="danger" disabled>
-        Danger
-      </Button>
-    </div>
-  ),
+  args: {
+    children: 'Buy tickets',
+    iconLeft: 'icon-ticket',
+    iconRight: 'icon-chevron-right',
+  },
+  render: renderButton,
 };
 
 export const AllVariants: Story = {

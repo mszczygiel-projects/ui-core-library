@@ -169,25 +169,25 @@ export const checkboxFieldStyles = css`
     flex: 1;
     min-width: 0;
     line-height: var(--checkbox-field-line-height);
-    color: var(--color-control-outline-label-default);
+    color: var(--color-control-outline-text-default);
   }
 
   :host(:hover) .label-text {
-    color: var(--color-control-outline-label-hover);
+    color: var(--color-control-outline-text-hover);
   }
 
   .label-row:focus-within .label-text {
-    color: var(--color-control-outline-label-active);
+    color: var(--color-control-outline-text-active);
   }
 
   :host([state='error']) .label-text,
   :host([state='error']:hover) .label-text {
-    color: var(--color-control-outline-label-error);
+    color: var(--color-control-outline-text-error);
   }
 
   :host([disabled]) .label-text,
   :host([state='disabled']) .label-text {
-    color: var(--color-control-outline-label-disabled);
+    color: var(--color-control-outline-text-disabled);
   }
 
   /* ---- Hint ---- */

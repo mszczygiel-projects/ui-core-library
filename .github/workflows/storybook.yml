@@ -45,7 +45,7 @@ jobs:
         run: pnpm icons:build
 
       - name: Build Storybook
-        run: pnpm --filter @ui-core/storybook run build-storybook --output-dir storybook-static
+        run: pnpm --filter @mszczygiel-projects/ui-core-storybook run build-storybook --output-dir storybook-static
         working-directory: apps/storybook
         env:
           GITHUB_PAGES: true

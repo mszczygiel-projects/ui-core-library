@@ -82,4 +82,25 @@ describe('UiButton', () => {
     const slot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="icon-left"]');
     expect(slot!.assignedElements()[0].textContent).to.equal('★');
   });
+
+  it('submits name and value with form submit', async () => {
+    const form = await fixture<HTMLFormElement>(html`
+      <form>
+        <ui-button type="submit" name="action" value="accept">Accept</ui-button>
+      </form>
+    `);
+    const el = form.querySelector<UiButton>('ui-button')!;
+    const innerButton = el.shadowRoot!.querySelector<HTMLButtonElement>('button')!;
+
+    let submittedValue: FormDataEntryValue | null = null;
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      submittedValue = new FormData(form).get('action');
+    });
+
+    innerButton.click();
+    await el.updateComplete;
+
+    expect(submittedValue).to.equal('accept');
+  });
 });
