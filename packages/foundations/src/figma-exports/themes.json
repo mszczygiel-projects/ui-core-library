@@ -6923,8 +6923,8 @@
       "brand": {
         "primary": {
           "$value": {
-            "Default": "{Themes.color.brand.primary}",
-            "Dark": "{Themes.color.brand.primary}"
+            "Default": "{Primitives Colors.brand.secondary.300}",
+            "Dark": "{Primitives Colors.brand.secondary.300}"
           },
           "$type": "color"
         },
@@ -7013,8 +7013,8 @@
         },
         "brand": {
           "$value": {
-            "Default": "{Themes.color.text.brand}",
-            "Dark": "{Themes.color.text.brand}"
+            "Default": "{Themes.color.on-brand-primary.brand.primary}",
+            "Dark": "{Themes.color.on-brand-primary.brand.primary}"
           },
           "$type": "color"
         }
@@ -7022,8 +7022,8 @@
       "icon": {
         "default": {
           "$value": {
-            "Default": "{Primitives Colors.gray.50}",
-            "Dark": "{Themes.color.icon.default}"
+            "Default": "{Themes.color.on-brand-primary.brand.primary}",
+            "Dark": "{Themes.color.on-brand-primary.brand.primary}"
           },
           "$type": "color"
         }
@@ -9437,8 +9437,8 @@
     "text-transform": {
       "uppercase": {
         "$value": {
-          "Default": false,
-          "Dark": false
+          "Default": true,
+          "Dark": true
         },
         "$type": "boolean"
       }
@@ -9464,8 +9464,8 @@
     "text-decoration": {
       "underline": {
         "$value": {
-          "Default": false,
-          "Dark": false
+          "Default": true,
+          "Dark": true
         },
         "$type": "boolean"
       }
