@@ -778,6 +778,16 @@ export function buildTailwindCss(tokens: Token[]): string {
   for (const [name, shape, color] of INSET_SHADOW_COMPOSITES)
     lines.push(`  ${name}: var(--inset-shadow-shape-${shape}) var(--shadow-color-${color});`);
 
+  const seenSemanticVars = new Set<string>();
+  for (const t of tokens) {
+    if (t.collection !== 'Themes' && t.collection !== 'Surfaces') continue;
+    const varName = cssVarName(t.collection, t.path);
+    if (!varName.startsWith('--color-')) continue;
+    if (seenSemanticVars.has(varName)) continue;
+    seenSemanticVars.add(varName);
+    lines.push(`  ${varName}: var(${varName});`);
+  }
+
   lines.push('}\n');
   return lines.join('\n');
 }
