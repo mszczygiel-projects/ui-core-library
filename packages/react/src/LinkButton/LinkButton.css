@@ -1,0 +1,27 @@
+@import '../Button/Button.css';
+
+/* Overrides for <a>: Button.css uses :not(:disabled) guards which always pass for <a>.
+   These selectors have higher specificity to win over hover/focus/active states. */
+
+.ui-link-button--disabled {
+  pointer-events: none;
+  cursor: not-allowed;
+  background-color: var(--_bg-disabled);
+  color: var(--_text-disabled);
+  border-color: var(--_border-disabled);
+}
+
+.ui-link-button--disabled:hover,
+.ui-link-button--disabled:focus-visible,
+.ui-link-button--disabled:active {
+  background-color: var(--_bg-disabled);
+  color: var(--_text-disabled);
+  border-color: var(--_border-disabled);
+}
+
+.ui-link-button--disabled.ui-button--loading {
+  cursor: wait;
+  background-color: var(--_bg);
+  color: var(--_text);
+  border-color: var(--_border);
+}
