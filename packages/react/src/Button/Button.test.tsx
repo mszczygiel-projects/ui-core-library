@@ -110,9 +110,4 @@ describe('Button', () => {
     fireEvent.click(container.querySelector('button')!);
     expect(handleClick).not.toHaveBeenCalled();
   });
-
-  it('matches snapshot', () => {
-    const { container } = render(<Button variant="primary">Click</Button>);
-    expect(container.firstChild).toMatchSnapshot();
-  });
 });

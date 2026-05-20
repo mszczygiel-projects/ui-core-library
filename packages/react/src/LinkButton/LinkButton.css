@@ -1,4 +1,4 @@
-@import '../Button/Button.css';
+@import "../Button/Button.css";
 
 /* Overrides for <a>: Button.css uses :not(:disabled) guards which always pass for <a>.
    These selectors have higher specificity to win over hover/focus/active states. */

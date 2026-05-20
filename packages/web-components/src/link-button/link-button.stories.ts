@@ -93,32 +93,102 @@ const iconChildren = ({ iconLeft, iconRight }: LinkButtonArgs) => {
 };
 
 export const Primary: Story = {
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Secondary: Story = {
   args: { variant: 'secondary' },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Outline: Story = {
   args: { variant: 'outline' },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Ghost: Story = {
   args: { variant: 'ghost' },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Danger: Story = {
   args: { variant: 'danger' },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const WithIcons: Story = {
@@ -127,20 +197,62 @@ export const WithIcons: Story = {
     iconLeft: 'icon-ticket',
     iconRight: 'icon-chevron-right',
   },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'Buy tickets', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'Buy tickets',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Disabled: Story = {
   args: { disabled: true },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const Loading: Story = {
   args: { loading: true },
-  render: ({ variant, size, href, target, loading, disabled, label, iconLeft, iconRight }: LinkButtonArgs) =>
-    lbtn(label ?? 'More information', { variant, size, href, target, loading, disabled, label }, ...iconChildren({ iconLeft, iconRight })),
+  render: ({
+    variant,
+    size,
+    href,
+    target,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+  }: LinkButtonArgs) =>
+    lbtn(
+      label ?? 'More information',
+      { variant, size, href, target, loading, disabled, label },
+      ...iconChildren({ iconLeft, iconRight }),
+    ),
 };
 
 export const ExternalLink: Story = {

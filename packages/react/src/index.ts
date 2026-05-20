@@ -6,7 +6,11 @@ export type { ButtonProps, ButtonVariant, ButtonSize } from './Button/Button.js'
 export { IconButton } from './IconButton/IconButton.js';
 export type { IconButtonProps } from './IconButton/IconButton.js';
 export { LinkButton } from './LinkButton/LinkButton.js';
-export type { LinkButtonProps, LinkButtonVariant, LinkButtonSize } from './LinkButton/LinkButton.js';
+export type {
+  LinkButtonProps,
+  LinkButtonVariant,
+  LinkButtonSize,
+} from './LinkButton/LinkButton.js';
 export { TextField } from './TextField/TextField.js';
 export type {
   TextFieldProps,

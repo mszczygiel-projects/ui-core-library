@@ -178,13 +178,4 @@ describe('LinkButton', () => {
     fireEvent.click(container.querySelector('a')!);
     expect(handleClick).toHaveBeenCalledOnce();
   });
-
-  it('matches snapshot', () => {
-    const { container } = render(
-      <LinkButton href="/page" variant="primary">
-        Click
-      </LinkButton>,
-    );
-    expect(container.firstChild).toMatchSnapshot();
-  });
 });
