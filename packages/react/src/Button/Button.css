@@ -8,6 +8,7 @@
 
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: var(--layout-gap-inline-lg);
   padding-inline: var(--button-padding-inline);
   padding-block: var(--button-padding-stack);
@@ -24,6 +25,7 @@
   letter-spacing: var(--button-letter-spacing);
   white-space: nowrap;
   text-align: center;
+  text-transform: var(--button-text-transform-uppercase);
 }
 
 .ui-button:hover:not(:disabled) {

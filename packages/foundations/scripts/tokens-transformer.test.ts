@@ -886,8 +886,11 @@ describe('tailwind.css — generated output', () => {
     expect(tw).toContain('--inset-shadow-');
   });
 
-  it('does not include semantic Themes/Surfaces/Sizes tokens (Primitives only)', () => {
-    expect(tw).not.toContain('--color-brand-primary:');
+  it('includes semantic color tokens from Themes/Surfaces', () => {
+    expect(tw).toContain('--color-brand-primary:');
+  });
+
+  it('does not include non-color semantic tokens (typography, ring)', () => {
     expect(tw).not.toContain('--typography-');
   });
 });

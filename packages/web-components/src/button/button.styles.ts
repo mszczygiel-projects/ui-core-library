@@ -131,6 +131,7 @@ export const buttonStyles = css`
     letter-spacing: var(--button-letter-spacing);
     white-space: nowrap;
     text-align: center;
+    text-transform: var(--button-text-transform-uppercase);
   }
 
   button:hover:not(:disabled) {

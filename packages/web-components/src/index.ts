@@ -7,6 +7,8 @@ export { UiButton } from './button/button.js';
 export type { ButtonVariant, ButtonSize } from './button/button.js';
 export { UiIconButton } from './icon-button/icon-button.js';
 export type { IconButtonVariant, IconButtonSize } from './icon-button/icon-button.js';
+export { UiLinkButton } from './link-button/link-button.js';
+export type { LinkButtonVariant, LinkButtonSize } from './link-button/link-button.js';
 export { UiTextField } from './text-field/text-field.js';
 export type {
   TextFieldVariant,

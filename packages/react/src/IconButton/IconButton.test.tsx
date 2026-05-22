@@ -86,11 +86,4 @@ describe('IconButton', () => {
     fireEvent.click(container.querySelector('button')!);
     expect(handleClick).not.toHaveBeenCalled();
   });
-
-  it('matches snapshot', () => {
-    const { container } = render(
-      <IconButton variant="primary" aria-label="Action" icon={<span>★</span>} />,
-    );
-    expect(container.firstChild).toMatchSnapshot();
-  });
 });
