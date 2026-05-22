@@ -40,3 +40,5 @@ export type {
   SelectFieldState,
   SelectOption,
 } from './select-field/select-field.js';
+export { UiNotification } from './notification/notification.js';
+export type { NotificationStatus, NotificationVariant } from './notification/notification.js';
