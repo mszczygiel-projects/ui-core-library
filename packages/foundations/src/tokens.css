@@ -4245,10 +4245,10 @@
   --typography-heading-display-font-weight-strong: var(--font-weight-semibold);
   --typography-heading-display-font-size: var(--text-3xl);
   --typography-heading-display-line-height: var(--text-3xl--line-height);
+  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
   --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-display-large-letter-spacing: var(--tracking-normal);
-  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -4300,11 +4300,11 @@
   --typography-body-small-letter-spacing: var(--tracking-normal);
   --typography-body-letter-spacing: var(--tracking-normal);
   --typography-body-large-font-size: var(--text-lg);
-  --typography-body-large-letter-spacing: var(--tracking-normal);
   --typography-body-large-line-height: var(--text-lg--line-height);
+  --typography-body-large-letter-spacing: var(--tracking-normal);
   --typography-caption-font-weight: var(--font-weight-normal);
-  --typography-caption-font-size: var(--text-xs);
-  --typography-caption-line-height: var(--text-xs--line-height);
+  --typography-caption-font-size: var(--text-sm);
+  --typography-caption-line-height: var(--text-sm--line-height);
   --typography-caption-letter-spacing: var(--tracking-widest);
   --typography-caption-text-tranform: none;
   --typography-eyebrow-font-family: var(--typography-caption-font-family);
@@ -4314,10 +4314,6 @@
   --typography-eyebrow-letter-spacing: var(--tracking-widest);
   --typography-eyebrow-text-transform: uppercase;
   --typography-link-font-weight: var(--typography-body-font-weight-strong);
-  --typography-link-font-size: var(--text-xs);
-  --typography-link-line-height: var(--text-xs--line-height);
-  --typography-link-letter-spacing: var(--tracking-widest);
-  --typography-link-text-transform: uppercase;
   --radius-pill: var(--radius-full);
   --stroke-border: 0.0625rem;
   --stroke-ring: 0.125rem;
@@ -4440,6 +4436,29 @@
   --select-dropdown-padding: var(--spacing-1);
   --select-dropdown-radius: var(--spacing-2);
   --select-dropdown-border-width: 0.0625rem;
+  --notification-radius: var(--radius-md);
+  --notification-font-family: var(--typography-body-font-family);
+  --notification-font-size: var(--typography-body-font-size);
+  --notification-line-height: var(--typography-body-line-height);
+  --notification-font-weight: var(--typography-body-font-weight-strong);
+  --notification-letter-spacing: 0;
+  --notification-description-font-family: var(--typography-body-font-family);
+  --notification-description-font-size: var(--typography-body-font-size);
+  --notification-description-line-height: var(--typography-body-line-height);
+  --notification-description-font-weight: var(--typography-body-font-weight);
+  --notification-description-letter-spacing: 0;
+  --notification-padding-inline: var(--layout-padding-inline-lg);
+  --notification-padding-stack: var(--layout-padding-stack-lg);
+  --notification-default-show-icon: false;
+  --notification-default-border-left: 0.125rem;
+  --notification-default-border-right: 0.125rem;
+  --notification-default-border-top: 0.125rem;
+  --notification-default-border-bottom: 0.125rem;
+  --notification-subtle-show-icon: true;
+  --notification-subtle-border-left: 0.125rem;
+  --notification-subtle-border-right: 0;
+  --notification-subtle-border-top: 0;
+  --notification-subtle-border-bottom: 0;
 }
 
 /* === Sizes (Desktop) === */
@@ -4461,8 +4480,6 @@
     --typography-heading-h3-line-height: var(--text-xl--line-height);
     --typography-heading-h4-font-size: var(--text-lg);
     --typography-heading-h4-line-height: var(--text-lg--line-height);
-    --typography-caption-font-size: var(--text-sm);
-    --typography-caption-line-height: var(--text-sm--line-height);
     --layout-container-max-width: 90rem;
     --layout-container-padding-inline: var(--layout-padding-inline-xl);
     --control-radius: var(--radius-md-desktop);

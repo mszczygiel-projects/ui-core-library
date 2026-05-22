@@ -1,0 +1,149 @@
+/* --- Status-specific local variables --- */
+.ui-notification--info {
+  --_base: var(--color-feedback-info-base);
+  --_subtle: var(--color-feedback-info-subtle);
+  --_on-base: var(--color-feedback-info-on-base);
+}
+
+.ui-notification--success {
+  --_base: var(--color-feedback-success-base);
+  --_subtle: var(--color-feedback-success-subtle);
+  --_on-base: var(--color-feedback-success-on-base);
+}
+
+.ui-notification--warning {
+  --_base: var(--color-feedback-warning-base);
+  --_subtle: var(--color-feedback-warning-subtle);
+  --_on-base: var(--color-feedback-warning-on-base);
+}
+
+.ui-notification--error {
+  --_base: var(--color-feedback-error-base);
+  --_subtle: var(--color-feedback-error-subtle);
+  --_on-base: var(--color-feedback-error-on-base);
+}
+
+/* --- Icon visibility controlled by CSS variable --- */
+/* default variant: icon hidden */
+.ui-notification--default {
+  --_show-icon: none;
+}
+
+/* subtle variant: icon visible */
+.ui-notification--subtle {
+  --_show-icon: flex;
+}
+
+/* --- Block --- */
+.ui-notification {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+  padding-inline: var(--notification-padding-inline);
+  padding-block: var(--notification-padding-stack);
+  border-radius: var(--notification-radius);
+  overflow: hidden;
+  border-style: solid;
+}
+
+/* --- Default variant: solid background, border all sides --- */
+.ui-notification--default {
+  background-color: var(--_base);
+  border-color: var(--_base);
+  border-top-width: var(--notification-default-border-top);
+  border-right-width: var(--notification-default-border-right);
+  border-bottom-width: var(--notification-default-border-bottom);
+  border-left-width: var(--notification-default-border-left);
+  color: var(--_on-base);
+}
+
+/* --- Subtle variant: tinted background, left border only --- */
+.ui-notification--subtle {
+  background-color: var(--_subtle);
+  border-color: var(--_base);
+  border-top-width: var(--notification-subtle-border-top);
+  border-right-width: var(--notification-subtle-border-right);
+  border-bottom-width: var(--notification-subtle-border-bottom);
+  border-left-width: var(--notification-subtle-border-left);
+  color: var(--_base);
+}
+
+/* --- Header row: icon + title --- */
+.ui-notification__header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  /* Reserve space on the right for the close button: icon(24px) + padding(16px) + gap(8px) */
+  padding-right: var(--spacing-8);
+}
+
+/* --- Status icon — always rendered, visibility via --_show-icon --- */
+.ui-notification__icon {
+  display: var(--_show-icon, none);
+  flex-shrink: 0;
+  width: var(--size-6);
+  height: var(--size-6);
+  color: inherit;
+  align-items: center;
+  justify-content: center;
+}
+
+.ui-notification__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* --- Title --- */
+.ui-notification__title {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--notification-font-family);
+  font-size: var(--notification-font-size);
+  font-weight: var(--notification-font-weight);
+  line-height: var(--notification-line-height);
+  letter-spacing: var(--notification-letter-spacing);
+  color: inherit;
+  overflow-wrap: break-word;
+}
+
+/* --- Description --- */
+.ui-notification__description {
+  margin: 0;
+  font-family: var(--notification-description-font-family);
+  font-size: var(--notification-description-font-size);
+  font-weight: var(--notification-description-font-weight);
+  line-height: var(--notification-description-line-height);
+  letter-spacing: var(--notification-description-letter-spacing);
+  color: inherit;
+  overflow-wrap: break-word;
+}
+
+/* --- Close button --- */
+.ui-notification__close {
+  position: absolute;
+  top: var(--notification-padding-stack);
+  right: var(--notification-padding-inline);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--size-6);
+  height: var(--size-6);
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  border-radius: var(--radius-sm);
+}
+
+.ui-notification__close svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-notification__close:focus-visible {
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}

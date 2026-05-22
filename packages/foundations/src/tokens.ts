@@ -1984,12 +1984,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -2064,8 +2064,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          letterSpacing: 'var(--typography-body-large-letter-spacing)',
           lineHeight: 'var(--typography-body-large-line-height)',
+          letterSpacing: 'var(--typography-body-large-letter-spacing)',
         },
       },
       caption: {
@@ -2086,10 +2086,6 @@ export const tokens = {
       },
       link: {
         fontWeight: 'var(--typography-link-font-weight)',
-        fontSize: 'var(--typography-link-font-size)',
-        lineHeight: 'var(--typography-link-line-height)',
-        letterSpacing: 'var(--typography-link-letter-spacing)',
-        textTransform: 'var(--typography-link-text-transform)',
       },
     },
     radius: {
@@ -2326,6 +2322,43 @@ export const tokens = {
         radius: 'var(--select-dropdown-radius)',
         border: {
           width: 'var(--select-dropdown-border-width)',
+        },
+      },
+    },
+    notification: {
+      radius: 'var(--notification-radius)',
+      fontFamily: 'var(--notification-font-family)',
+      fontSize: 'var(--notification-font-size)',
+      lineHeight: 'var(--notification-line-height)',
+      fontWeight: 'var(--notification-font-weight)',
+      letterSpacing: 'var(--notification-letter-spacing)',
+      description: {
+        fontFamily: 'var(--notification-description-font-family)',
+        fontSize: 'var(--notification-description-font-size)',
+        lineHeight: 'var(--notification-description-line-height)',
+        fontWeight: 'var(--notification-description-font-weight)',
+        letterSpacing: 'var(--notification-description-letter-spacing)',
+      },
+      padding: {
+        inline: 'var(--notification-padding-inline)',
+        stack: 'var(--notification-padding-stack)',
+      },
+      default: {
+        showIcon: 'var(--notification-default-show-icon)',
+        border: {
+          left: 'var(--notification-default-border-left)',
+          right: 'var(--notification-default-border-right)',
+          top: 'var(--notification-default-border-top)',
+          bottom: 'var(--notification-default-border-bottom)',
+        },
+      },
+      subtle: {
+        showIcon: 'var(--notification-subtle-show-icon)',
+        border: {
+          left: 'var(--notification-subtle-border-left)',
+          right: 'var(--notification-subtle-border-right)',
+          top: 'var(--notification-subtle-border-top)',
+          bottom: 'var(--notification-subtle-border-bottom)',
         },
       },
     },
