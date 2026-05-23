@@ -175,6 +175,7 @@ Component-specific behavior is documented next to implementation files:
 
 - [React Button](packages/react/src/Button/README.md)
 - [React IconButton](packages/react/src/IconButton/README.md)
+- [React LinkButton](packages/react/src/LinkButton/README.md)
 - [React Loader](packages/react/src/Loader/README.md)
 - [React CheckboxField](packages/react/src/CheckboxField/README.md)
 - [React Notification](packages/react/src/Notification/README.md)
@@ -185,6 +186,7 @@ Component-specific behavior is documented next to implementation files:
 - [React TextField](packages/react/src/TextField/README.md)
 - [Web Components Button](packages/web-components/src/button/README.md)
 - [Web Components IconButton](packages/web-components/src/icon-button/README.md)
+- [Web Components LinkButton](packages/web-components/src/link-button/README.md)
 - [Web Components Loader](packages/web-components/src/loader/README.md)
 - [Web Components CheckboxField](packages/web-components/src/checkbox-field/README.md)
 - [Web Components Notification](packages/web-components/src/notification/README.md)
