@@ -42,28 +42,35 @@ describe('UiNotification', () => {
     expect(headingEl?.textContent?.trim()).to.equal('Hello world');
   });
 
+  it('container has role="alert"', async () => {
+    const el = await fixture<UiNotification>(
+      html`<ui-notification heading="Test"></ui-notification>`,
+    );
+    const container = el.shadowRoot!.querySelector('.container');
+    expect(container?.getAttribute('role')).to.equal('alert');
+  });
+
   it('renders close button by default', async () => {
     const el = await fixture<UiNotification>(
       html`<ui-notification heading="Test"></ui-notification>`,
     );
-    const btn = el.shadowRoot!.querySelector('.close');
-    expect(btn).to.not.equal(null);
+    expect(el.shadowRoot!.querySelector('.close')).to.not.equal(null);
   });
 
   it('does not render close button when has-close-button is absent', async () => {
     const el = await fixture<UiNotification>(
       html`<ui-notification heading="Test" .hasCloseButton=${false}></ui-notification>`,
     );
-    const btn = el.shadowRoot!.querySelector('.close');
-    expect(btn).to.equal(null);
+    expect(el.shadowRoot!.querySelector('.close')).to.equal(null);
   });
 
   it('close button has aria-label="Close notification"', async () => {
     const el = await fixture<UiNotification>(
       html`<ui-notification heading="Test"></ui-notification>`,
     );
-    const btn = el.shadowRoot!.querySelector('.close');
-    expect(btn?.getAttribute('aria-label')).to.equal('Close notification');
+    expect(el.shadowRoot!.querySelector('.close')?.getAttribute('aria-label')).to.equal(
+      'Close notification',
+    );
   });
 
   it('dispatches ui-close event when close button is clicked', async () => {
@@ -74,8 +81,7 @@ describe('UiNotification', () => {
     el.addEventListener('ui-close', () => {
       fired = true;
     });
-    const btn = el.shadowRoot!.querySelector<HTMLButtonElement>('.close');
-    btn?.click();
+    el.shadowRoot!.querySelector<HTMLButtonElement>('.close')?.click();
     expect(fired).to.equal(true);
   });
 
@@ -95,11 +101,12 @@ describe('UiNotification', () => {
     const el = await fixture<UiNotification>(
       html`<ui-notification heading="Test">Description text</ui-notification>`,
     );
-    // Wait for slotchange to fire and _hasDescription to update
     await waitUntil(() => el.shadowRoot!.querySelector('.description:not([hidden])') !== null);
     const slot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot');
-    const nodes = slot!.assignedNodes({ flatten: true });
-    const text = nodes.map((n) => n.textContent).join('');
+    const text = slot!
+      .assignedNodes({ flatten: true })
+      .map((n) => n.textContent)
+      .join('');
     expect(text).to.include('Description text');
   });
 
@@ -108,8 +115,7 @@ describe('UiNotification', () => {
       html`<ui-notification heading="Test"></ui-notification>`,
     );
     await el.updateComplete;
-    const desc = el.shadowRoot!.querySelector('.description');
-    expect(desc?.hasAttribute('hidden')).to.equal(true);
+    expect(el.shadowRoot!.querySelector('.description')?.hasAttribute('hidden')).to.equal(true);
   });
 
   it('renders inner .container element', async () => {
@@ -132,4 +138,5 @@ describe('UiNotification', () => {
     );
     expect(el.variant).to.equal('default');
   });
+
 });
