@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import { type CSSProperties, type ReactNode } from 'react';
 import {
   IconClose,
   IconDanger,
@@ -13,15 +13,15 @@ export type NotificationVariant = 'default' | 'subtle';
 export interface NotificationProps {
   status?: NotificationStatus;
   variant?: NotificationVariant;
-  title: string;
-  description?: string;
+  heading: string;
+  children?: ReactNode;
   hasCloseButton?: boolean;
   onClose?: () => void;
   className?: string;
   style?: CSSProperties;
 }
 
-const statusIcons: Record<NotificationStatus, React.ReactNode> = {
+const statusIcons: Record<NotificationStatus, ReactNode> = {
   info: <IconInfo aria-hidden="true" />,
   success: <IconFlag aria-hidden="true" />,
   warning: <IconDanger aria-hidden="true" />,
@@ -31,8 +31,8 @@ const statusIcons: Record<NotificationStatus, React.ReactNode> = {
 export function Notification({
   status = 'info',
   variant = 'default',
-  title,
-  description,
+  heading,
+  children,
   hasCloseButton = true,
   onClose,
   className,
@@ -50,14 +50,14 @@ export function Notification({
   return (
     <div role="alert" className={classes} style={style}>
       <div className="ui-notification__header">
-        {/* Icon is always rendered — CSS var --_show-icon controls visibility */}
+        {/* Icon always in DOM — visibility driven by CSS var --_show-icon */}
         <span className="ui-notification__icon" aria-hidden="true">
           {statusIcons[status]}
         </span>
-        <p className="ui-notification__title">{title}</p>
+        <div className="ui-notification__heading">{heading}</div>
       </div>
 
-      {description && <p className="ui-notification__description">{description}</p>}
+      {children && <div className="ui-notification__description">{children}</div>}
 
       {hasCloseButton && (
         <button

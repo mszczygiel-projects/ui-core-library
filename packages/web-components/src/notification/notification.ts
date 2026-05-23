@@ -24,7 +24,7 @@ const statusIcons: Record<NotificationStatus, string> = {
  * @attr {string} status - info | success | warning | error (default: info)
  * @attr {string} variant - default | subtle (default: default)
  * @attr {string} heading - Required heading text.
- * @attr {boolean} has-close-button - Show/hide the close button (default: true).
+ * @attr {boolean} has-close-button - Shows the × close button (default: true).
  */
 @customElement('ui-notification')
 export class UiNotification extends LitElement {
@@ -55,15 +55,15 @@ export class UiNotification extends LitElement {
 
   protected override render() {
     return html`
-      <div class="container">
+      <div class="container" role="alert">
         <div class="header">
           <span class="icon" aria-hidden="true">${unsafeSVG(statusIcons[this.status])}</span>
-          <p class="heading">${this.heading}</p>
+          <div class="heading">${this.heading}</div>
         </div>
 
-        <p class="description" ?hidden=${!this._hasDescription}>
+        <div class="description" ?hidden=${!this._hasDescription}>
           <slot @slotchange=${this._onSlotChange}></slot>
-        </p>
+        </div>
 
         ${this.hasCloseButton
           ? html`
