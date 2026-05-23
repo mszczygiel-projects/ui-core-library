@@ -22,6 +22,10 @@ export class UiLinkButton extends LitElement {
   @property({ type: String, reflect: true }) target?: string;
   @property({ type: String, reflect: true }) rel?: string;
   @property({ type: String }) label?: string;
+  @property({ type: Boolean, reflect: true, attribute: 'has-leading-icon' })
+  hasLeadingIcon = false;
+  @property({ type: Boolean, reflect: true, attribute: 'has-trailing-icon' })
+  hasTrailingIcon = false;
 
   private get computedRel(): string | undefined {
     if (this.rel !== undefined) return this.rel;
@@ -55,11 +59,31 @@ export class UiLinkButton extends LitElement {
         tabindex=${this.isInactive ? '-1' : nothing}
         @click=${this.handleClick}
       >
-        ${this.loading
-          ? html`<ui-loader data-size=${this.loaderSize} label="Loading"></ui-loader>`
-          : html`<slot name="icon-left"></slot>`}
-        <span class="label"><slot></slot></span>
-        ${this.loading ? nothing : html`<slot name="icon-right"></slot>`}
+        ${this.hasLeadingIcon
+          ? html`
+              <span class="icon-box icon-box--leading">
+                <slot name="leading-icon"></slot>
+              </span>
+              <span class="separator" aria-hidden="true"></span>
+            `
+          : nothing}
+
+        <span class="content">
+          ${this.loading
+            ? html`<ui-loader data-size=${this.loaderSize} label="Loading"></ui-loader>`
+            : html`<slot name="icon-left"></slot>`}
+          <span class="label"><slot></slot></span>
+          ${this.loading ? nothing : html`<slot name="icon-right"></slot>`}
+        </span>
+
+        ${this.hasTrailingIcon
+          ? html`
+              <span class="separator" aria-hidden="true"></span>
+              <span class="icon-box icon-box--trailing">
+                <slot name="trailing-icon"></slot>
+              </span>
+            `
+          : nothing}
       </a>
     `;
   }

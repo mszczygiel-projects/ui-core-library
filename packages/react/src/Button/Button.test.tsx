@@ -110,4 +110,125 @@ describe('Button', () => {
     fireEvent.click(container.querySelector('button')!);
     expect(handleClick).not.toHaveBeenCalled();
   });
+
+  it('renders leading icon box and separator when leadingIcon is provided', () => {
+    const { container } = render(<Button leadingIcon={<span>L</span>}>Click</Button>);
+    expect(container.querySelector('.ui-button__icon-box--leading')).not.toBeNull();
+    expect(container.querySelector('.ui-button__separator')).not.toBeNull();
+  });
+
+  it('renders trailing icon box and separator when trailingIcon is provided', () => {
+    const { container } = render(<Button trailingIcon={<span>R</span>}>Click</Button>);
+    expect(container.querySelector('.ui-button__icon-box--trailing')).not.toBeNull();
+    expect(container.querySelector('.ui-button__separator')).not.toBeNull();
+  });
+
+  it('renders two separators when both icon boxes are provided', () => {
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} trailingIcon={<span>R</span>}>
+        Click
+      </Button>,
+    );
+    expect(container.querySelectorAll('.ui-button__separator')).toHaveLength(2);
+  });
+
+  it('does not add split class when onLeadingIconClick is absent', () => {
+    const { container } = render(<Button leadingIcon={<span>L</span>}>Click</Button>);
+    expect(container.querySelector('.ui-button__icon-box--split')).toBeNull();
+  });
+
+  it('adds split class and role=button when onLeadingIconClick is provided', () => {
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onLeadingIconClick={vi.fn()}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading');
+    expect(box?.classList.contains('ui-button__icon-box--split')).toBe(true);
+    expect(box?.getAttribute('role')).toBe('button');
+    expect(box?.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('calls onLeadingIconClick and stops propagation when split leading is clicked', () => {
+    const onLeadingIconClick = vi.fn();
+    const onClick = vi.fn();
+    const { container } = render(
+      <Button
+        leadingIcon={<span>L</span>}
+        onLeadingIconClick={onLeadingIconClick}
+        onClick={onClick}
+      >
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.click(box);
+    expect(onLeadingIconClick).toHaveBeenCalledOnce();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('calls onTrailingIconClick and stops propagation when split trailing is clicked', () => {
+    const onTrailingIconClick = vi.fn();
+    const onClick = vi.fn();
+    const { container } = render(
+      <Button
+        trailingIcon={<span>R</span>}
+        onTrailingIconClick={onTrailingIconClick}
+        onClick={onClick}
+      >
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--trailing')!;
+    fireEvent.click(box);
+    expect(onTrailingIconClick).toHaveBeenCalledOnce();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('click on icon box without split handler propagates to button onClick', () => {
+    const onClick = vi.fn();
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onClick={onClick}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.click(box);
+    expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it('split mode disabled when button is disabled — no role/tabIndex on icon box', () => {
+    const { container } = render(
+      <Button disabled leadingIcon={<span>L</span>} onLeadingIconClick={vi.fn()}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading');
+    expect(box?.getAttribute('role')).toBeNull();
+    expect(box?.getAttribute('tabindex')).toBeNull();
+  });
+
+  it('calls onLeadingIconClick on Enter key in split mode', () => {
+    const onLeadingIconClick = vi.fn();
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onLeadingIconClick={onLeadingIconClick}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.keyDown(box, { key: 'Enter' });
+    expect(onLeadingIconClick).toHaveBeenCalledOnce();
+  });
+
+  it('calls onLeadingIconClick on Space key in split mode', () => {
+    const onLeadingIconClick = vi.fn();
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onLeadingIconClick={onLeadingIconClick}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.keyDown(box, { key: ' ' });
+    expect(onLeadingIconClick).toHaveBeenCalledOnce();
+  });
 });

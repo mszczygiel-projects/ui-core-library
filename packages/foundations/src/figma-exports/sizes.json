@@ -37,25 +37,11 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "large": {
           "font-size": {
             "$value": {
               "Mobile": "{Primitives Sizes.text.4xl}",
               "Desktop": "{Primitives Sizes.text.7xl}"
-            },
-            "$type": "number"
-          },
-          "line-height": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
-              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
             },
             "$type": "number"
           },
@@ -65,7 +51,21 @@
               "Desktop": "{Primitives Sizes.tracking.normal}"
             },
             "$type": "string"
+          },
+          "line-height": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
+              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
+            },
+            "$type": "number"
           }
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         }
       },
       "title": {
@@ -450,13 +450,6 @@
           "$value": {
             "Mobile": "{Primitives Sizes.text.lg}",
             "Desktop": "{Primitives Sizes.text.lg}"
-          },
-          "$type": "number"
-        },
-        "line-height": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.lg--line-height}",
-            "Desktop": "{Primitives Sizes.text.lg--line-height}"
           },
           "$type": "number"
         },
@@ -1092,13 +1085,6 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "font-family": {
           "$value": {
             "Mobile": "{Sizes.control.font-family}",
@@ -1292,6 +1278,15 @@
           },
           "$type": "number"
         }
+      },
+      "separator": {
+        "inset": {
+          "$value": {
+            "Mobile": 4,
+            "Desktop": 4
+          },
+          "$type": "number"
+        }
       }
     },
     "large": {
@@ -1340,6 +1335,24 @@
           },
           "$type": "number"
         }
+      },
+      "separator": {
+        "inset": {
+          "$value": {
+            "Mobile": 4,
+            "Desktop": 4
+          },
+          "$type": "number"
+        }
+      }
+    },
+    "separator": {
+      "inset": {
+        "$value": {
+          "Mobile": 4,
+          "Desktop": 4
+        },
+        "$type": "number"
       }
     }
   },

@@ -7,9 +7,11 @@ type IconName = keyof typeof svgMap;
 
 const iconOptions = Object.keys(svgMap) as IconName[];
 
-type ButtonStoryArgs = React.ComponentProps<typeof Button> & {
+type ButtonStoryArgs = Omit<React.ComponentProps<typeof Button>, 'leadingIcon' | 'trailingIcon'> & {
   iconLeft?: IconName | '';
   iconRight?: IconName | '';
+  leadingIcon?: IconName | '';
+  trailingIcon?: IconName | '';
 };
 
 const toIconExportName = (name: IconName) =>
@@ -34,7 +36,26 @@ const renderButton = ({ children, iconLeft, iconRight, ...args }: ButtonStoryArg
   </Button>
 );
 
-const meta: Meta<typeof Button> = {
+const renderButtonWithBoxes = ({
+  children,
+  iconLeft,
+  iconRight,
+  leadingIcon,
+  trailingIcon,
+  ...args
+}: ButtonStoryArgs) => (
+  <Button
+    {...args}
+    iconLeft={renderIcon(iconLeft)}
+    iconRight={renderIcon(iconRight)}
+    leadingIcon={renderIcon(leadingIcon)}
+    trailingIcon={renderIcon(trailingIcon)}
+  >
+    {children}
+  </Button>
+);
+
+const meta: Meta<ButtonStoryArgs> = {
   title: 'React/Button',
   component: Button,
   argTypes: {
@@ -57,6 +78,14 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['', ...iconOptions],
     },
+    leadingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
+    trailingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'primary',
@@ -66,6 +95,8 @@ const meta: Meta<typeof Button> = {
     children: 'More information',
     iconLeft: '',
     iconRight: '',
+    leadingIcon: '',
+    trailingIcon: '',
   },
 };
 
@@ -105,18 +136,59 @@ export const WithIcons: Story = {
   render: renderButton,
 };
 
-export const AllVariants: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {(['small', 'default', 'large'] as const).map((size) => (
-        <div key={size} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          {(['primary', 'secondary', 'outline', 'ghost', 'danger'] as const).map((variant) => (
-            <Button key={variant} variant={variant} size={size}>
-              {variant}
-            </Button>
-          ))}
-        </div>
-      ))}
-    </div>
+export const WithIconBoxes: Story = {
+  args: {
+    children: 'Buy tickets',
+    leadingIcon: 'icon-ticket',
+    trailingIcon: 'icon-chevron-right',
+    iconLeft: '',
+    iconRight: '',
+  },
+  render: renderButtonWithBoxes,
+};
+
+export const SplitLeading: Story = {
+  name: 'Split — Leading (independent action)',
+  args: {
+    children: 'Buy tickets',
+    leadingIcon: 'icon-ticket',
+    trailingIcon: '',
+    iconLeft: '',
+    iconRight: '',
+  },
+  render: ({ children, iconLeft, iconRight, leadingIcon, trailingIcon, ...args }) => (
+    <Button
+      {...args}
+      iconLeft={renderIcon(iconLeft)}
+      iconRight={renderIcon(iconRight)}
+      leadingIcon={renderIcon(leadingIcon)}
+      trailingIcon={renderIcon(trailingIcon)}
+      onLeadingIconClick={() => alert('Leading icon clicked!')}
+    >
+      {children}
+    </Button>
+  ),
+};
+
+export const SplitTrailing: Story = {
+  name: 'Split — Trailing (independent action)',
+  args: {
+    children: 'Buy tickets',
+    leadingIcon: '',
+    trailingIcon: 'icon-chevron-right',
+    iconLeft: '',
+    iconRight: '',
+  },
+  render: ({ children, iconLeft, iconRight, leadingIcon, trailingIcon, ...args }) => (
+    <Button
+      {...args}
+      iconLeft={renderIcon(iconLeft)}
+      iconRight={renderIcon(iconRight)}
+      leadingIcon={renderIcon(leadingIcon)}
+      trailingIcon={renderIcon(trailingIcon)}
+      onTrailingIconClick={() => alert('Trailing icon clicked!')}
+    >
+      {children}
+    </Button>
   ),
 };

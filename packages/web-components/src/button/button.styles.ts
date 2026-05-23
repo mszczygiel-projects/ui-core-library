@@ -5,10 +5,19 @@ export const buttonStyles = css`
     display: inline-flex;
     border-radius: var(--button-radius);
     --_icon-size: var(--button-icon-size);
+    --_separator-inset: var(--button-separator-inset);
+    --_icon-box-size: calc(var(--button-padding-stack) * 2 + var(--size-6));
   }
 
   :host([data-size='large']) {
     --_icon-size: var(--control-large-icon-size);
+    --_separator-inset: var(--button-large-separator-inset);
+    --_icon-box-size: calc(var(--button-large-padding-stack) * 2 + var(--size-6));
+  }
+
+  :host([data-size='small']) {
+    --_separator-inset: var(--button-small-separator-inset);
+    --_icon-box-size: calc(var(--button-small-padding-stack) * 2 + var(--size-6));
   }
 
   /* Variant local aliases — default (primary) */
@@ -29,6 +38,7 @@ export const buttonStyles = css`
     --_border-focus: var(--color-button-primary-border-focus);
     --_border-active: var(--color-button-primary-border-active);
     --_border-disabled: var(--color-button-primary-border-disabled);
+    --_separator: var(--color-button-primary-separator-default);
   }
 
   :host([variant='secondary']) {
@@ -47,6 +57,7 @@ export const buttonStyles = css`
     --_border-focus: var(--color-button-secondary-border-focus);
     --_border-active: var(--color-button-secondary-border-active);
     --_border-disabled: var(--color-button-secondary-border-disabled);
+    --_separator: var(--color-button-secondary-separator-default);
   }
 
   :host([variant='outline']) {
@@ -65,6 +76,7 @@ export const buttonStyles = css`
     --_border-focus: var(--color-button-outline-border-focus);
     --_border-active: var(--color-button-outline-border-active);
     --_border-disabled: var(--color-button-outline-border-disabled);
+    --_separator: var(--color-button-outline-separator-default);
   }
 
   :host([variant='ghost']) {
@@ -83,6 +95,7 @@ export const buttonStyles = css`
     --_border-focus: var(--color-button-ghost-border-focus);
     --_border-active: var(--color-button-ghost-border-active);
     --_border-disabled: var(--color-button-ghost-border-disabled);
+    --_separator: transparent;
   }
 
   :host([variant='danger']) {
@@ -101,6 +114,7 @@ export const buttonStyles = css`
     --_border-focus: var(--color-button-danger-border-focus);
     --_border-active: var(--color-button-danger-border-active);
     --_border-disabled: var(--color-button-danger-border-disabled);
+    --_separator: var(--color-button-danger-separator-default);
   }
 
   button {
@@ -113,11 +127,8 @@ export const buttonStyles = css`
     width: 100%;
 
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--layout-gap-inline-lg);
-    padding-inline: var(--button-padding-inline);
-    padding-block: var(--button-padding-stack);
+    align-items: stretch;
+    overflow: hidden;
 
     background-color: var(--_bg);
     color: var(--_text);
@@ -166,13 +177,23 @@ export const buttonStyles = css`
     border-color: var(--_border);
   }
 
-  :host([data-size='small']) button {
+  .content {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    gap: var(--layout-gap-inline-lg);
+    padding-inline: var(--button-padding-inline);
+    padding-block: var(--button-padding-stack);
+  }
+
+  :host([data-size='small']) .content {
     padding-inline: var(--button-small-padding-inline);
     padding-block: var(--button-small-padding-stack);
     font-size: var(--button-small-font-size);
   }
 
-  :host([data-size='large']) button {
+  :host([data-size='large']) .content {
     padding-inline: var(--button-large-padding-inline);
     padding-block: var(--button-large-padding-stack);
     font-size: var(--control-large-font-size);
@@ -197,5 +218,54 @@ export const buttonStyles = css`
   ui-loader {
     flex-shrink: 0;
     color: inherit;
+  }
+
+  .separator {
+    flex-shrink: 0;
+    width: 1px;
+    background-color: var(--_separator);
+    margin-block: var(--_separator-inset);
+  }
+
+  /* ── LeadingIconBox / TrailingIconBox ── */
+
+  /*
+   * Icon box size = button height = padding-block × 2 + line-height.
+   * We compute it explicitly because aspect-ratio: 1 is unreliable on flex items
+   * when the flex container has auto height (no definite cross-size).
+   */
+  .icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: var(--_icon-box-size);
+    align-self: stretch;
+  }
+
+  .icon-box--leading {
+    border-radius: var(--button-radius) 0 0 var(--button-radius);
+  }
+
+  .icon-box--trailing {
+    border-radius: 0 var(--button-radius) var(--button-radius) 0;
+  }
+
+  /* Split mode — hover/active on the icon box only */
+  .icon-box--split:hover {
+    background-color: var(--_bg-hover);
+    color: var(--_text-hover);
+  }
+
+  .icon-box--split:active {
+    background-color: var(--_bg-active);
+    color: var(--_text-active);
+  }
+
+  /* Isolate button-level hover when a split icon box is hovered */
+  button:not(:disabled):has(.icon-box--split:hover) {
+    background-color: var(--_bg);
+    color: var(--_text);
+    border-color: var(--_border);
   }
 `;

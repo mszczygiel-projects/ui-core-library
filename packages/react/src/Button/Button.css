@@ -1,22 +1,18 @@
 .ui-button {
   appearance: none;
   border: none;
-  padding: 0;
   margin: 0;
   cursor: pointer;
   text-decoration: none;
 
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--layout-gap-inline-lg);
-  padding-inline: var(--button-padding-inline);
-  padding-block: var(--button-padding-stack);
+  align-items: stretch;
 
   background-color: var(--_bg);
   color: var(--_text);
   border: var(--button-border-width) solid var(--_border);
   border-radius: var(--button-radius);
+  overflow: hidden;
 
   font-family: var(--button-font-family);
   font-weight: var(--button-font-weight);
@@ -24,7 +20,6 @@
   line-height: var(--size-6);
   letter-spacing: var(--button-letter-spacing);
   white-space: nowrap;
-  text-align: center;
   text-transform: var(--button-text-transform-uppercase);
 }
 
@@ -78,6 +73,7 @@
   --_border-focus: var(--color-button-primary-border-focus);
   --_border-active: var(--color-button-primary-border-active);
   --_border-disabled: var(--color-button-primary-border-disabled);
+  --_separator: var(--color-button-primary-separator-default);
 }
 
 .ui-button--secondary {
@@ -96,6 +92,7 @@
   --_border-focus: var(--color-button-secondary-border-focus);
   --_border-active: var(--color-button-secondary-border-active);
   --_border-disabled: var(--color-button-secondary-border-disabled);
+  --_separator: var(--color-button-secondary-separator-default);
 }
 
 .ui-button--outline {
@@ -114,6 +111,7 @@
   --_border-focus: var(--color-button-outline-border-focus);
   --_border-active: var(--color-button-outline-border-active);
   --_border-disabled: var(--color-button-outline-border-disabled);
+  --_separator: var(--color-button-outline-separator-default);
 }
 
 .ui-button--ghost {
@@ -132,6 +130,7 @@
   --_border-focus: var(--color-button-ghost-border-focus);
   --_border-active: var(--color-button-ghost-border-active);
   --_border-disabled: var(--color-button-ghost-border-disabled);
+  --_separator: transparent;
 }
 
 .ui-button--danger {
@@ -150,17 +149,27 @@
   --_border-focus: var(--color-button-danger-border-focus);
   --_border-active: var(--color-button-danger-border-active);
   --_border-disabled: var(--color-button-danger-border-disabled);
+  --_separator: var(--color-button-danger-separator-default);
 }
 
-/* Sizes */
+.ui-button__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  gap: var(--layout-gap-inline-lg);
+  padding-inline: var(--button-padding-inline);
+  padding-block: var(--button-padding-stack);
+  text-align: center;
+}
 
-.ui-button--small {
+.ui-button--small .ui-button__content {
   padding-inline: var(--button-small-padding-inline);
   padding-block: var(--button-small-padding-stack);
   font-size: var(--button-small-font-size);
 }
 
-.ui-button--large {
+.ui-button--large .ui-button__content {
   padding-inline: var(--button-large-padding-inline);
   padding-block: var(--button-large-padding-stack);
   font-size: var(--control-large-font-size);
@@ -194,4 +203,84 @@
 /* Loading: override Loader color to match button text */
 .ui-button--loading {
   --loader-color: currentColor;
+}
+
+/* ── LeadingIconBox / TrailingIconBox ── */
+
+/*
+ * Icon box size = button height = padding-block × 2 + line-height.
+ * We compute it explicitly because aspect-ratio: 1 is unreliable on flex items
+ * when the flex container has auto height (no definite cross-size).
+ */
+.ui-button {
+  --_separator-inset: var(--button-separator-inset);
+  --_icon-box-size: calc(var(--button-padding-stack) * 2 + var(--size-6));
+}
+
+.ui-button--small {
+  --_separator-inset: var(--button-small-separator-inset);
+  --_icon-box-size: calc(var(--button-small-padding-stack) * 2 + var(--size-6));
+}
+
+.ui-button--large {
+  --_separator-inset: var(--button-large-separator-inset);
+  --_icon-box-size: calc(var(--button-large-padding-stack) * 2 + var(--size-6));
+}
+
+/* Separator line */
+.ui-button__separator {
+  flex-shrink: 0;
+  width: 1px;
+  background-color: var(--_separator);
+  margin-block: var(--_separator-inset);
+}
+
+/* Icon box — explicit square: width = button height */
+.ui-button__icon-box {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--_icon-box-size);
+  align-self: stretch;
+}
+
+.ui-button__icon-box--leading {
+  border-radius: var(--button-radius) 0 0 var(--button-radius);
+}
+
+.ui-button__icon-box--trailing {
+  border-radius: 0 var(--button-radius) var(--button-radius) 0;
+}
+
+/* Icons inside icon boxes */
+.ui-button__icon-box > * {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--button-icon-size);
+  height: var(--button-icon-size);
+  color: inherit;
+}
+
+.ui-button--large .ui-button__icon-box > * {
+  width: var(--control-large-icon-size);
+  height: var(--control-large-icon-size);
+}
+
+/* Split mode — hover/active on the icon box only */
+.ui-button__icon-box--split:hover {
+  background-color: var(--_bg-hover);
+  color: var(--_text-hover);
+}
+
+.ui-button__icon-box--split:active {
+  background-color: var(--_bg-active);
+  color: var(--_text-active);
+}
+
+/* Isolate button-level hover when a split icon box is hovered */
+.ui-button:not(:disabled):has(.ui-button__icon-box--split:hover) {
+  background-color: var(--_bg);
+  color: var(--_text);
+  border-color: var(--_border);
 }

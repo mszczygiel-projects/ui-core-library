@@ -15,6 +15,8 @@ export interface LinkButtonProps {
   disabled?: boolean;
   iconLeft?: ReactNode;
   iconRight?: ReactNode;
+  leadingIcon?: ReactNode;
+  trailingIcon?: ReactNode;
   children?: ReactNode;
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
   className?: string;
@@ -32,6 +34,8 @@ export function LinkButton({
   disabled = false,
   iconLeft,
   iconRight,
+  leadingIcon,
+  trailingIcon,
   children,
   onClick,
   className,
@@ -72,13 +76,29 @@ export function LinkButton({
         .join(' ')}
       style={style}
     >
-      {loading ? (
-        <Loader size={loaderSize} label="Loading" />
-      ) : (
-        iconLeft && <span className="ui-button__icon">{iconLeft}</span>
+      {leadingIcon && (
+        <>
+          <span className="ui-button__icon-box ui-button__icon-box--leading">{leadingIcon}</span>
+          <span className="ui-button__separator" aria-hidden="true" />
+        </>
       )}
-      <span className="ui-button__label">{children}</span>
-      {!loading && iconRight && <span className="ui-button__icon">{iconRight}</span>}
+
+      <span className="ui-button__content">
+        {loading ? (
+          <Loader size={loaderSize} label="Loading" />
+        ) : (
+          iconLeft && <span className="ui-button__icon">{iconLeft}</span>
+        )}
+        <span className="ui-button__label">{children}</span>
+        {!loading && iconRight && <span className="ui-button__icon">{iconRight}</span>}
+      </span>
+
+      {trailingIcon && (
+        <>
+          <span className="ui-button__separator" aria-hidden="true" />
+          <span className="ui-button__icon-box ui-button__icon-box--trailing">{trailingIcon}</span>
+        </>
+      )}
     </a>
   );
 }

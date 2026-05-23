@@ -12,11 +12,8 @@ export const linkButtonStyles = css`
     text-decoration: none;
 
     display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--layout-gap-inline-lg);
-    padding-inline: var(--button-padding-inline);
-    padding-block: var(--button-padding-stack);
+    align-items: stretch;
+    overflow: hidden;
 
     background-color: var(--_bg);
     color: var(--_text);
@@ -73,18 +70,6 @@ export const linkButtonStyles = css`
   :host([loading]) a {
     cursor: wait;
     --loader-color: currentColor;
-  }
-
-  :host([data-size='small']) a {
-    padding-inline: var(--button-small-padding-inline);
-    padding-block: var(--button-small-padding-stack);
-    font-size: var(--button-small-font-size);
-  }
-
-  :host([data-size='large']) a {
-    padding-inline: var(--button-large-padding-inline);
-    padding-block: var(--button-large-padding-stack);
-    font-size: var(--control-large-font-size);
   }
 
   ::slotted(*) {
