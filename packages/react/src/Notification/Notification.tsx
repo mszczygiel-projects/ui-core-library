@@ -28,6 +28,13 @@ const statusIcons: Record<NotificationStatus, ReactNode> = {
   error: <IconDanger aria-hidden="true" />,
 };
 
+const statusRoles: Record<NotificationStatus, 'status' | 'alert'> = {
+  info: 'status',
+  success: 'status',
+  warning: 'status',
+  error: 'alert',
+};
+
 export function Notification({
   status = 'info',
   variant = 'default',
@@ -48,7 +55,7 @@ export function Notification({
     .join(' ');
 
   return (
-    <div role="alert" className={classes} style={style}>
+    <div role={statusRoles[status]} className={classes} style={style}>
       <div className="ui-notification__header">
         {/* Icon always in DOM — visibility driven by CSS var --_show-icon */}
         <span className="ui-notification__icon" aria-hidden="true">

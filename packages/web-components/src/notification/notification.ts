@@ -15,6 +15,13 @@ const statusIcons: Record<NotificationStatus, string> = {
   error: svgMap['icon-danger'],
 };
 
+const statusRoles: Record<NotificationStatus, 'status' | 'alert'> = {
+  info: 'status',
+  success: 'status',
+  warning: 'status',
+  error: 'alert',
+};
+
 /**
  * Notification banner communicating a status message to the user.
  *
@@ -55,7 +62,7 @@ export class UiNotification extends LitElement {
 
   protected override render() {
     return html`
-      <div class="container" role="alert">
+      <div class="container" role=${statusRoles[this.status]}>
         <div class="header">
           <span class="icon" aria-hidden="true">${unsafeSVG(statusIcons[this.status])}</span>
           <div class="heading">${this.heading}</div>
