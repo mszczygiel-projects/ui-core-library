@@ -508,6 +508,18 @@ describe('buildTokensCss — dark mode block', () => {
     expect(css).toContain('--color-brand-primary: var(--color-brand-primary-600)');
   });
 
+  it('dark block uses :root and [data-surface="default"] selectors', () => {
+    const differs = themeColor(
+      ['color', 'brand', 'primary'],
+      '{Primitives Colors.brand.primary.500}',
+      '{Primitives Colors.brand.primary.600}',
+    );
+    const css = buildWithThemes([differs]);
+    expect(css).toContain(
+      '@media (prefers-color-scheme: dark) {\n  :root, [data-surface="default"] {',
+    );
+  });
+
   it('dark block also includes aliases that depend on dark-overridden tokens', () => {
     const gray700 = prim('gray', '700', '#374151');
     const gray200 = prim('gray', '200', '#e5e7eb');
@@ -754,11 +766,23 @@ describe('tokens.css — generated output', () => {
     expect(css).toContain('@media (prefers-color-scheme: dark)');
   });
 
-  it('dark block contains fewer declarations than the Themes :root block', () => {
-    const darkMatch = css.match(
-      /@media \(prefers-color-scheme: dark\) \{\s*:root \{([\s\S]*?)\}\s*\}/,
+  it('Themes block includes [data-surface="default"] selector', () => {
+    expect(css).toContain('/* === Themes === */\n:root, [data-surface="default"] {');
+  });
+
+  it('Themes (Dark) block includes [data-surface="default"] selector', () => {
+    expect(css).toContain(
+      '/* === Themes (Dark) === */\n@media (prefers-color-scheme: dark) {\n  :root, [data-surface="default"] {',
     );
-    const themesMatch = css.match(/\/\* === Themes === \*\/\n:root \{([\s\S]*?)\n\}/);
+  });
+
+  it('dark block contains fewer declarations than the Themes default block', () => {
+    const darkMatch = css.match(
+      /@media \(prefers-color-scheme: dark\) \{\s*:root, \[data-surface="default"\] \{([\s\S]*?)\}\s*\}/,
+    );
+    const themesMatch = css.match(
+      /\/\* === Themes === \*\/\n:root, \[data-surface="default"\] \{([\s\S]*?)\n\}/,
+    );
     expect(darkMatch).not.toBeNull();
     expect(themesMatch).not.toBeNull();
     const countLines = (s: string) => s.split('\n').filter((l) => l.trim().startsWith('--')).length;

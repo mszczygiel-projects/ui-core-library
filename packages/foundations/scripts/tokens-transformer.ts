@@ -514,7 +514,7 @@ export function buildTokensCss(
     if (line !== null) themesDefaultLines.push(line);
   }
   if (themesDefaultLines.length > 0) {
-    chunks.push('/* === Themes === */\n:root {');
+    chunks.push('/* === Themes === */\n:root, [data-surface="default"] {');
     chunks.push(...themesDefaultLines);
     chunks.push('}\n');
   }
@@ -582,7 +582,9 @@ export function buildTokensCss(
       if (line !== null) darkLines.push(line);
     }
     if (darkLines.length > 0) {
-      chunks.push('/* === Themes (Dark) === */\n@media (prefers-color-scheme: dark) {\n  :root {');
+      chunks.push(
+        '/* === Themes (Dark) === */\n@media (prefers-color-scheme: dark) {\n  :root, [data-surface="default"] {',
+      );
       chunks.push(...darkLines.map((l) => '  ' + l));
       chunks.push('  }\n}\n');
     }

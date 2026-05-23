@@ -243,7 +243,8 @@
 }
 
 /* === Themes === */
-:root {
+:root,
+[data-surface="default"] {
   --color-brand-primary: var(--color-brand-primary-500);
   --color-brand-secondary: var(--color-brand-secondary-400);
   --color-brand-tertiary: var(--color-gray-200);
@@ -2277,7 +2278,8 @@
 
 /* === Themes (Dark) === */
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root,
+  [data-surface="default"] {
     --color-brand-primary: var(--color-brand-primary-400);
     --color-background-default: var(--color-gray-900);
     --color-background-sunken: var(--color-gray-800);
