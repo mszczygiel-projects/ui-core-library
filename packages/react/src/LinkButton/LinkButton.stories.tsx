@@ -7,9 +7,14 @@ type IconName = keyof typeof svgMap;
 
 const iconOptions = Object.keys(svgMap) as IconName[];
 
-type LinkButtonStoryArgs = React.ComponentProps<typeof LinkButton> & {
+type LinkButtonStoryArgs = Omit<
+  React.ComponentProps<typeof LinkButton>,
+  'leadingIcon' | 'trailingIcon'
+> & {
   iconLeft?: IconName | '';
   iconRight?: IconName | '';
+  leadingIcon?: IconName | '';
+  trailingIcon?: IconName | '';
 };
 
 const toIconExportName = (name: IconName) =>
@@ -30,7 +35,26 @@ const renderLinkButton = ({ children, iconLeft, iconRight, ...args }: LinkButton
   </LinkButton>
 );
 
-const meta: Meta<typeof LinkButton> = {
+const renderLinkButtonWithBoxes = ({
+  children,
+  iconLeft,
+  iconRight,
+  leadingIcon,
+  trailingIcon,
+  ...args
+}: LinkButtonStoryArgs) => (
+  <LinkButton
+    {...args}
+    iconLeft={renderIcon(iconLeft)}
+    iconRight={renderIcon(iconRight)}
+    leadingIcon={renderIcon(leadingIcon)}
+    trailingIcon={renderIcon(trailingIcon)}
+  >
+    {children}
+  </LinkButton>
+);
+
+const meta: Meta<LinkButtonStoryArgs> = {
   title: 'React/LinkButton',
   component: LinkButton,
   argTypes: {
@@ -58,6 +82,14 @@ const meta: Meta<typeof LinkButton> = {
       control: 'select',
       options: ['', ...iconOptions],
     },
+    leadingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
+    trailingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'primary',
@@ -69,6 +101,8 @@ const meta: Meta<typeof LinkButton> = {
     children: 'More information',
     iconLeft: '',
     iconRight: '',
+    leadingIcon: '',
+    trailingIcon: '',
   },
 };
 
@@ -108,16 +142,6 @@ export const WithIcons: Story = {
   render: renderLinkButton,
 };
 
-export const Disabled: Story = {
-  args: { disabled: true },
-  render: renderLinkButton,
-};
-
-export const Loading: Story = {
-  args: { loading: true },
-  render: renderLinkButton,
-};
-
 export const ExternalLink: Story = {
   args: {
     href: 'https://example.com',
@@ -127,18 +151,13 @@ export const ExternalLink: Story = {
   render: renderLinkButton,
 };
 
-export const AllVariants: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-      {(['small', 'default', 'large'] as const).map((size) => (
-        <div key={size} style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
-          {(['primary', 'secondary', 'outline', 'ghost', 'danger'] as const).map((variant) => (
-            <LinkButton key={variant} variant={variant} size={size} href="#">
-              {variant}
-            </LinkButton>
-          ))}
-        </div>
-      ))}
-    </div>
-  ),
+export const WithIconBoxes: Story = {
+  args: {
+    children: 'Kup bilet',
+    leadingIcon: 'icon-ticket',
+    trailingIcon: 'icon-chevron-right',
+    iconLeft: '',
+    iconRight: '',
+  },
+  render: renderLinkButtonWithBoxes,
 };

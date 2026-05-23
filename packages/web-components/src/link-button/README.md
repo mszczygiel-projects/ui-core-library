@@ -30,11 +30,11 @@ A web component link-styled button with visual variants, optional icon slots, an
 
 ## Slots
 
-| Name         | Description           |
-| ------------ | --------------------- |
+| Name         | Description               |
+| ------------ | ------------------------- |
 | default      | Link button label content |
-| `icon-left`  | Icon before the label |
-| `icon-right` | Icon after the label  |
+| `icon-left`  | Icon before the label     |
+| `icon-right` | Icon after the label      |
 
 ## Accessibility notes
 

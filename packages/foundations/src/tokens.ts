@@ -265,6 +265,13 @@ export const tokens = {
               active: 'var(--color-on-subtle-button-primary-border-active)',
               disabled: 'var(--color-on-subtle-button-primary-border-disabled)',
             },
+            separator: {
+              default: 'var(--color-on-subtle-button-primary-separator-default)',
+              hover: 'var(--color-on-subtle-button-primary-separator-hover)',
+              focus: 'var(--color-on-subtle-button-primary-separator-focus)',
+              active: 'var(--color-on-subtle-button-primary-separator-active)',
+              disabled: 'var(--color-on-subtle-button-primary-separator-disabled)',
+            },
           },
           secondary: {
             background: {
@@ -287,6 +294,13 @@ export const tokens = {
               focus: 'var(--color-on-subtle-button-secondary-border-focus)',
               active: 'var(--color-on-subtle-button-secondary-border-active)',
               disabled: 'var(--color-on-subtle-button-secondary-border-disabled)',
+            },
+            separator: {
+              default: 'var(--color-on-subtle-button-secondary-separator-default)',
+              hover: 'var(--color-on-subtle-button-secondary-separator-hover)',
+              focus: 'var(--color-on-subtle-button-secondary-separator-focus)',
+              active: 'var(--color-on-subtle-button-secondary-separator-active)',
+              disabled: 'var(--color-on-subtle-button-secondary-separator-disabled)',
             },
           },
           outline: {
@@ -311,6 +325,13 @@ export const tokens = {
               active: 'var(--color-on-subtle-button-outline-border-active)',
               disabled: 'var(--color-on-subtle-button-outline-border-disabled)',
             },
+            separator: {
+              default: 'var(--color-on-subtle-button-outline-separator-default)',
+              hover: 'var(--color-on-subtle-button-outline-separator-hover)',
+              focus: 'var(--color-on-subtle-button-outline-separator-focus)',
+              active: 'var(--color-on-subtle-button-outline-separator-active)',
+              disabled: 'var(--color-on-subtle-button-outline-separator-disabled)',
+            },
           },
           ghost: {
             background: {
@@ -334,6 +355,13 @@ export const tokens = {
               active: 'var(--color-on-subtle-button-ghost-border-active)',
               disabled: 'var(--color-on-subtle-button-ghost-border-disabled)',
             },
+            separator: {
+              default: 'var(--color-on-subtle-button-ghost-separator-default)',
+              hover: 'var(--color-on-subtle-button-ghost-separator-hover)',
+              focus: 'var(--color-on-subtle-button-ghost-separator-focus)',
+              active: 'var(--color-on-subtle-button-ghost-separator-active)',
+              disabled: 'var(--color-on-subtle-button-ghost-separator-disabled)',
+            },
           },
           danger: {
             background: {
@@ -356,6 +384,13 @@ export const tokens = {
               focus: 'var(--color-on-subtle-button-danger-border-focus)',
               active: 'var(--color-on-subtle-button-danger-border-active)',
               disabled: 'var(--color-on-subtle-button-danger-border-disabled)',
+            },
+            separator: {
+              default: 'var(--color-on-subtle-button-danger-separator-default)',
+              hover: 'var(--color-on-subtle-button-danger-separator-hover)',
+              focus: 'var(--color-on-subtle-button-danger-separator-focus)',
+              active: 'var(--color-on-subtle-button-danger-separator-active)',
+              disabled: 'var(--color-on-subtle-button-danger-separator-disabled)',
             },
           },
         },
@@ -740,6 +775,13 @@ export const tokens = {
               focus: 'var(--color-on-inverse-button-danger-text-focus)',
               hover: 'var(--color-on-inverse-button-danger-text-hover)',
             },
+            separator: {
+              default: 'var(--color-on-inverse-button-danger-separator-default)',
+              hover: 'var(--color-on-inverse-button-danger-separator-hover)',
+              focus: 'var(--color-on-inverse-button-danger-separator-focus)',
+              active: 'var(--color-on-inverse-button-danger-separator-active)',
+              disabled: 'var(--color-on-inverse-button-danger-separator-disabled)',
+            },
           },
           ghost: {
             text: {
@@ -762,6 +804,13 @@ export const tokens = {
               disabled: 'var(--color-on-inverse-button-ghost-border-disabled)',
               focus: 'var(--color-on-inverse-button-ghost-border-focus)',
               hover: 'var(--color-on-inverse-button-ghost-border-hover)',
+            },
+            separator: {
+              default: 'var(--color-on-inverse-button-ghost-separator-default)',
+              hover: 'var(--color-on-inverse-button-ghost-separator-hover)',
+              focus: 'var(--color-on-inverse-button-ghost-separator-focus)',
+              active: 'var(--color-on-inverse-button-ghost-separator-active)',
+              disabled: 'var(--color-on-inverse-button-ghost-separator-disabled)',
             },
           },
           outline: {
@@ -786,6 +835,13 @@ export const tokens = {
               focus: 'var(--color-on-inverse-button-outline-text-focus)',
               hover: 'var(--color-on-inverse-button-outline-text-hover)',
             },
+            separator: {
+              default: 'var(--color-on-inverse-button-outline-separator-default)',
+              hover: 'var(--color-on-inverse-button-outline-separator-hover)',
+              focus: 'var(--color-on-inverse-button-outline-separator-focus)',
+              active: 'var(--color-on-inverse-button-outline-separator-active)',
+              disabled: 'var(--color-on-inverse-button-outline-separator-disabled)',
+            },
           },
           primary: {
             background: {
@@ -809,6 +865,13 @@ export const tokens = {
               focus: 'var(--color-on-inverse-button-primary-text-focus)',
               hover: 'var(--color-on-inverse-button-primary-text-hover)',
             },
+            separator: {
+              default: 'var(--color-on-inverse-button-primary-separator-default)',
+              hover: 'var(--color-on-inverse-button-primary-separator-hover)',
+              focus: 'var(--color-on-inverse-button-primary-separator-focus)',
+              active: 'var(--color-on-inverse-button-primary-separator-active)',
+              disabled: 'var(--color-on-inverse-button-primary-separator-disabled)',
+            },
           },
           secondary: {
             background: {
@@ -831,6 +894,13 @@ export const tokens = {
               disabled: 'var(--color-on-inverse-button-secondary-text-disabled)',
               focus: 'var(--color-on-inverse-button-secondary-text-focus)',
               hover: 'var(--color-on-inverse-button-secondary-text-hover)',
+            },
+            separator: {
+              default: 'var(--color-on-inverse-button-secondary-separator-default)',
+              hover: 'var(--color-on-inverse-button-secondary-separator-hover)',
+              focus: 'var(--color-on-inverse-button-secondary-separator-focus)',
+              active: 'var(--color-on-inverse-button-secondary-separator-active)',
+              disabled: 'var(--color-on-inverse-button-secondary-separator-disabled)',
             },
           },
         },
@@ -1215,6 +1285,13 @@ export const tokens = {
               focus: 'var(--color-on-brand-primary-button-danger-text-focus)',
               hover: 'var(--color-on-brand-primary-button-danger-text-hover)',
             },
+            separator: {
+              default: 'var(--color-on-brand-primary-button-danger-separator-default)',
+              hover: 'var(--color-on-brand-primary-button-danger-separator-hover)',
+              focus: 'var(--color-on-brand-primary-button-danger-separator-focus)',
+              active: 'var(--color-on-brand-primary-button-danger-separator-active)',
+              disabled: 'var(--color-on-brand-primary-button-danger-separator-disabled)',
+            },
           },
           ghost: {
             text: {
@@ -1237,6 +1314,13 @@ export const tokens = {
               disabled: 'var(--color-on-brand-primary-button-ghost-border-disabled)',
               focus: 'var(--color-on-brand-primary-button-ghost-border-focus)',
               hover: 'var(--color-on-brand-primary-button-ghost-border-hover)',
+            },
+            separator: {
+              default: 'var(--color-on-brand-primary-button-ghost-separator-default)',
+              hover: 'var(--color-on-brand-primary-button-ghost-separator-hover)',
+              focus: 'var(--color-on-brand-primary-button-ghost-separator-focus)',
+              active: 'var(--color-on-brand-primary-button-ghost-separator-active)',
+              disabled: 'var(--color-on-brand-primary-button-ghost-separator-disabled)',
             },
           },
           outline: {
@@ -1261,6 +1345,13 @@ export const tokens = {
               focus: 'var(--color-on-brand-primary-button-outline-text-focus)',
               hover: 'var(--color-on-brand-primary-button-outline-text-hover)',
             },
+            separator: {
+              default: 'var(--color-on-brand-primary-button-outline-separator-default)',
+              hover: 'var(--color-on-brand-primary-button-outline-separator-hover)',
+              focus: 'var(--color-on-brand-primary-button-outline-separator-focus)',
+              active: 'var(--color-on-brand-primary-button-outline-separator-active)',
+              disabled: 'var(--color-on-brand-primary-button-outline-separator-disabled)',
+            },
           },
           primary: {
             background: {
@@ -1284,6 +1375,13 @@ export const tokens = {
               focus: 'var(--color-on-brand-primary-button-primary-text-focus)',
               hover: 'var(--color-on-brand-primary-button-primary-text-hover)',
             },
+            separator: {
+              default: 'var(--color-on-brand-primary-button-primary-separator-default)',
+              hover: 'var(--color-on-brand-primary-button-primary-separator-hover)',
+              focus: 'var(--color-on-brand-primary-button-primary-separator-focus)',
+              active: 'var(--color-on-brand-primary-button-primary-separator-active)',
+              disabled: 'var(--color-on-brand-primary-button-primary-separator-disabled)',
+            },
           },
           secondary: {
             background: {
@@ -1306,6 +1404,13 @@ export const tokens = {
               disabled: 'var(--color-on-brand-primary-button-secondary-text-disabled)',
               focus: 'var(--color-on-brand-primary-button-secondary-text-focus)',
               hover: 'var(--color-on-brand-primary-button-secondary-text-hover)',
+            },
+            separator: {
+              default: 'var(--color-on-brand-primary-button-secondary-separator-default)',
+              hover: 'var(--color-on-brand-primary-button-secondary-separator-hover)',
+              focus: 'var(--color-on-brand-primary-button-secondary-separator-focus)',
+              active: 'var(--color-on-brand-primary-button-secondary-separator-active)',
+              disabled: 'var(--color-on-brand-primary-button-secondary-separator-disabled)',
             },
           },
         },
@@ -1468,10 +1573,10 @@ export const tokens = {
         strong: 'var(--shadow-color-strong)',
       },
       elevation: {
-        "1": 'var(--shadow-elevation-1)',
-        "2": 'var(--shadow-elevation-2)',
-        "3": 'var(--shadow-elevation-3)',
-        "4": 'var(--shadow-elevation-4)',
+        '1': 'var(--shadow-elevation-1)',
+        '2': 'var(--shadow-elevation-2)',
+        '3': 'var(--shadow-elevation-3)',
+        '4': 'var(--shadow-elevation-4)',
       },
       interactive: {
         default: 'var(--shadow-interactive-default)',
@@ -1761,6 +1866,13 @@ export const tokens = {
             focus: 'var(--color-button-danger-text-focus)',
             hover: 'var(--color-button-danger-text-hover)',
           },
+          separator: {
+            default: 'var(--color-button-danger-separator-default)',
+            hover: 'var(--color-button-danger-separator-hover)',
+            focus: 'var(--color-button-danger-separator-focus)',
+            active: 'var(--color-button-danger-separator-active)',
+            disabled: 'var(--color-button-danger-separator-disabled)',
+          },
         },
         ghost: {
           background: {
@@ -1783,6 +1895,13 @@ export const tokens = {
             disabled: 'var(--color-button-ghost-text-disabled)',
             focus: 'var(--color-button-ghost-text-focus)',
             hover: 'var(--color-button-ghost-text-hover)',
+          },
+          separator: {
+            default: 'var(--color-button-ghost-separator-default)',
+            hover: 'var(--color-button-ghost-separator-hover)',
+            focus: 'var(--color-button-ghost-separator-focus)',
+            active: 'var(--color-button-ghost-separator-active)',
+            disabled: 'var(--color-button-ghost-separator-disabled)',
           },
         },
         outline: {
@@ -1807,6 +1926,13 @@ export const tokens = {
             focus: 'var(--color-button-outline-text-focus)',
             hover: 'var(--color-button-outline-text-hover)',
           },
+          separator: {
+            default: 'var(--color-button-outline-separator-default)',
+            hover: 'var(--color-button-outline-separator-hover)',
+            focus: 'var(--color-button-outline-separator-focus)',
+            active: 'var(--color-button-outline-separator-active)',
+            disabled: 'var(--color-button-outline-separator-disabled)',
+          },
         },
         primary: {
           background: {
@@ -1830,6 +1956,13 @@ export const tokens = {
             focus: 'var(--color-button-primary-text-focus)',
             hover: 'var(--color-button-primary-text-hover)',
           },
+          separator: {
+            default: 'var(--color-button-primary-separator-default)',
+            hover: 'var(--color-button-primary-separator-hover)',
+            focus: 'var(--color-button-primary-separator-focus)',
+            active: 'var(--color-button-primary-separator-active)',
+            disabled: 'var(--color-button-primary-separator-disabled)',
+          },
         },
         secondary: {
           background: {
@@ -1852,6 +1985,13 @@ export const tokens = {
             disabled: 'var(--color-button-secondary-text-disabled)',
             focus: 'var(--color-button-secondary-text-focus)',
             hover: 'var(--color-button-secondary-text-hover)',
+          },
+          separator: {
+            default: 'var(--color-button-secondary-separator-default)',
+            hover: 'var(--color-button-secondary-separator-hover)',
+            focus: 'var(--color-button-secondary-separator-focus)',
+            active: 'var(--color-button-secondary-separator-active)',
+            disabled: 'var(--color-button-secondary-separator-disabled)',
           },
         },
       },
@@ -1984,12 +2124,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -2064,8 +2204,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          lineHeight: 'var(--typography-body-large-line-height)',
           letterSpacing: 'var(--typography-body-large-letter-spacing)',
+          lineHeight: 'var(--typography-body-large-line-height)',
         },
       },
       caption: {
@@ -2248,6 +2388,9 @@ export const tokens = {
           inline: 'var(--button-small-padding-inline)',
           stack: 'var(--button-small-padding-stack)',
         },
+        separator: {
+          inset: 'var(--button-small-separator-inset)',
+        },
       },
       large: {
         fontSize: 'var(--button-large-font-size)',
@@ -2260,6 +2403,12 @@ export const tokens = {
         icon: {
           size: 'var(--button-large-icon-size)',
         },
+        separator: {
+          inset: 'var(--button-large-separator-inset)',
+        },
+      },
+      separator: {
+        inset: 'var(--button-separator-inset)',
       },
     },
     checkbox: {

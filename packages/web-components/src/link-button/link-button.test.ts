@@ -142,4 +142,66 @@ describe('UiLinkButton', () => {
     const slot = el.shadowRoot!.querySelector<HTMLSlotElement>('slot[name="icon-left"]');
     expect(slot!.assignedElements()[0].textContent).to.equal('★');
   });
+
+  it('renders leading icon box and separator when has-leading-icon is set', async () => {
+    const el = await fixture<UiLinkButton>(
+      html`<ui-link-button href="/page" has-leading-icon>
+        <span slot="leading-icon">★</span>Click
+      </ui-link-button>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon-box--leading')).to.not.equal(null);
+    expect(el.shadowRoot!.querySelector('.separator')).to.not.equal(null);
+  });
+
+  it('renders trailing icon box and separator when has-trailing-icon is set', async () => {
+    const el = await fixture<UiLinkButton>(
+      html`<ui-link-button href="/page" has-trailing-icon>
+        <span slot="trailing-icon">→</span>Click
+      </ui-link-button>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon-box--trailing')).to.not.equal(null);
+    expect(el.shadowRoot!.querySelector('.separator')).to.not.equal(null);
+  });
+
+  it('renders two separators when both icon boxes are set', async () => {
+    const el = await fixture<UiLinkButton>(
+      html`<ui-link-button href="/page" has-leading-icon has-trailing-icon>
+        <span slot="leading-icon">★</span>
+        <span slot="trailing-icon">→</span>
+        Click
+      </ui-link-button>`,
+    );
+    expect(el.shadowRoot!.querySelectorAll('.separator')).to.have.length(2);
+  });
+
+  it('does not render icon boxes when neither attribute is set', async () => {
+    const el = await fixture<UiLinkButton>(
+      html`<ui-link-button href="/page">Click</ui-link-button>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon-box')).to.equal(null);
+    expect(el.shadowRoot!.querySelector('.separator')).to.equal(null);
+  });
+
+  it('icon boxes have no role or tabindex — no split mode on LinkButton', async () => {
+    const el = await fixture<UiLinkButton>(
+      html`<ui-link-button href="/page" has-leading-icon has-trailing-icon>
+        <span slot="leading-icon">★</span>
+        <span slot="trailing-icon">→</span>
+        Click
+      </ui-link-button>`,
+    );
+    const boxes = el.shadowRoot!.querySelectorAll('.icon-box');
+    boxes.forEach((box) => {
+      expect(box.getAttribute('role')).to.equal(null);
+      expect(box.getAttribute('tabindex')).to.equal(null);
+    });
+  });
+
+  it('content wrapper is rendered inside <a>', async () => {
+    const el = await fixture<UiLinkButton>(
+      html`<ui-link-button href="/page">Click</ui-link-button>`,
+    );
+    const a = el.shadowRoot!.querySelector('a')!;
+    expect(a.querySelector('.content')).to.not.equal(null);
+  });
 });

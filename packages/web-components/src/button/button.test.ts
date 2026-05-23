@@ -103,4 +103,105 @@ describe('UiButton', () => {
 
     expect(submittedValue).to.equal('accept');
   });
+
+  it('renders leading icon box and separator when has-leading-icon is set', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-leading-icon> <span slot="leading-icon">★</span>Click </ui-button>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon-box--leading')).to.not.equal(null);
+    expect(el.shadowRoot!.querySelector('.separator')).to.not.equal(null);
+  });
+
+  it('renders trailing icon box and separator when has-trailing-icon is set', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-trailing-icon> <span slot="trailing-icon">★</span>Click </ui-button>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon-box--trailing')).to.not.equal(null);
+    expect(el.shadowRoot!.querySelector('.separator')).to.not.equal(null);
+  });
+
+  it('renders two separators when both icon boxes are set', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-leading-icon has-trailing-icon>
+        <span slot="leading-icon">★</span>
+        <span slot="trailing-icon">→</span>
+        Click
+      </ui-button>`,
+    );
+    expect(el.shadowRoot!.querySelectorAll('.separator')).to.have.length(2);
+  });
+
+  it('does not add split class without split-leading attribute', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-leading-icon><span slot="leading-icon">★</span>Click</ui-button>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon-box--split')).to.equal(null);
+  });
+
+  it('adds split class and role=button when split-leading is set', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-leading-icon split-leading>
+        <span slot="leading-icon">★</span>Click
+      </ui-button>`,
+    );
+    const box = el.shadowRoot!.querySelector('.icon-box--leading');
+    expect(box?.classList.contains('icon-box--split')).to.equal(true);
+    expect(box?.getAttribute('role')).to.equal('button');
+    expect(box?.getAttribute('tabindex')).to.equal('0');
+  });
+
+  it('dispatches leading-icon-click and stops propagation when split leading is clicked', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-leading-icon split-leading>
+        <span slot="leading-icon">★</span>Click
+      </ui-button>`,
+    );
+    const box = el.shadowRoot!.querySelector('.icon-box--leading')!;
+
+    let leadingFired = false;
+    let buttonClicked = false;
+
+    el.addEventListener('leading-icon-click', () => {
+      leadingFired = true;
+    });
+    el.shadowRoot!.querySelector('button')!.addEventListener('click', () => {
+      buttonClicked = true;
+    });
+
+    (box as HTMLElement).click();
+    await el.updateComplete;
+
+    expect(leadingFired).to.equal(true);
+    expect(buttonClicked).to.equal(false);
+  });
+
+  it('dispatches trailing-icon-click when split trailing is clicked', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-trailing-icon split-trailing>
+        <span slot="trailing-icon">→</span>Click
+      </ui-button>`,
+    );
+    const box = el.shadowRoot!.querySelector('.icon-box--trailing')!;
+
+    let trailingFired = false;
+    el.addEventListener('trailing-icon-click', () => {
+      trailingFired = true;
+    });
+
+    (box as HTMLElement).click();
+    await el.updateComplete;
+
+    expect(trailingFired).to.equal(true);
+  });
+
+  it('split mode disabled when button is disabled — no role/tabIndex on icon box', async () => {
+    const el = await fixture<UiButton>(
+      html`<ui-button has-leading-icon split-leading disabled>
+        <span slot="leading-icon">★</span>Click
+      </ui-button>`,
+    );
+    const box = el.shadowRoot!.querySelector('.icon-box--leading');
+    expect(box?.getAttribute('role')).to.equal(null);
+    expect(box?.getAttribute('tabindex')).to.equal(null);
+  });
 });
