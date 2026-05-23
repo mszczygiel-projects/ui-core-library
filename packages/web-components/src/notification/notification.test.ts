@@ -138,5 +138,4 @@ describe('UiNotification', () => {
     );
     expect(el.variant).to.equal('default');
   });
-
 });
