@@ -9,7 +9,7 @@ import { resetStyles } from '../styles/reset.styles.js';
 export type TextFieldVariant = 'outline' | 'filled' | 'underlined';
 export type TextFieldSize = 'small' | 'default' | 'large';
 export type TextFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type TextFieldLabelPlacement = 'top' | 'floating';
+export type TextFieldLabelPlacement = 'top' | 'floating' | 'inner';
 
 @customElement('ui-text-field')
 export class UiTextField extends LitElement {
@@ -52,9 +52,11 @@ export class UiTextField extends LitElement {
   }
 
   private get _isFloating(): boolean {
-    if (this.variant === 'filled') return false;
-    if (this.variant === 'underlined') return true;
     return this.labelPlacement === 'floating';
+  }
+
+  private get _isInner(): boolean {
+    return this.labelPlacement === 'inner';
   }
 
   private get _isDisabled(): boolean {
@@ -131,14 +133,18 @@ export class UiTextField extends LitElement {
 
   override render() {
     const isFloating = this._isFloating;
+    const isInner = this._isInner;
     const isDisabled = this._isDisabled;
     const hintId = 'hint';
 
     return html`
-      ${!isFloating && this.label
+      ${!isFloating && !isInner && this.label
         ? html`<label class="label" for="input">${this.label}</label>`
         : nothing}
       <div class="field-wrapper">
+        ${isInner && this.label
+          ? html`<label class="label" for="input">${this.label}</label>`
+          : nothing}
         <slot
           name="leading-icon"
           class="icon icon--leading"

@@ -516,7 +516,7 @@ describe('buildTokensCss — dark mode block', () => {
     );
     const css = buildWithThemes([differs]);
     expect(css).toContain(
-      '@media (prefers-color-scheme: dark) {\n  :root, [data-surface="default"] {',
+      '@media (prefers-color-scheme: dark) {\n  :root,\n  [data-surface="default"] {',
     );
   });
 
@@ -767,21 +767,21 @@ describe('tokens.css — generated output', () => {
   });
 
   it('Themes block includes [data-surface="default"] selector', () => {
-    expect(css).toContain('/* === Themes === */\n:root, [data-surface="default"] {');
+    expect(css).toMatch(/\/\* === Themes === \*\/\n:root,\s*\n\s*\[data-surface="default"\] \{/);
   });
 
   it('Themes (Dark) block includes [data-surface="default"] selector', () => {
-    expect(css).toContain(
-      '/* === Themes (Dark) === */\n@media (prefers-color-scheme: dark) {\n  :root, [data-surface="default"] {',
+    expect(css).toMatch(
+      /\/\* === Themes \(Dark\) === \*\/\n@media \(prefers-color-scheme: dark\) \{\n\s*:root,\s*\n\s*\[data-surface="default"\] \{/,
     );
   });
 
   it('dark block contains fewer declarations than the Themes default block', () => {
     const darkMatch = css.match(
-      /@media \(prefers-color-scheme: dark\) \{\s*:root, \[data-surface="default"\] \{([\s\S]*?)\}\s*\}/,
+      /@media \(prefers-color-scheme: dark\) \{\s*:root,\s*\n?\s*\[data-surface="default"\] \{([\s\S]*?)\}\s*\}/,
     );
     const themesMatch = css.match(
-      /\/\* === Themes === \*\/\n:root, \[data-surface="default"\] \{([\s\S]*?)\n\}/,
+      /\/\* === Themes === \*\/\n:root,\s*\n?\s*\[data-surface="default"\] \{([\s\S]*?)\n\}/,
     );
     expect(darkMatch).not.toBeNull();
     expect(themesMatch).not.toBeNull();

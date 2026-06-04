@@ -53,7 +53,7 @@ Use `defaultValue` (uncontrolled) to get automatic reset-to-initial-value behavi
 | `variant`        | `'outline' \| 'filled' \| 'underlined'`           | `'outline'` | Visual style                             |
 | `size`           | `'small' \| 'default' \| 'large'`                 | `'default'` | Field size                               |
 | `label`          | `string`                                          | —           | Label text                               |
-| `labelPlacement` | `'top' \| 'floating'`                             | `'top'`     | Where to render the label                |
+| `labelPlacement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`     | Where to render the label                |
 | `placeholder`    | `string`                                          | `''`        | Placeholder text                         |
 | `hint`           | `string`                                          | —           | Helper text rendered below the field     |
 | `state`          | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'` | Visual and a11y state                    |

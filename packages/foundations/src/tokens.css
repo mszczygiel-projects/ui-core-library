@@ -4791,6 +4791,12 @@
   --control-label-letter-spacing: var(--typography-eyebrow-letter-spacing);
   --control-label-font-family: var(--typography-eyebrow-font-familly);
   --control-label-text-transform: var(--typography-eyebrow-text-transform);
+  --control-label-inner-font-size: var(--control-label-font-size);
+  --control-label-inner-line-height: var(--control-label-line-height);
+  --control-label-inner-font-weight: var(--control-label-font-weight);
+  --control-label-inner-letter-spacing: var(--control-label-letter-spacing);
+  --control-label-inner-font-family: var(--control-label-font-family);
+  --control-label-inner-text-transform: var(--control-label-text-transform);
   --control-hint-font-size: var(--text-xs);
   --control-hint-line-height: var(--text-xs--line-height);
   --control-hint-font-weight: var(--font-weight-normal);

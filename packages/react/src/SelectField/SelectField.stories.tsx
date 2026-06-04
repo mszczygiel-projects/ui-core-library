@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import type { ComponentProps } from 'react';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
+import * as Icons from '@mszczygiel-projects/ui-core-icons/react';
 import { SelectField } from './SelectField.js';
+
+type IconName = keyof typeof svgMap;
+
+const iconOptions = Object.keys(svgMap) as IconName[];
 
 const FRUIT_OPTIONS = [
   { value: 'apple', label: 'Apple' },
@@ -10,7 +17,31 @@ const FRUIT_OPTIONS = [
   { value: 'elderberry', label: 'Elderberry' },
 ];
 
-const meta: Meta<typeof SelectField> = {
+type SelectFieldStoryArgs = Omit<ComponentProps<typeof SelectField>, 'leadingIcon'> & {
+  leadingIcon?: IconName | '';
+};
+
+const toIconExportName = (name: IconName) =>
+  name
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+
+const renderIcon = (name?: IconName | '') => {
+  if (!name) {
+    return undefined;
+  }
+
+  const IconComponent = Icons[toIconExportName(name) as keyof typeof Icons];
+
+  return IconComponent ? <IconComponent /> : undefined;
+};
+
+const renderSelectField = ({ leadingIcon, ...args }: SelectFieldStoryArgs) => (
+  <SelectField {...args} leadingIcon={renderIcon(leadingIcon)} />
+);
+
+const meta: Meta<SelectFieldStoryArgs> = {
   title: 'React/SelectField',
   component: SelectField,
   argTypes: {
@@ -22,84 +53,73 @@ const meta: Meta<typeof SelectField> = {
       control: 'select',
       options: ['small', 'default', 'large'],
     },
+    labelPlacement: {
+      control: 'select',
+      options: ['top', 'inner'],
+    },
     state: {
       control: 'select',
       options: ['default', 'success', 'error', 'disabled'],
     },
     label: { control: 'text' },
-    hint: { control: 'text' },
     placeholder: { control: 'text' },
+    hint: { control: 'text' },
     clearable: { control: 'boolean' },
     disabled: { control: 'boolean' },
+    leadingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'outline',
     size: 'default',
+    labelPlacement: 'top',
     state: 'default',
-    label: 'Label',
+    label: 'Fruit',
     placeholder: 'Select option...',
     options: FRUIT_OPTIONS,
     clearable: false,
+    leadingIcon: '',
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof SelectField>;
+type Story = StoryObj<SelectFieldStoryArgs>;
 
-export const Default: Story = {};
-
-export const WithValue: Story = {
-  args: { value: 'banana' },
+export const Outline: Story = {
+  args: {},
+  render: renderSelectField,
 };
 
-export const WithHint: Story = {
-  args: { hint: 'Choose your favourite fruit.' },
+export const Filled: Story = {
+  args: { variant: 'filled' },
+  render: renderSelectField,
+};
+
+export const Underlined: Story = {
+  args: { variant: 'underlined' },
+  render: renderSelectField,
+};
+
+export const OutlineInnerLabel: Story = {
+  args: { labelPlacement: 'inner' },
+  render: renderSelectField,
+};
+
+export const FilledInnerLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'inner' },
+  render: renderSelectField,
+};
+
+export const UnderlinedInnerLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'inner' },
+  render: renderSelectField,
 };
 
 export const Clearable: Story = {
   args: { value: 'apple', clearable: true },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <SelectField size="small" label="Small" options={FRUIT_OPTIONS} />
-      <SelectField size="default" label="Default" options={FRUIT_OPTIONS} />
-      <SelectField size="large" label="Large" options={FRUIT_OPTIONS} />
-    </div>
-  ),
-};
-
-export const States: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <SelectField state="default" label="Default" options={FRUIT_OPTIONS} />
-      <SelectField
-        state="success"
-        label="Success"
-        hint="Great choice!"
-        value="apple"
-        options={FRUIT_OPTIONS}
-      />
-      <SelectField
-        state="error"
-        label="Error"
-        hint="Please select an option."
-        options={FRUIT_OPTIONS}
-      />
-      <SelectField state="disabled" label="Disabled" options={FRUIT_OPTIONS} />
-    </div>
-  ),
-};
-
-export const Variants: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <SelectField variant="outline" label="Outline" options={FRUIT_OPTIONS} />
-      <SelectField variant="filled" label="Filled" options={FRUIT_OPTIONS} />
-      <SelectField variant="underlined" label="Underlined" options={FRUIT_OPTIONS} />
-    </div>
-  ),
+  render: renderSelectField,
 };
 
 export const Controlled: Story = {
@@ -120,24 +140,4 @@ export const Controlled: Story = {
       </div>
     );
   },
-};
-
-export const AllVariantsAndSizes: Story = {
-  render: () => (
-    <div
-      style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1.5rem', maxWidth: 800 }}
-    >
-      {(['outline', 'filled', 'underlined'] as const).map((variant) =>
-        (['small', 'default', 'large'] as const).map((size) => (
-          <SelectField
-            key={`${variant}-${size}`}
-            variant={variant}
-            size={size}
-            label={`${variant} / ${size}`}
-            options={FRUIT_OPTIONS}
-          />
-        )),
-      )}
-    </div>
-  ),
 };

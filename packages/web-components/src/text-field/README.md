@@ -60,7 +60,7 @@ Both the native events and the `ui-*` custom events bubble and are composed (cro
 | `variant`        | `variant`         | `'outline' \| 'filled' \| 'underlined'`           | `'outline'` |
 | `size`           | `data-size`       | `'small' \| 'default' \| 'large'`                 | `'default'` |
 | `label`          | `label`           | `string`                                          | —           |
-| `labelPlacement` | `label-placement` | `'top' \| 'floating'`                             | `'top'`     |
+| `labelPlacement` | `label-placement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`     |
 | `placeholder`    | `placeholder`     | `string`                                          | `''`        |
 | `value`          | `value`           | `string`                                          | `''`        |
 | `hint`           | `hint`            | `string`                                          | —           |

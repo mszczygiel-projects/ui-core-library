@@ -10,7 +10,7 @@ import { resetStyles } from '../styles/reset.styles.js';
 export type PasswordFieldVariant = 'outline' | 'filled' | 'underlined';
 export type PasswordFieldSize = 'small' | 'default' | 'large';
 export type PasswordFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type PasswordFieldLabelPlacement = 'top' | 'floating';
+export type PasswordFieldLabelPlacement = 'top' | 'floating' | 'inner';
 
 @customElement('ui-password-field')
 export class UiPasswordField extends LitElement {
@@ -51,9 +51,11 @@ export class UiPasswordField extends LitElement {
   }
 
   private get _isFloating(): boolean {
-    if (this.variant === 'filled') return false;
-    if (this.variant === 'underlined') return true;
     return this.labelPlacement === 'floating';
+  }
+
+  private get _isInner(): boolean {
+    return this.labelPlacement === 'inner';
   }
 
   private get _isDisabled(): boolean {
@@ -124,6 +126,7 @@ export class UiPasswordField extends LitElement {
 
   override render() {
     const isFloating = this._isFloating;
+    const isInner = this._isInner;
     const isDisabled = this._isDisabled;
     const hintId = 'hint';
     const inputType = this.showPassword ? 'text' : 'password';
@@ -131,10 +134,13 @@ export class UiPasswordField extends LitElement {
     const toggleIcon = this.showPassword ? svgMap['icon-eye'] : svgMap['icon-eye-slash'];
 
     return html`
-      ${!isFloating && this.label
+      ${!isFloating && !isInner && this.label
         ? html`<label class="label" for="input">${this.label}</label>`
         : nothing}
       <div class="field-wrapper">
+        ${isInner && this.label
+          ? html`<label class="label" for="input">${this.label}</label>`
+          : nothing}
         <input
           id="input"
           class="input"

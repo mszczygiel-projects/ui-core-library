@@ -1,9 +1,43 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { IconSearch } from '@mszczygiel-projects/ui-core-icons/react';
-import { IconDanger } from '@mszczygiel-projects/ui-core-icons/react';
+import type { ComponentProps } from 'react';
+import { svgMap } from '@mszczygiel-projects/ui-core-icons';
+import * as Icons from '@mszczygiel-projects/ui-core-icons/react';
 import { TextField } from './TextField.js';
 
-const meta: Meta<typeof TextField> = {
+type IconName = keyof typeof svgMap;
+
+const iconOptions = Object.keys(svgMap) as IconName[];
+
+type TextFieldStoryArgs = Omit<ComponentProps<typeof TextField>, 'leadingIcon' | 'trailingIcon'> & {
+  leadingIcon?: IconName | '';
+  trailingIcon?: IconName | '';
+};
+
+const toIconExportName = (name: IconName) =>
+  name
+    .split('-')
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join('');
+
+const renderIcon = (name?: IconName | '') => {
+  if (!name) {
+    return undefined;
+  }
+
+  const IconComponent = Icons[toIconExportName(name) as keyof typeof Icons];
+
+  return IconComponent ? <IconComponent /> : undefined;
+};
+
+const renderTextField = ({ leadingIcon, trailingIcon, ...args }: TextFieldStoryArgs) => (
+  <TextField
+    {...args}
+    leadingIcon={renderIcon(leadingIcon)}
+    trailingIcon={renderIcon(trailingIcon)}
+  />
+);
+
+const meta: Meta<TextFieldStoryArgs> = {
   title: 'React/TextField',
   component: TextField,
   argTypes: {
@@ -17,7 +51,7 @@ const meta: Meta<typeof TextField> = {
     },
     labelPlacement: {
       control: 'select',
-      options: ['top', 'floating'],
+      options: ['top', 'floating', 'inner'],
     },
     state: {
       control: 'select',
@@ -27,6 +61,14 @@ const meta: Meta<typeof TextField> = {
     placeholder: { control: 'text' },
     hint: { control: 'text' },
     disabled: { control: 'boolean' },
+    leadingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
+    trailingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'outline',
@@ -35,66 +77,55 @@ const meta: Meta<typeof TextField> = {
     state: 'default',
     label: 'Email address',
     placeholder: 'you@example.com',
+    leadingIcon: '',
+    trailingIcon: '',
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof TextField>;
+type Story = StoryObj<TextFieldStoryArgs>;
 
-export const Outline: Story = {};
+export const Outline: Story = {
+  args: {},
+  render: renderTextField,
+};
 
 export const Filled: Story = {
   args: { variant: 'filled' },
+  render: renderTextField,
 };
 
 export const Underlined: Story = {
+  args: { variant: 'underlined' },
+  render: renderTextField,
+};
+
+export const OutlineInnerLabel: Story = {
+  args: { labelPlacement: 'inner' },
+  render: renderTextField,
+};
+
+export const FilledInnerLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'inner' },
+  render: renderTextField,
+};
+
+export const UnderlinedInnerLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'inner' },
+  render: renderTextField,
+};
+
+export const OutlineFloatingLabel: Story = {
+  args: { labelPlacement: 'floating' },
+  render: renderTextField,
+};
+
+export const FilledFloatingLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'floating' },
+  render: renderTextField,
+};
+
+export const UnderlinedFloatingLabel: Story = {
   args: { variant: 'underlined', labelPlacement: 'floating' },
-};
-
-export const FloatingLabel: Story = {
-  args: { labelPlacement: 'floating', label: 'Email address', placeholder: '' },
-};
-
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <TextField size="small" label="Small" placeholder="Small input" />
-      <TextField size="default" label="Default" placeholder="Default input" />
-      <TextField size="large" label="Large" placeholder="Large input" />
-    </div>
-  ),
-};
-
-export const States: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <TextField state="default" label="Default" placeholder="Default state" />
-      <TextField state="success" label="Success" placeholder="Success state" hint="Looks good!" />
-      <TextField
-        state="error"
-        label="Error"
-        placeholder="Error state"
-        hint="This field is required."
-      />
-      <TextField state="disabled" label="Disabled" placeholder="Disabled state" />
-    </div>
-  ),
-};
-
-export const WithHint: Story = {
-  args: { hint: 'We will never share your email.' },
-};
-
-export const WithLeadingIcon: Story = {
-  args: { label: 'Search', placeholder: 'Search…', leadingIcon: <IconSearch /> },
-};
-
-export const WithTrailingIcon: Story = {
-  args: {
-    state: 'error',
-    label: 'Email',
-    placeholder: 'you@example.com',
-    hint: 'Invalid email.',
-    trailingIcon: <IconDanger />,
-  },
+  render: renderTextField,
 };

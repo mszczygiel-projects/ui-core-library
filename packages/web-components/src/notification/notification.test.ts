@@ -42,12 +42,18 @@ describe('UiNotification', () => {
     expect(headingEl?.textContent?.trim()).to.equal('Hello world');
   });
 
-  it('container has role="alert"', async () => {
-    const el = await fixture<UiNotification>(
+  it('container has role="status" by default and role="alert" for error', async () => {
+    const statusEl = await fixture<UiNotification>(
       html`<ui-notification heading="Test"></ui-notification>`,
     );
-    const container = el.shadowRoot!.querySelector('.container');
-    expect(container?.getAttribute('role')).to.equal('alert');
+    const statusContainer = statusEl.shadowRoot!.querySelector('.container');
+    expect(statusContainer?.getAttribute('role')).to.equal('status');
+
+    const alertEl = await fixture<UiNotification>(
+      html`<ui-notification heading="Test" status="error"></ui-notification>`,
+    );
+    const alertContainer = alertEl.shadowRoot!.querySelector('.container');
+    expect(alertContainer?.getAttribute('role')).to.equal('alert');
   });
 
   it('renders close button by default', async () => {

@@ -6,6 +6,11 @@ A form-associated web component select with custom trigger/listbox UI.
 
 ```html
 <ui-select-field label="Country" name="country"></ui-select-field>
+
+<!-- with leading icon -->
+<ui-select-field label="Country" name="country">
+  <span slot="leading-icon"><!-- svg --></span>
+</ui-select-field>
 ```
 
 ```ts
@@ -50,19 +55,26 @@ Clear action (`Enter`, `Space`, mouse) emits value-change events and does not op
 
 ## Props
 
-| Property      | Attribute     | Type                                              | Default              |
-| ------------- | ------------- | ------------------------------------------------- | -------------------- |
-| `variant`     | `variant`     | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`          |
-| `size`        | `data-size`   | `'small' \| 'default' \| 'large'`                 | `'default'`          |
-| `label`       | `label`       | `string`                                          | —                    |
-| `hint`        | `hint`        | `string`                                          | —                    |
-| `state`       | `state`       | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`          |
-| `placeholder` | `placeholder` | `string`                                          | `'Select option...'` |
-| `value`       | `value`       | `string`                                          | `''`                 |
-| `options`     | —             | `SelectOption[]`                                  | `[]`                 |
-| `disabled`    | `disabled`    | `boolean`                                         | `false`              |
-| `clearable`   | `clearable`   | `boolean`                                         | `false`              |
-| `name`        | `name`        | `string`                                          | —                    |
+| Property         | Attribute         | Type                                              | Default              |
+| ---------------- | ----------------- | ------------------------------------------------- | -------------------- |
+| `variant`        | `variant`         | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`          |
+| `size`           | `data-size`       | `'small' \| 'default' \| 'large'`                 | `'default'`          |
+| `labelPlacement` | `label-placement` | `'top' \| 'inner'`                                | `'top'`              |
+| `label`          | `label`           | `string`                                          | —                    |
+| `hint`           | `hint`            | `string`                                          | —                    |
+| `state`          | `state`           | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`          |
+| `placeholder`    | `placeholder`     | `string`                                          | `'Select option...'` |
+| `value`          | `value`           | `string`                                          | `''`                 |
+| `options`        | —                 | `SelectOption[]`                                  | `[]`                 |
+| `disabled`       | `disabled`        | `boolean`                                         | `false`              |
+| `clearable`      | `clearable`       | `boolean`                                         | `false`              |
+| `name`           | `name`            | `string`                                          | —                    |
+
+## Slots
+
+| Slot           | Description                             |
+| -------------- | --------------------------------------- |
+| `leading-icon` | Icon rendered before the selected value |
 
 ## Types
 

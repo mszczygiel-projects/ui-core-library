@@ -25,6 +25,7 @@ export const textFieldStyles = css`
     --_padding-inline-icon: var(--control-padding-inline-has-icon);
     --_radius: var(--control-radius);
     --_icon-size: var(--control-icon-size);
+    --_inside_label_vertical_gap: 0px;
   }
 
   :host([data-size='small']) {
@@ -34,6 +35,7 @@ export const textFieldStyles = css`
     --_padding-inline-icon: var(--control-small-padding-inline-has-icon);
     --_radius: var(--control-small-radius);
     --_icon-size: var(--control-small-icon-size);
+    --_inside_label_vertical_gap: 0px;
   }
 
   :host([data-size='large']) {
@@ -43,6 +45,7 @@ export const textFieldStyles = css`
     --_padding-inline-icon: var(--control-large-padding-inline-has-icon);
     --_radius: var(--control-large-radius);
     --_icon-size: var(--control-large-icon-size);
+    --_inside_label_vertical_gap: var(--spacing-1);
   }
 
   /* ---- Variant color aliases: outline + underlined (share same tokens) ---- */
@@ -100,6 +103,12 @@ export const textFieldStyles = css`
     --_icon-disabled: var(--color-control-outline-icon-disabled);
 
     --_border-width: var(--control-border-width);
+
+    /*
+     * Chip background for the floating label when it sits at the top of the field.
+     * Outline/Underlined: opaque page background to visually cut through the border.
+     */
+    --_label-chip-bg: var(--color-background-default);
   }
 
   /* ---- Variant color aliases: filled ---- */
@@ -155,6 +164,22 @@ export const textFieldStyles = css`
     --_icon-disabled: var(--color-control-filled-icon-disabled);
 
     --_border-width: var(--control-border-width);
+
+    /*
+     * Chip background for the floating label: matches the filled field background
+     * so the chip blends in rather than cutting through an invisible border.
+     */
+    --_label-chip-bg: var(--_bg);
+  }
+
+  :host([variant='underlined']) {
+    --_padding-inline: 0px;
+  }
+
+  :host([label-placement='floating']) {
+    --_padding-inline-icon: calc(
+      var(--control-icon-size) + var(--spacing-2) + var(--_padding-inline)
+    );
   }
 
   /* ---- Label (top placement) ---- */
@@ -204,7 +229,7 @@ export const textFieldStyles = css`
 
     background-color: var(--_bg);
     border: var(--_border-width) solid var(--_border);
-    border-radius: var(--text-input-border-radius, var(--_radius));
+    border-radius: var(--_radius);
   }
 
   .field-wrapper:hover {
@@ -340,6 +365,65 @@ export const textFieldStyles = css`
     padding-inline-end: 0;
   }
 
+  /* ---- Inner label ---- */
+
+  :host([label-placement='inner']) {
+    --_inner-label-size: var(--size-4);
+  }
+
+  :host([label-placement='inner']) .label {
+    position: absolute;
+    top: var(--_padding-stack);
+    inset-inline-start: var(--_padding-inline);
+    margin: 0;
+    font-size: var(--control-label-inner-font-size);
+    line-height: var(--control-label-inner-line-height);
+    font-weight: var(--control-label-inner-font-weight);
+    font-family: var(--control-label-inner-font-family);
+    text-transform: var(--control-label-inner-text-transform);
+    letter-spacing: var(--control-label-inner-letter-spacing);
+    color: var(--_label);
+    pointer-events: none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  :host([has-leading-icon][label-placement='inner']) .label {
+    inset-inline-start: var(--_padding-inline);
+  }
+
+  :host([label-placement='inner']) .field-wrapper:hover .label {
+    color: var(--_label-hover);
+  }
+
+  :host([label-placement='inner']) .field-wrapper:focus-within .label {
+    color: var(--_label-active);
+  }
+
+  :host([state='success'][label-placement='inner']) .label {
+    color: var(--_label-success);
+  }
+
+  :host([state='error'][label-placement='inner']) .label {
+    color: var(--_label-error);
+  }
+
+  :host([state='disabled'][label-placement='inner']) .label,
+  :host([disabled][label-placement='inner']) .label {
+    color: var(--_label-disabled);
+  }
+
+  :host([label-placement='inner']) .input,
+  :host([label-placement='inner']) .icon--leading,
+  :host([label-placement='inner']) .icon--trailing {
+    padding-block-start: calc(
+      var(--_padding-stack) - 2 * var(--_border-width) + var(--_inner-label-size) +
+        var(--_inside_label_vertical_gap)
+    );
+    padding-block-end: calc(var(--_padding-stack) - 2 * var(--_border-width));
+  }
+
   /* ---- Floating label ---- */
 
   /*
@@ -347,10 +431,11 @@ export const textFieldStyles = css`
    * Input uses placeholder=" " (single space) to drive :placeholder-shown state.
    * When empty+unfocused: label centered = acts as visual placeholder.
    * When filled or focused: label shrunken at top.
+   *
+   * Applies to label-placement='floating' for all variants (outline, filled, underlined).
    */
 
-  :host([label-placement='floating']) .label,
-  :host([variant='underlined']) .label {
+  :host([label-placement='floating']) .label {
     position: absolute;
     inset-inline-start: var(--_padding-inline);
     top: calc(var(--size-3) * -1);
@@ -364,7 +449,7 @@ export const textFieldStyles = css`
     color: var(--_label);
     padding: 0 var(--size-1);
     left: var(--size-2);
-    background-color: var(--color-background-default);
+    background-color: var(--_label-chip-bg);
     pointer-events: none;
     margin: 0;
     white-space: nowrap;
@@ -377,15 +462,8 @@ export const textFieldStyles = css`
       transform var(--duration-150) ease;
   }
 
-  /* Leading icon shifts floating label */
-  :host([has-leading-icon][label-placement='floating']) .label,
-  :host([has-leading-icon][variant='underlined']) .label {
-    inset-inline-start: var(--_padding-inline-icon);
-  }
-
   /* Empty + unfocused: label centered acts as placeholder */
-  :host([label-placement='floating']) .input:placeholder-shown ~ .label,
-  :host([variant='underlined']) .input:placeholder-shown ~ .label {
+  :host([label-placement='floating']) .input:placeholder-shown ~ .label {
     top: 50%;
     transform: translateY(-50%);
     font-size: var(--_font-size);
@@ -395,34 +473,34 @@ export const textFieldStyles = css`
     left: var(--_padding-inline);
   }
 
+  /* Leading icon shifts floating label */
+  :host([has-leading-icon][label-placement='floating']) .input:placeholder-shown ~ .label {
+    left: var(--_padding-inline-icon);
+  }
+
   /* Filled or focused: label shrunken at top */
-  :host([label-placement='floating']) .field-wrapper:focus-within .label,
-  :host([variant='underlined']) .field-wrapper:focus-within .label {
+  :host([label-placement='floating']) .field-wrapper:focus-within .label {
     top: calc(var(--size-3) * -1);
     transform: translateY(0);
     font-size: var(--control-label-floating-font-size);
     color: var(--_label-active);
     padding: 0 var(--size-1);
-    background-color: var(--color-background-default);
+    background-color: var(--_label-chip-bg);
     left: var(--size-2);
   }
 
   /* Floating label state colors */
 
-  :host([state='success'][label-placement='floating']) .input:not(:placeholder-shown) ~ .label,
-  :host([state='success'][variant='underlined']) .input:not(:placeholder-shown) ~ .label {
+  :host([state='success'][label-placement='floating']) .input:not(:placeholder-shown) ~ .label {
     color: var(--_label-success);
   }
 
-  :host([state='error'][label-placement='floating']) .input:not(:placeholder-shown) ~ .label,
-  :host([state='error'][variant='underlined']) .input:not(:placeholder-shown) ~ .label {
+  :host([state='error'][label-placement='floating']) .input:not(:placeholder-shown) ~ .label {
     color: var(--_label-error);
   }
 
   :host([state='disabled'][label-placement='floating']) .label,
-  :host([disabled][label-placement='floating']) .label,
-  :host([state='disabled'][variant='underlined']) .label,
-  :host([disabled][variant='underlined']) .label {
+  :host([disabled][label-placement='floating']) .label {
     color: var(--_label-disabled);
   }
 

@@ -28,23 +28,25 @@ Use `defaultValue` in uncontrolled mode to restore the initial value on `form.re
 
 ## Props
 
-| Prop           | Type                                              | Default       | Description                                |
-| -------------- | ------------------------------------------------- | ------------- | ------------------------------------------ |
-| `variant`      | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`   | Visual style                               |
-| `size`         | `'small' \| 'default' \| 'large'`                 | `'default'`   | Field size                                 |
-| `value`        | `string`                                          | —             | Controlled value                           |
-| `defaultValue` | `string`                                          | —             | Initial uncontrolled value                 |
-| `placeholder`  | `string`                                          | `'Search...'` | Placeholder text                           |
-| `hint`         | `string`                                          | —             | Helper text                                |
-| `state`        | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`   | Visual and disabled state                  |
-| `name`         | `string`                                          | —             | Native input name                          |
-| `disabled`     | `boolean`                                         | —             | Disables the field                         |
-| `required`     | `boolean`                                         | —             | Marks the field as required                |
-| `readOnly`     | `boolean`                                         | —             | Makes the field read-only                  |
-| `onChange`     | `(value: string) => void`                         | —             | Called with the new value                  |
-| `onClear`      | `() => void`                                      | —             | Called when the clear control is activated |
-| `className`    | `string`                                          | —             | Extra class on root element                |
-| `style`        | `CSSProperties`                                   | —             | Inline style on root element               |
+| Prop             | Type                                              | Default       | Description                                |
+| ---------------- | ------------------------------------------------- | ------------- | ------------------------------------------ |
+| `variant`        | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`   | Visual style                               |
+| `size`           | `'small' \| 'default' \| 'large'`                 | `'default'`   | Field size                                 |
+| `label`          | `string`                                          | —             | Label text                                 |
+| `labelPlacement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`       | Where to render the label                  |
+| `value`          | `string`                                          | —             | Controlled value                           |
+| `defaultValue`   | `string`                                          | —             | Initial uncontrolled value                 |
+| `placeholder`    | `string`                                          | `'Search...'` | Placeholder text                           |
+| `hint`           | `string`                                          | —             | Helper text                                |
+| `state`          | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`   | Visual and disabled state                  |
+| `name`           | `string`                                          | —             | Native input name                          |
+| `disabled`       | `boolean`                                         | —             | Disables the field                         |
+| `required`       | `boolean`                                         | —             | Marks the field as required                |
+| `readOnly`       | `boolean`                                         | —             | Makes the field read-only                  |
+| `onChange`       | `(value: string) => void`                         | —             | Called with the new value                  |
+| `onClear`        | `() => void`                                      | —             | Called when the clear control is activated |
+| `className`      | `string`                                          | —             | Extra class on root element                |
+| `style`          | `CSSProperties`                                   | —             | Inline style on root element               |
 
 ## Accessibility notes
 

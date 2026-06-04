@@ -11,6 +11,7 @@
   --_padding-inline-icon: var(--control-padding-inline-has-icon);
   --_radius: var(--control-radius);
   --_icon-size: var(--control-icon-size);
+  --_inside_label_vertical_gap: 0px;
 }
 
 /* ---- Sizes ---- */
@@ -22,6 +23,7 @@
   --_padding-inline-icon: var(--control-small-padding-inline-has-icon);
   --_radius: var(--control-small-radius);
   --_icon-size: var(--control-small-icon-size);
+  --_inside_label_vertical_gap: 0px;
 }
 
 .ui-text-field--large {
@@ -31,6 +33,7 @@
   --_padding-inline-icon: var(--control-large-padding-inline-has-icon);
   --_radius: var(--control-large-radius);
   --_icon-size: var(--control-large-icon-size);
+  --_inside_label_vertical_gap: var(--spacing-1);
 }
 
 /* ---- Variant color aliases: outline + underlined ---- */
@@ -87,6 +90,12 @@
   --_icon-disabled: var(--color-control-outline-icon-disabled);
 
   --_border-width: var(--control-border-width);
+
+  /*
+   * Chip background for the floating label when it sits at the top of the field.
+   * Outline/Underlined: opaque page background to visually cut through the border.
+   */
+  --_label-chip-bg: var(--color-background-default);
 }
 
 /* ---- Variant color aliases: filled ---- */
@@ -142,6 +151,22 @@
   --_icon-disabled: var(--color-control-filled-icon-disabled);
 
   --_border-width: var(--control-border-width);
+
+  /*
+   * Chip background for the floating label: matches the filled field background
+   * so the chip blends in rather than cutting through an invisible border.
+   */
+  --_label-chip-bg: var(--_bg);
+}
+
+.ui-text-field--underlined {
+  --_padding-inline: 0px;
+}
+
+.ui-text-field--floating {
+  --_padding-inline-icon: calc(
+    var(--control-icon-size) + var(--spacing-2) + var(--_padding-inline)
+  );
 }
 
 /* ---- Label (top placement) ---- */
@@ -323,6 +348,71 @@
   padding-inline-end: 0;
 }
 
+/* ---- Inner label ---- */
+
+/*
+ * Label is absolutely positioned at the top of the field-wrapper (first child in DOM).
+ * The horizontal flex layout (leading icon → input → trailing icon) is preserved unchanged.
+ * The input gets extra padding-block-start to push the text below the label.
+ * No animation — label is always static at the top.
+ */
+
+.ui-text-field--inner {
+  --_inner-label-size: var(--size-4);
+}
+
+.ui-text-field--inner .ui-text-field__label {
+  position: absolute;
+  top: var(--_padding-stack);
+  inset-inline-start: var(--_padding-inline);
+  margin: 0;
+  font-size: var(--control-label-inner-font-size);
+  line-height: var(--control-label-inner-line-height);
+  font-weight: var(--control-label-inner-font-weight);
+  font-family: var(--control-label-inner-font-family);
+  text-transform: var(--control-label-inner-text-transform);
+  letter-spacing: var(--control-label-inner-letter-spacing);
+  color: var(--_label);
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ui-text-field--inner.ui-text-field--has-leading-icon .ui-text-field__label {
+  inset-inline-start: var(--_padding-inline);
+}
+
+.ui-text-field--inner .ui-text-field__field-wrapper:hover .ui-text-field__label {
+  color: var(--_label-hover);
+}
+
+.ui-text-field--inner .ui-text-field__field-wrapper:focus-within .ui-text-field__label {
+  color: var(--_label-active);
+}
+
+.ui-text-field--inner.ui-text-field--state-success .ui-text-field__label {
+  color: var(--_label-success);
+}
+
+.ui-text-field--inner.ui-text-field--state-error .ui-text-field__label {
+  color: var(--_label-error);
+}
+
+.ui-text-field--inner.ui-text-field--state-disabled .ui-text-field__label {
+  color: var(--_label-disabled);
+}
+
+.ui-text-field--inner .ui-text-field__input,
+.ui-text-field--inner .ui-text-field__icon--leading,
+.ui-text-field--inner .ui-text-field__icon--trailing {
+  padding-block-start: calc(
+    var(--_padding-stack) - 2 * var(--_border-width) + var(--_inner-label-size) +
+      var(--_inside_label_vertical_gap)
+  );
+  padding-block-end: calc(var(--_padding-stack) - 2 * var(--_border-width));
+}
+
 /* ---- Floating label ---- */
 
 /*
@@ -330,6 +420,8 @@
  * Input uses placeholder=" " (single space) in floating mode.
  * Empty+unfocused: label centered — acts as visual placeholder.
  * Filled or focused: label shrunken at top.
+ *
+ * Applies to labelPlacement='floating' for all variants (outline, filled, underlined).
  */
 
 .ui-text-field--floating .ui-text-field__label {
@@ -347,7 +439,7 @@
   color: var(--_label);
   padding: 0 var(--size-1);
   left: var(--size-2);
-  background-color: var(--color-background-default);
+  background-color: var(--_label-chip-bg);
   pointer-events: none;
   white-space: nowrap;
   overflow: hidden;
@@ -357,11 +449,6 @@
     font-size var(--duration-150) ease,
     color var(--duration-150) ease,
     transform var(--duration-150) ease;
-}
-
-/* Leading icon shifts floating label */
-.ui-text-field--floating.ui-text-field--has-leading-icon .ui-text-field__label {
-  inset-inline-start: var(--_padding-inline-icon);
 }
 
 /* Empty + unfocused: label centered */
@@ -375,6 +462,13 @@
   left: var(--_padding-inline);
 }
 
+/* Leading icon shifts floating label */
+.ui-text-field--floating.ui-text-field--has-leading-icon
+  .ui-text-field__input:placeholder-shown
+  ~ .ui-text-field__label {
+  left: var(--_padding-inline-icon);
+}
+
 /* Focused: label shrunken */
 .ui-text-field--floating .ui-text-field__field-wrapper:focus-within .ui-text-field__label {
   top: calc(var(--size-3) * -1);
@@ -382,7 +476,7 @@
   font-size: var(--control-label-floating-font-size);
   color: var(--_label-active);
   padding: 0 var(--size-1);
-  background-color: var(--color-background-default);
+  background-color: var(--_label-chip-bg);
   left: var(--size-2);
 }
 

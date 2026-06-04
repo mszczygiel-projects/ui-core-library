@@ -9,6 +9,7 @@ import './SelectField.css';
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SelectFieldSize = 'small' | 'default' | 'large';
 export type SelectFieldState = 'default' | 'success' | 'error' | 'disabled';
+export type SelectFieldLabelPlacement = 'top' | 'inner';
 
 export interface SelectOption {
   value: string;
@@ -19,6 +20,7 @@ export interface SelectOption {
 export interface SelectFieldProps {
   variant?: SelectFieldVariant;
   size?: SelectFieldSize;
+  labelPlacement?: SelectFieldLabelPlacement;
   id?: string;
   label?: string;
   hint?: string;
@@ -52,6 +54,7 @@ function nextEnabledIndex(options: SelectOption[], current: number, direction: 1
 export function SelectField({
   variant = 'outline',
   size = 'default',
+  labelPlacement = 'top',
   id,
   label,
   hint,
@@ -195,6 +198,8 @@ export function SelectField({
     }
   };
 
+  const isInner = labelPlacement === 'inner';
+
   const rootClass = [
     'ui-select-field',
     `ui-select-field--${variant}`,
@@ -202,6 +207,7 @@ export function SelectField({
     open && 'ui-select-field--open',
     state !== 'default' && `ui-select-field--state-${state}`,
     leadingIcon && 'ui-select-field--has-leading-icon',
+    isInner && 'ui-select-field--inner',
     className,
   ]
     .filter(Boolean)
@@ -209,7 +215,7 @@ export function SelectField({
 
   return (
     <div className={rootClass} ref={wrapperRef} style={style}>
-      {label && (
+      {label && !isInner && (
         <label id={labelId} className="ui-select-field__label" htmlFor={triggerId}>
           {label}
         </label>
@@ -234,6 +240,11 @@ export function SelectField({
           {leadingIcon && (
             <span className="ui-select-field__leading-icon" aria-hidden="true">
               {leadingIcon}
+            </span>
+          )}
+          {label && isInner && (
+            <span id={labelId} className="ui-select-field__inner-label">
+              {label}
             </span>
           )}
           <span

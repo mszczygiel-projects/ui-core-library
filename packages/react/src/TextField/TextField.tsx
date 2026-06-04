@@ -11,7 +11,7 @@ import './TextField.css';
 export type TextFieldVariant = 'outline' | 'filled' | 'underlined';
 export type TextFieldSize = 'small' | 'default' | 'large';
 export type TextFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type TextFieldLabelPlacement = 'top' | 'floating';
+export type TextFieldLabelPlacement = 'top' | 'floating' | 'inner';
 
 export interface TextFieldProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
@@ -62,19 +62,15 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
   const isDisabled = disabled || state === 'disabled';
   const effectiveTrailingIcon = trailingIcon ?? (state === 'error' ? <IconDanger /> : undefined);
 
-  const effectivePlacement = (): TextFieldLabelPlacement => {
-    if (variant === 'filled') return 'top';
-    if (variant === 'underlined') return 'floating';
-    return labelPlacement;
-  };
-
-  const isFloating = effectivePlacement() === 'floating';
+  const isFloating = labelPlacement === 'floating';
+  const isInner = labelPlacement === 'inner';
 
   const rootClass = [
     'ui-text-field',
     `ui-text-field--${variant}`,
     size !== 'default' && `ui-text-field--${size}`,
     isFloating && 'ui-text-field--floating',
+    isInner && 'ui-text-field--inner',
     state !== 'default' && `ui-text-field--state-${state}`,
     leadingIcon && 'ui-text-field--has-leading-icon',
     effectiveTrailingIcon && 'ui-text-field--has-trailing-icon',
@@ -91,8 +87,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
 
   return (
     <div className={rootClass} style={style}>
-      {!isFloating && labelEl}
+      {!isFloating && !isInner && labelEl}
       <div className="ui-text-field__field-wrapper">
+        {isInner && labelEl}
         {leadingIcon && (
           <span className="ui-text-field__icon ui-text-field__icon--leading">{leadingIcon}</span>
         )}

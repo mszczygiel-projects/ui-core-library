@@ -1120,6 +1120,50 @@
           "Desktop": "{Sizes.typography.eyebrow.text-transform}"
         },
         "$type": "string"
+      },
+      "inner": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Sizes.control.label.font-size}",
+            "Desktop": "{Sizes.control.label.font-size}"
+          },
+          "$type": "number"
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Sizes.control.label.line-height}",
+            "Desktop": "{Sizes.control.label.line-height}"
+          },
+          "$type": "number"
+        },
+        "font-weight": {
+          "$value": {
+            "Mobile": "{Sizes.control.label.font-weight}",
+            "Desktop": "{Sizes.control.label.font-weight}"
+          },
+          "$type": "number"
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Sizes.control.label.letter-spacing}",
+            "Desktop": "{Sizes.control.label.letter-spacing}"
+          },
+          "$type": "string"
+        },
+        "font-family": {
+          "$value": {
+            "Mobile": "{Sizes.control.label.font-family}",
+            "Desktop": "{Sizes.control.label.font-family}"
+          },
+          "$type": "string"
+        },
+        "text-transform": {
+          "$value": {
+            "Mobile": "{Sizes.control.label.text-transform}",
+            "Desktop": "{Sizes.control.label.text-transform}"
+          },
+          "$type": "string"
+        }
       }
     },
     "hint": {

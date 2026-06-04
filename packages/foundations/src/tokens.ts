@@ -2350,6 +2350,14 @@ export const tokens = {
         letterSpacing: 'var(--control-label-letter-spacing)',
         fontFamily: 'var(--control-label-font-family)',
         textTransform: 'var(--control-label-text-transform)',
+        inner: {
+          fontSize: 'var(--control-label-inner-font-size)',
+          lineHeight: 'var(--control-label-inner-line-height)',
+          fontWeight: 'var(--control-label-inner-font-weight)',
+          letterSpacing: 'var(--control-label-inner-letter-spacing)',
+          fontFamily: 'var(--control-label-inner-font-family)',
+          textTransform: 'var(--control-label-inner-text-transform)',
+        },
       },
       hint: {
         fontSize: 'var(--control-hint-font-size)',

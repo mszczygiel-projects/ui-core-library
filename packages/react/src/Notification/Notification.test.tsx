@@ -10,9 +10,13 @@ describe('Notification', () => {
     expect(container.querySelector('.ui-notification')).not.toBeNull();
   });
 
-  it('has role="alert"', () => {
-    const { container } = render(<Notification heading="Test" />);
-    expect(container.querySelector('[role="alert"]')).not.toBeNull();
+  it('uses role="status" by default and role="alert" for error status', () => {
+    const { container: statusContainer } = render(<Notification heading="Test" />);
+    expect(statusContainer.querySelector('[role="status"]')).not.toBeNull();
+    cleanup();
+
+    const { container: alertContainer } = render(<Notification heading="Test" status="error" />);
+    expect(alertContainer.querySelector('[role="alert"]')).not.toBeNull();
   });
 
   it('applies status class', () => {

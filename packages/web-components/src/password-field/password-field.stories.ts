@@ -15,7 +15,7 @@ const meta: Meta = {
     },
     labelPlacement: {
       control: 'select',
-      options: ['top', 'floating'],
+      options: ['top', 'floating', 'inner'],
     },
     state: {
       control: 'select',
@@ -67,7 +67,17 @@ const input = (props: PasswordFieldArgs = {}) =>
     disabled: props.disabled || undefined,
   });
 
-export const Default: Story = {
+export const Outline: Story = {
+  render: (args: PasswordFieldArgs) => input(args),
+};
+
+export const Filled: Story = {
+  args: { variant: 'filled' },
+  render: (args: PasswordFieldArgs) => input(args),
+};
+
+export const Underlined: Story = {
+  args: { variant: 'underlined' },
   render: (args: PasswordFieldArgs) => input(args),
 };
 
@@ -76,45 +86,32 @@ export const ShowPassword: Story = {
   render: (args: PasswordFieldArgs) => input(args),
 };
 
-export const Sizes: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 } },
-      input({ size: 'small', label: 'Small', placeholder: 'Small password input' }),
-      input({ size: 'default', label: 'Default', placeholder: 'Default password input' }),
-      input({ size: 'large', label: 'Large', placeholder: 'Large password input' }),
-    ),
-};
-
-export const States: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 } },
-      input({ state: 'default', label: 'Default', placeholder: 'Default state' }),
-      input({
-        state: 'success',
-        label: 'Success',
-        placeholder: 'Success state',
-        hint: 'Password is strong.',
-      }),
-      input({
-        state: 'error',
-        label: 'Error',
-        placeholder: 'Error state',
-        hint: 'Minimum of 8 characters.',
-      }),
-      input({ state: 'disabled', label: 'Disabled', placeholder: 'Disabled state' }),
-    ),
-};
-
-export const WithHint: Story = {
-  args: { hint: 'Minimum of 8 characters.' },
+export const OutlineInnerLabel: Story = {
+  args: { labelPlacement: 'inner' },
   render: (args: PasswordFieldArgs) => input(args),
 };
 
-export const FloatingLabel: Story = {
+export const FilledInnerLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'inner' },
+  render: (args: PasswordFieldArgs) => input(args),
+};
+
+export const UnderlinedInnerLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'inner' },
+  render: (args: PasswordFieldArgs) => input(args),
+};
+
+export const OutlineFloatingLabel: Story = {
   args: { labelPlacement: 'floating', placeholder: '' },
+  render: (args: PasswordFieldArgs) => input(args),
+};
+
+export const FilledFloatingLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'floating', placeholder: '' },
+  render: (args: PasswordFieldArgs) => input(args),
+};
+
+export const UnderlinedFloatingLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'floating', placeholder: '' },
   render: (args: PasswordFieldArgs) => input(args),
 };

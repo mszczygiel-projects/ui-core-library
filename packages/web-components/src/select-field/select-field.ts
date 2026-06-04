@@ -10,6 +10,7 @@ import { resetStyles } from '../styles/reset.styles.js';
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SelectFieldSize = 'small' | 'default' | 'large';
 export type SelectFieldState = 'default' | 'success' | 'error' | 'disabled';
+export type SelectFieldLabelPlacement = 'top' | 'inner';
 
 export interface SelectOption {
   value: string;
@@ -26,6 +27,8 @@ export class UiSelectField extends LitElement {
   @property({ type: String, reflect: true }) variant: SelectFieldVariant = 'outline';
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: SelectFieldSize =
     'default';
+  @property({ type: String, reflect: true, attribute: 'label-placement' })
+  labelPlacement: SelectFieldLabelPlacement = 'top';
   @property({ type: String, reflect: true }) label?: string;
   @property({ type: String, reflect: true }) hint?: string;
   @property({ type: String, reflect: true }) state: SelectFieldState = 'default';
@@ -248,8 +251,10 @@ export class UiSelectField extends LitElement {
     const listboxId = 'listbox';
     const hintId = 'hint';
 
+    const isInner = this.labelPlacement === 'inner';
+
     return html`
-      ${this.label
+      ${this.label && !isInner
         ? html`<label id=${labelId} class="label" for=${triggerId}>${this.label}</label>`
         : nothing}
       <div class="field-container">
@@ -271,6 +276,9 @@ export class UiSelectField extends LitElement {
             class="icon icon--leading"
             @slotchange=${this._handleLeadingSlotChange}
           ></slot>
+          ${this.label && isInner
+            ? html`<span id=${labelId} class="inner-label">${this.label}</span>`
+            : nothing}
           <span
             class=${classMap({
               value: true,

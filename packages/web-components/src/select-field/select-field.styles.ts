@@ -27,6 +27,7 @@ export const selectFieldStyles = css`
     --_icon-size: var(--control-icon-size);
     --_option-padding-stack: var(--select-option-padding-stack);
     --_option-gap: var(--select-option-gap);
+    --_inside_label_vertical_gap: 0px;
   }
 
   :host([data-size='small']) {
@@ -38,6 +39,7 @@ export const selectFieldStyles = css`
     --_icon-size: var(--control-small-icon-size);
     --_option-padding-stack: var(--select-option-small-padding-stack);
     --_option-gap: var(--select-option-small-gap);
+    --_inside_label_vertical_gap: 0px;
   }
 
   :host([data-size='large']) {
@@ -49,6 +51,7 @@ export const selectFieldStyles = css`
     --_icon-size: var(--control-large-icon-size);
     --_option-padding-stack: var(--select-option-large-padding-stack);
     --_option-gap: var(--select-option-gap);
+    --_inside_label_vertical_gap: var(--spacing-1);
   }
 
   /* ---- Variant color aliases: outline + underlined ---- */
@@ -71,9 +74,17 @@ export const selectFieldStyles = css`
     --_border-disabled: var(--color-control-outline-border-disabled);
 
     --_text: var(--color-control-outline-text-default);
+    --_text-hover: var(--color-control-outline-text-hover);
+    --_text-active: var(--color-control-outline-text-active);
+    --_text-success: var(--color-control-outline-text-success);
+    --_text-error: var(--color-control-outline-text-error);
     --_text-disabled: var(--color-control-outline-text-disabled);
 
     --_placeholder: var(--color-control-outline-placeholder-default);
+    --_placeholder-hover: var(--color-control-outline-placeholder-hover);
+    --_placeholder-active: var(--color-control-outline-placeholder-active);
+    --_placeholder-success: var(--color-control-outline-placeholder-success);
+    --_placeholder-error: var(--color-control-outline-placeholder-error);
     --_placeholder-disabled: var(--color-control-outline-placeholder-disabled);
 
     --_label: var(--color-control-outline-label-default);
@@ -84,6 +95,8 @@ export const selectFieldStyles = css`
     --_label-disabled: var(--color-control-outline-label-disabled);
 
     --_hint: var(--color-control-outline-hint-default);
+    --_hint-hover: var(--color-control-outline-hint-hover);
+    --_hint-active: var(--color-control-outline-hint-active);
     --_hint-success: var(--color-control-outline-hint-success);
     --_hint-error: var(--color-control-outline-hint-error);
     --_hint-disabled: var(--color-control-outline-hint-disabled);
@@ -116,9 +129,17 @@ export const selectFieldStyles = css`
     --_border-disabled: var(--color-control-filled-border-disabled);
 
     --_text: var(--color-control-filled-text-default);
+    --_text-hover: var(--color-control-filled-text-hover);
+    --_text-active: var(--color-control-filled-text-active);
+    --_text-success: var(--color-control-filled-text-success);
+    --_text-error: var(--color-control-filled-text-error);
     --_text-disabled: var(--color-control-filled-text-disabled);
 
     --_placeholder: var(--color-control-filled-placeholder-default);
+    --_placeholder-hover: var(--color-control-filled-placeholder-hover);
+    --_placeholder-active: var(--color-control-filled-placeholder-active);
+    --_placeholder-success: var(--color-control-filled-placeholder-success);
+    --_placeholder-error: var(--color-control-filled-placeholder-error);
     --_placeholder-disabled: var(--color-control-filled-placeholder-disabled);
 
     --_label: var(--color-control-filled-label-default);
@@ -129,6 +150,8 @@ export const selectFieldStyles = css`
     --_label-disabled: var(--color-control-filled-label-disabled);
 
     --_hint: var(--color-control-filled-hint-default);
+    --_hint-hover: var(--color-control-filled-hint-hover);
+    --_hint-active: var(--color-control-filled-hint-active);
     --_hint-success: var(--color-control-filled-hint-success);
     --_hint-error: var(--color-control-filled-hint-error);
     --_hint-disabled: var(--color-control-filled-hint-disabled);
@@ -176,6 +199,63 @@ export const selectFieldStyles = css`
 
   :host([state='disabled']) .label,
   :host([disabled]) .label {
+    color: var(--_label-disabled);
+  }
+
+  /* ---- Inner label ---- */
+
+  :host([label-placement='inner']) {
+    --_inner-label-size: var(--size-4);
+  }
+
+  :host([label-placement='inner']) .trigger {
+    position: relative;
+    padding-block-start: calc(
+      var(--_padding-stack) - 2 * var(--_border-width) + var(--_inner-label-size) +
+        var(--_inside_label_vertical_gap)
+    );
+    padding-block-end: calc(var(--_padding-stack) - 2 * var(--_border-width));
+  }
+
+  .inner-label {
+    position: absolute;
+    top: var(--_padding-stack);
+    inset-inline-start: var(--_padding-inline);
+    font-size: var(--control-label-inner-font-size);
+    line-height: var(--control-label-inner-line-height);
+    font-weight: var(--control-label-inner-font-weight);
+    font-family: var(--control-label-inner-font-family);
+    text-transform: var(--control-label-inner-text-transform);
+    letter-spacing: var(--control-label-inner-letter-spacing);
+    color: var(--_label);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    pointer-events: none;
+  }
+
+  :host([has-leading-icon][label-placement='inner']) .inner-label {
+    inset-inline-start: var(--_padding-inline);
+  }
+
+  :host([label-placement='inner']) .trigger:hover .inner-label {
+    color: var(--_label-hover);
+  }
+
+  :host([label-placement='inner'][open]) .inner-label {
+    color: var(--_label-active);
+  }
+
+  :host([label-placement='inner'][state='success']) .inner-label {
+    color: var(--_label-success);
+  }
+
+  :host([label-placement='inner'][state='error']) .inner-label {
+    color: var(--_label-error);
+  }
+
+  :host([label-placement='inner'][state='disabled']) .inner-label,
+  :host([label-placement='inner'][disabled]) .inner-label {
     color: var(--_label-disabled);
   }
 
@@ -248,11 +328,14 @@ export const selectFieldStyles = css`
 
   /* Underlined: bottom border only, no radius */
 
+  :host([variant='underlined']) {
+    --_padding-inline: 0px;
+  }
+
   :host([variant='underlined']) .trigger {
     border: none;
     border-bottom: var(--control-underlined-border-width-default) solid var(--_border);
     border-radius: 0;
-    padding-inline: 0;
   }
 
   :host([variant='underlined']) .trigger:hover {
@@ -292,6 +375,7 @@ export const selectFieldStyles = css`
     width: var(--_icon-size);
     height: var(--_icon-size);
     color: var(--_icon);
+    margin-inline-start: var(--_padding-inline);
   }
 
   :host([has-leading-icon]) .icon--leading {
@@ -299,7 +383,7 @@ export const selectFieldStyles = css`
   }
 
   :host([has-leading-icon]) .trigger {
-    padding-inline-start: var(--_padding-inline);
+    padding-inline-start: 0;
   }
 
   .trigger:hover .icon--leading {
@@ -346,6 +430,38 @@ export const selectFieldStyles = css`
 
   .value--placeholder {
     color: var(--_placeholder);
+  }
+
+  .trigger:hover .value {
+    color: var(--_text-hover);
+  }
+
+  .trigger:hover .value--placeholder {
+    color: var(--_placeholder-hover);
+  }
+
+  :host([open]) .trigger .value {
+    color: var(--_text-active);
+  }
+
+  :host([open]) .trigger .value--placeholder {
+    color: var(--_placeholder-active);
+  }
+
+  :host([state='success']) .value {
+    color: var(--_text-success);
+  }
+
+  :host([state='success']) .value--placeholder {
+    color: var(--_placeholder-success);
+  }
+
+  :host([state='error']) .value {
+    color: var(--_text-error);
+  }
+
+  :host([state='error']) .value--placeholder {
+    color: var(--_placeholder-error);
   }
 
   :host([state='disabled']) .value,

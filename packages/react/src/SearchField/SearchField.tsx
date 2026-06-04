@@ -2,12 +2,19 @@ import { useRef, useState, useEffect, type CSSProperties } from 'react';
 import { IconSearch } from '@mszczygiel-projects/ui-core-icons/react';
 import { IconClose } from '@mszczygiel-projects/ui-core-icons/react';
 import { TextField } from '../TextField/TextField.js';
-import type { TextFieldVariant, TextFieldSize, TextFieldState } from '../TextField/TextField.js';
+import type {
+  TextFieldVariant,
+  TextFieldSize,
+  TextFieldState,
+  TextFieldLabelPlacement,
+} from '../TextField/TextField.js';
 import './SearchField.css';
 
 export interface SearchFieldProps {
   variant?: TextFieldVariant;
   size?: TextFieldSize;
+  label?: string;
+  labelPlacement?: TextFieldLabelPlacement;
   value?: string;
   defaultValue?: string;
   placeholder?: string;
@@ -26,6 +33,8 @@ export interface SearchFieldProps {
 export function SearchField({
   variant = 'outline',
   size = 'default',
+  label,
+  labelPlacement,
   value,
   defaultValue,
   placeholder = 'Search...',
@@ -91,6 +100,8 @@ export function SearchField({
       className={['ui-search-field', className].filter(Boolean).join(' ')}
       style={style}
       size={size}
+      label={label}
+      labelPlacement={labelPlacement}
       value={effectiveValue}
       placeholder={placeholder}
       hint={hint}
