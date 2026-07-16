@@ -41,3 +41,11 @@ export type {
   NotificationStatus,
   NotificationVariant,
 } from './Notification/Notification.js';
+export { Badge } from './Badge/Badge.js';
+export type {
+  BadgeProps,
+  BadgeVariant,
+  BadgeAppearance,
+  BadgeSize,
+  BadgeShape,
+} from './Badge/Badge.js';

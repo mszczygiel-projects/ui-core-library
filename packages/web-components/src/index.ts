@@ -42,3 +42,5 @@ export type {
 } from './select-field/select-field.js';
 export { UiNotification } from './notification/notification.js';
 export type { NotificationStatus, NotificationVariant } from './notification/notification.js';
+export { UiBadge } from './badge/badge.js';
+export type { BadgeVariant, BadgeAppearance, BadgeSize, BadgeShape } from './badge/badge.js';

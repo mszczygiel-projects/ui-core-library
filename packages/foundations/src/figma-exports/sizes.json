@@ -1071,19 +1071,19 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "font-weight": {
           "$value": {
             "Mobile": "{Primitives Sizes.font-weight.normal}",
             "Desktop": "{Primitives Sizes.font-weight.normal}"
           },
           "$type": "number"
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         },
         "font-family": {
           "$value": {
@@ -1638,19 +1638,19 @@
     }
   },
   "notification": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.radius.md}",
-        "Desktop": "{Sizes.radius.md}"
-      },
-      "$type": "number"
-    },
     "font-family": {
       "$value": {
         "Mobile": "{Themes.typography.body.font-family}",
         "Desktop": "{Themes.typography.body.font-family}"
       },
       "$type": "string"
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.radius.md}",
+        "Desktop": "{Sizes.radius.md}"
+      },
+      "$type": "number"
     },
     "font-size": {
       "$value": {
@@ -1809,6 +1809,145 @@
           },
           "$type": "number"
         }
+      }
+    }
+  },
+  "badge": {
+    "font-family": {
+      "$value": {
+        "Mobile": "{Themes.typography.caption.font-family}",
+        "Desktop": "{Themes.typography.caption.font-family}"
+      },
+      "$type": "string"
+    },
+    "font-weight": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.font-weight.medium}",
+        "Desktop": "{Primitives Sizes.font-weight.medium}"
+      },
+      "$type": "number"
+    },
+    "letter-spacing": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.tracking.normal}",
+        "Desktop": "{Primitives Sizes.tracking.normal}"
+      },
+      "$type": "string"
+    },
+    "gap": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.1}",
+        "Desktop": "{Primitives Sizes.spacing.1}"
+      },
+      "$type": "number"
+    },
+    "padding": {
+      "inline-icon-only": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "number"
+      }
+    },
+    "rounded": {
+      "radius": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.radius.full}",
+          "Desktop": "{Primitives Sizes.radius.full}"
+        },
+        "$type": "number"
+      }
+    },
+    "square": {
+      "radius": {
+        "$value": {
+          "Mobile": "{Themes.radius.sm.mobile}",
+          "Desktop": "{Themes.radius.sm.desktop}"
+        },
+        "$type": "number"
+      }
+    },
+    "small": {
+      "height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.size.5}",
+          "Desktop": "{Primitives Sizes.size.5}"
+        },
+        "$type": "number"
+      },
+      "padding": {
+        "inline": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.2}",
+            "Desktop": "{Primitives Sizes.spacing.2}"
+          },
+          "$type": "number"
+        }
+      },
+      "icon": {
+        "size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.size.3}",
+            "Desktop": "{Primitives Sizes.size.3}"
+          },
+          "$type": "number"
+        }
+      },
+      "font-size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.xs}",
+          "Desktop": "{Primitives Sizes.text.xs}"
+        },
+        "$type": "number"
+      },
+      "line-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.xs--line-height}",
+          "Desktop": "{Primitives Sizes.text.xs--line-height}"
+        },
+        "$type": "number"
+      }
+    },
+    "medium": {
+      "height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.size.6}",
+          "Desktop": "{Primitives Sizes.size.6}"
+        },
+        "$type": "number"
+      },
+      "padding": {
+        "inline": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.3}",
+            "Desktop": "{Primitives Sizes.spacing.3}"
+          },
+          "$type": "number"
+        }
+      },
+      "icon": {
+        "size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.size.4}",
+            "Desktop": "{Primitives Sizes.size.4}"
+          },
+          "$type": "number"
+        }
+      },
+      "font-size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.sm}",
+          "Desktop": "{Primitives Sizes.text.sm}"
+        },
+        "$type": "number"
+      },
+      "line-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.sm--line-height}",
+          "Desktop": "{Primitives Sizes.text.sm--line-height}"
+        },
+        "$type": "number"
       }
     }
   }
