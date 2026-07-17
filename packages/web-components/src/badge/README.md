@@ -28,19 +28,18 @@ A non-interactive status/label chip. Single default appearance per variant — n
 
 `label` is required in icon-only mode — it renders `role="img"` + `aria-label` on the host.
 
-## API
+## Props
 
-| Attribute    | Values                                                          | Default   |
-| ------------ | --------------------------------------------------------------- | --------- |
-| `variant`    | `neutral` / `brand` / `success` / `warning` / `error` / `info` | `neutral` |
-| `appearance` | `solid` / `subtle`                                              | `solid`   |
-| `data-size`  | `small` / `medium`                                              | `small`   |
-| `shape`      | `rounded` / `square`                                            | `rounded` |
-| `icon-only`  | boolean                                                          | `false`   |
-| `label`      | string — accessible name (icon-only mode)                        | —         |
+| Property    | Attribute    | Type                                                          | Default   |
+| ----------- | ------------ | ------------------------------------------------------------- | --------- |
+| `variant`   | `variant`    | `neutral` / `brand` / `success` / `warning` / `error` / `info` | `neutral` |
+| `appearance`| `appearance` | `solid` / `subtle`                                            | `solid`   |
+| `size`      | `data-size`  | `small` / `medium`                                            | `small`   |
+| `shape`     | `shape`      | `rounded` / `square`                                          | `rounded` |
+| `iconOnly`  | `icon-only`  | boolean                                                       | `false`   |
+| `label`     | `label`      | string — accessible name (icon-only mode)                     | —         |
 
 `appearance` maps to the Figma `Style` property (`style` is reserved in HTML).
-
 ## Slots
 
 - default — label text
