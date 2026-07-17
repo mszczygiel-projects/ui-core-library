@@ -45,9 +45,9 @@ describe('Chip', () => {
     expect(container.querySelector('.ui-chip__action')!.getAttribute('aria-pressed')).toBe('true');
   });
 
-  it('omits aria-pressed when not selected', () => {
+  it('sets aria-pressed="false" when not selected', () => {
     const { container } = render(<Chip>Filter</Chip>);
-    expect(container.querySelector('.ui-chip__action')!.getAttribute('aria-pressed')).toBeNull();
+    expect(container.querySelector('.ui-chip__action')!.getAttribute('aria-pressed')).toBe('false');
   });
 
   it('renders the leading icon inside an aria-hidden wrapper', () => {
