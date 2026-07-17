@@ -120,7 +120,7 @@ export function Chip({
         type="button"
         className="ui-chip__action"
         disabled={disabled}
-        aria-pressed={selected || undefined}
+        aria-pressed={selected}
         onClick={onClick}
         onKeyDown={handleKeyDown}
       >
