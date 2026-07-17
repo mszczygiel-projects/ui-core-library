@@ -28,8 +28,8 @@ export class UiBadge extends LitElement {
   @property({ type: String }) label?: string;
 
   override updated(changed: PropertyValues<this>) {
-    if (changed.has('label')) {
-      if (this.label) {
+    if (changed.has('label') || changed.has('iconOnly')) {
+      if (this.iconOnly && this.label) {
         this.setAttribute('role', 'img');
         this.setAttribute('aria-label', this.label);
       } else {
