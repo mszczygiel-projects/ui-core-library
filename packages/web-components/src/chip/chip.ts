@@ -100,7 +100,7 @@ export class UiChip extends LitElement {
         class="action"
         type="button"
         ?disabled=${this.disabled}
-        aria-pressed=${this.selected ? 'true' : nothing}
+        aria-pressed=${this.selected}
         @keydown=${this.handleKeydown}
         @focus=${this.handleActionFocus}
         @blur=${this.handleActionBlur}
