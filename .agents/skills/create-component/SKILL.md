@@ -25,7 +25,8 @@ Stage 4  Implementation (code)  →  tests + Storybook verification
 
 Files: `[Core] Foundations` = `Xxn0guDvAfyIqEKB6kADE9`, `[Core] UI Library` =
 `BzqkruN7r8mwWfFReznc83`. Reference implementations: Button (`179:100`,
-interactive) and Badge (`2037:98`, non-interactive).
+interactive), Badge (`2037:98`, non-interactive), Chip (`2068:2859`, interactive
+with a nested independently-interactive sub-component — the dismiss button).
 
 ---
 
@@ -166,6 +167,32 @@ Conventions locked by Button/Badge:
   size's font-size token. If Figma shows equal px line-height across sizes, use
   a fixed `--size-{n}` instead (Button case).
 - Non-interactive components: no `focusStyles`, no state selectors.
+- **`:host(:has(...))` silently drops the whole rule** in at least one shadow-DOM
+  engine used by this project's Storybook build — `:has()` alone works, and
+  `:host(.plain-class)` alone works, but nesting `:has()` inside `:host()`
+  doesn't (`CSSStyleSheet.replaceSync` drops the rule with no error). Needed
+  whenever a host-level style (e.g. a focus ring around the whole component)
+  must react to ONE specific interactive descendant having focus while a
+  SEPARATE descendant (e.g. a nested dismiss button) must not trigger it —
+  `delegatesFocus` + `:host(:focus-visible)` (the Button pattern) can't
+  express that asymmetry either, since it reflects ANY inner focus. Fix:
+  toggle a plain class on the host from `focus`/`blur` handlers on the specific
+  inner element, gated on `event.target.matches(':focus-visible')`, then style
+  with `:host(.that-class)`. Verify by enumerating
+  `shadowRoot.adoptedStyleSheets[i].cssRules` — a screenshot alone won't catch
+  a silently-dropped rule. See chip's `chip.ts`/`chip.styles.ts` for the
+  working pattern.
+- **Verify contrast on all 4 Surfaces before shipping any style with a
+  transparent or non-fixed background** (e.g. an `outline` appearance). A
+  "subtle text = fixed dark primitive" token (see Stage 1 rule above) is only
+  safe when paired with the component's OWN fixed light tint background: the
+  moment a style has a transparent/surface-dependent background, that same
+  text primitive sits directly on the page surface color and can lose almost
+  all contrast on Inverse/Primary surfaces (near-black text on a black
+  surface, for example). This is a Foundations-level gap (on-inverse/
+  on-brand-primary groups lacking a lighter text variant for brand/warning),
+  not a per-component bug — flag it, don't silently invent a component-local
+  fix.
 
 ### Stories + tests + verification
 

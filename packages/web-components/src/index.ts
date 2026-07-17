@@ -44,3 +44,5 @@ export { UiNotification } from './notification/notification.js';
 export type { NotificationStatus, NotificationVariant } from './notification/notification.js';
 export { UiBadge } from './badge/badge.js';
 export type { BadgeVariant, BadgeAppearance, BadgeSize, BadgeShape } from './badge/badge.js';
+export { UiChip } from './chip/chip.js';
+export type { ChipVariant, ChipAppearance, ChipSize } from './chip/chip.js';
