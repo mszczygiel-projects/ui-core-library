@@ -495,6 +495,8 @@
 
 .ui-chip__dismiss:focus-visible {
   background-color: var(--color-chip-dismiss-background-focus);
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
 }
 
 .ui-chip__dismiss:active {
