@@ -46,10 +46,10 @@ describe('UiChip', () => {
     expect(action.getAttribute('aria-pressed')).to.equal('true');
   });
 
-  it('omits aria-pressed when not selected', async () => {
+  it('sets aria-pressed="false" when not selected', async () => {
     const el = await fixture<UiChip>(html`<ui-chip>Filter</ui-chip>`);
     const action = el.shadowRoot!.querySelector('button.action')!;
-    expect(action.hasAttribute('aria-pressed')).to.equal(false);
+    expect(action.getAttribute('aria-pressed')).to.equal('false');
   });
 
   it('does not render the dismiss button by default', async () => {
