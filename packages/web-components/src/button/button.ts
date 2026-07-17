@@ -9,22 +9,69 @@ import '../loader/loader.js';
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'small' | 'default' | 'large';
 
+/**
+ * Primary interactive control for triggering actions, with variant, size, icon, and loading support.
+ *
+ * @element ui-button
+ *
+ * @example
+ * ```html
+ * <ui-button variant="secondary" data-size="large">Save changes</ui-button>
+ * ```
+ *
+ * @slot - Button label content.
+ * @slot icon-left - Icon inside the content area, before the label.
+ * @slot icon-right - Icon inside the content area, after the label.
+ * @slot leading-icon - Icon in a separated box at the leading edge; requires `has-leading-icon`.
+ * @slot trailing-icon - Icon in a separated box at the trailing edge; requires `has-trailing-icon`.
+ *
+ * @fires {CustomEvent} leading-icon-click - Leading icon box clicked in split mode (`split-leading`).
+ * @fires {CustomEvent} trailing-icon-click - Trailing icon box clicked in split mode (`split-trailing`).
+ */
 @customElement('ui-button')
 export class UiButton extends LitElement {
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, focusStyles, buttonStyles];
   static formAssociated = true;
 
+  /**
+   * Visual emphasis of the button.
+   * @default 'primary'
+   */
   @property({ type: String, reflect: true }) variant: ButtonVariant = 'primary';
+
+  /**
+   * Overall button height and typography scale.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: ButtonSize = 'default';
+
+  /** Replaces content with a spinner and disables interaction. */
   @property({ type: Boolean, reflect: true }) loading = false;
+
+  /** Disables the button. */
   @property({ type: Boolean }) disabled = false;
+
+  /**
+   * Native button type; `submit` and `reset` act on the associated form.
+   * @default 'button'
+   */
   @property({ type: String }) type: 'button' | 'submit' | 'reset' = 'button';
+
+  /** Form field name submitted together with `value` when type is `submit`. */
   @property({ type: String }) name?: string;
+
+  /** Form value submitted under `name` when type is `submit`. */
   @property({ type: String }) value = '';
+
+  /** Accessible name; use when the visible label is missing or insufficient. */
   @property({ type: String }) label?: string;
+
+  /** Reserves the leading icon box; assign content via the `leading-icon` slot. */
   @property({ type: Boolean, reflect: true, attribute: 'has-leading-icon' })
   hasLeadingIcon = false;
+
+  /** Reserves the trailing icon box; assign content via the `trailing-icon` slot. */
   @property({ type: Boolean, reflect: true, attribute: 'has-trailing-icon' })
   hasTrailingIcon = false;
 

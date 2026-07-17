@@ -23,23 +23,43 @@ const statusRoles: Record<NotificationStatus, 'status' | 'alert'> = {
 };
 
 /**
- * Notification banner communicating a status message to the user.
+ * Banner communicating a status message; `error` renders as an assertive `role="alert"`.
+ *
+ * @element ui-notification
+ *
+ * @example
+ * ```html
+ * <ui-notification status="success" heading="Changes saved">
+ *   Your profile is now up to date.
+ * </ui-notification>
+ * ```
  *
  * @slot - Optional description text rendered below the heading.
  * @fires {CustomEvent} ui-close - Dispatched when the close button is clicked.
- *
- * @attr {string} status - info | success | warning | error (default: info)
- * @attr {string} variant - default | subtle (default: default)
- * @attr {string} heading - Required heading text.
- * @attr {boolean} has-close-button - Shows the × close button (default: true).
  */
 @customElement('ui-notification')
 export class UiNotification extends LitElement {
   static override styles = [resetStyles, notificationStyles];
 
+  /**
+   * Semantic tone; also picks the status icon and ARIA role.
+   * @default 'info'
+   */
   @property({ type: String, reflect: true }) status: NotificationStatus = 'info';
+
+  /**
+   * Visual style: solid accent or subtle tinted background.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true }) variant: NotificationVariant = 'default';
+
+  /** Heading text — the primary message. */
   @property({ type: String }) heading = '';
+
+  /**
+   * Shows the × close button.
+   * @default true
+   */
   @property({ type: Boolean, attribute: 'has-close-button', reflect: true })
   hasCloseButton = true;
 

@@ -1,7 +1,29 @@
 import type { Preview } from '@storybook/react-vite';
+import { setCustomElementsManifest } from '@storybook/web-components';
+import { parameters as wcArgTypesParameters } from '@storybook/web-components/entry-preview-argtypes';
+import { parameters as reactArgTypesParameters } from '@storybook/react/entry-preview-argtypes';
+import customElementsManifest from '../../../packages/web-components/custom-elements.json';
 import '@mszczygiel-projects/ui-core-foundations/fonts/default.css';
 import '@mszczygiel-projects/ui-core-foundations/tokens.css';
 import '@mszczygiel-projects/ui-core-foundations/base.css';
+
+setCustomElementsManifest(customElementsManifest);
+
+// One Storybook, two docgen sources: WC story metas set `component` to a
+// tag-name string (extracted from custom-elements.json), React metas to the
+// component function (extracted from react-docgen's __docgenInfo).
+const wcDocs = wcArgTypesParameters.docs;
+const reactDocs = reactArgTypesParameters.docs;
+
+const extractArgTypes = (component: unknown) =>
+  typeof component === 'string'
+    ? wcDocs.extractArgTypes(component)
+    : reactDocs.extractArgTypes(component);
+
+const extractComponentDescription = (component: unknown) =>
+  typeof component === 'string'
+    ? wcDocs.extractComponentDescription(component)
+    : reactDocs.extractComponentDescription(component);
 
 const FALLBACK_BG = '#ffffff';
 
@@ -47,7 +69,12 @@ const preview: Preview = {
     },
   ],
   globalTypes: {},
+  tags: ['autodocs'],
   parameters: {
+    docs: {
+      extractArgTypes,
+      extractComponentDescription,
+    },
     backgrounds: {
       default: 'default',
       options: {

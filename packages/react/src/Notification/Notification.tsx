@@ -10,14 +10,39 @@ import './Notification.css';
 export type NotificationStatus = 'info' | 'success' | 'warning' | 'error';
 export type NotificationVariant = 'default' | 'subtle';
 
+/**
+ * Banner communicating a status message; `error` renders as an assertive `role="alert"`.
+ *
+ * @example
+ * <Notification status="success" heading="Changes saved" onClose={dismiss}>
+ *   Your profile is now up to date.
+ * </Notification>
+ */
 export interface NotificationProps {
+  /**
+   * Semantic tone; also picks the status icon and ARIA role.
+   * @default 'info'
+   */
   status?: NotificationStatus;
+  /**
+   * Visual style: solid accent or subtle tinted background.
+   * @default 'default'
+   */
   variant?: NotificationVariant;
+  /** Heading text — the primary message. */
   heading: string;
+  /** Optional description rendered below the heading. */
   children?: ReactNode;
+  /**
+   * Shows the × close button.
+   * @default true
+   */
   hasCloseButton?: boolean;
+  /** Called when the close button is clicked. */
   onClose?: () => void;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
 }
 

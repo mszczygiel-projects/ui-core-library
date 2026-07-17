@@ -1,9 +1,11 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import './loader.js';
 
 const meta: Meta = {
   title: 'Web Components/Loader',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-loader' as unknown as ComponentType,
   argTypes: {
     size: {
       control: 'select',

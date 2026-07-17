@@ -11,34 +11,88 @@ export type SelectFieldSize = 'small' | 'default' | 'large';
 export type SelectFieldState = 'default' | 'success' | 'error' | 'disabled';
 export type SelectFieldLabelPlacement = 'top' | 'inner';
 
+/** Single option in a SelectField list. */
 export interface SelectOption {
+  /** Value submitted with the form when this option is selected. */
   value: string;
+  /** Text shown in the trigger and the dropdown list. */
   label: string;
+  /** Renders the option grayed out and unselectable. */
   disabled?: boolean;
 }
 
+/**
+ * Custom dropdown select with keyboard navigation and a hidden native select for form submission.
+ *
+ * @example
+ * <SelectField
+ *   label="Country"
+ *   options={[{ value: 'pl', label: 'Poland' }, { value: 'de', label: 'Germany' }]}
+ *   onChange={setCountry}
+ * />
+ */
 export interface SelectFieldProps {
+  /**
+   * Container style: bordered, filled background, or bottom border only.
+   * @default 'outline'
+   */
   variant?: SelectFieldVariant;
+  /**
+   * Field height and typography scale.
+   * @default 'default'
+   */
   size?: SelectFieldSize;
+  /**
+   * Label position: above the field or inline inside it.
+   * @default 'top'
+   */
   labelPlacement?: SelectFieldLabelPlacement;
+  /** Trigger element id; auto-generated when omitted. */
   id?: string;
+  /** Label text. */
   label?: string;
+  /** Helper text rendered below the field, linked via `aria-describedby`. */
   hint?: string;
+  /**
+   * Validation state; `disabled` also disables the trigger.
+   * @default 'default'
+   */
   state?: SelectFieldState;
+  /**
+   * Text shown while no option is selected.
+   * @default 'Select option...'
+   */
   placeholder?: string;
+  /** Controlled selected value; omit to use uncontrolled mode. */
   value?: string;
+  /** Initially selected value in uncontrolled mode. */
   defaultValue?: string;
+  /**
+   * Options rendered in the dropdown list.
+   * @default []
+   */
   options?: SelectOption[];
+  /** Disables the select. */
   disabled?: boolean;
+  /** Shows a clear affordance when a value is selected (also Delete/Backspace). */
   clearable?: boolean;
+  /** Native form field name — enables the hidden native select for form submission. */
   name?: string;
+  /** Marks the select as required for form submission. */
   required?: boolean;
+  /** Associates the hidden native select with a form by id. */
   form?: string;
+  /** Autocomplete hint forwarded to the hidden native select. */
   autoComplete?: string;
+  /** Sets `aria-invalid` on the trigger. */
   ariaInvalid?: boolean;
+  /** Icon rendered inside the trigger, at the start. */
   leadingIcon?: ReactNode;
+  /** Called with the selected option's value; clearing passes an empty string. */
   onChange?: (value: string) => void;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
 }
 

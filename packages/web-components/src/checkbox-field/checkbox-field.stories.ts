@@ -1,9 +1,11 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import './checkbox-field.js';
 
 const meta: Meta = {
   title: 'Web Components/CheckboxField',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-checkbox-field' as unknown as ComponentType,
   argTypes: {
     state: {
       control: 'select',

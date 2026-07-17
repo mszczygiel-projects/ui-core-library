@@ -2,10 +2,26 @@ import type { CSSProperties } from 'react';
 import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 import './Loader.css';
 
+/**
+ * Inline spinner indicating a pending asynchronous operation.
+ *
+ * @example
+ * <Loader size="small" label="Loading results" />
+ */
 export interface LoaderProps {
+  /**
+   * Spinner diameter.
+   * @default 'default'
+   */
   size?: 'small' | 'default' | 'large';
+  /**
+   * Accessible name announced by screen readers.
+   * @default 'Loading'
+   */
   label?: string;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
 }
 

@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import './notification.js';
 
@@ -7,6 +7,8 @@ const DESCRIPTION =
 
 const meta: Meta = {
   title: 'Web Components/Notification',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-notification' as unknown as ComponentType,
   argTypes: {
     status: {
       control: 'select',

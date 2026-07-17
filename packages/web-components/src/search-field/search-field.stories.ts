@@ -1,9 +1,11 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import './search-field.js';
 
 const meta: Meta = {
   title: 'Web Components/SearchField',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-search-field' as unknown as ComponentType,
   argTypes: {
     variant: {
       control: 'select',

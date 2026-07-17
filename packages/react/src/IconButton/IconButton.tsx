@@ -8,16 +8,41 @@ export type {
 } from '../Button/Button.js';
 import type { ButtonVariant, ButtonSize } from '../Button/Button.js';
 
+/**
+ * Square button holding a single icon, for actions with no visible text label.
+ *
+ * @example
+ * <IconButton variant="ghost" icon={<IconClose />} aria-label="Close dialog" onClick={close} />
+ */
 export interface IconButtonProps {
+  /**
+   * Visual emphasis of the button.
+   * @default 'primary'
+   */
   variant?: ButtonVariant;
+  /**
+   * Overall button size.
+   * @default 'default'
+   */
   size?: ButtonSize;
+  /** Replaces the icon with a spinner and disables interaction. */
   loading?: boolean;
+  /** Disables the button. */
   disabled?: boolean;
+  /**
+   * Native button type.
+   * @default 'button'
+   */
   type?: 'button' | 'submit' | 'reset';
+  /** The icon to display. */
   icon?: ReactNode;
+  /** Accessible name — required because the button has no visible text. */
   'aria-label': string;
+  /** Click handler. */
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
 }
 

@@ -12,31 +12,95 @@ export type SelectFieldSize = 'small' | 'default' | 'large';
 export type SelectFieldState = 'default' | 'success' | 'error' | 'disabled';
 export type SelectFieldLabelPlacement = 'top' | 'inner';
 
+/** Single option in a ui-select-field list. */
 export interface SelectOption {
+  /** Value submitted with the form when this option is selected. */
   value: string;
+  /** Text shown in the trigger and the dropdown list. */
   label: string;
+  /** Renders the option grayed out and unselectable. */
   disabled?: boolean;
 }
 
+/**
+ * Form-associated custom dropdown select with keyboard navigation.
+ *
+ * @element ui-select-field
+ *
+ * @example
+ * ```html
+ * <ui-select-field label="Country"></ui-select-field>
+ * <script>
+ *   document.querySelector('ui-select-field').options = [
+ *     { value: 'pl', label: 'Poland' },
+ *     { value: 'de', label: 'Germany' },
+ *   ];
+ * </script>
+ * ```
+ *
+ * @slot leading-icon - Icon rendered inside the trigger, at the start.
+ *
+ * @fires {Event} input - Native-like input event when the value changes.
+ * @fires {Event} change - Native-like change event when the value changes.
+ * @fires {CustomEvent} ui-change - Same moment as `change`; `detail.value` carries the selected value.
+ */
 @customElement('ui-select-field')
 export class UiSelectField extends LitElement {
   static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, selectFieldStyles];
 
+  /**
+   * Container style: bordered, filled background, or bottom border only.
+   * @default 'outline'
+   */
   @property({ type: String, reflect: true }) variant: SelectFieldVariant = 'outline';
+
+  /**
+   * Field height and typography scale.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: SelectFieldSize =
     'default';
+
+  /**
+   * Label position: above the field or inline inside it.
+   * @default 'top'
+   */
   @property({ type: String, reflect: true, attribute: 'label-placement' })
   labelPlacement: SelectFieldLabelPlacement = 'top';
+
+  /** Label text. */
   @property({ type: String, reflect: true }) label?: string;
+
+  /** Helper text rendered below the field, linked via `aria-describedby`. */
   @property({ type: String, reflect: true }) hint?: string;
+
+  /**
+   * Validation state; `disabled` also disables the trigger.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true }) state: SelectFieldState = 'default';
+
+  /**
+   * Text shown while no option is selected.
+   * @default 'Select option...'
+   */
   @property({ type: String, reflect: true }) placeholder = 'Select option...';
+
+  /** Selected value; the attribute also sets the initial value restored on form reset. */
   @property({ type: String, reflect: true }) value = '';
+
+  /** Options rendered in the dropdown list — set as a property, not an attribute. */
   @property({ type: Array }) options: SelectOption[] = [];
+
+  /** Disables the select. */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Shows a clear affordance when a value is selected (also Delete/Backspace). */
   @property({ type: Boolean, reflect: true }) clearable = false;
+
+  /** Form field name used on submission. */
   @property({ type: String }) name?: string;
 
   @state() private _open = false;

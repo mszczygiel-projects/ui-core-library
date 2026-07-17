@@ -9,16 +9,45 @@ export type BadgeAppearance = 'solid' | 'subtle';
 export type BadgeSize = 'small' | 'medium';
 export type BadgeShape = 'rounded' | 'square';
 
+/**
+ * Compact status label for counts, categories, and state indicators.
+ *
+ * @element ui-badge
+ *
+ * @example
+ * ```html
+ * <ui-badge variant="success" appearance="subtle">Active</ui-badge>
+ * ```
+ *
+ * @slot - Badge label content.
+ * @slot icon - Leading icon; combine with `icon-only` to hide the label.
+ */
 @customElement('ui-badge')
 export class UiBadge extends LitElement {
   static override styles = [resetStyles, badgeStyles];
 
+  /**
+   * Semantic color scheme.
+   * @default 'neutral'
+   */
   @property({ type: String, reflect: true }) variant: BadgeVariant = 'neutral';
 
-  /** Visual style — maps to the Figma `Style` property (renamed: `style` is reserved in HTML/React). */
+  /**
+   * Visual style — maps to the Figma `Style` property (renamed: `style` is reserved in HTML/React).
+   * @default 'solid'
+   */
   @property({ type: String, reflect: true }) appearance: BadgeAppearance = 'solid';
 
+  /**
+   * Overall badge height and typography scale.
+   * @default 'small'
+   */
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: BadgeSize = 'small';
+
+  /**
+   * Corner rounding: fully rounded pill or square with small radius.
+   * @default 'rounded'
+   */
   @property({ type: String, reflect: true }) shape: BadgeShape = 'rounded';
 
   /** Icon-only mode — hides the label and switches to icon-only padding. */

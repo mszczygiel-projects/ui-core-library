@@ -9,21 +9,62 @@ import '../loader/loader.js';
 
 export type { ButtonVariant as LinkButtonVariant, ButtonSize as LinkButtonSize };
 
+/**
+ * Anchor element styled as a button, for navigation that should look like an action.
+ *
+ * @element ui-link-button
+ *
+ * @example
+ * ```html
+ * <ui-link-button href="/pricing" variant="outline">See pricing</ui-link-button>
+ * ```
+ *
+ * @slot - Link label content.
+ * @slot icon-left - Icon inside the content area, before the label.
+ * @slot icon-right - Icon inside the content area, after the label.
+ * @slot leading-icon - Icon in a separated box at the leading edge; requires `has-leading-icon`.
+ * @slot trailing-icon - Icon in a separated box at the trailing edge; requires `has-trailing-icon`.
+ */
 @customElement('ui-link-button')
 export class UiLinkButton extends LitElement {
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, focusStyles, buttonStyles, linkButtonStyles];
 
+  /**
+   * Visual emphasis of the button.
+   * @default 'primary'
+   */
   @property({ type: String, reflect: true }) variant: ButtonVariant = 'primary';
+
+  /**
+   * Overall height and typography scale.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: ButtonSize = 'default';
+
+  /** Replaces content with a spinner and blocks navigation. */
   @property({ type: Boolean, reflect: true }) loading = false;
+
+  /** Blocks navigation and applies disabled styling (`aria-disabled`). */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Destination URL. */
   @property({ type: String, reflect: true }) href = '';
+
+  /** Native anchor target; `_blank` automatically adds `rel="noopener noreferrer"`. */
   @property({ type: String, reflect: true }) target?: string;
+
+  /** Native anchor rel; overrides the automatic `_blank` fallback. */
   @property({ type: String, reflect: true }) rel?: string;
+
+  /** Accessible name; use when the visible label is missing or insufficient. */
   @property({ type: String }) label?: string;
+
+  /** Reserves the leading icon box; assign content via the `leading-icon` slot. */
   @property({ type: Boolean, reflect: true, attribute: 'has-leading-icon' })
   hasLeadingIcon = false;
+
+  /** Reserves the trailing icon box; assign content via the `trailing-icon` slot. */
   @property({ type: Boolean, reflect: true, attribute: 'has-trailing-icon' })
   hasTrailingIcon = false;
 

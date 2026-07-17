@@ -5,22 +5,50 @@ import './LinkButton.css';
 
 export type { ButtonVariant as LinkButtonVariant, ButtonSize as LinkButtonSize };
 
+/**
+ * Anchor element styled as a button, for navigation that should look like an action.
+ *
+ * @example
+ * <LinkButton href="/pricing" variant="outline" iconRight={<IconArrowRight />}>See pricing</LinkButton>
+ */
 export interface LinkButtonProps {
+  /** Destination URL. */
   href: string;
+  /** Native anchor target; `_blank` automatically adds `rel="noopener noreferrer"`. */
   target?: '_self' | '_blank' | '_parent' | '_top';
+  /** Native anchor rel; overrides the automatic `_blank` fallback. */
   rel?: string;
+  /**
+   * Visual emphasis of the button.
+   * @default 'primary'
+   */
   variant?: ButtonVariant;
+  /**
+   * Overall height and typography scale.
+   * @default 'default'
+   */
   size?: ButtonSize;
+  /** Replaces content with a spinner and blocks navigation. */
   loading?: boolean;
+  /** Blocks navigation and applies disabled styling (`aria-disabled`). */
   disabled?: boolean;
+  /** Icon rendered inside the content area, before the label. */
   iconLeft?: ReactNode;
+  /** Icon rendered inside the content area, after the label. */
   iconRight?: ReactNode;
+  /** Icon in a separated box at the leading edge (before the separator). */
   leadingIcon?: ReactNode;
+  /** Icon in a separated box at the trailing edge (after the separator). */
   trailingIcon?: ReactNode;
+  /** Link label content. */
   children?: ReactNode;
+  /** Click handler; not called while disabled or loading. */
   onClick?: React.MouseEventHandler<HTMLAnchorElement>;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
+  /** Accessible name; use when the visible label is missing or insufficient. */
   'aria-label'?: string;
 }
 

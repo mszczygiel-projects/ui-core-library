@@ -5,24 +5,53 @@ import './Button.css';
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
 export type ButtonSize = 'small' | 'default' | 'large';
 
+/**
+ * Primary interactive control for triggering actions, with variant, size, icon, and loading support.
+ *
+ * @example
+ * <Button variant="secondary" size="large" onClick={save}>Save changes</Button>
+ */
 export interface ButtonProps {
+  /**
+   * Visual emphasis of the button.
+   * @default 'primary'
+   */
   variant?: ButtonVariant;
+  /**
+   * Overall button height and typography scale.
+   * @default 'default'
+   */
   size?: ButtonSize;
+  /** Replaces content with a spinner and disables interaction. */
   loading?: boolean;
+  /** Disables the button. */
   disabled?: boolean;
+  /**
+   * Native button type.
+   * @default 'button'
+   */
   type?: 'button' | 'submit' | 'reset';
+  /** Icon rendered inside the content area, before the label. */
   iconLeft?: ReactNode;
+  /** Icon rendered inside the content area, after the label. */
   iconRight?: ReactNode;
+  /** Icon in a separated box at the leading edge (before the separator). */
   leadingIcon?: ReactNode;
+  /** Icon in a separated box at the trailing edge (after the separator). */
   trailingIcon?: ReactNode;
   /** When provided, leading icon box becomes an independent interactive zone (split mode). */
   onLeadingIconClick?: MouseEventHandler<HTMLSpanElement>;
   /** When provided, trailing icon box becomes an independent interactive zone (split mode). */
   onTrailingIconClick?: MouseEventHandler<HTMLSpanElement>;
+  /** Button label content. */
   children?: ReactNode;
+  /** Click handler for the main button area. */
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
+  /** Accessible name; use when the visible label is missing or insufficient. */
   'aria-label'?: string;
 }
 

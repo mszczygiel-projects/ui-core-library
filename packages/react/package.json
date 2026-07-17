@@ -12,11 +12,11 @@
     "dist"
   ],
   "scripts": {
-    "build": "rollup -c && tsc --build tsconfig.build.json --emitDeclarationOnly --force",
-    "test": "vitest run",
+    "build": "rollup -c && tsc --build tsconfig.build.json --emitDeclarationOnly --force && tsx scripts/generate-llms.ts",
+    "test": "vitest run && vitest run --config vitest.scripts.config.ts",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "lint": "eslint src"
+    "lint": "eslint src scripts"
   },
   "repository": {
     "type": "git",
@@ -35,18 +35,21 @@
     "@mszczygiel-projects/ui-core-icons": "workspace:*"
   },
   "devDependencies": {
+    "@mszczygiel-projects/ui-core-foundations": "workspace:*",
+    "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "@rollup/plugin-typescript": "^12.3.0",
     "@testing-library/react": "^16.0.0",
     "@testing-library/user-event": "^14.0.0",
     "@types/react": "^18.0.0",
     "@types/react-dom": "^18.0.0",
-    "@mszczygiel-projects/ui-core-foundations": "workspace:*",
-    "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "@vitejs/plugin-react": "^4.0.0",
     "jsdom": "^29.1.0",
-    "rollup": "^4.60.2",
     "react": "^18.0.0",
+    "react-docgen-typescript": "^2.4.0",
     "react-dom": "^18.0.0",
+    "rollup": "^4.60.2",
+    "tsx": "^4.0.0",
+    "typescript": "^5.5.0",
     "vitest": "^2.0.0"
   }
 }

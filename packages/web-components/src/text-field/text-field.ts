@@ -11,26 +11,84 @@ export type TextFieldSize = 'small' | 'default' | 'large';
 export type TextFieldState = 'default' | 'success' | 'error' | 'disabled';
 export type TextFieldLabelPlacement = 'top' | 'floating' | 'inner';
 
+/**
+ * Form-associated single-line text input with label, hint, validation states, and icon slots.
+ *
+ * @element ui-text-field
+ *
+ * @example
+ * ```html
+ * <ui-text-field label="Email" type="email" hint="Work address preferred"></ui-text-field>
+ * ```
+ *
+ * @slot leading-icon - Icon rendered inside the field, at the start.
+ * @slot trailing-icon - Icon rendered inside the field, at the end; `error` state provides a default.
+ *
+ * @fires {Event} input - Native-like input event on every keystroke.
+ * @fires {CustomEvent} ui-input - Same moment as `input`; `detail.value` carries the current value.
+ * @fires {Event} change - Native-like change event when the value is committed.
+ * @fires {CustomEvent} ui-change - Same moment as `change`; `detail.value` carries the current value.
+ */
 @customElement('ui-text-field')
 export class UiTextField extends LitElement {
   static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, textFieldStyles];
 
+  /**
+   * Container style: bordered, filled background, or bottom border only.
+   * @default 'outline'
+   */
   @property({ type: String, reflect: true }) variant: TextFieldVariant = 'outline';
+
+  /**
+   * Field height and typography scale.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: TextFieldSize =
     'default';
+
+  /** Label text. */
   @property({ type: String, reflect: true }) label?: string;
+
+  /**
+   * Label position: above the field, floating over it, or inline inside it.
+   * @default 'top'
+   */
   @property({ type: String, reflect: true, attribute: 'label-placement' })
   labelPlacement: TextFieldLabelPlacement = 'top';
+
+  /** Placeholder text shown while empty. */
   @property({ type: String, reflect: true }) placeholder = '';
+
+  /** Current value; the attribute also sets the initial value restored on form reset. */
   @property({ type: String, reflect: true }) value = '';
+
+  /** Helper text rendered below the field, linked via `aria-describedby`. */
   @property({ type: String, reflect: true }) hint?: string;
+
+  /**
+   * Validation state; `error` shows a danger icon, `disabled` also disables the input.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true }) state: TextFieldState = 'default';
+
+  /** Form field name used on submission. */
   @property({ type: String }) name?: string;
+
+  /**
+   * Native input type.
+   * @default 'text'
+   */
   @property({ type: String }) type: 'text' | 'email' | 'tel' | 'url' = 'text';
+
+  /** Disables the input. */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Marks the field as required for form submission. */
   @property({ type: Boolean, reflect: true }) required = false;
+
+  /** Makes the input read-only. */
   @property({ type: Boolean, reflect: true }) readonly = false;
 
   @state() private _hasLeadingIcon = false;

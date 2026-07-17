@@ -1,4 +1,4 @@
-import { createElement, useRef, useEffect } from 'react';
+import { createElement, type ComponentType, useRef, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import type { SelectOption } from './select-field.js';
@@ -66,7 +66,10 @@ function SelectFieldWC(props: SelectFieldArgs) {
 
 const meta: Meta<SelectFieldArgs> = {
   title: 'Web Components/SelectField',
-  component: SelectFieldWC,
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts);
+  // rendering goes through the React wrapper so `.options` is set as a property.
+  component: 'ui-select-field' as unknown as ComponentType,
+  render: (args) => createElement(SelectFieldWC, args),
   argTypes: {
     variant: {
       control: 'select',

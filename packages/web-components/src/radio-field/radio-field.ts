@@ -6,19 +6,53 @@ import { motionStyles } from '../styles/motion.styles.js';
 
 export type RadioFieldState = 'default' | 'error' | 'disabled';
 
+/**
+ * Form-associated single radio button with label and hint; group radios by giving them the same `name`.
+ *
+ * @element ui-radio-field
+ *
+ * @example
+ * ```html
+ * <ui-radio-field name="plan" value="pro" label="Pro plan"></ui-radio-field>
+ * ```
+ *
+ * @fires {Event} change - Native-like change event after user interaction.
+ * @fires {CustomEvent} ui-change - Same moment as `change`; `detail.checked` carries the new state.
+ */
 @customElement('ui-radio-field')
 export class UiRadioField extends LitElement {
   static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, radioFieldStyles];
 
+  /** Label text rendered next to the radio. */
   @property({ type: String, reflect: true }) label = '';
+
+  /** Helper text rendered below the radio, linked via `aria-describedby`. */
   @property({ type: String, reflect: true }) hint?: string;
+
+  /** Checked state; the attribute also sets the initial state restored on form reset. */
   @property({ type: Boolean, reflect: true }) checked = false;
+
+  /**
+   * Validation state; `disabled` also disables the input.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true }) state: RadioFieldState = 'default';
+
+  /** Disables the radio. */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Form field name — radios with the same name form a group. */
   @property({ type: String }) name?: string;
+
+  /**
+   * Value submitted with the form when selected.
+   * @default 'on'
+   */
   @property({ type: String }) value = 'on';
+
+  /** Marks the radio group as required for form submission. */
   @property({ type: Boolean, reflect: true }) required = false;
 
   @state() private _formDisabled = false;

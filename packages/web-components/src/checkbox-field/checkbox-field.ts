@@ -6,20 +6,56 @@ import { motionStyles } from '../styles/motion.styles.js';
 
 export type CheckboxFieldState = 'default' | 'error' | 'disabled';
 
+/**
+ * Form-associated checkbox with label and hint, supporting the indeterminate state.
+ *
+ * @element ui-checkbox-field
+ *
+ * @example
+ * ```html
+ * <ui-checkbox-field label="Subscribe to newsletter" hint="Max one email per week"></ui-checkbox-field>
+ * ```
+ *
+ * @fires {Event} change - Native-like change event after user interaction.
+ * @fires {CustomEvent} ui-change - Same moment as `change`; `detail.checked` carries the new state.
+ */
 @customElement('ui-checkbox-field')
 export class UiCheckboxField extends LitElement {
   static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, checkboxFieldStyles];
 
+  /** Label text rendered next to the checkbox. */
   @property({ type: String, reflect: true }) label = '';
+
+  /** Helper text rendered below the checkbox, linked via `aria-describedby`. */
   @property({ type: String, reflect: true }) hint?: string;
+
+  /** Checked state; the attribute also sets the initial state restored on form reset. */
   @property({ type: Boolean, reflect: true }) checked = false;
+
+  /** Visual "partially checked" state (e.g. a parent of a mixed selection). */
   @property({ type: Boolean, reflect: true }) indeterminate = false;
+
+  /**
+   * Validation state; `disabled` also disables the input.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true }) state: CheckboxFieldState = 'default';
+
+  /** Disables the checkbox. */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Form field name used on submission. */
   @property({ type: String }) name?: string;
+
+  /**
+   * Value submitted with the form when checked.
+   * @default 'on'
+   */
   @property({ type: String }) value = 'on';
+
+  /** Marks the checkbox as required for form submission. */
   @property({ type: Boolean, reflect: true }) required = false;
 
   @state() private _formDisabled = false;

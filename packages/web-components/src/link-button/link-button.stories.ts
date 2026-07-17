@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
@@ -8,6 +8,8 @@ const iconOptions = Object.keys(svgMap) as Array<keyof typeof svgMap>;
 
 const meta: Meta = {
   title: 'Web Components/LinkButton',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-link-button' as unknown as ComponentType,
   argTypes: {
     variant: {
       control: 'select',

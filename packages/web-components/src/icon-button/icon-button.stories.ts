@@ -1,10 +1,12 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import './icon-button.js';
 
 const meta: Meta = {
   title: 'Web Components/IconButton',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-icon-button' as unknown as ComponentType,
   argTypes: {
     variant: {
       control: 'select',

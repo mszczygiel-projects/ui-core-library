@@ -10,23 +10,61 @@ import type {
 } from '../TextField/TextField.js';
 import './SearchField.css';
 
+/**
+ * Search input built on TextField, with a leading search icon and a clear button.
+ *
+ * @example
+ * <SearchField label="Search products" onChange={setQuery} onClear={resetResults} />
+ */
 export interface SearchFieldProps {
+  /**
+   * Container style: bordered, filled background, or bottom border only.
+   * @default 'outline'
+   */
   variant?: TextFieldVariant;
+  /**
+   * Field height and typography scale.
+   * @default 'default'
+   */
   size?: TextFieldSize;
+  /** Label text. */
   label?: string;
+  /**
+   * Label position: above the field, floating over it, or inline inside it.
+   * @default 'top'
+   */
   labelPlacement?: TextFieldLabelPlacement;
+  /** Controlled input value; omit to use uncontrolled mode. */
   value?: string;
+  /** Initial value in uncontrolled mode. */
   defaultValue?: string;
+  /**
+   * Placeholder text shown while empty.
+   * @default 'Search...'
+   */
   placeholder?: string;
+  /** Helper text rendered below the field, linked via `aria-describedby`. */
   hint?: string;
+  /**
+   * Validation state; `disabled` also disables the input.
+   * @default 'default'
+   */
   state?: TextFieldState;
+  /** Native form field name. */
   name?: string;
+  /** Disables the input and the clear button. */
   disabled?: boolean;
+  /** Marks the field as required for form submission. */
   required?: boolean;
+  /** Makes the input read-only. */
   readOnly?: boolean;
+  /** Called with the input's string value on every change (including clearing). */
   onChange?: (value: string) => void;
+  /** Called when the clear button empties the field. */
   onClear?: () => void;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
 }
 

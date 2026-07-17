@@ -140,7 +140,8 @@ export const Shapes: Story = {
 
 export const WithIcon: Story = {
   args: { icon: 'icon-info' },
-  render: ({ size, shape, appearance, icon }) => variantRow(appearance ?? 'solid', size, shape, icon),
+  render: ({ size, shape, appearance, icon }) =>
+    variantRow(appearance ?? 'solid', size, shape, icon),
 };
 
 export const IconOnly: Story = {
