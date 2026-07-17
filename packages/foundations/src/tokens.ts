@@ -512,6 +512,80 @@ export const tokens = {
             },
           },
         },
+        badge: {
+          neutral: {
+            solid: {
+              background: 'var(--color-on-subtle-badge-neutral-solid-background)',
+              text: 'var(--color-on-subtle-badge-neutral-solid-text)',
+              border: 'var(--color-on-subtle-badge-neutral-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-subtle-badge-neutral-subtle-background)',
+              text: 'var(--color-on-subtle-badge-neutral-subtle-text)',
+              border: 'var(--color-on-subtle-badge-neutral-subtle-border)',
+            },
+          },
+          brand: {
+            solid: {
+              background: 'var(--color-on-subtle-badge-brand-solid-background)',
+              text: 'var(--color-on-subtle-badge-brand-solid-text)',
+              border: 'var(--color-on-subtle-badge-brand-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-subtle-badge-brand-subtle-background)',
+              text: 'var(--color-on-subtle-badge-brand-subtle-text)',
+              border: 'var(--color-on-subtle-badge-brand-subtle-border)',
+            },
+          },
+          success: {
+            solid: {
+              background: 'var(--color-on-subtle-badge-success-solid-background)',
+              text: 'var(--color-on-subtle-badge-success-solid-text)',
+              border: 'var(--color-on-subtle-badge-success-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-subtle-badge-success-subtle-background)',
+              text: 'var(--color-on-subtle-badge-success-subtle-text)',
+              border: 'var(--color-on-subtle-badge-success-subtle-border)',
+            },
+          },
+          warning: {
+            solid: {
+              background: 'var(--color-on-subtle-badge-warning-solid-background)',
+              text: 'var(--color-on-subtle-badge-warning-solid-text)',
+              border: 'var(--color-on-subtle-badge-warning-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-subtle-badge-warning-subtle-background)',
+              text: 'var(--color-on-subtle-badge-warning-subtle-text)',
+              border: 'var(--color-on-subtle-badge-warning-subtle-border)',
+            },
+          },
+          error: {
+            solid: {
+              background: 'var(--color-on-subtle-badge-error-solid-background)',
+              text: 'var(--color-on-subtle-badge-error-solid-text)',
+              border: 'var(--color-on-subtle-badge-error-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-subtle-badge-error-subtle-background)',
+              text: 'var(--color-on-subtle-badge-error-subtle-text)',
+              border: 'var(--color-on-subtle-badge-error-subtle-border)',
+            },
+          },
+          info: {
+            solid: {
+              background: 'var(--color-on-subtle-badge-info-solid-background)',
+              text: 'var(--color-on-subtle-badge-info-solid-text)',
+              border: 'var(--color-on-subtle-badge-info-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-subtle-badge-info-subtle-background)',
+              text: 'var(--color-on-subtle-badge-info-subtle-text)',
+              border: 'var(--color-on-subtle-badge-info-subtle-border)',
+            },
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -1019,6 +1093,80 @@ export const tokens = {
             check: {
               default: 'var(--color-on-inverse-select-option-check-default)',
               active: 'var(--color-on-inverse-select-option-check-active)',
+            },
+          },
+        },
+        badge: {
+          neutral: {
+            solid: {
+              background: 'var(--color-on-inverse-badge-neutral-solid-background)',
+              text: 'var(--color-on-inverse-badge-neutral-solid-text)',
+              border: 'var(--color-on-inverse-badge-neutral-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-inverse-badge-neutral-subtle-background)',
+              text: 'var(--color-on-inverse-badge-neutral-subtle-text)',
+              border: 'var(--color-on-inverse-badge-neutral-subtle-border)',
+            },
+          },
+          brand: {
+            solid: {
+              background: 'var(--color-on-inverse-badge-brand-solid-background)',
+              text: 'var(--color-on-inverse-badge-brand-solid-text)',
+              border: 'var(--color-on-inverse-badge-brand-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-inverse-badge-brand-subtle-background)',
+              text: 'var(--color-on-inverse-badge-brand-subtle-text)',
+              border: 'var(--color-on-inverse-badge-brand-subtle-border)',
+            },
+          },
+          success: {
+            solid: {
+              background: 'var(--color-on-inverse-badge-success-solid-background)',
+              text: 'var(--color-on-inverse-badge-success-solid-text)',
+              border: 'var(--color-on-inverse-badge-success-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-inverse-badge-success-subtle-background)',
+              text: 'var(--color-on-inverse-badge-success-subtle-text)',
+              border: 'var(--color-on-inverse-badge-success-subtle-border)',
+            },
+          },
+          warning: {
+            solid: {
+              background: 'var(--color-on-inverse-badge-warning-solid-background)',
+              text: 'var(--color-on-inverse-badge-warning-solid-text)',
+              border: 'var(--color-on-inverse-badge-warning-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-inverse-badge-warning-subtle-background)',
+              text: 'var(--color-on-inverse-badge-warning-subtle-text)',
+              border: 'var(--color-on-inverse-badge-warning-subtle-border)',
+            },
+          },
+          error: {
+            solid: {
+              background: 'var(--color-on-inverse-badge-error-solid-background)',
+              text: 'var(--color-on-inverse-badge-error-solid-text)',
+              border: 'var(--color-on-inverse-badge-error-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-inverse-badge-error-subtle-background)',
+              text: 'var(--color-on-inverse-badge-error-subtle-text)',
+              border: 'var(--color-on-inverse-badge-error-subtle-border)',
+            },
+          },
+          info: {
+            solid: {
+              background: 'var(--color-on-inverse-badge-info-solid-background)',
+              text: 'var(--color-on-inverse-badge-info-solid-text)',
+              border: 'var(--color-on-inverse-badge-info-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-inverse-badge-info-subtle-background)',
+              text: 'var(--color-on-inverse-badge-info-subtle-text)',
+              border: 'var(--color-on-inverse-badge-info-subtle-border)',
             },
           },
         },
@@ -1532,6 +1680,80 @@ export const tokens = {
             },
           },
         },
+        badge: {
+          neutral: {
+            solid: {
+              background: 'var(--color-on-brand-primary-badge-neutral-solid-background)',
+              text: 'var(--color-on-brand-primary-badge-neutral-solid-text)',
+              border: 'var(--color-on-brand-primary-badge-neutral-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-brand-primary-badge-neutral-subtle-background)',
+              text: 'var(--color-on-brand-primary-badge-neutral-subtle-text)',
+              border: 'var(--color-on-brand-primary-badge-neutral-subtle-border)',
+            },
+          },
+          brand: {
+            solid: {
+              background: 'var(--color-on-brand-primary-badge-brand-solid-background)',
+              text: 'var(--color-on-brand-primary-badge-brand-solid-text)',
+              border: 'var(--color-on-brand-primary-badge-brand-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-brand-primary-badge-brand-subtle-background)',
+              text: 'var(--color-on-brand-primary-badge-brand-subtle-text)',
+              border: 'var(--color-on-brand-primary-badge-brand-subtle-border)',
+            },
+          },
+          success: {
+            solid: {
+              background: 'var(--color-on-brand-primary-badge-success-solid-background)',
+              text: 'var(--color-on-brand-primary-badge-success-solid-text)',
+              border: 'var(--color-on-brand-primary-badge-success-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-brand-primary-badge-success-subtle-background)',
+              text: 'var(--color-on-brand-primary-badge-success-subtle-text)',
+              border: 'var(--color-on-brand-primary-badge-success-subtle-border)',
+            },
+          },
+          warning: {
+            solid: {
+              background: 'var(--color-on-brand-primary-badge-warning-solid-background)',
+              text: 'var(--color-on-brand-primary-badge-warning-solid-text)',
+              border: 'var(--color-on-brand-primary-badge-warning-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-brand-primary-badge-warning-subtle-background)',
+              text: 'var(--color-on-brand-primary-badge-warning-subtle-text)',
+              border: 'var(--color-on-brand-primary-badge-warning-subtle-border)',
+            },
+          },
+          error: {
+            solid: {
+              background: 'var(--color-on-brand-primary-badge-error-solid-background)',
+              text: 'var(--color-on-brand-primary-badge-error-solid-text)',
+              border: 'var(--color-on-brand-primary-badge-error-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-brand-primary-badge-error-subtle-background)',
+              text: 'var(--color-on-brand-primary-badge-error-subtle-text)',
+              border: 'var(--color-on-brand-primary-badge-error-subtle-border)',
+            },
+          },
+          info: {
+            solid: {
+              background: 'var(--color-on-brand-primary-badge-info-solid-background)',
+              text: 'var(--color-on-brand-primary-badge-info-solid-text)',
+              border: 'var(--color-on-brand-primary-badge-info-solid-border)',
+            },
+            subtle: {
+              background: 'var(--color-on-brand-primary-badge-info-subtle-background)',
+              text: 'var(--color-on-brand-primary-badge-info-subtle-text)',
+              border: 'var(--color-on-brand-primary-badge-info-subtle-border)',
+            },
+          },
+        },
       },
       selection: {
         background: 'var(--color-selection-background)',
@@ -1573,10 +1795,10 @@ export const tokens = {
         strong: 'var(--shadow-color-strong)',
       },
       elevation: {
-        '1': 'var(--shadow-elevation-1)',
-        '2': 'var(--shadow-elevation-2)',
-        '3': 'var(--shadow-elevation-3)',
-        '4': 'var(--shadow-elevation-4)',
+        "1": 'var(--shadow-elevation-1)',
+        "2": 'var(--shadow-elevation-2)',
+        "3": 'var(--shadow-elevation-3)',
+        "4": 'var(--shadow-elevation-4)',
       },
       interactive: {
         default: 'var(--shadow-interactive-default)',
@@ -2113,6 +2335,80 @@ export const tokens = {
           },
         },
       },
+      badge: {
+        neutral: {
+          solid: {
+            background: 'var(--color-badge-neutral-solid-background)',
+            text: 'var(--color-badge-neutral-solid-text)',
+            border: 'var(--color-badge-neutral-solid-border)',
+          },
+          subtle: {
+            background: 'var(--color-badge-neutral-subtle-background)',
+            text: 'var(--color-badge-neutral-subtle-text)',
+            border: 'var(--color-badge-neutral-subtle-border)',
+          },
+        },
+        brand: {
+          solid: {
+            background: 'var(--color-badge-brand-solid-background)',
+            text: 'var(--color-badge-brand-solid-text)',
+            border: 'var(--color-badge-brand-solid-border)',
+          },
+          subtle: {
+            background: 'var(--color-badge-brand-subtle-background)',
+            text: 'var(--color-badge-brand-subtle-text)',
+            border: 'var(--color-badge-brand-subtle-border)',
+          },
+        },
+        success: {
+          solid: {
+            background: 'var(--color-badge-success-solid-background)',
+            text: 'var(--color-badge-success-solid-text)',
+            border: 'var(--color-badge-success-solid-border)',
+          },
+          subtle: {
+            background: 'var(--color-badge-success-subtle-background)',
+            text: 'var(--color-badge-success-subtle-text)',
+            border: 'var(--color-badge-success-subtle-border)',
+          },
+        },
+        warning: {
+          solid: {
+            background: 'var(--color-badge-warning-solid-background)',
+            text: 'var(--color-badge-warning-solid-text)',
+            border: 'var(--color-badge-warning-solid-border)',
+          },
+          subtle: {
+            background: 'var(--color-badge-warning-subtle-background)',
+            text: 'var(--color-badge-warning-subtle-text)',
+            border: 'var(--color-badge-warning-subtle-border)',
+          },
+        },
+        error: {
+          solid: {
+            background: 'var(--color-badge-error-solid-background)',
+            text: 'var(--color-badge-error-solid-text)',
+            border: 'var(--color-badge-error-solid-border)',
+          },
+          subtle: {
+            background: 'var(--color-badge-error-subtle-background)',
+            text: 'var(--color-badge-error-subtle-text)',
+            border: 'var(--color-badge-error-subtle-border)',
+          },
+        },
+        info: {
+          solid: {
+            background: 'var(--color-badge-info-solid-background)',
+            text: 'var(--color-badge-info-solid-text)',
+            border: 'var(--color-badge-info-solid-border)',
+          },
+          subtle: {
+            background: 'var(--color-badge-info-subtle-background)',
+            text: 'var(--color-badge-info-subtle-text)',
+            border: 'var(--color-badge-info-subtle-border)',
+          },
+        },
+      },
     },
   },
   sizes: {
@@ -2342,8 +2638,8 @@ export const tokens = {
         floating: {
           fontSize: 'var(--control-label-floating-font-size)',
           lineHeight: 'var(--control-label-floating-line-height)',
-          letterSpacing: 'var(--control-label-floating-letter-spacing)',
           fontWeight: 'var(--control-label-floating-font-weight)',
+          letterSpacing: 'var(--control-label-floating-letter-spacing)',
           fontFamily: 'var(--control-label-floating-font-family)',
           textTransform: 'var(--control-label-floating-text-transform)',
         },
@@ -2483,8 +2779,8 @@ export const tokens = {
       },
     },
     notification: {
-      radius: 'var(--notification-radius)',
       fontFamily: 'var(--notification-font-family)',
+      radius: 'var(--notification-radius)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -2517,6 +2813,43 @@ export const tokens = {
           top: 'var(--notification-subtle-border-top)',
           bottom: 'var(--notification-subtle-border-bottom)',
         },
+      },
+    },
+    badge: {
+      fontFamily: 'var(--badge-font-family)',
+      fontWeight: 'var(--badge-font-weight)',
+      letterSpacing: 'var(--badge-letter-spacing)',
+      gap: 'var(--badge-gap)',
+      padding: {
+        inlineIconOnly: 'var(--badge-padding-inline-icon-only)',
+      },
+      rounded: {
+        radius: 'var(--badge-rounded-radius)',
+      },
+      square: {
+        radius: 'var(--badge-square-radius)',
+      },
+      small: {
+        height: 'var(--badge-small-height)',
+        padding: {
+          inline: 'var(--badge-small-padding-inline)',
+        },
+        icon: {
+          size: 'var(--badge-small-icon-size)',
+        },
+        fontSize: 'var(--badge-small-font-size)',
+        lineHeight: 'var(--badge-small-line-height)',
+      },
+      medium: {
+        height: 'var(--badge-medium-height)',
+        padding: {
+          inline: 'var(--badge-medium-padding-inline)',
+        },
+        icon: {
+          size: 'var(--badge-medium-icon-size)',
+        },
+        fontSize: 'var(--badge-medium-font-size)',
+        lineHeight: 'var(--badge-medium-line-height)',
       },
     },
   },
