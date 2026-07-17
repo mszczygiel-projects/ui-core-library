@@ -1,4 +1,4 @@
-# `<Badge>`
+# `Badge`
 
 A non-interactive status/label chip. Single default appearance per variant — no hover, focus, or active states.
 
