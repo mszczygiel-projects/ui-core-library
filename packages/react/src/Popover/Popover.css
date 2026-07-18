@@ -1,0 +1,100 @@
+.ui-popover {
+  display: inline-block;
+}
+
+.ui-popover__anchor {
+  display: inline-block;
+}
+
+/*
+ * The panel is promoted to the top layer via the native Popover API, which
+ * applies UA styles ([popover] { inset: 0; margin: auto; border; padding;
+ * background: Canvas; }) — every one of them is overridden here. Positioning
+ * comes from Floating UI through the --_x/--_y private properties.
+ *
+ * `display: none` is the author-origin base for both closed states (it also
+ * wins over the UA's :popover-open rule, hence the explicit re-enable below).
+ */
+.ui-popover__panel {
+  display: none;
+  position: fixed;
+  left: var(--_x, 0);
+  top: var(--_y, 0);
+  right: auto;
+  bottom: auto;
+  margin: 0;
+  padding: 0;
+  width: max-content;
+  background-color: var(--color-popover-background);
+  color: inherit;
+  border: var(--popover-border-width) solid var(--color-popover-border);
+  border-radius: var(--popover-radius);
+  box-shadow: var(--shadow-md);
+  /* The arrow protrudes past the panel edge. */
+  overflow: visible;
+}
+
+.ui-popover__panel:popover-open {
+  display: block;
+}
+
+/*
+ * Fallback for browsers without the Popover API: same fixed positioning,
+ * stacked with the single documented --z-overlay hook (no z-index scale —
+ * top-layer rendering doesn't need one, only this fallback does).
+ */
+.ui-popover__panel--open {
+  display: block;
+  z-index: var(--z-overlay, 100);
+}
+
+.ui-popover__panel:focus {
+  outline: none;
+}
+
+.ui-popover__content {
+  /* Padding lives here, not on the panel — UA popover padding is reset above. */
+  padding: var(--popover-padding);
+}
+
+/*
+ * Caret: a square rotated 45°, half protruding past the panel edge. Fill
+ * matches the panel background so it covers the panel border underneath;
+ * only the two outward-facing sides draw a border. The protruding side is
+ * derived from the RESOLVED placement (data-placement, set after flip/shift) —
+ * cross-axis position comes from Floating UI via --_arrow-x/--_arrow-y.
+ */
+.ui-popover__arrow {
+  position: absolute;
+  left: var(--_arrow-x);
+  top: var(--_arrow-y);
+  width: var(--popover-arrow-size);
+  height: var(--popover-arrow-size);
+  background-color: var(--color-popover-background);
+  border: 0 solid var(--color-popover-border);
+  transform: rotate(45deg);
+}
+
+.ui-popover__panel[data-placement^='top'] .ui-popover__arrow {
+  bottom: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
+  border-right-width: var(--popover-border-width);
+  border-bottom-width: var(--popover-border-width);
+}
+
+.ui-popover__panel[data-placement^='bottom'] .ui-popover__arrow {
+  top: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
+  border-top-width: var(--popover-border-width);
+  border-left-width: var(--popover-border-width);
+}
+
+.ui-popover__panel[data-placement^='left'] .ui-popover__arrow {
+  right: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
+  border-top-width: var(--popover-border-width);
+  border-right-width: var(--popover-border-width);
+}
+
+.ui-popover__panel[data-placement^='right'] .ui-popover__arrow {
+  left: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
+  border-bottom-width: var(--popover-border-width);
+  border-left-width: var(--popover-border-width);
+}

@@ -1270,6 +1270,8 @@
   --color-on-subtle-chip-dismiss-background-hover: var(--color-on-subtle-background-overlay);
   --color-on-subtle-chip-dismiss-background-focus: var(--color-transparent);
   --color-on-subtle-chip-dismiss-background-active: var(--color-on-subtle-background-overlay);
+  --color-on-subtle-popover-background: var(--color-on-subtle-background-default);
+  --color-on-subtle-popover-border: var(--color-on-subtle-border-default);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -1964,6 +1966,8 @@
   --color-on-inverse-chip-dismiss-background-hover: var(--color-on-inverse-background-overlay);
   --color-on-inverse-chip-dismiss-background-focus: var(--color-transparent);
   --color-on-inverse-chip-dismiss-background-active: var(--color-on-inverse-background-overlay);
+  --color-on-inverse-popover-background: var(--color-on-inverse-background-default);
+  --color-on-inverse-popover-border: var(--color-on-inverse-border-default);
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -2658,6 +2662,8 @@
   --color-on-brand-primary-chip-dismiss-background-hover: var(--color-on-brand-primary-background-overlay);
   --color-on-brand-primary-chip-dismiss-background-focus: var(--color-transparent);
   --color-on-brand-primary-chip-dismiss-background-active: var(--color-on-brand-primary-background-overlay);
+  --color-on-brand-primary-popover-background: var(--color-on-brand-primary-background-default);
+  --color-on-brand-primary-popover-border: var(--color-on-brand-primary-border-default);
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
   --color-badge-neutral-solid-background: var(--color-gray-800);
@@ -3024,6 +3030,8 @@
   --color-chip-dismiss-background-hover: var(--color-background-overlay);
   --color-chip-dismiss-background-focus: var(--color-transparent);
   --color-chip-dismiss-background-active: var(--color-background-overlay);
+  --color-popover-background: var(--color-background-default);
+  --color-popover-border: var(--color-border-default);
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
@@ -3540,6 +3548,7 @@
     --color-on-subtle-chip-info-outline-border-focus: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-outline-border-active: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-outline-border-selected: var(--color-on-subtle-chip-info-solid-background-default);
+    --color-on-subtle-popover-background: var(--color-on-subtle-background-default);
     --color-on-inverse-brand-primary: var(--color-brand-primary);
     --color-on-inverse-background-default: var(--color-background-inverse);
     --color-on-inverse-background-inverse: var(--color-background-default);
@@ -3813,6 +3822,7 @@
     --color-on-inverse-chip-info-outline-border-focus: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-outline-border-active: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-outline-border-selected: var(--color-on-inverse-chip-info-solid-background-default);
+    --color-on-inverse-popover-background: var(--color-on-inverse-background-default);
     --color-on-brand-primary-brand-primary: var(--color-brand-primary);
     --color-on-brand-primary-background-default: var(--color-brand-primary-600);
     --color-on-brand-primary-background-sunken: var(--color-background-sunken);
@@ -4091,6 +4101,7 @@
     --color-on-brand-primary-chip-info-outline-border-focus: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-outline-border-active: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-outline-border-selected: var(--color-on-brand-primary-chip-info-solid-background-default);
+    --color-on-brand-primary-popover-background: var(--color-on-brand-primary-background-default);
     --color-selection-background: var(--color-button-primary-background-default);
     --color-badge-neutral-solid-background: var(--color-gray-700);
     --color-badge-neutral-solid-border: var(--color-badge-neutral-solid-background);
@@ -4261,6 +4272,7 @@
     --color-chip-info-outline-border-focus: var(--color-feedback-info-base);
     --color-chip-info-outline-border-active: var(--color-feedback-info-base);
     --color-chip-info-outline-border-selected: var(--color-chip-info-solid-background-default);
+    --color-popover-background: var(--color-background-default);
   }
 }
 
@@ -4960,6 +4972,8 @@
   --color-chip-dismiss-background-hover: var(--color-on-subtle-chip-dismiss-background-hover);
   --color-chip-dismiss-background-focus: var(--color-on-subtle-chip-dismiss-background-focus);
   --color-chip-dismiss-background-active: var(--color-on-subtle-chip-dismiss-background-active);
+  --color-popover-background: var(--color-on-subtle-popover-background);
+  --color-popover-border: var(--color-on-subtle-popover-border);
 }
 
 /* === Surfaces (Inverse) === */
@@ -5658,6 +5672,8 @@
   --color-chip-dismiss-background-hover: var(--color-on-inverse-chip-dismiss-background-hover);
   --color-chip-dismiss-background-focus: var(--color-on-inverse-chip-dismiss-background-focus);
   --color-chip-dismiss-background-active: var(--color-on-inverse-chip-dismiss-background-active);
+  --color-popover-background: var(--color-on-inverse-popover-background);
+  --color-popover-border: var(--color-on-inverse-popover-border);
 }
 
 /* === Surfaces (Primary) === */
@@ -6356,6 +6372,8 @@
   --color-chip-dismiss-background-hover: var(--color-on-brand-primary-chip-dismiss-background-hover);
   --color-chip-dismiss-background-focus: var(--color-on-brand-primary-chip-dismiss-background-focus);
   --color-chip-dismiss-background-active: var(--color-on-brand-primary-chip-dismiss-background-active);
+  --color-popover-background: var(--color-on-brand-primary-popover-background);
+  --color-popover-border: var(--color-on-brand-primary-popover-border);
 }
 
 /* === Sizes (Mobile — default) === */
@@ -6536,13 +6554,13 @@
   --button-large-icon-size: var(--control-large-icon-size);
   --button-large-separator-inset: 0.25rem;
   --button-separator-inset: 0.25rem;
-  --checkbox-radius: var(--control-radius);
   --checkbox-field-gap: var(--spacing-3);
   --checkbox-field-font-family: var(--control-font-family);
   --checkbox-field-font-weight: var(--control-font-weight);
   --checkbox-field-font-size: var(--control-font-size);
   --checkbox-field-line-height: var(--checkbox-size-default);
   --checkbox-field-letter-spacing: var(--tracking-normal);
+  --checkbox-radius: var(--control-radius);
   --checkbox-border-width: var(--control-border-width);
   --checkbox-size-default: var(--size-5);
   --radio-radius: var(--radius-full);
@@ -6622,6 +6640,11 @@
   --chip-letter-spacing: var(--tracking-normal);
   --chip-gap: var(--spacing-1);
   --chip-radius: var(--radius-full);
+  --popover-padding: var(--spacing-4);
+  --popover-radius: var(--spacing-2);
+  --popover-border-width: 0.0625rem;
+  --popover-arrow-size: var(--spacing-2);
+  --popover-offset: var(--spacing-2);
 }
 
 /* === Sizes (Desktop) === */

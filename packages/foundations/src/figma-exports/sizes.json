@@ -1401,13 +1401,6 @@
     }
   },
   "checkbox": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
     "field": {
       "gap": {
         "$value": {
@@ -1451,6 +1444,13 @@
         },
         "$type": "string"
       }
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.control.radius}",
+        "Desktop": "{Sizes.control.radius}"
+      },
+      "$type": "number"
     },
     "border": {
       "width": {
@@ -2084,6 +2084,47 @@
       "$value": {
         "Mobile": "{Primitives Sizes.radius.full}",
         "Desktop": "{Primitives Sizes.radius.full}"
+      },
+      "$type": "number"
+    }
+  },
+  "popover": {
+    "padding": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.4}",
+        "Desktop": "{Primitives Sizes.spacing.4}"
+      },
+      "$type": "number"
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.2}",
+        "Desktop": "{Primitives Sizes.spacing.2}"
+      },
+      "$type": "number"
+    },
+    "border": {
+      "width": {
+        "$value": {
+          "Mobile": 1,
+          "Desktop": 1
+        },
+        "$type": "number"
+      }
+    },
+    "arrow": {
+      "size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "number"
+      }
+    },
+    "offset": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.2}",
+        "Desktop": "{Primitives Sizes.spacing.2}"
       },
       "$type": "number"
     }

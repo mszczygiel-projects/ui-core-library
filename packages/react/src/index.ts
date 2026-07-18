@@ -51,3 +51,12 @@ export type {
 } from './Badge/Badge.js';
 export { Chip } from './Chip/Chip.js';
 export type { ChipProps, ChipVariant, ChipAppearance, ChipSize } from './Chip/Chip.js';
+export { Popover } from './Popover/Popover.js';
+export type {
+  PopoverProps,
+  PopoverPlacement,
+  PopoverTrigger,
+  PopoverDismiss,
+  PopoverOpenChangeReason,
+  PopoverOpenChangeDetail,
+} from './Popover/Popover.js';

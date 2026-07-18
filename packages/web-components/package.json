@@ -32,6 +32,7 @@
     "@mszczygiel-projects/ui-core-foundations": "workspace:*"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
     "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "lit": "^3.0.0"
   },
