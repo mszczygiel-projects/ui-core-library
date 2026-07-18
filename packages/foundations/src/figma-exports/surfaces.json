@@ -6625,6 +6625,26 @@
           }
         }
       }
+    },
+    "popover": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.popover.background}",
+          "Subtle": "{Themes.color.on-subtle.popover.background}",
+          "Inverse": "{Themes.color.on-inverse.popover.background}",
+          "Primary": "{Themes.color.on-brand-primary.popover.background}"
+        },
+        "$type": "color"
+      },
+      "border": {
+        "$value": {
+          "Default": "{Themes.color.popover.border}",
+          "Subtle": "{Themes.color.on-subtle.popover.border}",
+          "Inverse": "{Themes.color.on-inverse.popover.border}",
+          "Primary": "{Themes.color.on-brand-primary.popover.border}"
+        },
+        "$type": "color"
+      }
     }
   }
 }

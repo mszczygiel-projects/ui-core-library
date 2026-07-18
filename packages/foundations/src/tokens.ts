@@ -1076,6 +1076,10 @@ export const tokens = {
             },
           },
         },
+        popover: {
+          background: 'var(--color-on-subtle-popover-background)',
+          border: 'var(--color-on-subtle-popover-border)',
+        },
       },
       onInverse: {
         brand: {
@@ -2150,6 +2154,10 @@ export const tokens = {
             },
           },
         },
+        popover: {
+          background: 'var(--color-on-inverse-popover-background)',
+          border: 'var(--color-on-inverse-popover-border)',
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -3223,6 +3231,10 @@ export const tokens = {
               active: 'var(--color-on-brand-primary-chip-dismiss-background-active)',
             },
           },
+        },
+        popover: {
+          background: 'var(--color-on-brand-primary-popover-background)',
+          border: 'var(--color-on-brand-primary-popover-border)',
         },
       },
       selection: {
@@ -4369,6 +4381,10 @@ export const tokens = {
           },
         },
       },
+      popover: {
+        background: 'var(--color-popover-background)',
+        border: 'var(--color-popover-border)',
+      },
     },
   },
   sizes: {
@@ -4676,7 +4692,6 @@ export const tokens = {
       },
     },
     checkbox: {
-      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -4685,6 +4700,7 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
+      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -4846,6 +4862,17 @@ export const tokens = {
       letterSpacing: 'var(--chip-letter-spacing)',
       gap: 'var(--chip-gap)',
       radius: 'var(--chip-radius)',
+    },
+    popover: {
+      padding: 'var(--popover-padding)',
+      radius: 'var(--popover-radius)',
+      border: {
+        width: 'var(--popover-border-width)',
+      },
+      arrow: {
+        size: 'var(--popover-arrow-size)',
+      },
+      offset: 'var(--popover-offset)',
     },
   },
 } as const;

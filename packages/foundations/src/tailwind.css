@@ -1231,6 +1231,8 @@
   --color-on-subtle-chip-dismiss-background-hover: var(--color-on-subtle-chip-dismiss-background-hover);
   --color-on-subtle-chip-dismiss-background-focus: var(--color-on-subtle-chip-dismiss-background-focus);
   --color-on-subtle-chip-dismiss-background-active: var(--color-on-subtle-chip-dismiss-background-active);
+  --color-on-subtle-popover-background: var(--color-on-subtle-popover-background);
+  --color-on-subtle-popover-border: var(--color-on-subtle-popover-border);
   --color-on-inverse-brand-primary: var(--color-on-inverse-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-on-inverse-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-on-inverse-brand-tertiary);
@@ -1925,6 +1927,8 @@
   --color-on-inverse-chip-dismiss-background-hover: var(--color-on-inverse-chip-dismiss-background-hover);
   --color-on-inverse-chip-dismiss-background-focus: var(--color-on-inverse-chip-dismiss-background-focus);
   --color-on-inverse-chip-dismiss-background-active: var(--color-on-inverse-chip-dismiss-background-active);
+  --color-on-inverse-popover-background: var(--color-on-inverse-popover-background);
+  --color-on-inverse-popover-border: var(--color-on-inverse-popover-border);
   --color-on-brand-primary-brand-primary: var(--color-on-brand-primary-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-on-brand-primary-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-on-brand-primary-brand-tertiary);
@@ -2619,6 +2623,8 @@
   --color-on-brand-primary-chip-dismiss-background-hover: var(--color-on-brand-primary-chip-dismiss-background-hover);
   --color-on-brand-primary-chip-dismiss-background-focus: var(--color-on-brand-primary-chip-dismiss-background-focus);
   --color-on-brand-primary-chip-dismiss-background-active: var(--color-on-brand-primary-chip-dismiss-background-active);
+  --color-on-brand-primary-popover-background: var(--color-on-brand-primary-popover-background);
+  --color-on-brand-primary-popover-border: var(--color-on-brand-primary-popover-border);
   --color-selection-background: var(--color-selection-background);
   --color-selection-text: var(--color-selection-text);
   --color-badge-neutral-solid-background: var(--color-badge-neutral-solid-background);
@@ -2985,4 +2991,6 @@
   --color-chip-dismiss-background-hover: var(--color-chip-dismiss-background-hover);
   --color-chip-dismiss-background-focus: var(--color-chip-dismiss-background-focus);
   --color-chip-dismiss-background-active: var(--color-chip-dismiss-background-active);
+  --color-popover-background: var(--color-popover-background);
+  --color-popover-border: var(--color-popover-border);
 }

@@ -46,3 +46,11 @@ export { UiBadge } from './badge/badge.js';
 export type { BadgeVariant, BadgeAppearance, BadgeSize, BadgeShape } from './badge/badge.js';
 export { UiChip } from './chip/chip.js';
 export type { ChipVariant, ChipAppearance, ChipSize } from './chip/chip.js';
+export { UiPopover } from './popover/popover.js';
+export type {
+  PopoverPlacement,
+  PopoverTrigger,
+  PopoverDismiss,
+  PopoverOpenChangeReason,
+  PopoverOpenChangeDetail,
+} from './popover/popover.js';

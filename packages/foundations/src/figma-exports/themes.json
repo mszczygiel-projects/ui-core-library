@@ -7728,6 +7728,22 @@
             }
           }
         }
+      },
+      "popover": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.on-subtle.background.default}",
+            "Dark": "{Themes.color.on-subtle.background.default}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.on-subtle.border.default}",
+            "Dark": "{Themes.color.on-subtle.border.default}"
+          },
+          "$type": "color"
+        }
       }
     },
     "on-inverse": {
@@ -12967,6 +12983,22 @@
               "$type": "color"
             }
           }
+        }
+      },
+      "popover": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.on-inverse.background.default}",
+            "Dark": "{Themes.color.on-inverse.background.default}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.on-inverse.border.default}",
+            "Dark": "{Themes.color.on-inverse.border.default}"
+          },
+          "$type": "color"
         }
       }
     },
@@ -18208,6 +18240,22 @@
             }
           }
         }
+      },
+      "popover": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.on-brand-primary.background.default}",
+            "Dark": "{Themes.color.on-brand-primary.background.default}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.on-brand-primary.border.default}",
+            "Dark": "{Themes.color.on-brand-primary.border.default}"
+          },
+          "$type": "color"
+        }
       }
     },
     "selection": {
@@ -20972,6 +21020,22 @@
             "$type": "color"
           }
         }
+      }
+    },
+    "popover": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.background.default}",
+          "Dark": "{Themes.color.background.default}"
+        },
+        "$type": "color"
+      },
+      "border": {
+        "$value": {
+          "Default": "{Themes.color.border.default}",
+          "Dark": "{Themes.color.border.default}"
+        },
+        "$type": "color"
       }
     }
   },
