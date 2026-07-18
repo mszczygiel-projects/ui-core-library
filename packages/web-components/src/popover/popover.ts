@@ -265,7 +265,11 @@ export class UiPopover extends LitElement {
     const focusWasInside = this._containsFocus();
 
     if (supportsNativePopover) {
-      if (panel.matches(':popover-open')) panel.hidePopover();
+      try {
+        if (panel.matches(':popover-open')) panel.hidePopover();
+      } catch {
+        // Best-effort: some environments expose Popover API only partially.
+      }
     } else {
       panel.classList.remove('panel--open');
     }
