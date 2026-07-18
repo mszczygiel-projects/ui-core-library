@@ -13,7 +13,7 @@ const [open, setOpen] = useState(false);
   open={open}
   onOpenChange={(detail) => setOpen(detail.open)}
   placement="bottom-start"
-  anchor={<Button variant="secondary">Open</Button>}
+  anchor={<button type="button">Open</button>}
 >
   Floating content
 </Popover>;
