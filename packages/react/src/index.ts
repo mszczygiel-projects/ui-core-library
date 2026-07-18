@@ -49,3 +49,5 @@ export type {
   BadgeSize,
   BadgeShape,
 } from './Badge/Badge.js';
+export { Chip } from './Chip/Chip.js';
+export type { ChipProps, ChipVariant, ChipAppearance, ChipSize } from './Chip/Chip.js';

@@ -1,0 +1,534 @@
+import { css } from 'lit';
+
+export const chipStyles = css`
+  /*
+   * Layout constraint: padding lives on inner elements, not :host — document-level
+   * reset (* { padding: 0 }) outranks :host rules from inside the shadow tree.
+   */
+  :host {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+
+    height: var(--chip-small-height);
+    --_pad: var(--chip-small-padding-inline);
+    --_icon-size: var(--chip-small-icon-size);
+    --_dismiss-size: var(--chip-small-dismiss-size);
+
+    background-color: var(--_bg);
+    color: var(--_text);
+    border: var(--control-border-width) solid var(--_border);
+    border-radius: var(--chip-radius);
+
+    font-family: var(--chip-font-family);
+    font-weight: var(--chip-font-weight);
+    font-size: var(--chip-small-font-size);
+    line-height: var(--chip-small-line-height);
+    letter-spacing: var(--chip-letter-spacing);
+    white-space: nowrap;
+  }
+
+  :host([data-size='medium']) {
+    height: var(--chip-medium-height);
+    font-size: var(--chip-medium-font-size);
+    line-height: var(--chip-medium-line-height);
+    --_pad: var(--chip-medium-padding-inline);
+    --_icon-size: var(--chip-medium-icon-size);
+    --_dismiss-size: var(--chip-medium-dismiss-size);
+  }
+
+  :host,
+  :host([variant='neutral'][appearance='solid']) {
+    --_bg: var(--color-chip-neutral-solid-background-default);
+    --_bg-hover: var(--color-chip-neutral-solid-background-hover);
+    --_bg-focus: var(--color-chip-neutral-solid-background-focus);
+    --_bg-active: var(--color-chip-neutral-solid-background-active);
+    --_bg-selected: var(--color-chip-neutral-solid-background-selected);
+    --_bg-disabled: var(--color-chip-neutral-solid-background-disabled);
+    --_text: var(--color-chip-neutral-solid-text-default);
+    --_text-hover: var(--color-chip-neutral-solid-text-hover);
+    --_text-focus: var(--color-chip-neutral-solid-text-focus);
+    --_text-active: var(--color-chip-neutral-solid-text-active);
+    --_text-selected: var(--color-chip-neutral-solid-text-selected);
+    --_text-disabled: var(--color-chip-neutral-solid-text-disabled);
+    --_border: var(--color-chip-neutral-solid-border-default);
+    --_border-hover: var(--color-chip-neutral-solid-border-hover);
+    --_border-focus: var(--color-chip-neutral-solid-border-focus);
+    --_border-active: var(--color-chip-neutral-solid-border-active);
+    --_border-selected: var(--color-chip-neutral-solid-border-selected);
+    --_border-disabled: var(--color-chip-neutral-solid-border-disabled);
+  }
+
+  :host([variant='neutral'][appearance='subtle']) {
+    --_bg: var(--color-chip-neutral-subtle-background-default);
+    --_bg-hover: var(--color-chip-neutral-subtle-background-hover);
+    --_bg-focus: var(--color-chip-neutral-subtle-background-focus);
+    --_bg-active: var(--color-chip-neutral-subtle-background-active);
+    --_bg-selected: var(--color-chip-neutral-subtle-background-selected);
+    --_bg-disabled: var(--color-chip-neutral-subtle-background-disabled);
+    --_text: var(--color-chip-neutral-subtle-text-default);
+    --_text-hover: var(--color-chip-neutral-subtle-text-hover);
+    --_text-focus: var(--color-chip-neutral-subtle-text-focus);
+    --_text-active: var(--color-chip-neutral-subtle-text-active);
+    --_text-selected: var(--color-chip-neutral-subtle-text-selected);
+    --_text-disabled: var(--color-chip-neutral-subtle-text-disabled);
+    --_border: var(--color-chip-neutral-subtle-border-default);
+    --_border-hover: var(--color-chip-neutral-subtle-border-hover);
+    --_border-focus: var(--color-chip-neutral-subtle-border-focus);
+    --_border-active: var(--color-chip-neutral-subtle-border-active);
+    --_border-selected: var(--color-chip-neutral-subtle-border-selected);
+    --_border-disabled: var(--color-chip-neutral-subtle-border-disabled);
+  }
+
+  :host([variant='neutral'][appearance='outline']) {
+    --_bg: var(--color-chip-neutral-outline-background-default);
+    --_bg-hover: var(--color-chip-neutral-outline-background-hover);
+    --_bg-focus: var(--color-chip-neutral-outline-background-focus);
+    --_bg-active: var(--color-chip-neutral-outline-background-active);
+    --_bg-selected: var(--color-chip-neutral-outline-background-selected);
+    --_bg-disabled: var(--color-chip-neutral-outline-background-disabled);
+    --_text: var(--color-chip-neutral-outline-text-default);
+    --_text-hover: var(--color-chip-neutral-outline-text-hover);
+    --_text-focus: var(--color-chip-neutral-outline-text-focus);
+    --_text-active: var(--color-chip-neutral-outline-text-active);
+    --_text-selected: var(--color-chip-neutral-outline-text-selected);
+    --_text-disabled: var(--color-chip-neutral-outline-text-disabled);
+    --_border: var(--color-chip-neutral-outline-border-default);
+    --_border-hover: var(--color-chip-neutral-outline-border-hover);
+    --_border-focus: var(--color-chip-neutral-outline-border-focus);
+    --_border-active: var(--color-chip-neutral-outline-border-active);
+    --_border-selected: var(--color-chip-neutral-outline-border-selected);
+    --_border-disabled: var(--color-chip-neutral-outline-border-disabled);
+  }
+
+  :host([variant='brand'][appearance='solid']) {
+    --_bg: var(--color-chip-brand-solid-background-default);
+    --_bg-hover: var(--color-chip-brand-solid-background-hover);
+    --_bg-focus: var(--color-chip-brand-solid-background-focus);
+    --_bg-active: var(--color-chip-brand-solid-background-active);
+    --_bg-selected: var(--color-chip-brand-solid-background-selected);
+    --_bg-disabled: var(--color-chip-brand-solid-background-disabled);
+    --_text: var(--color-chip-brand-solid-text-default);
+    --_text-hover: var(--color-chip-brand-solid-text-hover);
+    --_text-focus: var(--color-chip-brand-solid-text-focus);
+    --_text-active: var(--color-chip-brand-solid-text-active);
+    --_text-selected: var(--color-chip-brand-solid-text-selected);
+    --_text-disabled: var(--color-chip-brand-solid-text-disabled);
+    --_border: var(--color-chip-brand-solid-border-default);
+    --_border-hover: var(--color-chip-brand-solid-border-hover);
+    --_border-focus: var(--color-chip-brand-solid-border-focus);
+    --_border-active: var(--color-chip-brand-solid-border-active);
+    --_border-selected: var(--color-chip-brand-solid-border-selected);
+    --_border-disabled: var(--color-chip-brand-solid-border-disabled);
+  }
+
+  :host([variant='brand'][appearance='subtle']) {
+    --_bg: var(--color-chip-brand-subtle-background-default);
+    --_bg-hover: var(--color-chip-brand-subtle-background-hover);
+    --_bg-focus: var(--color-chip-brand-subtle-background-focus);
+    --_bg-active: var(--color-chip-brand-subtle-background-active);
+    --_bg-selected: var(--color-chip-brand-subtle-background-selected);
+    --_bg-disabled: var(--color-chip-brand-subtle-background-disabled);
+    --_text: var(--color-chip-brand-subtle-text-default);
+    --_text-hover: var(--color-chip-brand-subtle-text-hover);
+    --_text-focus: var(--color-chip-brand-subtle-text-focus);
+    --_text-active: var(--color-chip-brand-subtle-text-active);
+    --_text-selected: var(--color-chip-brand-subtle-text-selected);
+    --_text-disabled: var(--color-chip-brand-subtle-text-disabled);
+    --_border: var(--color-chip-brand-subtle-border-default);
+    --_border-hover: var(--color-chip-brand-subtle-border-hover);
+    --_border-focus: var(--color-chip-brand-subtle-border-focus);
+    --_border-active: var(--color-chip-brand-subtle-border-active);
+    --_border-selected: var(--color-chip-brand-subtle-border-selected);
+    --_border-disabled: var(--color-chip-brand-subtle-border-disabled);
+  }
+
+  :host([variant='brand'][appearance='outline']) {
+    --_bg: var(--color-chip-brand-outline-background-default);
+    --_bg-hover: var(--color-chip-brand-outline-background-hover);
+    --_bg-focus: var(--color-chip-brand-outline-background-focus);
+    --_bg-active: var(--color-chip-brand-outline-background-active);
+    --_bg-selected: var(--color-chip-brand-outline-background-selected);
+    --_bg-disabled: var(--color-chip-brand-outline-background-disabled);
+    --_text: var(--color-chip-brand-outline-text-default);
+    --_text-hover: var(--color-chip-brand-outline-text-hover);
+    --_text-focus: var(--color-chip-brand-outline-text-focus);
+    --_text-active: var(--color-chip-brand-outline-text-active);
+    --_text-selected: var(--color-chip-brand-outline-text-selected);
+    --_text-disabled: var(--color-chip-brand-outline-text-disabled);
+    --_border: var(--color-chip-brand-outline-border-default);
+    --_border-hover: var(--color-chip-brand-outline-border-hover);
+    --_border-focus: var(--color-chip-brand-outline-border-focus);
+    --_border-active: var(--color-chip-brand-outline-border-active);
+    --_border-selected: var(--color-chip-brand-outline-border-selected);
+    --_border-disabled: var(--color-chip-brand-outline-border-disabled);
+  }
+
+  :host([variant='success'][appearance='solid']) {
+    --_bg: var(--color-chip-success-solid-background-default);
+    --_bg-hover: var(--color-chip-success-solid-background-hover);
+    --_bg-focus: var(--color-chip-success-solid-background-focus);
+    --_bg-active: var(--color-chip-success-solid-background-active);
+    --_bg-selected: var(--color-chip-success-solid-background-selected);
+    --_bg-disabled: var(--color-chip-success-solid-background-disabled);
+    --_text: var(--color-chip-success-solid-text-default);
+    --_text-hover: var(--color-chip-success-solid-text-hover);
+    --_text-focus: var(--color-chip-success-solid-text-focus);
+    --_text-active: var(--color-chip-success-solid-text-active);
+    --_text-selected: var(--color-chip-success-solid-text-selected);
+    --_text-disabled: var(--color-chip-success-solid-text-disabled);
+    --_border: var(--color-chip-success-solid-border-default);
+    --_border-hover: var(--color-chip-success-solid-border-hover);
+    --_border-focus: var(--color-chip-success-solid-border-focus);
+    --_border-active: var(--color-chip-success-solid-border-active);
+    --_border-selected: var(--color-chip-success-solid-border-selected);
+    --_border-disabled: var(--color-chip-success-solid-border-disabled);
+  }
+
+  :host([variant='success'][appearance='subtle']) {
+    --_bg: var(--color-chip-success-subtle-background-default);
+    --_bg-hover: var(--color-chip-success-subtle-background-hover);
+    --_bg-focus: var(--color-chip-success-subtle-background-focus);
+    --_bg-active: var(--color-chip-success-subtle-background-active);
+    --_bg-selected: var(--color-chip-success-subtle-background-selected);
+    --_bg-disabled: var(--color-chip-success-subtle-background-disabled);
+    --_text: var(--color-chip-success-subtle-text-default);
+    --_text-hover: var(--color-chip-success-subtle-text-hover);
+    --_text-focus: var(--color-chip-success-subtle-text-focus);
+    --_text-active: var(--color-chip-success-subtle-text-active);
+    --_text-selected: var(--color-chip-success-subtle-text-selected);
+    --_text-disabled: var(--color-chip-success-subtle-text-disabled);
+    --_border: var(--color-chip-success-subtle-border-default);
+    --_border-hover: var(--color-chip-success-subtle-border-hover);
+    --_border-focus: var(--color-chip-success-subtle-border-focus);
+    --_border-active: var(--color-chip-success-subtle-border-active);
+    --_border-selected: var(--color-chip-success-subtle-border-selected);
+    --_border-disabled: var(--color-chip-success-subtle-border-disabled);
+  }
+
+  :host([variant='success'][appearance='outline']) {
+    --_bg: var(--color-chip-success-outline-background-default);
+    --_bg-hover: var(--color-chip-success-outline-background-hover);
+    --_bg-focus: var(--color-chip-success-outline-background-focus);
+    --_bg-active: var(--color-chip-success-outline-background-active);
+    --_bg-selected: var(--color-chip-success-outline-background-selected);
+    --_bg-disabled: var(--color-chip-success-outline-background-disabled);
+    --_text: var(--color-chip-success-outline-text-default);
+    --_text-hover: var(--color-chip-success-outline-text-hover);
+    --_text-focus: var(--color-chip-success-outline-text-focus);
+    --_text-active: var(--color-chip-success-outline-text-active);
+    --_text-selected: var(--color-chip-success-outline-text-selected);
+    --_text-disabled: var(--color-chip-success-outline-text-disabled);
+    --_border: var(--color-chip-success-outline-border-default);
+    --_border-hover: var(--color-chip-success-outline-border-hover);
+    --_border-focus: var(--color-chip-success-outline-border-focus);
+    --_border-active: var(--color-chip-success-outline-border-active);
+    --_border-selected: var(--color-chip-success-outline-border-selected);
+    --_border-disabled: var(--color-chip-success-outline-border-disabled);
+  }
+
+  :host([variant='warning'][appearance='solid']) {
+    --_bg: var(--color-chip-warning-solid-background-default);
+    --_bg-hover: var(--color-chip-warning-solid-background-hover);
+    --_bg-focus: var(--color-chip-warning-solid-background-focus);
+    --_bg-active: var(--color-chip-warning-solid-background-active);
+    --_bg-selected: var(--color-chip-warning-solid-background-selected);
+    --_bg-disabled: var(--color-chip-warning-solid-background-disabled);
+    --_text: var(--color-chip-warning-solid-text-default);
+    --_text-hover: var(--color-chip-warning-solid-text-hover);
+    --_text-focus: var(--color-chip-warning-solid-text-focus);
+    --_text-active: var(--color-chip-warning-solid-text-active);
+    --_text-selected: var(--color-chip-warning-solid-text-selected);
+    --_text-disabled: var(--color-chip-warning-solid-text-disabled);
+    --_border: var(--color-chip-warning-solid-border-default);
+    --_border-hover: var(--color-chip-warning-solid-border-hover);
+    --_border-focus: var(--color-chip-warning-solid-border-focus);
+    --_border-active: var(--color-chip-warning-solid-border-active);
+    --_border-selected: var(--color-chip-warning-solid-border-selected);
+    --_border-disabled: var(--color-chip-warning-solid-border-disabled);
+  }
+
+  :host([variant='warning'][appearance='subtle']) {
+    --_bg: var(--color-chip-warning-subtle-background-default);
+    --_bg-hover: var(--color-chip-warning-subtle-background-hover);
+    --_bg-focus: var(--color-chip-warning-subtle-background-focus);
+    --_bg-active: var(--color-chip-warning-subtle-background-active);
+    --_bg-selected: var(--color-chip-warning-subtle-background-selected);
+    --_bg-disabled: var(--color-chip-warning-subtle-background-disabled);
+    --_text: var(--color-chip-warning-subtle-text-default);
+    --_text-hover: var(--color-chip-warning-subtle-text-hover);
+    --_text-focus: var(--color-chip-warning-subtle-text-focus);
+    --_text-active: var(--color-chip-warning-subtle-text-active);
+    --_text-selected: var(--color-chip-warning-subtle-text-selected);
+    --_text-disabled: var(--color-chip-warning-subtle-text-disabled);
+    --_border: var(--color-chip-warning-subtle-border-default);
+    --_border-hover: var(--color-chip-warning-subtle-border-hover);
+    --_border-focus: var(--color-chip-warning-subtle-border-focus);
+    --_border-active: var(--color-chip-warning-subtle-border-active);
+    --_border-selected: var(--color-chip-warning-subtle-border-selected);
+    --_border-disabled: var(--color-chip-warning-subtle-border-disabled);
+  }
+
+  :host([variant='warning'][appearance='outline']) {
+    --_bg: var(--color-chip-warning-outline-background-default);
+    --_bg-hover: var(--color-chip-warning-outline-background-hover);
+    --_bg-focus: var(--color-chip-warning-outline-background-focus);
+    --_bg-active: var(--color-chip-warning-outline-background-active);
+    --_bg-selected: var(--color-chip-warning-outline-background-selected);
+    --_bg-disabled: var(--color-chip-warning-outline-background-disabled);
+    --_text: var(--color-chip-warning-outline-text-default);
+    --_text-hover: var(--color-chip-warning-outline-text-hover);
+    --_text-focus: var(--color-chip-warning-outline-text-focus);
+    --_text-active: var(--color-chip-warning-outline-text-active);
+    --_text-selected: var(--color-chip-warning-outline-text-selected);
+    --_text-disabled: var(--color-chip-warning-outline-text-disabled);
+    --_border: var(--color-chip-warning-outline-border-default);
+    --_border-hover: var(--color-chip-warning-outline-border-hover);
+    --_border-focus: var(--color-chip-warning-outline-border-focus);
+    --_border-active: var(--color-chip-warning-outline-border-active);
+    --_border-selected: var(--color-chip-warning-outline-border-selected);
+    --_border-disabled: var(--color-chip-warning-outline-border-disabled);
+  }
+
+  :host([variant='error'][appearance='solid']) {
+    --_bg: var(--color-chip-error-solid-background-default);
+    --_bg-hover: var(--color-chip-error-solid-background-hover);
+    --_bg-focus: var(--color-chip-error-solid-background-focus);
+    --_bg-active: var(--color-chip-error-solid-background-active);
+    --_bg-selected: var(--color-chip-error-solid-background-selected);
+    --_bg-disabled: var(--color-chip-error-solid-background-disabled);
+    --_text: var(--color-chip-error-solid-text-default);
+    --_text-hover: var(--color-chip-error-solid-text-hover);
+    --_text-focus: var(--color-chip-error-solid-text-focus);
+    --_text-active: var(--color-chip-error-solid-text-active);
+    --_text-selected: var(--color-chip-error-solid-text-selected);
+    --_text-disabled: var(--color-chip-error-solid-text-disabled);
+    --_border: var(--color-chip-error-solid-border-default);
+    --_border-hover: var(--color-chip-error-solid-border-hover);
+    --_border-focus: var(--color-chip-error-solid-border-focus);
+    --_border-active: var(--color-chip-error-solid-border-active);
+    --_border-selected: var(--color-chip-error-solid-border-selected);
+    --_border-disabled: var(--color-chip-error-solid-border-disabled);
+  }
+
+  :host([variant='error'][appearance='subtle']) {
+    --_bg: var(--color-chip-error-subtle-background-default);
+    --_bg-hover: var(--color-chip-error-subtle-background-hover);
+    --_bg-focus: var(--color-chip-error-subtle-background-focus);
+    --_bg-active: var(--color-chip-error-subtle-background-active);
+    --_bg-selected: var(--color-chip-error-subtle-background-selected);
+    --_bg-disabled: var(--color-chip-error-subtle-background-disabled);
+    --_text: var(--color-chip-error-subtle-text-default);
+    --_text-hover: var(--color-chip-error-subtle-text-hover);
+    --_text-focus: var(--color-chip-error-subtle-text-focus);
+    --_text-active: var(--color-chip-error-subtle-text-active);
+    --_text-selected: var(--color-chip-error-subtle-text-selected);
+    --_text-disabled: var(--color-chip-error-subtle-text-disabled);
+    --_border: var(--color-chip-error-subtle-border-default);
+    --_border-hover: var(--color-chip-error-subtle-border-hover);
+    --_border-focus: var(--color-chip-error-subtle-border-focus);
+    --_border-active: var(--color-chip-error-subtle-border-active);
+    --_border-selected: var(--color-chip-error-subtle-border-selected);
+    --_border-disabled: var(--color-chip-error-subtle-border-disabled);
+  }
+
+  :host([variant='error'][appearance='outline']) {
+    --_bg: var(--color-chip-error-outline-background-default);
+    --_bg-hover: var(--color-chip-error-outline-background-hover);
+    --_bg-focus: var(--color-chip-error-outline-background-focus);
+    --_bg-active: var(--color-chip-error-outline-background-active);
+    --_bg-selected: var(--color-chip-error-outline-background-selected);
+    --_bg-disabled: var(--color-chip-error-outline-background-disabled);
+    --_text: var(--color-chip-error-outline-text-default);
+    --_text-hover: var(--color-chip-error-outline-text-hover);
+    --_text-focus: var(--color-chip-error-outline-text-focus);
+    --_text-active: var(--color-chip-error-outline-text-active);
+    --_text-selected: var(--color-chip-error-outline-text-selected);
+    --_text-disabled: var(--color-chip-error-outline-text-disabled);
+    --_border: var(--color-chip-error-outline-border-default);
+    --_border-hover: var(--color-chip-error-outline-border-hover);
+    --_border-focus: var(--color-chip-error-outline-border-focus);
+    --_border-active: var(--color-chip-error-outline-border-active);
+    --_border-selected: var(--color-chip-error-outline-border-selected);
+    --_border-disabled: var(--color-chip-error-outline-border-disabled);
+  }
+
+  :host([variant='info'][appearance='solid']) {
+    --_bg: var(--color-chip-info-solid-background-default);
+    --_bg-hover: var(--color-chip-info-solid-background-hover);
+    --_bg-focus: var(--color-chip-info-solid-background-focus);
+    --_bg-active: var(--color-chip-info-solid-background-active);
+    --_bg-selected: var(--color-chip-info-solid-background-selected);
+    --_bg-disabled: var(--color-chip-info-solid-background-disabled);
+    --_text: var(--color-chip-info-solid-text-default);
+    --_text-hover: var(--color-chip-info-solid-text-hover);
+    --_text-focus: var(--color-chip-info-solid-text-focus);
+    --_text-active: var(--color-chip-info-solid-text-active);
+    --_text-selected: var(--color-chip-info-solid-text-selected);
+    --_text-disabled: var(--color-chip-info-solid-text-disabled);
+    --_border: var(--color-chip-info-solid-border-default);
+    --_border-hover: var(--color-chip-info-solid-border-hover);
+    --_border-focus: var(--color-chip-info-solid-border-focus);
+    --_border-active: var(--color-chip-info-solid-border-active);
+    --_border-selected: var(--color-chip-info-solid-border-selected);
+    --_border-disabled: var(--color-chip-info-solid-border-disabled);
+  }
+
+  :host([variant='info'][appearance='subtle']) {
+    --_bg: var(--color-chip-info-subtle-background-default);
+    --_bg-hover: var(--color-chip-info-subtle-background-hover);
+    --_bg-focus: var(--color-chip-info-subtle-background-focus);
+    --_bg-active: var(--color-chip-info-subtle-background-active);
+    --_bg-selected: var(--color-chip-info-subtle-background-selected);
+    --_bg-disabled: var(--color-chip-info-subtle-background-disabled);
+    --_text: var(--color-chip-info-subtle-text-default);
+    --_text-hover: var(--color-chip-info-subtle-text-hover);
+    --_text-focus: var(--color-chip-info-subtle-text-focus);
+    --_text-active: var(--color-chip-info-subtle-text-active);
+    --_text-selected: var(--color-chip-info-subtle-text-selected);
+    --_text-disabled: var(--color-chip-info-subtle-text-disabled);
+    --_border: var(--color-chip-info-subtle-border-default);
+    --_border-hover: var(--color-chip-info-subtle-border-hover);
+    --_border-focus: var(--color-chip-info-subtle-border-focus);
+    --_border-active: var(--color-chip-info-subtle-border-active);
+    --_border-selected: var(--color-chip-info-subtle-border-selected);
+    --_border-disabled: var(--color-chip-info-subtle-border-disabled);
+  }
+
+  :host([variant='info'][appearance='outline']) {
+    --_bg: var(--color-chip-info-outline-background-default);
+    --_bg-hover: var(--color-chip-info-outline-background-hover);
+    --_bg-focus: var(--color-chip-info-outline-background-focus);
+    --_bg-active: var(--color-chip-info-outline-background-active);
+    --_bg-selected: var(--color-chip-info-outline-background-selected);
+    --_bg-disabled: var(--color-chip-info-outline-background-disabled);
+    --_text: var(--color-chip-info-outline-text-default);
+    --_text-hover: var(--color-chip-info-outline-text-hover);
+    --_text-focus: var(--color-chip-info-outline-text-focus);
+    --_text-active: var(--color-chip-info-outline-text-active);
+    --_text-selected: var(--color-chip-info-outline-text-selected);
+    --_text-disabled: var(--color-chip-info-outline-text-disabled);
+    --_border: var(--color-chip-info-outline-border-default);
+    --_border-hover: var(--color-chip-info-outline-border-hover);
+    --_border-focus: var(--color-chip-info-outline-border-focus);
+    --_border-active: var(--color-chip-info-outline-border-active);
+    --_border-selected: var(--color-chip-info-outline-border-selected);
+    --_border-disabled: var(--color-chip-info-outline-border-disabled);
+  }
+
+  /* Interactive states — resolve against the local aliases set above */
+  :host(:hover:not([disabled])) {
+    background-color: var(--_bg-hover);
+    color: var(--_text-hover);
+    border-color: var(--_border-hover);
+  }
+
+  :host(:active:not([disabled])) {
+    background-color: var(--_bg-active);
+    color: var(--_text-active);
+    border-color: var(--_border-active);
+  }
+
+  /*
+   * Focus ring wraps the whole chip while the action area holds focus.
+   * :host(:has(.action:focus-visible)) would be the declarative equivalent,
+   * but :has() as a :host() argument isn't implemented everywhere — the
+   * action-focused class is toggled imperatively in chip.ts instead.
+   */
+  .action:focus-visible {
+    outline: none;
+  }
+
+  :host(.action-focused) {
+    outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+    outline-offset: var(--ring-offset);
+    background-color: var(--_bg-focus);
+    color: var(--_text-focus);
+    border-color: var(--_border-focus);
+  }
+
+  /* Selected wins over hover/active/focus — keep after the state rules */
+  :host([selected]:not([disabled])) {
+    background-color: var(--_bg-selected);
+    color: var(--_text-selected);
+    border-color: var(--_border-selected);
+  }
+
+  :host([disabled]) {
+    background-color: var(--_bg-disabled);
+    color: var(--_text-disabled);
+    border-color: var(--_border-disabled);
+  }
+
+  .action {
+    display: inline-flex;
+    align-items: center;
+    box-sizing: border-box;
+    gap: var(--chip-gap);
+    height: 100%;
+    padding-inline: var(--_pad);
+    background: none;
+    border: none;
+    border-radius: var(--chip-radius);
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    cursor: pointer;
+  }
+
+  .action:disabled {
+    cursor: not-allowed;
+  }
+
+  :host([dismissible]:not([disabled])) .action {
+    padding-inline-end: 0;
+  }
+
+  .dismiss {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    width: var(--_dismiss-size);
+    height: var(--_dismiss-size);
+    margin-inline: var(--chip-gap) var(--_pad);
+    padding: 0;
+    background-color: var(--color-chip-dismiss-background-default);
+    border: none;
+    border-radius: var(--chip-radius);
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .dismiss:hover {
+    background-color: var(--color-chip-dismiss-background-hover);
+  }
+
+  .dismiss:focus-visible {
+    background-color: var(--color-chip-dismiss-background-focus);
+    outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+    outline-offset: var(--ring-offset);
+  }
+
+  .dismiss:active {
+    background-color: var(--color-chip-dismiss-background-active);
+  }
+
+  .dismiss svg {
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+  }
+
+  ::slotted([slot='icon']) {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: var(--_icon-size);
+    height: var(--_icon-size);
+    color: inherit;
+  }
+
+  .label {
+    display: inline;
+  }
+`;
