@@ -227,7 +227,11 @@ export class UiPopover extends LitElement {
     if (!panel) return;
 
     if (supportsNativePopover) {
-      if (!panel.matches(':popover-open')) panel.showPopover();
+      try {
+        if (!panel.matches(':popover-open')) panel.showPopover();
+      } catch {
+        // Best-effort: some environments expose Popover API only partially.
+      }
     } else {
       panel.classList.add('panel--open');
     }
