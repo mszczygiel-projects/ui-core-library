@@ -36,7 +36,7 @@ const [open, setOpen] = useState(false);
 | `children`     | ReactNode — panel content                                        | —        |
 | `onOpenChange` | `(detail: { open, reason }) => void`                             | —        |
 
-Positioning (offset/flip/shift/arrow) is computed by [Floating UI](https://floating-ui.com); the resolved placement (after collisions) is exposed as `data-placement` on the panel element. When `anchor` is a single element and `trigger` is not `manual`, `aria-expanded` is injected onto it; with `trigger="manual"` the consumer owns the anchor's ARIA. Note: the injection reaches the DOM only if the anchor component forwards unknown/ARIA props (a native `<button>` does; the DS `Button` currently whitelists its props and drops it).
+Positioning (offset/flip/shift/arrow) is computed by [Floating UI](https://floating-ui.com); the resolved placement (after collisions) is exposed as `data-placement` on the panel element. When `anchor` is a single element and `trigger` is not `manual`, `aria-expanded` is injected onto it; with `trigger="manual"` the consumer owns the anchor's ARIA. The injection reaches the DOM for native elements and for DS interactive components (`Button`, `IconButton`, `LinkButton`, `Chip`), which forward `aria-*` props to their semantic root element.
 
 ## Focus ownership
 

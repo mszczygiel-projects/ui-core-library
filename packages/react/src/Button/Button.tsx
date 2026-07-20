@@ -1,5 +1,13 @@
-import type { CSSProperties, KeyboardEvent, MouseEvent, MouseEventHandler, ReactNode } from 'react';
+import type {
+  AriaAttributes,
+  CSSProperties,
+  KeyboardEvent,
+  MouseEvent,
+  MouseEventHandler,
+  ReactNode,
+} from 'react';
 import { Loader } from '../Loader/Loader.js';
+import { pickAriaProps } from '../aria.js';
 import './Button.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -8,10 +16,14 @@ export type ButtonSize = 'small' | 'default' | 'large';
 /**
  * Primary interactive control for triggering actions, with variant, size, icon, and loading support.
  *
+ * Any `aria-*` attribute is forwarded to the root `<button>` (e.g. `aria-expanded`
+ * injected by Popover when the button is its anchor). Component-managed attributes
+ * (`aria-busy` while loading) take precedence.
+ *
  * @example
  * <Button variant="secondary" size="large" onClick={save}>Save changes</Button>
  */
-export interface ButtonProps {
+export interface ButtonProps extends AriaAttributes {
   /**
    * Visual emphasis of the button.
    * @default 'primary'
@@ -83,12 +95,14 @@ export function Button({
   className,
   style,
   'aria-label': ariaLabel,
+  ...aria
 }: ButtonProps) {
   const loaderSize = size === 'large' ? 'default' : 'small';
   const isDisabled = disabled || loading;
 
   return (
     <button
+      {...pickAriaProps(aria)}
       type={type}
       disabled={isDisabled}
       aria-busy={loading ? 'true' : undefined}

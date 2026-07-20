@@ -33,3 +33,4 @@ A React icon-only button with the same variants and loading behavior as `Button`
 
 - Uses a native `<button>` element, so keyboard activation and focus behavior are native.
 - `aria-label` is required and should describe the action because there is no visible text label.
+- Any other `aria-*` attribute (e.g. `aria-expanded`, `aria-haspopup`, `aria-controls`) is forwarded to the root `<button>`; component-managed `aria-busy` (while loading) wins over a forwarded value. Non-ARIA unknown props are still dropped (closed interface).

@@ -1,4 +1,5 @@
 import type {
+  AriaAttributes,
   CSSProperties,
   KeyboardEvent,
   MouseEvent,
@@ -6,6 +7,7 @@ import type {
   ReactNode,
 } from 'react';
 import { IconClose } from '@mszczygiel-projects/ui-core-icons/react';
+import { pickAriaProps } from '../aria.js';
 import './Chip.css';
 
 export type ChipVariant = 'neutral' | 'brand' | 'success' | 'warning' | 'error' | 'info';
@@ -15,12 +17,16 @@ export type ChipSize = 'small' | 'medium';
 /**
  * Interactive chip for filters, selections, and dismissible tags.
  *
+ * Any `aria-*` attribute is forwarded to the action `<button>` (the chip's
+ * semantic control), not the wrapper. Component-managed `aria-pressed` takes
+ * precedence.
+ *
  * @example
  * <Chip variant="brand" appearance="subtle" selected dismissible onDismiss={() => remove(id)}>
  *   Filter
  * </Chip>
  */
-export interface ChipProps {
+export interface ChipProps extends AriaAttributes {
   /**
    * Semantic color scheme.
    * @default 'neutral'
@@ -84,6 +90,7 @@ export function Chip({
   onDismiss,
   className,
   style,
+  ...aria
 }: ChipProps) {
   const showDismiss = dismissible && !disabled;
 
@@ -117,6 +124,7 @@ export function Chip({
       style={style}
     >
       <button
+        {...pickAriaProps(aria)}
         type="button"
         className="ui-chip__action"
         disabled={disabled}

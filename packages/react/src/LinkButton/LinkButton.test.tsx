@@ -231,4 +231,15 @@ describe('LinkButton', () => {
     const { container } = render(<LinkButton href="/page">Click</LinkButton>);
     expect(container.querySelector('.ui-button__content')).not.toBeNull();
   });
+
+  it('forwards aria-* props to the root anchor, with computed aria-disabled winning', () => {
+    const { container } = render(
+      <LinkButton href="/p" disabled aria-current="page" aria-disabled="false">
+        Go
+      </LinkButton>,
+    );
+    const a = container.querySelector('a')!;
+    expect(a.getAttribute('aria-current')).toBe('page');
+    expect(a.getAttribute('aria-disabled')).toBe('true');
+  });
 });

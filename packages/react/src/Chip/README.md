@@ -81,3 +81,7 @@ and the action button gets the native `disabled` attribute:
 | `style`        | `CSSProperties` — forwarded to the root element                   | —          | Inline style on root element (positioning only) |
 
 `appearance` maps to the Figma `Style` property (`style` is the inline-style prop in React).
+
+## Accessibility notes
+
+- Any `aria-*` attribute is forwarded to the action `<button>` (the chip's semantic control), not the wrapper `<span>`. Component-managed `aria-pressed` (from `selected`) wins over a forwarded value. Non-ARIA unknown props are still dropped (closed interface).

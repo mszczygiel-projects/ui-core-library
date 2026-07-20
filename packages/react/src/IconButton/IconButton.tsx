@@ -1,5 +1,6 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { AriaAttributes, CSSProperties, ReactNode } from 'react';
 import { Loader } from '../Loader/Loader.js';
+import { pickAriaProps } from '../aria.js';
 import './IconButton.css';
 
 export type {
@@ -11,10 +12,14 @@ import type { ButtonVariant, ButtonSize } from '../Button/Button.js';
 /**
  * Square button holding a single icon, for actions with no visible text label.
  *
+ * Any `aria-*` attribute is forwarded to the root `<button>` (e.g. `aria-expanded`
+ * injected by Popover when the button is its anchor). Component-managed attributes
+ * (`aria-busy` while loading) take precedence.
+ *
  * @example
  * <IconButton variant="ghost" icon={<IconClose />} aria-label="Close dialog" onClick={close} />
  */
-export interface IconButtonProps {
+export interface IconButtonProps extends AriaAttributes {
   /**
    * Visual emphasis of the button.
    * @default 'primary'
@@ -57,11 +62,13 @@ export function IconButton({
   onClick,
   className,
   style,
+  ...aria
 }: IconButtonProps) {
   const loaderSize = size === 'large' ? 'default' : 'small';
 
   return (
     <button
+      {...pickAriaProps(aria)}
       type={type}
       disabled={disabled || loading}
       aria-busy={loading ? 'true' : undefined}

@@ -2,6 +2,7 @@ import { describe, it, expect, afterEach, vi } from 'vitest';
 import { render, cleanup, fireEvent, waitFor } from '@testing-library/react';
 import { Popover } from './Popover.js';
 import type { PopoverOpenChangeDetail } from './Popover.js';
+import { Button } from '../Button/Button.js';
 
 afterEach(() => cleanup());
 
@@ -186,6 +187,18 @@ describe('Popover', () => {
       </Popover>,
     );
     expect(getByText('Open').hasAttribute('aria-expanded')).toBe(false);
+  });
+
+  it('aria-expanded reaches the DOM through the DS Button anchor', () => {
+    const { getByText, rerender } = render(<Popover anchor={<Button>Open</Button>}>C</Popover>);
+    expect(getByText('Open').closest('button')!.getAttribute('aria-expanded')).toBe('false');
+
+    rerender(
+      <Popover open anchor={<Button>Open</Button>}>
+        C
+      </Popover>,
+    );
+    expect(getByText('Open').closest('button')!.getAttribute('aria-expanded')).toBe('true');
   });
 
   it('renders the arrow element only when arrow is set', () => {

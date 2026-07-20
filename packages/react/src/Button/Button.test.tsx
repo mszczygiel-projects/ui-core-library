@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { Button } from './Button.js';
+import { Button, type ButtonProps } from './Button.js';
 
 afterEach(() => cleanup());
 
@@ -230,5 +230,34 @@ describe('Button', () => {
     const box = container.querySelector('.ui-button__icon-box--leading')!;
     fireEvent.keyDown(box, { key: ' ' });
     expect(onLeadingIconClick).toHaveBeenCalledOnce();
+  });
+
+  it('forwards aria-* props to the root button', () => {
+    const { container } = render(
+      <Button aria-expanded={false} aria-haspopup="dialog" aria-controls="panel-1">
+        Click
+      </Button>,
+    );
+    const btn = container.querySelector('button')!;
+    expect(btn.getAttribute('aria-expanded')).toBe('false');
+    expect(btn.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(btn.getAttribute('aria-controls')).toBe('panel-1');
+  });
+
+  it('component-managed aria-busy wins over a forwarded value while loading', () => {
+    const { container } = render(
+      <Button loading aria-busy="false">
+        Click
+      </Button>,
+    );
+    expect(container.querySelector('button')!.getAttribute('aria-busy')).toBe('true');
+  });
+
+  it('non-aria unknown props never reach the DOM', () => {
+    const rogue = { 'data-rogue': 'x', id: 'nope' } as unknown as ButtonProps;
+    const { container } = render(<Button {...rogue}>Click</Button>);
+    const btn = container.querySelector('button')!;
+    expect(btn.hasAttribute('data-rogue')).toBe(false);
+    expect(btn.hasAttribute('id')).toBe(false);
   });
 });

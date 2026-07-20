@@ -1,6 +1,7 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { AriaAttributes, CSSProperties, ReactNode } from 'react';
 import { type ButtonVariant, type ButtonSize } from '../Button/Button.js';
 import { Loader } from '../Loader/Loader.js';
+import { pickAriaProps } from '../aria.js';
 import './LinkButton.css';
 
 export type { ButtonVariant as LinkButtonVariant, ButtonSize as LinkButtonSize };
@@ -11,7 +12,7 @@ export type { ButtonVariant as LinkButtonVariant, ButtonSize as LinkButtonSize }
  * @example
  * <LinkButton href="/pricing" variant="outline" iconRight={<IconArrowRight />}>See pricing</LinkButton>
  */
-export interface LinkButtonProps {
+export interface LinkButtonProps extends AriaAttributes {
   /** Destination URL. */
   href: string;
   /** Native anchor target; `_blank` automatically adds `rel="noopener noreferrer"`. */
@@ -69,6 +70,7 @@ export function LinkButton({
   className,
   style,
   'aria-label': ariaLabel,
+  ...aria
 }: LinkButtonProps) {
   const isInactive = disabled || loading;
   const loaderSize = size === 'large' ? 'default' : 'small';
@@ -84,6 +86,7 @@ export function LinkButton({
 
   return (
     <a
+      {...pickAriaProps(aria)}
       href={href}
       target={target}
       rel={computedRel}

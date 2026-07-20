@@ -39,3 +39,4 @@ A React link-styled button component with visual variants, optional icons, and b
 - Uses a native `<a>` element, so link semantics and keyboard focus behavior are native.
 - Inactive state is exposed with `aria-disabled="true"`, removed from tab order, and click navigation is prevented.
 - Provide `aria-label` when visible content is not descriptive enough.
+- Any other `aria-*` attribute (e.g. `aria-current`) is forwarded to the root `<a>`; component-managed `aria-disabled`/`aria-busy` win over forwarded values. Non-ARIA unknown props are still dropped (closed interface).

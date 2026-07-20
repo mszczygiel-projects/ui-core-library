@@ -137,4 +137,21 @@ describe('Chip', () => {
     expect(root.className).toContain('custom');
     expect(root.style.marginTop).toBe('4px');
   });
+
+  it('forwards aria-* props to the action button, not the wrapper', () => {
+    const { container } = render(<Chip aria-haspopup="listbox">F</Chip>);
+    expect(container.querySelector('.ui-chip__action')!.getAttribute('aria-haspopup')).toBe(
+      'listbox',
+    );
+    expect(container.querySelector('.ui-chip')!.hasAttribute('aria-haspopup')).toBe(false);
+  });
+
+  it('component-managed aria-pressed wins over a forwarded value', () => {
+    const { container } = render(
+      <Chip selected aria-pressed={false}>
+        F
+      </Chip>,
+    );
+    expect(container.querySelector('.ui-chip__action')!.getAttribute('aria-pressed')).toBe('true');
+  });
 });

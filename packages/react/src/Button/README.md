@@ -30,8 +30,10 @@ A React button component with visual variants, optional icons, and built-in load
 | `className`  | `string`                                                       | —           | Extra class on root element           |
 | `style`      | `CSSProperties`                                                | —           | Inline style on root element          |
 | `aria-label` | `string`                                                       | —           | Accessible label when needed          |
+| `aria-*`     | `AriaAttributes`                                               | —           | Forwarded to the root `<button>`      |
 
 ## Accessibility notes
 
 - Uses a native `<button>` element, so keyboard activation (`Enter`, `Space`) and semantics are provided by the browser.
 - `loading` sets `aria-busy="true"` and disables interaction to prevent duplicate actions.
+- Any `aria-*` attribute (e.g. `aria-expanded`, `aria-haspopup`, `aria-controls`) is forwarded to the root `<button>` — this is how Popover's injected `aria-expanded` reaches the DOM when Button is its anchor. Component-managed attributes (`aria-busy` while loading) win over forwarded values. Non-ARIA unknown props are still dropped (closed interface).
