@@ -54,3 +54,9 @@ export type {
   PopoverOpenChangeReason,
   PopoverOpenChangeDetail,
 } from './popover/popover.js';
+export { UiCalendar } from './calendar/calendar.js';
+export type {
+  CalendarSelectionMode,
+  CalendarDateSelectDetail,
+  CalendarMonthChangeDetail,
+} from './calendar/calendar.js';

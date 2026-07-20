@@ -6645,6 +6645,128 @@
         },
         "$type": "color"
       }
+    },
+    "calendar": {
+      "day": {
+        "background": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.background.default}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.background.default}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.background.default}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.background.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.background.hover}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.background.hover}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.background.hover}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.background.hover}"
+            },
+            "$type": "color"
+          },
+          "selected": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.background.selected}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.background.selected}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.background.selected}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.background.selected}"
+            },
+            "$type": "color"
+          },
+          "in-range": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.background.in-range}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.background.in-range}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.background.in-range}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.background.in-range}"
+            },
+            "$type": "color"
+          }
+        },
+        "text": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.text.default}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.text.default}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.text.default}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.text.default}"
+            },
+            "$type": "color"
+          },
+          "selected": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.text.selected}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.text.selected}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.text.selected}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.text.selected}"
+            },
+            "$type": "color"
+          },
+          "in-range": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.text.in-range}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.text.in-range}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.text.in-range}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.text.in-range}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.text.disabled}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.text.disabled}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.text.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.text.disabled}"
+            },
+            "$type": "color"
+          },
+          "outside": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.text.outside}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.text.outside}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.text.outside}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.text.outside}"
+            },
+            "$type": "color"
+          }
+        },
+        "border": {
+          "today": {
+            "$value": {
+              "Default": "{Themes.color.calendar.day.border.today}",
+              "Subtle": "{Themes.color.on-subtle.calendar.day.border.today}",
+              "Inverse": "{Themes.color.on-inverse.calendar.day.border.today}",
+              "Primary": "{Themes.color.on-brand-primary.calendar.day.border.today}"
+            },
+            "$type": "color"
+          }
+        }
+      },
+      "weekday": {
+        "text": {
+          "$value": {
+            "Default": "{Themes.color.calendar.weekday.text}",
+            "Subtle": "{Themes.color.on-subtle.calendar.weekday.text}",
+            "Inverse": "{Themes.color.on-inverse.calendar.weekday.text}",
+            "Primary": "{Themes.color.on-brand-primary.calendar.weekday.text}"
+          },
+          "$type": "color"
+        }
+      },
+      "header": {
+        "text": {
+          "$value": {
+            "Default": "{Themes.color.calendar.header.text}",
+            "Subtle": "{Themes.color.on-subtle.calendar.header.text}",
+            "Inverse": "{Themes.color.on-inverse.calendar.header.text}",
+            "Primary": "{Themes.color.on-brand-primary.calendar.header.text}"
+          },
+          "$type": "color"
+        }
+      }
     }
   }
 }

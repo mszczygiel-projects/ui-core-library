@@ -1,0 +1,160 @@
+/*
+ * Font tokens note: --calendar-font-family / --calendar-*-font-weight /
+ * --calendar-*-line-height are already defined in Figma Foundations but reach
+ * tokens.css only with the next Luckino export — until then the fallbacks
+ * mirror the Figma alias targets (typography/caption family + weights).
+ */
+.ui-calendar {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--calendar-header-gap);
+  font-family: var(--calendar-font-family, var(--typography-caption-font-family));
+}
+
+/* ---- Header ---- */
+
+.ui-calendar__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--calendar-header-gap);
+}
+
+.ui-calendar__month-label {
+  font-size: var(--calendar-day-font-size);
+  font-weight: var(--calendar-weekday-font-weight, var(--font-weight-medium));
+  line-height: var(--calendar-day-line-height, var(--size-5));
+  color: var(--color-calendar-header-text);
+  text-transform: capitalize;
+}
+
+.ui-calendar__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--size-8);
+  block-size: var(--size-8);
+  border: none;
+  padding: 0;
+  background-color: var(--color-calendar-day-background-default);
+  color: var(--color-calendar-header-text);
+  border-radius: var(--calendar-day-radius);
+  cursor: pointer;
+}
+
+.ui-calendar__nav:hover {
+  background-color: var(--color-calendar-day-background-hover);
+}
+
+.ui-calendar__nav svg {
+  inline-size: var(--size-5);
+  block-size: var(--size-5);
+}
+
+/* ---- Grid ---- */
+
+.ui-calendar__grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--calendar-day-gap);
+}
+
+.ui-calendar__week {
+  display: flex;
+  gap: var(--calendar-day-gap);
+}
+
+.ui-calendar__weekday {
+  inline-size: var(--calendar-day-size);
+  text-align: center;
+  font-size: var(--calendar-weekday-font-size);
+  font-weight: var(--calendar-weekday-font-weight, var(--font-weight-medium));
+  line-height: var(--calendar-weekday-line-height, var(--size-4));
+  color: var(--color-calendar-weekday-text);
+}
+
+/* ---- Day cell ---- */
+
+.ui-calendar__day-cell {
+  position: relative;
+  inline-size: var(--calendar-day-size);
+  block-size: var(--calendar-day-size);
+}
+
+/* Range tint band behind the day button; halves keep the band continuous
+   across cells while endpoints stay circular. */
+.ui-calendar__band {
+  position: absolute;
+  inset-block: 0;
+  background-color: var(--color-calendar-day-background-in-range);
+  pointer-events: none;
+}
+
+.ui-calendar__band--full {
+  inset-inline: 0;
+}
+
+.ui-calendar__band--start {
+  inset-inline: 50% 0;
+}
+
+.ui-calendar__band--end {
+  inset-inline: 0 50%;
+}
+
+.ui-calendar__day {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+  background-color: var(--color-calendar-day-background-default);
+  color: var(--color-calendar-day-text-default);
+  border-radius: var(--calendar-day-radius);
+  font-family: inherit;
+  font-size: var(--calendar-day-font-size);
+  font-weight: var(--calendar-day-font-weight, var(--typography-caption-font-weight));
+  line-height: var(--calendar-day-line-height, var(--size-5));
+  cursor: pointer;
+}
+
+.ui-calendar__day:hover {
+  background-color: var(--color-calendar-day-background-hover);
+}
+
+.ui-calendar__day--today {
+  border: var(--calendar-today-border-width) solid var(--color-calendar-day-border-today);
+}
+
+.ui-calendar__day--outside {
+  color: var(--color-calendar-day-text-outside);
+}
+
+.ui-calendar__day--in-range {
+  color: var(--color-calendar-day-text-in-range);
+}
+
+.ui-calendar__day--selected,
+.ui-calendar__day--range-start,
+.ui-calendar__day--range-end {
+  background-color: var(--color-calendar-day-background-selected);
+  color: var(--color-calendar-day-text-selected);
+}
+
+.ui-calendar__day--selected:hover,
+.ui-calendar__day--range-start:hover,
+.ui-calendar__day--range-end:hover {
+  background-color: var(--color-calendar-day-background-selected);
+}
+
+.ui-calendar__day--disabled {
+  color: var(--color-calendar-day-text-disabled);
+  cursor: not-allowed;
+}
+
+.ui-calendar__day--disabled:hover {
+  background-color: var(--color-calendar-day-background-default);
+}

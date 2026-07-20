@@ -1272,6 +1272,18 @@
   --color-on-subtle-chip-dismiss-background-active: var(--color-on-subtle-background-overlay);
   --color-on-subtle-popover-background: var(--color-on-subtle-background-default);
   --color-on-subtle-popover-border: var(--color-on-subtle-border-default);
+  --color-on-subtle-calendar-day-background-default: var(--color-on-subtle-control-outline-background-default);
+  --color-on-subtle-calendar-day-background-hover: var(--color-on-subtle-background-subtle);
+  --color-on-subtle-calendar-day-background-selected: var(--color-on-subtle-action-primary-base-default);
+  --color-on-subtle-calendar-day-background-in-range: var(--color-brand-primary-100);
+  --color-on-subtle-calendar-day-text-default: var(--color-on-subtle-text-primary);
+  --color-on-subtle-calendar-day-text-selected: var(--color-on-subtle-action-primary-on-base-default);
+  --color-on-subtle-calendar-day-text-in-range: var(--color-brand-primary-700);
+  --color-on-subtle-calendar-day-text-disabled: var(--color-on-subtle-text-muted);
+  --color-on-subtle-calendar-day-text-outside: var(--color-on-subtle-text-muted);
+  --color-on-subtle-calendar-day-border-today: var(--color-on-subtle-action-primary-base-default);
+  --color-on-subtle-calendar-weekday-text: var(--color-on-subtle-text-secondary);
+  --color-on-subtle-calendar-header-text: var(--color-on-subtle-text-primary);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -1968,6 +1980,18 @@
   --color-on-inverse-chip-dismiss-background-active: var(--color-on-inverse-background-overlay);
   --color-on-inverse-popover-background: var(--color-on-inverse-background-default);
   --color-on-inverse-popover-border: var(--color-on-inverse-border-default);
+  --color-on-inverse-calendar-day-background-default: var(--color-on-inverse-control-outline-background-default);
+  --color-on-inverse-calendar-day-background-hover: var(--color-on-inverse-background-subtle);
+  --color-on-inverse-calendar-day-background-selected: var(--color-on-inverse-action-primary-base-default);
+  --color-on-inverse-calendar-day-background-in-range: var(--color-brand-primary-100);
+  --color-on-inverse-calendar-day-text-default: var(--color-on-inverse-text-primary);
+  --color-on-inverse-calendar-day-text-selected: var(--color-on-inverse-action-primary-on-base-default);
+  --color-on-inverse-calendar-day-text-in-range: var(--color-brand-primary-700);
+  --color-on-inverse-calendar-day-text-disabled: var(--color-on-inverse-text-muted);
+  --color-on-inverse-calendar-day-text-outside: var(--color-on-inverse-text-muted);
+  --color-on-inverse-calendar-day-border-today: var(--color-on-inverse-action-primary-base-default);
+  --color-on-inverse-calendar-weekday-text: var(--color-on-inverse-text-secondary);
+  --color-on-inverse-calendar-header-text: var(--color-on-inverse-text-primary);
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -2664,6 +2688,18 @@
   --color-on-brand-primary-chip-dismiss-background-active: var(--color-on-brand-primary-background-overlay);
   --color-on-brand-primary-popover-background: var(--color-on-brand-primary-background-default);
   --color-on-brand-primary-popover-border: var(--color-on-brand-primary-border-default);
+  --color-on-brand-primary-calendar-day-background-default: var(--color-on-brand-primary-control-outline-background-default);
+  --color-on-brand-primary-calendar-day-background-hover: var(--color-on-brand-primary-background-subtle);
+  --color-on-brand-primary-calendar-day-background-selected: var(--color-on-brand-primary-action-primary-base-default);
+  --color-on-brand-primary-calendar-day-background-in-range: var(--color-brand-primary-100);
+  --color-on-brand-primary-calendar-day-text-default: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-calendar-day-text-selected: var(--color-on-brand-primary-action-primary-on-base-default);
+  --color-on-brand-primary-calendar-day-text-in-range: var(--color-brand-primary-700);
+  --color-on-brand-primary-calendar-day-text-disabled: var(--color-on-brand-primary-text-muted);
+  --color-on-brand-primary-calendar-day-text-outside: var(--color-on-brand-primary-text-muted);
+  --color-on-brand-primary-calendar-day-border-today: var(--color-on-brand-primary-action-primary-base-default);
+  --color-on-brand-primary-calendar-weekday-text: var(--color-on-brand-primary-text-secondary);
+  --color-on-brand-primary-calendar-header-text: var(--color-on-brand-primary-text-primary);
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
   --color-badge-neutral-solid-background: var(--color-gray-800);
@@ -3032,6 +3068,18 @@
   --color-chip-dismiss-background-active: var(--color-background-overlay);
   --color-popover-background: var(--color-background-default);
   --color-popover-border: var(--color-border-default);
+  --color-calendar-day-background-default: var(--color-control-outline-background-default);
+  --color-calendar-day-background-hover: var(--color-background-subtle);
+  --color-calendar-day-background-selected: var(--color-action-primary-base-default);
+  --color-calendar-day-background-in-range: var(--color-brand-primary-100);
+  --color-calendar-day-text-default: var(--color-text-primary);
+  --color-calendar-day-text-selected: var(--color-action-primary-on-base-default);
+  --color-calendar-day-text-in-range: var(--color-brand-primary-700);
+  --color-calendar-day-text-disabled: var(--color-text-muted);
+  --color-calendar-day-text-outside: var(--color-text-muted);
+  --color-calendar-day-border-today: var(--color-action-primary-base-default);
+  --color-calendar-weekday-text: var(--color-text-secondary);
+  --color-calendar-header-text: var(--color-text-primary);
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
@@ -3549,6 +3597,14 @@
     --color-on-subtle-chip-info-outline-border-active: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-outline-border-selected: var(--color-on-subtle-chip-info-solid-background-default);
     --color-on-subtle-popover-background: var(--color-on-subtle-background-default);
+    --color-on-subtle-calendar-day-background-hover: var(--color-on-subtle-background-subtle);
+    --color-on-subtle-calendar-day-background-selected: var(--color-on-subtle-action-primary-base-default);
+    --color-on-subtle-calendar-day-text-default: var(--color-on-subtle-text-primary);
+    --color-on-subtle-calendar-day-text-disabled: var(--color-on-subtle-text-muted);
+    --color-on-subtle-calendar-day-text-outside: var(--color-on-subtle-text-muted);
+    --color-on-subtle-calendar-day-border-today: var(--color-on-subtle-action-primary-base-default);
+    --color-on-subtle-calendar-weekday-text: var(--color-on-subtle-text-secondary);
+    --color-on-subtle-calendar-header-text: var(--color-on-subtle-text-primary);
     --color-on-inverse-brand-primary: var(--color-brand-primary);
     --color-on-inverse-background-default: var(--color-background-inverse);
     --color-on-inverse-background-inverse: var(--color-background-default);
@@ -3823,6 +3879,12 @@
     --color-on-inverse-chip-info-outline-border-active: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-outline-border-selected: var(--color-on-inverse-chip-info-solid-background-default);
     --color-on-inverse-popover-background: var(--color-on-inverse-background-default);
+    --color-on-inverse-calendar-day-text-default: var(--color-on-inverse-text-primary);
+    --color-on-inverse-calendar-day-text-selected: var(--color-on-inverse-action-primary-on-base-default);
+    --color-on-inverse-calendar-day-text-disabled: var(--color-on-inverse-text-muted);
+    --color-on-inverse-calendar-day-text-outside: var(--color-on-inverse-text-muted);
+    --color-on-inverse-calendar-weekday-text: var(--color-on-inverse-text-secondary);
+    --color-on-inverse-calendar-header-text: var(--color-on-inverse-text-primary);
     --color-on-brand-primary-brand-primary: var(--color-brand-primary);
     --color-on-brand-primary-background-default: var(--color-brand-primary-600);
     --color-on-brand-primary-background-sunken: var(--color-background-sunken);
@@ -4102,6 +4164,10 @@
     --color-on-brand-primary-chip-info-outline-border-active: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-outline-border-selected: var(--color-on-brand-primary-chip-info-solid-background-default);
     --color-on-brand-primary-popover-background: var(--color-on-brand-primary-background-default);
+    --color-on-brand-primary-calendar-day-background-hover: var(--color-on-brand-primary-background-subtle);
+    --color-on-brand-primary-calendar-day-text-selected: var(--color-on-brand-primary-action-primary-on-base-default);
+    --color-on-brand-primary-calendar-day-text-disabled: var(--color-on-brand-primary-text-muted);
+    --color-on-brand-primary-calendar-day-text-outside: var(--color-on-brand-primary-text-muted);
     --color-selection-background: var(--color-button-primary-background-default);
     --color-badge-neutral-solid-background: var(--color-gray-700);
     --color-badge-neutral-solid-border: var(--color-badge-neutral-solid-background);
@@ -4273,6 +4339,14 @@
     --color-chip-info-outline-border-active: var(--color-feedback-info-base);
     --color-chip-info-outline-border-selected: var(--color-chip-info-solid-background-default);
     --color-popover-background: var(--color-background-default);
+    --color-calendar-day-background-hover: var(--color-background-subtle);
+    --color-calendar-day-background-selected: var(--color-action-primary-base-default);
+    --color-calendar-day-text-default: var(--color-text-primary);
+    --color-calendar-day-text-disabled: var(--color-text-muted);
+    --color-calendar-day-text-outside: var(--color-text-muted);
+    --color-calendar-day-border-today: var(--color-action-primary-base-default);
+    --color-calendar-weekday-text: var(--color-text-secondary);
+    --color-calendar-header-text: var(--color-text-primary);
   }
 }
 
@@ -4974,6 +5048,18 @@
   --color-chip-dismiss-background-active: var(--color-on-subtle-chip-dismiss-background-active);
   --color-popover-background: var(--color-on-subtle-popover-background);
   --color-popover-border: var(--color-on-subtle-popover-border);
+  --color-calendar-day-background-default: var(--color-on-subtle-calendar-day-background-default);
+  --color-calendar-day-background-hover: var(--color-on-subtle-calendar-day-background-hover);
+  --color-calendar-day-background-selected: var(--color-on-subtle-calendar-day-background-selected);
+  --color-calendar-day-background-in-range: var(--color-on-subtle-calendar-day-background-in-range);
+  --color-calendar-day-text-default: var(--color-on-subtle-calendar-day-text-default);
+  --color-calendar-day-text-selected: var(--color-on-subtle-calendar-day-text-selected);
+  --color-calendar-day-text-in-range: var(--color-on-subtle-calendar-day-text-in-range);
+  --color-calendar-day-text-disabled: var(--color-on-subtle-calendar-day-text-disabled);
+  --color-calendar-day-text-outside: var(--color-on-subtle-calendar-day-text-outside);
+  --color-calendar-day-border-today: var(--color-on-subtle-calendar-day-border-today);
+  --color-calendar-weekday-text: var(--color-on-subtle-calendar-weekday-text);
+  --color-calendar-header-text: var(--color-on-subtle-calendar-header-text);
 }
 
 /* === Surfaces (Inverse) === */
@@ -5674,6 +5760,18 @@
   --color-chip-dismiss-background-active: var(--color-on-inverse-chip-dismiss-background-active);
   --color-popover-background: var(--color-on-inverse-popover-background);
   --color-popover-border: var(--color-on-inverse-popover-border);
+  --color-calendar-day-background-default: var(--color-on-inverse-calendar-day-background-default);
+  --color-calendar-day-background-hover: var(--color-on-inverse-calendar-day-background-hover);
+  --color-calendar-day-background-selected: var(--color-on-inverse-calendar-day-background-selected);
+  --color-calendar-day-background-in-range: var(--color-on-inverse-calendar-day-background-in-range);
+  --color-calendar-day-text-default: var(--color-on-inverse-calendar-day-text-default);
+  --color-calendar-day-text-selected: var(--color-on-inverse-calendar-day-text-selected);
+  --color-calendar-day-text-in-range: var(--color-on-inverse-calendar-day-text-in-range);
+  --color-calendar-day-text-disabled: var(--color-on-inverse-calendar-day-text-disabled);
+  --color-calendar-day-text-outside: var(--color-on-inverse-calendar-day-text-outside);
+  --color-calendar-day-border-today: var(--color-on-inverse-calendar-day-border-today);
+  --color-calendar-weekday-text: var(--color-on-inverse-calendar-weekday-text);
+  --color-calendar-header-text: var(--color-on-inverse-calendar-header-text);
 }
 
 /* === Surfaces (Primary) === */
@@ -6374,6 +6472,18 @@
   --color-chip-dismiss-background-active: var(--color-on-brand-primary-chip-dismiss-background-active);
   --color-popover-background: var(--color-on-brand-primary-popover-background);
   --color-popover-border: var(--color-on-brand-primary-popover-border);
+  --color-calendar-day-background-default: var(--color-on-brand-primary-calendar-day-background-default);
+  --color-calendar-day-background-hover: var(--color-on-brand-primary-calendar-day-background-hover);
+  --color-calendar-day-background-selected: var(--color-on-brand-primary-calendar-day-background-selected);
+  --color-calendar-day-background-in-range: var(--color-on-brand-primary-calendar-day-background-in-range);
+  --color-calendar-day-text-default: var(--color-on-brand-primary-calendar-day-text-default);
+  --color-calendar-day-text-selected: var(--color-on-brand-primary-calendar-day-text-selected);
+  --color-calendar-day-text-in-range: var(--color-on-brand-primary-calendar-day-text-in-range);
+  --color-calendar-day-text-disabled: var(--color-on-brand-primary-calendar-day-text-disabled);
+  --color-calendar-day-text-outside: var(--color-on-brand-primary-calendar-day-text-outside);
+  --color-calendar-day-border-today: var(--color-on-brand-primary-calendar-day-border-today);
+  --color-calendar-weekday-text: var(--color-on-brand-primary-calendar-weekday-text);
+  --color-calendar-header-text: var(--color-on-brand-primary-calendar-header-text);
 }
 
 /* === Sizes (Mobile — default) === */
@@ -6385,8 +6495,8 @@
   --typography-heading-display-line-height: var(--text-3xl--line-height);
   --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
-  --typography-heading-display-large-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-line-height: var(--text-4xl--line-height);
+  --typography-heading-display-large-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -6438,8 +6548,8 @@
   --typography-body-small-letter-spacing: var(--tracking-normal);
   --typography-body-letter-spacing: var(--tracking-normal);
   --typography-body-large-font-size: var(--text-lg);
-  --typography-body-large-line-height: var(--text-lg--line-height);
   --typography-body-large-letter-spacing: var(--tracking-normal);
+  --typography-body-large-line-height: var(--text-lg--line-height);
   --typography-caption-font-weight: var(--font-weight-normal);
   --typography-caption-font-size: var(--text-sm);
   --typography-caption-line-height: var(--text-sm--line-height);
@@ -6583,8 +6693,8 @@
   --select-dropdown-padding: var(--spacing-1);
   --select-dropdown-radius: var(--spacing-2);
   --select-dropdown-border-width: 0.0625rem;
-  --notification-font-family: var(--typography-body-font-family);
   --notification-radius: var(--radius-md);
+  --notification-font-family: var(--typography-body-font-family);
   --notification-font-size: var(--typography-body-font-size);
   --notification-line-height: var(--typography-body-line-height);
   --notification-font-weight: var(--typography-body-font-weight-strong);
@@ -6645,6 +6755,18 @@
   --popover-border-width: 0.0625rem;
   --popover-arrow-size: var(--spacing-2);
   --popover-offset: var(--spacing-2);
+  --calendar-day-size: var(--size-10);
+  --calendar-day-font-size: var(--text-sm);
+  --calendar-day-radius: var(--radius-full);
+  --calendar-day-gap: var(--spacing-0);
+  --calendar-day-font-weight: 400;
+  --calendar-day-line-height: calc(1.25 / 0.875);
+  --calendar-weekday-font-size: var(--text-xs);
+  --calendar-weekday-font-weight: var(--font-weight-medium);
+  --calendar-weekday-line-height: calc(1 / 0.75);
+  --calendar-header-gap: var(--spacing-2);
+  --calendar-today-border-width: 0.0625rem;
+  --calendar-font-family: var(--typography-caption-font-family);
 }
 
 /* === Sizes (Desktop) === */

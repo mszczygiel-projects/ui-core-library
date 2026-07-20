@@ -1080,6 +1080,32 @@ export const tokens = {
           background: 'var(--color-on-subtle-popover-background)',
           border: 'var(--color-on-subtle-popover-border)',
         },
+        calendar: {
+          day: {
+            background: {
+              default: 'var(--color-on-subtle-calendar-day-background-default)',
+              hover: 'var(--color-on-subtle-calendar-day-background-hover)',
+              selected: 'var(--color-on-subtle-calendar-day-background-selected)',
+              inRange: 'var(--color-on-subtle-calendar-day-background-in-range)',
+            },
+            text: {
+              default: 'var(--color-on-subtle-calendar-day-text-default)',
+              selected: 'var(--color-on-subtle-calendar-day-text-selected)',
+              inRange: 'var(--color-on-subtle-calendar-day-text-in-range)',
+              disabled: 'var(--color-on-subtle-calendar-day-text-disabled)',
+              outside: 'var(--color-on-subtle-calendar-day-text-outside)',
+            },
+            border: {
+              today: 'var(--color-on-subtle-calendar-day-border-today)',
+            },
+          },
+          weekday: {
+            text: 'var(--color-on-subtle-calendar-weekday-text)',
+          },
+          header: {
+            text: 'var(--color-on-subtle-calendar-header-text)',
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -2158,6 +2184,32 @@ export const tokens = {
           background: 'var(--color-on-inverse-popover-background)',
           border: 'var(--color-on-inverse-popover-border)',
         },
+        calendar: {
+          day: {
+            background: {
+              default: 'var(--color-on-inverse-calendar-day-background-default)',
+              hover: 'var(--color-on-inverse-calendar-day-background-hover)',
+              selected: 'var(--color-on-inverse-calendar-day-background-selected)',
+              inRange: 'var(--color-on-inverse-calendar-day-background-in-range)',
+            },
+            text: {
+              default: 'var(--color-on-inverse-calendar-day-text-default)',
+              selected: 'var(--color-on-inverse-calendar-day-text-selected)',
+              inRange: 'var(--color-on-inverse-calendar-day-text-in-range)',
+              disabled: 'var(--color-on-inverse-calendar-day-text-disabled)',
+              outside: 'var(--color-on-inverse-calendar-day-text-outside)',
+            },
+            border: {
+              today: 'var(--color-on-inverse-calendar-day-border-today)',
+            },
+          },
+          weekday: {
+            text: 'var(--color-on-inverse-calendar-weekday-text)',
+          },
+          header: {
+            text: 'var(--color-on-inverse-calendar-header-text)',
+          },
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -3235,6 +3287,32 @@ export const tokens = {
         popover: {
           background: 'var(--color-on-brand-primary-popover-background)',
           border: 'var(--color-on-brand-primary-popover-border)',
+        },
+        calendar: {
+          day: {
+            background: {
+              default: 'var(--color-on-brand-primary-calendar-day-background-default)',
+              hover: 'var(--color-on-brand-primary-calendar-day-background-hover)',
+              selected: 'var(--color-on-brand-primary-calendar-day-background-selected)',
+              inRange: 'var(--color-on-brand-primary-calendar-day-background-in-range)',
+            },
+            text: {
+              default: 'var(--color-on-brand-primary-calendar-day-text-default)',
+              selected: 'var(--color-on-brand-primary-calendar-day-text-selected)',
+              inRange: 'var(--color-on-brand-primary-calendar-day-text-in-range)',
+              disabled: 'var(--color-on-brand-primary-calendar-day-text-disabled)',
+              outside: 'var(--color-on-brand-primary-calendar-day-text-outside)',
+            },
+            border: {
+              today: 'var(--color-on-brand-primary-calendar-day-border-today)',
+            },
+          },
+          weekday: {
+            text: 'var(--color-on-brand-primary-calendar-weekday-text)',
+          },
+          header: {
+            text: 'var(--color-on-brand-primary-calendar-header-text)',
+          },
         },
       },
       selection: {
@@ -4385,6 +4463,32 @@ export const tokens = {
         background: 'var(--color-popover-background)',
         border: 'var(--color-popover-border)',
       },
+      calendar: {
+        day: {
+          background: {
+            default: 'var(--color-calendar-day-background-default)',
+            hover: 'var(--color-calendar-day-background-hover)',
+            selected: 'var(--color-calendar-day-background-selected)',
+            inRange: 'var(--color-calendar-day-background-in-range)',
+          },
+          text: {
+            default: 'var(--color-calendar-day-text-default)',
+            selected: 'var(--color-calendar-day-text-selected)',
+            inRange: 'var(--color-calendar-day-text-in-range)',
+            disabled: 'var(--color-calendar-day-text-disabled)',
+            outside: 'var(--color-calendar-day-text-outside)',
+          },
+          border: {
+            today: 'var(--color-calendar-day-border-today)',
+          },
+        },
+        weekday: {
+          text: 'var(--color-calendar-weekday-text)',
+        },
+        header: {
+          text: 'var(--color-calendar-header-text)',
+        },
+      },
     },
   },
   sizes: {
@@ -4399,8 +4503,8 @@ export const tokens = {
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
+            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
         },
         title: {
@@ -4476,8 +4580,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          lineHeight: 'var(--typography-body-large-line-height)',
           letterSpacing: 'var(--typography-body-large-letter-spacing)',
+          lineHeight: 'var(--typography-body-large-line-height)',
         },
       },
       caption: {
@@ -4755,8 +4859,8 @@ export const tokens = {
       },
     },
     notification: {
-      fontFamily: 'var(--notification-font-family)',
       radius: 'var(--notification-radius)',
+      fontFamily: 'var(--notification-font-family)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -4873,6 +4977,30 @@ export const tokens = {
         size: 'var(--popover-arrow-size)',
       },
       offset: 'var(--popover-offset)',
+    },
+    calendar: {
+      day: {
+        size: 'var(--calendar-day-size)',
+        fontSize: 'var(--calendar-day-font-size)',
+        radius: 'var(--calendar-day-radius)',
+        gap: 'var(--calendar-day-gap)',
+        fontWeight: 'var(--calendar-day-font-weight)',
+        lineHeight: 'var(--calendar-day-line-height)',
+      },
+      weekday: {
+        fontSize: 'var(--calendar-weekday-font-size)',
+        fontWeight: 'var(--calendar-weekday-font-weight)',
+        lineHeight: 'var(--calendar-weekday-line-height)',
+      },
+      header: {
+        gap: 'var(--calendar-header-gap)',
+      },
+      today: {
+        border: {
+          width: 'var(--calendar-today-border-width)',
+        },
+      },
+      fontFamily: 'var(--calendar-font-family)',
     },
   },
 } as const;

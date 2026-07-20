@@ -60,3 +60,10 @@ export type {
   PopoverOpenChangeReason,
   PopoverOpenChangeDetail,
 } from './Popover/Popover.js';
+export { Calendar } from './Calendar/Calendar.js';
+export type {
+  CalendarProps,
+  CalendarSelectionMode,
+  CalendarDateSelectDetail,
+  CalendarMonthChangeDetail,
+} from './Calendar/Calendar.js';
