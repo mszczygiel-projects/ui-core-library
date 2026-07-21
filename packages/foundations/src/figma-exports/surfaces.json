@@ -6954,6 +6954,458 @@
         },
         "$type": "color"
       }
+    },
+    "switch": {
+      "track": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.switch.track.default}",
+            "Subtle": "{Themes.color.on-subtle.switch.track.default}",
+            "Inverse": "{Themes.color.on-inverse.switch.track.default}",
+            "Primary": "{Themes.color.on-brand-primary.switch.track.default}"
+          },
+          "$type": "color"
+        },
+        "hover": {
+          "$value": {
+            "Default": "{Themes.color.switch.track.hover}",
+            "Subtle": "{Themes.color.on-subtle.switch.track.hover}",
+            "Inverse": "{Themes.color.on-inverse.switch.track.hover}",
+            "Primary": "{Themes.color.on-brand-primary.switch.track.hover}"
+          },
+          "$type": "color"
+        },
+        "active": {
+          "$value": {
+            "Default": "{Themes.color.switch.track.active}",
+            "Subtle": "{Themes.color.on-subtle.switch.track.active}",
+            "Inverse": "{Themes.color.on-inverse.switch.track.active}",
+            "Primary": "{Themes.color.on-brand-primary.switch.track.active}"
+          },
+          "$type": "color"
+        },
+        "success": {
+          "$value": {
+            "Default": "{Themes.color.switch.track.success}",
+            "Subtle": "{Themes.color.on-subtle.switch.track.success}",
+            "Inverse": "{Themes.color.on-inverse.switch.track.success}",
+            "Primary": "{Themes.color.on-brand-primary.switch.track.success}"
+          },
+          "$type": "color"
+        },
+        "error": {
+          "$value": {
+            "Default": "{Themes.color.switch.track.error}",
+            "Subtle": "{Themes.color.on-subtle.switch.track.error}",
+            "Inverse": "{Themes.color.on-inverse.switch.track.error}",
+            "Primary": "{Themes.color.on-brand-primary.switch.track.error}"
+          },
+          "$type": "color"
+        },
+        "disabled": {
+          "$value": {
+            "Default": "{Themes.color.switch.track.disabled}",
+            "Subtle": "{Themes.color.on-subtle.switch.track.disabled}",
+            "Inverse": "{Themes.color.on-inverse.switch.track.disabled}",
+            "Primary": "{Themes.color.on-brand-primary.switch.track.disabled}"
+          },
+          "$type": "color"
+        }
+      },
+      "border": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.switch.border.default}",
+            "Subtle": "{Themes.color.on-subtle.switch.border.default}",
+            "Inverse": "{Themes.color.on-inverse.switch.border.default}",
+            "Primary": "{Themes.color.on-brand-primary.switch.border.default}"
+          },
+          "$type": "color"
+        },
+        "hover": {
+          "$value": {
+            "Default": "{Themes.color.switch.border.hover}",
+            "Subtle": "{Themes.color.on-subtle.switch.border.hover}",
+            "Inverse": "{Themes.color.on-inverse.switch.border.hover}",
+            "Primary": "{Themes.color.on-brand-primary.switch.border.hover}"
+          },
+          "$type": "color"
+        },
+        "active": {
+          "$value": {
+            "Default": "{Themes.color.switch.border.active}",
+            "Subtle": "{Themes.color.on-subtle.switch.border.active}",
+            "Inverse": "{Themes.color.on-inverse.switch.border.active}",
+            "Primary": "{Themes.color.on-brand-primary.switch.border.active}"
+          },
+          "$type": "color"
+        },
+        "success": {
+          "$value": {
+            "Default": "{Themes.color.switch.border.success}",
+            "Subtle": "{Themes.color.on-subtle.switch.border.success}",
+            "Inverse": "{Themes.color.on-inverse.switch.border.success}",
+            "Primary": "{Themes.color.on-brand-primary.switch.border.success}"
+          },
+          "$type": "color"
+        },
+        "error": {
+          "$value": {
+            "Default": "{Themes.color.switch.border.error}",
+            "Subtle": "{Themes.color.on-subtle.switch.border.error}",
+            "Inverse": "{Themes.color.on-inverse.switch.border.error}",
+            "Primary": "{Themes.color.on-brand-primary.switch.border.error}"
+          },
+          "$type": "color"
+        },
+        "disabled": {
+          "$value": {
+            "Default": "{Themes.color.switch.border.disabled}",
+            "Subtle": "{Themes.color.on-subtle.switch.border.disabled}",
+            "Inverse": "{Themes.color.on-inverse.switch.border.disabled}",
+            "Primary": "{Themes.color.on-brand-primary.switch.border.disabled}"
+          },
+          "$type": "color"
+        }
+      },
+      "thumb": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.switch.thumb.default}",
+            "Subtle": "{Themes.color.on-subtle.switch.thumb.default}",
+            "Inverse": "{Themes.color.on-inverse.switch.thumb.default}",
+            "Primary": "{Themes.color.on-brand-primary.switch.thumb.default}"
+          },
+          "$type": "color"
+        },
+        "hover": {
+          "$value": {
+            "Default": "{Themes.color.switch.thumb.hover}",
+            "Subtle": "{Themes.color.on-subtle.switch.thumb.hover}",
+            "Inverse": "{Themes.color.on-inverse.switch.thumb.hover}",
+            "Primary": "{Themes.color.on-brand-primary.switch.thumb.hover}"
+          },
+          "$type": "color"
+        },
+        "active": {
+          "$value": {
+            "Default": "{Themes.color.switch.thumb.active}",
+            "Subtle": "{Themes.color.on-subtle.switch.thumb.active}",
+            "Inverse": "{Themes.color.on-inverse.switch.thumb.active}",
+            "Primary": "{Themes.color.on-brand-primary.switch.thumb.active}"
+          },
+          "$type": "color"
+        },
+        "success": {
+          "$value": {
+            "Default": "{Themes.color.switch.thumb.success}",
+            "Subtle": "{Themes.color.on-subtle.switch.thumb.success}",
+            "Inverse": "{Themes.color.on-inverse.switch.thumb.success}",
+            "Primary": "{Themes.color.on-brand-primary.switch.thumb.success}"
+          },
+          "$type": "color"
+        },
+        "error": {
+          "$value": {
+            "Default": "{Themes.color.switch.thumb.error}",
+            "Subtle": "{Themes.color.on-subtle.switch.thumb.error}",
+            "Inverse": "{Themes.color.on-inverse.switch.thumb.error}",
+            "Primary": "{Themes.color.on-brand-primary.switch.thumb.error}"
+          },
+          "$type": "color"
+        },
+        "disabled": {
+          "$value": {
+            "Default": "{Themes.color.switch.thumb.disabled}",
+            "Subtle": "{Themes.color.on-subtle.switch.thumb.disabled}",
+            "Inverse": "{Themes.color.on-inverse.switch.thumb.disabled}",
+            "Primary": "{Themes.color.on-brand-primary.switch.thumb.disabled}"
+          },
+          "$type": "color"
+        }
+      },
+      "icon": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.switch.icon.default}",
+            "Subtle": "{Themes.color.on-subtle.switch.icon.default}",
+            "Inverse": "{Themes.color.on-inverse.switch.icon.default}",
+            "Primary": "{Themes.color.on-brand-primary.switch.icon.default}"
+          },
+          "$type": "color"
+        },
+        "hover": {
+          "$value": {
+            "Default": "{Themes.color.switch.icon.hover}",
+            "Subtle": "{Themes.color.on-subtle.switch.icon.hover}",
+            "Inverse": "{Themes.color.on-inverse.switch.icon.hover}",
+            "Primary": "{Themes.color.on-brand-primary.switch.icon.hover}"
+          },
+          "$type": "color"
+        },
+        "active": {
+          "$value": {
+            "Default": "{Themes.color.switch.icon.active}",
+            "Subtle": "{Themes.color.on-subtle.switch.icon.active}",
+            "Inverse": "{Themes.color.on-inverse.switch.icon.active}",
+            "Primary": "{Themes.color.on-brand-primary.switch.icon.active}"
+          },
+          "$type": "color"
+        },
+        "success": {
+          "$value": {
+            "Default": "{Themes.color.switch.icon.success}",
+            "Subtle": "{Themes.color.on-subtle.switch.icon.success}",
+            "Inverse": "{Themes.color.on-inverse.switch.icon.success}",
+            "Primary": "{Themes.color.on-brand-primary.switch.icon.success}"
+          },
+          "$type": "color"
+        },
+        "error": {
+          "$value": {
+            "Default": "{Themes.color.switch.icon.error}",
+            "Subtle": "{Themes.color.on-subtle.switch.icon.error}",
+            "Inverse": "{Themes.color.on-inverse.switch.icon.error}",
+            "Primary": "{Themes.color.on-brand-primary.switch.icon.error}"
+          },
+          "$type": "color"
+        },
+        "disabled": {
+          "$value": {
+            "Default": "{Themes.color.switch.icon.disabled}",
+            "Subtle": "{Themes.color.on-subtle.switch.icon.disabled}",
+            "Inverse": "{Themes.color.on-inverse.switch.icon.disabled}",
+            "Primary": "{Themes.color.on-brand-primary.switch.icon.disabled}"
+          },
+          "$type": "color"
+        }
+      },
+      "checked": {
+        "track": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.track.default}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.track.default}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.track.default}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.track.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.track.hover}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.track.hover}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.track.hover}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.track.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.track.active}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.track.active}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.track.active}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.track.active}"
+            },
+            "$type": "color"
+          },
+          "success": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.track.success}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.track.success}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.track.success}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.track.success}"
+            },
+            "$type": "color"
+          },
+          "error": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.track.error}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.track.error}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.track.error}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.track.error}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.track.disabled}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.track.disabled}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.track.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.track.disabled}"
+            },
+            "$type": "color"
+          }
+        },
+        "border": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.border.default}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.border.default}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.border.default}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.border.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.border.hover}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.border.hover}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.border.hover}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.border.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.border.active}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.border.active}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.border.active}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.border.active}"
+            },
+            "$type": "color"
+          },
+          "success": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.border.success}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.border.success}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.border.success}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.border.success}"
+            },
+            "$type": "color"
+          },
+          "error": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.border.error}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.border.error}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.border.error}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.border.error}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.border.disabled}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.border.disabled}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.border.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.border.disabled}"
+            },
+            "$type": "color"
+          }
+        },
+        "thumb": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.thumb.default}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.thumb.default}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.thumb.default}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.thumb.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.thumb.hover}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.thumb.hover}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.thumb.hover}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.thumb.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.thumb.active}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.thumb.active}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.thumb.active}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.thumb.active}"
+            },
+            "$type": "color"
+          },
+          "success": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.thumb.success}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.thumb.success}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.thumb.success}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.thumb.success}"
+            },
+            "$type": "color"
+          },
+          "error": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.thumb.error}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.thumb.error}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.thumb.error}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.thumb.error}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.thumb.disabled}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.thumb.disabled}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.thumb.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.thumb.disabled}"
+            },
+            "$type": "color"
+          }
+        },
+        "icon": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.icon.default}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.icon.default}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.icon.default}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.icon.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.icon.hover}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.icon.hover}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.icon.hover}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.icon.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.icon.active}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.icon.active}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.icon.active}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.icon.active}"
+            },
+            "$type": "color"
+          },
+          "success": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.icon.success}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.icon.success}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.icon.success}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.icon.success}"
+            },
+            "$type": "color"
+          },
+          "error": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.icon.error}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.icon.error}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.icon.error}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.icon.error}"
+            },
+            "$type": "color"
+          },
+          "disabled": {
+            "$value": {
+              "Default": "{Themes.color.switch.checked.icon.disabled}",
+              "Subtle": "{Themes.color.on-subtle.switch.checked.icon.disabled}",
+              "Inverse": "{Themes.color.on-inverse.switch.checked.icon.disabled}",
+              "Primary": "{Themes.color.on-brand-primary.switch.checked.icon.disabled}"
+            },
+            "$type": "color"
+          }
+        }
+      }
     }
   }
 }

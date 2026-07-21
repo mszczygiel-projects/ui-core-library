@@ -51,6 +51,8 @@ export { UiCheckboxField } from './checkbox-field/checkbox-field.js';
 export type { CheckboxFieldState } from './checkbox-field/checkbox-field.js';
 export { UiRadioField } from './radio-field/radio-field.js';
 export type { RadioFieldState } from './radio-field/radio-field.js';
+export { UiSwitchField } from './switch-field/switch-field.js';
+export type { SwitchFieldState, SwitchFieldLabelPosition } from './switch-field/switch-field.js';
 export { UiSelectField } from './select-field/select-field.js';
 export type {
   SelectFieldVariant,

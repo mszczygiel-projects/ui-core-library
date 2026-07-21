@@ -45,6 +45,12 @@ export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';
 export type { RadioFieldProps, RadioFieldState } from './RadioField/RadioField.js';
+export { SwitchField } from './SwitchField/SwitchField.js';
+export type {
+  SwitchFieldProps,
+  SwitchFieldState,
+  SwitchFieldLabelPosition,
+} from './SwitchField/SwitchField.js';
 export { SelectField } from './SelectField/SelectField.js';
 export type {
   SelectFieldProps,
