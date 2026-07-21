@@ -32,6 +32,15 @@ export { PasswordField } from './PasswordField/PasswordField.js';
 export type { PasswordFieldProps } from './PasswordField/PasswordField.js';
 export { SearchField } from './SearchField/SearchField.js';
 export type { SearchFieldProps } from './SearchField/SearchField.js';
+export { NumberField } from './NumberField/NumberField.js';
+export type {
+  NumberFieldProps,
+  NumberFieldVariant,
+  NumberFieldSize,
+  NumberFieldState,
+  NumberFieldLabelPlacement,
+  NumberFieldControls,
+} from './NumberField/NumberField.js';
 export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';
