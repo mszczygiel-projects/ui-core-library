@@ -97,3 +97,14 @@ export { DateField } from './DateField/DateField.js';
 export type { DateFieldProps, DateFieldChangeDetail } from './DateField/DateField.js';
 export { Pagination } from './Pagination/Pagination.js';
 export type { PaginationProps, PaginationEntry } from './Pagination/Pagination.js';
+export { useDragDismiss } from './hooks/useDragDismiss.js';
+export type { DragDismissDirection, UseDragDismissOptions } from './hooks/useDragDismiss.js';
+export { Dialog } from './Dialog/Dialog.js';
+export type {
+  DialogProps,
+  DialogSize,
+  DialogVariant,
+  DialogDismiss,
+  DialogOpenChangeReason,
+  DialogOpenChangeDetail,
+} from './Dialog/Dialog.js';

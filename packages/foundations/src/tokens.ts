@@ -16,6 +16,7 @@ export const tokens = {
           inverse: 'var(--color-on-subtle-background-inverse)',
           overlay: 'var(--color-on-subtle-background-overlay)',
           brandPrimary: 'var(--color-on-subtle-background-brand-primary)',
+          tint: 'var(--color-on-subtle-background-tint)',
         },
         text: {
           primary: 'var(--color-on-subtle-text-primary)',
@@ -1135,6 +1136,11 @@ export const tokens = {
             foreground: 'var(--color-on-subtle-pagination-ellipsis-foreground)',
           },
         },
+        dialog: {
+          background: 'var(--color-on-subtle-dialog-background)',
+          border: 'var(--color-on-subtle-dialog-border)',
+          divider: 'var(--color-on-subtle-dialog-divider)',
+        },
       },
       onInverse: {
         brand: {
@@ -1149,6 +1155,7 @@ export const tokens = {
           inverse: 'var(--color-on-inverse-background-inverse)',
           overlay: 'var(--color-on-inverse-background-overlay)',
           brandPrimary: 'var(--color-on-inverse-background-brand-primary)',
+          tint: 'var(--color-on-inverse-background-tint)',
         },
         text: {
           primary: 'var(--color-on-inverse-text-primary)',
@@ -2268,6 +2275,11 @@ export const tokens = {
             foreground: 'var(--color-on-inverse-pagination-ellipsis-foreground)',
           },
         },
+        dialog: {
+          background: 'var(--color-on-inverse-dialog-background)',
+          border: 'var(--color-on-inverse-dialog-border)',
+          divider: 'var(--color-on-inverse-dialog-divider)',
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -2282,6 +2294,7 @@ export const tokens = {
           inverse: 'var(--color-on-brand-primary-background-inverse)',
           overlay: 'var(--color-on-brand-primary-background-overlay)',
           brandPrimary: 'var(--color-on-brand-primary-background-brand-primary)',
+          tint: 'var(--color-on-brand-primary-background-tint)',
         },
         text: {
           primary: 'var(--color-on-brand-primary-text-primary)',
@@ -3401,6 +3414,11 @@ export const tokens = {
             foreground: 'var(--color-on-brand-primary-pagination-ellipsis-foreground)',
           },
         },
+        dialog: {
+          background: 'var(--color-on-brand-primary-dialog-background)',
+          border: 'var(--color-on-brand-primary-dialog-border)',
+          divider: 'var(--color-on-brand-primary-dialog-divider)',
+        },
       },
       selection: {
         background: 'var(--color-selection-background)',
@@ -3486,6 +3504,7 @@ export const tokens = {
         inverse: 'var(--color-background-inverse)',
         overlay: 'var(--color-background-overlay)',
         brandPrimary: 'var(--color-background-brand-primary)',
+        tint: 'var(--color-background-tint)',
       },
       text: {
         primary: 'var(--color-text-primary)',
@@ -4605,6 +4624,11 @@ export const tokens = {
           foreground: 'var(--color-pagination-ellipsis-foreground)',
         },
       },
+      dialog: {
+        background: 'var(--color-dialog-background)',
+        border: 'var(--color-dialog-border)',
+        divider: 'var(--color-dialog-divider)',
+      },
     },
   },
   sizes: {
@@ -4616,12 +4640,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -4975,8 +4999,8 @@ export const tokens = {
       },
     },
     notification: {
-      radius: 'var(--notification-radius)',
       fontFamily: 'var(--notification-font-family)',
+      radius: 'var(--notification-radius)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -5139,6 +5163,50 @@ export const tokens = {
       minHeight: 'var(--textarea-min-height)',
       large: {
         minHeight: 'var(--textarea-large-min-height)',
+      },
+    },
+    dialog: {
+      small: {
+        maxWidth: 'var(--dialog-small-max-width)',
+      },
+      medium: {
+        maxWidth: 'var(--dialog-medium-max-width)',
+      },
+      large: {
+        maxWidth: 'var(--dialog-large-max-width)',
+      },
+      radius: 'var(--dialog-radius)',
+      sheet: {
+        radius: 'var(--dialog-sheet-radius)',
+      },
+      border: {
+        width: 'var(--dialog-border-width)',
+      },
+      margin: 'var(--dialog-margin)',
+      padding: {
+        inline: 'var(--dialog-padding-inline)',
+        stack: 'var(--dialog-padding-stack)',
+      },
+      gap: 'var(--dialog-gap)',
+      header: {
+        gap: 'var(--dialog-header-gap)',
+      },
+      footer: {
+        gap: 'var(--dialog-footer-gap)',
+      },
+      title: {
+        fontFamily: 'var(--dialog-title-font-family)',
+        fontSize: 'var(--dialog-title-font-size)',
+        lineHeight: 'var(--dialog-title-line-height)',
+        fontWeight: 'var(--dialog-title-font-weight)',
+        letterSpacing: 'var(--dialog-title-letter-spacing)',
+      },
+      description: {
+        fontFamily: 'var(--dialog-description-font-family)',
+        fontSize: 'var(--dialog-description-font-size)',
+        lineHeight: 'var(--dialog-description-line-height)',
+        fontWeight: 'var(--dialog-description-font-weight)',
+        letterSpacing: 'var(--dialog-description-letter-spacing)',
       },
     },
   },

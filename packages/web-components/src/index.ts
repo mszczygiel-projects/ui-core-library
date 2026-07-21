@@ -1,3 +1,5 @@
+export { DragDismissController } from './controllers/drag-dismiss.js';
+export type { DragDismissDirection, DragDismissOptions } from './controllers/drag-dismiss.js';
 export { focusStyles } from './styles/focus.styles.js';
 export { motionStyles } from './styles/motion.styles.js';
 export { resetStyles } from './styles/reset.styles.js';
@@ -93,3 +95,11 @@ export type {
 } from './date-field/date-field.js';
 export { UiPagination } from './pagination/pagination.js';
 export type { PaginationChangeDetail, PaginationEntry } from './pagination/pagination.js';
+export { UiDialog } from './dialog/dialog.js';
+export type {
+  DialogSize,
+  DialogVariant,
+  DialogDismiss,
+  DialogOpenChangeReason,
+  DialogOpenChangeDetail,
+} from './dialog/dialog.js';

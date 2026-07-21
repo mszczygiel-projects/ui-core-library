@@ -133,6 +133,9 @@
   --size-20: var(--size-20);
   --size-24: var(--size-24);
   --size-32: var(--size-32);
+  --size-100: var(--size-100);
+  --size-140: var(--size-140);
+  --size-200: var(--size-200);
   --radius-none: var(--radius-none);
   --radius-xs: var(--radius-xs);
   --radius-sm: var(--radius-sm);
@@ -216,6 +219,7 @@
   --color-background-inverse: var(--color-background-inverse);
   --color-background-overlay: var(--color-background-overlay);
   --color-background-brand-primary: var(--color-background-brand-primary);
+  --color-background-tint: var(--color-background-tint);
   --color-text-primary: var(--color-text-primary);
   --color-text-secondary: var(--color-text-secondary);
   --color-text-muted: var(--color-text-muted);
@@ -546,6 +550,7 @@
   --color-on-subtle-background-inverse: var(--color-on-subtle-background-inverse);
   --color-on-subtle-background-overlay: var(--color-on-subtle-background-overlay);
   --color-on-subtle-background-brand-primary: var(--color-on-subtle-background-brand-primary);
+  --color-on-subtle-background-tint: var(--color-on-subtle-background-tint);
   --color-on-subtle-text-primary: var(--color-on-subtle-text-primary);
   --color-on-subtle-text-secondary: var(--color-on-subtle-text-secondary);
   --color-on-subtle-text-muted: var(--color-on-subtle-text-muted);
@@ -1260,6 +1265,9 @@
   --color-on-subtle-pagination-item-selected-background: var(--color-on-subtle-pagination-item-selected-background);
   --color-on-subtle-pagination-item-selected-foreground: var(--color-on-subtle-pagination-item-selected-foreground);
   --color-on-subtle-pagination-ellipsis-foreground: var(--color-on-subtle-pagination-ellipsis-foreground);
+  --color-on-subtle-dialog-background: var(--color-on-subtle-dialog-background);
+  --color-on-subtle-dialog-border: var(--color-on-subtle-dialog-border);
+  --color-on-subtle-dialog-divider: var(--color-on-subtle-dialog-divider);
   --color-on-inverse-brand-primary: var(--color-on-inverse-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-on-inverse-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-on-inverse-brand-tertiary);
@@ -1269,6 +1277,7 @@
   --color-on-inverse-background-inverse: var(--color-on-inverse-background-inverse);
   --color-on-inverse-background-overlay: var(--color-on-inverse-background-overlay);
   --color-on-inverse-background-brand-primary: var(--color-on-inverse-background-brand-primary);
+  --color-on-inverse-background-tint: var(--color-on-inverse-background-tint);
   --color-on-inverse-text-primary: var(--color-on-inverse-text-primary);
   --color-on-inverse-text-secondary: var(--color-on-inverse-text-secondary);
   --color-on-inverse-text-muted: var(--color-on-inverse-text-muted);
@@ -1983,6 +1992,9 @@
   --color-on-inverse-pagination-item-selected-background: var(--color-on-inverse-pagination-item-selected-background);
   --color-on-inverse-pagination-item-selected-foreground: var(--color-on-inverse-pagination-item-selected-foreground);
   --color-on-inverse-pagination-ellipsis-foreground: var(--color-on-inverse-pagination-ellipsis-foreground);
+  --color-on-inverse-dialog-background: var(--color-on-inverse-dialog-background);
+  --color-on-inverse-dialog-border: var(--color-on-inverse-dialog-border);
+  --color-on-inverse-dialog-divider: var(--color-on-inverse-dialog-divider);
   --color-on-brand-primary-brand-primary: var(--color-on-brand-primary-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-on-brand-primary-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-on-brand-primary-brand-tertiary);
@@ -1992,6 +2004,7 @@
   --color-on-brand-primary-background-inverse: var(--color-on-brand-primary-background-inverse);
   --color-on-brand-primary-background-overlay: var(--color-on-brand-primary-background-overlay);
   --color-on-brand-primary-background-brand-primary: var(--color-on-brand-primary-background-brand-primary);
+  --color-on-brand-primary-background-tint: var(--color-on-brand-primary-background-tint);
   --color-on-brand-primary-text-primary: var(--color-on-brand-primary-text-primary);
   --color-on-brand-primary-text-secondary: var(--color-on-brand-primary-text-secondary);
   --color-on-brand-primary-text-muted: var(--color-on-brand-primary-text-muted);
@@ -2706,6 +2719,9 @@
   --color-on-brand-primary-pagination-item-selected-background: var(--color-on-brand-primary-pagination-item-selected-background);
   --color-on-brand-primary-pagination-item-selected-foreground: var(--color-on-brand-primary-pagination-item-selected-foreground);
   --color-on-brand-primary-pagination-ellipsis-foreground: var(--color-on-brand-primary-pagination-ellipsis-foreground);
+  --color-on-brand-primary-dialog-background: var(--color-on-brand-primary-dialog-background);
+  --color-on-brand-primary-dialog-border: var(--color-on-brand-primary-dialog-border);
+  --color-on-brand-primary-dialog-divider: var(--color-on-brand-primary-dialog-divider);
   --color-selection-background: var(--color-selection-background);
   --color-selection-text: var(--color-selection-text);
   --color-badge-neutral-solid-background: var(--color-badge-neutral-solid-background);
@@ -3101,4 +3117,7 @@
   --color-pagination-item-selected-background: var(--color-pagination-item-selected-background);
   --color-pagination-item-selected-foreground: var(--color-pagination-item-selected-foreground);
   --color-pagination-ellipsis-foreground: var(--color-pagination-ellipsis-foreground);
+  --color-dialog-background: var(--color-dialog-background);
+  --color-dialog-border: var(--color-dialog-border);
+  --color-dialog-divider: var(--color-dialog-divider);
 }

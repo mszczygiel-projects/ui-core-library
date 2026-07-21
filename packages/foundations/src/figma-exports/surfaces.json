@@ -85,6 +85,15 @@
           "Primary": "{Themes.color.on-brand-primary.background.brand-primary}"
         },
         "$type": "color"
+      },
+      "tint": {
+        "$value": {
+          "Default": "{Themes.color.background.tint}",
+          "Subtle": "{Themes.color.on-subtle.background.tint}",
+          "Inverse": "{Themes.color.on-inverse.background.tint}",
+          "Primary": "{Themes.color.on-brand-primary.background.tint}"
+        },
+        "$type": "color"
       }
     },
     "text": {
@@ -6915,6 +6924,35 @@
           },
           "$type": "color"
         }
+      }
+    },
+    "dialog": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.dialog.background}",
+          "Subtle": "{Themes.color.on-subtle.dialog.background}",
+          "Inverse": "{Themes.color.on-inverse.dialog.background}",
+          "Primary": "{Themes.color.on-brand-primary.dialog.background}"
+        },
+        "$type": "color"
+      },
+      "border": {
+        "$value": {
+          "Default": "{Themes.color.dialog.border}",
+          "Subtle": "{Themes.color.on-subtle.dialog.border}",
+          "Inverse": "{Themes.color.on-inverse.dialog.border}",
+          "Primary": "{Themes.color.on-brand-primary.dialog.border}"
+        },
+        "$type": "color"
+      },
+      "divider": {
+        "$value": {
+          "Default": "{Themes.color.dialog.divider}",
+          "Subtle": "{Themes.color.on-subtle.dialog.divider}",
+          "Inverse": "{Themes.color.on-inverse.dialog.divider}",
+          "Primary": "{Themes.color.on-brand-primary.dialog.divider}"
+        },
+        "$type": "color"
       }
     }
   }

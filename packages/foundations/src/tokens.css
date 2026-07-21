@@ -37,6 +37,9 @@
   --size-20: 5rem;
   --size-24: 6rem;
   --size-32: 8rem;
+  --size-100: 25rem;
+  --size-140: 35rem;
+  --size-200: 50rem;
   --radius-none: 0;
   --radius-xs: 0.125rem;
   --radius-sm: 0.25rem;
@@ -253,8 +256,9 @@
   --color-background-sunken: var(--color-gray-100);
   --color-background-subtle: var(--color-gray-200);
   --color-background-inverse: var(--color-gray-900);
-  --color-background-overlay: var(--color-black-100);
+  --color-background-overlay: var(--color-black-400);
   --color-background-brand-primary: var(--color-brand-primary);
+  --color-background-tint: var(--color-black-100);
   --color-text-primary: var(--color-gray-1000);
   --color-text-secondary: var(--color-gray-700);
   --color-text-muted: var(--color-gray-500);
@@ -585,6 +589,7 @@
   --color-on-subtle-background-inverse: var(--color-background-inverse);
   --color-on-subtle-background-overlay: var(--color-background-overlay);
   --color-on-subtle-background-brand-primary: var(--color-background-brand-primary);
+  --color-on-subtle-background-tint: var(--color-black-100);
   --color-on-subtle-text-primary: var(--color-text-primary);
   --color-on-subtle-text-secondary: var(--color-text-secondary);
   --color-on-subtle-text-muted: var(--color-text-muted);
@@ -1267,9 +1272,9 @@
   --color-on-subtle-chip-info-outline-border-selected: var(--color-on-subtle-chip-info-solid-background-default);
   --color-on-subtle-chip-info-outline-border-disabled: var(--color-border-default);
   --color-on-subtle-chip-dismiss-background-default: var(--color-transparent);
-  --color-on-subtle-chip-dismiss-background-hover: var(--color-on-subtle-background-overlay);
+  --color-on-subtle-chip-dismiss-background-hover: var(--color-on-subtle-background-tint);
   --color-on-subtle-chip-dismiss-background-focus: var(--color-transparent);
-  --color-on-subtle-chip-dismiss-background-active: var(--color-on-subtle-background-overlay);
+  --color-on-subtle-chip-dismiss-background-active: var(--color-on-subtle-background-tint);
   --color-on-subtle-popover-background: var(--color-on-subtle-background-default);
   --color-on-subtle-popover-border: var(--color-on-subtle-border-default);
   --color-on-subtle-calendar-day-background-default: var(--color-on-subtle-control-outline-background-default);
@@ -1299,6 +1304,9 @@
   --color-on-subtle-pagination-item-selected-background: var(--color-on-subtle-action-primary-base-default);
   --color-on-subtle-pagination-item-selected-foreground: var(--color-on-subtle-action-primary-on-base-default);
   --color-on-subtle-pagination-ellipsis-foreground: var(--color-on-subtle-text-muted);
+  --color-on-subtle-dialog-background: var(--color-on-subtle-background-default);
+  --color-on-subtle-dialog-border: var(--color-on-subtle-border-default);
+  --color-on-subtle-dialog-divider: var(--color-on-subtle-border-default);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -1308,12 +1316,13 @@
   --color-on-inverse-background-inverse: var(--color-background-default);
   --color-on-inverse-background-overlay: var(--color-background-overlay);
   --color-on-inverse-background-brand-primary: var(--color-background-brand-primary);
+  --color-on-inverse-background-tint: var(--color-white-100);
   --color-on-inverse-text-primary: var(--color-white-1000);
   --color-on-inverse-text-secondary: var(--color-gray-100);
   --color-on-inverse-text-muted: var(--color-gray-300);
   --color-on-inverse-text-brand: var(--color-brand-primary-200);
   --color-on-inverse-icon-default: var(--color-brand-primary-200);
-  --color-on-inverse-border-default: var(--color-gray-50);
+  --color-on-inverse-border-default: var(--color-gray-700);
   --color-on-inverse-ring-default: var(--color-ring-default);
   --color-on-inverse-link-default: var(--color-brand-primary-200);
   --color-on-inverse-link-hover: var(--color-brand-primary-300);
@@ -1323,7 +1332,7 @@
   --color-on-inverse-control-outline-background-success: var(--color-control-outline-background-success);
   --color-on-inverse-control-outline-background-error: var(--color-control-outline-background-error);
   --color-on-inverse-control-outline-background-disabled: var(--color-control-outline-background-disabled);
-  --color-on-inverse-control-outline-border-default: var(--color-on-inverse-border-default);
+  --color-on-inverse-control-outline-border-default: var(--color-gray-500);
   --color-on-inverse-control-outline-border-hover: var(--color-gray-200);
   --color-on-inverse-control-outline-border-active: var(--color-gray-200);
   --color-on-inverse-control-outline-border-success: var(--color-control-outline-border-success);
@@ -1990,9 +1999,9 @@
   --color-on-inverse-chip-info-outline-border-selected: var(--color-on-inverse-chip-info-solid-background-default);
   --color-on-inverse-chip-info-outline-border-disabled: var(--color-border-default);
   --color-on-inverse-chip-dismiss-background-default: var(--color-transparent);
-  --color-on-inverse-chip-dismiss-background-hover: var(--color-on-inverse-background-overlay);
+  --color-on-inverse-chip-dismiss-background-hover: var(--color-on-inverse-background-tint);
   --color-on-inverse-chip-dismiss-background-focus: var(--color-transparent);
-  --color-on-inverse-chip-dismiss-background-active: var(--color-on-inverse-background-overlay);
+  --color-on-inverse-chip-dismiss-background-active: var(--color-on-inverse-background-tint);
   --color-on-inverse-popover-background: var(--color-on-inverse-background-default);
   --color-on-inverse-popover-border: var(--color-on-inverse-border-default);
   --color-on-inverse-calendar-day-background-default: var(--color-on-inverse-control-outline-background-default);
@@ -2022,6 +2031,9 @@
   --color-on-inverse-pagination-item-selected-background: var(--color-on-inverse-action-primary-base-default);
   --color-on-inverse-pagination-item-selected-foreground: var(--color-on-inverse-action-primary-on-base-default);
   --color-on-inverse-pagination-ellipsis-foreground: var(--color-on-inverse-text-muted);
+  --color-on-inverse-dialog-background: var(--color-on-inverse-background-default);
+  --color-on-inverse-dialog-border: var(--color-on-inverse-border-default);
+  --color-on-inverse-dialog-divider: var(--color-on-inverse-border-default);
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -2031,12 +2043,13 @@
   --color-on-brand-primary-background-inverse: var(--color-background-inverse);
   --color-on-brand-primary-background-overlay: var(--color-background-overlay);
   --color-on-brand-primary-background-brand-primary: var(--color-background-brand-primary);
+  --color-on-brand-primary-background-tint: var(--color-white-100);
   --color-on-brand-primary-text-primary: var(--color-white-1000);
   --color-on-brand-primary-text-secondary: var(--color-gray-50);
   --color-on-brand-primary-text-muted: var(--color-text-muted);
   --color-on-brand-primary-text-brand: var(--color-white-1000);
   --color-on-brand-primary-icon-default: var(--color-white-1000);
-  --color-on-brand-primary-border-default: var(--color-border-default);
+  --color-on-brand-primary-border-default: var(--color-white-300);
   --color-on-brand-primary-ring-default: var(--color-brand-secondary);
   --color-on-brand-primary-link-default: var(--color-brand-secondary-100);
   --color-on-brand-primary-link-hover: var(--color-brand-secondary-100);
@@ -2713,9 +2726,9 @@
   --color-on-brand-primary-chip-info-outline-border-selected: var(--color-on-brand-primary-chip-info-solid-background-default);
   --color-on-brand-primary-chip-info-outline-border-disabled: var(--color-border-default);
   --color-on-brand-primary-chip-dismiss-background-default: var(--color-transparent);
-  --color-on-brand-primary-chip-dismiss-background-hover: var(--color-on-brand-primary-background-overlay);
+  --color-on-brand-primary-chip-dismiss-background-hover: var(--color-on-brand-primary-background-tint);
   --color-on-brand-primary-chip-dismiss-background-focus: var(--color-transparent);
-  --color-on-brand-primary-chip-dismiss-background-active: var(--color-on-brand-primary-background-overlay);
+  --color-on-brand-primary-chip-dismiss-background-active: var(--color-on-brand-primary-background-tint);
   --color-on-brand-primary-popover-background: var(--color-on-brand-primary-background-default);
   --color-on-brand-primary-popover-border: var(--color-on-brand-primary-border-default);
   --color-on-brand-primary-calendar-day-background-default: var(--color-on-brand-primary-control-outline-background-default);
@@ -2745,6 +2758,9 @@
   --color-on-brand-primary-pagination-item-selected-background: var(--color-on-brand-primary-action-primary-base-default);
   --color-on-brand-primary-pagination-item-selected-foreground: var(--color-on-brand-primary-action-primary-on-base-default);
   --color-on-brand-primary-pagination-ellipsis-foreground: var(--color-on-brand-primary-text-muted);
+  --color-on-brand-primary-dialog-background: var(--color-on-brand-primary-background-default);
+  --color-on-brand-primary-dialog-border: var(--color-on-brand-primary-border-default);
+  --color-on-brand-primary-dialog-divider: var(--color-on-brand-primary-border-default);
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
   --color-badge-neutral-solid-background: var(--color-gray-800);
@@ -3108,9 +3124,9 @@
   --color-chip-info-outline-border-selected: var(--color-chip-info-solid-background-default);
   --color-chip-info-outline-border-disabled: var(--color-border-default);
   --color-chip-dismiss-background-default: var(--color-transparent);
-  --color-chip-dismiss-background-hover: var(--color-background-overlay);
+  --color-chip-dismiss-background-hover: var(--color-background-tint);
   --color-chip-dismiss-background-focus: var(--color-transparent);
-  --color-chip-dismiss-background-active: var(--color-background-overlay);
+  --color-chip-dismiss-background-active: var(--color-background-tint);
   --color-popover-background: var(--color-background-default);
   --color-popover-border: var(--color-border-default);
   --color-calendar-day-background-default: var(--color-control-outline-background-default);
@@ -3140,6 +3156,9 @@
   --color-pagination-item-selected-background: var(--color-action-primary-base-default);
   --color-pagination-item-selected-foreground: var(--color-action-primary-on-base-default);
   --color-pagination-ellipsis-foreground: var(--color-text-muted);
+  --color-dialog-background: var(--color-background-default);
+  --color-dialog-border: var(--color-border-default);
+  --color-dialog-divider: var(--color-border-default);
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
@@ -3175,11 +3194,13 @@
     --color-background-subtle: var(--color-gray-700);
     --color-background-inverse: var(--color-white-1000);
     --color-background-brand-primary: var(--color-brand-primary);
+    --color-background-tint: var(--color-white-100);
     --color-text-primary: var(--color-gray-50);
     --color-text-secondary: var(--color-gray-200);
     --color-text-muted: var(--color-gray-300);
     --color-text-brand: var(--color-brand-primary);
     --color-icon-default: var(--color-gray-50);
+    --color-border-default: var(--color-gray-700);
     --color-ring-default: var(--color-white-1000);
     --color-link-default: var(--color-action-secondary-base-default);
     --color-link-hover: var(--color-action-secondary-base-hover);
@@ -3325,6 +3346,7 @@
     --color-radio-checked-border-success: var(--color-feedback-success-base);
     --color-radio-checked-border-error: var(--color-feedback-error-base);
     --color-select-dropdown-background: var(--color-background-default);
+    --color-select-dropdown-border: var(--color-border-default);
     --color-select-option-background-hover: var(--color-background-subtle);
     --color-select-option-background-active: var(--color-action-primary-base-default);
     --color-select-option-text-default: var(--color-text-primary);
@@ -3340,11 +3362,13 @@
     --color-on-subtle-background-subtle: var(--color-background-subtle);
     --color-on-subtle-background-inverse: var(--color-background-inverse);
     --color-on-subtle-background-brand-primary: var(--color-background-brand-primary);
+    --color-on-subtle-background-tint: var(--color-white-100);
     --color-on-subtle-text-primary: var(--color-text-primary);
     --color-on-subtle-text-secondary: var(--color-text-secondary);
     --color-on-subtle-text-muted: var(--color-text-muted);
     --color-on-subtle-text-brand: var(--color-text-brand);
     --color-on-subtle-icon-default: var(--color-icon-default);
+    --color-on-subtle-border-default: var(--color-border-default);
     --color-on-subtle-ring-default: var(--color-ring-default);
     --color-on-subtle-link-default: var(--color-link-default);
     --color-on-subtle-link-hover: var(--color-link-hover);
@@ -3478,6 +3502,7 @@
     --color-on-subtle-radio-checked-border-success: var(--color-radio-checked-border-success);
     --color-on-subtle-radio-checked-border-error: var(--color-radio-checked-border-error);
     --color-on-subtle-select-dropdown-background: var(--color-on-subtle-background-default);
+    --color-on-subtle-select-dropdown-border: var(--color-on-subtle-border-default);
     --color-on-subtle-select-option-background-hover: var(--color-on-subtle-background-subtle);
     --color-on-subtle-select-option-background-active: var(--color-on-subtle-action-primary-base-default);
     --color-on-subtle-select-option-text-default: var(--color-on-subtle-text-primary);
@@ -3541,6 +3566,7 @@
     --color-on-subtle-chip-neutral-outline-text-active: var(--color-on-subtle-text-secondary);
     --color-on-subtle-chip-neutral-outline-text-disabled: var(--color-on-subtle-text-muted);
     --color-on-subtle-chip-neutral-outline-border-selected: var(--color-on-subtle-chip-neutral-solid-background-default);
+    --color-on-subtle-chip-neutral-outline-border-disabled: var(--color-border-default);
     --color-on-subtle-chip-brand-solid-background-default: var(--color-on-subtle-brand-primary);
     --color-on-subtle-chip-brand-solid-background-focus: var(--color-on-subtle-brand-primary);
     --color-on-subtle-chip-brand-solid-background-disabled: var(--color-on-subtle-background-subtle);
@@ -3564,6 +3590,7 @@
     --color-on-subtle-chip-brand-outline-border-focus: var(--color-on-subtle-brand-primary);
     --color-on-subtle-chip-brand-outline-border-active: var(--color-on-subtle-brand-primary);
     --color-on-subtle-chip-brand-outline-border-selected: var(--color-on-subtle-chip-brand-solid-background-default);
+    --color-on-subtle-chip-brand-outline-border-disabled: var(--color-border-default);
     --color-on-subtle-chip-success-solid-background-default: var(--color-on-subtle-feedback-success-base);
     --color-on-subtle-chip-success-solid-background-focus: var(--color-on-subtle-feedback-success-base);
     --color-on-subtle-chip-success-solid-background-disabled: var(--color-on-subtle-background-subtle);
@@ -3587,6 +3614,7 @@
     --color-on-subtle-chip-success-outline-border-focus: var(--color-on-subtle-feedback-success-base);
     --color-on-subtle-chip-success-outline-border-active: var(--color-on-subtle-feedback-success-base);
     --color-on-subtle-chip-success-outline-border-selected: var(--color-on-subtle-chip-success-solid-background-default);
+    --color-on-subtle-chip-success-outline-border-disabled: var(--color-border-default);
     --color-on-subtle-chip-warning-solid-background-default: var(--color-on-subtle-feedback-warning-base);
     --color-on-subtle-chip-warning-solid-background-focus: var(--color-on-subtle-feedback-warning-base);
     --color-on-subtle-chip-warning-solid-background-disabled: var(--color-on-subtle-background-subtle);
@@ -3610,6 +3638,7 @@
     --color-on-subtle-chip-warning-outline-border-focus: var(--color-on-subtle-feedback-warning-base);
     --color-on-subtle-chip-warning-outline-border-active: var(--color-on-subtle-feedback-warning-base);
     --color-on-subtle-chip-warning-outline-border-selected: var(--color-on-subtle-chip-warning-solid-background-default);
+    --color-on-subtle-chip-warning-outline-border-disabled: var(--color-border-default);
     --color-on-subtle-chip-error-solid-background-default: var(--color-on-subtle-feedback-error-base);
     --color-on-subtle-chip-error-solid-background-focus: var(--color-on-subtle-feedback-error-base);
     --color-on-subtle-chip-error-solid-background-disabled: var(--color-on-subtle-background-subtle);
@@ -3633,6 +3662,7 @@
     --color-on-subtle-chip-error-outline-border-focus: var(--color-on-subtle-feedback-error-base);
     --color-on-subtle-chip-error-outline-border-active: var(--color-on-subtle-feedback-error-base);
     --color-on-subtle-chip-error-outline-border-selected: var(--color-on-subtle-chip-error-solid-background-default);
+    --color-on-subtle-chip-error-outline-border-disabled: var(--color-border-default);
     --color-on-subtle-chip-info-solid-background-default: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-solid-background-focus: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-solid-background-disabled: var(--color-on-subtle-background-subtle);
@@ -3656,7 +3686,11 @@
     --color-on-subtle-chip-info-outline-border-focus: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-outline-border-active: var(--color-on-subtle-feedback-info-base);
     --color-on-subtle-chip-info-outline-border-selected: var(--color-on-subtle-chip-info-solid-background-default);
+    --color-on-subtle-chip-info-outline-border-disabled: var(--color-border-default);
+    --color-on-subtle-chip-dismiss-background-hover: var(--color-on-subtle-background-tint);
+    --color-on-subtle-chip-dismiss-background-active: var(--color-on-subtle-background-tint);
     --color-on-subtle-popover-background: var(--color-on-subtle-background-default);
+    --color-on-subtle-popover-border: var(--color-on-subtle-border-default);
     --color-on-subtle-calendar-day-background-hover: var(--color-on-subtle-background-subtle);
     --color-on-subtle-calendar-day-background-selected: var(--color-on-subtle-action-primary-base-default);
     --color-on-subtle-calendar-day-text-default: var(--color-on-subtle-text-primary);
@@ -3675,19 +3709,25 @@
     --color-on-subtle-pagination-item-border-active: var(--color-on-subtle-pagination-item-background-active);
     --color-on-subtle-pagination-item-selected-background: var(--color-on-subtle-action-primary-base-default);
     --color-on-subtle-pagination-ellipsis-foreground: var(--color-on-subtle-text-muted);
+    --color-on-subtle-dialog-background: var(--color-on-subtle-background-default);
+    --color-on-subtle-dialog-border: var(--color-on-subtle-border-default);
+    --color-on-subtle-dialog-divider: var(--color-on-subtle-border-default);
     --color-on-inverse-brand-primary: var(--color-brand-primary);
     --color-on-inverse-background-default: var(--color-background-inverse);
     --color-on-inverse-background-inverse: var(--color-background-default);
     --color-on-inverse-background-brand-primary: var(--color-background-brand-primary);
+    --color-on-inverse-background-tint: var(--color-black-100);
     --color-on-inverse-text-primary: var(--color-gray-1000);
     --color-on-inverse-text-secondary: var(--color-gray-800);
     --color-on-inverse-text-muted: var(--color-gray-500);
     --color-on-inverse-text-brand: var(--color-text-brand);
     --color-on-inverse-icon-default: var(--color-brand-primary-500);
+    --color-on-inverse-border-default: var(--color-gray-200);
     --color-on-inverse-ring-default: var(--color-ring-default);
     --color-on-inverse-link-default: var(--color-link-default);
     --color-on-inverse-link-hover: var(--color-link-hover);
     --color-on-inverse-control-outline-background-disabled: var(--color-control-outline-background-disabled);
+    --color-on-inverse-control-outline-border-default: var(--color-gray-600);
     --color-on-inverse-control-outline-border-success: var(--color-control-outline-border-success);
     --color-on-inverse-control-outline-border-error: var(--color-control-outline-border-error);
     --color-on-inverse-control-outline-text-default: var(--color-on-inverse-text-primary);
@@ -3781,6 +3821,7 @@
     --color-on-inverse-radio-checked-border-success: var(--color-radio-checked-border-success);
     --color-on-inverse-radio-checked-border-error: var(--color-radio-checked-border-error);
     --color-on-inverse-select-dropdown-background: var(--color-on-inverse-background-default);
+    --color-on-inverse-select-dropdown-border: var(--color-on-inverse-border-default);
     --color-on-inverse-select-option-text-default: var(--color-on-inverse-text-primary);
     --color-on-inverse-select-option-text-hover: var(--color-on-inverse-text-primary);
     --color-on-inverse-select-option-text-active: var(--color-on-inverse-action-primary-on-base-default);
@@ -3827,6 +3868,7 @@
     --color-on-inverse-chip-neutral-outline-text-active: var(--color-on-inverse-text-secondary);
     --color-on-inverse-chip-neutral-outline-text-disabled: var(--color-on-inverse-text-muted);
     --color-on-inverse-chip-neutral-outline-border-selected: var(--color-on-inverse-chip-neutral-solid-background-default);
+    --color-on-inverse-chip-neutral-outline-border-disabled: var(--color-border-default);
     --color-on-inverse-chip-brand-solid-background-default: var(--color-on-inverse-brand-primary);
     --color-on-inverse-chip-brand-solid-background-focus: var(--color-on-inverse-brand-primary);
     --color-on-inverse-chip-brand-solid-text-disabled: var(--color-on-inverse-text-muted);
@@ -3846,6 +3888,7 @@
     --color-on-inverse-chip-brand-outline-border-focus: var(--color-on-inverse-brand-primary);
     --color-on-inverse-chip-brand-outline-border-active: var(--color-on-inverse-brand-primary);
     --color-on-inverse-chip-brand-outline-border-selected: var(--color-on-inverse-chip-brand-solid-background-default);
+    --color-on-inverse-chip-brand-outline-border-disabled: var(--color-border-default);
     --color-on-inverse-chip-success-solid-background-default: var(--color-on-inverse-feedback-success-base);
     --color-on-inverse-chip-success-solid-background-focus: var(--color-on-inverse-feedback-success-base);
     --color-on-inverse-chip-success-solid-text-disabled: var(--color-on-inverse-text-muted);
@@ -3865,6 +3908,7 @@
     --color-on-inverse-chip-success-outline-border-focus: var(--color-on-inverse-feedback-success-base);
     --color-on-inverse-chip-success-outline-border-active: var(--color-on-inverse-feedback-success-base);
     --color-on-inverse-chip-success-outline-border-selected: var(--color-on-inverse-chip-success-solid-background-default);
+    --color-on-inverse-chip-success-outline-border-disabled: var(--color-border-default);
     --color-on-inverse-chip-warning-solid-background-default: var(--color-on-inverse-feedback-warning-base);
     --color-on-inverse-chip-warning-solid-background-focus: var(--color-on-inverse-feedback-warning-base);
     --color-on-inverse-chip-warning-solid-text-disabled: var(--color-on-inverse-text-muted);
@@ -3884,6 +3928,7 @@
     --color-on-inverse-chip-warning-outline-border-focus: var(--color-on-inverse-feedback-warning-base);
     --color-on-inverse-chip-warning-outline-border-active: var(--color-on-inverse-feedback-warning-base);
     --color-on-inverse-chip-warning-outline-border-selected: var(--color-on-inverse-chip-warning-solid-background-default);
+    --color-on-inverse-chip-warning-outline-border-disabled: var(--color-border-default);
     --color-on-inverse-chip-error-solid-background-default: var(--color-on-inverse-feedback-error-base);
     --color-on-inverse-chip-error-solid-background-focus: var(--color-on-inverse-feedback-error-base);
     --color-on-inverse-chip-error-solid-text-disabled: var(--color-on-inverse-text-muted);
@@ -3903,6 +3948,7 @@
     --color-on-inverse-chip-error-outline-border-focus: var(--color-on-inverse-feedback-error-base);
     --color-on-inverse-chip-error-outline-border-active: var(--color-on-inverse-feedback-error-base);
     --color-on-inverse-chip-error-outline-border-selected: var(--color-on-inverse-chip-error-solid-background-default);
+    --color-on-inverse-chip-error-outline-border-disabled: var(--color-border-default);
     --color-on-inverse-chip-info-solid-background-default: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-solid-background-focus: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-solid-text-disabled: var(--color-on-inverse-text-muted);
@@ -3922,7 +3968,11 @@
     --color-on-inverse-chip-info-outline-border-focus: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-outline-border-active: var(--color-on-inverse-feedback-info-base);
     --color-on-inverse-chip-info-outline-border-selected: var(--color-on-inverse-chip-info-solid-background-default);
+    --color-on-inverse-chip-info-outline-border-disabled: var(--color-border-default);
+    --color-on-inverse-chip-dismiss-background-hover: var(--color-on-inverse-background-tint);
+    --color-on-inverse-chip-dismiss-background-active: var(--color-on-inverse-background-tint);
     --color-on-inverse-popover-background: var(--color-on-inverse-background-default);
+    --color-on-inverse-popover-border: var(--color-on-inverse-border-default);
     --color-on-inverse-calendar-day-text-default: var(--color-on-inverse-text-primary);
     --color-on-inverse-calendar-day-text-selected: var(--color-on-inverse-action-primary-on-base-default);
     --color-on-inverse-calendar-day-text-disabled: var(--color-on-inverse-text-muted);
@@ -3935,6 +3985,9 @@
     --color-on-inverse-pagination-item-foreground-disabled: var(--color-on-inverse-text-muted);
     --color-on-inverse-pagination-item-selected-foreground: var(--color-on-inverse-action-primary-on-base-default);
     --color-on-inverse-pagination-ellipsis-foreground: var(--color-on-inverse-text-muted);
+    --color-on-inverse-dialog-background: var(--color-on-inverse-background-default);
+    --color-on-inverse-dialog-border: var(--color-on-inverse-border-default);
+    --color-on-inverse-dialog-divider: var(--color-on-inverse-border-default);
     --color-on-brand-primary-brand-primary: var(--color-brand-primary);
     --color-on-brand-primary-background-default: var(--color-brand-primary-600);
     --color-on-brand-primary-background-sunken: var(--color-background-sunken);
@@ -4118,6 +4171,7 @@
     --color-on-brand-primary-chip-neutral-outline-background-selected: var(--color-on-brand-primary-chip-neutral-solid-background-default);
     --color-on-brand-primary-chip-neutral-outline-text-disabled: var(--color-on-brand-primary-text-muted);
     --color-on-brand-primary-chip-neutral-outline-border-selected: var(--color-on-brand-primary-chip-neutral-solid-background-default);
+    --color-on-brand-primary-chip-neutral-outline-border-disabled: var(--color-border-default);
     --color-on-brand-primary-chip-brand-solid-background-default: var(--color-on-brand-primary-brand-primary);
     --color-on-brand-primary-chip-brand-solid-background-focus: var(--color-on-brand-primary-brand-primary);
     --color-on-brand-primary-chip-brand-solid-background-disabled: var(--color-on-brand-primary-background-subtle);
@@ -4137,6 +4191,7 @@
     --color-on-brand-primary-chip-brand-outline-border-focus: var(--color-on-brand-primary-brand-primary);
     --color-on-brand-primary-chip-brand-outline-border-active: var(--color-on-brand-primary-brand-primary);
     --color-on-brand-primary-chip-brand-outline-border-selected: var(--color-on-brand-primary-chip-brand-solid-background-default);
+    --color-on-brand-primary-chip-brand-outline-border-disabled: var(--color-border-default);
     --color-on-brand-primary-chip-success-solid-background-default: var(--color-on-brand-primary-feedback-success-base);
     --color-on-brand-primary-chip-success-solid-background-focus: var(--color-on-brand-primary-feedback-success-base);
     --color-on-brand-primary-chip-success-solid-background-disabled: var(--color-on-brand-primary-background-subtle);
@@ -4156,6 +4211,7 @@
     --color-on-brand-primary-chip-success-outline-border-focus: var(--color-on-brand-primary-feedback-success-base);
     --color-on-brand-primary-chip-success-outline-border-active: var(--color-on-brand-primary-feedback-success-base);
     --color-on-brand-primary-chip-success-outline-border-selected: var(--color-on-brand-primary-chip-success-solid-background-default);
+    --color-on-brand-primary-chip-success-outline-border-disabled: var(--color-border-default);
     --color-on-brand-primary-chip-warning-solid-background-default: var(--color-on-brand-primary-feedback-warning-base);
     --color-on-brand-primary-chip-warning-solid-background-focus: var(--color-on-brand-primary-feedback-warning-base);
     --color-on-brand-primary-chip-warning-solid-background-disabled: var(--color-on-brand-primary-background-subtle);
@@ -4175,6 +4231,7 @@
     --color-on-brand-primary-chip-warning-outline-border-focus: var(--color-on-brand-primary-feedback-warning-base);
     --color-on-brand-primary-chip-warning-outline-border-active: var(--color-on-brand-primary-feedback-warning-base);
     --color-on-brand-primary-chip-warning-outline-border-selected: var(--color-on-brand-primary-chip-warning-solid-background-default);
+    --color-on-brand-primary-chip-warning-outline-border-disabled: var(--color-border-default);
     --color-on-brand-primary-chip-error-solid-background-default: var(--color-on-brand-primary-feedback-error-base);
     --color-on-brand-primary-chip-error-solid-background-focus: var(--color-on-brand-primary-feedback-error-base);
     --color-on-brand-primary-chip-error-solid-background-disabled: var(--color-on-brand-primary-background-subtle);
@@ -4194,6 +4251,7 @@
     --color-on-brand-primary-chip-error-outline-border-focus: var(--color-on-brand-primary-feedback-error-base);
     --color-on-brand-primary-chip-error-outline-border-active: var(--color-on-brand-primary-feedback-error-base);
     --color-on-brand-primary-chip-error-outline-border-selected: var(--color-on-brand-primary-chip-error-solid-background-default);
+    --color-on-brand-primary-chip-error-outline-border-disabled: var(--color-border-default);
     --color-on-brand-primary-chip-info-solid-background-default: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-solid-background-focus: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-solid-background-disabled: var(--color-on-brand-primary-background-subtle);
@@ -4213,6 +4271,7 @@
     --color-on-brand-primary-chip-info-outline-border-focus: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-outline-border-active: var(--color-on-brand-primary-feedback-info-base);
     --color-on-brand-primary-chip-info-outline-border-selected: var(--color-on-brand-primary-chip-info-solid-background-default);
+    --color-on-brand-primary-chip-info-outline-border-disabled: var(--color-border-default);
     --color-on-brand-primary-popover-background: var(--color-on-brand-primary-background-default);
     --color-on-brand-primary-calendar-day-background-hover: var(--color-on-brand-primary-background-subtle);
     --color-on-brand-primary-calendar-day-text-selected: var(--color-on-brand-primary-action-primary-on-base-default);
@@ -4225,6 +4284,7 @@
     --color-on-brand-primary-pagination-item-border-active: var(--color-on-brand-primary-pagination-item-background-active);
     --color-on-brand-primary-pagination-item-selected-foreground: var(--color-on-brand-primary-action-primary-on-base-default);
     --color-on-brand-primary-pagination-ellipsis-foreground: var(--color-on-brand-primary-text-muted);
+    --color-on-brand-primary-dialog-background: var(--color-on-brand-primary-background-default);
     --color-selection-background: var(--color-button-primary-background-default);
     --color-badge-neutral-solid-background: var(--color-gray-700);
     --color-badge-neutral-solid-border: var(--color-badge-neutral-solid-background);
@@ -4280,6 +4340,7 @@
     --color-chip-neutral-outline-text-active: var(--color-text-secondary);
     --color-chip-neutral-outline-text-disabled: var(--color-text-muted);
     --color-chip-neutral-outline-border-selected: var(--color-chip-neutral-solid-background-default);
+    --color-chip-neutral-outline-border-disabled: var(--color-border-default);
     --color-chip-brand-solid-background-default: var(--color-brand-primary);
     --color-chip-brand-solid-background-focus: var(--color-brand-primary);
     --color-chip-brand-solid-background-disabled: var(--color-background-subtle);
@@ -4303,6 +4364,7 @@
     --color-chip-brand-outline-border-focus: var(--color-brand-primary);
     --color-chip-brand-outline-border-active: var(--color-brand-primary);
     --color-chip-brand-outline-border-selected: var(--color-chip-brand-solid-background-default);
+    --color-chip-brand-outline-border-disabled: var(--color-border-default);
     --color-chip-success-solid-background-default: var(--color-feedback-success-base);
     --color-chip-success-solid-background-focus: var(--color-feedback-success-base);
     --color-chip-success-solid-background-disabled: var(--color-background-subtle);
@@ -4326,6 +4388,7 @@
     --color-chip-success-outline-border-focus: var(--color-feedback-success-base);
     --color-chip-success-outline-border-active: var(--color-feedback-success-base);
     --color-chip-success-outline-border-selected: var(--color-chip-success-solid-background-default);
+    --color-chip-success-outline-border-disabled: var(--color-border-default);
     --color-chip-warning-solid-background-default: var(--color-feedback-warning-base);
     --color-chip-warning-solid-background-focus: var(--color-feedback-warning-base);
     --color-chip-warning-solid-background-disabled: var(--color-background-subtle);
@@ -4349,6 +4412,7 @@
     --color-chip-warning-outline-border-focus: var(--color-feedback-warning-base);
     --color-chip-warning-outline-border-active: var(--color-feedback-warning-base);
     --color-chip-warning-outline-border-selected: var(--color-chip-warning-solid-background-default);
+    --color-chip-warning-outline-border-disabled: var(--color-border-default);
     --color-chip-error-solid-background-default: var(--color-feedback-error-base);
     --color-chip-error-solid-background-focus: var(--color-feedback-error-base);
     --color-chip-error-solid-background-disabled: var(--color-background-subtle);
@@ -4372,6 +4436,7 @@
     --color-chip-error-outline-border-focus: var(--color-feedback-error-base);
     --color-chip-error-outline-border-active: var(--color-feedback-error-base);
     --color-chip-error-outline-border-selected: var(--color-chip-error-solid-background-default);
+    --color-chip-error-outline-border-disabled: var(--color-border-default);
     --color-chip-info-solid-background-default: var(--color-feedback-info-base);
     --color-chip-info-solid-background-focus: var(--color-feedback-info-base);
     --color-chip-info-solid-background-disabled: var(--color-background-subtle);
@@ -4395,7 +4460,11 @@
     --color-chip-info-outline-border-focus: var(--color-feedback-info-base);
     --color-chip-info-outline-border-active: var(--color-feedback-info-base);
     --color-chip-info-outline-border-selected: var(--color-chip-info-solid-background-default);
+    --color-chip-info-outline-border-disabled: var(--color-border-default);
+    --color-chip-dismiss-background-hover: var(--color-background-tint);
+    --color-chip-dismiss-background-active: var(--color-background-tint);
     --color-popover-background: var(--color-background-default);
+    --color-popover-border: var(--color-border-default);
     --color-calendar-day-background-hover: var(--color-background-subtle);
     --color-calendar-day-background-selected: var(--color-action-primary-base-default);
     --color-calendar-day-text-default: var(--color-text-primary);
@@ -4414,6 +4483,9 @@
     --color-pagination-item-border-active: var(--color-pagination-item-background-active);
     --color-pagination-item-selected-background: var(--color-action-primary-base-default);
     --color-pagination-ellipsis-foreground: var(--color-text-muted);
+    --color-dialog-background: var(--color-background-default);
+    --color-dialog-border: var(--color-border-default);
+    --color-dialog-divider: var(--color-border-default);
   }
 }
 
@@ -4428,6 +4500,7 @@
   --color-background-inverse: var(--color-on-subtle-background-inverse);
   --color-background-overlay: var(--color-on-subtle-background-overlay);
   --color-background-brand-primary: var(--color-on-subtle-background-brand-primary);
+  --color-background-tint: var(--color-on-subtle-background-tint);
   --color-text-primary: var(--color-on-subtle-text-primary);
   --color-text-secondary: var(--color-on-subtle-text-secondary);
   --color-text-muted: var(--color-on-subtle-text-muted);
@@ -5142,6 +5215,9 @@
   --color-pagination-item-selected-background: var(--color-on-subtle-pagination-item-selected-background);
   --color-pagination-item-selected-foreground: var(--color-on-subtle-pagination-item-selected-foreground);
   --color-pagination-ellipsis-foreground: var(--color-on-subtle-pagination-ellipsis-foreground);
+  --color-dialog-background: var(--color-on-subtle-dialog-background);
+  --color-dialog-border: var(--color-on-subtle-dialog-border);
+  --color-dialog-divider: var(--color-on-subtle-dialog-divider);
 }
 
 /* === Surfaces (Inverse) === */
@@ -5155,6 +5231,7 @@
   --color-background-inverse: var(--color-on-inverse-background-inverse);
   --color-background-overlay: var(--color-on-inverse-background-overlay);
   --color-background-brand-primary: var(--color-on-inverse-background-brand-primary);
+  --color-background-tint: var(--color-on-inverse-background-tint);
   --color-text-primary: var(--color-on-inverse-text-primary);
   --color-text-secondary: var(--color-on-inverse-text-secondary);
   --color-text-muted: var(--color-on-inverse-text-muted);
@@ -5869,6 +5946,9 @@
   --color-pagination-item-selected-background: var(--color-on-inverse-pagination-item-selected-background);
   --color-pagination-item-selected-foreground: var(--color-on-inverse-pagination-item-selected-foreground);
   --color-pagination-ellipsis-foreground: var(--color-on-inverse-pagination-ellipsis-foreground);
+  --color-dialog-background: var(--color-on-inverse-dialog-background);
+  --color-dialog-border: var(--color-on-inverse-dialog-border);
+  --color-dialog-divider: var(--color-on-inverse-dialog-divider);
 }
 
 /* === Surfaces (Primary) === */
@@ -5882,6 +5962,7 @@
   --color-background-inverse: var(--color-on-brand-primary-background-inverse);
   --color-background-overlay: var(--color-on-brand-primary-background-overlay);
   --color-background-brand-primary: var(--color-on-brand-primary-background-brand-primary);
+  --color-background-tint: var(--color-on-brand-primary-background-tint);
   --color-text-primary: var(--color-on-brand-primary-text-primary);
   --color-text-secondary: var(--color-on-brand-primary-text-secondary);
   --color-text-muted: var(--color-on-brand-primary-text-muted);
@@ -6596,6 +6677,9 @@
   --color-pagination-item-selected-background: var(--color-on-brand-primary-pagination-item-selected-background);
   --color-pagination-item-selected-foreground: var(--color-on-brand-primary-pagination-item-selected-foreground);
   --color-pagination-ellipsis-foreground: var(--color-on-brand-primary-pagination-ellipsis-foreground);
+  --color-dialog-background: var(--color-on-brand-primary-dialog-background);
+  --color-dialog-border: var(--color-on-brand-primary-dialog-border);
+  --color-dialog-divider: var(--color-on-brand-primary-dialog-divider);
 }
 
 /* === Sizes (Mobile — default) === */
@@ -6605,10 +6689,10 @@
   --typography-heading-display-font-weight-strong: var(--font-weight-semibold);
   --typography-heading-display-font-size: var(--text-3xl);
   --typography-heading-display-line-height: var(--text-3xl--line-height);
-  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
-  --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-display-large-letter-spacing: var(--tracking-normal);
+  --typography-heading-display-large-line-height: var(--text-4xl--line-height);
+  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -6805,8 +6889,8 @@
   --select-dropdown-padding: var(--spacing-1);
   --select-dropdown-radius: var(--spacing-2);
   --select-dropdown-border-width: 0.0625rem;
-  --notification-radius: var(--radius-md);
   --notification-font-family: var(--typography-body-font-family);
+  --notification-radius: var(--radius-md);
   --notification-font-size: var(--typography-body-font-size);
   --notification-line-height: var(--typography-body-line-height);
   --notification-font-weight: var(--typography-body-font-weight-strong);
@@ -6886,6 +6970,28 @@
   --textarea-small-min-height: var(--size-20);
   --textarea-min-height: var(--size-24);
   --textarea-large-min-height: var(--size-32);
+  --dialog-small-max-width: var(--size-100);
+  --dialog-medium-max-width: var(--size-140);
+  --dialog-large-max-width: var(--size-200);
+  --dialog-radius: var(--radius-lg);
+  --dialog-sheet-radius: var(--radius-lg);
+  --dialog-border-width: var(--stroke-border);
+  --dialog-margin: var(--spacing-4);
+  --dialog-padding-inline: var(--spacing-6);
+  --dialog-padding-stack: var(--spacing-6);
+  --dialog-gap: var(--spacing-4);
+  --dialog-header-gap: var(--spacing-2);
+  --dialog-footer-gap: var(--spacing-3);
+  --dialog-title-font-family: var(--typography-heading-title-font-family);
+  --dialog-title-font-size: var(--typography-heading-title-font-size);
+  --dialog-title-line-height: var(--typography-heading-title-line-height);
+  --dialog-title-font-weight: var(--typography-heading-title-font-weight-strong);
+  --dialog-title-letter-spacing: var(--typography-heading-title-letter-spacing);
+  --dialog-description-font-family: var(--typography-body-font-family);
+  --dialog-description-font-size: var(--typography-body-small-font-size);
+  --dialog-description-line-height: var(--typography-body-small-line-height);
+  --dialog-description-font-weight: var(--typography-body-font-weight);
+  --dialog-description-letter-spacing: var(--typography-body-small-letter-spacing);
 }
 
 /* === Sizes (Desktop) === */
