@@ -37,6 +37,14 @@ export type {
   SearchFieldSize,
   SearchFieldState,
 } from './search-field/search-field.js';
+export { UiNumberField } from './number-field/number-field.js';
+export type {
+  NumberFieldVariant,
+  NumberFieldSize,
+  NumberFieldState,
+  NumberFieldLabelPlacement,
+  NumberFieldControls,
+} from './number-field/number-field.js';
 export { UiCheckboxField } from './checkbox-field/checkbox-field.js';
 export type { CheckboxFieldState } from './checkbox-field/checkbox-field.js';
 export { UiRadioField } from './radio-field/radio-field.js';
