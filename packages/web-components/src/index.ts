@@ -60,3 +60,18 @@ export type {
   CalendarDateSelectDetail,
   CalendarMonthChangeDetail,
 } from './calendar/calendar.js';
+export { UiDatePicker } from './date-picker/date-picker.js';
+export type {
+  DatePickerDateChangeDetail,
+  DatePickerRangeChangeDetail,
+  DatePickerOpenChangeDetail,
+  DatePickerOpenChangeReason,
+} from './date-picker/date-picker.js';
+export { UiDateField } from './date-field/date-field.js';
+export type {
+  DateFieldVariant,
+  DateFieldSize,
+  DateFieldState,
+  DateFieldLabelPlacement,
+  DateFieldChangeDetail,
+} from './date-field/date-field.js';

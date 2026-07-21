@@ -6495,8 +6495,8 @@
   --typography-heading-display-line-height: var(--text-3xl--line-height);
   --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
-  --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-display-large-letter-spacing: var(--tracking-normal);
+  --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -6767,6 +6767,7 @@
   --calendar-header-gap: var(--spacing-2);
   --calendar-today-border-width: 0.0625rem;
   --calendar-font-family: var(--typography-caption-font-family);
+  --date-picker-gap: var(--spacing-2);
 }
 
 /* === Sizes (Desktop) === */

@@ -4503,8 +4503,8 @@ export const tokens = {
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
         },
         title: {
@@ -5001,6 +5001,9 @@ export const tokens = {
         },
       },
       fontFamily: 'var(--calendar-font-family)',
+    },
+    datePicker: {
+      gap: 'var(--date-picker-gap)',
     },
   },
 } as const;

@@ -1,11 +1,5 @@
 import { css } from 'lit';
 
-/*
- * Font tokens note: --calendar-font-family / --calendar-*-font-weight /
- * --calendar-*-line-height are already defined in Figma Foundations but reach
- * tokens.css only with the next Luckino export — until then the fallbacks
- * mirror the Figma alias targets (typography/caption family + weights).
- */
 export const calendarStyles = css`
   :host {
     display: inline-block;
@@ -15,7 +9,7 @@ export const calendarStyles = css`
     display: flex;
     flex-direction: column;
     gap: var(--calendar-header-gap);
-    font-family: var(--calendar-font-family, var(--typography-caption-font-family));
+    font-family: var(--calendar-font-family);
   }
 
   /* ---- Header ---- */
@@ -29,8 +23,8 @@ export const calendarStyles = css`
 
   .month-label {
     font-size: var(--calendar-day-font-size);
-    font-weight: var(--calendar-weekday-font-weight, var(--font-weight-medium));
-    line-height: var(--calendar-day-line-height, var(--size-5));
+    font-weight: var(--calendar-weekday-font-weight);
+    line-height: var(--calendar-day-line-height);
     color: var(--color-calendar-header-text);
     text-transform: capitalize;
   }
@@ -75,8 +69,8 @@ export const calendarStyles = css`
     inline-size: var(--calendar-day-size);
     text-align: center;
     font-size: var(--calendar-weekday-font-size);
-    font-weight: var(--calendar-weekday-font-weight, var(--font-weight-medium));
-    line-height: var(--calendar-weekday-line-height, var(--size-4));
+    font-weight: var(--calendar-weekday-font-weight);
+    line-height: var(--calendar-weekday-line-height);
     color: var(--color-calendar-weekday-text);
   }
 
@@ -123,8 +117,8 @@ export const calendarStyles = css`
     border-radius: var(--calendar-day-radius);
     font-family: inherit;
     font-size: var(--calendar-day-font-size);
-    font-weight: var(--calendar-day-font-weight, var(--typography-caption-font-weight));
-    line-height: var(--calendar-day-line-height, var(--size-5));
+    font-weight: var(--calendar-day-font-weight);
+    line-height: var(--calendar-day-line-height);
     cursor: pointer;
   }
 
