@@ -37,25 +37,11 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "large": {
           "font-size": {
             "$value": {
               "Mobile": "{Primitives Sizes.text.4xl}",
               "Desktop": "{Primitives Sizes.text.7xl}"
-            },
-            "$type": "number"
-          },
-          "line-height": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
-              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
             },
             "$type": "number"
           },
@@ -65,7 +51,21 @@
               "Desktop": "{Primitives Sizes.tracking.normal}"
             },
             "$type": "string"
+          },
+          "line-height": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
+              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
+            },
+            "$type": "number"
           }
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         }
       },
       "title": {
@@ -1071,19 +1071,19 @@
           },
           "$type": "number"
         },
-        "font-weight": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.font-weight.normal}",
-            "Desktop": "{Primitives Sizes.font-weight.normal}"
-          },
-          "$type": "number"
-        },
         "letter-spacing": {
           "$value": {
             "Mobile": "{Primitives Sizes.tracking.normal}",
             "Desktop": "{Primitives Sizes.tracking.normal}"
           },
           "$type": "string"
+        },
+        "font-weight": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.font-weight.normal}",
+            "Desktop": "{Primitives Sizes.font-weight.normal}"
+          },
+          "$type": "number"
         },
         "font-family": {
           "$value": {

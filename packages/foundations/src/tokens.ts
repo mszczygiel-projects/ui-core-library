@@ -4912,12 +4912,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -5130,8 +5130,8 @@ export const tokens = {
         floating: {
           fontSize: 'var(--control-label-floating-font-size)',
           lineHeight: 'var(--control-label-floating-line-height)',
-          fontWeight: 'var(--control-label-floating-font-weight)',
           letterSpacing: 'var(--control-label-floating-letter-spacing)',
+          fontWeight: 'var(--control-label-floating-font-weight)',
           fontFamily: 'var(--control-label-floating-font-family)',
           textTransform: 'var(--control-label-floating-text-transform)',
         },
