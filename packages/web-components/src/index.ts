@@ -16,6 +16,14 @@ export type {
   TextFieldState,
   TextFieldLabelPlacement,
 } from './text-field/text-field.js';
+export { UiTextareaField } from './textarea-field/textarea-field.js';
+export type {
+  TextareaFieldVariant,
+  TextareaFieldSize,
+  TextareaFieldState,
+  TextareaFieldLabelPlacement,
+  TextareaFieldResize,
+} from './textarea-field/textarea-field.js';
 export { UiPasswordField } from './password-field/password-field.js';
 export type {
   PasswordFieldVariant,

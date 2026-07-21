@@ -1638,19 +1638,19 @@
     }
   },
   "notification": {
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.body.font-family}",
-        "Desktop": "{Themes.typography.body.font-family}"
-      },
-      "$type": "string"
-    },
     "radius": {
       "$value": {
         "Mobile": "{Sizes.radius.md}",
         "Desktop": "{Sizes.radius.md}"
       },
       "$type": "number"
+    },
+    "font-family": {
+      "$value": {
+        "Mobile": "{Themes.typography.body.font-family}",
+        "Desktop": "{Themes.typography.body.font-family}"
+      },
+      "$type": "string"
     },
     "font-size": {
       "$value": {
@@ -2260,6 +2260,33 @@
           },
           "$type": "number"
         }
+      }
+    }
+  },
+  "textarea": {
+    "small": {
+      "min-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.size.20}",
+          "Desktop": "{Primitives Sizes.size.20}"
+        },
+        "$type": "number"
+      }
+    },
+    "min-height": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.24}",
+        "Desktop": "{Primitives Sizes.size.24}"
+      },
+      "$type": "number"
+    },
+    "large": {
+      "min-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.size.32}",
+          "Desktop": "{Primitives Sizes.size.32}"
+        },
+        "$type": "number"
       }
     }
   }
