@@ -1284,6 +1284,21 @@
   --color-on-subtle-calendar-day-border-today: var(--color-on-subtle-action-primary-base-default);
   --color-on-subtle-calendar-weekday-text: var(--color-on-subtle-text-secondary);
   --color-on-subtle-calendar-header-text: var(--color-on-subtle-text-primary);
+  --color-on-subtle-pagination-item-background-default: var(--color-on-subtle-control-outline-background-default);
+  --color-on-subtle-pagination-item-background-hover: var(--color-on-subtle-background-subtle);
+  --color-on-subtle-pagination-item-background-active: var(--color-on-subtle-pagination-item-background-hover);
+  --color-on-subtle-pagination-item-background-disabled: var(--color-on-subtle-pagination-item-background-default);
+  --color-on-subtle-pagination-item-foreground-default: var(--color-on-subtle-text-primary);
+  --color-on-subtle-pagination-item-foreground-hover: var(--color-on-subtle-text-primary);
+  --color-on-subtle-pagination-item-foreground-active: var(--color-on-subtle-pagination-item-foreground-hover);
+  --color-on-subtle-pagination-item-foreground-disabled: var(--color-on-subtle-text-muted);
+  --color-on-subtle-pagination-item-border-default: var(--color-on-subtle-pagination-item-background-default);
+  --color-on-subtle-pagination-item-border-hover: var(--color-on-subtle-pagination-item-background-hover);
+  --color-on-subtle-pagination-item-border-active: var(--color-on-subtle-pagination-item-background-active);
+  --color-on-subtle-pagination-item-border-disabled: var(--color-on-subtle-pagination-item-background-disabled);
+  --color-on-subtle-pagination-item-selected-background: var(--color-on-subtle-action-primary-base-default);
+  --color-on-subtle-pagination-item-selected-foreground: var(--color-on-subtle-action-primary-on-base-default);
+  --color-on-subtle-pagination-ellipsis-foreground: var(--color-on-subtle-text-muted);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -1992,6 +2007,21 @@
   --color-on-inverse-calendar-day-border-today: var(--color-on-inverse-action-primary-base-default);
   --color-on-inverse-calendar-weekday-text: var(--color-on-inverse-text-secondary);
   --color-on-inverse-calendar-header-text: var(--color-on-inverse-text-primary);
+  --color-on-inverse-pagination-item-background-default: var(--color-on-inverse-control-outline-background-default);
+  --color-on-inverse-pagination-item-background-hover: var(--color-on-inverse-background-subtle);
+  --color-on-inverse-pagination-item-background-active: var(--color-on-inverse-pagination-item-background-hover);
+  --color-on-inverse-pagination-item-background-disabled: var(--color-on-inverse-pagination-item-background-default);
+  --color-on-inverse-pagination-item-foreground-default: var(--color-on-inverse-text-primary);
+  --color-on-inverse-pagination-item-foreground-hover: var(--color-on-inverse-text-primary);
+  --color-on-inverse-pagination-item-foreground-active: var(--color-on-inverse-pagination-item-foreground-hover);
+  --color-on-inverse-pagination-item-foreground-disabled: var(--color-on-inverse-text-muted);
+  --color-on-inverse-pagination-item-border-default: var(--color-on-inverse-pagination-item-background-default);
+  --color-on-inverse-pagination-item-border-hover: var(--color-on-inverse-pagination-item-background-hover);
+  --color-on-inverse-pagination-item-border-active: var(--color-on-inverse-pagination-item-background-active);
+  --color-on-inverse-pagination-item-border-disabled: var(--color-on-inverse-pagination-item-background-disabled);
+  --color-on-inverse-pagination-item-selected-background: var(--color-on-inverse-action-primary-base-default);
+  --color-on-inverse-pagination-item-selected-foreground: var(--color-on-inverse-action-primary-on-base-default);
+  --color-on-inverse-pagination-ellipsis-foreground: var(--color-on-inverse-text-muted);
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -2700,6 +2730,21 @@
   --color-on-brand-primary-calendar-day-border-today: var(--color-on-brand-primary-action-primary-base-default);
   --color-on-brand-primary-calendar-weekday-text: var(--color-on-brand-primary-text-secondary);
   --color-on-brand-primary-calendar-header-text: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-pagination-item-background-default: var(--color-on-brand-primary-control-outline-background-default);
+  --color-on-brand-primary-pagination-item-background-hover: var(--color-on-brand-primary-background-subtle);
+  --color-on-brand-primary-pagination-item-background-active: var(--color-on-brand-primary-pagination-item-background-hover);
+  --color-on-brand-primary-pagination-item-background-disabled: var(--color-on-brand-primary-pagination-item-background-default);
+  --color-on-brand-primary-pagination-item-foreground-default: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-pagination-item-foreground-hover: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-pagination-item-foreground-active: var(--color-on-brand-primary-pagination-item-foreground-hover);
+  --color-on-brand-primary-pagination-item-foreground-disabled: var(--color-on-brand-primary-text-muted);
+  --color-on-brand-primary-pagination-item-border-default: var(--color-on-brand-primary-pagination-item-background-default);
+  --color-on-brand-primary-pagination-item-border-hover: var(--color-on-brand-primary-pagination-item-background-hover);
+  --color-on-brand-primary-pagination-item-border-active: var(--color-on-brand-primary-pagination-item-background-active);
+  --color-on-brand-primary-pagination-item-border-disabled: var(--color-on-brand-primary-pagination-item-background-disabled);
+  --color-on-brand-primary-pagination-item-selected-background: var(--color-on-brand-primary-action-primary-base-default);
+  --color-on-brand-primary-pagination-item-selected-foreground: var(--color-on-brand-primary-action-primary-on-base-default);
+  --color-on-brand-primary-pagination-ellipsis-foreground: var(--color-on-brand-primary-text-muted);
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
   --color-badge-neutral-solid-background: var(--color-gray-800);
@@ -3080,6 +3125,21 @@
   --color-calendar-day-border-today: var(--color-action-primary-base-default);
   --color-calendar-weekday-text: var(--color-text-secondary);
   --color-calendar-header-text: var(--color-text-primary);
+  --color-pagination-item-background-default: var(--color-control-outline-background-default);
+  --color-pagination-item-background-hover: var(--color-background-subtle);
+  --color-pagination-item-background-active: var(--color-pagination-item-background-hover);
+  --color-pagination-item-background-disabled: var(--color-pagination-item-background-default);
+  --color-pagination-item-foreground-default: var(--color-text-primary);
+  --color-pagination-item-foreground-hover: var(--color-text-primary);
+  --color-pagination-item-foreground-active: var(--color-pagination-item-foreground-hover);
+  --color-pagination-item-foreground-disabled: var(--color-text-muted);
+  --color-pagination-item-border-default: var(--color-pagination-item-background-default);
+  --color-pagination-item-border-hover: var(--color-pagination-item-background-hover);
+  --color-pagination-item-border-active: var(--color-pagination-item-background-active);
+  --color-pagination-item-border-disabled: var(--color-pagination-item-background-disabled);
+  --color-pagination-item-selected-background: var(--color-action-primary-base-default);
+  --color-pagination-item-selected-foreground: var(--color-action-primary-on-base-default);
+  --color-pagination-ellipsis-foreground: var(--color-text-muted);
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
@@ -3605,6 +3665,16 @@
     --color-on-subtle-calendar-day-border-today: var(--color-on-subtle-action-primary-base-default);
     --color-on-subtle-calendar-weekday-text: var(--color-on-subtle-text-secondary);
     --color-on-subtle-calendar-header-text: var(--color-on-subtle-text-primary);
+    --color-on-subtle-pagination-item-background-hover: var(--color-on-subtle-background-subtle);
+    --color-on-subtle-pagination-item-background-active: var(--color-on-subtle-pagination-item-background-hover);
+    --color-on-subtle-pagination-item-foreground-default: var(--color-on-subtle-text-primary);
+    --color-on-subtle-pagination-item-foreground-hover: var(--color-on-subtle-text-primary);
+    --color-on-subtle-pagination-item-foreground-active: var(--color-on-subtle-pagination-item-foreground-hover);
+    --color-on-subtle-pagination-item-foreground-disabled: var(--color-on-subtle-text-muted);
+    --color-on-subtle-pagination-item-border-hover: var(--color-on-subtle-pagination-item-background-hover);
+    --color-on-subtle-pagination-item-border-active: var(--color-on-subtle-pagination-item-background-active);
+    --color-on-subtle-pagination-item-selected-background: var(--color-on-subtle-action-primary-base-default);
+    --color-on-subtle-pagination-ellipsis-foreground: var(--color-on-subtle-text-muted);
     --color-on-inverse-brand-primary: var(--color-brand-primary);
     --color-on-inverse-background-default: var(--color-background-inverse);
     --color-on-inverse-background-inverse: var(--color-background-default);
@@ -3885,6 +3955,12 @@
     --color-on-inverse-calendar-day-text-outside: var(--color-on-inverse-text-muted);
     --color-on-inverse-calendar-weekday-text: var(--color-on-inverse-text-secondary);
     --color-on-inverse-calendar-header-text: var(--color-on-inverse-text-primary);
+    --color-on-inverse-pagination-item-foreground-default: var(--color-on-inverse-text-primary);
+    --color-on-inverse-pagination-item-foreground-hover: var(--color-on-inverse-text-primary);
+    --color-on-inverse-pagination-item-foreground-active: var(--color-on-inverse-pagination-item-foreground-hover);
+    --color-on-inverse-pagination-item-foreground-disabled: var(--color-on-inverse-text-muted);
+    --color-on-inverse-pagination-item-selected-foreground: var(--color-on-inverse-action-primary-on-base-default);
+    --color-on-inverse-pagination-ellipsis-foreground: var(--color-on-inverse-text-muted);
     --color-on-brand-primary-brand-primary: var(--color-brand-primary);
     --color-on-brand-primary-background-default: var(--color-brand-primary-600);
     --color-on-brand-primary-background-sunken: var(--color-background-sunken);
@@ -4168,6 +4244,13 @@
     --color-on-brand-primary-calendar-day-text-selected: var(--color-on-brand-primary-action-primary-on-base-default);
     --color-on-brand-primary-calendar-day-text-disabled: var(--color-on-brand-primary-text-muted);
     --color-on-brand-primary-calendar-day-text-outside: var(--color-on-brand-primary-text-muted);
+    --color-on-brand-primary-pagination-item-background-hover: var(--color-on-brand-primary-background-subtle);
+    --color-on-brand-primary-pagination-item-background-active: var(--color-on-brand-primary-pagination-item-background-hover);
+    --color-on-brand-primary-pagination-item-foreground-disabled: var(--color-on-brand-primary-text-muted);
+    --color-on-brand-primary-pagination-item-border-hover: var(--color-on-brand-primary-pagination-item-background-hover);
+    --color-on-brand-primary-pagination-item-border-active: var(--color-on-brand-primary-pagination-item-background-active);
+    --color-on-brand-primary-pagination-item-selected-foreground: var(--color-on-brand-primary-action-primary-on-base-default);
+    --color-on-brand-primary-pagination-ellipsis-foreground: var(--color-on-brand-primary-text-muted);
     --color-selection-background: var(--color-button-primary-background-default);
     --color-badge-neutral-solid-background: var(--color-gray-700);
     --color-badge-neutral-solid-border: var(--color-badge-neutral-solid-background);
@@ -4347,6 +4430,16 @@
     --color-calendar-day-border-today: var(--color-action-primary-base-default);
     --color-calendar-weekday-text: var(--color-text-secondary);
     --color-calendar-header-text: var(--color-text-primary);
+    --color-pagination-item-background-hover: var(--color-background-subtle);
+    --color-pagination-item-background-active: var(--color-pagination-item-background-hover);
+    --color-pagination-item-foreground-default: var(--color-text-primary);
+    --color-pagination-item-foreground-hover: var(--color-text-primary);
+    --color-pagination-item-foreground-active: var(--color-pagination-item-foreground-hover);
+    --color-pagination-item-foreground-disabled: var(--color-text-muted);
+    --color-pagination-item-border-hover: var(--color-pagination-item-background-hover);
+    --color-pagination-item-border-active: var(--color-pagination-item-background-active);
+    --color-pagination-item-selected-background: var(--color-action-primary-base-default);
+    --color-pagination-ellipsis-foreground: var(--color-text-muted);
   }
 }
 
@@ -5060,6 +5153,21 @@
   --color-calendar-day-border-today: var(--color-on-subtle-calendar-day-border-today);
   --color-calendar-weekday-text: var(--color-on-subtle-calendar-weekday-text);
   --color-calendar-header-text: var(--color-on-subtle-calendar-header-text);
+  --color-pagination-item-background-default: var(--color-on-subtle-pagination-item-background-default);
+  --color-pagination-item-background-hover: var(--color-on-subtle-pagination-item-background-hover);
+  --color-pagination-item-background-active: var(--color-on-subtle-pagination-item-background-active);
+  --color-pagination-item-background-disabled: var(--color-on-subtle-pagination-item-background-disabled);
+  --color-pagination-item-foreground-default: var(--color-on-subtle-pagination-item-foreground-default);
+  --color-pagination-item-foreground-hover: var(--color-on-subtle-pagination-item-foreground-hover);
+  --color-pagination-item-foreground-active: var(--color-on-subtle-pagination-item-foreground-active);
+  --color-pagination-item-foreground-disabled: var(--color-on-subtle-pagination-item-foreground-disabled);
+  --color-pagination-item-border-default: var(--color-on-subtle-pagination-item-border-default);
+  --color-pagination-item-border-hover: var(--color-on-subtle-pagination-item-border-hover);
+  --color-pagination-item-border-active: var(--color-on-subtle-pagination-item-border-active);
+  --color-pagination-item-border-disabled: var(--color-on-subtle-pagination-item-border-disabled);
+  --color-pagination-item-selected-background: var(--color-on-subtle-pagination-item-selected-background);
+  --color-pagination-item-selected-foreground: var(--color-on-subtle-pagination-item-selected-foreground);
+  --color-pagination-ellipsis-foreground: var(--color-on-subtle-pagination-ellipsis-foreground);
 }
 
 /* === Surfaces (Inverse) === */
@@ -5772,6 +5880,21 @@
   --color-calendar-day-border-today: var(--color-on-inverse-calendar-day-border-today);
   --color-calendar-weekday-text: var(--color-on-inverse-calendar-weekday-text);
   --color-calendar-header-text: var(--color-on-inverse-calendar-header-text);
+  --color-pagination-item-background-default: var(--color-on-inverse-pagination-item-background-default);
+  --color-pagination-item-background-hover: var(--color-on-inverse-pagination-item-background-hover);
+  --color-pagination-item-background-active: var(--color-on-inverse-pagination-item-background-active);
+  --color-pagination-item-background-disabled: var(--color-on-inverse-pagination-item-background-disabled);
+  --color-pagination-item-foreground-default: var(--color-on-inverse-pagination-item-foreground-default);
+  --color-pagination-item-foreground-hover: var(--color-on-inverse-pagination-item-foreground-hover);
+  --color-pagination-item-foreground-active: var(--color-on-inverse-pagination-item-foreground-active);
+  --color-pagination-item-foreground-disabled: var(--color-on-inverse-pagination-item-foreground-disabled);
+  --color-pagination-item-border-default: var(--color-on-inverse-pagination-item-border-default);
+  --color-pagination-item-border-hover: var(--color-on-inverse-pagination-item-border-hover);
+  --color-pagination-item-border-active: var(--color-on-inverse-pagination-item-border-active);
+  --color-pagination-item-border-disabled: var(--color-on-inverse-pagination-item-border-disabled);
+  --color-pagination-item-selected-background: var(--color-on-inverse-pagination-item-selected-background);
+  --color-pagination-item-selected-foreground: var(--color-on-inverse-pagination-item-selected-foreground);
+  --color-pagination-ellipsis-foreground: var(--color-on-inverse-pagination-ellipsis-foreground);
 }
 
 /* === Surfaces (Primary) === */
@@ -6484,6 +6607,21 @@
   --color-calendar-day-border-today: var(--color-on-brand-primary-calendar-day-border-today);
   --color-calendar-weekday-text: var(--color-on-brand-primary-calendar-weekday-text);
   --color-calendar-header-text: var(--color-on-brand-primary-calendar-header-text);
+  --color-pagination-item-background-default: var(--color-on-brand-primary-pagination-item-background-default);
+  --color-pagination-item-background-hover: var(--color-on-brand-primary-pagination-item-background-hover);
+  --color-pagination-item-background-active: var(--color-on-brand-primary-pagination-item-background-active);
+  --color-pagination-item-background-disabled: var(--color-on-brand-primary-pagination-item-background-disabled);
+  --color-pagination-item-foreground-default: var(--color-on-brand-primary-pagination-item-foreground-default);
+  --color-pagination-item-foreground-hover: var(--color-on-brand-primary-pagination-item-foreground-hover);
+  --color-pagination-item-foreground-active: var(--color-on-brand-primary-pagination-item-foreground-active);
+  --color-pagination-item-foreground-disabled: var(--color-on-brand-primary-pagination-item-foreground-disabled);
+  --color-pagination-item-border-default: var(--color-on-brand-primary-pagination-item-border-default);
+  --color-pagination-item-border-hover: var(--color-on-brand-primary-pagination-item-border-hover);
+  --color-pagination-item-border-active: var(--color-on-brand-primary-pagination-item-border-active);
+  --color-pagination-item-border-disabled: var(--color-on-brand-primary-pagination-item-border-disabled);
+  --color-pagination-item-selected-background: var(--color-on-brand-primary-pagination-item-selected-background);
+  --color-pagination-item-selected-foreground: var(--color-on-brand-primary-pagination-item-selected-foreground);
+  --color-pagination-ellipsis-foreground: var(--color-on-brand-primary-pagination-ellipsis-foreground);
 }
 
 /* === Sizes (Mobile — default) === */
@@ -6495,8 +6633,8 @@
   --typography-heading-display-line-height: var(--text-3xl--line-height);
   --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
-  --typography-heading-display-large-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-line-height: var(--text-4xl--line-height);
+  --typography-heading-display-large-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -6693,8 +6831,8 @@
   --select-dropdown-padding: var(--spacing-1);
   --select-dropdown-radius: var(--spacing-2);
   --select-dropdown-border-width: 0.0625rem;
-  --notification-radius: var(--radius-md);
   --notification-font-family: var(--typography-body-font-family);
+  --notification-radius: var(--radius-md);
   --notification-font-size: var(--typography-body-font-size);
   --notification-line-height: var(--typography-body-line-height);
   --notification-font-weight: var(--typography-body-font-weight-strong);
@@ -6768,6 +6906,9 @@
   --calendar-today-border-width: 0.0625rem;
   --calendar-font-family: var(--typography-caption-font-family);
   --date-picker-gap: var(--spacing-2);
+  --pagination-item-size: var(--size-10);
+  --pagination-gap: var(--spacing-1);
+  --pagination-jump-input-width: var(--size-20);
 }
 
 /* === Sizes (Desktop) === */

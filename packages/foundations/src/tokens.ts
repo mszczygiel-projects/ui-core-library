@@ -1106,6 +1106,35 @@ export const tokens = {
             text: 'var(--color-on-subtle-calendar-header-text)',
           },
         },
+        pagination: {
+          item: {
+            background: {
+              default: 'var(--color-on-subtle-pagination-item-background-default)',
+              hover: 'var(--color-on-subtle-pagination-item-background-hover)',
+              active: 'var(--color-on-subtle-pagination-item-background-active)',
+              disabled: 'var(--color-on-subtle-pagination-item-background-disabled)',
+            },
+            foreground: {
+              default: 'var(--color-on-subtle-pagination-item-foreground-default)',
+              hover: 'var(--color-on-subtle-pagination-item-foreground-hover)',
+              active: 'var(--color-on-subtle-pagination-item-foreground-active)',
+              disabled: 'var(--color-on-subtle-pagination-item-foreground-disabled)',
+            },
+            border: {
+              default: 'var(--color-on-subtle-pagination-item-border-default)',
+              hover: 'var(--color-on-subtle-pagination-item-border-hover)',
+              active: 'var(--color-on-subtle-pagination-item-border-active)',
+              disabled: 'var(--color-on-subtle-pagination-item-border-disabled)',
+            },
+            selected: {
+              background: 'var(--color-on-subtle-pagination-item-selected-background)',
+              foreground: 'var(--color-on-subtle-pagination-item-selected-foreground)',
+            },
+          },
+          ellipsis: {
+            foreground: 'var(--color-on-subtle-pagination-ellipsis-foreground)',
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -2210,6 +2239,35 @@ export const tokens = {
             text: 'var(--color-on-inverse-calendar-header-text)',
           },
         },
+        pagination: {
+          item: {
+            background: {
+              default: 'var(--color-on-inverse-pagination-item-background-default)',
+              hover: 'var(--color-on-inverse-pagination-item-background-hover)',
+              active: 'var(--color-on-inverse-pagination-item-background-active)',
+              disabled: 'var(--color-on-inverse-pagination-item-background-disabled)',
+            },
+            foreground: {
+              default: 'var(--color-on-inverse-pagination-item-foreground-default)',
+              hover: 'var(--color-on-inverse-pagination-item-foreground-hover)',
+              active: 'var(--color-on-inverse-pagination-item-foreground-active)',
+              disabled: 'var(--color-on-inverse-pagination-item-foreground-disabled)',
+            },
+            border: {
+              default: 'var(--color-on-inverse-pagination-item-border-default)',
+              hover: 'var(--color-on-inverse-pagination-item-border-hover)',
+              active: 'var(--color-on-inverse-pagination-item-border-active)',
+              disabled: 'var(--color-on-inverse-pagination-item-border-disabled)',
+            },
+            selected: {
+              background: 'var(--color-on-inverse-pagination-item-selected-background)',
+              foreground: 'var(--color-on-inverse-pagination-item-selected-foreground)',
+            },
+          },
+          ellipsis: {
+            foreground: 'var(--color-on-inverse-pagination-ellipsis-foreground)',
+          },
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -3312,6 +3370,35 @@ export const tokens = {
           },
           header: {
             text: 'var(--color-on-brand-primary-calendar-header-text)',
+          },
+        },
+        pagination: {
+          item: {
+            background: {
+              default: 'var(--color-on-brand-primary-pagination-item-background-default)',
+              hover: 'var(--color-on-brand-primary-pagination-item-background-hover)',
+              active: 'var(--color-on-brand-primary-pagination-item-background-active)',
+              disabled: 'var(--color-on-brand-primary-pagination-item-background-disabled)',
+            },
+            foreground: {
+              default: 'var(--color-on-brand-primary-pagination-item-foreground-default)',
+              hover: 'var(--color-on-brand-primary-pagination-item-foreground-hover)',
+              active: 'var(--color-on-brand-primary-pagination-item-foreground-active)',
+              disabled: 'var(--color-on-brand-primary-pagination-item-foreground-disabled)',
+            },
+            border: {
+              default: 'var(--color-on-brand-primary-pagination-item-border-default)',
+              hover: 'var(--color-on-brand-primary-pagination-item-border-hover)',
+              active: 'var(--color-on-brand-primary-pagination-item-border-active)',
+              disabled: 'var(--color-on-brand-primary-pagination-item-border-disabled)',
+            },
+            selected: {
+              background: 'var(--color-on-brand-primary-pagination-item-selected-background)',
+              foreground: 'var(--color-on-brand-primary-pagination-item-selected-foreground)',
+            },
+          },
+          ellipsis: {
+            foreground: 'var(--color-on-brand-primary-pagination-ellipsis-foreground)',
           },
         },
       },
@@ -4489,6 +4576,35 @@ export const tokens = {
           text: 'var(--color-calendar-header-text)',
         },
       },
+      pagination: {
+        item: {
+          background: {
+            default: 'var(--color-pagination-item-background-default)',
+            hover: 'var(--color-pagination-item-background-hover)',
+            active: 'var(--color-pagination-item-background-active)',
+            disabled: 'var(--color-pagination-item-background-disabled)',
+          },
+          foreground: {
+            default: 'var(--color-pagination-item-foreground-default)',
+            hover: 'var(--color-pagination-item-foreground-hover)',
+            active: 'var(--color-pagination-item-foreground-active)',
+            disabled: 'var(--color-pagination-item-foreground-disabled)',
+          },
+          border: {
+            default: 'var(--color-pagination-item-border-default)',
+            hover: 'var(--color-pagination-item-border-hover)',
+            active: 'var(--color-pagination-item-border-active)',
+            disabled: 'var(--color-pagination-item-border-disabled)',
+          },
+          selected: {
+            background: 'var(--color-pagination-item-selected-background)',
+            foreground: 'var(--color-pagination-item-selected-foreground)',
+          },
+        },
+        ellipsis: {
+          foreground: 'var(--color-pagination-ellipsis-foreground)',
+        },
+      },
     },
   },
   sizes: {
@@ -4503,8 +4619,8 @@ export const tokens = {
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
+            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
         },
         title: {
@@ -4859,8 +4975,8 @@ export const tokens = {
       },
     },
     notification: {
-      radius: 'var(--notification-radius)',
       fontFamily: 'var(--notification-font-family)',
+      radius: 'var(--notification-radius)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -5004,6 +5120,17 @@ export const tokens = {
     },
     datePicker: {
       gap: 'var(--date-picker-gap)',
+    },
+    pagination: {
+      item: {
+        size: 'var(--pagination-item-size)',
+      },
+      gap: 'var(--pagination-gap)',
+      jump: {
+        input: {
+          width: 'var(--pagination-jump-input-width)',
+        },
+      },
     },
   },
 } as const;

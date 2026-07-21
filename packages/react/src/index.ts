@@ -77,3 +77,5 @@ export type {
 } from './DatePicker/DatePicker.js';
 export { DateField } from './DateField/DateField.js';
 export type { DateFieldProps, DateFieldChangeDetail } from './DateField/DateField.js';
+export { Pagination } from './Pagination/Pagination.js';
+export type { PaginationProps, PaginationEntry } from './Pagination/Pagination.js';

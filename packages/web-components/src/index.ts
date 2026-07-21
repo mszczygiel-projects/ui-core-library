@@ -75,3 +75,5 @@ export type {
   DateFieldLabelPlacement,
   DateFieldChangeDetail,
 } from './date-field/date-field.js';
+export { UiPagination } from './pagination/pagination.js';
+export type { PaginationChangeDetail, PaginationEntry } from './pagination/pagination.js';
