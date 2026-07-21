@@ -4975,8 +4975,8 @@ export const tokens = {
       },
     },
     notification: {
-      fontFamily: 'var(--notification-font-family)',
       radius: 'var(--notification-radius)',
+      fontFamily: 'var(--notification-font-family)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -5130,6 +5130,15 @@ export const tokens = {
         input: {
           width: 'var(--pagination-jump-input-width)',
         },
+      },
+    },
+    textarea: {
+      small: {
+        minHeight: 'var(--textarea-small-min-height)',
+      },
+      minHeight: 'var(--textarea-min-height)',
+      large: {
+        minHeight: 'var(--textarea-large-min-height)',
       },
     },
   },

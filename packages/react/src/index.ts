@@ -19,6 +19,15 @@ export type {
   TextFieldState,
   TextFieldLabelPlacement,
 } from './TextField/TextField.js';
+export { TextareaField } from './TextareaField/TextareaField.js';
+export type {
+  TextareaFieldProps,
+  TextareaFieldVariant,
+  TextareaFieldSize,
+  TextareaFieldState,
+  TextareaFieldLabelPlacement,
+  TextareaFieldResize,
+} from './TextareaField/TextareaField.js';
 export { PasswordField } from './PasswordField/PasswordField.js';
 export type { PasswordFieldProps } from './PasswordField/PasswordField.js';
 export { SearchField } from './SearchField/SearchField.js';
