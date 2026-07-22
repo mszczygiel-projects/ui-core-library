@@ -5,6 +5,7 @@ import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { chipStyles } from './chip.styles.js';
 import { focusStyles } from '../styles/focus.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type ChipVariant = 'neutral' | 'brand' | 'success' | 'warning' | 'error' | 'info';
 export type ChipAppearance = 'solid' | 'subtle' | 'outline';
@@ -58,9 +59,9 @@ export class UiChip extends LitElement {
 
   /**
    * Accessible name of the dismiss button.
-   * @default 'Remove'
+   * @default `getUiCoreConfig().labels.chip.dismiss`
    */
-  @property({ type: String, attribute: 'dismiss-label' }) dismissLabel = 'Remove';
+  @property({ type: String, attribute: 'dismiss-label' }) dismissLabel?: string;
 
   private dispatchDismiss() {
     this.dispatchEvent(new CustomEvent('dismiss', { bubbles: true, composed: true }));
@@ -116,7 +117,7 @@ export class UiChip extends LitElement {
             <button
               class="dismiss"
               type="button"
-              aria-label=${this.dismissLabel}
+              aria-label=${this.dismissLabel ?? getUiCoreConfig().labels.chip.dismiss}
               @click=${this.handleDismissClick}
             >
               ${unsafeSVG(svgMap['icon-close'])}

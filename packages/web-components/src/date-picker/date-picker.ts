@@ -1,6 +1,7 @@
 import { LitElement, html, nothing } from 'lit';
 import type { PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { datePickerStyles } from './date-picker.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
 import '../popover/popover.js';
@@ -8,6 +9,7 @@ import '../calendar/calendar.js';
 import '../button/button.js';
 import type { PopoverPlacement, PopoverOpenChangeDetail } from '../popover/popover.js';
 import type { CalendarSelectionMode, CalendarDateSelectDetail } from '../calendar/calendar.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export interface DatePickerDateChangeDetail {
   /** Committed date, ISO `YYYY-MM-DD`. */
@@ -102,16 +104,16 @@ export class UiDatePicker extends LitElement {
   @property({ type: String }) today?: string;
 
   /** Label of the Apply button (range mode). */
-  @property({ type: String, attribute: 'apply-label' }) applyLabel = 'Apply';
+  @property({ type: String, attribute: 'apply-label' }) applyLabel?: string;
 
   /** Label of the Clear button (range mode). */
-  @property({ type: String, attribute: 'clear-label' }) clearLabel = 'Clear';
+  @property({ type: String, attribute: 'clear-label' }) clearLabel?: string;
 
   /** Accessible name of the previous-month button. */
-  @property({ type: String, attribute: 'prev-month-label' }) prevMonthLabel = 'Previous month';
+  @property({ type: String, attribute: 'prev-month-label' }) prevMonthLabel?: string;
 
   /** Accessible name of the next-month button. */
-  @property({ type: String, attribute: 'next-month-label' }) nextMonthLabel = 'Next month';
+  @property({ type: String, attribute: 'next-month-label' }) nextMonthLabel?: string;
 
   @state() private pendingStart: string | null = null;
   @state() private pendingEnd: string | null = null;
@@ -182,8 +184,8 @@ export class UiDatePicker extends LitElement {
             first-day-of-week=${this.firstDayOfWeek ?? nothing}
             locale=${this.locale ?? nothing}
             today=${this.today ?? nothing}
-            prev-month-label=${this.prevMonthLabel}
-            next-month-label=${this.nextMonthLabel}
+            prev-month-label=${ifDefined(this.prevMonthLabel)}
+            next-month-label=${ifDefined(this.nextMonthLabel)}
             .disabledDates=${this.disabledDates}
             @date-select=${this.handleDateSelect}
           ></ui-calendar>
@@ -191,10 +193,10 @@ export class UiDatePicker extends LitElement {
             ? html`
                 <div class="footer">
                   <ui-button variant="ghost" data-size="small" @click=${this.handleClear}>
-                    ${this.clearLabel}
+                    ${this.clearLabel ?? getUiCoreConfig().labels.datePicker.clear}
                   </ui-button>
                   <ui-button variant="primary" data-size="small" @click=${this.handleApply}>
-                    ${this.applyLabel}
+                    ${this.applyLabel ?? getUiCoreConfig().labels.datePicker.apply}
                   </ui-button>
                 </div>
               `

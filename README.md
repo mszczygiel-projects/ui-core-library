@@ -151,6 +151,85 @@ Per-client brand overrides go on `:root` after the imports:
 }
 ```
 
+## Runtime configuration — `configureUiCore()`
+
+Call it **once at app boot**, before anything renders. The config is a plain module-level object, so components read it as they render — React does not re-render a component that already read a value.
+
+```ts
+import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations';
+
+configureUiCore({
+  locale: 'pl-PL',
+  labels: {
+    dialog: { close: 'Zamknij okno' },
+    pagination: { item: (page) => `Strona ${page}` },
+  },
+});
+```
+
+| Option          | Type                       | Default     | What it does                                                    |
+| --------------- | -------------------------- | ----------- | --------------------------------------------------------------- |
+| `labels`        | `UiCoreLabelsOverrides`    | English     | Every UI string the components render on their own — see below  |
+| `locale`        | `string`                   | `''`        | BCP 47 tag for formatting dates the components own              |
+| `loaderVariant` | `'spinner'`                | `'spinner'` | Spinner style used by `Loader` and every button's loading state |
+| `iconSet`       | `'default' \| 'heroicons'` | `'default'` | Reserved — not yet wired to anything                            |
+
+### UI text (`labels`)
+
+**Components never own translated text.** Every string one can render on its own has an English default in the library and is replaced by your i18n stack — either globally here, or per instance via a prop.
+
+Merging is **per leaf**: overriding `labels.listbox.empty` leaves `create` and `loading` on their English defaults.
+
+A label is a **plain string** when it is fully static, and a **function** when it contains a variable — the whole sentence belongs to the translator, because word order differs between languages:
+
+```ts
+configureUiCore({
+  labels: {
+    searchField: { clear: 'Wyczyść' }, // static  → string
+    combobox: { removeChip: (option) => `Usuń ${option}` }, // dynamic → function
+  },
+});
+```
+
+Every label also has a matching per-instance prop that wins over the global config, with the same type:
+
+```tsx
+<Dialog closeLabel="Zamknij" />
+<Pagination getItemAriaLabel={(page) => `Strona ${page}`} />
+```
+
+```html
+<ui-dialog close-label="Zamknij"></ui-dialog>
+```
+
+The full list of paths lives in `UiCoreLabels` in [`packages/foundations/src/config.ts`](packages/foundations/src/config.ts) — it is exported, so your i18n layer can type against it:
+
+```ts
+import type { UiCoreLabels, UiCoreLabelsOverrides } from '@mszczygiel-projects/ui-core-foundations';
+```
+
+### Dates and numbers (`locale`)
+
+`locale` affects only the data a component formats itself — Calendar's day names and cell labels, DateField's display and parsing. It never affects UI copy, which always comes from `labels`.
+
+Resolution order, most specific first:
+
+```
+component prop  ??  configureUiCore({ locale })  ??  navigator.language  ??  'en-US'
+```
+
+Leaving it empty (the default) keeps the runtime locale in charge.
+
+**Pluralization, date and number formatting of your own data are out of scope.** The library never embeds `Intl` logic for copy and never picks a plural form — pass pre-formatted strings, or a formatter callback prop.
+
+### RTL
+
+There is no `dir` option. The components' CSS uses logical properties throughout, so right-to-left works from the native HTML attribute:
+
+```html
+<html dir="rtl"></html>
+```
+
 ## Generating your own tokens / icons
 
 Both `@mszczygiel-projects/ui-core-foundations` and `@mszczygiel-projects/ui-core-icons` ship a CLI so a consumer project can regenerate `tokens.css` / `tailwind.css` / `tokens.ts` from its own Luckino export, or build an icon set from its own SVG sources.

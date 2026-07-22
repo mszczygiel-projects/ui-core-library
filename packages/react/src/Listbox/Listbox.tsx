@@ -10,6 +10,7 @@ import {
 } from './listbox-navigation.js';
 import type { ListboxItems, ListboxRow } from './listbox-navigation.js';
 import './Listbox.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type {
   ListboxOption,
@@ -65,17 +66,17 @@ export interface ListboxProps {
   loading?: boolean;
   /**
    * Text shown while `loading`.
-   * @default 'Loading...'
+   * @default `getUiCoreConfig().labels.listbox.loading`
    */
   loadingLabel?: string;
   /**
    * Text shown when there are no options and it is not loading.
-   * @default 'No results found'
+   * @default `getUiCoreConfig().labels.listbox.empty`
    */
   emptyLabel?: string;
   /**
    * Leading word of the create affordance, rendered in the strong weight.
-   * @default 'Create'
+   * @default `getUiCoreConfig().labels.listbox.create`
    */
   createLabel?: string;
   /** Pending query; when set, the create affordance is rendered as the last row. */
@@ -102,9 +103,9 @@ export function Listbox({
   activeIndex = -1,
   size = 'default',
   loading = false,
-  loadingLabel = 'Loading...',
-  emptyLabel = 'No results found',
-  createLabel = 'Create',
+  loadingLabel,
+  emptyLabel,
+  createLabel,
   createValue,
   labelledBy,
   label,
@@ -113,6 +114,11 @@ export function Listbox({
   className,
   style,
 }: ListboxProps) {
+  const labels = getUiCoreConfig().labels.listbox;
+  const resolvedLoadingLabel = loadingLabel ?? labels.loading;
+  const resolvedEmptyLabel = emptyLabel ?? labels.empty;
+  const resolvedCreateLabel = createLabel ?? labels.create;
+
   const rows = buildRows(items, createValue);
   const options = flattenOptions(items);
   // While results are still arriving there is nothing to create yet.
@@ -162,14 +168,14 @@ export function Listbox({
   if (loading) {
     body = (
       <div className="ui-listbox__message" role="presentation">
-        <Loader size="small" label={loadingLabel} />
-        <span>{loadingLabel}</span>
+        <Loader size="small" label={resolvedLoadingLabel} />
+        <span>{resolvedLoadingLabel}</span>
       </div>
     );
   } else if (options.length === 0 && !createRow) {
     body = (
       <div className="ui-listbox__message" role="presentation">
-        {emptyLabel}
+        {resolvedEmptyLabel}
       </div>
     );
   } else if (isGroupedItems(items)) {
@@ -239,7 +245,7 @@ export function Listbox({
             <IconPlus />
           </span>
           <span className="ui-listbox__label">
-            <span className="ui-listbox__create-prefix">{createLabel}</span>
+            <span className="ui-listbox__create-prefix">{resolvedCreateLabel}</span>
             {` "${createValue ?? ''}"`}
           </span>
         </div>

@@ -4,6 +4,25 @@
  * being lexicographically ordered.
  */
 
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
+
+/**
+ * Resolves the locale used for formatting the dates a component owns.
+ *
+ * Four rungs, most specific first: the component prop, the library-wide
+ * `configureUiCore({ locale })`, the runtime locale, and finally en-US. This
+ * is deliberately about formatting *data* — UI copy comes from
+ * `getUiCoreConfig().labels` and never from a locale table.
+ */
+export function resolveLocale(locale?: string): string {
+  return (
+    locale ||
+    getUiCoreConfig().locale ||
+    (typeof navigator !== 'undefined' ? navigator.language : '') ||
+    'en-US'
+  );
+}
+
 export interface CalendarDay {
   iso: string;
   day: number;

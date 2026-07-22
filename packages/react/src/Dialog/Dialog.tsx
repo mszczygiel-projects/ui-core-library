@@ -3,6 +3,7 @@ import type { CSSProperties, MouseEvent as ReactMouseEvent, ReactNode, UIEvent }
 import { IconClose } from '@mszczygiel-projects/ui-core-icons/react';
 import { useDragDismiss } from '../hooks/useDragDismiss.js';
 import './Dialog.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type DialogSize = 'small' | 'medium' | 'large' | 'fullscreen';
 
@@ -97,6 +98,11 @@ export interface DialogProps {
    * @default true
    */
   hasCloseButton?: boolean;
+  /**
+   * Accessible name of the close button.
+   * @default `getUiCoreConfig().labels.dialog.close`
+   */
+  closeLabel?: string;
   /** Accessible name used when no `title` is provided. */
   label?: string;
   /**
@@ -131,6 +137,7 @@ export function Dialog({
   variant = 'default',
   dismissOn = 'both',
   hasCloseButton = true,
+  closeLabel,
   label,
   dragToDismiss = false,
   title,
@@ -299,7 +306,7 @@ export function Dialog({
             <button
               type="button"
               className="ui-dialog__close"
-              aria-label="Close dialog"
+              aria-label={closeLabel ?? getUiCoreConfig().labels.dialog.close}
               onClick={() => request('close-button')}
             >
               <IconClose aria-hidden="true" />

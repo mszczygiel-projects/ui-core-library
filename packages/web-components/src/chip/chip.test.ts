@@ -17,7 +17,8 @@ describe('UiChip', () => {
     expect(el.selected).to.equal(false);
     expect(el.disabled).to.equal(false);
     expect(el.dismissible).to.equal(false);
-    expect(el.dismissLabel).to.equal('Remove');
+    // Label props are unset by default; the text comes from the foundations config.
+    expect(el.dismissLabel).to.equal(undefined);
   });
 
   it('reflects variant, appearance and data-size attributes', async () => {

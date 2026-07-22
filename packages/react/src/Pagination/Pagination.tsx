@@ -5,6 +5,7 @@ import { TextField } from '../TextField/TextField.js';
 import { pickAriaProps } from '../aria.js';
 import { paginate } from './paginate.js';
 import './Pagination.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type { PaginationEntry } from './paginate.js';
 
@@ -52,17 +53,17 @@ export interface PaginationProps extends AriaAttributes {
   hideJumpToPage?: boolean;
   /**
    * Visible caption and accessible name of the jump-to-page field.
-   * @default 'Go to page'
+   * @default `getUiCoreConfig().labels.pagination.jumpToPage`
    */
   jumpLabel?: string;
   /**
    * Accessible name of the previous-page button.
-   * @default 'Previous page'
+   * @default `getUiCoreConfig().labels.pagination.previousPage`
    */
   prevLabel?: string;
   /**
    * Accessible name of the next-page button.
-   * @default 'Next page'
+   * @default `getUiCoreConfig().labels.pagination.nextPage`
    */
   nextLabel?: string;
   /**
@@ -84,18 +85,21 @@ export function Pagination({
   siblingCount = 1,
   pageLabel,
   hideJumpToPage = false,
-  jumpLabel = 'Go to page',
-  prevLabel = 'Previous page',
-  nextLabel = 'Next page',
-  getItemAriaLabel = (page) => `Page ${page}`,
+  jumpLabel,
+  prevLabel,
+  nextLabel,
+  getItemAriaLabel,
   className,
   style,
-  'aria-label': ariaLabel = 'Pagination',
+  'aria-label': ariaLabel,
   ...aria
 }: PaginationProps) {
   const total = Math.max(1, Math.floor(totalPages));
   const current = Math.min(Math.max(1, Math.floor(currentPage)), total);
   const entries = paginate(current, total, siblingCount);
+  const labels = getUiCoreConfig().labels.pagination;
+  const resolvedJumpLabel = jumpLabel ?? labels.jumpToPage;
+  const itemAriaLabel = getItemAriaLabel ?? labels.item;
   const jumpLabelId = useId();
   const [draft, setDraft] = useState<string | null>(null);
 
@@ -111,7 +115,7 @@ export function Pagination({
   return (
     <nav
       {...pickAriaProps(aria)}
-      aria-label={ariaLabel}
+      aria-label={ariaLabel ?? labels.label}
       className={['ui-pagination', className].filter(Boolean).join(' ')}
       style={style}
     >
@@ -119,7 +123,7 @@ export function Pagination({
         className="ui-pagination__prev"
         variant="ghost"
         icon={<IconChevronLeft />}
-        aria-label={prevLabel}
+        aria-label={prevLabel ?? labels.previousPage}
         disabled={current <= 1}
         onClick={() => onChange(current - 1)}
       />
@@ -139,7 +143,7 @@ export function Pagination({
                 ]
                   .filter(Boolean)
                   .join(' ')}
-                aria-label={getItemAriaLabel(entry)}
+                aria-label={itemAriaLabel(entry)}
                 aria-current={entry === current ? 'page' : undefined}
                 onClick={() => {
                   if (entry !== current) onChange(entry);
@@ -155,7 +159,7 @@ export function Pagination({
         className="ui-pagination__next"
         variant="ghost"
         icon={<IconChevronRight />}
-        aria-label={nextLabel}
+        aria-label={nextLabel ?? labels.nextPage}
         disabled={current >= total}
         onClick={() => onChange(current + 1)}
       />
@@ -165,7 +169,7 @@ export function Pagination({
           {!hideJumpToPage && (
             <div className="ui-pagination__jump">
               <span id={jumpLabelId} className="ui-pagination__jump-label">
-                {jumpLabel}
+                {resolvedJumpLabel}
               </span>
               <TextField
                 className="ui-pagination__jump-field"

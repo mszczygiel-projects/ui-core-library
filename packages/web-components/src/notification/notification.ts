@@ -4,6 +4,7 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { notificationStyles } from './notification.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type NotificationStatus = 'info' | 'success' | 'warning' | 'error';
 export type NotificationVariant = 'default' | 'subtle';
@@ -70,6 +71,12 @@ export class UiNotification extends LitElement {
   @property({ type: Boolean, attribute: 'has-close-button', reflect: true })
   hasCloseButton = true;
 
+  /**
+   * Accessible name of the close button.
+   * @default `getUiCoreConfig().labels.notification.close`
+   */
+  @property({ type: String, attribute: 'close-label' }) closeLabel?: string;
+
   /** Tracks whether the default slot has any content. */
   @state() private _hasDescription = false;
 
@@ -108,7 +115,7 @@ export class UiNotification extends LitElement {
               <button
                 type="button"
                 class="close"
-                aria-label="Close notification"
+                aria-label=${this.closeLabel ?? getUiCoreConfig().labels.notification.close}
                 @click=${this._handleClose}
               >
                 <span aria-hidden="true">${unsafeSVG(svgMap['icon-close'])}</span>

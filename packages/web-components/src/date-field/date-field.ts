@@ -1,6 +1,7 @@
 import { LitElement, html, nothing, type PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { dateFieldStyles } from './date-field.styles.js';
@@ -12,6 +13,7 @@ import {
   parseDateText,
   parseRangeText,
 } from './date-format.js';
+import { resolveLocale } from '../calendar/date-utils.js';
 import '../date-picker/date-picker.js';
 import type {
   DatePickerDateChangeDetail,
@@ -20,6 +22,7 @@ import type {
 } from '../date-picker/date-picker.js';
 import type { PopoverPlacement } from '../popover/popover.js';
 import type { CalendarSelectionMode } from '../calendar/calendar.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type DateFieldVariant = 'outline' | 'filled' | 'underlined';
 export type DateFieldSize = 'small' | 'default' | 'large';
@@ -149,13 +152,13 @@ export class UiDateField extends LitElement {
 
   /** Accessible name of the calendar toggle button. */
   @property({ type: String, attribute: 'calendar-button-label' })
-  calendarButtonLabel = 'Open calendar';
+  calendarButtonLabel?: string;
 
   /** Label of the Apply button (range mode). */
-  @property({ type: String, attribute: 'apply-label' }) applyLabel = 'Apply';
+  @property({ type: String, attribute: 'apply-label' }) applyLabel?: string;
 
   /** Label of the Clear button (range mode). */
-  @property({ type: String, attribute: 'clear-label' }) clearLabel = 'Clear';
+  @property({ type: String, attribute: 'clear-label' }) clearLabel?: string;
 
   @state() private _open = false;
   @state() private _editing = false;
@@ -180,7 +183,7 @@ export class UiDateField extends LitElement {
   }
 
   private get _resolvedLocale(): string {
-    return this.locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US';
+    return resolveLocale(this.locale);
   }
 
   private get _isDisabled(): boolean {
@@ -366,8 +369,8 @@ export class UiDateField extends LitElement {
         first-day-of-week=${this.firstDayOfWeek ?? nothing}
         locale=${this.locale ?? nothing}
         today=${this.today ?? nothing}
-        apply-label=${this.applyLabel}
-        clear-label=${this.clearLabel}
+        apply-label=${ifDefined(this.applyLabel)}
+        clear-label=${ifDefined(this.clearLabel)}
         .disabledDates=${this.disabledDates}
         @date-change=${this._onPickerDateChange}
         @range-change=${this._onPickerRangeChange}
@@ -400,7 +403,8 @@ export class UiDateField extends LitElement {
           <button
             class="calendar-toggle icon icon--trailing"
             type="button"
-            aria-label=${this.calendarButtonLabel}
+            aria-label=${this.calendarButtonLabel ??
+            getUiCoreConfig().labels.dateField.openCalendar}
             aria-expanded=${this._open ? 'true' : 'false'}
             aria-haspopup="dialog"
             ?disabled=${isDisabled}

@@ -28,6 +28,7 @@ import {
 } from '../Listbox/listbox-navigation.js';
 import type { ListboxItems, ListboxRow } from '../Listbox/listbox-navigation.js';
 import './SelectField.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SelectFieldSize = 'small' | 'default' | 'large';
@@ -119,9 +120,14 @@ export interface SelectFieldProps {
   leadingIcon?: ReactNode;
   /**
    * Text shown when there are no options.
-   * @default 'No results found'
+   * @default `getUiCoreConfig().labels.listbox.empty`
    */
   emptyLabel?: string;
+  /**
+   * Accessible name of the clear button.
+   * @default `getUiCoreConfig().labels.selectField.clear`
+   */
+  clearLabel?: string;
   /** Called with the selected option's value; clearing passes an empty string. */
   onChange?: (value: string) => void;
   /** Extra class names appended to the root element. */
@@ -151,7 +157,8 @@ export function SelectField({
   autoComplete,
   ariaInvalid,
   leadingIcon,
-  emptyLabel = 'No results found',
+  emptyLabel,
+  clearLabel,
   onChange,
   className,
   style,
@@ -383,7 +390,7 @@ export function SelectField({
           <span
             className="ui-select-field__clear"
             role="button"
-            aria-label="Clear selection"
+            aria-label={clearLabel ?? getUiCoreConfig().labels.selectField.clear}
             tabIndex={0}
             onMouseDown={handleClear}
             onKeyDown={(e) => {

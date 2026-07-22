@@ -3,6 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { iconButtonStyles } from './icon-button.styles.js';
 import { focusStyles } from '../styles/focus.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 import '../loader/loader.js';
 
 export type IconButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger';
@@ -43,6 +44,12 @@ export class UiIconButton extends LitElement {
   /** Replaces the icon with a spinner and disables interaction. */
   @property({ type: Boolean, reflect: true }) loading = false;
 
+  /**
+   * Accessible name of the spinner shown while `loading`.
+   * @default `getUiCoreConfig().labels.button.loading`
+   */
+  @property({ type: String, attribute: 'loading-label' }) loadingLabel?: string;
+
   /** Disables the button. */
   @property({ type: Boolean }) disabled = false;
 
@@ -68,7 +75,10 @@ export class UiIconButton extends LitElement {
         aria-label=${this.label ?? nothing}
       >
         ${this.loading
-          ? html`<ui-loader data-size=${this.loaderSize} label="Loading"></ui-loader>`
+          ? html`<ui-loader
+              data-size=${this.loaderSize}
+              label=${this.loadingLabel ?? getUiCoreConfig().labels.button.loading}
+            ></ui-loader>`
           : html`<slot></slot>`}
       </button>
     `;

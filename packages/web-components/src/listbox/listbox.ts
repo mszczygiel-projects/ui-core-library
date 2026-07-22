@@ -3,6 +3,7 @@ import type { TemplateResult } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 import '../loader/loader.js';
 
 /** Single selectable entry in an option list. */
@@ -146,13 +147,13 @@ export interface ListboxRenderConfig {
   activeIndex: number;
   /** Replaces the list with a loading message. */
   loading?: boolean;
-  /** Text shown while `loading`. */
+  /** Text shown while `loading`. Defaults to `getUiCoreConfig().labels.listbox.loading`. */
   loadingLabel?: string;
-  /** Text shown when there are no options and it is not loading. */
+  /** Text shown when there are no options and it is not loading. Defaults to `getUiCoreConfig().labels.listbox.empty`. */
   emptyLabel?: string;
   /**
    * Leading word of the create affordance, rendered in the strong weight.
-   * @default 'Create'
+   * @default `getUiCoreConfig().labels.listbox.create`
    */
   createLabel?: string;
   /** Pending query; when set, the create affordance is rendered as the last row. */
@@ -227,7 +228,8 @@ function renderCreateRow(
     >
       <span class="option__icon" aria-hidden="true">${unsafeSVG(svgMap['icon-plus'])}</span>
       <span class="option__label"
-        ><span class="option__create-prefix">${config.createLabel ?? 'Create'}</span
+        ><span class="option__create-prefix"
+          >${config.createLabel ?? getUiCoreConfig().labels.listbox.create}</span
         >${` "${config.createValue ?? ''}"`}</span
       >
     </div>
@@ -252,14 +254,17 @@ export function renderListbox(config: ListboxRenderConfig): TemplateResult {
   if (config.loading) {
     body = html`
       <div class="listbox__message" role="presentation">
-        <ui-loader data-size="small" label=${config.loadingLabel ?? 'Loading'}></ui-loader>
-        <span>${config.loadingLabel ?? 'Loading...'}</span>
+        <ui-loader
+          data-size="small"
+          label=${config.loadingLabel ?? getUiCoreConfig().labels.listbox.loading}
+        ></ui-loader>
+        <span>${config.loadingLabel ?? getUiCoreConfig().labels.listbox.loading}</span>
       </div>
     `;
   } else if (options.length === 0 && !createRow) {
     body = html`
       <div class="listbox__message" role="presentation">
-        ${config.emptyLabel ?? 'No results found'}
+        ${config.emptyLabel ?? getUiCoreConfig().labels.listbox.empty}
       </div>
     `;
   } else if (config.items && isGroupedItems(config.items)) {

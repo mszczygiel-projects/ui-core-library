@@ -9,6 +9,7 @@ import type {
   TextFieldLabelPlacement,
 } from '../TextField/TextField.js';
 import './PasswordField.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 /**
  * Password input built on TextField, with a show/hide visibility toggle.
@@ -59,6 +60,16 @@ export interface PasswordFieldProps {
   showPassword?: boolean;
   /** Called when the visibility toggle is clicked. */
   onToggleVisibility?: () => void;
+  /**
+   * Accessible name of the visibility toggle while the password is hidden.
+   * @default `getUiCoreConfig().labels.passwordField.show`
+   */
+  showLabel?: string;
+  /**
+   * Accessible name of the visibility toggle while the password is visible.
+   * @default `getUiCoreConfig().labels.passwordField.hide`
+   */
+  hideLabel?: string;
   /** Called with the input's string value on every change. */
   onChange?: (value: string) => void;
   /** Extra class names appended to the root element. */
@@ -70,6 +81,8 @@ export interface PasswordFieldProps {
 export function PasswordField({
   showPassword: controlledShowPassword,
   onToggleVisibility,
+  showLabel,
+  hideLabel,
   disabled,
   state,
   ...rest
@@ -92,7 +105,11 @@ export function PasswordField({
     <button
       className="ui-password-field__toggle"
       type="button"
-      aria-label={showPassword ? 'Hide password' : 'Show password'}
+      aria-label={
+        showPassword
+          ? (hideLabel ?? getUiCoreConfig().labels.passwordField.hide)
+          : (showLabel ?? getUiCoreConfig().labels.passwordField.show)
+      }
       aria-pressed={showPassword}
       disabled={isDisabled}
       onClick={handleToggle}

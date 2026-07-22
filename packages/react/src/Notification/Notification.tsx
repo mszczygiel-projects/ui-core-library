@@ -6,6 +6,7 @@ import {
   IconInfo,
 } from '@mszczygiel-projects/ui-core-icons/react';
 import './Notification.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type NotificationStatus = 'info' | 'success' | 'warning' | 'error';
 export type NotificationVariant = 'default' | 'subtle';
@@ -45,6 +46,11 @@ export interface NotificationProps {
   hasCloseButton?: boolean;
   /** Called when the close button is clicked. */
   onClose?: () => void;
+  /**
+   * Accessible name of the close button.
+   * @default `getUiCoreConfig().labels.notification.close`
+   */
+  closeLabel?: string;
   /** Extra class names appended to the root element. */
   className?: string;
   /** Inline styles forwarded to the root element (positioning only — never visual styles). */
@@ -73,6 +79,7 @@ export function Notification({
   hasLeadingIcon = true,
   hasCloseButton = true,
   onClose,
+  closeLabel,
   className,
   style,
 }: NotificationProps) {
@@ -102,7 +109,7 @@ export function Notification({
         <button
           type="button"
           className="ui-notification__close"
-          aria-label="Close notification"
+          aria-label={closeLabel ?? getUiCoreConfig().labels.notification.close}
           onClick={onClose}
         >
           <IconClose aria-hidden="true" />

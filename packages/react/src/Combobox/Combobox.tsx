@@ -32,6 +32,7 @@ import {
 } from '../Listbox/listbox-navigation.js';
 import type { ListboxItems, ListboxOption, ListboxRow } from '../Listbox/listbox-navigation.js';
 import './Combobox.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type ComboboxVariant = 'outline' | 'filled' | 'underlined';
 export type ComboboxSize = 'small' | 'default' | 'large';
@@ -131,17 +132,27 @@ export interface ComboboxProps {
   leadingIcon?: ReactNode;
   /**
    * Text shown when nothing matches.
-   * @default 'No results found'
+   * @default `getUiCoreConfig().labels.listbox.empty`
    */
   emptyLabel?: string;
   /**
+   * Accessible name of the clear button.
+   * @default `getUiCoreConfig().labels.combobox.clear`
+   */
+  clearLabel?: string;
+  /**
+   * Builds the accessible name of a selected chip's dismiss button, in `multiple` mode.
+   * @default `getUiCoreConfig().labels.combobox.removeChip`
+   */
+  removeChipLabel?: (optionLabel: string) => string;
+  /**
    * Text shown while `loading`.
-   * @default 'Loading...'
+   * @default `getUiCoreConfig().labels.listbox.loading`
    */
   loadingLabel?: string;
   /**
    * Prefix of the create row; the query is appended in quotes.
-   * @default 'Create'
+   * @default `getUiCoreConfig().labels.listbox.create`
    */
   createLabel?: string;
   /** Called with the selected value in single mode. */
@@ -178,9 +189,11 @@ export function Combobox({
   disabled,
   clearable = false,
   leadingIcon,
-  emptyLabel = 'No results found',
-  loadingLabel = 'Loading...',
-  createLabel = 'Create',
+  emptyLabel,
+  loadingLabel,
+  createLabel,
+  clearLabel,
+  removeChipLabel,
   onChange,
   onValuesChange,
   onFilter,
@@ -440,7 +453,9 @@ export function Combobox({
                 size="small"
                 dismissible
                 disabled={isDisabled}
-                dismissLabel={`Remove ${option.label}`}
+                dismissLabel={(removeChipLabel ?? getUiCoreConfig().labels.combobox.removeChip)(
+                  option.label,
+                )}
                 onDismiss={() => removeValue(option.value)}
               >
                 {option.label}
@@ -476,7 +491,7 @@ export function Combobox({
           <span
             className="ui-combobox__clear"
             role="button"
-            aria-label="Clear selection"
+            aria-label={clearLabel ?? getUiCoreConfig().labels.combobox.clear}
             tabIndex={0}
             onMouseDown={handleClear}
             onKeyDown={(e) => {

@@ -9,6 +9,7 @@ import type {
 import { IconClose } from '@mszczygiel-projects/ui-core-icons/react';
 import { pickAriaProps } from '../aria.js';
 import './Chip.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type ChipVariant = 'neutral' | 'brand' | 'success' | 'warning' | 'error' | 'info';
 export type ChipAppearance = 'solid' | 'subtle' | 'outline';
@@ -59,7 +60,7 @@ export interface ChipProps extends AriaAttributes {
   dismissible?: boolean;
   /**
    * Accessible name of the dismiss button.
-   * @default 'Remove'
+   * @default `getUiCoreConfig().labels.chip.dismiss`
    */
   dismissLabel?: string;
   /** Leading icon. */
@@ -83,7 +84,7 @@ export function Chip({
   selected = false,
   disabled = false,
   dismissible = false,
-  dismissLabel = 'Remove',
+  dismissLabel,
   icon,
   children,
   onClick,
@@ -143,7 +144,7 @@ export function Chip({
         <button
           type="button"
           className="ui-chip__dismiss"
-          aria-label={dismissLabel}
+          aria-label={dismissLabel ?? getUiCoreConfig().labels.chip.dismiss}
           onClick={handleDismissClick}
         >
           <IconClose />

@@ -18,6 +18,7 @@ import type {
 import { commitValue, formatValue, parseValue, stepValue } from './numeric.js';
 import { useHoldRepeat } from './useHoldRepeat.js';
 import './NumberField.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type NumberFieldVariant = TextFieldVariant;
 export type NumberFieldSize = TextFieldSize;
@@ -101,12 +102,12 @@ export interface NumberFieldProps {
   readOnly?: boolean;
   /**
    * Accessible name for the decrement button.
-   * @default 'Decrease'
+   * @default `getUiCoreConfig().labels.numberField.decrement`
    */
   decrementLabel?: string;
   /**
    * Accessible name for the increment button.
-   * @default 'Increase'
+   * @default `getUiCoreConfig().labels.numberField.increment`
    */
   incrementLabel?: string;
   /** Called on commit: blur, Enter, arrow key, or stepper click/hold tick. */
@@ -136,8 +137,8 @@ export function NumberField({
   disabled,
   required,
   readOnly,
-  decrementLabel = 'Decrease',
-  incrementLabel = 'Increase',
+  decrementLabel,
+  incrementLabel,
   onValueChange,
   className,
   style,
@@ -287,12 +288,24 @@ export function NumberField({
       onKeyDown={handleKeyDown}
       leadingIcon={
         isInline
-          ? stepper('decrement', decrementLabel, <IconMinus />, atMin, decrementHold)
+          ? stepper(
+              'decrement',
+              decrementLabel ?? getUiCoreConfig().labels.numberField.decrement,
+              <IconMinus />,
+              atMin,
+              decrementHold,
+            )
           : undefined
       }
       trailingIcon={
         isInline
-          ? stepper('increment', incrementLabel, <IconPlus />, atMax, incrementHold)
+          ? stepper(
+              'increment',
+              incrementLabel ?? getUiCoreConfig().labels.numberField.increment,
+              <IconPlus />,
+              atMax,
+              incrementHold,
+            )
           : undefined
       }
     />

@@ -36,19 +36,18 @@ export class UiLoader extends LitElement {
 
   /**
    * Accessible name announced by screen readers.
-   * @default 'Loading'
+   * @default `getUiCoreConfig().labels.loader.loading`
    */
-  @property({ type: String }) label = 'Loading';
+  @property({ type: String }) label?: string;
 
   private get variant(): LoaderVariant {
     return getUiCoreConfig().loaderVariant;
   }
 
   override render() {
+    const label = this.label ?? getUiCoreConfig().labels.loader.loading;
     return html`
-      <span role="status" aria-label=${this.label} aria-live="polite">
-        ${this.renderVariant()}
-      </span>
+      <span role="status" aria-label=${label} aria-live="polite"> ${this.renderVariant()} </span>
     `;
   }
 

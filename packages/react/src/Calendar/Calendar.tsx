@@ -9,6 +9,7 @@ import {
   dayLabel,
   daysInMonth,
   localeFirstDayOfWeek,
+  resolveLocale,
   monthLabel,
   parseISODate,
   todayISO,
@@ -17,6 +18,7 @@ import {
 } from './date-utils.js';
 import type { CalendarDay } from './date-utils.js';
 import './Calendar.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type CalendarSelectionMode = 'single' | 'range';
 
@@ -100,16 +102,15 @@ export function Calendar({
   firstDayOfWeek,
   locale,
   today,
-  prevMonthLabel = 'Previous month',
-  nextMonthLabel = 'Next month',
+  prevMonthLabel,
+  nextMonthLabel,
   onDateSelect,
   onMonthChange,
   className,
   style,
   ...aria
 }: CalendarProps) {
-  const resolvedLocale =
-    locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US';
+  const resolvedLocale = resolveLocale(locale);
   const resolvedFirstDay =
     firstDayOfWeek && firstDayOfWeek >= 1 && firstDayOfWeek <= 7
       ? firstDayOfWeek
@@ -299,7 +300,7 @@ export function Calendar({
         <button
           type="button"
           className="ui-calendar__nav"
-          aria-label={prevMonthLabel}
+          aria-label={prevMonthLabel ?? getUiCoreConfig().labels.calendar.previousMonth}
           onClick={() => navigateMonth(-1)}
         >
           <IconChevronLeft />
@@ -310,7 +311,7 @@ export function Calendar({
         <button
           type="button"
           className="ui-calendar__nav"
-          aria-label={nextMonthLabel}
+          aria-label={nextMonthLabel ?? getUiCoreConfig().labels.calendar.nextMonth}
           onClick={() => navigateMonth(1)}
         >
           <IconChevronRight />

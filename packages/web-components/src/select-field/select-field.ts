@@ -21,6 +21,7 @@ import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
 import '../popover/popover.js';
 import type { PopoverPlacement, PopoverOpenChangeDetail } from '../popover/popover.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SelectFieldSize = 'small' | 'default' | 'large';
@@ -140,9 +141,15 @@ export class UiSelectField extends LitElement {
 
   /**
    * Text shown when there are no options.
-   * @default 'No results found'
+   * @default `getUiCoreConfig().labels.listbox.empty`
    */
-  @property({ type: String, attribute: 'empty-label' }) emptyLabel = 'No results found';
+  @property({ type: String, attribute: 'empty-label' }) emptyLabel?: string;
+
+  /**
+   * Accessible name of the clear button.
+   * @default `getUiCoreConfig().labels.selectField.clear`
+   */
+  @property({ type: String, attribute: 'clear-label' }) clearLabel?: string;
 
   @state() private _open = false;
   @state() private _activeIndex = -1;
@@ -432,7 +439,7 @@ export class UiSelectField extends LitElement {
                 ? html`<span
                     class="clear"
                     role="button"
-                    aria-label="Clear selection"
+                    aria-label=${this.clearLabel ?? getUiCoreConfig().labels.selectField.clear}
                     tabindex="0"
                     @mousedown=${this._handleClear}
                     @keydown=${this._handleClearKeyDown}

@@ -6,6 +6,7 @@ import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { searchFieldStyles } from './search-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type SearchFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SearchFieldSize = 'small' | 'default' | 'large';
@@ -86,6 +87,12 @@ export class UiSearchField extends LitElement {
 
   /** Makes the input read-only. */
   @property({ type: Boolean, reflect: true }) readonly = false;
+
+  /**
+   * Accessible name of the clear button.
+   * @default `getUiCoreConfig().labels.searchField.clear`
+   */
+  @property({ type: String, attribute: 'clear-label' }) clearLabel?: string;
 
   @state() private _formDisabled = false;
 
@@ -214,7 +221,7 @@ export class UiSearchField extends LitElement {
         <button
           class="clear icon icon--trailing"
           type="button"
-          aria-label="Clear search"
+          aria-label=${this.clearLabel ?? getUiCoreConfig().labels.searchField.clear}
           aria-hidden=${hasValue ? nothing : 'true'}
           tabindex=${hasValue ? '0' : '-1'}
           ?disabled=${isDisabled}

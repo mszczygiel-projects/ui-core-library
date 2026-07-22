@@ -6,6 +6,7 @@ import { Calendar } from '../Calendar/Calendar.js';
 import type { CalendarDateSelectDetail, CalendarSelectionMode } from '../Calendar/Calendar.js';
 import { Button } from '../Button/Button.js';
 import './DatePicker.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export interface DatePickerDateChangeDetail {
   /** Committed date, ISO `YYYY-MM-DD`. */
@@ -84,12 +85,12 @@ export interface DatePickerProps {
   today?: string;
   /**
    * Label of the Apply button (range mode).
-   * @default 'Apply'
+   * @default `getUiCoreConfig().labels.datePicker.apply`
    */
   applyLabel?: string;
   /**
    * Label of the Clear button (range mode).
-   * @default 'Clear'
+   * @default `getUiCoreConfig().labels.datePicker.clear`
    */
   clearLabel?: string;
   /** Accessible name of the previous-month button. */
@@ -122,8 +123,8 @@ export function DatePicker({
   firstDayOfWeek,
   locale,
   today,
-  applyLabel = 'Apply',
-  clearLabel = 'Clear',
+  applyLabel,
+  clearLabel,
   prevMonthLabel,
   nextMonthLabel,
   anchor,
@@ -189,10 +190,10 @@ export function DatePicker({
         {range && (
           <div className="ui-date-picker__footer">
             <Button variant="ghost" size="small" onClick={handleClear}>
-              {clearLabel}
+              {clearLabel ?? getUiCoreConfig().labels.datePicker.clear}
             </Button>
             <Button variant="primary" size="small" onClick={handleApply}>
-              {applyLabel}
+              {applyLabel ?? getUiCoreConfig().labels.datePicker.apply}
             </Button>
           </div>
         )}

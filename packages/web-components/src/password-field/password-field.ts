@@ -6,6 +6,7 @@ import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { passwordFieldStyles } from './password-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type PasswordFieldVariant = 'outline' | 'filled' | 'underlined';
 export type PasswordFieldSize = 'small' | 'default' | 'large';
@@ -86,6 +87,18 @@ export class UiPasswordField extends LitElement {
 
   /** Shows the password as plain text; toggled by the built-in eye button. */
   @property({ type: Boolean, reflect: true, attribute: 'show-password' }) showPassword = false;
+
+  /**
+   * Accessible name of the visibility toggle while the password is hidden.
+   * @default `getUiCoreConfig().labels.passwordField.show`
+   */
+  @property({ type: String, attribute: 'show-label' }) showLabel?: string;
+
+  /**
+   * Accessible name of the visibility toggle while the password is visible.
+   * @default `getUiCoreConfig().labels.passwordField.hide`
+   */
+  @property({ type: String, attribute: 'hide-label' }) hideLabel?: string;
 
   @state() private _formDisabled = false;
 
@@ -183,7 +196,10 @@ export class UiPasswordField extends LitElement {
     const isDisabled = this._isDisabled;
     const hintId = 'hint';
     const inputType = this.showPassword ? 'text' : 'password';
-    const toggleLabel = this.showPassword ? 'Hide password' : 'Show password';
+    const labels = getUiCoreConfig().labels.passwordField;
+    const toggleLabel = this.showPassword
+      ? (this.hideLabel ?? labels.hide)
+      : (this.showLabel ?? labels.show);
     const toggleIcon = this.showPassword ? svgMap['icon-eye'] : svgMap['icon-eye-slash'];
 
     return html`

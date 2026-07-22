@@ -17,7 +17,9 @@ import {
   parseDateText,
   parseRangeText,
 } from './date-format.js';
+import { resolveLocale } from '../Calendar/date-utils.js';
 import './DateField.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export interface DateFieldChangeDetail {
   startDate: string | null;
@@ -149,7 +151,7 @@ export function DateField({
   locale,
   today,
   placement = 'bottom-start',
-  calendarButtonLabel = 'Open calendar',
+  calendarButtonLabel,
   applyLabel,
   clearLabel,
   prevMonthLabel,
@@ -171,8 +173,7 @@ export function DateField({
   const [text, setText] = useState('');
   const [invalid, setInvalid] = useState(false);
 
-  const resolvedLocale =
-    locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US';
+  const resolvedLocale = resolveLocale(locale);
   const isDisabled = disabled || state === 'disabled';
 
   const display = editing
@@ -240,7 +241,7 @@ export function DateField({
     <button
       className="ui-date-field__calendar-toggle"
       type="button"
-      aria-label={calendarButtonLabel}
+      aria-label={calendarButtonLabel ?? getUiCoreConfig().labels.dateField.openCalendar}
       aria-haspopup="dialog"
       aria-expanded={open}
       disabled={isDisabled}

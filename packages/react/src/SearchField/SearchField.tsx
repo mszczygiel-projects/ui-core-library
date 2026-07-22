@@ -9,6 +9,7 @@ import type {
   TextFieldLabelPlacement,
 } from '../TextField/TextField.js';
 import './SearchField.css';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 /**
  * Search input built on TextField, with a leading search icon and a clear button.
@@ -62,6 +63,11 @@ export interface SearchFieldProps {
   onChange?: (value: string) => void;
   /** Called when the clear button empties the field. */
   onClear?: () => void;
+  /**
+   * Accessible name of the clear button.
+   * @default `getUiCoreConfig().labels.searchField.clear`
+   */
+  clearLabel?: string;
   /** Extra class names appended to the root element. */
   className?: string;
   /** Inline styles forwarded to the root element (positioning only — never visual styles). */
@@ -84,6 +90,7 @@ export function SearchField({
   readOnly,
   onChange,
   onClear,
+  clearLabel,
   className,
   style,
 }: SearchFieldProps) {
@@ -122,7 +129,7 @@ export function SearchField({
         .filter(Boolean)
         .join(' ')}
       type="button"
-      aria-label="Clear search"
+      aria-label={clearLabel ?? getUiCoreConfig().labels.searchField.clear}
       aria-hidden={!hasValue || undefined}
       tabIndex={hasValue ? 0 : -1}
       disabled={isDisabled}

@@ -7,6 +7,7 @@ import { focusStyles } from '../styles/focus.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
 import { paginate } from './paginate.js';
 import '../icon-button/icon-button.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type { PaginationEntry } from './paginate.js';
 
@@ -73,34 +74,33 @@ export class UiPagination extends LitElement {
 
   /**
    * Visible caption and accessible name of the jump-to-page field.
-   * @default 'Go to page'
+   * @default `getUiCoreConfig().labels.pagination.jumpToPage`
    */
-  @property({ type: String, attribute: 'jump-label' }) jumpLabel = 'Go to page';
+  @property({ type: String, attribute: 'jump-label' }) jumpLabel?: string;
 
   /**
    * Accessible name of the previous-page button.
-   * @default 'Previous page'
+   * @default `getUiCoreConfig().labels.pagination.previousPage`
    */
-  @property({ type: String, attribute: 'prev-label' }) prevLabel = 'Previous page';
+  @property({ type: String, attribute: 'prev-label' }) prevLabel?: string;
 
   /**
    * Accessible name of the next-page button.
-   * @default 'Next page'
+   * @default `getUiCoreConfig().labels.pagination.nextPage`
    */
-  @property({ type: String, attribute: 'next-label' }) nextLabel = 'Next page';
+  @property({ type: String, attribute: 'next-label' }) nextLabel?: string;
 
   /**
    * Accessible name of the root `<nav>`.
-   * @default 'Pagination'
+   * @default `getUiCoreConfig().labels.pagination.label`
    */
-  @property({ type: String }) label = 'Pagination';
+  @property({ type: String }) label?: string;
 
   /**
    * Builds the accessible name of a page item. Property-only (function type).
    * @default page => `Page ${page}`
    */
-  @property({ attribute: false }) itemAriaLabel: (page: number) => string = (page) =>
-    `Page ${page}`;
+  @property({ attribute: false }) itemAriaLabel?: (page: number) => string;
 
   /** Draft value of the jump field; `null` mirrors `currentPage`. */
   @state() private _draft: string | null = null;
@@ -174,13 +174,16 @@ export class UiPagination extends LitElement {
     const current = this._current;
     const total = this._total;
     const entries = paginate(current, total, this.siblingCount);
+    const labels = getUiCoreConfig().labels.pagination;
+    const jumpLabel = this.jumpLabel ?? labels.jumpToPage;
+    const itemAriaLabel = this.itemAriaLabel ?? labels.item;
 
     return html`
-      <nav class="root" aria-label=${this.label}>
+      <nav class="root" aria-label=${this.label ?? labels.label}>
         <ui-icon-button
           class="prev"
           variant="ghost"
-          label=${this.prevLabel}
+          label=${this.prevLabel ?? labels.previousPage}
           ?disabled=${current <= 1}
           @click=${this._onPrevClick}
         >
@@ -195,7 +198,7 @@ export class UiPagination extends LitElement {
                     <button
                       type="button"
                       class="item ${entry === current ? 'item--current' : ''}"
-                      aria-label=${this.itemAriaLabel(entry)}
+                      aria-label=${itemAriaLabel(entry)}
                       aria-current=${entry === current ? 'page' : nothing}
                       @click=${() => this._onItemClick(entry)}
                     >
@@ -208,7 +211,7 @@ export class UiPagination extends LitElement {
         <ui-icon-button
           class="next"
           variant="ghost"
-          label=${this.nextLabel}
+          label=${this.nextLabel ?? labels.nextPage}
           ?disabled=${current >= total}
           @click=${this._onNextClick}
         >
@@ -222,13 +225,13 @@ export class UiPagination extends LitElement {
             ? nothing
             : html`
                 <div class="jump">
-                  <span class="jump-label" aria-hidden="true">${this.jumpLabel}</span>
+                  <span class="jump-label" aria-hidden="true">${jumpLabel}</span>
                   <input
                     class="jump-input"
                     type="text"
                     inputmode="numeric"
                     autocomplete="off"
-                    aria-label=${this.jumpLabel}
+                    aria-label=${jumpLabel}
                     .value=${this._draft ?? String(current)}
                     @input=${this._onJumpInput}
                     @keydown=${this._onJumpKeydown}

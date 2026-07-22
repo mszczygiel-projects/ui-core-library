@@ -8,6 +8,7 @@ import { resetStyles } from '../styles/reset.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { DragDismissController } from '../controllers/drag-dismiss.js';
 import '../icon-button/icon-button.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type DialogSize = 'small' | 'medium' | 'large' | 'fullscreen';
 
@@ -134,6 +135,12 @@ export class UiDialog extends LitElement {
 
   /** Accessible name used when no `title` slot is provided. */
   @property({ type: String }) label?: string;
+
+  /**
+   * Accessible name of the close button.
+   * @default `getUiCoreConfig().labels.dialog.close`
+   */
+  @property({ type: String, attribute: 'close-label' }) closeLabel?: string;
 
   /**
    * Allows the sheet to be flicked away downwards. Sheet-only — it does nothing
@@ -320,7 +327,7 @@ export class UiDialog extends LitElement {
                   class="close"
                   variant="ghost"
                   data-size="small"
-                  label="Close dialog"
+                  label=${this.closeLabel ?? getUiCoreConfig().labels.dialog.close}
                   @click=${this._onCloseClick}
                 >
                   ${unsafeSVG(svgMap['icon-close'])}

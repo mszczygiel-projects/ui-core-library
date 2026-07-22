@@ -14,6 +14,7 @@ import {
   dayLabel,
   daysInMonth,
   localeFirstDayOfWeek,
+  resolveLocale,
   monthLabel,
   parseISODate,
   todayISO,
@@ -21,6 +22,7 @@ import {
   weekdayLabels,
 } from './date-utils.js';
 import type { CalendarDay } from './date-utils.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type CalendarSelectionMode = 'single' | 'range';
 
@@ -100,10 +102,10 @@ export class UiCalendar extends LitElement {
   @property({ type: String }) today?: string;
 
   /** Accessible name of the previous-month button. */
-  @property({ type: String, attribute: 'prev-month-label' }) prevMonthLabel = 'Previous month';
+  @property({ type: String, attribute: 'prev-month-label' }) prevMonthLabel?: string;
 
   /** Accessible name of the next-month button. */
-  @property({ type: String, attribute: 'next-month-label' }) nextMonthLabel = 'Next month';
+  @property({ type: String, attribute: 'next-month-label' }) nextMonthLabel?: string;
 
   @state() private viewYear = 0;
   @state() private viewMonth = 0; // 1-12
@@ -111,7 +113,7 @@ export class UiCalendar extends LitElement {
   @state() private hoverISO: string | null = null;
 
   private get resolvedLocale(): string {
-    return this.locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US';
+    return resolveLocale(this.locale);
   }
 
   private get resolvedFirstDay(): number {
@@ -325,7 +327,7 @@ export class UiCalendar extends LitElement {
           <button
             type="button"
             class="nav"
-            aria-label=${this.prevMonthLabel}
+            aria-label=${this.prevMonthLabel ?? getUiCoreConfig().labels.calendar.previousMonth}
             @click=${() => this.navigateMonth(-1)}
           >
             ${unsafeSVG(svgMap['icon-chevron-left'])}
@@ -336,7 +338,7 @@ export class UiCalendar extends LitElement {
           <button
             type="button"
             class="nav"
-            aria-label=${this.nextMonthLabel}
+            aria-label=${this.nextMonthLabel ?? getUiCoreConfig().labels.calendar.nextMonth}
             @click=${() => this.navigateMonth(1)}
           >
             ${unsafeSVG(svgMap['icon-chevron-right'])}

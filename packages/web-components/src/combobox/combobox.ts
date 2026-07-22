@@ -24,6 +24,7 @@ import { resetStyles } from '../styles/reset.styles.js';
 import '../popover/popover.js';
 import '../chip/chip.js';
 import type { PopoverPlacement, PopoverOpenChangeDetail } from '../popover/popover.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type ComboboxVariant = 'outline' | 'filled' | 'underlined';
 export type ComboboxSize = 'small' | 'default' | 'large';
@@ -173,21 +174,34 @@ export class UiCombobox extends LitElement {
 
   /**
    * Text shown when nothing matches.
-   * @default 'No results found'
+   * @default `getUiCoreConfig().labels.listbox.empty`
    */
-  @property({ type: String, attribute: 'empty-label' }) emptyLabel = 'No results found';
+  @property({ type: String, attribute: 'empty-label' }) emptyLabel?: string;
+
+  /**
+   * Accessible name of the clear button.
+   * @default `getUiCoreConfig().labels.combobox.clear`
+   */
+  @property({ type: String, attribute: 'clear-label' }) clearLabel?: string;
+
+  /**
+   * Builds the accessible name of a selected chip's dismiss button, in `multiple`
+   * mode. Property-only (function type).
+   * @default `getUiCoreConfig().labels.combobox.removeChip`
+   */
+  @property({ attribute: false }) removeChipLabel?: (optionLabel: string) => string;
 
   /**
    * Text shown while `loading`.
-   * @default 'Loading...'
+   * @default `getUiCoreConfig().labels.listbox.loading`
    */
-  @property({ type: String, attribute: 'loading-label' }) loadingLabel = 'Loading...';
+  @property({ type: String, attribute: 'loading-label' }) loadingLabel?: string;
 
   /**
    * Prefix of the create row; the query is appended in quotes.
-   * @default 'Create'
+   * @default `getUiCoreConfig().labels.listbox.create`
    */
-  @property({ type: String, attribute: 'create-label' }) createLabel = 'Create';
+  @property({ type: String, attribute: 'create-label' }) createLabel?: string;
 
   @state() private _open = false;
   @state() private _query = '';
@@ -555,7 +569,9 @@ export class UiCombobox extends LitElement {
                           data-size="small"
                           dismissible
                           ?disabled=${isDisabled}
-                          dismiss-label=${`Remove ${option.label}`}
+                          dismiss-label=${(
+                            this.removeChipLabel ?? getUiCoreConfig().labels.combobox.removeChip
+                          )(option.label)}
                           @dismiss=${() => this._removeValue(option.value)}
                           >${option.label}</ui-chip
                         >
@@ -588,7 +604,7 @@ export class UiCombobox extends LitElement {
                 ? html`<span
                     class="clear"
                     role="button"
-                    aria-label="Clear selection"
+                    aria-label=${this.clearLabel ?? getUiCoreConfig().labels.combobox.clear}
                     tabindex="0"
                     @mousedown=${this._handleClear}
                     @keydown=${(e: KeyboardEvent) => {

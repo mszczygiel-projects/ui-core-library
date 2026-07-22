@@ -39,10 +39,11 @@ describe('UiPagination', () => {
     expect(el.totalPages).to.equal(1);
     expect(el.siblingCount).to.equal(1);
     expect(el.hideJumpToPage).to.equal(false);
-    expect(el.jumpLabel).to.equal('Go to page');
-    expect(el.prevLabel).to.equal('Previous page');
-    expect(el.nextLabel).to.equal('Next page');
-    expect(el.label).to.equal('Pagination');
+    // Label props are unset by default; the text comes from the foundations config.
+    expect(el.jumpLabel).to.equal(undefined);
+    expect(el.prevLabel).to.equal(undefined);
+    expect(el.nextLabel).to.equal(undefined);
+    expect(el.label).to.equal(undefined);
   });
 
   it('reflects current-page, total-pages and sibling-count attributes', async () => {

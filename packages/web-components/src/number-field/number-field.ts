@@ -7,6 +7,7 @@ import { numberFieldStyles } from './number-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
 import { commitValue, formatValue, parseValue, stepValue } from './numeric.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type NumberFieldVariant = 'outline' | 'filled' | 'underlined';
 export type NumberFieldSize = 'small' | 'default' | 'large';
@@ -126,15 +127,15 @@ export class UiNumberField extends LitElement {
 
   /**
    * Accessible name for the decrement button.
-   * @default 'Decrease'
+   * @default `getUiCoreConfig().labels.numberField.decrement`
    */
-  @property({ type: String, attribute: 'decrement-label' }) decrementLabel = 'Decrease';
+  @property({ type: String, attribute: 'decrement-label' }) decrementLabel?: string;
 
   /**
    * Accessible name for the increment button.
-   * @default 'Increase'
+   * @default `getUiCoreConfig().labels.numberField.increment`
    */
-  @property({ type: String, attribute: 'increment-label' }) incrementLabel = 'Increase';
+  @property({ type: String, attribute: 'increment-label' }) incrementLabel?: string;
 
   @state() private _text = '';
   @state() private _formDisabled = false;
@@ -301,7 +302,9 @@ export class UiNumberField extends LitElement {
       <button
         class=${`stepper icon icon--${isDecrement ? 'leading' : 'trailing'}`}
         type="button"
-        aria-label=${isDecrement ? this.decrementLabel : this.incrementLabel}
+        aria-label=${isDecrement
+          ? (this.decrementLabel ?? getUiCoreConfig().labels.numberField.decrement)
+          : (this.incrementLabel ?? getUiCoreConfig().labels.numberField.increment)}
         ?disabled=${this._isInert || atBound}
         @pointerdown=${(e: PointerEvent) => {
           // Keep focus on the input so typing can continue after a click.

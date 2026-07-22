@@ -5,6 +5,7 @@ import { buttonStyles } from '../button/button.styles.js';
 import { linkButtonStyles } from './link-button.styles.js';
 import { focusStyles } from '../styles/focus.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 import '../loader/loader.js';
 
 export type { ButtonVariant as LinkButtonVariant, ButtonSize as LinkButtonSize };
@@ -44,6 +45,12 @@ export class UiLinkButton extends LitElement {
 
   /** Replaces content with a spinner and blocks navigation. */
   @property({ type: Boolean, reflect: true }) loading = false;
+
+  /**
+   * Accessible name of the spinner shown while `loading`.
+   * @default `getUiCoreConfig().labels.button.loading`
+   */
+  @property({ type: String, attribute: 'loading-label' }) loadingLabel?: string;
 
   /** Blocks navigation and applies disabled styling (`aria-disabled`). */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -111,7 +118,10 @@ export class UiLinkButton extends LitElement {
 
         <span class="content">
           ${this.loading
-            ? html`<ui-loader data-size=${this.loaderSize} label="Loading"></ui-loader>`
+            ? html`<ui-loader
+                data-size=${this.loaderSize}
+                label=${this.loadingLabel ?? getUiCoreConfig().labels.button.loading}
+              ></ui-loader>`
             : html`<slot name="icon-left"></slot>`}
           <span class="label"><slot></slot></span>
           ${this.loading ? nothing : html`<slot name="icon-right"></slot>`}
