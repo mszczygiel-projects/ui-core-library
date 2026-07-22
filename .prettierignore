@@ -1,0 +1,25 @@
+# Generated files — formatting them makes every regeneration look like a huge
+# diff and buries real changes. The generator owns their layout, not Prettier.
+#
+# Without this file the repo oscillates: `pnpm build` writes the generator's
+# format, `pnpm format` rewrites it, and the next build flips it back. A token
+# change of three lines shows up as ten thousand.
+
+# pnpm writes `resolution: {integrity: …}` on one line; Prettier explodes it
+# into four, tripling the file.
+pnpm-lock.yaml
+
+# Written by scripts/build-tokens.ts and scripts/build-typography.ts
+packages/foundations/src/tokens.css
+packages/foundations/src/tokens.ts
+packages/foundations/src/tailwind.css
+packages/foundations/src/typography.css
+
+# Written by cem:build (also gitignored)
+packages/web-components/custom-elements.json
+
+# Build output
+dist/
+storybook-static/
+.nx/
+**/.rollup.cache/

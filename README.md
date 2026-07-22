@@ -167,12 +167,11 @@ configureUiCore({
 });
 ```
 
-| Option          | Type                       | Default     | What it does                                                    |
-| --------------- | -------------------------- | ----------- | --------------------------------------------------------------- |
-| `labels`        | `UiCoreLabelsOverrides`    | English     | Every UI string the components render on their own — see below  |
-| `locale`        | `string`                   | `''`        | BCP 47 tag for formatting dates the components own              |
-| `loaderVariant` | `'spinner'`                | `'spinner'` | Spinner style used by `Loader` and every button's loading state |
-| `iconSet`       | `'default' \| 'heroicons'` | `'default'` | Reserved — not yet wired to anything                            |
+| Option          | Type                    | Default     | What it does                                                    |
+| --------------- | ----------------------- | ----------- | --------------------------------------------------------------- |
+| `labels`        | `UiCoreLabelsOverrides` | English     | Every UI string the components render on their own — see below  |
+| `locale`        | `string`                | `''`        | BCP 47 tag for formatting dates the components own              |
+| `loaderVariant` | `'spinner'`             | `'spinner'` | Spinner style used by `Loader` and every button's loading state |
 
 ### UI text (`labels`)
 
