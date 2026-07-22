@@ -51,6 +51,25 @@ export type {
   SwitchFieldState,
   SwitchFieldLabelPosition,
 } from './SwitchField/SwitchField.js';
+export { Listbox } from './Listbox/Listbox.js';
+export type { ListboxProps, ListboxSize } from './Listbox/Listbox.js';
+export {
+  buildRows,
+  flattenOptions,
+  isGroupedItems,
+  isOptionSelected,
+  toggleValue,
+  nextEnabledRow,
+  firstEnabledRow,
+  rowIndexOfValue,
+  listboxOptionId,
+} from './Listbox/listbox-navigation.js';
+export type {
+  ListboxOption,
+  ListboxOptionGroup,
+  ListboxItems,
+  ListboxRow,
+} from './Listbox/listbox-navigation.js';
 export { SelectField } from './SelectField/SelectField.js';
 export type {
   SelectFieldProps,
@@ -59,6 +78,16 @@ export type {
   SelectFieldState,
   SelectOption,
 } from './SelectField/SelectField.js';
+export { Combobox } from './Combobox/Combobox.js';
+export type {
+  ComboboxProps,
+  ComboboxVariant,
+  ComboboxSize,
+  ComboboxState,
+  ComboboxFilterMode,
+  ComboboxOption,
+  ComboboxOptionGroup,
+} from './Combobox/Combobox.js';
 export { Notification } from './Notification/Notification.js';
 export type {
   NotificationProps,

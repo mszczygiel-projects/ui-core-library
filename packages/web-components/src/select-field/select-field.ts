@@ -4,26 +4,43 @@ import { unsafeSVG } from 'lit/directives/unsafe-svg.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 import { selectFieldStyles } from './select-field.styles.js';
+import { listboxStyles } from '../listbox/listbox.styles.js';
+import {
+  buildRows,
+  firstEnabledRow,
+  flattenOptions,
+  listboxOptionId,
+  nextEnabledRow,
+  renderListbox,
+  rowIndexOfValue,
+  scrollRowIntoView,
+} from '../listbox/listbox.js';
+import type { ListboxItems, ListboxOption, ListboxRow } from '../listbox/listbox.js';
+import { controlFieldStyles } from '../styles/control-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import '../popover/popover.js';
+import type { PopoverPlacement, PopoverOpenChangeDetail } from '../popover/popover.js';
 
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SelectFieldSize = 'small' | 'default' | 'large';
 export type SelectFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type SelectFieldLabelPlacement = 'top' | 'inner';
+export type SelectFieldLabelPlacement = 'top' | 'inner' | 'inline';
 
 /** Single option in a ui-select-field list. */
-export interface SelectOption {
-  /** Value submitted with the form when this option is selected. */
-  value: string;
-  /** Text shown in the trigger and the dropdown list. */
-  label: string;
-  /** Renders the option grayed out and unselectable. */
-  disabled?: boolean;
-}
+export type SelectOption = ListboxOption;
+/** Named set of options rendered under a sticky header. */
+export type { ListboxOptionGroup as SelectOptionGroup } from '../listbox/listbox.js';
+
+const LISTBOX_ID = 'listbox';
 
 /**
  * Form-associated custom dropdown select with keyboard navigation.
+ *
+ * The list floats through `ui-popover`, so it flips above the field when there
+ * is no room below and escapes any `overflow: hidden` ancestor. Options are
+ * rendered by the shared listbox module into this component's own shadow root,
+ * which is what lets `aria-controls` and `aria-activedescendant` resolve.
  *
  * @element ui-select-field
  *
@@ -43,12 +60,20 @@ export interface SelectOption {
  * @fires {Event} input - Native-like input event when the value changes.
  * @fires {Event} change - Native-like change event when the value changes.
  * @fires {CustomEvent} ui-change - Same moment as `change`; `detail.value` carries the selected value.
+ *
+ * @cssprop --listbox-max-height - Scroll height of the dropdown; falls back to `--select-dropdown-max-height`.
  */
 @customElement('ui-select-field')
 export class UiSelectField extends LitElement {
   static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
-  static override styles = [resetStyles, motionStyles, selectFieldStyles];
+  static override styles = [
+    resetStyles,
+    motionStyles,
+    controlFieldStyles,
+    listboxStyles,
+    selectFieldStyles,
+  ];
 
   /**
    * Container style: bordered, filled background, or bottom border only.
@@ -64,7 +89,8 @@ export class UiSelectField extends LitElement {
     'default';
 
   /**
-   * Label position: above the field or inline inside it.
+   * Label position: above the field, stacked inside it, or inline with the
+   * value (`Season: 2025/26`).
    * @default 'top'
    */
   @property({ type: String, reflect: true, attribute: 'label-placement' })
@@ -91,8 +117,17 @@ export class UiSelectField extends LitElement {
   /** Selected value; the attribute also sets the initial value restored on form reset. */
   @property({ type: String, reflect: true }) value = '';
 
-  /** Options rendered in the dropdown list — set as a property, not an attribute. */
-  @property({ type: Array }) options: SelectOption[] = [];
+  /**
+   * Options rendered in the dropdown — a flat array or an array of
+   * `{ label, options }` groups. Set as a property, not an attribute.
+   */
+  @property({ type: Array }) options: ListboxItems = [];
+
+  /**
+   * Preferred dropdown position; flips automatically when there is no room.
+   * @default 'bottom-start'
+   */
+  @property({ type: String, reflect: true }) placement: PopoverPlacement = 'bottom-start';
 
   /** Disables the select. */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -103,13 +138,19 @@ export class UiSelectField extends LitElement {
   /** Form field name used on submission. */
   @property({ type: String }) name?: string;
 
+  /**
+   * Text shown when there are no options.
+   * @default 'No results found'
+   */
+  @property({ type: String, attribute: 'empty-label' }) emptyLabel = 'No results found';
+
   @state() private _open = false;
   @state() private _activeIndex = -1;
   @state() private _formDisabled = false;
 
   private _defaultValue = '';
   private _internals: ElementInternals;
-  private _clickOutsideHandler?: (e: MouseEvent) => void;
+  private _triggerResizeObserver?: ResizeObserver;
 
   constructor() {
     super();
@@ -120,19 +161,28 @@ export class UiSelectField extends LitElement {
     return this.disabled || this.state === 'disabled' || this._formDisabled;
   }
 
-  private get _selectedOption(): SelectOption | undefined {
-    return this.options?.find((o) => o.value === this.value);
+  private get _rows(): ListboxRow[] {
+    return buildRows(this.options);
   }
 
-  override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    this._removeClickOutside();
+  private get _selectedOption(): ListboxOption | undefined {
+    return flattenOptions(this.options).find((o) => o.value === this.value);
+  }
+
+  private get _triggerEl(): HTMLButtonElement | null {
+    return this.shadowRoot?.querySelector<HTMLButtonElement>('.trigger') ?? null;
   }
 
   override connectedCallback(): void {
     super.connectedCallback();
     this._defaultValue = this.value;
     this._syncFormValue();
+  }
+
+  override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this._triggerResizeObserver?.disconnect();
+    this._triggerResizeObserver = undefined;
   }
 
   override updated(changedProperties: PropertyValues<this>): void {
@@ -143,6 +193,10 @@ export class UiSelectField extends LitElement {
       changedProperties.has('state')
     ) {
       this._syncFormValue();
+    }
+    // Cheap when already visible, so no need to diff the active index.
+    if (this._open) {
+      scrollRowIntoView(this.shadowRoot, LISTBOX_ID, this._activeIndex);
     }
   }
 
@@ -165,6 +219,24 @@ export class UiSelectField extends LitElement {
     this._internals.setFormValue(this._isDisabled ? null : this.value);
   }
 
+  /**
+   * Keeps the floating list as wide as the field. Observes the host — a node
+   * that survives every re-render — and reads the trigger fresh on each
+   * callback, so a re-rendered trigger cannot leave a stale observer behind.
+   */
+  private _observeTriggerWidth() {
+    if (typeof ResizeObserver !== 'function') return;
+    const sync = () => {
+      const trigger = this._triggerEl;
+      if (!trigger) return;
+      this.style.setProperty('--_dropdown-width', `${trigger.getBoundingClientRect().width}px`);
+    };
+    sync();
+    this._triggerResizeObserver?.disconnect();
+    this._triggerResizeObserver = new ResizeObserver(sync);
+    this._triggerResizeObserver.observe(this);
+  }
+
   private _dispatchValueChange() {
     this.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     this.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
@@ -181,64 +253,56 @@ export class UiSelectField extends LitElement {
     if (this._isDisabled) return;
     this._open = true;
     this.toggleAttribute('open', true);
-    this._activeIndex = (this.options ?? []).findIndex((o) => o.value === this.value);
-    this._addClickOutside();
+    const rows = this._rows;
+    const selected = rowIndexOfValue(rows, this.value);
+    this._activeIndex = selected >= 0 ? selected : firstEnabledRow(rows);
+    /*
+     * Measure after the render settles: on first open ui-popover may not be
+     * upgraded yet, so the trigger would still be shrink-to-fit and the panel
+     * would flash at the wrong width.
+     */
+    void this.updateComplete.then(() => {
+      if (this._open) this._observeTriggerWidth();
+    });
   }
 
   private _closeDropdown() {
     this._open = false;
     this.toggleAttribute('open', false);
     this._activeIndex = -1;
-    this._removeClickOutside();
+    this._triggerResizeObserver?.disconnect();
+    this._triggerResizeObserver = undefined;
   }
 
-  private _addClickOutside() {
-    this._clickOutsideHandler = (e: MouseEvent) => {
-      if (!this.contains(e.target as Node) && !this.shadowRoot?.contains(e.target as Node)) {
-        this._closeDropdown();
-      }
-    };
-    document.addEventListener('mousedown', this._clickOutsideHandler);
-  }
-
-  private _removeClickOutside() {
-    if (this._clickOutsideHandler) {
-      document.removeEventListener('mousedown', this._clickOutsideHandler);
-      this._clickOutsideHandler = undefined;
-    }
-  }
-
-  private _selectOption(option: SelectOption) {
-    if (option.disabled) return;
+  private _selectRow(row: ListboxRow) {
+    if (row.kind !== 'option' || row.option.disabled) return;
     const prev = this.value;
-    this.value = option.value;
+    this.value = row.option.value;
     this._closeDropdown();
-    this.shadowRoot?.querySelector<HTMLButtonElement>('.trigger')?.focus();
-    if (prev !== this.value) {
-      this._dispatchValueChange();
-    }
+    this._triggerEl?.focus();
+    if (prev !== this.value) this._dispatchValueChange();
   }
 
   private _handleTriggerClick() {
-    if (this._open) {
-      this._closeDropdown();
-    } else {
-      this._openDropdown();
-    }
+    if (this._open) this._closeDropdown();
+    else this._openDropdown();
+  }
+
+  private _handlePopoverOpenChange(event: CustomEvent<PopoverOpenChangeDetail>) {
+    event.stopPropagation();
+    if (!event.detail.open) this._closeDropdown();
   }
 
   private _handleKeyDown(e: KeyboardEvent) {
     if (this._isDisabled) return;
+    const rows = this._rows;
 
     switch (e.key) {
       case 'Enter':
       case ' ':
         e.preventDefault();
-        if (!this._open) {
-          this._openDropdown();
-        } else if (this._activeIndex >= 0 && this.options?.[this._activeIndex]) {
-          this._selectOption(this.options[this._activeIndex]);
-        }
+        if (!this._open) this._openDropdown();
+        else if (rows[this._activeIndex]) this._selectRow(rows[this._activeIndex]);
         break;
       case 'Escape':
         if (this._open) {
@@ -248,18 +312,24 @@ export class UiSelectField extends LitElement {
         break;
       case 'ArrowDown':
         e.preventDefault();
-        if (!this._open) {
-          this._openDropdown();
-        } else {
-          this._activeIndex = this._nextEnabledIndex(this._activeIndex, 1);
-        }
+        if (!this._open) this._openDropdown();
+        else this._activeIndex = nextEnabledRow(rows, this._activeIndex, 1);
         break;
       case 'ArrowUp':
         e.preventDefault();
-        if (!this._open) {
-          this._openDropdown();
-        } else {
-          this._activeIndex = this._nextEnabledIndex(this._activeIndex, -1);
+        if (!this._open) this._openDropdown();
+        else this._activeIndex = nextEnabledRow(rows, this._activeIndex, -1);
+        break;
+      case 'Home':
+        if (this._open) {
+          e.preventDefault();
+          this._activeIndex = firstEnabledRow(rows);
+        }
+        break;
+      case 'End':
+        if (this._open) {
+          e.preventDefault();
+          this._activeIndex = nextEnabledRow(rows, rows.length, -1);
         }
         break;
       case 'Delete':
@@ -275,30 +345,16 @@ export class UiSelectField extends LitElement {
     }
   }
 
-  private _nextEnabledIndex(current: number, direction: 1 | -1): number {
-    const opts = this.options ?? [];
-    let next = current + direction;
-    while (next >= 0 && next < opts.length) {
-      if (!opts[next].disabled) return next;
-      next += direction;
-    }
-    return current;
-  }
-
   private _handleClear(e: Event) {
     e.stopPropagation();
     e.preventDefault();
     const prev = this.value;
     this.value = '';
-    if (prev !== '') {
-      this._dispatchValueChange();
-    }
+    if (prev !== '') this._dispatchValueChange();
   }
 
   private _handleClearKeyDown(e: KeyboardEvent) {
-    if (e.key === 'Enter' || e.key === ' ') {
-      this._handleClear(e);
-    }
+    if (e.key === 'Enter' || e.key === ' ') this._handleClear(e);
   }
 
   private _handleLeadingSlotChange(e: Event) {
@@ -312,101 +368,101 @@ export class UiSelectField extends LitElement {
     const hasValue = !!this.value;
     const labelId = 'label';
     const triggerId = 'trigger';
-    const listboxId = 'listbox';
     const hintId = 'hint';
 
     const isInner = this.labelPlacement === 'inner';
+    const isInline = this.labelPlacement === 'inline';
+    const activeId =
+      this._open && this._activeIndex >= 0
+        ? listboxOptionId(LISTBOX_ID, this._activeIndex)
+        : nothing;
 
     return html`
-      ${this.label && !isInner
+      ${this.label && !isInner && !isInline
         ? html`<label id=${labelId} class="label" for=${triggerId}>${this.label}</label>`
         : nothing}
       <div class="field-container">
-        <button
-          id=${triggerId}
-          class="trigger"
-          type="button"
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-expanded=${this._open ? 'true' : 'false'}
-          aria-controls=${listboxId}
-          aria-describedby=${this.hint ? hintId : nothing}
-          ?disabled=${isDisabled}
-          @click=${this._handleTriggerClick}
-          @keydown=${this._handleKeyDown}
+        <ui-popover
+          class="popover"
+          trigger="manual"
+          placement=${this.placement}
+          ?open=${this._open}
+          dismiss-on="both"
+          @open-change=${this._handlePopoverOpenChange}
         >
-          <slot
-            name="leading-icon"
-            class="icon icon--leading"
-            @slotchange=${this._handleLeadingSlotChange}
-          ></slot>
-          ${this.label && isInner
-            ? html`<span id=${labelId} class="inner-label">${this.label}</span>`
-            : nothing}
-          <span
-            class=${classMap({
-              value: true,
-              'value--placeholder': !selected,
-            })}
+          <button
+            slot="trigger"
+            id=${triggerId}
+            class="trigger"
+            type="button"
+            role="combobox"
+            aria-haspopup="listbox"
+            aria-expanded=${this._open ? 'true' : 'false'}
+            aria-controls=${LISTBOX_ID}
+            aria-activedescendant=${activeId}
+            aria-describedby=${this.hint ? hintId : nothing}
+            aria-labelledby=${this.label ? labelId : nothing}
+            ?disabled=${isDisabled}
+            @click=${this._handleTriggerClick}
+            @keydown=${this._handleKeyDown}
           >
-            ${selected?.label ?? this.placeholder}
-          </span>
-          <span class="trailing">
-            ${this.clearable && hasValue
-              ? html`<span
-                  class="clear"
-                  role="button"
-                  aria-label="Clear selection"
-                  tabindex="0"
-                  @mousedown=${this._handleClear}
-                  @keydown=${this._handleClearKeyDown}
-                >
-                  ${unsafeSVG(svgMap['icon-close'])}
-                </span>`
+            <slot
+              name="leading-icon"
+              class="icon icon--leading"
+              @slotchange=${this._handleLeadingSlotChange}
+            ></slot>
+            ${this.label && isInner
+              ? html`<span id=${labelId} class="inner-label">${this.label}</span>`
               : nothing}
-            <span class="chevron" aria-hidden="true">
-              ${this._open
-                ? unsafeSVG(svgMap['icon-chevron-up'])
-                : unsafeSVG(svgMap['icon-chevron-down'])}
-            </span>
-          </span>
-        </button>
-        ${this._open
-          ? html`
-              <ul
-                id=${listboxId}
-                class="dropdown"
-                role="listbox"
-                aria-labelledby=${this.label ? labelId : nothing}
-                aria-label=${this.label ? nothing : this.placeholder}
+            <span class="content">
+              ${this.label && isInline
+                ? html`<span id=${labelId} class="inline-label">${this.label}:</span>`
+                : nothing}
+              <span
+                class=${classMap({
+                  value: true,
+                  'value--placeholder': !selected,
+                })}
               >
-                ${(this.options ?? []).map(
-                  (opt, i) => html`
-                    <li
-                      class=${classMap({
-                        option: true,
-                        'option--selected': opt.value === this.value,
-                        'option--focused': i === this._activeIndex,
-                        'option--disabled': !!opt.disabled,
-                      })}
-                      role="option"
-                      aria-selected=${opt.value === this.value ? 'true' : 'false'}
-                      aria-disabled=${opt.disabled ? 'true' : nothing}
-                      @mousedown=${(e: MouseEvent) => {
-                        e.preventDefault();
-                        this._selectOption(opt);
-                      }}
-                      @mousemove=${() => {
-                        if (!opt.disabled) this._activeIndex = i;
-                      }}
-                    >
-                      ${opt.label}
-                    </li>
-                  `,
-                )}
-              </ul>
-            `
-          : nothing}
+                ${selected?.label ?? this.placeholder}
+              </span>
+            </span>
+            <span class="trailing">
+              ${this.clearable && hasValue
+                ? html`<span
+                    class="clear"
+                    role="button"
+                    aria-label="Clear selection"
+                    tabindex="0"
+                    @mousedown=${this._handleClear}
+                    @keydown=${this._handleClearKeyDown}
+                  >
+                    ${unsafeSVG(svgMap['icon-close'])}
+                  </span>`
+                : nothing}
+              <span class="chevron" aria-hidden="true">
+                ${this._open
+                  ? unsafeSVG(svgMap['icon-chevron-up'])
+                  : unsafeSVG(svgMap['icon-chevron-down'])}
+              </span>
+            </span>
+          </button>
+          ${this._open
+            ? renderListbox({
+                idPrefix: LISTBOX_ID,
+                items: this.options,
+                value: this.value,
+                activeIndex: this._activeIndex,
+                emptyLabel: this.emptyLabel,
+                labelledBy: this.label ? labelId : undefined,
+                label: this.label ? undefined : this.placeholder,
+                onSelect: (row) => this._selectRow(row),
+                onActivate: (index) => {
+                  this._activeIndex = index;
+                },
+              })
+            : nothing}
+        </ui-popover>
       </div>
       ${this.hint ? html`<p id=${hintId} class="hint">${this.hint}</p>` : nothing}
     `;

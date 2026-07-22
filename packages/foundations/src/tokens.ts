@@ -511,6 +511,16 @@ export const tokens = {
               default: 'var(--color-on-subtle-select-option-check-default)',
               active: 'var(--color-on-subtle-select-option-check-active)',
             },
+            create: {
+              text: 'var(--color-on-subtle-select-option-create-text)',
+            },
+          },
+          optionGroup: {
+            text: 'var(--color-on-subtle-select-option-group-text)',
+            background: 'var(--color-on-subtle-select-option-group-background)',
+          },
+          empty: {
+            text: 'var(--color-on-subtle-select-empty-text)',
           },
         },
         badge: {
@@ -1718,6 +1728,16 @@ export const tokens = {
               default: 'var(--color-on-inverse-select-option-check-default)',
               active: 'var(--color-on-inverse-select-option-check-active)',
             },
+            create: {
+              text: 'var(--color-on-inverse-select-option-create-text)',
+            },
+          },
+          optionGroup: {
+            text: 'var(--color-on-inverse-select-option-group-text)',
+            background: 'var(--color-on-inverse-select-option-group-background)',
+          },
+          empty: {
+            text: 'var(--color-on-inverse-select-empty-text)',
           },
         },
         badge: {
@@ -2925,6 +2945,16 @@ export const tokens = {
               default: 'var(--color-on-brand-primary-select-option-check-default)',
               active: 'var(--color-on-brand-primary-select-option-check-active)',
             },
+            create: {
+              text: 'var(--color-on-brand-primary-select-option-create-text)',
+            },
+          },
+          optionGroup: {
+            text: 'var(--color-on-brand-primary-select-option-group-text)',
+            background: 'var(--color-on-brand-primary-select-option-group-background)',
+          },
+          empty: {
+            text: 'var(--color-on-brand-primary-select-empty-text)',
           },
         },
         badge: {
@@ -3664,10 +3694,10 @@ export const tokens = {
         strong: 'var(--shadow-color-strong)',
       },
       elevation: {
-        "1": 'var(--shadow-elevation-1)',
-        "2": 'var(--shadow-elevation-2)',
-        "3": 'var(--shadow-elevation-3)',
-        "4": 'var(--shadow-elevation-4)',
+        '1': 'var(--shadow-elevation-1)',
+        '2': 'var(--shadow-elevation-2)',
+        '3': 'var(--shadow-elevation-3)',
+        '4': 'var(--shadow-elevation-4)',
       },
       interactive: {
         default: 'var(--shadow-interactive-default)',
@@ -4203,6 +4233,16 @@ export const tokens = {
             default: 'var(--color-select-option-check-default)',
             active: 'var(--color-select-option-check-active)',
           },
+          create: {
+            text: 'var(--color-select-option-create-text)',
+          },
+        },
+        optionGroup: {
+          text: 'var(--color-select-option-group-text)',
+          background: 'var(--color-select-option-group-background)',
+        },
+        empty: {
+          text: 'var(--color-select-empty-text)',
         },
       },
       badge: {
@@ -4914,8 +4954,8 @@ export const tokens = {
           lineHeight: 'var(--typography-heading-display-line-height)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
+            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
@@ -4992,8 +5032,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          letterSpacing: 'var(--typography-body-large-letter-spacing)',
           lineHeight: 'var(--typography-body-large-line-height)',
+          letterSpacing: 'var(--typography-body-large-letter-spacing)',
         },
       },
       caption: {
@@ -5130,8 +5170,8 @@ export const tokens = {
         floating: {
           fontSize: 'var(--control-label-floating-font-size)',
           lineHeight: 'var(--control-label-floating-line-height)',
-          letterSpacing: 'var(--control-label-floating-letter-spacing)',
           fontWeight: 'var(--control-label-floating-font-weight)',
+          letterSpacing: 'var(--control-label-floating-letter-spacing)',
           fontFamily: 'var(--control-label-floating-font-family)',
           textTransform: 'var(--control-label-floating-text-transform)',
         },
@@ -5145,6 +5185,9 @@ export const tokens = {
           letterSpacing: 'var(--control-label-inner-letter-spacing)',
           fontFamily: 'var(--control-label-inner-font-family)',
           textTransform: 'var(--control-label-inner-text-transform)',
+        },
+        inline: {
+          gap: 'var(--control-label-inline-gap)',
         },
       },
       hint: {
@@ -5208,6 +5251,7 @@ export const tokens = {
       },
     },
     checkbox: {
+      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -5216,7 +5260,6 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
-      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -5267,6 +5310,19 @@ export const tokens = {
         radius: 'var(--select-dropdown-radius)',
         border: {
           width: 'var(--select-dropdown-border-width)',
+        },
+        maxHeight: 'var(--select-dropdown-max-height)',
+      },
+      optionGroup: {
+        fontFamily: 'var(--select-option-group-font-family)',
+        fontSize: 'var(--select-option-group-font-size)',
+        fontWeight: 'var(--select-option-group-font-weight)',
+        letterSpacing: 'var(--select-option-group-letter-spacing)',
+        lineHeight: 'var(--select-option-group-line-height)',
+        textTransform: 'var(--select-option-group-text-transform)',
+        padding: {
+          inline: 'var(--select-option-group-padding-inline)',
+          stack: 'var(--select-option-group-padding-stack)',
         },
       },
     },
@@ -5506,6 +5562,14 @@ export const tokens = {
       },
       description: {
         gap: 'var(--switch-description-gap)',
+      },
+    },
+    combobox: {
+      chips: {
+        gap: 'var(--combobox-chips-gap)',
+        padding: {
+          stack: 'var(--combobox-chips-padding-stack)',
+        },
       },
     },
   },

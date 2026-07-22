@@ -1,7 +1,7 @@
 import { createElement, type ComponentType, useRef, useEffect } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
-import type { SelectOption } from './select-field.js';
+import type { SelectOption, SelectOptionGroup } from './select-field.js';
 import './select-field.js';
 
 const iconOptions = Object.keys(svgMap) as Array<keyof typeof svgMap>;
@@ -25,7 +25,8 @@ type SelectFieldArgs = {
   value?: string;
   clearable?: boolean;
   disabled?: boolean;
-  options?: SelectOption[];
+  options?: SelectOption[] | SelectOptionGroup[];
+  placement?: string;
   leadingIcon?: keyof typeof svgMap | '';
 };
 
@@ -37,7 +38,7 @@ const iconSpan = (name: keyof typeof svgMap) =>
   });
 
 function SelectFieldWC(props: SelectFieldArgs) {
-  const ref = useRef<HTMLElement & { options: SelectOption[] }>(null);
+  const ref = useRef<HTMLElement & { options: SelectOption[] | SelectOptionGroup[] }>(null);
 
   useEffect(() => {
     if (ref.current) {
@@ -57,6 +58,7 @@ function SelectFieldWC(props: SelectFieldArgs) {
       hint: props.hint,
       placeholder: props.placeholder,
       value: props.value,
+      placement: props.placement,
       clearable: props.clearable || undefined,
       disabled: props.disabled || undefined,
     },
@@ -81,7 +83,7 @@ const meta: Meta<SelectFieldArgs> = {
     },
     labelPlacement: {
       control: 'select',
-      options: ['top', 'inner'],
+      options: ['top', 'inner', 'inline'],
     },
     state: {
       control: 'select',
@@ -139,4 +141,79 @@ export const UnderlinedInnerLabel: Story = {
 
 export const Clearable: Story = {
   args: { value: 'apple', clearable: true },
+};
+
+export const InlineLabel: Story = {
+  args: { labelPlacement: 'inline', label: 'Season', value: 'apple' },
+};
+
+/** Compact filter-bar row: label and value share one line. */
+export const InlineLabelVariants: Story = {
+  render: () =>
+    createElement(
+      'div',
+      { style: { display: 'flex', gap: 24, alignItems: 'flex-start' } },
+      ...['outline', 'filled', 'underlined'].map((variant) =>
+        createElement(SelectFieldWC, {
+          key: variant,
+          variant,
+          labelPlacement: 'inline',
+          label: 'Season',
+          value: 'apple',
+        }),
+      ),
+    ),
+};
+
+const GROUPED_OPTIONS: SelectOptionGroup[] = [
+  { label: 'Citrus', options: [{ value: 'lemon', label: 'Lemon' }] },
+  {
+    label: 'Berries',
+    options: [
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'raspberry', label: 'Raspberry' },
+      { value: 'blueberry', label: 'Blueberry' },
+    ],
+  },
+  {
+    label: 'Stone fruit',
+    options: [
+      { value: 'peach', label: 'Peach' },
+      { value: 'plum', label: 'Plum' },
+    ],
+  },
+];
+
+/** Group headers stick to the top of the panel while their group scrolls. */
+export const GroupedOptions: Story = {
+  args: { label: 'Fruit', options: GROUPED_OPTIONS },
+};
+
+/** A value set up front renders instead of the placeholder. */
+export const WithDefaultValue: Story = {
+  args: { label: 'Fruit', value: 'banana' },
+};
+
+/** The panel flips above the field when there is no room below. */
+export const PlacementTop: Story = {
+  args: { label: 'Fruit', placement: 'top-start' },
+};
+
+export const OnSurfaces: Story = {
+  render: (args) =>
+    createElement(
+      'div',
+      { style: { display: 'flex', flexDirection: 'column', gap: 24 } },
+      ...(['default', 'subtle', 'inverse', 'primary'] as const).map((surface) =>
+        createElement(
+          'div',
+          {
+            key: surface,
+            'data-surface': surface === 'default' ? undefined : surface,
+            style: { backgroundColor: 'var(--color-background-default)', padding: 16 },
+          },
+          createElement(SelectFieldWC, { ...args, label: 'Fruit', value: 'apple' }),
+        ),
+      ),
+    ),
 };

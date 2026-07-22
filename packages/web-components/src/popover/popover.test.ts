@@ -42,7 +42,10 @@ describe('UiPopover', () => {
 
   it('panel is hidden until open is set', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover><button slot="trigger">Open</button><p>Content</p></ui-popover>
+      <ui-popover
+        ><button slot="trigger">Open</button>
+        <p>Content</p></ui-popover
+      >
     `);
     expect(isShown(el)).to.equal(false);
 
@@ -73,7 +76,10 @@ describe('UiPopover', () => {
 
   it('trigger click requests open but never mutates open itself (controlled)', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover><button slot="trigger">Open</button><p>Content</p></ui-popover>
+      <ui-popover
+        ><button slot="trigger">Open</button>
+        <p>Content</p></ui-popover
+      >
     `);
     const trigger = el.querySelector('button')!;
     setTimeout(() => trigger.click());
@@ -85,7 +91,10 @@ describe('UiPopover', () => {
 
   it('trigger click requests close when already open', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover open><button slot="trigger">Open</button><p>Content</p></ui-popover>
+      <ui-popover open
+        ><button slot="trigger">Open</button>
+        <p>Content</p></ui-popover
+      >
     `);
     const trigger = el.querySelector('button')!;
     setTimeout(() => trigger.click());
@@ -108,7 +117,10 @@ describe('UiPopover', () => {
 
   it('manual trigger makes no open/close requests from clicks', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover trigger="manual"><button slot="trigger">Open</button><p>C</p></ui-popover>
+      <ui-popover trigger="manual"
+        ><button slot="trigger">Open</button>
+        <p>C</p></ui-popover
+      >
     `);
     const events = openChangeEvents(el);
     el.querySelector('button')!.click();
@@ -118,7 +130,10 @@ describe('UiPopover', () => {
 
   it('Escape requests close while open', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover open><button slot="trigger">Open</button><p>C</p></ui-popover>
+      <ui-popover open
+        ><button slot="trigger">Open</button>
+        <p>C</p></ui-popover
+      >
     `);
     const events = openChangeEvents(el);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
@@ -128,7 +143,10 @@ describe('UiPopover', () => {
 
   it('outside pointerdown requests close while open', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover open><button slot="trigger">Open</button><p>C</p></ui-popover>
+      <ui-popover open
+        ><button slot="trigger">Open</button>
+        <p>C</p></ui-popover
+      >
     `);
     const events = openChangeEvents(el);
     document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
@@ -138,7 +156,10 @@ describe('UiPopover', () => {
 
   it('pointerdown inside the popover does not request close', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover open><button slot="trigger">Open</button><p id="c">C</p></ui-popover>
+      <ui-popover open
+        ><button slot="trigger">Open</button>
+        <p id="c">C</p></ui-popover
+      >
     `);
     const events = openChangeEvents(el);
     el.querySelector('#c')!.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
@@ -148,7 +169,10 @@ describe('UiPopover', () => {
 
   it("dismissOn='escape' ignores outside clicks", async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover open dismiss-on="escape"><button slot="trigger">O</button><p>C</p></ui-popover>
+      <ui-popover open dismiss-on="escape"
+        ><button slot="trigger">O</button>
+        <p>C</p></ui-popover
+      >
     `);
     const events = openChangeEvents(el);
     document.body.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true }));
@@ -171,7 +195,10 @@ describe('UiPopover', () => {
 
   it('dismiss listeners are inactive while closed', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover><button slot="trigger">O</button><p>C</p></ui-popover>
+      <ui-popover
+        ><button slot="trigger">O</button>
+        <p>C</p></ui-popover
+      >
     `);
     const events = openChangeEvents(el);
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
@@ -182,7 +209,10 @@ describe('UiPopover', () => {
 
   it('syncs aria-expanded on the trigger element for non-manual triggers', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover><button slot="trigger">O</button><p>C</p></ui-popover>
+      <ui-popover
+        ><button slot="trigger">O</button>
+        <p>C</p></ui-popover
+      >
     `);
     const trigger = el.querySelector('button')!;
     expect(trigger.getAttribute('aria-expanded')).to.equal('false');
@@ -194,14 +224,40 @@ describe('UiPopover', () => {
 
   it('manual trigger leaves trigger ARIA to the consumer', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover trigger="manual"><button slot="trigger">O</button><p>C</p></ui-popover>
+      <ui-popover trigger="manual"
+        ><button slot="trigger">O</button>
+        <p>C</p></ui-popover
+      >
     `);
     expect(el.querySelector('button')!.hasAttribute('aria-expanded')).to.equal(false);
   });
 
+  it('manual trigger never overwrites aria-expanded set by the consumer', async () => {
+    const el = await fixture<UiPopover>(html`
+      <ui-popover trigger="manual">
+        <button slot="trigger" aria-expanded="true">O</button>
+        <p>C</p>
+      </ui-popover>
+    `);
+    const trigger = el.querySelector('button')!;
+    expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+
+    // Toggling open must not clear what the consumer owns.
+    el.open = true;
+    await el.updateComplete;
+    expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+
+    el.open = false;
+    await el.updateComplete;
+    expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+  });
+
   it('renders the arrow part only when arrow is set', async () => {
     const el = await fixture<UiPopover>(html`
-      <ui-popover><button slot="trigger">O</button><p>C</p></ui-popover>
+      <ui-popover
+        ><button slot="trigger">O</button>
+        <p>C</p></ui-popover
+      >
     `);
     expect(el.shadowRoot!.querySelector('[part="arrow"]')).to.equal(null);
 

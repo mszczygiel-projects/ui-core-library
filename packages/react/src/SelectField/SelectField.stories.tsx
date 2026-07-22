@@ -55,7 +55,7 @@ const meta: Meta<SelectFieldStoryArgs> = {
     },
     labelPlacement: {
       control: 'select',
-      options: ['top', 'inner'],
+      options: ['top', 'inner', 'inline'],
     },
     state: {
       control: 'select',
@@ -140,4 +140,75 @@ export const Controlled: Story = {
       </div>
     );
   },
+};
+
+const GROUPED_OPTIONS = [
+  { label: 'Citrus', options: [{ value: 'lemon', label: 'Lemon' }] },
+  {
+    label: 'Berries',
+    options: [
+      { value: 'strawberry', label: 'Strawberry' },
+      { value: 'raspberry', label: 'Raspberry' },
+      { value: 'blueberry', label: 'Blueberry' },
+    ],
+  },
+  {
+    label: 'Stone fruit',
+    options: [
+      { value: 'peach', label: 'Peach' },
+      { value: 'plum', label: 'Plum' },
+    ],
+  },
+];
+
+/** Compact filter-bar row: label and value share one line. */
+export const InlineLabel: StoryObj<SelectFieldStoryArgs> = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 24, alignItems: 'flex-start' }}>
+      {(['outline', 'filled', 'underlined'] as const).map((variant) => (
+        <SelectField
+          key={variant}
+          variant={variant}
+          labelPlacement="inline"
+          label="Season"
+          defaultValue="apple"
+          options={FRUIT_OPTIONS}
+        />
+      ))}
+    </div>
+  ),
+};
+
+/** Group headers stick to the top of the panel while their group scrolls. */
+export const GroupedOptions: StoryObj<SelectFieldStoryArgs> = {
+  args: { label: 'Fruit', options: GROUPED_OPTIONS },
+  render: renderSelectField,
+};
+
+/** A value set up front renders instead of the placeholder. */
+export const WithDefaultValue: StoryObj<SelectFieldStoryArgs> = {
+  args: { label: 'Fruit', defaultValue: 'banana', options: FRUIT_OPTIONS },
+  render: renderSelectField,
+};
+
+/** The panel flips above the field when there is no room below. */
+export const PlacementTop: StoryObj<SelectFieldStoryArgs> = {
+  args: { label: 'Fruit', placement: 'top-start', options: FRUIT_OPTIONS },
+  render: renderSelectField,
+};
+
+export const OnSurfaces: StoryObj<SelectFieldStoryArgs> = {
+  render: () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
+      {(['default', 'subtle', 'inverse', 'primary'] as const).map((surface) => (
+        <div
+          key={surface}
+          data-surface={surface === 'default' ? undefined : surface}
+          style={{ backgroundColor: 'var(--color-background-default)', padding: 16 }}
+        >
+          <SelectField label="Fruit" defaultValue="apple" options={FRUIT_OPTIONS} />
+        </div>
+      ))}
+    </div>
+  ),
 };

@@ -1,28 +1,50 @@
-import { useId, useRef, useState, useEffect, type CSSProperties, type ReactNode } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from 'react';
 import {
   IconChevronDown,
   IconChevronUp,
   IconClose,
 } from '@mszczygiel-projects/ui-core-icons/react';
+import { Popover } from '../Popover/Popover.js';
+import type { PopoverPlacement } from '../Popover/Popover.js';
+import { Listbox } from '../Listbox/Listbox.js';
+import {
+  buildRows,
+  firstEnabledRow,
+  flattenOptions,
+  isGroupedItems,
+  listboxOptionId,
+  nextEnabledRow,
+  rowIndexOfValue,
+  scrollRowIntoView,
+} from '../Listbox/listbox-navigation.js';
+import type { ListboxItems, ListboxRow } from '../Listbox/listbox-navigation.js';
 import './SelectField.css';
 
 export type SelectFieldVariant = 'outline' | 'filled' | 'underlined';
 export type SelectFieldSize = 'small' | 'default' | 'large';
 export type SelectFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type SelectFieldLabelPlacement = 'top' | 'inner';
+export type SelectFieldLabelPlacement = 'top' | 'inner' | 'inline';
 
-/** Single option in a SelectField list. */
-export interface SelectOption {
-  /** Value submitted with the form when this option is selected. */
-  value: string;
-  /** Text shown in the trigger and the dropdown list. */
-  label: string;
-  /** Renders the option grayed out and unselectable. */
-  disabled?: boolean;
-}
+export type {
+  ListboxOption as SelectOption,
+  ListboxOptionGroup as SelectOptionGroup,
+} from '../Listbox/listbox-navigation.js';
 
 /**
- * Custom dropdown select with keyboard navigation and a hidden native select for form submission.
+ * Custom dropdown select with keyboard navigation and a hidden native select
+ * for form submission.
+ *
+ * The list floats through `Popover`, so it flips above the field when there is
+ * no room below and escapes any `overflow: hidden` ancestor.
  *
  * @example
  * <SelectField
@@ -43,7 +65,8 @@ export interface SelectFieldProps {
    */
   size?: SelectFieldSize;
   /**
-   * Label position: above the field or inline inside it.
+   * Label position: above the field, stacked inside it, or inline with the
+   * value (`Season: 2025/26`).
    * @default 'top'
    */
   labelPlacement?: SelectFieldLabelPlacement;
@@ -68,10 +91,16 @@ export interface SelectFieldProps {
   /** Initially selected value in uncontrolled mode. */
   defaultValue?: string;
   /**
-   * Options rendered in the dropdown list.
+   * Options rendered in the dropdown — a flat array or an array of
+   * `{ label, options }` groups.
    * @default []
    */
-  options?: SelectOption[];
+  options?: ListboxItems;
+  /**
+   * Preferred dropdown position; flips automatically when there is no room.
+   * @default 'bottom-start'
+   */
+  placement?: PopoverPlacement;
   /** Disables the select. */
   disabled?: boolean;
   /** Shows a clear affordance when a value is selected (also Delete/Backspace). */
@@ -88,21 +117,17 @@ export interface SelectFieldProps {
   ariaInvalid?: boolean;
   /** Icon rendered inside the trigger, at the start. */
   leadingIcon?: ReactNode;
+  /**
+   * Text shown when there are no options.
+   * @default 'No results found'
+   */
+  emptyLabel?: string;
   /** Called with the selected option's value; clearing passes an empty string. */
   onChange?: (value: string) => void;
   /** Extra class names appended to the root element. */
   className?: string;
   /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
-}
-
-function nextEnabledIndex(options: SelectOption[], current: number, direction: 1 | -1): number {
-  let next = current + direction;
-  while (next >= 0 && next < options.length) {
-    if (!options[next].disabled) return next;
-    next += direction;
-  }
-  return current;
 }
 
 export function SelectField({
@@ -117,6 +142,7 @@ export function SelectField({
   value,
   defaultValue,
   options = [],
+  placement = 'bottom-start',
   disabled,
   clearable = false,
   name,
@@ -125,6 +151,7 @@ export function SelectField({
   autoComplete,
   ariaInvalid,
   leadingIcon,
+  emptyLabel = 'No results found',
   onChange,
   className,
   style,
@@ -147,19 +174,39 @@ export function SelectField({
   const triggerRef = useRef<HTMLButtonElement>(null);
 
   const isDisabled = disabled || state === 'disabled';
-  const selectedOption = options.find((o) => o.value === effectiveValue);
+  const flatOptions = flattenOptions(options);
+  const rows = buildRows(options);
+  const selectedOption = flatOptions.find((o) => o.value === effectiveValue);
   const hasValue = !!effectiveValue;
 
+  /*
+   * Keeps the floating list as wide as the field. Observes the wrapper — a node
+   * React never recreates — and reads the trigger fresh on each callback, so a
+   * re-rendered trigger cannot leave a stale observer behind.
+   */
+  useLayoutEffect(() => {
+    const wrapper = wrapperRef.current;
+    if (!open || !wrapper) return undefined;
+    const sync = () => {
+      const trigger = triggerRef.current;
+      if (!trigger) return;
+      wrapper.style.setProperty(
+        '--ui-select-field-dropdown-width',
+        `${trigger.getBoundingClientRect().width}px`,
+      );
+    };
+    sync();
+    if (typeof ResizeObserver !== 'function') return undefined;
+    const observer = new ResizeObserver(sync);
+    observer.observe(wrapper);
+    return () => observer.disconnect();
+  }, [open]);
+
+  // Keeps the active row visible while arrowing through a scrolling list.
   useEffect(() => {
     if (!open) return;
-    const handler = (e: MouseEvent) => {
-      if (!wrapperRef.current?.contains(e.target as Node)) {
-        setOpen(false);
-      }
-    };
-    document.addEventListener('mousedown', handler);
-    return () => document.removeEventListener('mousedown', handler);
-  }, [open]);
+    scrollRowIntoView(listboxId, activeIndex);
+  }, [open, activeIndex, listboxId]);
 
   useEffect(() => {
     const formElement = wrapperRef.current?.closest('form');
@@ -177,24 +224,25 @@ export function SelectField({
     return () => formElement.removeEventListener('reset', handleFormReset);
   }, [isControlled]);
 
+  const closeDropdown = useCallback(() => {
+    setOpen(false);
+    setActiveIndex(-1);
+  }, []);
+
   const openDropdown = () => {
     if (isDisabled) return;
     setOpen(true);
-    setActiveIndex(options.findIndex((o) => o.value === effectiveValue));
+    const selected = rowIndexOfValue(rows, effectiveValue);
+    setActiveIndex(selected >= 0 ? selected : firstEnabledRow(rows));
   };
 
-  const closeDropdown = () => {
-    setOpen(false);
-    setActiveIndex(-1);
-  };
-
-  const handleSelect = (opt: SelectOption) => {
-    if (opt.disabled) return;
+  const handleSelect = (row: ListboxRow) => {
+    if (row.kind !== 'option' || row.option.disabled) return;
     const prev = effectiveValue;
-    if (!isControlled) setInternalValue(opt.value);
+    if (!isControlled) setInternalValue(row.option.value);
     closeDropdown();
     triggerRef.current?.focus();
-    if (prev !== opt.value) onChange?.(opt.value);
+    if (prev !== row.option.value) onChange?.(row.option.value);
   };
 
   const handleClear = (e: React.SyntheticEvent | Event) => {
@@ -217,11 +265,8 @@ export function SelectField({
       case 'Enter':
       case ' ':
         e.preventDefault();
-        if (!open) {
-          openDropdown();
-        } else if (activeIndex >= 0 && options[activeIndex]) {
-          handleSelect(options[activeIndex]);
-        }
+        if (!open) openDropdown();
+        else if (rows[activeIndex]) handleSelect(rows[activeIndex]);
         break;
       case 'Escape':
         if (open) {
@@ -232,12 +277,24 @@ export function SelectField({
       case 'ArrowDown':
         e.preventDefault();
         if (!open) openDropdown();
-        else setActiveIndex((i) => nextEnabledIndex(options, i, 1));
+        else setActiveIndex((i) => nextEnabledRow(rows, i, 1));
         break;
       case 'ArrowUp':
         e.preventDefault();
         if (!open) openDropdown();
-        else setActiveIndex((i) => nextEnabledIndex(options, i, -1));
+        else setActiveIndex((i) => nextEnabledRow(rows, i, -1));
+        break;
+      case 'Home':
+        if (open) {
+          e.preventDefault();
+          setActiveIndex(firstEnabledRow(rows));
+        }
+        break;
+      case 'End':
+        if (open) {
+          e.preventDefault();
+          setActiveIndex(nextEnabledRow(rows, rows.length, -1));
+        }
         break;
       case 'Delete':
       case 'Backspace':
@@ -253,119 +310,130 @@ export function SelectField({
   };
 
   const isInner = labelPlacement === 'inner';
+  const isInline = labelPlacement === 'inline';
 
   const rootClass = [
     'ui-select-field',
+    // Shared size ramp and per-variant colour aliases.
+    'ui-control-field',
+    `ui-control-field--${variant}`,
+    size !== 'default' && `ui-control-field--${size}`,
     `ui-select-field--${variant}`,
     size !== 'default' && `ui-select-field--${size}`,
     open && 'ui-select-field--open',
     state !== 'default' && `ui-select-field--state-${state}`,
     leadingIcon && 'ui-select-field--has-leading-icon',
     isInner && 'ui-select-field--inner',
+    isInline && 'ui-select-field--inline',
     className,
   ]
     .filter(Boolean)
     .join(' ');
 
+  const trigger = (
+    <button
+      ref={triggerRef}
+      id={triggerId}
+      className="ui-select-field__trigger"
+      type="button"
+      role="combobox"
+      aria-haspopup="listbox"
+      aria-expanded={open}
+      aria-controls={listboxId}
+      aria-activedescendant={
+        open && activeIndex >= 0 ? listboxOptionId(listboxId, activeIndex) : undefined
+      }
+      aria-describedby={hint ? hintId : undefined}
+      aria-labelledby={label ? labelId : undefined}
+      aria-required={required || undefined}
+      aria-invalid={ariaInvalid || undefined}
+      disabled={isDisabled}
+      onClick={() => (open ? closeDropdown() : openDropdown())}
+      onKeyDown={handleKeyDown}
+    >
+      {leadingIcon && (
+        <span className="ui-select-field__leading-icon" aria-hidden="true">
+          {leadingIcon}
+        </span>
+      )}
+      {label && isInner && (
+        <span id={labelId} className="ui-select-field__inner-label">
+          {label}
+        </span>
+      )}
+      <span className="ui-select-field__content">
+        {label && isInline && (
+          <span id={labelId} className="ui-select-field__inline-label">
+            {label}:
+          </span>
+        )}
+        <span
+          className={[
+            'ui-select-field__value',
+            !selectedOption && 'ui-select-field__value--placeholder',
+          ]
+            .filter(Boolean)
+            .join(' ')}
+        >
+          {selectedOption?.label ?? placeholder}
+        </span>
+      </span>
+      <span className="ui-select-field__trailing">
+        {clearable && hasValue && (
+          <span
+            className="ui-select-field__clear"
+            role="button"
+            aria-label="Clear selection"
+            tabIndex={0}
+            onMouseDown={handleClear}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') handleClear(e);
+            }}
+          >
+            <IconClose />
+          </span>
+        )}
+        <span className="ui-select-field__chevron" aria-hidden="true">
+          {open ? <IconChevronUp /> : <IconChevronDown />}
+        </span>
+      </span>
+    </button>
+  );
+
   return (
     <div className={rootClass} ref={wrapperRef} style={style}>
-      {label && !isInner && (
+      {label && !isInner && !isInline && (
         <label id={labelId} className="ui-select-field__label" htmlFor={triggerId}>
           {label}
         </label>
       )}
       <div className="ui-select-field__field-container">
-        <button
-          ref={triggerRef}
-          id={triggerId}
-          className="ui-select-field__trigger"
-          type="button"
-          role="combobox"
-          aria-haspopup="listbox"
-          aria-expanded={open}
-          aria-controls={listboxId}
-          aria-describedby={hint ? hintId : undefined}
-          aria-required={required || undefined}
-          aria-invalid={ariaInvalid || undefined}
-          disabled={isDisabled}
-          onClick={() => (open ? closeDropdown() : openDropdown())}
-          onKeyDown={handleKeyDown}
+        <Popover
+          className="ui-select-field__popover"
+          trigger="manual"
+          placement={placement}
+          open={open}
+          onOpenChange={(detail) => {
+            if (!detail.open) closeDropdown();
+          }}
+          anchor={trigger}
         >
-          {leadingIcon && (
-            <span className="ui-select-field__leading-icon" aria-hidden="true">
-              {leadingIcon}
-            </span>
+          {/* Mounted only while open: the popover panel stays in the DOM either way. */}
+          {open && (
+            <Listbox
+              idPrefix={listboxId}
+              items={options}
+              value={effectiveValue}
+              activeIndex={activeIndex}
+              size={size}
+              emptyLabel={emptyLabel}
+              labelledBy={label ? labelId : undefined}
+              label={label ? undefined : placeholder}
+              onSelect={handleSelect}
+              onActivate={setActiveIndex}
+            />
           )}
-          {label && isInner && (
-            <span id={labelId} className="ui-select-field__inner-label">
-              {label}
-            </span>
-          )}
-          <span
-            className={[
-              'ui-select-field__value',
-              !selectedOption && 'ui-select-field__value--placeholder',
-            ]
-              .filter(Boolean)
-              .join(' ')}
-          >
-            {selectedOption?.label ?? placeholder}
-          </span>
-          <span className="ui-select-field__trailing">
-            {clearable && hasValue && (
-              <span
-                className="ui-select-field__clear"
-                role="button"
-                aria-label="Clear selection"
-                tabIndex={0}
-                onMouseDown={handleClear}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') handleClear(e);
-                }}
-              >
-                <IconClose />
-              </span>
-            )}
-            <span className="ui-select-field__chevron" aria-hidden="true">
-              {open ? <IconChevronUp /> : <IconChevronDown />}
-            </span>
-          </span>
-        </button>
-        {open && (
-          <ul
-            id={listboxId}
-            className="ui-select-field__dropdown"
-            role="listbox"
-            aria-labelledby={label ? labelId : undefined}
-            aria-label={label ? undefined : placeholder}
-          >
-            {options.map((opt, i) => (
-              <li
-                key={opt.value}
-                className={[
-                  'ui-select-field__option',
-                  opt.value === effectiveValue && 'ui-select-field__option--selected',
-                  i === activeIndex && 'ui-select-field__option--focused',
-                  opt.disabled && 'ui-select-field__option--disabled',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                role="option"
-                aria-selected={opt.value === effectiveValue}
-                aria-disabled={opt.disabled || undefined}
-                onMouseDown={(e) => {
-                  e.preventDefault();
-                  handleSelect(opt);
-                }}
-                onMouseMove={() => {
-                  if (!opt.disabled) setActiveIndex(i);
-                }}
-              >
-                {opt.label}
-              </li>
-            ))}
-          </ul>
-        )}
+        </Popover>
         {name && (
           <select
             className="ui-select-field__native-select"
@@ -382,11 +450,21 @@ export function SelectField({
             <option value="" disabled={required}>
               {placeholder}
             </option>
-            {options.map((opt) => (
-              <option key={opt.value} value={opt.value} disabled={opt.disabled}>
-                {opt.label}
-              </option>
-            ))}
+            {isGroupedItems(options)
+              ? options.map((group) => (
+                  <optgroup key={group.label} label={group.label}>
+                    {(group.options ?? []).map((opt) => (
+                      <option key={opt.value} value={opt.value} disabled={opt.disabled}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </optgroup>
+                ))
+              : flatOptions.map((opt) => (
+                  <option key={opt.value} value={opt.value} disabled={opt.disabled}>
+                    {opt.label}
+                  </option>
+                ))}
           </select>
         )}
       </div>

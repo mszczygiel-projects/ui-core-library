@@ -40,14 +40,14 @@ describe('UiSelectField', () => {
 
   it('dropdown is closed by default', async () => {
     const el = await makeEl();
-    expect(el.shadowRoot!.querySelector('.dropdown')).to.equal(null);
+    expect(el.shadowRoot!.querySelector('.listbox')).to.equal(null);
   });
 
   it('dropdown opens on trigger click', async () => {
     const el = await makeEl();
     el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
     await el.updateComplete;
-    expect(el.shadowRoot!.querySelector('.dropdown')).to.not.equal(null);
+    expect(el.shadowRoot!.querySelector('.listbox')).to.not.equal(null);
   });
 
   it('host gets open attribute when open', async () => {
@@ -83,7 +83,7 @@ describe('UiSelectField', () => {
       new MouseEvent('mousedown', { bubbles: true }),
     );
     await el.updateComplete;
-    expect(el.shadowRoot!.querySelector('.dropdown')).to.equal(null);
+    expect(el.shadowRoot!.querySelector('.listbox')).to.equal(null);
   });
 
   it('dispatches ui-change event on selection', async () => {
@@ -374,5 +374,226 @@ describe('UiSelectField', () => {
 
     expect(el.value).to.equal('');
     expect(el.hasAttribute('open')).to.equal(false);
+  });
+
+  describe('inline label placement', () => {
+    it('renders the label inside the trigger with a colon', async () => {
+      const el = await makeEl();
+      el.label = 'Season';
+      el.labelPlacement = 'inline';
+      await el.updateComplete;
+
+      const inline = el.shadowRoot!.querySelector('.inline-label');
+      expect(inline).to.not.equal(null);
+      expect(inline!.textContent!.trim()).to.equal('Season:');
+    });
+
+    it('does not render the standalone label element', async () => {
+      const el = await makeEl();
+      el.label = 'Season';
+      el.labelPlacement = 'inline';
+      await el.updateComplete;
+
+      expect(el.shadowRoot!.querySelector('label.label')).to.equal(null);
+    });
+
+    it('names the trigger through the inline label', async () => {
+      const el = await makeEl();
+      el.label = 'Season';
+      el.labelPlacement = 'inline';
+      await el.updateComplete;
+
+      const trigger = el.shadowRoot!.querySelector('.trigger')!;
+      expect(trigger.getAttribute('aria-labelledby')).to.equal('label');
+      expect(el.shadowRoot!.querySelector('#label')).to.not.equal(null);
+    });
+
+    it('keeps the top label for the default placement', async () => {
+      const el = await makeEl();
+      el.label = 'Season';
+      await el.updateComplete;
+
+      expect(el.shadowRoot!.querySelector('label.label')).to.not.equal(null);
+      expect(el.shadowRoot!.querySelector('.inline-label')).to.equal(null);
+    });
+  });
+
+  describe('option groups', () => {
+    const GROUPS = [
+      { label: 'Recent', options: [{ value: 'apple', label: 'Apple' }] },
+      {
+        label: 'All',
+        options: [
+          { value: 'banana', label: 'Banana' },
+          { value: 'cherry', label: 'Cherry' },
+        ],
+      },
+    ];
+
+    async function openGrouped() {
+      const el = await fixture<UiSelectField>(html`<ui-select-field></ui-select-field>`);
+      el.options = GROUPS;
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+      return el;
+    }
+
+    it('renders a group per entry with a labelled header', async () => {
+      const el = await openGrouped();
+      const groups = el.shadowRoot!.querySelectorAll('[role="group"]');
+      expect(groups.length).to.equal(2);
+      expect(groups[0].getAttribute('aria-labelledby')).to.equal('listbox-group-0');
+      expect(el.shadowRoot!.querySelector('#listbox-group-0')!.textContent!.trim()).to.equal(
+        'Recent',
+      );
+    });
+
+    it('indexes options continuously across groups', async () => {
+      const el = await openGrouped();
+      expect(el.shadowRoot!.querySelector('#listbox-opt-0')!.textContent).to.contain('Apple');
+      expect(el.shadowRoot!.querySelector('#listbox-opt-2')!.textContent).to.contain('Cherry');
+    });
+
+    it('selects an option from the second group', async () => {
+      const el = await openGrouped();
+      el.shadowRoot!.querySelector<HTMLElement>('#listbox-opt-2')!.dispatchEvent(
+        new MouseEvent('mousedown', { bubbles: true }),
+      );
+      await el.updateComplete;
+      expect(el.value).to.equal('cherry');
+    });
+  });
+
+  describe('active descendant', () => {
+    it('is absent while the list is closed', async () => {
+      const el = await makeEl();
+      const trigger = el.shadowRoot!.querySelector('.trigger')!;
+      expect(trigger.hasAttribute('aria-activedescendant')).to.equal(false);
+    });
+
+    it('points at the active option once open', async () => {
+      const el = await makeEl();
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      const trigger = el.shadowRoot!.querySelector('.trigger')!;
+      const active = trigger.getAttribute('aria-activedescendant');
+      expect(active).to.equal('listbox-opt-0');
+      // The reference must resolve inside this same shadow root.
+      expect(el.shadowRoot!.querySelector(`#${active}`)).to.not.equal(null);
+    });
+
+    it('follows arrow navigation and skips disabled options', async () => {
+      const el = await makeEl();
+      const trigger = el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!;
+      trigger.click();
+      await el.updateComplete;
+
+      trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      await el.updateComplete;
+      expect(trigger.getAttribute('aria-activedescendant')).to.equal('listbox-opt-1');
+
+      // Cherry is disabled, so the active row stays put.
+      trigger.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowDown', bubbles: true }));
+      await el.updateComplete;
+      expect(trigger.getAttribute('aria-activedescendant')).to.equal('listbox-opt-1');
+    });
+
+    it('keeps aria-expanded despite the popover manual mode', async () => {
+      const el = await makeEl();
+      const trigger = el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!;
+      expect(trigger.getAttribute('aria-expanded')).to.equal('false');
+      trigger.click();
+      await el.updateComplete;
+      expect(trigger.getAttribute('aria-expanded')).to.equal('true');
+    });
+  });
+
+  describe('floating list', () => {
+    it('renders the list inside the popover', async () => {
+      const el = await makeEl();
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      const popover = el.shadowRoot!.querySelector('ui-popover')!;
+      expect(popover.hasAttribute('open')).to.equal(true);
+      expect(popover.querySelector('.listbox')).to.not.equal(null);
+    });
+
+    it('defaults to bottom-start placement and forwards it', async () => {
+      const el = await makeEl();
+      expect(el.placement).to.equal('bottom-start');
+      el.placement = 'top-start';
+      await el.updateComplete;
+      expect(el.shadowRoot!.querySelector('ui-popover')!.getAttribute('placement')).to.equal(
+        'top-start',
+      );
+    });
+
+    it('shows the empty message when there are no options', async () => {
+      const el = await fixture<UiSelectField>(html`<ui-select-field></ui-select-field>`);
+      el.options = [];
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      const message = el.shadowRoot!.querySelector('.listbox__message');
+      expect(message).to.not.equal(null);
+      expect(message!.textContent!.trim()).to.equal('No results found');
+    });
+  });
+
+  describe('option rendering per the Development annotations', () => {
+    it('renders an option icon before the label when given', async () => {
+      const el = await fixture<UiSelectField>(html`<ui-select-field></ui-select-field>`);
+      el.options = [{ value: 'a', label: 'Alpha', icon: 'icon-star' }];
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      const children = [...el.shadowRoot!.querySelector('#listbox-opt-0')!.children].map(
+        (n) => n.className,
+      );
+      expect(children).to.deep.equal(['option__icon', 'option__label']);
+      expect(el.shadowRoot!.querySelector('.option__icon svg')).to.not.equal(null);
+    });
+
+    it('omits the icon slot for options without one', async () => {
+      const el = await makeEl();
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+      expect(el.shadowRoot!.querySelector('.option .option__icon')).to.equal(null);
+    });
+
+    it('flags grouped lists so the panel can drop its inline padding', async () => {
+      const el = await fixture<UiSelectField>(html`<ui-select-field></ui-select-field>`);
+      el.options = [{ label: 'G', options: [{ value: 'a', label: 'Alpha' }] }];
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      expect(el.shadowRoot!.querySelector('.listbox--grouped')).to.not.equal(null);
+      expect(el.shadowRoot!.querySelector('.listbox__group-options')).to.not.equal(null);
+    });
+
+    it('keeps the single-select row surface', async () => {
+      const el = await makeEl();
+      el.value = 'apple';
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      const list = el.shadowRoot!.querySelector('.listbox')!;
+      expect(list.classList.contains('listbox--multiple')).to.equal(false);
+      expect(el.shadowRoot!.querySelector('.option--selected')).to.not.equal(null);
+    });
+
+    it('leaves a flat list unflagged', async () => {
+      const el = await makeEl();
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+      expect(el.shadowRoot!.querySelector('.listbox--grouped')).to.equal(null);
+    });
   });
 });

@@ -294,7 +294,9 @@ export class UiPopover extends LitElement {
     if (!panel || !this.open) return;
     const arrowEl = this.arrow ? this._arrowEl : null;
 
-    const middleware = [offsetMiddleware(this.offset ?? this._tokenLengthPx('--popover-offset', 8))];
+    const middleware = [
+      offsetMiddleware(this.offset ?? this._tokenLengthPx('--popover-offset', 8)),
+    ];
     if (this.flip) middleware.push(flipMiddleware());
     if (this.shift) middleware.push(shiftMiddleware());
     if (arrowEl) middleware.push(arrowMiddleware({ element: arrowEl }));
@@ -348,15 +350,18 @@ export class UiPopover extends LitElement {
   }
 
   private _syncTriggerAria = () => {
+    /*
+     * Manual mode: the consumer owns the trigger's ARIA (e.g. the combobox
+     * pattern, where the trigger carries aria-expanded plus aria-controls and
+     * aria-activedescendant pointing into its own shadow root). Leaving it
+     * alone means exactly that — clearing the attribute would fight the
+     * consumer that just set it.
+     */
+    if (this.trigger === 'manual') return;
     const slot = this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="trigger"]');
     const anchor = slot?.assignedElements({ flatten: true })[0];
     if (!anchor) return;
-    // Manual mode: the consumer owns the trigger's ARIA (e.g. combobox pattern).
-    if (this.trigger === 'manual') {
-      anchor.removeAttribute('aria-expanded');
-    } else {
-      anchor.setAttribute('aria-expanded', String(this.open));
-    }
+    anchor.setAttribute('aria-expanded', String(this.open));
   };
 
   private _dispatchOpenChange(open: boolean, reason: PopoverOpenChangeReason) {

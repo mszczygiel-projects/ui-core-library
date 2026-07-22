@@ -1,5 +1,6 @@
 export { DragDismissController } from './controllers/drag-dismiss.js';
 export type { DragDismissDirection, DragDismissOptions } from './controllers/drag-dismiss.js';
+export { controlFieldStyles } from './styles/control-field.styles.js';
 export { focusStyles } from './styles/focus.styles.js';
 export { motionStyles } from './styles/motion.styles.js';
 export { resetStyles } from './styles/reset.styles.js';
@@ -53,6 +54,27 @@ export { UiRadioField } from './radio-field/radio-field.js';
 export type { RadioFieldState } from './radio-field/radio-field.js';
 export { UiSwitchField } from './switch-field/switch-field.js';
 export type { SwitchFieldState, SwitchFieldLabelPosition } from './switch-field/switch-field.js';
+export {
+  renderListbox,
+  buildRows,
+  flattenOptions,
+  isGroupedItems,
+  isOptionSelected,
+  toggleValue,
+  nextEnabledRow,
+  firstEnabledRow,
+  rowIndexOfValue,
+  listboxOptionId,
+  scrollRowIntoView,
+} from './listbox/listbox.js';
+export type {
+  ListboxOption,
+  ListboxOptionGroup,
+  ListboxItems,
+  ListboxRow,
+  ListboxRenderConfig,
+} from './listbox/listbox.js';
+export { listboxStyles } from './listbox/listbox.styles.js';
 export { UiSelectField } from './select-field/select-field.js';
 export type {
   SelectFieldVariant,
@@ -60,6 +82,16 @@ export type {
   SelectFieldState,
   SelectOption,
 } from './select-field/select-field.js';
+export { UiCombobox } from './combobox/combobox.js';
+export type {
+  ComboboxVariant,
+  ComboboxSize,
+  ComboboxState,
+  ComboboxFilterMode,
+  ComboboxChangeDetail,
+  ComboboxFilterDetail,
+  ComboboxCreateDetail,
+} from './combobox/combobox.js';
 export { UiNotification } from './notification/notification.js';
 export type { NotificationStatus, NotificationVariant } from './notification/notification.js';
 export { UiBadge } from './badge/badge.js';

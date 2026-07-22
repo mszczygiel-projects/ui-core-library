@@ -15,6 +15,45 @@ A React select component with custom trigger/listbox UI and native form semantic
 />
 ```
 
+## Floating list
+
+The dropdown is composed from two primitives rather than positioned by hand:
+
+- **`Popover`** (`trigger="manual"`) does the positioning — it flips above
+  the field when there is no room below, shifts to stay in the viewport, and
+  renders in the browser top layer so no `overflow: hidden` ancestor can clip
+  it. `placement` defaults to `bottom-start`.
+- **`Listbox`** renders the options through the `Listbox` component.
+
+The popover's own panel chrome is neutralised with descendant rules on
+`.ui-select-field__popover`, because the panel surface belongs to the listbox
+(`select-dropdown-*` tokens). The panel is kept as wide as the field by a
+`ResizeObserver` that writes `--ui-select-field-dropdown-width`.
+
+## Option groups
+
+`options` accepts either a flat array or an array of groups. Headers stick to
+the top of the panel while their group scrolls, and option indices run
+continuously across groups.
+
+```tsx
+options={[
+  { label: 'Recent', options: [{ value: '2025', label: '2025/26' }] },
+  { label: 'All seasons', options: [{ value: '2024', label: '2024/25' }] },
+]}
+```
+
+## Label placement
+
+| Value           | Result                                                                  |
+| --------------- | ----------------------------------------------------------------------- |
+| `top` (default) | Label above the field.                                                  |
+| `inner`         | Small label stacked above the value, inside the field.                  |
+| `inline`        | Label and value on one line — `Season: 2025/26`. Suited to filter bars. |
+
+The inline label uses the value's type ramp (`control/font-*`) with the label
+colour of the current variant and state, separated by `--control-label-inline-gap`.
+
 ## Form integration
 
 `SelectField` uses a visually hidden native `<select>` synchronized with the custom UI.

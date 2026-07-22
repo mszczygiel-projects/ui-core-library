@@ -2494,6 +2494,40 @@
             },
             "$type": "color"
           }
+        },
+        "create": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.link.default}",
+              "Dark": "{Themes.color.link.default}"
+            },
+            "$type": "color"
+          }
+        }
+      },
+      "option-group": {
+        "text": {
+          "$value": {
+            "Default": "{Themes.color.text.secondary}",
+            "Dark": "{Themes.color.text.secondary}"
+          },
+          "$type": "color"
+        },
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.select.dropdown.background}",
+            "Dark": "{Themes.color.select.dropdown.background}"
+          },
+          "$type": "color"
+        }
+      },
+      "empty": {
+        "text": {
+          "$value": {
+            "Default": "{Themes.color.text.secondary}",
+            "Dark": "{Themes.color.text.secondary}"
+          },
+          "$type": "color"
         }
       }
     },
@@ -4992,6 +5026,40 @@
               },
               "$type": "color"
             }
+          },
+          "create": {
+            "text": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.link.default}",
+                "Dark": "{Themes.color.on-subtle.link.default}"
+              },
+              "$type": "color"
+            }
+          }
+        },
+        "option-group": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.on-subtle.text.secondary}",
+              "Dark": "{Themes.color.on-subtle.text.secondary}"
+            },
+            "$type": "color"
+          },
+          "background": {
+            "$value": {
+              "Default": "{Themes.color.on-subtle.select.dropdown.background}",
+              "Dark": "{Themes.color.on-subtle.select.dropdown.background}"
+            },
+            "$type": "color"
+          }
+        },
+        "empty": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.on-subtle.text.secondary}",
+              "Dark": "{Themes.color.on-subtle.text.secondary}"
+            },
+            "$type": "color"
           }
         }
       },
@@ -10851,6 +10919,40 @@
               },
               "$type": "color"
             }
+          },
+          "create": {
+            "text": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.link.default}",
+                "Dark": "{Themes.color.on-inverse.link.default}"
+              },
+              "$type": "color"
+            }
+          }
+        },
+        "option-group": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.on-inverse.text.secondary}",
+              "Dark": "{Themes.color.on-inverse.text.secondary}"
+            },
+            "$type": "color"
+          },
+          "background": {
+            "$value": {
+              "Default": "{Themes.color.on-inverse.select.dropdown.background}",
+              "Dark": "{Themes.color.on-inverse.select.dropdown.background}"
+            },
+            "$type": "color"
+          }
+        },
+        "empty": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.on-inverse.text.secondary}",
+              "Dark": "{Themes.color.on-inverse.text.secondary}"
+            },
+            "$type": "color"
           }
         }
       },
@@ -16710,6 +16812,40 @@
               },
               "$type": "color"
             }
+          },
+          "create": {
+            "text": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.link.default}",
+                "Dark": "{Themes.color.on-brand-primary.link.default}"
+              },
+              "$type": "color"
+            }
+          }
+        },
+        "option-group": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.on-brand-primary.text.secondary}",
+              "Dark": "{Themes.color.on-brand-primary.text.secondary}"
+            },
+            "$type": "color"
+          },
+          "background": {
+            "$value": {
+              "Default": "{Themes.color.on-brand-primary.select.dropdown.background}",
+              "Dark": "{Themes.color.on-brand-primary.select.dropdown.background}"
+            },
+            "$type": "color"
+          }
+        },
+        "empty": {
+          "text": {
+            "$value": {
+              "Default": "{Themes.color.on-brand-primary.text.secondary}",
+              "Dark": "{Themes.color.on-brand-primary.text.secondary}"
+            },
+            "$type": "color"
           }
         }
       },

@@ -36,18 +36,18 @@ ui-core-library/              ← Nx monorepo, pnpm workspace
 
 ### Tech stack
 
-| Layer              | Technology                                                  |
-| ------------------ | ----------------------------------------------------------- |
-| Monorepo           | Nx + pnpm                                                   |
-| Web Components     | Lit (Shadow DOM)                                            |
-| React              | React 18+ (light DOM)                                       |
-| Foundations (code) | TypeScript + CSS custom properties                          |
-| Tailwind           | v4 — configured via `@theme inline` in `tailwind.css`       |
-| Documentation      | Storybook                                                   |
+| Layer              | Technology                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------- |
+| Monorepo           | Nx + pnpm                                                                                 |
+| Web Components     | Lit (Shadow DOM)                                                                          |
+| React              | React 18+ (light DOM)                                                                     |
+| Foundations (code) | TypeScript + CSS custom properties                                                        |
+| Tailwind           | v4 — configured via `@theme inline` in `tailwind.css`                                     |
+| Documentation      | Storybook                                                                                 |
 | Testing (WC)       | @web/test-runner + Playwright (Chromium) + @open-wc/testing; build scripts: Vitest (node) |
-| Testing (React)    | Vitest + jsdom + Testing Library; build scripts: Vitest (node) |
-| Testing (tokens)   | Vitest (node)                                               |
-| Visual regression  | Chromatic                                                   |
+| Testing (React)    | Vitest + jsdom + Testing Library; build scripts: Vitest (node)                            |
+| Testing (tokens)   | Vitest (node)                                                                             |
+| Visual regression  | Chromatic                                                                                 |
 
 ### Nx configuration notes
 
@@ -300,6 +300,22 @@ html`${unsafeSVG(svgMap['icon-chevron-down'])}`;
 - Auto Layout in Figma = flex/grid in code
 - Naming and comments in English
 - Lit and React are **separate implementations** sharing the same token set
+
+### Shared primitives behind the field components
+
+`ui-select-field` / `SelectField` and `ui-combobox` / `Combobox` are compositions, not monoliths:
+
+| Layer        | Lit                                 | React                      | Responsibility                                                               |
+| ------------ | ----------------------------------- | -------------------------- | ---------------------------------------------------------------------------- |
+| Positioning  | `ui-popover` (`trigger="manual"`)   | `Popover`                  | flip/shift, top-layer rendering                                              |
+| Option list  | `renderListbox()` + `listboxStyles` | `<Listbox>`                | options, sticky group headers, empty/loading, check marks, create row        |
+| Field chrome | `controlFieldStyles`                | `styles/control-field.css` | size ramp and per-variant colour aliases (`--_bg`, `--_text`, `--_label`, …) |
+
+Three things about this that are easy to get wrong:
+
+1. **There is no `<ui-listbox>` element.** `aria-activedescendant` and `aria-controls` are id references, and **id references do not resolve across a shadow boundary**. So on the Lit side the list is a render function that draws into the _caller's_ shadow root, keeping the trigger and the options in one tree. React has no such constraint and ships a real `<Listbox>` component. The asymmetry is deliberate — see `packages/web-components/src/listbox/README.md`.
+2. **The panel surface belongs to the listbox, not to the popover.** The listbox owns background, border, radius, padding, max-height and scrolling (`select-dropdown-*` tokens) so it also works inline. Whenever it is floated inside a popover, neutralise the popover chrome (`::part(panel)` / `::part(content)` in Lit, descendant rules in React) or two surfaces will stack.
+3. **The `select-*` token family is shared.** `--color-select-option-*`, `--color-select-dropdown-*`, `--select-option-group-*` and friends back _every_ listbox surface, including the Combobox — the prefix is historical, not a scope. Do not rename it to `listbox-*` without a full audit; it is published API.
 
 ### Documentation convention (JSDoc/TSDoc) — required
 

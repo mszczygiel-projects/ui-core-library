@@ -1,6 +1,10 @@
 import { css } from 'lit';
 
-export const selectFieldStyles = css`
+/**
+ * Element rules for `ui-combobox`. The size ramp and per-variant colour
+ * aliases (`--_bg`, `--_text`, `--_label`, …) come from `controlFieldStyles`.
+ */
+export const comboboxStyles = css`
   /* ---- Host ---- */
 
   :host {
@@ -29,11 +33,6 @@ export const selectFieldStyles = css`
     color: var(--_label);
   }
 
-  /* Hover: trigger before label in DOM — use :has() */
-  .label:has(~ .field-container .trigger:hover) {
-    color: var(--_label-hover);
-  }
-
   :host([open]) .label {
     color: var(--_label-active);
   }
@@ -51,79 +50,23 @@ export const selectFieldStyles = css`
     color: var(--_label-disabled);
   }
 
-  /* ---- Inner label ---- */
-
-  :host([label-placement='inner']) {
-    --_inner-label-size: var(--size-4);
-  }
-
-  :host([label-placement='inner']) .trigger {
-    position: relative;
-    padding-block-start: calc(
-      var(--_padding-stack) - 2 * var(--_border-width) + var(--_inner-label-size) +
-        var(--_inside_label_vertical_gap)
-    );
-    padding-block-end: calc(var(--_padding-stack) - 2 * var(--_border-width));
-  }
-
-  .inner-label {
-    position: absolute;
-    top: var(--_padding-stack);
-    inset-inline-start: var(--_padding-inline);
-    font-size: var(--control-label-inner-font-size);
-    line-height: var(--control-label-inner-line-height);
-    font-weight: var(--control-label-inner-font-weight);
-    font-family: var(--control-label-inner-font-family);
-    text-transform: var(--control-label-inner-text-transform);
-    letter-spacing: var(--control-label-inner-letter-spacing);
-    color: var(--_label);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    pointer-events: none;
-  }
-
-  :host([has-leading-icon][label-placement='inner']) .inner-label {
-    inset-inline-start: var(--_padding-inline);
-  }
-
-  :host([label-placement='inner']) .trigger:hover .inner-label {
-    color: var(--_label-hover);
-  }
-
-  :host([label-placement='inner'][open]) .inner-label {
-    color: var(--_label-active);
-  }
-
-  :host([label-placement='inner'][state='success']) .inner-label {
-    color: var(--_label-success);
-  }
-
-  :host([label-placement='inner'][state='error']) .inner-label {
-    color: var(--_label-error);
-  }
-
-  :host([label-placement='inner'][state='disabled']) .inner-label,
-  :host([label-placement='inner'][disabled]) .inner-label {
-    color: var(--_label-disabled);
-  }
-
-  /* ---- Field container (positions dropdown) ---- */
+  /* ---- Field ---- */
 
   .field-container {
     position: relative;
   }
 
-  /* ---- Trigger ---- */
-
-  .trigger {
-    all: unset;
+  /*
+   * The field box is a plain div rather than a button: the interactive element
+   * is the input inside it, which owns the combobox role and its ARIA.
+   */
+  .field {
     box-sizing: border-box;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: var(--spacing-2);
     width: 100%;
-    cursor: pointer;
+    cursor: text;
 
     padding-block: var(--_padding-stack);
     padding-inline: var(--_padding-inline);
@@ -132,47 +75,39 @@ export const selectFieldStyles = css`
     border: var(--_border-width) solid var(--_border);
     border-radius: var(--_radius);
 
-    font-family: var(--control-font-family);
-    font-size: var(--_font-size);
-    font-weight: var(--control-font-weight);
-    line-height: var(--size-6);
-    letter-spacing: var(--control-letter-spacing);
-    color: var(--_text);
-
     transition:
       background-color var(--duration-150) ease,
       border-color var(--duration-150) ease;
   }
 
-  .trigger:hover {
+  .field:hover {
     background-color: var(--_bg-hover);
     border-color: var(--_border-hover);
   }
 
-  .trigger:focus-visible,
-  :host([open]) .trigger {
+  :host([open]) .field,
+  .field:focus-within {
     background-color: var(--_bg-active);
     border-color: var(--_border-active);
     outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
     outline-offset: var(--ring-offset);
   }
 
-  :host([state='success']) .trigger {
+  :host([state='success']) .field {
     background-color: var(--_bg-success);
     border-color: var(--_border-success);
   }
 
-  :host([state='error']) .trigger {
+  :host([state='error']) .field {
     background-color: var(--_bg-error);
     border-color: var(--_border-error);
   }
 
-  :host([state='disabled']) .trigger,
-  :host([disabled]) .trigger {
+  :host([state='disabled']) .field,
+  :host([disabled]) .field {
     background-color: var(--_bg-disabled);
     border-color: var(--_border-disabled);
     cursor: not-allowed;
-    pointer-events: none;
   }
 
   /* Underlined: bottom border only, no radius */
@@ -181,36 +116,36 @@ export const selectFieldStyles = css`
     --_padding-inline: 0px;
   }
 
-  :host([variant='underlined']) .trigger {
+  :host([variant='underlined']) .field {
     border: none;
     border-bottom: var(--control-underlined-border-width-default) solid var(--_border);
     border-radius: 0;
   }
 
-  :host([variant='underlined']) .trigger:hover {
+  :host([variant='underlined']) .field:hover {
     border-bottom-color: var(--_border-hover);
     border-bottom-width: var(--control-underlined-border-width-hover);
   }
 
-  :host([variant='underlined']) .trigger:focus-visible,
-  :host([variant='underlined'][open]) .trigger {
+  :host([variant='underlined'][open]) .field,
+  :host([variant='underlined']) .field:focus-within {
     border-bottom-color: var(--_border-active);
     border-bottom-width: var(--control-underlined-border-width-active);
     outline: none;
   }
 
-  :host([variant='underlined'][state='success']) .trigger {
+  :host([variant='underlined'][state='success']) .field {
     border-bottom-color: var(--_border-success);
     border-bottom-width: var(--control-underlined-border-width-success);
   }
 
-  :host([variant='underlined'][state='error']) .trigger {
+  :host([variant='underlined'][state='error']) .field {
     border-bottom-color: var(--_border-error);
     border-bottom-width: var(--control-underlined-border-width-error);
   }
 
-  :host([variant='underlined'][state='disabled']) .trigger,
-  :host([variant='underlined'][disabled]) .trigger {
+  :host([variant='underlined'][state='disabled']) .field,
+  :host([variant='underlined'][disabled]) .field {
     border-bottom-width: var(--control-underlined-border-width-disabled);
   }
 
@@ -223,24 +158,20 @@ export const selectFieldStyles = css`
     justify-content: center;
     width: var(--_icon-size);
     height: var(--_icon-size);
+    /* Aligns with the first chip row when the field grows. */
+    margin-block-start: calc((var(--size-6) - var(--_icon-size)) / 2);
     color: var(--_icon);
-    margin-inline-start: var(--_padding-inline);
   }
 
   :host([has-leading-icon]) .icon--leading {
     display: inline-flex;
   }
 
-  :host([has-leading-icon]) .trigger {
-    padding-inline-start: 0;
-  }
-
-  .trigger:hover .icon--leading {
+  .field:hover .icon--leading {
     color: var(--_icon-hover);
   }
 
-  :host([open]) .icon--leading,
-  .trigger:focus-visible .icon--leading {
+  :host([open]) .icon--leading {
     color: var(--_icon-active);
   }
 
@@ -265,99 +196,64 @@ export const selectFieldStyles = css`
     color: inherit;
   }
 
-  /* ---- Value / Placeholder ---- */
+  /* ---- Content: chips + input ---- */
 
-  /* Wraps the inline label and the value so they share one baseline row. */
   .content {
     display: flex;
+    flex-direction: column;
+    gap: var(--combobox-chips-gap);
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Chips wrap in their own row; the query keeps a line of its own below. */
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: var(--control-label-inline-gap);
-    flex: 1;
-    min-width: 0;
+    gap: var(--combobox-chips-gap);
   }
 
-  .value {
-    flex: 1;
+  .chips:empty {
+    display: none;
+  }
+
+  /* ---- Input ---- */
+
+  .input {
+    all: unset;
+    box-sizing: border-box;
+    width: 100%;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    text-align: start;
+    font-family: var(--control-font-family);
+    font-size: var(--_font-size);
+    font-weight: var(--control-font-weight);
+    line-height: var(--size-6);
+    letter-spacing: var(--control-letter-spacing);
     color: var(--_text);
+    cursor: text;
   }
 
-  /* ---- Inline label ---- */
-
-  .inline-label {
-    flex: 0 0 auto;
-    white-space: nowrap;
-    color: var(--_label);
-  }
-
-  .trigger:hover .inline-label {
-    color: var(--_label-hover);
-  }
-
-  :host([open]) .inline-label {
-    color: var(--_label-active);
-  }
-
-  :host([state='success']) .inline-label {
-    color: var(--_label-success);
-  }
-
-  :host([state='error']) .inline-label {
-    color: var(--_label-error);
-  }
-
-  :host([state='disabled']) .inline-label,
-  :host([disabled]) .inline-label {
-    color: var(--_label-disabled);
-  }
-
-  .value--placeholder {
+  .input::placeholder {
     color: var(--_placeholder);
   }
 
-  .trigger:hover .value {
-    color: var(--_text-hover);
-  }
-
-  .trigger:hover .value--placeholder {
+  .field:hover .input::placeholder {
     color: var(--_placeholder-hover);
   }
 
-  :host([open]) .trigger .value {
-    color: var(--_text-active);
-  }
-
-  :host([open]) .trigger .value--placeholder {
+  :host([open]) .input::placeholder {
     color: var(--_placeholder-active);
   }
 
-  :host([state='success']) .value {
-    color: var(--_text-success);
-  }
-
-  :host([state='success']) .value--placeholder {
-    color: var(--_placeholder-success);
-  }
-
-  :host([state='error']) .value {
-    color: var(--_text-error);
-  }
-
-  :host([state='error']) .value--placeholder {
-    color: var(--_placeholder-error);
-  }
-
-  :host([state='disabled']) .value,
-  :host([disabled]) .value {
+  :host([state='disabled']) .input,
+  :host([disabled]) .input {
     color: var(--_text-disabled);
+    cursor: not-allowed;
   }
 
-  :host([state='disabled']) .value--placeholder,
-  :host([disabled]) .value--placeholder {
+  :host([state='disabled']) .input::placeholder,
+  :host([disabled]) .input::placeholder {
     color: var(--_placeholder-disabled);
   }
 
@@ -368,14 +264,14 @@ export const selectFieldStyles = css`
     align-items: center;
     gap: var(--spacing-1);
     flex-shrink: 0;
+    /* Aligns with the first chip row when the field grows. */
+    margin-block-start: calc((var(--size-6) - var(--_icon-size)) / 2);
     margin-inline-end: calc(var(--_padding-inline) * -0.5);
   }
 
   :host([variant='underlined']) .trailing {
     margin-inline-end: 0;
   }
-
-  /* ---- Clear button ---- */
 
   .clear {
     all: unset;
@@ -396,14 +292,13 @@ export const selectFieldStyles = css`
     outline-offset: var(--ring-offset);
   }
 
-  .clear svg {
+  .clear svg,
+  .chevron svg {
     display: inline-flex;
     width: var(--_icon-size);
     height: var(--_icon-size);
     color: inherit;
   }
-
-  /* ---- Chevron ---- */
 
   .chevron {
     display: inline-flex;
@@ -415,22 +310,13 @@ export const selectFieldStyles = css`
     flex-shrink: 0;
   }
 
-  .chevron svg {
-    display: inline-flex;
-    width: var(--_icon-size);
-    height: var(--_icon-size);
-    color: inherit;
-  }
-
-  .trigger:hover .clear,
-  .trigger:hover .chevron {
+  .field:hover .clear,
+  .field:hover .chevron {
     color: var(--_icon-hover);
   }
 
   :host([open]) .chevron,
-  :host([open]) .clear,
-  .trigger:focus-visible .chevron,
-  .trigger:focus-visible .clear {
+  :host([open]) .clear {
     color: var(--_icon-active);
   }
 
