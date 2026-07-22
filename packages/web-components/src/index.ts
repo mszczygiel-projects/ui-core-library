@@ -137,3 +137,10 @@ export type {
   DialogOpenChangeReason,
   DialogOpenChangeDetail,
 } from './dialog/dialog.js';
+export { UiBreadcrumbs } from './breadcrumbs/breadcrumbs.js';
+export type {
+  BreadcrumbsItem,
+  BreadcrumbsSize,
+  BreadcrumbsSeparator,
+  BreadcrumbsSelectDetail,
+} from './breadcrumbs/breadcrumbs.js';

@@ -1324,6 +1324,12 @@
   --color-on-subtle-switch-border-success: var(--color-on-subtle-switch-border-success);
   --color-on-subtle-switch-border-error: var(--color-on-subtle-switch-border-error);
   --color-on-subtle-switch-border-disabled: var(--color-on-subtle-switch-border-disabled);
+  --color-on-subtle-breadcrumbs-item-foreground-default: var(--color-on-subtle-breadcrumbs-item-foreground-default);
+  --color-on-subtle-breadcrumbs-item-foreground-hover: var(--color-on-subtle-breadcrumbs-item-foreground-hover);
+  --color-on-subtle-breadcrumbs-item-foreground-active: var(--color-on-subtle-breadcrumbs-item-foreground-active);
+  --color-on-subtle-breadcrumbs-current-foreground: var(--color-on-subtle-breadcrumbs-current-foreground);
+  --color-on-subtle-breadcrumbs-separator-foreground: var(--color-on-subtle-breadcrumbs-separator-foreground);
+  --color-on-subtle-breadcrumbs-ellipsis-foreground: var(--color-on-subtle-breadcrumbs-ellipsis-foreground);
   --color-on-inverse-brand-primary: var(--color-on-inverse-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-on-inverse-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-on-inverse-brand-tertiary);
@@ -2103,6 +2109,12 @@
   --color-on-inverse-switch-border-success: var(--color-on-inverse-switch-border-success);
   --color-on-inverse-switch-border-error: var(--color-on-inverse-switch-border-error);
   --color-on-inverse-switch-border-disabled: var(--color-on-inverse-switch-border-disabled);
+  --color-on-inverse-breadcrumbs-item-foreground-default: var(--color-on-inverse-breadcrumbs-item-foreground-default);
+  --color-on-inverse-breadcrumbs-item-foreground-hover: var(--color-on-inverse-breadcrumbs-item-foreground-hover);
+  --color-on-inverse-breadcrumbs-item-foreground-active: var(--color-on-inverse-breadcrumbs-item-foreground-active);
+  --color-on-inverse-breadcrumbs-current-foreground: var(--color-on-inverse-breadcrumbs-current-foreground);
+  --color-on-inverse-breadcrumbs-separator-foreground: var(--color-on-inverse-breadcrumbs-separator-foreground);
+  --color-on-inverse-breadcrumbs-ellipsis-foreground: var(--color-on-inverse-breadcrumbs-ellipsis-foreground);
   --color-on-brand-primary-brand-primary: var(--color-on-brand-primary-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-on-brand-primary-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-on-brand-primary-brand-tertiary);
@@ -2882,6 +2894,12 @@
   --color-on-brand-primary-switch-border-success: var(--color-on-brand-primary-switch-border-success);
   --color-on-brand-primary-switch-border-error: var(--color-on-brand-primary-switch-border-error);
   --color-on-brand-primary-switch-border-disabled: var(--color-on-brand-primary-switch-border-disabled);
+  --color-on-brand-primary-breadcrumbs-item-foreground-default: var(--color-on-brand-primary-breadcrumbs-item-foreground-default);
+  --color-on-brand-primary-breadcrumbs-item-foreground-hover: var(--color-on-brand-primary-breadcrumbs-item-foreground-hover);
+  --color-on-brand-primary-breadcrumbs-item-foreground-active: var(--color-on-brand-primary-breadcrumbs-item-foreground-active);
+  --color-on-brand-primary-breadcrumbs-current-foreground: var(--color-on-brand-primary-breadcrumbs-current-foreground);
+  --color-on-brand-primary-breadcrumbs-separator-foreground: var(--color-on-brand-primary-breadcrumbs-separator-foreground);
+  --color-on-brand-primary-breadcrumbs-ellipsis-foreground: var(--color-on-brand-primary-breadcrumbs-ellipsis-foreground);
   --color-selection-background: var(--color-selection-background);
   --color-selection-text: var(--color-selection-text);
   --color-badge-neutral-solid-background: var(--color-badge-neutral-solid-background);
@@ -3328,4 +3346,10 @@
   --color-switch-border-success: var(--color-switch-border-success);
   --color-switch-border-error: var(--color-switch-border-error);
   --color-switch-border-disabled: var(--color-switch-border-disabled);
+  --color-breadcrumbs-item-foreground-default: var(--color-breadcrumbs-item-foreground-default);
+  --color-breadcrumbs-item-foreground-hover: var(--color-breadcrumbs-item-foreground-hover);
+  --color-breadcrumbs-item-foreground-active: var(--color-breadcrumbs-item-foreground-active);
+  --color-breadcrumbs-current-foreground: var(--color-breadcrumbs-current-foreground);
+  --color-breadcrumbs-separator-foreground: var(--color-breadcrumbs-separator-foreground);
+  --color-breadcrumbs-ellipsis-foreground: var(--color-breadcrumbs-ellipsis-foreground);
 }

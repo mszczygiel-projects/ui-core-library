@@ -1363,6 +1363,12 @@
   --color-on-subtle-switch-border-success: var(--color-on-subtle-feedback-success-base);
   --color-on-subtle-switch-border-error: var(--color-on-subtle-feedback-error-base);
   --color-on-subtle-switch-border-disabled: var(--color-on-subtle-switch-track-disabled);
+  --color-on-subtle-breadcrumbs-item-foreground-default: var(--color-on-subtle-text-secondary);
+  --color-on-subtle-breadcrumbs-item-foreground-hover: var(--color-on-subtle-text-primary);
+  --color-on-subtle-breadcrumbs-item-foreground-active: var(--color-on-subtle-breadcrumbs-item-foreground-hover);
+  --color-on-subtle-breadcrumbs-current-foreground: var(--color-on-subtle-text-primary);
+  --color-on-subtle-breadcrumbs-separator-foreground: var(--color-on-subtle-text-muted);
+  --color-on-subtle-breadcrumbs-ellipsis-foreground: var(--color-on-subtle-text-secondary);
   --color-on-inverse-brand-primary: var(--color-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-brand-tertiary);
@@ -2142,6 +2148,12 @@
   --color-on-inverse-switch-border-success: var(--color-on-inverse-feedback-success-base);
   --color-on-inverse-switch-border-error: var(--color-on-inverse-feedback-error-base);
   --color-on-inverse-switch-border-disabled: var(--color-on-inverse-switch-track-disabled);
+  --color-on-inverse-breadcrumbs-item-foreground-default: var(--color-on-inverse-text-secondary);
+  --color-on-inverse-breadcrumbs-item-foreground-hover: var(--color-on-inverse-text-primary);
+  --color-on-inverse-breadcrumbs-item-foreground-active: var(--color-on-inverse-breadcrumbs-item-foreground-hover);
+  --color-on-inverse-breadcrumbs-current-foreground: var(--color-on-inverse-text-primary);
+  --color-on-inverse-breadcrumbs-separator-foreground: var(--color-on-inverse-text-muted);
+  --color-on-inverse-breadcrumbs-ellipsis-foreground: var(--color-on-inverse-text-secondary);
   --color-on-brand-primary-brand-primary: var(--color-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-brand-tertiary);
@@ -2921,6 +2933,12 @@
   --color-on-brand-primary-switch-border-success: var(--color-on-brand-primary-feedback-success-base);
   --color-on-brand-primary-switch-border-error: var(--color-on-brand-primary-feedback-error-base);
   --color-on-brand-primary-switch-border-disabled: var(--color-on-brand-primary-switch-track-disabled);
+  --color-on-brand-primary-breadcrumbs-item-foreground-default: var(--color-on-brand-primary-text-secondary);
+  --color-on-brand-primary-breadcrumbs-item-foreground-hover: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-breadcrumbs-item-foreground-active: var(--color-on-brand-primary-breadcrumbs-item-foreground-hover);
+  --color-on-brand-primary-breadcrumbs-current-foreground: var(--color-on-brand-primary-text-primary);
+  --color-on-brand-primary-breadcrumbs-separator-foreground: var(--color-on-brand-primary-text-secondary);
+  --color-on-brand-primary-breadcrumbs-ellipsis-foreground: var(--color-on-brand-primary-text-secondary);
   --color-selection-background: var(--color-on-brand-primary-background-default);
   --color-selection-text: var(--color-on-brand-primary-text-primary);
   --color-badge-neutral-solid-background: var(--color-gray-800);
@@ -3367,6 +3385,12 @@
   --color-switch-border-success: var(--color-feedback-success-base);
   --color-switch-border-error: var(--color-feedback-error-base);
   --color-switch-border-disabled: var(--color-switch-track-disabled);
+  --color-breadcrumbs-item-foreground-default: var(--color-text-secondary);
+  --color-breadcrumbs-item-foreground-hover: var(--color-text-primary);
+  --color-breadcrumbs-item-foreground-active: var(--color-breadcrumbs-item-foreground-hover);
+  --color-breadcrumbs-current-foreground: var(--color-text-primary);
+  --color-breadcrumbs-separator-foreground: var(--color-text-muted);
+  --color-breadcrumbs-ellipsis-foreground: var(--color-text-secondary);
   --typography-heading-font-family: "Playfair Display";
   --typography-body-font-family: "Roboto Condensed";
   --typography-caption-font-family: "Ubuntu";
@@ -4075,6 +4099,12 @@
     --color-on-subtle-switch-border-success: var(--color-on-subtle-feedback-success-base);
     --color-on-subtle-switch-border-error: var(--color-on-subtle-feedback-error-base);
     --color-on-subtle-switch-border-disabled: var(--color-on-subtle-switch-track-disabled);
+    --color-on-subtle-breadcrumbs-item-foreground-default: var(--color-on-subtle-text-secondary);
+    --color-on-subtle-breadcrumbs-item-foreground-hover: var(--color-on-subtle-text-primary);
+    --color-on-subtle-breadcrumbs-item-foreground-active: var(--color-on-subtle-breadcrumbs-item-foreground-hover);
+    --color-on-subtle-breadcrumbs-current-foreground: var(--color-on-subtle-text-primary);
+    --color-on-subtle-breadcrumbs-separator-foreground: var(--color-on-subtle-text-muted);
+    --color-on-subtle-breadcrumbs-ellipsis-foreground: var(--color-on-subtle-text-secondary);
     --color-on-inverse-brand-primary: var(--color-brand-primary);
     --color-on-inverse-background-default: var(--color-background-inverse);
     --color-on-inverse-background-inverse: var(--color-background-default);
@@ -4464,6 +4494,12 @@
     --color-on-inverse-switch-border-success: var(--color-on-inverse-feedback-success-base);
     --color-on-inverse-switch-border-error: var(--color-on-inverse-feedback-error-base);
     --color-on-inverse-switch-border-disabled: var(--color-on-inverse-switch-track-disabled);
+    --color-on-inverse-breadcrumbs-item-foreground-default: var(--color-on-inverse-text-secondary);
+    --color-on-inverse-breadcrumbs-item-foreground-hover: var(--color-on-inverse-text-primary);
+    --color-on-inverse-breadcrumbs-item-foreground-active: var(--color-on-inverse-breadcrumbs-item-foreground-hover);
+    --color-on-inverse-breadcrumbs-current-foreground: var(--color-on-inverse-text-primary);
+    --color-on-inverse-breadcrumbs-separator-foreground: var(--color-on-inverse-text-muted);
+    --color-on-inverse-breadcrumbs-ellipsis-foreground: var(--color-on-inverse-text-secondary);
     --color-on-brand-primary-brand-primary: var(--color-brand-primary);
     --color-on-brand-primary-background-default: var(--color-brand-primary-600);
     --color-on-brand-primary-background-sunken: var(--color-background-sunken);
@@ -5038,6 +5074,12 @@
     --color-switch-border-success: var(--color-feedback-success-base);
     --color-switch-border-error: var(--color-feedback-error-base);
     --color-switch-border-disabled: var(--color-switch-track-disabled);
+    --color-breadcrumbs-item-foreground-default: var(--color-text-secondary);
+    --color-breadcrumbs-item-foreground-hover: var(--color-text-primary);
+    --color-breadcrumbs-item-foreground-active: var(--color-breadcrumbs-item-foreground-hover);
+    --color-breadcrumbs-current-foreground: var(--color-text-primary);
+    --color-breadcrumbs-separator-foreground: var(--color-text-muted);
+    --color-breadcrumbs-ellipsis-foreground: var(--color-text-secondary);
   }
 }
 
@@ -5822,6 +5864,12 @@
   --color-switch-checked-icon-success: var(--color-on-subtle-switch-checked-icon-success);
   --color-switch-checked-icon-error: var(--color-on-subtle-switch-checked-icon-error);
   --color-switch-checked-icon-disabled: var(--color-on-subtle-switch-checked-icon-disabled);
+  --color-breadcrumbs-item-foreground-default: var(--color-on-subtle-breadcrumbs-item-foreground-default);
+  --color-breadcrumbs-item-foreground-hover: var(--color-on-subtle-breadcrumbs-item-foreground-hover);
+  --color-breadcrumbs-item-foreground-active: var(--color-on-subtle-breadcrumbs-item-foreground-active);
+  --color-breadcrumbs-current-foreground: var(--color-on-subtle-breadcrumbs-current-foreground);
+  --color-breadcrumbs-separator-foreground: var(--color-on-subtle-breadcrumbs-separator-foreground);
+  --color-breadcrumbs-ellipsis-foreground: var(--color-on-subtle-breadcrumbs-ellipsis-foreground);
 }
 
 /* === Surfaces (Inverse) === */
@@ -6605,6 +6653,12 @@
   --color-switch-checked-icon-success: var(--color-on-inverse-switch-checked-icon-success);
   --color-switch-checked-icon-error: var(--color-on-inverse-switch-checked-icon-error);
   --color-switch-checked-icon-disabled: var(--color-on-inverse-switch-checked-icon-disabled);
+  --color-breadcrumbs-item-foreground-default: var(--color-on-inverse-breadcrumbs-item-foreground-default);
+  --color-breadcrumbs-item-foreground-hover: var(--color-on-inverse-breadcrumbs-item-foreground-hover);
+  --color-breadcrumbs-item-foreground-active: var(--color-on-inverse-breadcrumbs-item-foreground-active);
+  --color-breadcrumbs-current-foreground: var(--color-on-inverse-breadcrumbs-current-foreground);
+  --color-breadcrumbs-separator-foreground: var(--color-on-inverse-breadcrumbs-separator-foreground);
+  --color-breadcrumbs-ellipsis-foreground: var(--color-on-inverse-breadcrumbs-ellipsis-foreground);
 }
 
 /* === Surfaces (Primary) === */
@@ -7388,6 +7442,12 @@
   --color-switch-checked-icon-success: var(--color-on-brand-primary-switch-checked-icon-success);
   --color-switch-checked-icon-error: var(--color-on-brand-primary-switch-checked-icon-error);
   --color-switch-checked-icon-disabled: var(--color-on-brand-primary-switch-checked-icon-disabled);
+  --color-breadcrumbs-item-foreground-default: var(--color-on-brand-primary-breadcrumbs-item-foreground-default);
+  --color-breadcrumbs-item-foreground-hover: var(--color-on-brand-primary-breadcrumbs-item-foreground-hover);
+  --color-breadcrumbs-item-foreground-active: var(--color-on-brand-primary-breadcrumbs-item-foreground-active);
+  --color-breadcrumbs-current-foreground: var(--color-on-brand-primary-breadcrumbs-current-foreground);
+  --color-breadcrumbs-separator-foreground: var(--color-on-brand-primary-breadcrumbs-separator-foreground);
+  --color-breadcrumbs-ellipsis-foreground: var(--color-on-brand-primary-breadcrumbs-ellipsis-foreground);
 }
 
 /* === Sizes (Mobile — default) === */
@@ -7397,10 +7457,10 @@
   --typography-heading-display-font-weight-strong: var(--font-weight-semibold);
   --typography-heading-display-font-size: var(--text-3xl);
   --typography-heading-display-line-height: var(--text-3xl--line-height);
+  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
   --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-display-large-letter-spacing: var(--tracking-normal);
-  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -7452,8 +7512,8 @@
   --typography-body-small-letter-spacing: var(--tracking-normal);
   --typography-body-letter-spacing: var(--tracking-normal);
   --typography-body-large-font-size: var(--text-lg);
-  --typography-body-large-line-height: var(--text-lg--line-height);
   --typography-body-large-letter-spacing: var(--tracking-normal);
+  --typography-body-large-line-height: var(--text-lg--line-height);
   --typography-caption-font-weight: var(--font-weight-normal);
   --typography-caption-font-size: var(--text-sm);
   --typography-caption-line-height: var(--text-sm--line-height);
@@ -7572,13 +7632,13 @@
   --button-large-icon-size: var(--control-large-icon-size);
   --button-large-separator-inset: 0.25rem;
   --button-separator-inset: 0.25rem;
+  --checkbox-radius: var(--control-radius);
   --checkbox-field-gap: var(--spacing-3);
   --checkbox-field-font-family: var(--control-font-family);
   --checkbox-field-font-weight: var(--control-font-weight);
   --checkbox-field-font-size: var(--control-font-size);
   --checkbox-field-line-height: var(--checkbox-size-default);
   --checkbox-field-letter-spacing: var(--tracking-normal);
-  --checkbox-radius: var(--control-radius);
   --checkbox-border-width: var(--control-border-width);
   --checkbox-size-default: var(--size-5);
   --radio-radius: var(--radius-full);
@@ -7610,8 +7670,8 @@
   --select-option-group-text-transform: var(--typography-eyebrow-text-transform);
   --select-option-group-padding-inline: var(--spacing-2);
   --select-option-group-padding-stack: var(--spacing-2);
-  --notification-radius: var(--radius-md);
   --notification-font-family: var(--typography-body-font-family);
+  --notification-radius: var(--radius-md);
   --notification-font-size: var(--typography-body-font-size);
   --notification-line-height: var(--typography-body-line-height);
   --notification-font-weight: var(--typography-body-font-weight-strong);
@@ -7727,6 +7787,22 @@
   --switch-description-gap: var(--spacing-1);
   --combobox-chips-gap: var(--spacing-1);
   --combobox-chips-padding-stack: var(--spacing-1);
+  --breadcrumbs-font-family: var(--typography-body-font-family);
+  --breadcrumbs-font-weight: var(--typography-body-font-weight);
+  --breadcrumbs-current-font-weight: var(--typography-body-font-weight-strong);
+  --breadcrumbs-letter-spacing: var(--tracking-normal);
+  --breadcrumbs-item-gap: var(--spacing-1);
+  --breadcrumbs-radius: var(--control-radius);
+  --breadcrumbs-small-font-size: var(--text-sm);
+  --breadcrumbs-small-line-height: var(--text-sm--line-height);
+  --breadcrumbs-small-icon-size: var(--size-4);
+  --breadcrumbs-small-separator-size: var(--size-3);
+  --breadcrumbs-small-gap: var(--spacing-1);
+  --breadcrumbs-medium-font-size: var(--text-base);
+  --breadcrumbs-medium-line-height: var(--text-base--line-height);
+  --breadcrumbs-medium-icon-size: var(--size-5);
+  --breadcrumbs-medium-separator-size: var(--size-4);
+  --breadcrumbs-medium-gap: var(--spacing-2);
 }
 
 /* === Sizes (Desktop) === */
