@@ -8,5 +8,4 @@ export type {
   UiCoreLabels,
   UiCoreLabelsOverrides,
   LoaderVariant,
-  IconSet,
 } from './config.js';

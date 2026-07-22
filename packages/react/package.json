@@ -28,12 +28,12 @@
   },
   "peerDependencies": {
     "@mszczygiel-projects/ui-core-foundations": "workspace:*",
+    "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "react": "^18.0.0",
     "react-dom": "^18.0.0"
   },
   "dependencies": {
-    "@floating-ui/dom": "^1.8.0",
-    "@mszczygiel-projects/ui-core-icons": "workspace:*"
+    "@floating-ui/dom": "^1.8.0"
   },
   "devDependencies": {
     "@mszczygiel-projects/ui-core-foundations": "workspace:*",

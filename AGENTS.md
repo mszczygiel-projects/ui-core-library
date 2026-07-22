@@ -291,6 +291,18 @@ import { svgMap } from '@mszczygiel-projects/ui-core-icons';
 html`${unsafeSVG(svgMap['icon-chevron-down'])}`;
 ```
 
+### The required-icon contract — update it when a component uses a new icon
+
+A consumer can replace the whole icon set with their own via a bundler alias (see README). That only works if their set covers every icon the components render themselves, so that list is an explicit contract in [`packages/icons/scripts/required-icons.ts`](packages/icons/scripts/required-icons.ts).
+
+**When you make a component use a new icon from `svgMap` or `/react`, add it to `REQUIRED_ICONS` in the same commit.** A test in `build-icons.test.ts` scans both component packages and fails if you forget; the icons build then fails for anyone whose set lacks the icon, which is the point — a missing icon renders nothing at all and reports no error.
+
+The list is hand-maintained rather than derived, because at least one call site resolves its key at runtime (`number-field.ts` picks between `icon-minus` and `icon-plus`), so a static import scan would silently under-report.
+
+`@mszczygiel-projects/ui-core-icons` is a **peer dependency** of `wc` and `react` — the same treatment `foundations` gets, for the same reason: the app owns the single copy so an alias reaches the library's own imports. Never move it back to `dependencies`.
+
+There is **no runtime icon-set switch** and no `iconSet` config field. Selection is build-time; a runtime toggle would force both sets into every bundle and kill tree-shaking.
+
 ---
 
 ## 6. Components — Implementation Rules

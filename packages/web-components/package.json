@@ -29,11 +29,11 @@
     "access": "restricted"
   },
   "peerDependencies": {
-    "@mszczygiel-projects/ui-core-foundations": "workspace:*"
+    "@mszczygiel-projects/ui-core-foundations": "workspace:*",
+    "@mszczygiel-projects/ui-core-icons": "workspace:*"
   },
   "dependencies": {
     "@floating-ui/dom": "^1.8.0",
-    "@mszczygiel-projects/ui-core-icons": "workspace:*",
     "lit": "^3.0.0"
   },
   "devDependencies": {
@@ -46,6 +46,7 @@
     "@web/test-runner-playwright": "^0.11.0",
     "react": "^18.0.0",
     "tsx": "^4.0.0",
-    "vitest": "^2.0.0"
+    "vitest": "^2.0.0",
+    "@mszczygiel-projects/ui-core-icons": "workspace:*"
   }
 }

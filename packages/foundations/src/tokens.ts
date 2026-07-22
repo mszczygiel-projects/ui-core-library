@@ -3694,10 +3694,10 @@ export const tokens = {
         strong: 'var(--shadow-color-strong)',
       },
       elevation: {
-        "1": 'var(--shadow-elevation-1)',
-        "2": 'var(--shadow-elevation-2)',
-        "3": 'var(--shadow-elevation-3)',
-        "4": 'var(--shadow-elevation-4)',
+        '1': 'var(--shadow-elevation-1)',
+        '2': 'var(--shadow-elevation-2)',
+        '3': 'var(--shadow-elevation-3)',
+        '4': 'var(--shadow-elevation-4)',
       },
       interactive: {
         default: 'var(--shadow-interactive-default)',

@@ -1,5 +1,4 @@
 export type LoaderVariant = 'spinner';
-export type IconSet = 'default' | 'heroicons';
 
 /**
  * Every UI string the components can render on their own.
@@ -173,8 +172,6 @@ export const defaultLabels: UiCoreLabels = {
 export interface UiCoreConfig {
   loaderVariant: LoaderVariant;
 
-  iconSet: IconSet;
-
   /**
    * BCP 47 tag used to format the dates a component owns — Calendar grid cells,
    * DateField display and parsing. Sits between a component's own `locale` prop
@@ -216,7 +213,6 @@ function cloneLabels(source: UiCoreLabels): UiCoreLabels {
 
 const config: UiCoreConfig = {
   loaderVariant: 'spinner',
-  iconSet: 'default',
   // Empty, not 'en': an unset locale must fall through to the runtime locale,
   // which is what the date components did before this config was wired in.
   locale: '',

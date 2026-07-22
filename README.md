@@ -248,6 +248,75 @@ pnpm exec ui-core-icons build \
 
 The generated `tokens.css` / `tailwind.css` are drop-in replacements for the versions exported from the package — import them instead when the project needs its own brand tokens. The generated `svg-map.js` and `react/` folder likewise replace the default icon set.
 
+### Using your own icon set inside the components
+
+Tokens and icons are both replaceable, but they bind at different moments. A token is late-bound: the browser resolves `var(--color-brand-primary)` at paint time, so a `:root` override is enough. An icon is **early-bound by the bundler**, so swapping the set the components use is a build-time alias, not a runtime option — there is deliberately no `iconSet` config field.
+
+This works because the published `dist` keeps the bare specifier rather than inlining the SVG:
+
+```js
+import { svgMap } from '@mszczygiel-projects/ui-core-icons'; // Lit
+import { IconClose } from '@mszczygiel-projects/ui-core-icons/react'; // React
+```
+
+`@mszczygiel-projects/ui-core-icons` is a **peer dependency** of both component packages, so your app owns the single installed copy and an alias reliably reaches the components' own imports.
+
+**1. Generate a set from your SVGs** with the CLI above. The build fails if your sources do not cover every icon the components render themselves.
+
+**2. Point the bundler at it.**
+
+```ts
+// vite.config.ts
+export default {
+  resolve: {
+    alias: {
+      '@mszczygiel-projects/ui-core-icons/react': '/src/generated/icons/react/index.js',
+      '@mszczygiel-projects/ui-core-icons': '/src/generated/icons/svg-map.js',
+    },
+  },
+};
+```
+
+```js
+// webpack.config.js — longest specifier first, same as Vite
+module.exports = {
+  resolve: {
+    alias: {
+      '@mszczygiel-projects/ui-core-icons/react': path.resolve(
+        __dirname,
+        'src/generated/icons/react/index.js',
+      ),
+      '@mszczygiel-projects/ui-core-icons$': path.resolve(
+        __dirname,
+        'src/generated/icons/svg-map.js',
+      ),
+    },
+  },
+};
+```
+
+Order matters: the `/react` entry must come first, or the shorter key swallows it.
+
+#### The contract
+
+A replacement set must provide **14 icons** — as `icon-*` keys in `svgMap`, and as the matching PascalCase React exports (`icon-eye-slash` → `IconEyeSlash`):
+
+```
+calendar · check · chevron-down · chevron-left · chevron-right · chevron-up
+close · danger · eye · eye-slash · info · minus · plus · search
+```
+
+The list is published, so your own tooling can type against it instead of copying it:
+
+```ts
+import { REQUIRED_ICONS } from '@mszczygiel-projects/ui-core-icons/required-icons';
+import type { RequiredIconName } from '@mszczygiel-projects/ui-core-icons/required-icons';
+```
+
+A missing icon is not a graceful degradation the way a missing CSS variable is — the component renders nothing at all, with no error. That is why the CLI treats an incomplete set as a hard build failure rather than a warning.
+
+Icons you pass **into** components (`<IconButton icon={…} />`, slots, `leadingIcon`) need none of this — import whatever you like and pass it in.
+
 ## Component docs
 
 Component-specific behavior is documented next to implementation files:
