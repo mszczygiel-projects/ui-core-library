@@ -29,7 +29,10 @@ if (typeof HTMLDialogElement !== 'undefined' && !HTMLDialogElement.prototype.sho
     this.setAttribute('open', '');
   };
 
-  HTMLDialogElement.prototype.close = function close(this: HTMLDialogElement, returnValue?: string) {
+  HTMLDialogElement.prototype.close = function close(
+    this: HTMLDialogElement,
+    returnValue?: string,
+  ) {
     if (!this.hasAttribute('open')) return;
     this.removeAttribute('open');
     if (returnValue !== undefined) this.returnValue = returnValue;

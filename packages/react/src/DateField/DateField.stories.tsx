@@ -46,7 +46,13 @@ export const RangeMode: Story = {
       });
       return (
         <div
-          style={{ display: 'flex', flexDirection: 'column', gap: 12, paddingBottom: 460, width: 360 }}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 12,
+            paddingBottom: 460,
+            width: 360,
+          }}
         >
           <DateField
             {...args}

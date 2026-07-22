@@ -50,7 +50,8 @@ const controlledDemo = (args: DatePickerArgs): ReactNode => {
       if (!el) return;
       const onOpenChange = (e: Event) =>
         setOpen((e as CustomEvent<PopoverOpenChangeDetail>).detail.open);
-      const onDateChange = (e: Event) => setSingle((e as CustomEvent<{ date: string }>).detail.date);
+      const onDateChange = (e: Event) =>
+        setSingle((e as CustomEvent<{ date: string }>).detail.date);
       const onRangeChange = (e: Event) => {
         const d = (e as CustomEvent<DatePickerRangeChangeDetail>).detail;
         setRange({ start: d.startDate, end: d.endDate });
@@ -80,12 +81,18 @@ const controlledDemo = (args: DatePickerArgs): ReactNode => {
           'start-date': (isRange ? range.start : single) ?? undefined,
           'end-date': (isRange ? range.end : undefined) ?? undefined,
         },
-        createElement('button', { slot: 'trigger', onClick: () => setOpen((o) => !o) }, 'Pick date'),
+        createElement(
+          'button',
+          { slot: 'trigger', onClick: () => setOpen((o) => !o) },
+          'Pick date',
+        ),
       ),
       createElement(
         'code',
         {},
-        isRange ? `start: ${range.start ?? '—'}  end: ${range.end ?? '—'}` : `date: ${single ?? '—'}`,
+        isRange
+          ? `start: ${range.start ?? '—'}  end: ${range.end ?? '—'}`
+          : `date: ${single ?? '—'}`,
       ),
     );
   };

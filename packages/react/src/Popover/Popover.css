@@ -75,25 +75,25 @@
   transform: rotate(45deg);
 }
 
-.ui-popover__panel[data-placement^='top'] .ui-popover__arrow {
+.ui-popover__panel[data-placement^="top"] .ui-popover__arrow {
   bottom: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
   border-right-width: var(--popover-border-width);
   border-bottom-width: var(--popover-border-width);
 }
 
-.ui-popover__panel[data-placement^='bottom'] .ui-popover__arrow {
+.ui-popover__panel[data-placement^="bottom"] .ui-popover__arrow {
   top: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
   border-top-width: var(--popover-border-width);
   border-left-width: var(--popover-border-width);
 }
 
-.ui-popover__panel[data-placement^='left'] .ui-popover__arrow {
+.ui-popover__panel[data-placement^="left"] .ui-popover__arrow {
   right: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
   border-top-width: var(--popover-border-width);
   border-right-width: var(--popover-border-width);
 }
 
-.ui-popover__panel[data-placement^='right'] .ui-popover__arrow {
+.ui-popover__panel[data-placement^="right"] .ui-popover__arrow {
   left: calc(-1 * (var(--popover-arrow-size) / 2 + var(--popover-border-width)));
   border-bottom-width: var(--popover-border-width);
   border-left-width: var(--popover-border-width);

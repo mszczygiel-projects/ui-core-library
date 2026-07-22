@@ -33,7 +33,14 @@ Holding <kbd>ArrowUp</kbd>/<kbd>ArrowDown</kbd> needs no timer logic — native 
 `precision` sets the number of decimal places kept on commit. It is deliberately independent of `step`.
 
 ```html
-<ui-number-field label="Weight (kg)" precision="2" step="0.1" min="0" max="10" value="2.5"></ui-number-field>
+<ui-number-field
+  label="Weight (kg)"
+  precision="2"
+  step="0.1"
+  min="0"
+  max="10"
+  value="2.5"
+></ui-number-field>
 ```
 
 Typing is never fought mid-edit: with `precision="2"` you can type `1.` or `1.5` transiently without it being rewritten on every keystroke. Rounding and clamping happen only on commit, and the value is re-rounded after every step so repeated clicks cannot leak `2.3000000000000003` into the input.
@@ -46,36 +53,36 @@ Use `ui-input` if you need the raw text on every keystroke.
 
 ## Attributes / properties
 
-| Attribute          | Property          | Type                                              | Default     | Description                                 |
-| ------------------ | ----------------- | ------------------------------------------------- | ----------- | ------------------------------------------- |
-| `value`            | `value`           | `number \| null`                                  | `null`      | Current value; also restored on form reset  |
-| `min`              | `min`             | `number`                                          | `-Infinity` | Lower bound, applied on commit              |
-| `max`              | `max`             | `number`                                          | `Infinity`  | Upper bound, applied on commit              |
-| `step`             | `step`            | `number`                                          | `1`         | Amount added or removed per step            |
-| `precision`        | `precision`       | `number`                                          | `0`         | Decimal places kept on commit               |
-| `controls`         | `controls`        | `'none' \| 'inline'`                              | `'none'`    | `inline` adds flanking stepper buttons      |
-| `variant`          | `variant`         | `'outline' \| 'filled' \| 'underlined'`           | `'outline'` | Visual style                                |
-| `data-size`        | `size`            | `'small' \| 'default' \| 'large'`                 | `'default'` | Field size                                  |
-| `label`            | `label`           | `string`                                          | —           | Label text; omit for a bare field           |
-| `label-placement`  | `labelPlacement`  | `'top' \| 'floating' \| 'inner'`                  | `'top'`     | Forced to `top` when `controls` is `inline` |
-| `hint`             | `hint`            | `string`                                          | —           | Helper text below the field                 |
-| `placeholder`      | `placeholder`     | `string`                                          | `''`        | Placeholder shown while empty               |
-| `state`            | `state`           | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'` | Visual and a11y state                       |
-| `name`             | `name`            | `string`                                          | —           | Form field name used on submission          |
-| `disabled`         | `disabled`        | `boolean`                                         | `false`     | Disables the input and both steppers        |
-| `required`         | `required`        | `boolean`                                         | `false`     | Marks the field as required                 |
-| `readonly`         | `readonly`        | `boolean`                                         | `false`     | Read-only input; steppers disabled too      |
-| `decrement-label`  | `decrementLabel`  | `string`                                          | `'Decrease'`| Accessible name for the decrement button    |
-| `increment-label`  | `incrementLabel`  | `string`                                          | `'Increase'`| Accessible name for the increment button    |
+| Attribute         | Property         | Type                                              | Default      | Description                                 |
+| ----------------- | ---------------- | ------------------------------------------------- | ------------ | ------------------------------------------- |
+| `value`           | `value`          | `number \| null`                                  | `null`       | Current value; also restored on form reset  |
+| `min`             | `min`            | `number`                                          | `-Infinity`  | Lower bound, applied on commit              |
+| `max`             | `max`            | `number`                                          | `Infinity`   | Upper bound, applied on commit              |
+| `step`            | `step`           | `number`                                          | `1`          | Amount added or removed per step            |
+| `precision`       | `precision`      | `number`                                          | `0`          | Decimal places kept on commit               |
+| `controls`        | `controls`       | `'none' \| 'inline'`                              | `'none'`     | `inline` adds flanking stepper buttons      |
+| `variant`         | `variant`        | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`  | Visual style                                |
+| `data-size`       | `size`           | `'small' \| 'default' \| 'large'`                 | `'default'`  | Field size                                  |
+| `label`           | `label`          | `string`                                          | —            | Label text; omit for a bare field           |
+| `label-placement` | `labelPlacement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`      | Forced to `top` when `controls` is `inline` |
+| `hint`            | `hint`           | `string`                                          | —            | Helper text below the field                 |
+| `placeholder`     | `placeholder`    | `string`                                          | `''`         | Placeholder shown while empty               |
+| `state`           | `state`          | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`  | Visual and a11y state                       |
+| `name`            | `name`           | `string`                                          | —            | Form field name used on submission          |
+| `disabled`        | `disabled`       | `boolean`                                         | `false`      | Disables the input and both steppers        |
+| `required`        | `required`       | `boolean`                                         | `false`      | Marks the field as required                 |
+| `readonly`        | `readonly`       | `boolean`                                         | `false`      | Read-only input; steppers disabled too      |
+| `decrement-label` | `decrementLabel` | `string`                                          | `'Decrease'` | Accessible name for the decrement button    |
+| `increment-label` | `incrementLabel` | `string`                                          | `'Increase'` | Accessible name for the increment button    |
 
 ## Events
 
-| Event       | Detail                        | When                                                    |
-| ----------- | ----------------------------- | ------------------------------------------------------- |
-| `input`     | —                             | Every keystroke                                         |
-| `ui-input`  | `{ value: string }`           | Every keystroke; carries the raw text                   |
-| `change`    | —                             | On commit, when the value actually moved                |
-| `ui-change` | `{ value: number \| null }`   | On commit; carries the committed number                 |
+| Event       | Detail                      | When                                     |
+| ----------- | --------------------------- | ---------------------------------------- |
+| `input`     | —                           | Every keystroke                          |
+| `ui-input`  | `{ value: string }`         | Every keystroke; carries the raw text    |
+| `change`    | —                           | On commit, when the value actually moved |
+| `ui-change` | `{ value: number \| null }` | On commit; carries the committed number  |
 
 ## Form integration
 

@@ -97,7 +97,12 @@ export const Locales: Story = {
           'div',
           { key: locale },
           createElement('p', { style: { marginBottom: 8 } }, locale),
-          calendar({ selectionMode: 'range', startDate: '2026-07-08', endDate: '2026-07-14', locale }),
+          calendar({
+            selectionMode: 'range',
+            startDate: '2026-07-08',
+            endDate: '2026-07-14',
+            locale,
+          }),
         ),
       ),
     ),

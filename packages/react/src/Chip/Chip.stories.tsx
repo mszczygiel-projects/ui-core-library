@@ -144,7 +144,13 @@ export const Disabled: Story = {
 };
 
 /** Filter bar demo: selected + dismissible together, with live removal and toggling. */
-const FilterBarDemo = ({ size, appearance }: { size?: 'small' | 'medium'; appearance?: ChipAppearance }) => {
+const FilterBarDemo = ({
+  size,
+  appearance,
+}: {
+  size?: 'small' | 'medium';
+  appearance?: ChipAppearance;
+}) => {
   const [filters, setFilters] = useState(
     variants.map((v) => ({ id: v, label: cap(v), selected: v === 'brand' })),
   );

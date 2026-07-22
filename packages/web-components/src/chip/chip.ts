@@ -87,7 +87,10 @@ export class UiChip extends LitElement {
   // (:has() as a :host() argument, unlike bare :has()) — track focus-visible
   // on the action button imperatively instead, scoped to keyboard focus only.
   private handleActionFocus(event: FocusEvent) {
-    this.classList.toggle('action-focused', (event.target as HTMLElement).matches(':focus-visible'));
+    this.classList.toggle(
+      'action-focused',
+      (event.target as HTMLElement).matches(':focus-visible'),
+    );
   }
 
   private handleActionBlur() {

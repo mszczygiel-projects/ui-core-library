@@ -2,7 +2,7 @@ import { type CSSProperties, type ReactNode } from 'react';
 import {
   IconClose,
   IconDanger,
-  IconFlag,
+  IconCheck,
   IconInfo,
 } from '@mszczygiel-projects/ui-core-icons/react';
 import './Notification.css';
@@ -34,6 +34,11 @@ export interface NotificationProps {
   /** Optional description rendered below the heading. */
   children?: ReactNode;
   /**
+   * Shows the status icon in front of the heading. Available in every variant.
+   * @default true
+   */
+  hasLeadingIcon?: boolean;
+  /**
    * Shows the × close button.
    * @default true
    */
@@ -48,7 +53,7 @@ export interface NotificationProps {
 
 const statusIcons: Record<NotificationStatus, ReactNode> = {
   info: <IconInfo aria-hidden="true" />,
-  success: <IconFlag aria-hidden="true" />,
+  success: <IconCheck aria-hidden="true" />,
   warning: <IconDanger aria-hidden="true" />,
   error: <IconDanger aria-hidden="true" />,
 };
@@ -65,6 +70,7 @@ export function Notification({
   variant = 'default',
   heading,
   children,
+  hasLeadingIcon = true,
   hasCloseButton = true,
   onClose,
   className,
@@ -82,10 +88,11 @@ export function Notification({
   return (
     <div role={statusRoles[status]} className={classes} style={style}>
       <div className="ui-notification__header">
-        {/* Icon always in DOM — visibility driven by CSS var --_show-icon */}
-        <span className="ui-notification__icon" aria-hidden="true">
-          {statusIcons[status]}
-        </span>
+        {hasLeadingIcon && (
+          <span className="ui-notification__icon" aria-hidden="true">
+            {statusIcons[status]}
+          </span>
+        )}
         <div className="ui-notification__heading">{heading}</div>
       </div>
 

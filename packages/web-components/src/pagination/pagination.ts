@@ -166,8 +166,7 @@ export class UiPagination extends LitElement {
     this._hasPageLabel = slot
       .assignedNodes({ flatten: true })
       .some(
-        (node) =>
-          node.nodeType === Node.ELEMENT_NODE || (node.textContent ?? '').trim() !== '',
+        (node) => node.nodeType === Node.ELEMENT_NODE || (node.textContent ?? '').trim() !== '',
       );
   }
 
@@ -190,9 +189,7 @@ export class UiPagination extends LitElement {
         <ul class="items">
           ${entries.map((entry) =>
             entry === 'ellipsis'
-              ? html`
-                  <li class="cell" aria-hidden="true"><span class="ellipsis">…</span></li>
-                `
+              ? html` <li class="cell" aria-hidden="true"><span class="ellipsis">…</span></li> `
               : html`
                   <li class="cell">
                     <button

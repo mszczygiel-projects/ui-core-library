@@ -200,9 +200,9 @@ describe('UiDialog', () => {
     const outside = document.createElement('button');
     document.body.appendChild(outside);
     outside.focus();
-    expect(el.contains(document.activeElement) || document.activeElement === document.body).to.equal(
-      true,
-    );
+    expect(
+      el.contains(document.activeElement) || document.activeElement === document.body,
+    ).to.equal(true);
     outside.remove();
   });
 

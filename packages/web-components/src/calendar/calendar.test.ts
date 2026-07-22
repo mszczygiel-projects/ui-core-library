@@ -168,9 +168,9 @@ describe('UiCalendar', () => {
     const e = (await oneEvent(el, 'month-change')) as CustomEvent;
     expect(e.detail).to.deep.equal({ year: 2026, month: 8 });
     await el.updateComplete;
-    expect(
-      el.shadowRoot!.querySelector('.month-label')!.textContent!.toLowerCase(),
-    ).to.contain('sierpie');
+    expect(el.shadowRoot!.querySelector('.month-label')!.textContent!.toLowerCase()).to.contain(
+      'sierpie',
+    );
   });
 
   it('grid exposes the ARIA date-grid pattern', async () => {

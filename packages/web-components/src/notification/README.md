@@ -42,6 +42,14 @@ Place description content in the default slot. Leave the slot empty for a headin
 <ui-notification heading="Upload complete." status="success"></ui-notification>
 ```
 
+## Leading icon
+
+The status icon is shown by default in **both** variants and is controlled by `has-leading-icon` — it is no longer tied to the variant. Because the property defaults to `true`, an absent attribute cannot express `false`; set the property to hide the icon:
+
+```js
+el.hasLeadingIcon = false;
+```
+
 ## Without close button
 
 ```html
@@ -69,6 +77,7 @@ el.hasCloseButton = false;
 | `heading`        | `heading`          | `string`                                      | `''`        | **Required.** Main heading text.                                                  |
 | `status`         | `status`           | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'`    | Colour scheme and status icon. Reflected.                                         |
 | `variant`        | `variant`          | `'default' \| 'subtle'`                       | `'default'` | `default` = solid fill; `subtle` = tinted background with left border. Reflected. |
+| `hasLeadingIcon` | `has-leading-icon` | `boolean`                                     | `true`      | Shows the status icon in front of the heading. Works in every variant. Reflected. |
 | `hasCloseButton` | `has-close-button` | `boolean`                                     | `true`      | Shows the × close button. Reflected.                                              |
 
 ## Accessibility notes

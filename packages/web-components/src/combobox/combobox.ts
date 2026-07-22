@@ -13,6 +13,7 @@ import {
   listboxOptionId,
   nextEnabledRow,
   renderListbox,
+  rowIndexOfValue,
   scrollRowIntoView,
   toggleValue,
 } from '../listbox/listbox.js';
@@ -397,8 +398,15 @@ export class UiCombobox extends LitElement {
     if (this.multiple) {
       this.values = toggleValue(this.values, row.option.value);
       this._query = '';
-      // The list stays open so more options can be picked.
-      this._activeIndex = firstEnabledRow(this._rows);
+      /*
+       * The list stays open so more options can be picked. Clearing the query
+       * re-expands the list, so the highlight has to be re-found by value —
+       * keeping the old index would silently move it to a different option,
+       * and resetting it would throw the user back to the top of the list.
+       */
+      const rows = this._rows;
+      const index = rowIndexOfValue(rows, row.option.value);
+      this._activeIndex = index >= 0 ? index : firstEnabledRow(rows);
     } else {
       this.value = row.option.value;
       this._query = '';

@@ -250,11 +250,7 @@ export function NumberField({
     </button>
   );
 
-  const rootClass = [
-    'ui-number-field',
-    isInline && 'ui-number-field--inline',
-    className,
-  ]
+  const rootClass = ['ui-number-field', isInline && 'ui-number-field--inline', className]
     .filter(Boolean)
     .join(' ');
 
@@ -290,10 +286,14 @@ export function NumberField({
       onBlur={commitText}
       onKeyDown={handleKeyDown}
       leadingIcon={
-        isInline ? stepper('decrement', decrementLabel, <IconMinus />, atMin, decrementHold) : undefined
+        isInline
+          ? stepper('decrement', decrementLabel, <IconMinus />, atMin, decrementHold)
+          : undefined
       }
       trailingIcon={
-        isInline ? stepper('increment', incrementLabel, <IconPlus />, atMax, incrementHold) : undefined
+        isInline
+          ? stepper('increment', incrementLabel, <IconPlus />, atMax, incrementHold)
+          : undefined
       }
     />
   );

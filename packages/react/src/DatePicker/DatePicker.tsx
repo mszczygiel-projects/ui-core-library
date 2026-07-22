@@ -18,10 +18,7 @@ export interface DatePickerRangeChangeDetail {
   endDate: string | null;
 }
 
-export type DatePickerOpenChangeReason =
-  | PopoverOpenChangeDetail['reason']
-  | 'select'
-  | 'apply';
+export type DatePickerOpenChangeReason = PopoverOpenChangeDetail['reason'] | 'select' | 'apply';
 
 export interface DatePickerOpenChangeDetail {
   open: boolean;

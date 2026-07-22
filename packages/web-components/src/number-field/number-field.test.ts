@@ -122,7 +122,9 @@ describe('UiNumberField', () => {
   });
 
   it('does not round while typing, only on commit', async () => {
-    const el = await fixture<UiNumberField>(html`<ui-number-field precision="2"></ui-number-field>`);
+    const el = await fixture<UiNumberField>(
+      html`<ui-number-field precision="2"></ui-number-field>`,
+    );
     const field = input(el);
 
     field.value = '1.';

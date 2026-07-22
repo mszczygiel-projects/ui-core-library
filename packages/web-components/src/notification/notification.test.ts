@@ -91,7 +91,7 @@ describe('UiNotification', () => {
     expect(fired).to.equal(true);
   });
 
-  it('icon element is always present in the DOM', async () => {
+  it('renders the leading icon by default in every variant', async () => {
     const elDefault = await fixture<UiNotification>(
       html`<ui-notification heading="Test" variant="default"></ui-notification>`,
     );
@@ -101,6 +101,20 @@ describe('UiNotification', () => {
       html`<ui-notification heading="Test" variant="subtle"></ui-notification>`,
     );
     expect(elSubtle.shadowRoot!.querySelector('.icon')).to.not.equal(null);
+  });
+
+  it('does not render the leading icon when has-leading-icon is absent', async () => {
+    const el = await fixture<UiNotification>(
+      html`<ui-notification heading="Test" .hasLeadingIcon=${false}></ui-notification>`,
+    );
+    expect(el.shadowRoot!.querySelector('.icon')).to.equal(null);
+  });
+
+  it('reflects has-leading-icon attribute', async () => {
+    const el = await fixture<UiNotification>(
+      html`<ui-notification heading="Test" has-leading-icon></ui-notification>`,
+    );
+    expect(el.hasLeadingIcon).to.equal(true);
   });
 
   it('projects default slot content as description', async () => {

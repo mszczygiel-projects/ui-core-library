@@ -16,8 +16,12 @@ const [open, setOpen] = useState(false);
   description="This action cannot be undone."
   footer={
     <>
-      <Button variant="outline" onClick={() => setOpen(false)}>Cancel</Button>
-      <Button variant="danger" onClick={confirm}>Delete</Button>
+      <Button variant="outline" onClick={() => setOpen(false)}>
+        Cancel
+      </Button>
+      <Button variant="danger" onClick={confirm}>
+        Delete
+      </Button>
     </>
   }
 >
@@ -27,22 +31,22 @@ const [open, setOpen] = useState(false);
 
 ## Props
 
-| Prop             | Type                                                | Default   |
-| ---------------- | --------------------------------------------------- | --------- |
-| `open`           | boolean (controlled)                                | `false`   |
-| `size`           | `small` / `medium` / `large` / `fullscreen`         | `medium`  |
-| `variant`        | `default` / `alert`                                 | `default` |
-| `dismissOn`      | `outside-click` / `escape` / `both` / `none`        | `both`    |
-| `hasCloseButton` | boolean                                             | `true`    |
-| `label`          | string — accessible name when no `title` is given   | —         |
-| `dragToDismiss`  | boolean — flick the sheet away (sheet mode only)    | `false`   |
-| `title`          | `ReactNode` — heading and accessible name           | —         |
-| `description`    | `ReactNode` — supporting text                       | —         |
-| `footer`         | `ReactNode` — action buttons                        | —         |
-| `children`       | `ReactNode` — body content                          | —         |
-| `onOpenChange`   | `(detail: { open, reason }) => void`                | —         |
-| `className`      | string — appended to the root                       | —         |
-| `style`          | `CSSProperties` — forwarded to the root             | —         |
+| Prop             | Type                                              | Default   |
+| ---------------- | ------------------------------------------------- | --------- |
+| `open`           | boolean (controlled)                              | `false`   |
+| `size`           | `small` / `medium` / `large` / `fullscreen`       | `medium`  |
+| `variant`        | `default` / `alert`                               | `default` |
+| `dismissOn`      | `outside-click` / `escape` / `both` / `none`      | `both`    |
+| `hasCloseButton` | boolean                                           | `true`    |
+| `label`          | string — accessible name when no `title` is given | —         |
+| `dragToDismiss`  | boolean — flick the sheet away (sheet mode only)  | `false`   |
+| `title`          | `ReactNode` — heading and accessible name         | —         |
+| `description`    | `ReactNode` — supporting text                     | —         |
+| `footer`         | `ReactNode` — action buttons                      | —         |
+| `children`       | `ReactNode` — body content                        | —         |
+| `onOpenChange`   | `(detail: { open, reason }) => void`              | —         |
+| `className`      | string — appended to the root                     | —         |
+| `style`          | `CSSProperties` — forwarded to the root           | —         |
 
 `reason` is `'close-button' | 'outside-click' | 'escape' | 'drag'`. The Lit twin takes the same content through slots (`title`, `description`, `footer`, default) instead of props.
 

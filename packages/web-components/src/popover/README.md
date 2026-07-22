@@ -30,17 +30,17 @@ With `trigger="manual"` the component makes no open/close requests from the trig
 
 ## Props
 
-| Property    | Attribute     | Type                                                             | Default  |
-| ----------- | ------------- | ---------------------------------------------------------------- | -------- |
-| `open`      | `open`        | boolean (controlled)                                             | `false`  |
-| `placement` | `placement`   | `top`/`bottom`/`left`/`right` (+ `-start`/`-end`; bare = center) | `bottom` |
-| `trigger`   | `trigger`     | `click` / `hover` / `manual`                                     | `click`  |
-| `offset`    | `offset`      | number (px); defaults to the `--popover-offset` token            | token    |
-| `flip`      | — (property)  | boolean — flip to opposite side on collision                     | `true`   |
-| `shift`     | — (property)  | boolean — nudge along alignment axis to stay in viewport         | `true`   |
-| `dismissOn` | `dismiss-on`  | `outside-click` / `escape` / `both`                              | `both`   |
-| `trapFocus` | `trap-focus`  | boolean — initial focus, Tab cycle, focus return                 | `false`  |
-| `arrow`     | `arrow`       | boolean — caret pointing at the trigger                          | `false`  |
+| Property    | Attribute    | Type                                                             | Default  |
+| ----------- | ------------ | ---------------------------------------------------------------- | -------- |
+| `open`      | `open`       | boolean (controlled)                                             | `false`  |
+| `placement` | `placement`  | `top`/`bottom`/`left`/`right` (+ `-start`/`-end`; bare = center) | `bottom` |
+| `trigger`   | `trigger`    | `click` / `hover` / `manual`                                     | `click`  |
+| `offset`    | `offset`     | number (px); defaults to the `--popover-offset` token            | token    |
+| `flip`      | — (property) | boolean — flip to opposite side on collision                     | `true`   |
+| `shift`     | — (property) | boolean — nudge along alignment axis to stay in viewport         | `true`   |
+| `dismissOn` | `dismiss-on` | `outside-click` / `escape` / `both`                              | `both`   |
+| `trapFocus` | `trap-focus` | boolean — initial focus, Tab cycle, focus return                 | `false`  |
+| `arrow`     | `arrow`      | boolean — caret pointing at the trigger                          | `false`  |
 
 Positioning (offset/flip/shift/arrow) is computed by [Floating UI](https://floating-ui.com); the resolved placement (after collisions) is reflected as `data-actual-placement` on the host.
 

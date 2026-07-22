@@ -152,6 +152,32 @@ describe('Combobox', () => {
       expect(chips.length).toBe(2);
     });
 
+    it('keeps the highlight on the option just picked, not the first row', () => {
+      const { container } = render(
+        <Combobox options={OPTIONS} multiple values={[]} onValuesChange={vi.fn()} />,
+      );
+      const input = inputOf(container);
+      fireEvent.change(input, { target: { value: 'ban' } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+
+      // The query is cleared, so the list is full again: banana is row 2.
+      const active = input.getAttribute('aria-activedescendant')!;
+      expect(active.endsWith('-opt-2')).toBe(true);
+      expect(document.getElementById(active)!.textContent).toBe('Banana');
+    });
+
+    it('carries on arrowing from the picked option', () => {
+      const { container } = render(
+        <Combobox options={OPTIONS} multiple values={[]} onValuesChange={vi.fn()} />,
+      );
+      const input = inputOf(container);
+      fireEvent.change(input, { target: { value: 'app' } });
+      fireEvent.keyDown(input, { key: 'Enter' });
+      // Apple is row 0 in the full list; ArrowDown must reach Apricot, not Banana.
+      fireEvent.keyDown(input, { key: 'ArrowDown' });
+      expect(input.getAttribute('aria-activedescendant')!.endsWith('-opt-1')).toBe(true);
+    });
+
     it('adds a value without dropping the existing ones', () => {
       const onValuesChange = vi.fn();
       const { container, getByText } = render(

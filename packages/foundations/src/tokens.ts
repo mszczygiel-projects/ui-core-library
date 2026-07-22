@@ -5216,6 +5216,7 @@ export const tokens = {
         inline: 'var(--button-padding-inline)',
         stack: 'var(--button-padding-stack)',
       },
+      gap: 'var(--button-gap)',
       small: {
         fontSize: 'var(--button-small-font-size)',
         lineHeight: 'var(--button-small-line-height)',
@@ -5227,6 +5228,7 @@ export const tokens = {
           inline: 'var(--button-small-padding-inline)',
           stack: 'var(--button-small-padding-stack)',
         },
+        gap: 'var(--button-small-gap)',
         separator: {
           inset: 'var(--button-small-separator-inset)',
         },
@@ -5239,6 +5241,7 @@ export const tokens = {
           inline: 'var(--button-large-padding-inline)',
           stack: 'var(--button-large-padding-stack)',
         },
+        gap: 'var(--button-large-gap)',
         icon: {
           size: 'var(--button-large-icon-size)',
         },
@@ -5251,7 +5254,6 @@ export const tokens = {
       },
     },
     checkbox: {
-      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -5260,6 +5262,7 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
+      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -5327,8 +5330,8 @@ export const tokens = {
       },
     },
     notification: {
-      fontFamily: 'var(--notification-font-family)',
       radius: 'var(--notification-radius)',
+      fontFamily: 'var(--notification-font-family)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -5345,7 +5348,6 @@ export const tokens = {
         stack: 'var(--notification-padding-stack)',
       },
       default: {
-        showIcon: 'var(--notification-default-show-icon)',
         border: {
           left: 'var(--notification-default-border-left)',
           right: 'var(--notification-default-border-right)',

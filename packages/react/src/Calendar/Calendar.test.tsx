@@ -27,9 +27,7 @@ describe('Calendar', () => {
   });
 
   it('respects an explicit firstDayOfWeek over the locale default', () => {
-    const { container } = render(
-      <Calendar today="2026-07-19" locale="pl-PL" firstDayOfWeek={7} />,
-    );
+    const { container } = render(<Calendar today="2026-07-19" locale="pl-PL" firstDayOfWeek={7} />);
     expect(day(container, '2026-06-28')).not.toBeNull();
   });
 

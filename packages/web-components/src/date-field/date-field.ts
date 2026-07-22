@@ -6,7 +6,12 @@ import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { dateFieldStyles } from './date-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
-import { formatDateDisplay, formatRangeDisplay, parseDateText, parseRangeText } from './date-format.js';
+import {
+  formatDateDisplay,
+  formatRangeDisplay,
+  parseDateText,
+  parseRangeText,
+} from './date-format.js';
 import '../date-picker/date-picker.js';
 import type {
   DatePickerDateChangeDetail,
@@ -175,9 +180,7 @@ export class UiDateField extends LitElement {
   }
 
   private get _resolvedLocale(): string {
-    return (
-      this.locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US'
-    );
+    return this.locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US';
   }
 
   private get _isDisabled(): boolean {
@@ -282,7 +285,12 @@ export class UiDateField extends LitElement {
     }
     if (this.mode === 'range') {
       const range = parseRangeText(locale, text);
-      if (!range || !range.start || this._isDateBlocked(range.start) || (range.end && this._isDateBlocked(range.end))) {
+      if (
+        !range ||
+        !range.start ||
+        this._isDateBlocked(range.start) ||
+        (range.end && this._isDateBlocked(range.end))
+      ) {
         this._markInvalid();
         return;
       }

@@ -141,9 +141,7 @@ export const Selected: Story = {
   render: ({ size }: ChipArgs) =>
     column(
       ...['solid', 'subtle', 'outline'].map((appearance) =>
-        row(
-          ...variants.map((v) => chip({ variant: v, appearance, size, selected: true }, cap(v))),
-        ),
+        row(...variants.map((v) => chip({ variant: v, appearance, size, selected: true }, cap(v)))),
       ),
     ),
 };
@@ -151,9 +149,7 @@ export const Selected: Story = {
 export const Dismissible: Story = {
   args: { dismissible: true },
   render: ({ size, appearance }: ChipArgs) =>
-    row(
-      ...variants.map((v) => chip({ variant: v, appearance, size, dismissible: true }, cap(v))),
-    ),
+    row(...variants.map((v) => chip({ variant: v, appearance, size, dismissible: true }, cap(v)))),
 };
 
 export const SelectedDismissible: Story = {

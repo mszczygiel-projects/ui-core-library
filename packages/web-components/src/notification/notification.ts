@@ -10,7 +10,7 @@ export type NotificationVariant = 'default' | 'subtle';
 
 const statusIcons: Record<NotificationStatus, string> = {
   info: svgMap['icon-info'],
-  success: svgMap['icon-flag'],
+  success: svgMap['icon-check'],
   warning: svgMap['icon-danger'],
   error: svgMap['icon-danger'],
 };
@@ -57,6 +57,13 @@ export class UiNotification extends LitElement {
   @property({ type: String }) heading = '';
 
   /**
+   * Shows the status icon in front of the heading. Available in every variant.
+   * @default true
+   */
+  @property({ type: Boolean, attribute: 'has-leading-icon', reflect: true })
+  hasLeadingIcon = true;
+
+  /**
    * Shows the × close button.
    * @default true
    */
@@ -84,7 +91,11 @@ export class UiNotification extends LitElement {
     return html`
       <div class="container" role=${statusRoles[this.status]}>
         <div class="header">
-          <span class="icon" aria-hidden="true">${unsafeSVG(statusIcons[this.status])}</span>
+          ${this.hasLeadingIcon
+            ? html`<span class="icon" aria-hidden="true"
+                >${unsafeSVG(statusIcons[this.status])}</span
+              >`
+            : nothing}
           <div class="heading">${this.heading}</div>
         </div>
 

@@ -87,9 +87,9 @@ describe('Pagination', () => {
 
     cleanup();
     setup({ currentPage: 10 });
-    expect(
-      (screen.getByRole('button', { name: 'Next page' }) as HTMLButtonElement).disabled,
-    ).toBe(true);
+    expect((screen.getByRole('button', { name: 'Next page' }) as HTMLButtonElement).disabled).toBe(
+      true,
+    );
   });
 
   it('commits the jump field on Enter, clamped to the range', () => {

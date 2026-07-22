@@ -153,12 +153,7 @@ describe('DateField', () => {
   it('controlled mode never mutates internally', () => {
     const onChange = vi.fn();
     const { container } = render(
-      <DateField
-        locale="pl-PL"
-        startDate="2026-07-05"
-        today="2026-07-19"
-        onChange={onChange}
-      />,
+      <DateField locale="pl-PL" startDate="2026-07-05" today="2026-07-19" onChange={onChange} />,
     );
     typeAndEnter(container, '2026-07-08');
     expect(onChange).toHaveBeenCalledWith({ startDate: '2026-07-08', endDate: null });

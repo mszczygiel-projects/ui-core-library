@@ -19,7 +19,9 @@ import { Chip } from '@mszczygiel-projects/ui-core-react';
 ```tsx
 import { IconInfo } from '@mszczygiel-projects/ui-core-icons/react';
 
-<Chip variant="info" icon={<IconInfo />}>Info</Chip>
+<Chip variant="info" icon={<IconInfo />}>
+  Info
+</Chip>;
 ```
 
 ## Dismissible
@@ -64,21 +66,21 @@ and the action button gets the native `disabled` attribute:
 
 ## Props
 
-| Prop           | Type                                                            | Default    | Description                                |
-| -------------- | ---------------------------------------------------------------- | ---------- | ------------------------------------------- |
-| `variant`      | `neutral` / `brand` / `success` / `warning` / `error` / `info`   | `neutral`  | Colour scheme                               |
-| `appearance`   | `solid` / `subtle` / `outline`                                   | `solid`    | Visual style (Figma `Style`)                |
-| `size`         | `small` / `medium`                                               | `small`    | Size                                        |
-| `selected`     | `boolean`                                                         | `false`    | Selected/pressed state (`aria-pressed`)     |
-| `disabled`     | `boolean`                                                         | `false`    | Disables the chip; hides the dismiss button |
-| `dismissible`  | `boolean`                                                         | `false`    | Shows the trailing dismiss button           |
-| `dismissLabel` | `string` — accessible name of the dismiss button                 | `'Remove'` | —                                            |
-| `icon`         | `ReactNode`                                                       | —          | Leading icon                                |
-| `children`     | `ReactNode` — label text                                          | —          | Label content                               |
-| `onClick`      | `(event) => void` — click handler for the main action             | —          | —                                            |
-| `onDismiss`    | `() => void`                                                      | —          | Called on dismiss-button click or Delete/Backspace |
-| `className`    | `string` — appended to the root element                          | —          | Extra class on root element                 |
-| `style`        | `CSSProperties` — forwarded to the root element                   | —          | Inline style on root element (positioning only) |
+| Prop           | Type                                                           | Default    | Description                                        |
+| -------------- | -------------------------------------------------------------- | ---------- | -------------------------------------------------- |
+| `variant`      | `neutral` / `brand` / `success` / `warning` / `error` / `info` | `neutral`  | Colour scheme                                      |
+| `appearance`   | `solid` / `subtle` / `outline`                                 | `solid`    | Visual style (Figma `Style`)                       |
+| `size`         | `small` / `medium`                                             | `small`    | Size                                               |
+| `selected`     | `boolean`                                                      | `false`    | Selected/pressed state (`aria-pressed`)            |
+| `disabled`     | `boolean`                                                      | `false`    | Disables the chip; hides the dismiss button        |
+| `dismissible`  | `boolean`                                                      | `false`    | Shows the trailing dismiss button                  |
+| `dismissLabel` | `string` — accessible name of the dismiss button               | `'Remove'` | —                                                  |
+| `icon`         | `ReactNode`                                                    | —          | Leading icon                                       |
+| `children`     | `ReactNode` — label text                                       | —          | Label content                                      |
+| `onClick`      | `(event) => void` — click handler for the main action          | —          | —                                                  |
+| `onDismiss`    | `() => void`                                                   | —          | Called on dismiss-button click or Delete/Backspace |
+| `className`    | `string` — appended to the root element                        | —          | Extra class on root element                        |
+| `style`        | `CSSProperties` — forwarded to the root element                | —          | Inline style on root element (positioning only)    |
 
 `appearance` maps to the Figma `Style` property (`style` is the inline-style prop in React).
 

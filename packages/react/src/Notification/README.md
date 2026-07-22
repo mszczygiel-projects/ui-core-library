@@ -46,6 +46,22 @@ Pass description content as `children`. Omit `children` for a heading-only notif
 <Notification heading="Upload complete." status="success" />;
 ```
 
+## Leading icon
+
+The status icon is shown by default in **both** variants and is controlled by `hasLeadingIcon` — it is no longer tied to the variant:
+
+```tsx
+{
+  /* With icon (default) */
+}
+<Notification heading="New update available." status="info" />;
+
+{
+  /* Heading only, no icon */
+}
+<Notification heading="New update available." status="info" hasLeadingIcon={false} />;
+```
+
 ## Without close button
 
 ```tsx
@@ -73,6 +89,7 @@ The component exposes no consumer hooks — styling is done through the status a
 | `status`         | `'info' \| 'success' \| 'warning' \| 'error'` | `'info'`    | Colour scheme and status icon.                                              |
 | `variant`        | `'default' \| 'subtle'`                       | `'default'` | `default` = solid fill; `subtle` = tinted background with left border.      |
 | `children`       | `ReactNode`                                   | —           | Optional description rendered below the heading.                            |
+| `hasLeadingIcon` | `boolean`                                     | `true`      | Shows the status icon in front of the heading. Works in every variant.      |
 | `hasCloseButton` | `boolean`                                     | `true`      | Shows the × close button.                                                   |
 | `onClose`        | `() => void`                                  | —           | Called when the close button is clicked. Consumer manages `open` state.     |
 | `className`      | `string`                                      | —           | Extra class on the root element.                                            |

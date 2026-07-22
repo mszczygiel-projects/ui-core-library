@@ -8,7 +8,7 @@ pipeline (Popover → Calendar → DatePicker → DateField).
 
 - **`single`** — auto-commit: clicking a day calls `onDateChange` and requests
   close immediately. No footer (matches native date-input UX).
-- **`range`** — explicit commit: day clicks only build a *pending* selection
+- **`range`** — explicit commit: day clicks only build a _pending_ selection
   shown in the calendar; `Apply` calls `onRangeChange` with the pending range
   and requests close; `Clear` resets the pending selection to empty without
   committing (Apply afterwards commits `{ null, null }`).
@@ -27,18 +27,18 @@ Opening seeds the pending range from the committed values.
 
 ## Props
 
-| Prop | Type | Default |
-| --- | --- | --- |
-| `selectionMode` | `'single' \| 'range'` | `'single'` |
-| `open` | boolean (controlled) | `false` |
-| `placement` | popover placement | `'bottom-start'` |
-| `startDate` / `endDate` | ISO `YYYY-MM-DD` | — |
-| `minDate` / `maxDate` / `disabledDates` / `firstDayOfWeek` / `locale` / `today` | forwarded to `Calendar` | — |
-| `applyLabel` / `clearLabel` | string | `'Apply'` / `'Clear'` |
-| `prevMonthLabel` / `nextMonthLabel` | string | English defaults |
-| `anchor` | `ReactNode` | — |
-| `onDateChange` / `onRangeChange` / `onOpenChange` | callbacks | — |
-| `className` / `style` | forwarded to the Popover root | — |
+| Prop                                                                            | Type                          | Default               |
+| ------------------------------------------------------------------------------- | ----------------------------- | --------------------- |
+| `selectionMode`                                                                 | `'single' \| 'range'`         | `'single'`            |
+| `open`                                                                          | boolean (controlled)          | `false`               |
+| `placement`                                                                     | popover placement             | `'bottom-start'`      |
+| `startDate` / `endDate`                                                         | ISO `YYYY-MM-DD`              | —                     |
+| `minDate` / `maxDate` / `disabledDates` / `firstDayOfWeek` / `locale` / `today` | forwarded to `Calendar`       | —                     |
+| `applyLabel` / `clearLabel`                                                     | string                        | `'Apply'` / `'Clear'` |
+| `prevMonthLabel` / `nextMonthLabel`                                             | string                        | English defaults      |
+| `anchor`                                                                        | `ReactNode`                   | —                     |
+| `onDateChange` / `onRangeChange` / `onOpenChange`                               | callbacks                     | —                     |
+| `className` / `style`                                                           | forwarded to the Popover root | —                     |
 
 ## Tokens
 

@@ -171,8 +171,7 @@ export class DragDismissController implements ReactiveController {
     // Clamp: the panel may move towards dismissal, never away from its edge.
     const travelled = Math.max(0, this.progress(coord));
     const offset = travelled * SIGN[this.direction];
-    target.style.translate =
-      AXIS[this.direction] === 'y' ? `0 ${offset}px` : `${offset}px 0`;
+    target.style.translate = AXIS[this.direction] === 'y' ? `0 ${offset}px` : `${offset}px 0`;
 
     // A gesture in progress must not also scroll or select.
     event.preventDefault();
@@ -190,8 +189,7 @@ export class DragDismissController implements ReactiveController {
         ? target.offsetHeight
         : target.offsetWidth
       : 0;
-    const distanceThreshold =
-      size * (this.options.distanceThreshold ?? DEFAULT_DISTANCE_THRESHOLD);
+    const distanceThreshold = size * (this.options.distanceThreshold ?? DEFAULT_DISTANCE_THRESHOLD);
     const velocityThreshold = this.options.velocityThreshold ?? DEFAULT_VELOCITY_THRESHOLD;
 
     const shouldDismiss =

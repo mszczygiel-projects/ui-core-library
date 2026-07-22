@@ -3,12 +3,10 @@ import type { UiDatePicker, DatePickerRangeChangeDetail } from './date-picker.js
 import type { UiCalendar } from '../calendar/calendar.js';
 import './date-picker.js';
 
-const calendar = (el: UiDatePicker) =>
-  el.shadowRoot!.querySelector<UiCalendar>('ui-calendar')!;
+const calendar = (el: UiDatePicker) => el.shadowRoot!.querySelector<UiCalendar>('ui-calendar')!;
 const day = (el: UiDatePicker, iso: string) =>
   calendar(el).shadowRoot!.querySelector<HTMLButtonElement>(`button[data-iso="${iso}"]`);
-const footerButtons = (el: UiDatePicker) =>
-  el.shadowRoot!.querySelectorAll('.footer ui-button');
+const footerButtons = (el: UiDatePicker) => el.shadowRoot!.querySelectorAll('.footer ui-button');
 
 describe('UiDatePicker', () => {
   it('renders popover with manual trigger, focus trap, and projected trigger slot', async () => {
@@ -127,12 +125,7 @@ describe('UiDatePicker', () => {
 
   it('forwards calendar constraints and popover dismissals', async () => {
     const el = await fixture<UiDatePicker>(html`
-      <ui-date-picker
-        open
-        today="2026-07-19"
-        min-date="2026-07-05"
-        locale="pl-PL"
-      ></ui-date-picker>
+      <ui-date-picker open today="2026-07-19" min-date="2026-07-05" locale="pl-PL"></ui-date-picker>
     `);
     expect(day(el, '2026-07-02')!.className).to.contain('day--disabled');
 

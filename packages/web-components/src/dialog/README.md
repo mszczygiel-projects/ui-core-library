@@ -24,15 +24,15 @@ Fully **controlled**: the component never mutates its own `open` state. Escape, 
 
 ## Props
 
-| Property         | Attribute          | Type                                                | Default    |
-| ---------------- | ------------------ | --------------------------------------------------- | ---------- |
-| `open`           | `open`             | boolean (controlled)                                | `false`    |
-| `size`           | `data-size`        | `small` / `medium` / `large` / `fullscreen`         | `medium`   |
-| `variant`        | `variant`          | `default` / `alert`                                 | `default`  |
-| `dismissOn`      | `dismiss-on`       | `outside-click` / `escape` / `both` / `none`        | `both`     |
-| `hasCloseButton` | `has-close-button` | boolean                                             | `true`     |
-| `label`          | `label`            | string — accessible name when no `title` slot       | —          |
-| `dragToDismiss`  | `drag-to-dismiss`  | boolean — flick the sheet away (sheet mode only)    | `false`    |
+| Property         | Attribute          | Type                                             | Default   |
+| ---------------- | ------------------ | ------------------------------------------------ | --------- |
+| `open`           | `open`             | boolean (controlled)                             | `false`   |
+| `size`           | `data-size`        | `small` / `medium` / `large` / `fullscreen`      | `medium`  |
+| `variant`        | `variant`          | `default` / `alert`                              | `default` |
+| `dismissOn`      | `dismiss-on`       | `outside-click` / `escape` / `both` / `none`     | `both`    |
+| `hasCloseButton` | `has-close-button` | boolean                                          | `true`    |
+| `label`          | `label`            | string — accessible name when no `title` slot    | —         |
+| `dragToDismiss`  | `drag-to-dismiss`  | boolean — flick the sheet away (sheet mode only) | `false`   |
 
 ## Events
 

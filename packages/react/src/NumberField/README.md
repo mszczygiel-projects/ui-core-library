@@ -48,31 +48,31 @@ On commit the value is **rounded first, then clamped** — rounding can push a v
 
 ## Props
 
-| Prop              | Type                                              | Default     | Description                                        |
-| ----------------- | ------------------------------------------------- | ----------- | -------------------------------------------------- |
-| `value`           | `number \| null`                                  | —           | Controlled value; `null` means empty                |
-| `defaultValue`    | `number`                                          | —           | Initial value in uncontrolled mode                  |
-| `min`             | `number`                                          | `-Infinity` | Lower bound, applied on commit                      |
-| `max`             | `number`                                          | `Infinity`  | Upper bound, applied on commit                      |
-| `step`            | `number`                                          | `1`         | Amount added or removed per step                    |
-| `precision`       | `number`                                          | `0`         | Decimal places kept on commit                       |
-| `controls`        | `'none' \| 'inline'`                              | `'none'`    | `inline` adds flanking stepper buttons              |
-| `variant`         | `'outline' \| 'filled' \| 'underlined'`           | `'outline'` | Visual style                                        |
-| `size`            | `'small' \| 'default' \| 'large'`                 | `'default'` | Field size                                          |
-| `label`           | `string`                                          | —           | Label text; omit for a bare field                   |
-| `labelPlacement`  | `'top' \| 'floating' \| 'inner'`                  | `'top'`     | Forced to `top` when `controls` is `inline`         |
-| `hint`            | `string`                                          | —           | Helper text below the field                         |
-| `placeholder`     | `string`                                          | —           | Placeholder shown while empty                       |
-| `state`           | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'` | Visual and a11y state                               |
-| `name`            | `string`                                          | —           | Native form field name                              |
-| `disabled`        | `boolean`                                         | `false`     | Disables the input and both steppers                |
-| `required`        | `boolean`                                         | `false`     | Marks the field as required                         |
-| `readOnly`        | `boolean`                                         | `false`     | Read-only input; steppers disabled too              |
-| `decrementLabel`  | `string`                                          | `'Decrease'`| Accessible name for the decrement button            |
-| `incrementLabel`  | `string`                                          | `'Increase'`| Accessible name for the increment button            |
-| `onValueChange`   | `(value: number \| null) => void`                 | —           | Called on commit                                    |
-| `className`       | `string`                                          | —           | Extra class on root element                         |
-| `style`           | `CSSProperties`                                   | —           | Inline style on root element                        |
+| Prop             | Type                                              | Default      | Description                                 |
+| ---------------- | ------------------------------------------------- | ------------ | ------------------------------------------- |
+| `value`          | `number \| null`                                  | —            | Controlled value; `null` means empty        |
+| `defaultValue`   | `number`                                          | —            | Initial value in uncontrolled mode          |
+| `min`            | `number`                                          | `-Infinity`  | Lower bound, applied on commit              |
+| `max`            | `number`                                          | `Infinity`   | Upper bound, applied on commit              |
+| `step`           | `number`                                          | `1`          | Amount added or removed per step            |
+| `precision`      | `number`                                          | `0`          | Decimal places kept on commit               |
+| `controls`       | `'none' \| 'inline'`                              | `'none'`     | `inline` adds flanking stepper buttons      |
+| `variant`        | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`  | Visual style                                |
+| `size`           | `'small' \| 'default' \| 'large'`                 | `'default'`  | Field size                                  |
+| `label`          | `string`                                          | —            | Label text; omit for a bare field           |
+| `labelPlacement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`      | Forced to `top` when `controls` is `inline` |
+| `hint`           | `string`                                          | —            | Helper text below the field                 |
+| `placeholder`    | `string`                                          | —            | Placeholder shown while empty               |
+| `state`          | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`  | Visual and a11y state                       |
+| `name`           | `string`                                          | —            | Native form field name                      |
+| `disabled`       | `boolean`                                         | `false`      | Disables the input and both steppers        |
+| `required`       | `boolean`                                         | `false`      | Marks the field as required                 |
+| `readOnly`       | `boolean`                                         | `false`      | Read-only input; steppers disabled too      |
+| `decrementLabel` | `string`                                          | `'Decrease'` | Accessible name for the decrement button    |
+| `incrementLabel` | `string`                                          | `'Increase'` | Accessible name for the increment button    |
+| `onValueChange`  | `(value: number \| null) => void`                 | —            | Called on commit                            |
+| `className`      | `string`                                          | —            | Extra class on root element                 |
+| `style`          | `CSSProperties`                                   | —            | Inline style on root element                |
 
 ## Accessibility notes
 

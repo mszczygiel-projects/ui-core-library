@@ -21,7 +21,9 @@ export function parseISODate(iso: string | undefined | null): Date | null {
   const d = Number(m[3]);
   const date = new Date(y, mo - 1, d);
   // new Date() silently rolls invalid dates over (2026-02-31 → March 3) — reject those.
-  return date.getFullYear() === y && date.getMonth() === mo - 1 && date.getDate() === d ? date : null;
+  return date.getFullYear() === y && date.getMonth() === mo - 1 && date.getDate() === d
+    ? date
+    : null;
 }
 
 export function toISODate(d: Date): string {
@@ -40,9 +42,13 @@ export function addDaysISO(iso: string, days: number): string | null {
   return toISODate(d);
 }
 
-export function addMonths(year: number, month: number, delta: number): { year: number; month: number } {
+export function addMonths(
+  year: number,
+  month: number,
+  delta: number,
+): { year: number; month: number } {
   const i = year * 12 + (month - 1) + delta;
-  return { year: Math.floor(i / 12), month: ((i % 12) + 12) % 12 + 1 };
+  return { year: Math.floor(i / 12), month: (((i % 12) + 12) % 12) + 1 };
 }
 
 export function daysInMonth(year: number, month: number): number {

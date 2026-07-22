@@ -26,6 +26,7 @@ import {
   isGroupedItems,
   listboxOptionId,
   nextEnabledRow,
+  rowIndexOfValue,
   scrollRowIntoView,
   toggleValue,
 } from '../Listbox/listbox-navigation.js';
@@ -299,8 +300,15 @@ export function Combobox({
     if (multiple) {
       onValuesChange?.(toggleValue(values, row.option.value));
       setQuery('');
-      // The list stays open so more options can be picked.
-      setActiveIndex(0);
+      /*
+       * The list stays open so more options can be picked. Clearing the query
+       * re-expands the list, so the highlight has to be re-found by value —
+       * keeping the old index would silently move it to a different option,
+       * and resetting it would throw the user back to the top of the list.
+       */
+      const nextRows = buildRows(options);
+      const index = rowIndexOfValue(nextRows, row.option.value);
+      setActiveIndex(index >= 0 ? index : firstEnabledRow(nextRows));
     } else {
       onChange?.(row.option.value);
       setQuery('');

@@ -53,16 +53,6 @@ export const notificationStyles = css`
     --_on-base: var(--color-feedback-error-on-base);
   }
 
-  /* ---- Icon visibility controlled by CSS variable ---- */
-  :host,
-  :host([variant='default']) {
-    --_show-icon: none;
-  }
-
-  :host([variant='subtle']) {
-    --_show-icon: flex;
-  }
-
   /* ---- Container: all visual box properties live here ---- */
   .container {
     position: relative;
@@ -111,9 +101,9 @@ export const notificationStyles = css`
     padding-right: var(--spacing-8);
   }
 
-  /* ---- Status icon — always in DOM, visibility via --_show-icon ---- */
+  /* ---- Status icon — rendered only when has-leading-icon is set ---- */
   .icon {
-    display: var(--_show-icon, none);
+    display: flex;
     flex-shrink: 0;
     width: var(--size-6);
     height: var(--size-6);

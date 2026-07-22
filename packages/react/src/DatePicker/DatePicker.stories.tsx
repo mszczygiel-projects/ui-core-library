@@ -49,7 +49,11 @@ const ControlledDemo = (props: {
         open={open}
         startDate={(isRange ? range.start : single) ?? undefined}
         endDate={(isRange ? range.end : undefined) ?? undefined}
-        anchor={<Button variant="secondary" onClick={() => setOpen((o) => !o)}>Pick date</Button>}
+        anchor={
+          <Button variant="secondary" onClick={() => setOpen((o) => !o)}>
+            Pick date
+          </Button>
+        }
         onDateChange={(d) => setSingle(d.date)}
         onRangeChange={(d) => setRange({ start: d.startDate, end: d.endDate })}
         onOpenChange={(d) => setOpen(d.open)}

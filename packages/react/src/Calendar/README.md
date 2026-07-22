@@ -27,20 +27,20 @@ click lands before the start.
 
 ## Props
 
-| Prop | Type | Default | Notes |
-| --- | --- | --- | --- |
-| `selectionMode` | `'single' \| 'range'` | `'single'` | |
-| `startDate` / `endDate` | ISO `YYYY-MM-DD` | — | End is range mode only |
-| `minDate` / `maxDate` | ISO string | — | Outside dates are disabled |
-| `disabledDates` | `string[] \| (iso) => boolean` | — | |
-| `firstDayOfWeek` | `1-7` (ISO, 1 = Monday) | locale `weekInfo` | Fallback: Monday |
-| `locale` | BCP 47 tag | runtime locale | Native `Intl`, no i18n lib |
-| `today` | ISO string | real today | Deterministic rendering (tests/SSR) |
-| `prevMonthLabel` / `nextMonthLabel` | `string` | English defaults | Localize via props |
-| `onDateSelect` | `(detail) => void` | — | Proposed `{ date, startDate, endDate }` |
-| `onMonthChange` | `(detail) => void` | — | `{ year, month }` (1-12) |
-| `className` / `style` | — | — | Root element |
-| `aria-*` | `AriaAttributes` | — | Forwarded to the `role="grid"` element |
+| Prop                                | Type                           | Default           | Notes                                   |
+| ----------------------------------- | ------------------------------ | ----------------- | --------------------------------------- |
+| `selectionMode`                     | `'single' \| 'range'`          | `'single'`        |                                         |
+| `startDate` / `endDate`             | ISO `YYYY-MM-DD`               | —                 | End is range mode only                  |
+| `minDate` / `maxDate`               | ISO string                     | —                 | Outside dates are disabled              |
+| `disabledDates`                     | `string[] \| (iso) => boolean` | —                 |                                         |
+| `firstDayOfWeek`                    | `1-7` (ISO, 1 = Monday)        | locale `weekInfo` | Fallback: Monday                        |
+| `locale`                            | BCP 47 tag                     | runtime locale    | Native `Intl`, no i18n lib              |
+| `today`                             | ISO string                     | real today        | Deterministic rendering (tests/SSR)     |
+| `prevMonthLabel` / `nextMonthLabel` | `string`                       | English defaults  | Localize via props                      |
+| `onDateSelect`                      | `(detail) => void`             | —                 | Proposed `{ date, startDate, endDate }` |
+| `onMonthChange`                     | `(detail) => void`             | —                 | `{ year, month }` (1-12)                |
+| `className` / `style`               | —                              | —                 | Root element                            |
+| `aria-*`                            | `AriaAttributes`               | —                 | Forwarded to the `role="grid"` element  |
 
 ## Accessibility
 

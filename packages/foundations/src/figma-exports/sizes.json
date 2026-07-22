@@ -1285,6 +1285,13 @@
         "$type": "number"
       }
     },
+    "gap": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.3}",
+        "Desktop": "{Primitives Sizes.spacing.3}"
+      },
+      "$type": "number"
+    },
     "small": {
       "font-size": {
         "$value": {
@@ -1331,6 +1338,13 @@
           },
           "$type": "number"
         }
+      },
+      "gap": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.3}",
+          "Desktop": "{Primitives Sizes.spacing.3}"
+        },
+        "$type": "number"
       },
       "separator": {
         "inset": {
@@ -1380,6 +1394,13 @@
           "$type": "number"
         }
       },
+      "gap": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.3}",
+          "Desktop": "{Primitives Sizes.spacing.3}"
+        },
+        "$type": "number"
+      },
       "icon": {
         "size": {
           "$value": {
@@ -1410,13 +1431,6 @@
     }
   },
   "checkbox": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
     "field": {
       "gap": {
         "$value": {
@@ -1460,6 +1474,13 @@
         },
         "$type": "string"
       }
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.control.radius}",
+        "Desktop": "{Sizes.control.radius}"
+      },
+      "$type": "number"
     },
     "border": {
       "width": {
@@ -1714,19 +1735,19 @@
     }
   },
   "notification": {
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.body.font-family}",
-        "Desktop": "{Themes.typography.body.font-family}"
-      },
-      "$type": "string"
-    },
     "radius": {
       "$value": {
         "Mobile": "{Sizes.radius.md}",
         "Desktop": "{Sizes.radius.md}"
       },
       "$type": "number"
+    },
+    "font-family": {
+      "$value": {
+        "Mobile": "{Themes.typography.body.font-family}",
+        "Desktop": "{Themes.typography.body.font-family}"
+      },
+      "$type": "string"
     },
     "font-size": {
       "$value": {
@@ -1810,13 +1831,6 @@
       }
     },
     "default": {
-      "show-icon": {
-        "$value": {
-          "Mobile": false,
-          "Desktop": false
-        },
-        "$type": "boolean"
-      },
       "border": {
         "left": {
           "$value": {

@@ -141,9 +141,7 @@ export function Calendar({
   useEffect(() => {
     if (!pendingFocus.current) return;
     pendingFocus.current = false;
-    rootRef.current
-      ?.querySelector<HTMLButtonElement>(`button[data-iso="${focusedISO}"]`)
-      ?.focus();
+    rootRef.current?.querySelector<HTMLButtonElement>(`button[data-iso="${focusedISO}"]`)?.focus();
   }, [focusedISO, view]);
 
   const isDisabled = (iso: string): boolean => {
@@ -269,12 +267,7 @@ export function Calendar({
       .join(' ');
 
     return (
-      <div
-        key={day.iso}
-        role="gridcell"
-        className="ui-calendar__day-cell"
-        aria-selected={selected}
-      >
+      <div key={day.iso} role="gridcell" className="ui-calendar__day-cell" aria-selected={selected}>
         {showBand && isStart && <span className="ui-calendar__band ui-calendar__band--start" />}
         {showBand && isEnd && <span className="ui-calendar__band ui-calendar__band--end" />}
         {showBand && inRange && <span className="ui-calendar__band ui-calendar__band--full" />}

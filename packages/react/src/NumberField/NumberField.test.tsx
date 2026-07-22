@@ -173,7 +173,9 @@ describe('NumberField', () => {
 
       // pointerdown fires the first step immediately
       act(() => {
-        increase.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true }));
+        increase.dispatchEvent(
+          new PointerEvent('pointerdown', { bubbles: true, cancelable: true }),
+        );
       });
       expect(onValueChange).toHaveBeenLastCalledWith(1);
 
@@ -212,7 +214,9 @@ describe('NumberField', () => {
       const increase = screen.getByLabelText('Increase');
 
       act(() => {
-        increase.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true }));
+        increase.dispatchEvent(
+          new PointerEvent('pointerdown', { bubbles: true, cancelable: true }),
+        );
       });
       act(() => void vi.advanceTimersByTime(500 + 100 * 10));
 
@@ -245,9 +249,7 @@ describe('NumberField', () => {
   it('respects the controlled value', async () => {
     const user = userEvent.setup();
     const onValueChange = vi.fn();
-    render(
-      <NumberField label="Q" controls="inline" value={7} onValueChange={onValueChange} />,
-    );
+    render(<NumberField label="Q" controls="inline" value={7} onValueChange={onValueChange} />);
 
     await user.click(screen.getByLabelText('Increase'));
     expect(onValueChange).toHaveBeenCalledWith(8);

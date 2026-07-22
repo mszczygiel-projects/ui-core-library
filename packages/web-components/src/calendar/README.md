@@ -22,17 +22,17 @@ click lands before the start.
 
 ## Props
 
-| Prop | WC attr | Type | Default | Notes |
-| --- | --- | --- | --- | --- |
-| `selectionMode` | `selection-mode` | `'single' \| 'range'` | `'single'` | |
-| `startDate` | `start-date` | ISO `YYYY-MM-DD` | — | Selected date in single mode |
-| `endDate` | `end-date` | ISO string | — | Range mode only |
-| `minDate` / `maxDate` | `min-date` / `max-date` | ISO string | — | Outside dates are disabled |
-| `disabledDates` | — (property only) | `string[] \| (iso) => boolean` | — | |
-| `firstDayOfWeek` | `first-day-of-week` | `1-7` (ISO, 1 = Monday) | locale `weekInfo` | Fallback: Monday |
-| `locale` | `locale` | BCP 47 tag | runtime locale | Native `Intl`, no i18n lib |
-| `today` | `today` | ISO string | real today | Deterministic rendering (tests/SSR) |
-| `prevMonthLabel` / `nextMonthLabel` | `prev-month-label` / `next-month-label` | string | English defaults | Localize via props |
+| Prop                                | WC attr                                 | Type                           | Default           | Notes                               |
+| ----------------------------------- | --------------------------------------- | ------------------------------ | ----------------- | ----------------------------------- |
+| `selectionMode`                     | `selection-mode`                        | `'single' \| 'range'`          | `'single'`        |                                     |
+| `startDate`                         | `start-date`                            | ISO `YYYY-MM-DD`               | —                 | Selected date in single mode        |
+| `endDate`                           | `end-date`                              | ISO string                     | —                 | Range mode only                     |
+| `minDate` / `maxDate`               | `min-date` / `max-date`                 | ISO string                     | —                 | Outside dates are disabled          |
+| `disabledDates`                     | — (property only)                       | `string[] \| (iso) => boolean` | —                 |                                     |
+| `firstDayOfWeek`                    | `first-day-of-week`                     | `1-7` (ISO, 1 = Monday)        | locale `weekInfo` | Fallback: Monday                    |
+| `locale`                            | `locale`                                | BCP 47 tag                     | runtime locale    | Native `Intl`, no i18n lib          |
+| `today`                             | `today`                                 | ISO string                     | real today        | Deterministic rendering (tests/SSR) |
+| `prevMonthLabel` / `nextMonthLabel` | `prev-month-label` / `next-month-label` | string                         | English defaults  | Localize via props                  |
 
 ## Events
 

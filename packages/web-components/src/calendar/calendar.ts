@@ -111,9 +111,7 @@ export class UiCalendar extends LitElement {
   @state() private hoverISO: string | null = null;
 
   private get resolvedLocale(): string {
-    return (
-      this.locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US'
-    );
+    return this.locale || (typeof navigator !== 'undefined' ? navigator.language : '') || 'en-US';
   }
 
   private get resolvedFirstDay(): number {
@@ -273,8 +271,7 @@ export class UiCalendar extends LitElement {
     const isEnd = !!range && day.iso === range.end;
     const inRange = !!range && day.iso > range.start && day.iso < range.end;
     // A lone range start (no end yet, no hover) still renders as selected.
-    const loneStart =
-      this.selectionMode === 'range' && !range && day.iso === this.startDate;
+    const loneStart = this.selectionMode === 'range' && !range && day.iso === this.startDate;
     const isEndpoint = isStart || isEnd || loneStart;
     const selected = singleSelected || isEndpoint || inRange;
     const disabled = this.isDisabled(day.iso);
@@ -358,7 +355,8 @@ export class UiCalendar extends LitElement {
             ${labels.map((l) => html`<span class="weekday" role="columnheader">${l}</span>`)}
           </div>
           ${weeks.map(
-            (week) => html`<div class="week" role="row">${week.map((d) => this.renderDay(d))}</div>`,
+            (week) =>
+              html`<div class="week" role="row">${week.map((d) => this.renderDay(d))}</div>`,
           )}
         </div>
       </div>

@@ -23,17 +23,6 @@
   --_on-base: var(--color-feedback-error-on-base);
 }
 
-/* --- Icon visibility controlled by CSS variable --- */
-/* default variant: icon hidden */
-.ui-notification--default {
-  --_show-icon: none;
-}
-
-/* subtle variant: icon visible */
-.ui-notification--subtle {
-  --_show-icon: flex;
-}
-
 /* --- Block --- */
 .ui-notification {
   position: relative;
@@ -78,9 +67,9 @@
   padding-right: var(--spacing-8);
 }
 
-/* --- Status icon — always rendered, visibility via --_show-icon --- */
+/* --- Status icon — rendered only when hasLeadingIcon is set --- */
 .ui-notification__icon {
-  display: var(--_show-icon, none);
+  display: flex;
   flex-shrink: 0;
   width: var(--size-6);
   height: var(--size-6);

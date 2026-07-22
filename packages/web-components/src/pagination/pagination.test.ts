@@ -83,16 +83,19 @@ describe('UiPagination', () => {
     const first = await fixture<UiPagination>(
       html`<ui-pagination current-page="1" total-pages="10"></ui-pagination>`,
     );
-    expect(first.shadowRoot!.querySelector<HTMLElement & { disabled: boolean }>('.prev')!.disabled)
-      .to.equal(true);
-    expect(first.shadowRoot!.querySelector<HTMLElement & { disabled: boolean }>('.next')!.disabled)
-      .to.equal(false);
+    expect(
+      first.shadowRoot!.querySelector<HTMLElement & { disabled: boolean }>('.prev')!.disabled,
+    ).to.equal(true);
+    expect(
+      first.shadowRoot!.querySelector<HTMLElement & { disabled: boolean }>('.next')!.disabled,
+    ).to.equal(false);
 
     const last = await fixture<UiPagination>(
       html`<ui-pagination current-page="10" total-pages="10"></ui-pagination>`,
     );
-    expect(last.shadowRoot!.querySelector<HTMLElement & { disabled: boolean }>('.next')!.disabled)
-      .to.equal(true);
+    expect(
+      last.shadowRoot!.querySelector<HTMLElement & { disabled: boolean }>('.next')!.disabled,
+    ).to.equal(true);
   });
 
   it('fires ui-change with source "item" on page click, and stays controlled', async () => {

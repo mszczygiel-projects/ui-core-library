@@ -83,13 +83,18 @@ describe('Notification', () => {
     );
   });
 
-  it('icon element is always present in the DOM (visibility via CSS)', () => {
-    const { container: d } = render(<Notification heading="Title" variant="default" />);
-    expect(d.querySelector('.ui-notification__icon')).not.toBeNull();
-    cleanup();
+  it('renders the leading icon by default in every variant', () => {
+    const variants = ['default', 'subtle'] as const;
+    for (const variant of variants) {
+      const { container } = render(<Notification heading="Title" variant={variant} />);
+      expect(container.querySelector('.ui-notification__icon')).not.toBeNull();
+      cleanup();
+    }
+  });
 
-    const { container: s } = render(<Notification heading="Title" variant="subtle" />);
-    expect(s.querySelector('.ui-notification__icon')).not.toBeNull();
+  it('does not render the leading icon when hasLeadingIcon=false', () => {
+    const { container } = render(<Notification heading="Title" hasLeadingIcon={false} />);
+    expect(container.querySelector('.ui-notification__icon')).toBeNull();
   });
 
   it('forwards className to root element', () => {

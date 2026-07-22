@@ -184,6 +184,26 @@ describe('UiCombobox', () => {
       expect(el.hasAttribute('open')).to.equal(true);
     });
 
+    it('keeps the highlight on the option just picked, not the first row', async () => {
+      const el = await makeMulti();
+      await type(el, 'ban');
+      await press(el, 'Enter');
+
+      // The query is cleared, so the list is full again: banana is row 2.
+      expect(inputOf(el).getAttribute('aria-activedescendant')).to.equal('listbox-opt-2');
+      const active = el.shadowRoot!.querySelector('.option--active');
+      expect(active!.textContent!.trim()).to.equal('Banana');
+    });
+
+    it('carries on arrowing from the picked option', async () => {
+      const el = await makeMulti();
+      await type(el, 'app');
+      await press(el, 'Enter');
+      // Apple is row 0 in the full list; ArrowDown must reach Apricot, not Banana.
+      await press(el, 'ArrowDown');
+      expect(inputOf(el).getAttribute('aria-activedescendant')).to.equal('listbox-opt-1');
+    });
+
     it('renders a chip per selected value', async () => {
       const el = await makeMulti();
       el.values = ['apple', 'banana'];

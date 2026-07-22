@@ -68,7 +68,11 @@ export const RangeMode: Story = {
       { style: { paddingBottom: 460 } },
       field(
         { ...args, mode: 'range' },
-        { 'start-date': '2026-07-05', 'end-date': '2026-07-12', hint: 'Type "5 lip 2026 – 12 lip 2026" or pick in the calendar' },
+        {
+          'start-date': '2026-07-05',
+          'end-date': '2026-07-12',
+          hint: 'Type "5 lip 2026 – 12 lip 2026" or pick in the calendar',
+        },
       ),
     ),
 };
@@ -104,7 +108,10 @@ export const OnSurfaces: Story = {
               width: 360,
             },
           },
-          field({ ...args, mode: 'range' }, { 'start-date': '2026-07-05', 'end-date': '2026-07-12' }),
+          field(
+            { ...args, mode: 'range' },
+            { 'start-date': '2026-07-05', 'end-date': '2026-07-12' },
+          ),
         ),
       ),
     ),

@@ -16,7 +16,9 @@ import { Badge } from '@mszczygiel-projects/ui-core-react';
 ```tsx
 import { IconInfo } from '@mszczygiel-projects/ui-core-icons/react';
 
-<Badge variant="info" icon={<IconInfo />}>Info</Badge>
+<Badge variant="info" icon={<IconInfo />}>
+  Info
+</Badge>;
 ```
 
 ## Icon-only
@@ -30,16 +32,16 @@ Provide `aria-label` — the root then renders `role="img"`.
 
 ## Props
 
-| Prop         | Type                                                            | Default   | Description                                      |
-| ------------ | --------------------------------------------------------------- | --------- | ------------------------------------------------ |
-| `variant`    | `neutral` / `brand` / `success` / `warning` / `error` / `info`  | `neutral` | Colour scheme                                    |
-| `appearance` | `solid` / `subtle`                                              | `solid`   | Visual style (Figma `Style`)                     |
-| `size`       | `small` / `medium`                                              | `small`   | Size                                             |
-| `shape`      | `rounded` / `square`                                            | `rounded` | Corner shape                                     |
-| `icon`       | `ReactNode`                                                     | —         | Leading icon                                     |
-| `children`   | `ReactNode` — label text                                        | —         | Label content (omit for icon-only)               |
-| `className`  | `string` — appended to the root element                         | —         | Extra class on root element                      |
-| `style`      | `CSSProperties` — forwarded to the root element                 | —         | Inline style on root element                     |
-| `aria-label` | `string` — accessible name (required for icon-only)             | —         | Sets accessible name; icon-only also sets `role` |
+| Prop         | Type                                                           | Default   | Description                                      |
+| ------------ | -------------------------------------------------------------- | --------- | ------------------------------------------------ |
+| `variant`    | `neutral` / `brand` / `success` / `warning` / `error` / `info` | `neutral` | Colour scheme                                    |
+| `appearance` | `solid` / `subtle`                                             | `solid`   | Visual style (Figma `Style`)                     |
+| `size`       | `small` / `medium`                                             | `small`   | Size                                             |
+| `shape`      | `rounded` / `square`                                           | `rounded` | Corner shape                                     |
+| `icon`       | `ReactNode`                                                    | —         | Leading icon                                     |
+| `children`   | `ReactNode` — label text                                       | —         | Label content (omit for icon-only)               |
+| `className`  | `string` — appended to the root element                        | —         | Extra class on root element                      |
+| `style`      | `CSSProperties` — forwarded to the root element                | —         | Inline style on root element                     |
+| `aria-label` | `string` — accessible name (required for icon-only)            | —         | Sets accessible name; icon-only also sets `role` |
 
 `appearance` maps to the Figma `Style` property (`style` is the inline-style prop in React).

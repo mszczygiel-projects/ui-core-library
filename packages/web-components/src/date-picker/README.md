@@ -8,7 +8,7 @@ the DateField pipeline (Popover → Calendar → DatePicker → DateField).
 
 - **`single`** — auto-commit: clicking a day dispatches `date-change` and a
   close request immediately. No footer (matches native date-input UX).
-- **`range`** — explicit commit: day clicks only build a *pending* selection
+- **`range`** — explicit commit: day clicks only build a _pending_ selection
   shown in the calendar; `Apply` dispatches `range-change` with the pending
   range and requests close; `Clear` resets the pending selection to empty
   without committing (Apply afterwards commits `{ null, null }`).
@@ -27,15 +27,15 @@ Opening seeds the pending range from the committed values.
 
 ## Props
 
-| Prop | WC attr | Type | Default |
-| --- | --- | --- | --- |
-| `selectionMode` | `selection-mode` | `'single' \| 'range'` | `'single'` |
-| `open` | `open` | boolean (controlled) | `false` |
-| `placement` | `placement` | popover placement | `'bottom-start'` |
-| `startDate` / `endDate` | `start-date` / `end-date` | ISO `YYYY-MM-DD` | — |
-| `minDate` / `maxDate` / `disabledDates` / `firstDayOfWeek` / `locale` / `today` | — | forwarded to `ui-calendar` | — |
-| `applyLabel` / `clearLabel` | `apply-label` / `clear-label` | string | `'Apply'` / `'Clear'` |
-| `prevMonthLabel` / `nextMonthLabel` | `prev-month-label` / `next-month-label` | string | English defaults |
+| Prop                                                                            | WC attr                                 | Type                       | Default               |
+| ------------------------------------------------------------------------------- | --------------------------------------- | -------------------------- | --------------------- |
+| `selectionMode`                                                                 | `selection-mode`                        | `'single' \| 'range'`      | `'single'`            |
+| `open`                                                                          | `open`                                  | boolean (controlled)       | `false`               |
+| `placement`                                                                     | `placement`                             | popover placement          | `'bottom-start'`      |
+| `startDate` / `endDate`                                                         | `start-date` / `end-date`               | ISO `YYYY-MM-DD`           | —                     |
+| `minDate` / `maxDate` / `disabledDates` / `firstDayOfWeek` / `locale` / `today` | —                                       | forwarded to `ui-calendar` | —                     |
+| `applyLabel` / `clearLabel`                                                     | `apply-label` / `clear-label`           | string                     | `'Apply'` / `'Clear'` |
+| `prevMonthLabel` / `nextMonthLabel`                                             | `prev-month-label` / `next-month-label` | string                     | English defaults      |
 
 ## Slots
 

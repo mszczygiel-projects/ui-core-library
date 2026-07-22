@@ -62,7 +62,7 @@ Rules that came out of Badge:
   able to pick them). Themes variables → `[]` (internal, hidden from pickers).
   `createVariable` does not guarantee the right value — set it explicitly.
 - **Border = background:** when design wants border identical to fill, alias the
-  border token to the *same group's* background token (all 4 Themes groups +
+  border token to the _same group's_ background token (all 4 Themes groups +
   Surfaces). Future background changes then propagate automatically.
 - **Text on fixed light tints (subtle style):** use a fixed dark primitive in
   BOTH Themes modes (e.g. green/950, red/900). Do NOT alias `feedback.base` —

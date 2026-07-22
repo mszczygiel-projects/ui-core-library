@@ -56,14 +56,14 @@ and the action button gets the native `disabled` attribute:
 ## Props
 
 | Property       | Attribute       | Type                                                           | Default    |
-| -------------- | --------------- | --------------------------------------------------------------- | ---------- |
-| `variant`      | `variant`       | `neutral` / `brand` / `success` / `warning` / `error` / `info`  | `neutral`  |
-| `appearance`   | `appearance`    | `solid` / `subtle` / `outline`                                  | `solid`    |
-| `size`         | `data-size`     | `small` / `medium`                                              | `small`    |
-| `selected`     | `selected`      | boolean                                                          | `false`    |
-| `disabled`     | `disabled`      | boolean                                                          | `false`    |
-| `dismissible`  | `dismissible`   | boolean                                                          | `false`    |
-| `dismissLabel` | `dismiss-label` | string — accessible name of the dismiss button                  | `'Remove'` |
+| -------------- | --------------- | -------------------------------------------------------------- | ---------- |
+| `variant`      | `variant`       | `neutral` / `brand` / `success` / `warning` / `error` / `info` | `neutral`  |
+| `appearance`   | `appearance`    | `solid` / `subtle` / `outline`                                 | `solid`    |
+| `size`         | `data-size`     | `small` / `medium`                                             | `small`    |
+| `selected`     | `selected`      | boolean                                                        | `false`    |
+| `disabled`     | `disabled`      | boolean                                                        | `false`    |
+| `dismissible`  | `dismissible`   | boolean                                                        | `false`    |
+| `dismissLabel` | `dismiss-label` | string — accessible name of the dismiss button                 | `'Remove'` |
 
 `appearance` maps to the Figma `Style` property (`style` is reserved in HTML).
 
