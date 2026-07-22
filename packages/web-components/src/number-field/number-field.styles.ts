@@ -11,7 +11,7 @@ export const numberFieldStyles = css`
     justify-content: center;
     width: var(--_icon-size);
     height: var(--_icon-size);
-    color: var(--_icon);
+    color: var(--_icon-action);
     /* Press-and-hold must not scroll the page or select text on touch. */
     touch-action: none;
     user-select: none;
@@ -42,11 +42,11 @@ export const numberFieldStyles = css`
   }
 
   .field-wrapper:hover .stepper {
-    color: var(--_icon-hover);
+    color: var(--_icon-action-hover);
   }
 
   .field-wrapper:focus-within .stepper {
-    color: var(--_icon-active);
+    color: var(--_icon-action-active);
   }
 
   .stepper:focus-visible {

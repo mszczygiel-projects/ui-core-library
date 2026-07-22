@@ -386,7 +386,7 @@ export const selectFieldStyles = css`
     width: var(--_icon-size);
     height: var(--_icon-size);
     cursor: pointer;
-    color: var(--_icon);
+    color: var(--_icon-action);
     border-radius: var(--radius-sm);
     flex-shrink: 0;
   }
@@ -411,7 +411,7 @@ export const selectFieldStyles = css`
     justify-content: center;
     width: var(--_icon-size);
     height: var(--_icon-size);
-    color: var(--_icon);
+    color: var(--_icon-action);
     flex-shrink: 0;
   }
 
@@ -424,14 +424,14 @@ export const selectFieldStyles = css`
 
   .trigger:hover .clear,
   .trigger:hover .chevron {
-    color: var(--_icon-hover);
+    color: var(--_icon-action-hover);
   }
 
   :host([open]) .chevron,
   :host([open]) .clear,
   .trigger:focus-visible .chevron,
   .trigger:focus-visible .clear {
-    color: var(--_icon-active);
+    color: var(--_icon-action-active);
   }
 
   :host([state='error']) .chevron,

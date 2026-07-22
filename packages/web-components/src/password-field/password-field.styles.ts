@@ -12,7 +12,7 @@ export const passwordFieldStyles = css`
     margin-inline-end: var(--_padding-inline);
     width: var(--_icon-size);
     height: var(--_icon-size);
-    color: var(--_icon);
+    color: var(--_icon-action);
   }
 
   .toggle svg {
@@ -24,11 +24,11 @@ export const passwordFieldStyles = css`
   }
 
   .field-wrapper:hover .toggle {
-    color: var(--_icon-hover);
+    color: var(--_icon-action-hover);
   }
 
   .field-wrapper:focus-within .toggle {
-    color: var(--_icon-active);
+    color: var(--_icon-action-active);
   }
 
   .toggle:focus-visible {

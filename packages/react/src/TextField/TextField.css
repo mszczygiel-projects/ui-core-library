@@ -36,6 +36,21 @@
   --_inside_label_vertical_gap: var(--spacing-1);
 }
 
+/* ---- Interactive icon controls ---- */
+
+/*
+ * Buttons living in an icon slot (clear, password toggle, steppers, calendar
+ * toggle) read as actions rather than as field chrome, so they take the action
+ * colour instead of --_icon. Variant-agnostic on purpose: action/primary is
+ * identical for outline, filled and underlined. Field state (success / error /
+ * disabled) still wins — those rules keep using the --_icon-* family below.
+ */
+.ui-text-field {
+  --_icon-action: var(--color-action-primary-base-default);
+  --_icon-action-hover: var(--color-action-primary-base-hover);
+  --_icon-action-active: var(--color-action-primary-base-active);
+}
+
 /* ---- Variant color aliases: outline + underlined ---- */
 
 .ui-text-field--outline,
@@ -524,6 +539,26 @@
 
 .ui-text-field__field-wrapper:focus-within .ui-text-field__icon {
   color: var(--_icon-active);
+}
+
+/*
+ * A slot holding a button is an interactive control (SearchField clear,
+ * PasswordField toggle, DateField calendar, NumberField steppers), not field
+ * chrome — it takes the action colour. The buttons themselves stay on
+ * `color: inherit`, so the slot is the single place that decides. The state
+ * rules below keep beating the idle rule here, so a success/error/disabled
+ * field still tints its controls.
+ */
+.ui-text-field__icon:has(button) {
+  color: var(--_icon-action);
+}
+
+.ui-text-field__field-wrapper:hover .ui-text-field__icon:has(button) {
+  color: var(--_icon-action-hover);
+}
+
+.ui-text-field__field-wrapper:focus-within .ui-text-field__icon:has(button) {
+  color: var(--_icon-action-active);
 }
 
 .ui-text-field--state-success .ui-text-field__icon {

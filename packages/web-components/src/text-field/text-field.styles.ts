@@ -48,6 +48,22 @@ export const textFieldStyles = css`
     --_inside_label_vertical_gap: var(--spacing-1);
   }
 
+  /* ---- Interactive icon controls ---- */
+
+  /*
+   * Buttons living in an icon slot (clear, password toggle, steppers, calendar
+   * toggle) read as actions rather than as field chrome, so they take the
+   * action colour instead of --_icon. Variant-agnostic on purpose:
+   * action/primary is identical for outline, filled and underlined. Field
+   * state (success / error / disabled) still wins — those rules keep using the
+   * --_icon-* family below.
+   */
+  :host {
+    --_icon-action: var(--color-action-primary-base-default);
+    --_icon-action-hover: var(--color-action-primary-base-hover);
+    --_icon-action-active: var(--color-action-primary-base-active);
+  }
+
   /* ---- Variant color aliases: outline + underlined (share same tokens) ---- */
 
   :host,

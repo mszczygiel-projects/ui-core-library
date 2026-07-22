@@ -20,7 +20,7 @@ export const dateFieldStyles = css`
     margin-inline-end: var(--_padding-inline);
     width: var(--_icon-size);
     height: var(--_icon-size);
-    color: var(--_icon);
+    color: var(--_icon-action);
   }
 
   .calendar-toggle svg {
@@ -32,7 +32,11 @@ export const dateFieldStyles = css`
   }
 
   .field-wrapper:hover .calendar-toggle {
-    color: var(--_icon-hover);
+    color: var(--_icon-action-hover);
+  }
+
+  .field-wrapper:focus-within .calendar-toggle {
+    color: var(--_icon-action-active);
   }
 
   .calendar-toggle:disabled {
