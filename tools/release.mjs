@@ -20,6 +20,7 @@ const versionFiles = [
   'packages/icons/package.json',
   'packages/react/package.json',
   'packages/web-components/package.json',
+  'CHANGELOG.md',
 ];
 
 ensureTagDoesNotExist(tagName);
