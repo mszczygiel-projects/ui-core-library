@@ -2715,8 +2715,8 @@
     "item": {
       "gap": {
         "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}"
         },
         "$type": "number"
       }
@@ -2787,8 +2787,8 @@
       "icon": {
         "size": {
           "$value": {
-            "Mobile": "{Primitives Sizes.size.5}",
-            "Desktop": "{Primitives Sizes.size.5}"
+            "Mobile": "{Primitives Sizes.size.4}",
+            "Desktop": "{Primitives Sizes.size.4}"
           },
           "$type": "number"
         }

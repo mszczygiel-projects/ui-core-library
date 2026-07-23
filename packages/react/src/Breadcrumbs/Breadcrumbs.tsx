@@ -117,7 +117,7 @@ export function Breadcrumbs({
                   onClick={(event) => onSelect?.(item, index, event)}
                 >
                   {renderIcon(item)}
-                  <span className="ui-breadcrumbs__label">{item.label}</span>
+                  {item.label ? <span className="ui-breadcrumbs__label">{item.label}</span> : null}
                 </a>
               ) : (
                 <span
@@ -130,7 +130,7 @@ export function Breadcrumbs({
                   aria-current={isCurrent ? 'page' : undefined}
                 >
                   {renderIcon(item)}
-                  <span className="ui-breadcrumbs__label">{item.label}</span>
+                  {item.label ? <span className="ui-breadcrumbs__label">{item.label}</span> : null}
                 </span>
               )}
               {!isCurrent && renderSeparator()}

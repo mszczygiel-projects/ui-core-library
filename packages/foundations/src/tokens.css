@@ -7791,7 +7791,7 @@
   --breadcrumbs-font-weight: var(--typography-body-font-weight);
   --breadcrumbs-current-font-weight: var(--typography-body-font-weight-strong);
   --breadcrumbs-letter-spacing: var(--tracking-normal);
-  --breadcrumbs-item-gap: var(--spacing-1);
+  --breadcrumbs-item-gap: var(--spacing-2);
   --breadcrumbs-radius: var(--control-radius);
   --breadcrumbs-small-font-size: var(--text-sm);
   --breadcrumbs-small-line-height: var(--text-sm--line-height);
@@ -7800,7 +7800,7 @@
   --breadcrumbs-small-gap: var(--spacing-1);
   --breadcrumbs-medium-font-size: var(--text-base);
   --breadcrumbs-medium-line-height: var(--text-base--line-height);
-  --breadcrumbs-medium-icon-size: var(--size-5);
+  --breadcrumbs-medium-icon-size: var(--size-4);
   --breadcrumbs-medium-separator-size: var(--size-4);
   --breadcrumbs-medium-gap: var(--spacing-2);
 }

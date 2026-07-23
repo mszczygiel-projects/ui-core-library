@@ -33,6 +33,10 @@ export const breadcrumbsStyles = css`
     align-items: center;
     gap: var(--_gap);
     list-style: none;
+
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
   }
 
   .item,

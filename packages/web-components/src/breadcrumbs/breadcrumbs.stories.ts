@@ -4,7 +4,7 @@ import type { BreadcrumbsItem } from './breadcrumbs.js';
 import './breadcrumbs.js';
 
 const TRAIL: BreadcrumbsItem[] = [
-  { label: 'Home', href: '#/', icon: 'icon-home' },
+  { label: '', href: '#/', icon: 'icon-home' },
   { label: 'Products', href: '#/products' },
   { label: 'Category', href: '#/products/category' },
   { label: 'Widget' },
