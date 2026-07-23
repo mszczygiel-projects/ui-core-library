@@ -12,6 +12,38 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.11.0] — 2026-07-23
+
+This release adds a new Breadcrumbs component to both rendering targets and
+wires it into the shared foundations token/config layers.
+
+### Added
+
+- **`Breadcrumbs` for React (`@mszczygiel-projects/ui-core-react`)** with
+  customizable `items`, `size` and `separator`, plus `onSelect` for integrating
+  client-side routing while keeping semantic links in the markup.
+- **`<ui-breadcrumbs>` for Web Components (`@mszczygiel-projects/ui-core-wc`)**
+  with equivalent navigation behavior, including a cancelable `ui-select` event
+  for router handoff.
+- **Responsive breadcrumb behavior in both implementations**:
+  automatic wrapping and a collapsed mobile trail (leading ellipsis + last two
+  crumbs) below `48rem`, while preserving full-path announcements for assistive
+  technology.
+- **Public exports for Breadcrumbs APIs** in React and Web Components package
+  entry points, including related item/detail and sizing/separator types.
+- **Component documentation, stories and test coverage** for Breadcrumbs in both
+  React and Web Components packages.
+
+### Changed
+
+- Foundations config now includes a **`labels.breadcrumbs.label`** leaf in
+  `UiCoreLabels` (with English default: `Breadcrumb`) so the root breadcrumb
+  navigation label can be localized through `configureUiCore`.
+- Foundations token outputs (`figma-exports`, `tokens.css`, `tokens.ts`,
+  `tailwind.css`) were regenerated to include Breadcrumbs semantic color/size
+  tokens used by the new component.
+  
+
 ## [0.10.0] — 2026-07-22
 
 The library no longer owns any of the English text it renders, and no longer
