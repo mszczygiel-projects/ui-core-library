@@ -1219,6 +1219,24 @@ export const tokens = {
             disabled: 'var(--color-on-subtle-switch-border-disabled)',
           },
         },
+        breadcrumbs: {
+          item: {
+            foreground: {
+              default: 'var(--color-on-subtle-breadcrumbs-item-foreground-default)',
+              hover: 'var(--color-on-subtle-breadcrumbs-item-foreground-hover)',
+              active: 'var(--color-on-subtle-breadcrumbs-item-foreground-active)',
+            },
+          },
+          current: {
+            foreground: 'var(--color-on-subtle-breadcrumbs-current-foreground)',
+          },
+          separator: {
+            foreground: 'var(--color-on-subtle-breadcrumbs-separator-foreground)',
+          },
+          ellipsis: {
+            foreground: 'var(--color-on-subtle-breadcrumbs-ellipsis-foreground)',
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -2436,6 +2454,24 @@ export const tokens = {
             disabled: 'var(--color-on-inverse-switch-border-disabled)',
           },
         },
+        breadcrumbs: {
+          item: {
+            foreground: {
+              default: 'var(--color-on-inverse-breadcrumbs-item-foreground-default)',
+              hover: 'var(--color-on-inverse-breadcrumbs-item-foreground-hover)',
+              active: 'var(--color-on-inverse-breadcrumbs-item-foreground-active)',
+            },
+          },
+          current: {
+            foreground: 'var(--color-on-inverse-breadcrumbs-current-foreground)',
+          },
+          separator: {
+            foreground: 'var(--color-on-inverse-breadcrumbs-separator-foreground)',
+          },
+          ellipsis: {
+            foreground: 'var(--color-on-inverse-breadcrumbs-ellipsis-foreground)',
+          },
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -3651,6 +3687,24 @@ export const tokens = {
             success: 'var(--color-on-brand-primary-switch-border-success)',
             error: 'var(--color-on-brand-primary-switch-border-error)',
             disabled: 'var(--color-on-brand-primary-switch-border-disabled)',
+          },
+        },
+        breadcrumbs: {
+          item: {
+            foreground: {
+              default: 'var(--color-on-brand-primary-breadcrumbs-item-foreground-default)',
+              hover: 'var(--color-on-brand-primary-breadcrumbs-item-foreground-hover)',
+              active: 'var(--color-on-brand-primary-breadcrumbs-item-foreground-active)',
+            },
+          },
+          current: {
+            foreground: 'var(--color-on-brand-primary-breadcrumbs-current-foreground)',
+          },
+          separator: {
+            foreground: 'var(--color-on-brand-primary-breadcrumbs-separator-foreground)',
+          },
+          ellipsis: {
+            foreground: 'var(--color-on-brand-primary-breadcrumbs-ellipsis-foreground)',
           },
         },
       },
@@ -4941,6 +4995,24 @@ export const tokens = {
           },
         },
       },
+      breadcrumbs: {
+        item: {
+          foreground: {
+            default: 'var(--color-breadcrumbs-item-foreground-default)',
+            hover: 'var(--color-breadcrumbs-item-foreground-hover)',
+            active: 'var(--color-breadcrumbs-item-foreground-active)',
+          },
+        },
+        current: {
+          foreground: 'var(--color-breadcrumbs-current-foreground)',
+        },
+        separator: {
+          foreground: 'var(--color-breadcrumbs-separator-foreground)',
+        },
+        ellipsis: {
+          foreground: 'var(--color-breadcrumbs-ellipsis-foreground)',
+        },
+      },
     },
   },
   sizes: {
@@ -4952,12 +5024,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -5032,8 +5104,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          lineHeight: 'var(--typography-body-large-line-height)',
           letterSpacing: 'var(--typography-body-large-letter-spacing)',
+          lineHeight: 'var(--typography-body-large-line-height)',
         },
       },
       caption: {
@@ -5254,6 +5326,7 @@ export const tokens = {
       },
     },
     checkbox: {
+      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -5262,7 +5335,6 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
-      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -5330,8 +5402,8 @@ export const tokens = {
       },
     },
     notification: {
-      radius: 'var(--notification-radius)',
       fontFamily: 'var(--notification-font-family)',
+      radius: 'var(--notification-radius)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -5572,6 +5644,40 @@ export const tokens = {
         padding: {
           stack: 'var(--combobox-chips-padding-stack)',
         },
+      },
+    },
+    breadcrumbs: {
+      fontFamily: 'var(--breadcrumbs-font-family)',
+      fontWeight: 'var(--breadcrumbs-font-weight)',
+      current: {
+        fontWeight: 'var(--breadcrumbs-current-font-weight)',
+      },
+      letterSpacing: 'var(--breadcrumbs-letter-spacing)',
+      item: {
+        gap: 'var(--breadcrumbs-item-gap)',
+      },
+      radius: 'var(--breadcrumbs-radius)',
+      small: {
+        fontSize: 'var(--breadcrumbs-small-font-size)',
+        lineHeight: 'var(--breadcrumbs-small-line-height)',
+        icon: {
+          size: 'var(--breadcrumbs-small-icon-size)',
+        },
+        separator: {
+          size: 'var(--breadcrumbs-small-separator-size)',
+        },
+        gap: 'var(--breadcrumbs-small-gap)',
+      },
+      medium: {
+        fontSize: 'var(--breadcrumbs-medium-font-size)',
+        lineHeight: 'var(--breadcrumbs-medium-line-height)',
+        icon: {
+          size: 'var(--breadcrumbs-medium-icon-size)',
+        },
+        separator: {
+          size: 'var(--breadcrumbs-medium-separator-size)',
+        },
+        gap: 'var(--breadcrumbs-medium-gap)',
       },
     },
   },

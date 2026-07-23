@@ -7448,6 +7448,72 @@
           }
         }
       }
+    },
+    "breadcrumbs": {
+      "item": {
+        "foreground": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.breadcrumbs.item.foreground.default}",
+              "Subtle": "{Themes.color.on-subtle.breadcrumbs.item.foreground.default}",
+              "Inverse": "{Themes.color.on-inverse.breadcrumbs.item.foreground.default}",
+              "Primary": "{Themes.color.on-brand-primary.breadcrumbs.item.foreground.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.breadcrumbs.item.foreground.hover}",
+              "Subtle": "{Themes.color.on-subtle.breadcrumbs.item.foreground.hover}",
+              "Inverse": "{Themes.color.on-inverse.breadcrumbs.item.foreground.hover}",
+              "Primary": "{Themes.color.on-brand-primary.breadcrumbs.item.foreground.hover}"
+            },
+            "$type": "color"
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.breadcrumbs.item.foreground.active}",
+              "Subtle": "{Themes.color.on-subtle.breadcrumbs.item.foreground.active}",
+              "Inverse": "{Themes.color.on-inverse.breadcrumbs.item.foreground.active}",
+              "Primary": "{Themes.color.on-brand-primary.breadcrumbs.item.foreground.active}"
+            },
+            "$type": "color"
+          }
+        }
+      },
+      "current": {
+        "foreground": {
+          "$value": {
+            "Default": "{Themes.color.breadcrumbs.current.foreground}",
+            "Subtle": "{Themes.color.on-subtle.breadcrumbs.current.foreground}",
+            "Inverse": "{Themes.color.on-inverse.breadcrumbs.current.foreground}",
+            "Primary": "{Themes.color.on-brand-primary.breadcrumbs.current.foreground}"
+          },
+          "$type": "color"
+        }
+      },
+      "separator": {
+        "foreground": {
+          "$value": {
+            "Default": "{Themes.color.breadcrumbs.separator.foreground}",
+            "Subtle": "{Themes.color.on-subtle.breadcrumbs.separator.foreground}",
+            "Inverse": "{Themes.color.on-inverse.breadcrumbs.separator.foreground}",
+            "Primary": "{Themes.color.on-brand-primary.breadcrumbs.separator.foreground}"
+          },
+          "$type": "color"
+        }
+      },
+      "ellipsis": {
+        "foreground": {
+          "$value": {
+            "Default": "{Themes.color.breadcrumbs.ellipsis.foreground}",
+            "Subtle": "{Themes.color.on-subtle.breadcrumbs.ellipsis.foreground}",
+            "Inverse": "{Themes.color.on-inverse.breadcrumbs.ellipsis.foreground}",
+            "Primary": "{Themes.color.on-brand-primary.breadcrumbs.ellipsis.foreground}"
+          },
+          "$type": "color"
+        }
+      }
     }
   }
 }

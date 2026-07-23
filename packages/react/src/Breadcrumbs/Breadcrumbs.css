@@ -1,0 +1,132 @@
+.ui-breadcrumbs {
+  display: block;
+
+  /* medium is the default ramp; the small modifier below swaps it */
+  --_font-size: var(--breadcrumbs-medium-font-size);
+  --_line-height: var(--breadcrumbs-medium-line-height);
+  --_icon-size: var(--breadcrumbs-medium-icon-size);
+  --_separator-size: var(--breadcrumbs-medium-separator-size);
+  --_gap: var(--breadcrumbs-medium-gap);
+
+  font-family: var(--breadcrumbs-font-family);
+  font-weight: var(--breadcrumbs-font-weight);
+  font-size: var(--_font-size);
+  line-height: var(--_line-height);
+  letter-spacing: var(--breadcrumbs-letter-spacing);
+}
+
+.ui-breadcrumbs--small {
+  --_font-size: var(--breadcrumbs-small-font-size);
+  --_line-height: var(--breadcrumbs-small-line-height);
+  --_icon-size: var(--breadcrumbs-small-icon-size);
+  --_separator-size: var(--breadcrumbs-small-separator-size);
+  --_gap: var(--breadcrumbs-small-gap);
+}
+
+.ui-breadcrumbs__list {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_gap);
+  list-style: none;
+}
+
+.ui-breadcrumbs__item,
+.ui-breadcrumbs__ellipsis {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-width: 0;
+}
+
+.ui-breadcrumbs__ellipsis {
+  /* Rendered only for the collapsed mobile trail; hidden at every other width. */
+  display: none;
+  color: var(--color-breadcrumbs-ellipsis-foreground);
+}
+
+.ui-breadcrumbs__link,
+.ui-breadcrumbs__crumb {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--breadcrumbs-item-gap);
+  min-width: 0;
+  max-width: var(--breadcrumbs-label-max-width, none);
+  border-radius: var(--breadcrumbs-radius);
+  color: var(--color-breadcrumbs-item-foreground-default);
+}
+
+.ui-breadcrumbs__link {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ui-breadcrumbs__link:hover {
+  color: var(--color-breadcrumbs-item-foreground-hover);
+  text-decoration: underline;
+}
+
+.ui-breadcrumbs__link:active {
+  color: var(--color-breadcrumbs-item-foreground-active);
+}
+
+/* The current page — last crumb, never a link */
+.ui-breadcrumbs__crumb--current {
+  color: var(--color-breadcrumbs-current-foreground);
+  font-weight: var(--breadcrumbs-current-font-weight);
+}
+
+.ui-breadcrumbs__label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ui-breadcrumbs__icon {
+  display: inline-flex;
+  flex: none;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+}
+
+.ui-breadcrumbs__separator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--color-breadcrumbs-separator-foreground);
+}
+
+.ui-breadcrumbs--chevron .ui-breadcrumbs__separator {
+  width: var(--_separator-size);
+  height: var(--_separator-size);
+}
+
+.ui-breadcrumbs__icon svg,
+.ui-breadcrumbs__separator svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* 48rem mirrors --breakpoint-md; media queries cannot read CSS custom properties */
+@media (max-width: 47.9375rem) {
+  .ui-breadcrumbs__ellipsis {
+    display: inline-flex;
+  }
+
+  /*
+   * Below the breakpoint only the last two crumbs stay in the layout. The rest
+   * are removed visually but kept in the accessibility tree, so a screen reader
+   * still announces the whole trail — the "…" marker is decorative.
+   */
+  .ui-breadcrumbs__item:not(:nth-last-child(-n + 2)) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}

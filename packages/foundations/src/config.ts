@@ -71,6 +71,10 @@ export interface UiCoreLabels {
     /** Accessible name of a page item. */
     item: (page: number) => string;
   };
+  breadcrumbs: {
+    /** Accessible name of the root `<nav>`. */
+    label: string;
+  };
   chip: {
     /** Accessible name of the dismiss button. */
     dismiss: string;
@@ -146,6 +150,9 @@ export const defaultLabels: UiCoreLabels = {
     nextPage: 'Next page',
     jumpToPage: 'Go to page',
     item: (page) => `Page ${page}`,
+  },
+  breadcrumbs: {
+    label: 'Breadcrumb',
   },
   chip: {
     dismiss: 'Remove',
