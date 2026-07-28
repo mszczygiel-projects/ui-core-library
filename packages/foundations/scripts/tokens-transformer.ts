@@ -58,6 +58,12 @@ export const SURFACE_MODE_SELECTOR: Record<string, string> = {
   Primary: '[data-surface="primary"]',
 };
 
+/** Emission order for the Surfaces modes the Core library ships. Extra client modes follow. */
+export const KNOWN_SURFACE_MODES = Object.keys(SURFACE_MODE_SELECTOR);
+
+/** Sizes modes the build knows how to map to a media query. Anything else is reported. */
+export const KNOWN_SIZE_MODES = ['Mobile', 'Desktop'];
+
 export const ALLOWED_DEPS: Record<Collection, Set<Collection>> = {
   'Primitives Colors': new Set(),
   'Primitives Sizes': new Set(),
@@ -124,6 +130,68 @@ export function walk(node: unknown, collection: Collection, path: string[], out:
   for (const [key, child] of Object.entries(node)) {
     walk(child, collection, [...path, key], out);
   }
+}
+
+// ─── Figma modes ─────────────────────────────────────────────────────────
+
+/** A leaf carries one value per Figma mode when its `$value` is an object. */
+export function isModeMap(value: LeafValue): value is Record<string, Primitive> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+/**
+ * Figma mode name → attribute value.
+ * `Dark` → `dark`, `DarkGreen` → `dark-green`, `Tenant Light` → `tenant-light`.
+ */
+export function modeSlug(mode: string): string {
+  return mode
+    .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z]+)([A-Z][a-z])/g, '$1-$2')
+    .trim()
+    .replace(/[\s_/.]+/g, '-')
+    .replace(/-+/g, '-')
+    .replace(/^-|-$/g, '')
+    .toLowerCase();
+}
+
+/** Every mode name present in a collection, in first-seen order. */
+export function collectModes(tokens: Token[]): string[] {
+  const seen = new Set<string>();
+  const out: string[] = [];
+  for (const t of tokens) {
+    if (!isModeMap(t.value)) continue;
+    for (const mode of Object.keys(t.value)) {
+      if (seen.has(mode)) continue;
+      seen.add(mode);
+      out.push(mode);
+    }
+  }
+  return out;
+}
+
+/**
+ * The mode emitted on `:root` — the one every other mode overrides.
+ * `Default` when Figma has it, otherwise the first mode of the collection.
+ */
+export function baseModeOf(modes: string[]): string | null {
+  if (modes.length === 0) return null;
+  return modes.find((m) => m === 'Default') ?? modes[0]!;
+}
+
+/**
+ * Selector list for one Themes mode.
+ *
+ * The base mode also answers to its own explicit attribute, so a consumer can pin
+ * the default theme instead of relying on the absence of `data-theme`. Every mode
+ * additionally covers nested `[data-surface="default"]` containers, which reset the
+ * surface context back to the page theme.
+ */
+export function themeModeSelector(mode: string, isBase: boolean): string {
+  const slug = modeSlug(mode);
+  if (isBase) {
+    return `:root,\n[data-theme="${slug}"],\n[data-surface="default"]`;
+  }
+  return `[data-theme="${slug}"],\n[data-theme="${slug}"] [data-surface="default"]`;
 }
 
 // ─── Path / var-name helpers ─────────────────────────────────────────────
@@ -403,8 +471,8 @@ export function detectCycles(
         if (parsed) edges.push(tokenKey(parsed.collection, normalizedPath(parsed.path)));
       }
     };
-    if (typeof t.value === 'object' && t.value !== null && !Array.isArray(t.value)) {
-      for (const v of Object.values(t.value as Record<string, Primitive>)) pushIfAlias(v);
+    if (isModeMap(t.value)) {
+      for (const v of Object.values(t.value)) pushIfAlias(v);
     } else {
       pushIfAlias(t.value as Primitive);
     }
@@ -450,13 +518,81 @@ export function emitLine(
 }
 
 export function valuesByMode(token: Token): { mode: string | null; raw: Primitive }[] {
-  if (typeof token.value === 'object' && token.value !== null && !Array.isArray(token.value)) {
-    return Object.entries(token.value as Record<string, Primitive>).map(([mode, raw]) => ({
-      mode,
-      raw,
-    }));
+  if (isModeMap(token.value)) {
+    return Object.entries(token.value).map(([mode, raw]) => ({ mode, raw }));
   }
   return [{ mode: null, raw: token.value as Primitive }];
+}
+
+/**
+ * Reverse alias graph over the Themes collection: target key → keys that alias it.
+ * Used to pull dependent aliases into a mode block alongside the tokens they follow.
+ */
+export function buildReverseThemeDeps(themes: Token[]): Map<string, Set<string>> {
+  const themeKeys = new Set(themes.map((t) => tokenKey(t.collection, normalizedPath(t.path))));
+  const reverse = new Map<string, Set<string>>();
+
+  for (const t of themes) {
+    const fromKey = tokenKey(t.collection, normalizedPath(t.path));
+    for (const { raw } of valuesByMode(t)) {
+      if (!isAlias(raw)) continue;
+      const parsed = parseAlias(raw);
+      if (!parsed || parsed.collection !== 'Themes') continue;
+      const targetKey = tokenKey(parsed.collection, normalizedPath(parsed.path));
+      if (!themeKeys.has(targetKey)) continue;
+      const dependents = reverse.get(targetKey) ?? new Set<string>();
+      dependents.add(fromKey);
+      reverse.set(targetKey, dependents);
+    }
+  }
+  return reverse;
+}
+
+/**
+ * Tokens that have to be re-declared for `mode`: those whose value differs from the
+ * base mode, plus every alias that transitively depends on one of them.
+ */
+export function tokensForThemeMode(
+  themes: Token[],
+  mode: string,
+  baseMode: string,
+  reverseThemeDeps: Map<string, Set<string>>,
+): Token[] {
+  const overriddenKeys = new Set(
+    themes
+      .filter((t) => {
+        if (!isModeMap(t.value)) return false;
+        return mode in t.value && baseMode in t.value && t.value[mode] !== t.value[baseMode];
+      })
+      .map((t) => tokenKey(t.collection, normalizedPath(t.path))),
+  );
+
+  const queue = [...overriddenKeys];
+  while (queue.length > 0) {
+    const key = queue.shift();
+    if (!key) continue;
+    for (const dependent of reverseThemeDeps.get(key) ?? []) {
+      if (overriddenKeys.has(dependent)) continue;
+      overriddenKeys.add(dependent);
+      queue.push(dependent);
+    }
+  }
+
+  return themes.filter((t) => overriddenKeys.has(tokenKey(t.collection, normalizedPath(t.path))));
+}
+
+/** Value of `token` in `mode`, falling back to the base mode and then to the first mode. */
+export function rawForMode(token: Token, mode: string, baseMode: string): Primitive {
+  if (!isModeMap(token.value)) return token.value as Primitive;
+  return token.value[mode] ?? token.value[baseMode] ?? (Object.values(token.value)[0] as Primitive);
+}
+
+export interface BuildTokensCssOptions {
+  /**
+   * Also mirror the `Dark` mode into `@media (prefers-color-scheme: dark)`, scoped to
+   * `:root:not([data-theme])` so an explicit `data-theme` always wins over the OS setting.
+   */
+  autoDarkMode?: boolean;
 }
 
 export function buildTokensCss(
@@ -464,7 +600,9 @@ export function buildTokensCss(
   registry: Map<string, Token>,
   warnings: WarningBucket,
   breakpointXlPx: number = 1280,
+  options: BuildTokensCssOptions = {},
 ): string {
+  const { autoDarkMode = true } = options;
   const primSizes = tokens.filter((t) => t.collection === 'Primitives Sizes');
   const primColors = tokens.filter((t) => t.collection === 'Primitives Colors');
   const primMotion = tokens.filter((t) => t.collection === 'Primitives Motions');
@@ -502,97 +640,61 @@ export function buildTokensCss(
     chunks.push(`  ${name}: var(--inset-shadow-shape-${shape}) var(--shadow-color-${color});`);
   chunks.push('}\n');
 
-  // Themes — Default mode (Light)
-  const themesDefaultLines: string[] = [];
+  // Themes — one block per Figma mode. The base mode lands on :root; every other mode
+  // becomes [data-theme="<slug>"], so a single attribute on <html> switches the theme.
+  const themeModes = collectModes(themes);
+  const baseThemeMode = baseModeOf(themeModes) ?? 'Default';
+
+  const themesBaseLines: string[] = [];
   for (const t of themes) {
-    const raw =
-      typeof t.value === 'object' && t.value !== null && !Array.isArray(t.value)
-        ? ((t.value as Record<string, Primitive>)['Default'] ??
-          (Object.values(t.value as Record<string, Primitive>)[0] as Primitive))
-        : (t.value as Primitive);
-    const line = resolveCssLine(t, raw, 'Default', registry, warnings);
-    if (line !== null) themesDefaultLines.push(line);
+    const raw = rawForMode(t, baseThemeMode, baseThemeMode);
+    const line = resolveCssLine(t, raw, baseThemeMode, registry, warnings);
+    if (line !== null) themesBaseLines.push(line);
   }
-  if (themesDefaultLines.length > 0) {
-    chunks.push('/* === Themes === */\n:root,\n[data-surface="default"] {');
-    chunks.push(...themesDefaultLines);
+  if (themesBaseLines.length > 0) {
+    chunks.push(`/* === Themes === */\n${themeModeSelector(baseThemeMode, true)} {`);
+    chunks.push(...themesBaseLines);
     chunks.push('}\n');
   }
 
-  // Themes — Dark mode
-  // Include direct dark overrides and aliases that depend on those overrides.
-  const directDarkOverrideKeys = new Set(
-    themes
-      .filter((t) => {
-        if (typeof t.value !== 'object' || t.value === null || Array.isArray(t.value)) return false;
-        const vals = t.value as Record<string, Primitive>;
-        return 'Dark' in vals && 'Default' in vals && vals['Dark'] !== vals['Default'];
-      })
-      .map((t) => tokenKey(t.collection, normalizedPath(t.path))),
-  );
+  const reverseThemeDeps = buildReverseThemeDeps(themes);
 
-  const themeKeys = new Set(themes.map((t) => tokenKey(t.collection, normalizedPath(t.path))));
-  const reverseThemeDeps = new Map<string, Set<string>>();
-
-  const addThemeDependencyEdge = (fromKey: string, raw: Primitive) => {
-    if (!isAlias(raw)) return;
-    const parsed = parseAlias(raw);
-    if (!parsed || parsed.collection !== 'Themes') return;
-    const targetKey = tokenKey(parsed.collection, normalizedPath(parsed.path));
-    if (!themeKeys.has(targetKey)) return;
-    const dependents = reverseThemeDeps.get(targetKey) ?? new Set<string>();
-    dependents.add(fromKey);
-    reverseThemeDeps.set(targetKey, dependents);
-  };
-
-  for (const t of themes) {
-    const fromKey = tokenKey(t.collection, normalizedPath(t.path));
-    const values = valuesByMode(t);
-    for (const entry of values) addThemeDependencyEdge(fromKey, entry.raw);
-  }
-
-  const darkThemeKeys = new Set(directDarkOverrideKeys);
-  const queue = [...directDarkOverrideKeys];
-  while (queue.length > 0) {
-    const key = queue.shift();
-    if (!key) continue;
-    const dependents = reverseThemeDeps.get(key);
-    if (!dependents) continue;
-    for (const dependent of dependents) {
-      if (darkThemeKeys.has(dependent)) continue;
-      darkThemeKeys.add(dependent);
-      queue.push(dependent);
+  for (const mode of themeModes) {
+    if (mode === baseThemeMode) continue;
+    const modeTokens = tokensForThemeMode(themes, mode, baseThemeMode, reverseThemeDeps);
+    const modeLines: string[] = [];
+    for (const t of modeTokens) {
+      const line = resolveCssLine(t, rawForMode(t, mode, baseThemeMode), mode, registry, warnings);
+      if (line !== null) modeLines.push(line);
     }
-  }
+    if (modeLines.length === 0) continue;
 
-  const darkThemes = themes.filter((t) =>
-    darkThemeKeys.has(tokenKey(t.collection, normalizedPath(t.path))),
-  );
+    chunks.push(`/* === Themes (${mode}) === */\n${themeModeSelector(mode, false)} {`);
+    chunks.push(...modeLines);
+    chunks.push('}\n');
 
-  if (darkThemes.length > 0) {
-    const darkLines: string[] = [];
-    for (const t of darkThemes) {
-      const raw =
-        typeof t.value === 'object' && t.value !== null && !Array.isArray(t.value)
-          ? ((t.value as Record<string, Primitive>)['Dark'] ??
-            (t.value as Record<string, Primitive>)['Default'] ??
-            (Object.values(t.value as Record<string, Primitive>)[0] as Primitive))
-          : (t.value as Primitive);
-      const line = resolveCssLine(t, raw, 'Dark', registry, warnings);
-      if (line !== null) darkLines.push(line);
-    }
-    if (darkLines.length > 0) {
+    // Opt-out mirror of the Dark mode onto the OS setting. `:root:not([data-theme])`
+    // keeps it from ever competing with an explicitly selected theme.
+    if (autoDarkMode && modeSlug(mode) === 'dark') {
       chunks.push(
-        '/* === Themes (Dark) === */\n@media (prefers-color-scheme: dark) {\n  :root,\n  [data-surface="default"] {',
+        `/* === Themes (${mode} — system preference) === */\n` +
+          '@media (prefers-color-scheme: dark) {\n' +
+          '  :root:not([data-theme]),\n' +
+          '  :root:not([data-theme]) [data-surface="default"] {',
       );
-      chunks.push(...darkLines.map((l) => '  ' + l));
+      chunks.push(...modeLines.map((l) => '  ' + l));
       chunks.push('  }\n}\n');
     }
   }
 
   // Surfaces — per mode (Default is skipped when all lines are self-referential)
-  for (const mode of ['Default', 'Subtle', 'Inverse', 'Primary']) {
-    const selector = SURFACE_MODE_SELECTOR[mode];
+  const surfaceModes = collectModes(surfaces);
+  const orderedSurfaceModes = [
+    ...KNOWN_SURFACE_MODES.filter((m) => surfaceModes.includes(m)),
+    ...surfaceModes.filter((m) => !KNOWN_SURFACE_MODES.includes(m)),
+  ];
+  for (const mode of orderedSurfaceModes) {
+    const selector = SURFACE_MODE_SELECTOR[mode] ?? `[data-surface="${modeSlug(mode)}"]`;
     const surfaceLines: string[] = [];
     for (const t of surfaces) {
       const modeValues = valuesByMode(t);
@@ -617,6 +719,15 @@ export function buildTokensCss(
       cssVarName(t.collection, t.path),
     ),
   );
+
+  // Sizes modes map to media queries, not attributes, so only the two the build knows
+  // a breakpoint for can be emitted. Report the rest instead of dropping them silently.
+  for (const mode of collectModes(sizes)) {
+    if (KNOWN_SIZE_MODES.includes(mode)) continue;
+    console.warn(
+      `⚠ UNMAPPED MODE: Sizes."${mode}" — only ${KNOWN_SIZE_MODES.join(' and ')} are emitted`,
+    );
+  }
 
   // Sizes — Mobile (default → :root)
   const mobileSizeLines: string[] = [];

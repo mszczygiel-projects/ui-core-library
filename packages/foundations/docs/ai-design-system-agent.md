@@ -731,3 +731,16 @@ Before signalling completion, verify:
 | `Themes`             | `Default`, `Dark`                         |
 | `Surfaces`           | `Default`, `Subtle`, `Inverse`, `Primary` |
 | `Sizes`              | `Mobile`, `Desktop`                       |
+
+These are the modes the fork starts with, and filling in their values is the whole of this
+workflow — you never add a mode as part of it.
+
+If a client genuinely needs an extra theme (a second brand, a seasonal palette), adding a
+mode to `Themes` or `Surfaces` is supported by the token build: it emits one
+`[data-theme="…"]` / `[data-surface="…"]` block per mode, kebab-casing the name
+(`DarkGreen` → `dark-green`). Two caveats before you do it:
+
+- **Fill every variable in the new mode.** A variable left empty there falls back to the
+  `Default` mode, which is correct behaviour but easy to mistake for the mode not working.
+- **`Sizes` cannot take extra modes** — a mode there maps to a media query and the build has
+  no breakpoint for an unknown name. It warns instead of emitting.

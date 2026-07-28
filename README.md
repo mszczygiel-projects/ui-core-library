@@ -151,6 +151,43 @@ Per-client brand overrides go on `:root` after the imports:
 }
 ```
 
+## Theming — `data-theme`
+
+Every mode of the Figma `Themes` collection is generated as its own attribute selector, so
+one attribute on `<html>` (or any container) switches the whole subtree:
+
+```html
+<html data-theme="dark">
+  <!-- everything below renders in the Dark theme -->
+</html>
+```
+
+```ts
+document.documentElement.dataset.theme = 'dark';
+delete document.documentElement.dataset.theme; // back to the default theme
+```
+
+| Figma mode    | Attribute value     |
+| ------------- | ------------------- |
+| `Default`     | `default` (or none) |
+| `Dark`        | `dark`              |
+| `DarkGreen`   | `dark-green`        |
+| `TenantLight` | `tenant-light`      |
+
+The mode name is kebab-cased: camelCase is split, spaces and underscores become hyphens.
+The Core library ships `Default` and `Dark`; a project generating tokens from its own Figma
+file (see below) gets a selector for **every** mode in that file, with no build changes.
+
+**Theme vs. surface.** `data-theme` picks the palette; `data-surface` picks a context
+_within_ the current theme. They compose — `data-surface="inverse"` inside `data-theme="dark"`
+is the dark theme's inverse surface, not the light one.
+
+**System dark mode.** `Dark` is additionally mirrored into
+`@media (prefers-color-scheme: dark)`, scoped so it only applies when no `data-theme` is set.
+The OS setting is therefore the default, and an explicit attribute always wins —
+`data-theme="default"` forces the light theme even on a dark OS. Generate with
+`--no-auto-dark` to drop the mirror entirely in a project that always sets the attribute.
+
 ## Runtime configuration — `configureUiCore()`
 
 Call it **once at app boot**, before anything renders. The config is a plain module-level object, so components read it as they render — React does not re-render a component that already read a value.
@@ -238,6 +275,9 @@ Both `@mszczygiel-projects/ui-core-foundations` and `@mszczygiel-projects/ui-cor
 pnpm exec ui-core-foundations build \
   --input ./figma-exports \
   --output ./src/generated/foundations
+
+# …add --no-auto-dark if the project always drives the theme from data-theme
+# and does not want the prefers-color-scheme fallback for the Dark mode.
 
 # Icons — input dir must contain icon-*.svg files.
 pnpm exec ui-core-icons build \

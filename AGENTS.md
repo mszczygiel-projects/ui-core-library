@@ -133,7 +133,7 @@ Tokens are organized in 5 Figma collections. The structure represents a layered 
 ```
 Primitives Colors + Primitives Sizes  ← raw values, no modes
            ↓
-        Themes                        ← semantic aliases, modes: Light | Dark
+        Themes                        ← semantic aliases, modes: Default | Dark | …any client mode
            ↓
         Surfaces                      ← context aliases, modes: Default | Subtle | Inverse | Primary
         Sizes                         ← responsive aliases, modes: Mobile | Desktop
@@ -154,7 +154,35 @@ Defined on `:root`. Contain raw values only — never referenced by components d
 
 ### Layer 2 — Themes
 
-Semantic aliases. Modes: **Default (light)** → `:root`, **Dark** → `[data-theme="dark"]`. Naming: `--color-{category}-{subcategory}-{role}-{state}`.
+Semantic aliases. Naming: `--color-{category}-{subcategory}-{role}-{state}`.
+
+**Every Figma mode of the Themes collection is emitted — the build does not know a fixed
+list of theme names.** The base mode (the one named `Default`, or the first mode when there
+is none) lands on `:root`; every other mode gets its own attribute selector, so one
+`data-theme` on `<html>` or `<body>` switches the whole page:
+
+| Figma mode    | Selector                                                               |
+| ------------- | ---------------------------------------------------------------------- |
+| `Default`     | `:root, [data-theme="default"], [data-surface="default"]`              |
+| `Dark`        | `[data-theme="dark"], [data-theme="dark"] [data-surface="default"]`    |
+| `DarkGreen`   | `[data-theme="dark-green"], [data-theme="dark-green"] [data-surface…]` |
+| `TenantLight` | `[data-theme="tenant-light"], …`                                       |
+
+Mode name → attribute value is kebab-case (`modeSlug()`): camelCase is split, spaces and
+underscores become hyphens, everything is lowercased. A mode block carries only the tokens
+whose value differs from the base mode, plus the aliases that transitively depend on them —
+everything else inherits from `:root`. A client fork can add as many modes as it likes
+without touching the build.
+
+The second selector in each pair (`[data-theme="x"] [data-surface="default"]`) exists because
+a nested `data-surface="default"` container resets the surface context back to the page
+theme; without it that container would fall back to the base mode's colors.
+
+**`Dark` additionally mirrors into `@media (prefers-color-scheme: dark)`**, scoped to
+`:root:not([data-theme])` so the OS setting only applies when no theme has been chosen
+explicitly — `data-theme="default"` forces light even on a dark OS. Pass `--no-auto-dark`
+to the CLI (or `autoDarkMode: false` to `buildTokens()`) to drop that mirror in projects that
+always drive the theme from the attribute.
 
 Color categories: `brand`, `background`, `text`, `icon`, `border`, `ring`, `link`, `feedback`, `action`, `button`, `control-outline`, `control-filled`.
 
@@ -173,6 +201,10 @@ Override `--color-*` variables per surface context. Activated via HTML attribute
 | `data-surface="inverse"` | `[data-surface="inverse"]` | Dark/inverse  |
 | `data-surface="primary"` | `[data-surface="primary"]` | Brand primary |
 
+Like Themes, the surface modes come from Figma rather than a fixed list — a mode the Core
+library does not ship (say `BrandHighlight`) is emitted as `[data-surface="brand-highlight"]`
+using the same `modeSlug()` rule.
+
 All child components adapt automatically — no component-level changes required.
 
 ### Layer 4 — Sizes
@@ -180,6 +212,11 @@ All child components adapt automatically — no component-level changes required
 Responsive typography tokens. Modes: **Mobile** → `:root`, **Desktop** → `@media (min-width: {breakpoint/xl})`. Only variables whose Desktop value differs from Mobile are emitted.
 
 Pattern: `--typography-{role}-{property}` (e.g. `--typography-body-font-size`). No HTML attributes needed for responsive behavior.
+
+Sizes is the one collection with a fixed mode list, because a mode here maps to a media
+query and the build has no breakpoint for a name it does not know. Any other mode is
+reported as `⚠ UNMAPPED MODE` rather than dropped silently — add the breakpoint handling
+before adding the mode in Figma.
 
 ### Build pipeline: Figma → Code
 
@@ -714,6 +751,11 @@ Both `@mszczygiel-projects/ui-core-foundations` and `@mszczygiel-projects/ui-cor
 pnpm exec ui-core-foundations build --input ./figma-exports --output ./src/generated/foundations
 pnpm exec ui-core-icons       build --input ./brand-icons    --output ./src/generated/icons
 ```
+
+`ui-core-foundations build` also takes `--no-auto-dark`, which drops the
+`@media (prefers-color-scheme: dark)` mirror of the `Dark` theme mode. Use it in a project
+whose theme is always set through `data-theme`; every mode is still emitted as
+`[data-theme="…"]` either way (see "Layer 2 — Themes").
 
 The CLIs are thin wrappers around `packages/*/scripts/build-*.ts`. Defaults match in-package paths, so `pnpm foundations:build` / `pnpm icons:build` behave exactly as before; the published bin entries are the `tsc`-compiled `dist/scripts/cli.js`. Scripts are compiled by a per-package `tsconfig.scripts.json` (loose strict, `types: ["node"]`) — separate from the source `tsconfig.build.json` so package types stay strict.
 

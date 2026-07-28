@@ -19,6 +19,9 @@ import {
   tokenKey,
   walk,
   isLeaf,
+  modeSlug,
+  baseModeOf,
+  collectModes,
   toCamel,
   tsKey,
   ALLOWED_DEPS,
@@ -448,79 +451,158 @@ describe('detectCycles', () => {
   });
 });
 
-// ─── 9. Dark mode block ───────────────────────────────────────────────────
+// ─── 9. Theme mode blocks ─────────────────────────────────────────────────
 
-describe('buildTokensCss — dark mode block', () => {
-  function buildWithThemes(themesData: Token[], extraTokens: Token[] = []): string {
-    const prim500: Token = prim('brand', 'primary', '500', '#256ce1');
-    const prim600: Token = prim('brand', 'primary', '600', '#1e5ac8');
-    const tokens = [prim500, prim600, ...themesData, ...extraTokens];
-    const reg = makeRegistry(tokens);
-    return buildTokensCss(tokens, reg, freshWarnings());
-  }
-
-  it('emits @media (prefers-color-scheme: dark) block when at least one token has Dark ≠ Default', () => {
-    const differs = themeColor(
-      ['color', 'brand', 'primary'],
-      '{Primitives Colors.brand.primary.500}',
-      '{Primitives Colors.brand.primary.600}',
-    );
-    expect(buildWithThemes([differs])).toContain('@media (prefers-color-scheme: dark)');
+describe('modeSlug', () => {
+  it('lowercases a single-word mode', () => {
+    expect(modeSlug('Dark')).toBe('dark');
+    expect(modeSlug('Default')).toBe('default');
   });
 
-  it('omits @media (prefers-color-scheme: dark) block when all tokens have Dark = Default', () => {
+  it('splits camelCase into kebab-case', () => {
+    expect(modeSlug('DarkGreen')).toBe('dark-green');
+    expect(modeSlug('TenantLight')).toBe('tenant-light');
+  });
+
+  it('normalizes spaces, underscores and slashes', () => {
+    expect(modeSlug('Tenant Light')).toBe('tenant-light');
+    expect(modeSlug('tenant_dark')).toBe('tenant-dark');
+    expect(modeSlug('Brand/High Contrast')).toBe('brand-high-contrast');
+  });
+
+  it('keeps consecutive capitals together', () => {
+    expect(modeSlug('HCDark')).toBe('hc-dark');
+  });
+});
+
+describe('baseModeOf', () => {
+  it('prefers a mode literally named Default', () => {
+    expect(baseModeOf(['Dark', 'Default', 'DarkGreen'])).toBe('Default');
+  });
+
+  it('falls back to the first mode when there is no Default', () => {
+    expect(baseModeOf(['TenantLight', 'TenantDark'])).toBe('TenantLight');
+  });
+
+  it('returns null for a collection without modes', () => {
+    expect(baseModeOf([])).toBeNull();
+  });
+});
+
+describe('buildTokensCss — theme mode blocks', () => {
+  function buildWithThemes(
+    themesData: Token[],
+    options?: Parameters<typeof buildTokensCss>[4],
+  ): string {
+    const prim500: Token = prim('brand', 'primary', '500', '#256ce1');
+    const prim600: Token = prim('brand', 'primary', '600', '#1e5ac8');
+    const prim700: Token = prim('brand', 'primary', '700', '#173f8f');
+    const tokens = [prim500, prim600, prim700, ...themesData];
+    const reg = makeRegistry(tokens);
+    return buildTokensCss(tokens, reg, freshWarnings(), 1280, options);
+  }
+
+  /** Slice out the body of the first block opened by `selector`. */
+  function blockAfter(css: string, selector: string): string {
+    const start = css.indexOf(selector);
+    expect(start, `selector not found: ${selector}`).toBeGreaterThanOrEqual(0);
+    const end = css.indexOf('}', start);
+    return css.slice(start, end + 1);
+  }
+
+  const brandDarkDiffers = themeColor(
+    ['color', 'brand', 'primary'],
+    '{Primitives Colors.brand.primary.500}',
+    '{Primitives Colors.brand.primary.600}',
+  );
+
+  it('emits a [data-theme="dark"] block when at least one token has Dark ≠ Default', () => {
+    const css = buildWithThemes([brandDarkDiffers]);
+    expect(css).toContain('/* === Themes (Dark) === */');
+    expect(css).toContain('[data-theme="dark"],\n[data-theme="dark"] [data-surface="default"] {');
+  });
+
+  it('omits the Dark block when all tokens have Dark = Default', () => {
     const same = themeColor(
       ['color', 'brand', 'primary'],
       '{Primitives Colors.brand.primary.500}',
       '{Primitives Colors.brand.primary.500}',
     );
-    expect(buildWithThemes([same])).not.toContain('@media (prefers-color-scheme: dark)');
+    const css = buildWithThemes([same]);
+    expect(css).not.toContain('[data-theme="dark"]');
+    expect(css).not.toContain('@media (prefers-color-scheme: dark)');
   });
 
-  it('dark block contains only the token whose Dark value differs', () => {
-    const differs = themeColor(
-      ['color', 'brand', 'primary'],
-      '{Primitives Colors.brand.primary.500}',
-      '{Primitives Colors.brand.primary.600}',
+  it('base mode lands on :root and answers to its own attribute', () => {
+    const css = buildWithThemes([brandDarkDiffers]);
+    expect(css).toContain(
+      '/* === Themes === */\n:root,\n[data-theme="default"],\n[data-surface="default"] {',
     );
+  });
+
+  it('emits one block per Figma mode, not just Default and Dark', () => {
+    const multi: Token = {
+      collection: 'Themes',
+      path: ['color', 'brand', 'primary'],
+      type: 'color',
+      value: {
+        Default: '{Primitives Colors.brand.primary.500}',
+        Dark: '{Primitives Colors.brand.primary.600}',
+        DarkGreen: '{Primitives Colors.brand.primary.700}',
+      },
+    };
+    const css = buildWithThemes([multi]);
+
+    expect(css).toContain('/* === Themes (DarkGreen) === */');
+    expect(css).toContain(
+      '[data-theme="dark-green"],\n[data-theme="dark-green"] [data-surface="default"] {',
+    );
+    expect(blockAfter(css, '[data-theme="dark-green"],')).toContain(
+      '--color-brand-primary: var(--color-brand-primary-700);',
+    );
+  });
+
+  it('a mode block omits tokens that do not differ from the base mode', () => {
+    const differs = brandDarkDiffers;
     const same = themeColor(
       ['color', 'text', 'primary'],
       '{Primitives Colors.brand.primary.500}',
       '{Primitives Colors.brand.primary.500}',
     );
-    const css = buildWithThemes([differs, same]);
-    const darkStart = css.indexOf('@media (prefers-color-scheme: dark)');
-    const darkEnd = css.indexOf('}', darkStart);
-    const darkBlock = css.slice(darkStart, darkEnd + 1);
+    const darkBlock = blockAfter(buildWithThemes([differs, same]), '/* === Themes (Dark) === */');
 
     expect(darkBlock).toContain('--color-brand-primary');
     expect(darkBlock).not.toContain('--color-text-primary');
   });
 
-  it('dark block uses unprefixed CSS var names', () => {
-    const differs = themeColor(
+  it('a token missing a mode entirely falls back to the base value', () => {
+    const partial: Token = {
+      collection: 'Themes',
+      path: ['color', 'text', 'primary'],
+      type: 'color',
+      value: {
+        Default: '{Primitives Colors.brand.primary.500}',
+        DarkGreen: '{Primitives Colors.brand.primary.700}',
+      },
+    };
+    // Has no DarkGreen value — inherits :root, so it must not appear in the block.
+    const darkOnly = themeColor(
       ['color', 'brand', 'primary'],
       '{Primitives Colors.brand.primary.500}',
       '{Primitives Colors.brand.primary.600}',
     );
-    const css = buildWithThemes([differs]);
+    const block = blockAfter(buildWithThemes([partial, darkOnly]), '[data-theme="dark-green"],');
+    expect(block).toContain('--color-text-primary');
+    expect(block).not.toContain('--color-brand-primary:');
+  });
+
+  it('mode blocks use unprefixed CSS var names', () => {
+    const css = buildWithThemes([brandDarkDiffers]);
     expect(css).not.toContain('--themes-');
     expect(css).toContain('--color-brand-primary: var(--color-brand-primary-600)');
   });
 
-  it('dark block uses :root and [data-surface="default"] selectors', () => {
-    const differs = themeColor(
-      ['color', 'brand', 'primary'],
-      '{Primitives Colors.brand.primary.500}',
-      '{Primitives Colors.brand.primary.600}',
-    );
-    const css = buildWithThemes([differs]);
-    expect(css).toContain(
-      '@media (prefers-color-scheme: dark) {\n  :root,\n  [data-surface="default"] {',
-    );
-  });
-
-  it('dark block also includes aliases that depend on dark-overridden tokens', () => {
+  it('a mode block also includes aliases that depend on an overridden token', () => {
     const gray700 = prim('gray', '700', '#374151');
     const gray200 = prim('gray', '200', '#e5e7eb');
 
@@ -538,16 +620,60 @@ describe('buildTokensCss — dark mode block', () => {
 
     const tokens = [gray700, gray200, textSecondary, outlineLabel];
     const reg = makeRegistry(tokens);
-    const css = buildTokensCss(tokens, reg, freshWarnings());
-
-    const darkStart = css.indexOf('@media (prefers-color-scheme: dark)');
-    const darkEnd = css.indexOf('}', darkStart);
-    const darkBlock = css.slice(darkStart, darkEnd + 1);
+    const darkBlock = blockAfter(
+      buildTokensCss(tokens, reg, freshWarnings()),
+      '/* === Themes (Dark) === */',
+    );
 
     expect(darkBlock).toContain('--color-text-secondary: var(--color-gray-200);');
     expect(darkBlock).toContain(
       '--color-control-outline-label-default: var(--color-text-secondary);',
     );
+  });
+
+  it('mirrors Dark onto the OS preference, scoped so data-theme always wins', () => {
+    const css = buildWithThemes([brandDarkDiffers]);
+    expect(css).toContain(
+      '@media (prefers-color-scheme: dark) {\n' +
+        '  :root:not([data-theme]),\n' +
+        '  :root:not([data-theme]) [data-surface="default"] {',
+    );
+  });
+
+  it('autoDarkMode: false drops the OS-preference mirror but keeps the attribute block', () => {
+    const css = buildWithThemes([brandDarkDiffers], { autoDarkMode: false });
+    expect(css).not.toContain('prefers-color-scheme');
+    expect(css).toContain('[data-theme="dark"],');
+  });
+
+  it('only a mode named Dark gets the OS-preference mirror', () => {
+    const multi: Token = {
+      collection: 'Themes',
+      path: ['color', 'brand', 'primary'],
+      type: 'color',
+      value: {
+        Default: '{Primitives Colors.brand.primary.500}',
+        DarkGreen: '{Primitives Colors.brand.primary.700}',
+      },
+    };
+    expect(buildWithThemes([multi])).not.toContain('prefers-color-scheme');
+  });
+
+  it('uses the first mode as the base when Figma has no Default mode', () => {
+    const tenant: Token = {
+      collection: 'Themes',
+      path: ['color', 'brand', 'primary'],
+      type: 'color',
+      value: {
+        TenantLight: '{Primitives Colors.brand.primary.500}',
+        TenantDark: '{Primitives Colors.brand.primary.600}',
+      },
+    };
+    const css = buildWithThemes([tenant]);
+    expect(css).toContain(
+      '/* === Themes === */\n:root,\n[data-theme="tenant-light"],\n[data-surface="default"] {',
+    );
+    expect(css).toContain('[data-theme="tenant-dark"],');
   });
 });
 
@@ -585,6 +711,38 @@ describe('buildTokensCss — Surfaces block structure', () => {
 
   it('Surfaces subtle block has no --surfaces- prefix', () => {
     expect(buildWithSurfaces()).not.toContain('--surfaces-');
+  });
+
+  it('emits a block for a surface mode outside the four Core modes', () => {
+    const prim500 = prim('brand', 'primary', '500', '#256ce1');
+    const theme = themeColor(
+      ['color', 'brand', 'primary'],
+      '{Primitives Colors.brand.primary.500}',
+    );
+    const onHighlight = themeColor(
+      ['color', 'on-highlight', 'brand', 'primary'],
+      '{Primitives Colors.brand.primary.500}',
+    );
+    const surface = surfaceColor(['color', 'brand', 'primary'], {
+      Default: '{Themes.color.brand.primary}',
+      BrandHighlight: '{Themes.color.on-highlight.brand.primary}',
+    });
+    const tokens = [prim500, theme, onHighlight, surface];
+    const css = buildTokensCss(tokens, makeRegistry(tokens), freshWarnings());
+
+    expect(css).toContain(
+      '/* === Surfaces (BrandHighlight) === */\n[data-surface="brand-highlight"] {',
+    );
+    expect(css).toContain('--color-brand-primary: var(--color-on-highlight-brand-primary);');
+  });
+
+  it('collectModes reports every mode present on Surfaces leaves', () => {
+    const surface = surfaceColor(['color', 'brand', 'primary'], {
+      Default: '#fff',
+      Subtle: '#eee',
+      BrandHighlight: '#ddd',
+    });
+    expect(collectModes([surface])).toEqual(['Default', 'Subtle', 'BrandHighlight']);
   });
 });
 
@@ -762,26 +920,30 @@ describe('tokens.css — generated output', () => {
     expect(css).not.toMatch(/--sizes-/);
   });
 
-  it('contains @media (prefers-color-scheme: dark) block', () => {
-    expect(css).toContain('@media (prefers-color-scheme: dark)');
+  it('Themes base block covers :root, its own attribute, and [data-surface="default"]', () => {
+    expect(css).toContain(
+      '/* === Themes === */\n:root,\n[data-theme="default"],\n[data-surface="default"] {',
+    );
   });
 
-  it('Themes block includes [data-surface="default"] selector', () => {
-    expect(css).toMatch(/\/\* === Themes === \*\/\n:root,\s*\n\s*\[data-surface="default"\] \{/);
+  it('Themes (Dark) block is attribute-driven, not media-query-driven', () => {
+    expect(css).toContain(
+      '/* === Themes (Dark) === */\n[data-theme="dark"],\n[data-theme="dark"] [data-surface="default"] {',
+    );
   });
 
-  it('Themes (Dark) block includes [data-surface="default"] selector', () => {
-    expect(css).toMatch(
-      /\/\* === Themes \(Dark\) === \*\/\n@media \(prefers-color-scheme: dark\) \{\n\s*:root,\s*\n\s*\[data-surface="default"\] \{/,
+  it('mirrors Dark onto prefers-color-scheme only when no data-theme is set', () => {
+    expect(css).toContain(
+      '@media (prefers-color-scheme: dark) {\n  :root:not([data-theme]),\n  :root:not([data-theme]) [data-surface="default"] {',
     );
   });
 
   it('dark block contains fewer declarations than the Themes default block', () => {
     const darkMatch = css.match(
-      /@media \(prefers-color-scheme: dark\) \{\s*:root,\s*\n?\s*\[data-surface="default"\] \{([\s\S]*?)\}\s*\}/,
+      /\[data-theme="dark"\],\n\[data-theme="dark"\] \[data-surface="default"\] \{([\s\S]*?)\n\}/,
     );
     const themesMatch = css.match(
-      /\/\* === Themes === \*\/\n:root,\s*\n?\s*\[data-surface="default"\] \{([\s\S]*?)\n\}/,
+      /\/\* === Themes === \*\/\n:root,\n\[data-theme="default"\],\n\[data-surface="default"\] \{([\s\S]*?)\n\}/,
     );
     expect(darkMatch).not.toBeNull();
     expect(themesMatch).not.toBeNull();

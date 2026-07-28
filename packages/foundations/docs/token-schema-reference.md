@@ -156,7 +156,8 @@ Line heights (same naming + `-line-height` suffix): `text/xs-line-height` (16) �
 
 ## Collection 5: Themes
 
-**Modes:** `Default` (light), `Dark`
+**Modes:** `Default` (light), `Dark` — in the Core file. A client fork may add more; the token
+build emits `[data-theme="<kebab-case name>"]` for every mode past the base one.
 **Rule:** Aliases to Primitives variables. Almost all values are `createVariableAlias(primitiveVar)`.
 **Total variables:** 1,348
 
@@ -380,7 +381,8 @@ Each has subgroups matching the main categories: `action`, `background`, `border
 
 ## Collection 6: Surfaces
 
-**Modes:** `Default`, `Subtle`, `Inverse`, `Primary`
+**Modes:** `Default`, `Subtle`, `Inverse`, `Primary` — extra client modes are emitted the same
+way, as `[data-surface="<kebab-case name>"]`.
 **Rule:** All variables are aliases to Themes variables.
 **What you change:** Almost nothing. Surfaces auto-inherit from Themes.
 
@@ -397,7 +399,9 @@ Example structure for `color/brand/primary`:
 
 ## Collection 7: Sizes
 
-**Modes:** `Mobile`, `Desktop`
+**Modes:** `Mobile`, `Desktop` — fixed. Unlike Themes and Surfaces, this collection takes no
+extra modes: a mode here maps to a media query and the build has no breakpoint for an unknown
+name, so it warns (`⚠ UNMAPPED MODE`) instead of emitting.
 **Rule:** Mix of aliases to Primitives + raw values for Desktop overrides.
 **Total variables:** 229
 **What you change:** Font families, radius values, button uppercase preference.

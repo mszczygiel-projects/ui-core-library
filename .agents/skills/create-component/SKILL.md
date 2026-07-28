@@ -126,8 +126,9 @@ variables are importable in other files only after publication.
   - `tokens.css` contains `--color-{component}-{variant}-{style}-{property}`
     (36 for a 6×2×3 matrix) and `--{component}-*` size vars;
   - each `[data-surface="…"]` block re-maps the component vars;
-  - dark overrides land in `@media (prefers-color-scheme: dark)` (note: NOT
-    `[data-theme="dark"]` — AGENTS.md description predates the current build);
+  - dark overrides land in a `[data-theme="dark"]` block, mirrored into
+    `@media (prefers-color-scheme: dark) { :root:not([data-theme]) … }`; any further
+    Figma mode gets its own `[data-theme="<kebab-name>"]` block;
   - build warnings: only pre-existing ones (radio violations); 0 circular,
     0 broken refs.
 - Commit only when the user asks.
@@ -204,10 +205,11 @@ Conventions locked by Button/Badge:
 - Tests: WC `@open-wc/testing` (defaults, attribute reflection, slots, ARIA);
   React Vitest + Testing Library (class mapping, derived modes, className/style
   forwarding, ARIA). Run `pnpm test:wc`, `pnpm test:react`, `pnpm lint`.
-- Visual check in Storybook (`pnpm storybook`) via the browser: light AND dark
-  (`prefers-color-scheme` emulation resets on navigation — re-apply after every
-  `navigate`), probe computed styles (padding/height/font/line-height), check
-  the console for errors.
+- Visual check in Storybook (`pnpm storybook`) via the browser: light AND dark.
+  Prefer setting `document.documentElement.dataset.theme = 'dark'` over
+  `prefers-color-scheme` emulation — the attribute survives a `navigate`, the
+  emulation resets and has to be re-applied every time. Probe computed styles
+  (padding/height/font/line-height), check the console for errors.
 
 ### Constraint reminders
 

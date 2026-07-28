@@ -21,11 +21,21 @@ import {
   detectCycles,
   tokenKey,
   normalizedPath,
+  collectModes,
+  baseModeOf,
+  modeSlug,
 } from './tokens-transformer.js';
 
 export interface BuildTokensOptions {
   inputDir: string;
   outputDir: string;
+  /**
+   * Mirror the Figma `Dark` mode into `@media (prefers-color-scheme: dark)` on top of its
+   * `[data-theme="dark"]` block, so the OS setting still applies when no theme attribute is
+   * set. Turn it off in projects that always drive the theme from `data-theme`.
+   * @default true
+   */
+  autoDarkMode?: boolean;
 }
 
 export const DEFAULT_FOUNDATIONS_ROOT = join(import.meta.dirname, '..');
@@ -76,7 +86,7 @@ export function buildTokens(
     outputDir: DEFAULT_OUTPUT_DIR,
   },
 ): void {
-  const { inputDir, outputDir } = options;
+  const { inputDir, outputDir, autoDarkMode = true } = options;
   const tokens = loadAllTokens(inputDir);
 
   const registry = new Map<string, Token>();
@@ -97,7 +107,7 @@ export function buildTokens(
 
   detectCycles(tokens, registry, warnings);
 
-  const tokensCss = buildTokensCss(tokens, registry, warnings, breakpointXlPx);
+  const tokensCss = buildTokensCss(tokens, registry, warnings, breakpointXlPx, { autoDarkMode });
   const tailwindCss = buildTailwindCss(tokens);
   const tokensTs = buildTokensTs(tokens);
 
@@ -110,8 +120,15 @@ export function buildTokens(
   for (const b of warnings.broken) console.warn(`⚠ BROKEN REF: ${b}`);
 
   const total = warnings.circular.length + warnings.violations.length + warnings.broken.length;
+  const themeModes = collectModes(tokens.filter((t) => t.collection === 'Themes'));
+  const baseThemeMode = baseModeOf(themeModes);
+  const themeSummary = themeModes
+    .map((m) => (m === baseThemeMode ? `${m} (:root)` : `${m} ([data-theme="${modeSlug(m)}"])`))
+    .join(', ');
+
   console.log(`\n✓ Generated tokens.css, tailwind.css, tokens.ts in ${outputDir}`);
   console.log(`  — ${tokens.length} tokens processed`);
+  console.log(`  — ${themeModes.length} theme modes: ${themeSummary || '(none)'}`);
   console.log(
     `  — ${total} warnings (${warnings.circular.length} circular, ${warnings.violations.length} violations, ${warnings.broken.length} broken)`,
   );
