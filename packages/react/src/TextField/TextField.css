@@ -428,6 +428,21 @@
   padding-block-end: calc(var(--_padding-stack) - 2 * var(--_border-width));
 }
 
+/*
+ * The icon slots have a fixed `height: --_icon-size`, and the block padding above
+ * is larger than that. Under the inherited `border-box` sizing the padding eats the
+ * whole box and leaves a zero-height content area, so slotted content sized with
+ * `height: 100%` — every interactive control we ship (SearchField clear,
+ * PasswordField toggle, DateField calendar, NumberField steppers) — collapses to
+ * nothing and renders invisibly. Sizing the block axis from the content out keeps
+ * the content box at `--_icon-size`; the inline axis is unaffected because the
+ * slots space themselves with margin, not padding.
+ */
+.ui-text-field--inner .ui-text-field__icon--leading,
+.ui-text-field--inner .ui-text-field__icon--trailing {
+  box-sizing: content-box;
+}
+
 /* ---- Floating label ---- */
 
 /*
