@@ -12,6 +12,78 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.12.0] — 2026-07-28
+
+The token build no longer knows a fixed list of theme names. Every mode of the
+Figma `Themes` collection is emitted as its own `[data-theme="…"]` selector, so a
+project generating tokens from its own Figma file gets a working theme switch for
+each of its modes without touching the build.
+
+### Added
+
+- **A selector per Figma theme mode in `tokens.css`.** The base mode (`Default`,
+  or the first mode when there is none) lands on `:root`; every other mode gets
+  `[data-theme="<kebab-case mode name>"]` — `DarkGreen` → `[data-theme="dark-green"]`.
+  One attribute on `<html>` switches the whole page:
+
+  ```html
+  <html data-theme="dark">
+    …
+  </html>
+  ```
+
+  A mode block carries only the tokens whose value differs from the base mode,
+  plus the aliases that transitively depend on them — everything else inherits
+  from `:root`.
+- **`data-theme="default"` is now an explicit selector**, so the base theme can be
+  pinned rather than relied on through the absence of the attribute. This is how a
+  page forces the light theme on a dark-mode OS.
+- **`--no-auto-dark` on the `ui-core-foundations build` CLI**, and the matching
+  `autoDarkMode` option on `buildTokens()`. It drops the
+  `@media (prefers-color-scheme: dark)` mirror of the `Dark` mode for projects that
+  always drive the theme from `data-theme`. Every mode is still emitted as
+  `[data-theme="…"]` either way.
+- **Surfaces modes are discovered from the export too.** A client mode the Core
+  library does not ship (e.g. `BrandHighlight`) is emitted as
+  `[data-surface="brand-highlight"]` using the same kebab-case rule; the four
+  shipped modes keep their emission order.
+- **`⚠ UNMAPPED MODE` warning for unknown Sizes modes.** Sizes is the one
+  collection with a fixed mode list, because a mode there maps to a media query
+  and the build has no breakpoint for a name it does not know. Such a mode is now
+  reported instead of dropped silently.
+- **The build logs the theme modes it found**, so a mode that never made it into
+  the CSS is visible:
+
+  ```
+  — 3 theme modes: Default (:root), Dark ([data-theme="dark"]), DarkGreen ([data-theme="dark-green"])
+  ```
+
+- Theming documentation in the root README and `packages/foundations/README.md`,
+  covering `data-theme` vs. `data-surface`, the system-preference fallback and the
+  CLI flags.
+
+### Changed
+
+- **The `Dark` mode is now primarily an attribute selector.** It previously existed
+  only inside `@media (prefers-color-scheme: dark)`; it is now emitted as
+  `[data-theme="dark"], [data-theme="dark"] [data-surface="default"]`, with the
+  media query kept as a mirror scoped to `:root:not([data-theme])`. The OS setting
+  therefore still applies by default, but an explicit `data-theme` always wins over
+  it. Rendered output is unchanged for a project that sets no theme attribute.
+- `buildTokensCss()` takes a trailing options argument (`{ autoDarkMode }`). This is
+  a build-script API, not part of the package's public exports.
+- `tokens.css` was regenerated with the new theme blocks.
+
+### Fixed
+
+- **React `TextField` icon slots in the `inner` variant collapsed to zero height.**
+  The slots have a fixed `height` with block padding larger than it, so under
+  `border-box` sizing the padding ate the whole box and left no content area —
+  slotted controls sized with `height: 100%` rendered invisibly. This affected the
+  SearchField clear button, the PasswordField toggle, the DateField calendar button
+  and the NumberField steppers. The slots now size the block axis from the content
+  out.
+
 ## [0.11.0] — 2026-07-23
 
 This release adds a new Breadcrumbs component to both rendering targets and
@@ -42,7 +114,6 @@ wires it into the shared foundations token/config layers.
 - Foundations token outputs (`figma-exports`, `tokens.css`, `tokens.ts`,
   `tailwind.css`) were regenerated to include Breadcrumbs semantic color/size
   tokens used by the new component.
-  
 
 ## [0.10.0] — 2026-07-22
 

@@ -137,7 +137,9 @@ export class UiBreadcrumbs extends LitElement {
                         href=${ifDefined(item.href)}
                         @click=${(event: MouseEvent) => this._onSelect(event, item, index)}
                       >
-                        ${this._renderIcon(item)}${item.label ? html`<span class="label">${item.label}</span>` : nothing}
+                        ${this._renderIcon(item)}${item.label
+                          ? html`<span class="label">${item.label}</span>`
+                          : nothing}
                       </a>
                     `
                   : html`
@@ -145,7 +147,9 @@ export class UiBreadcrumbs extends LitElement {
                         class="crumb ${isCurrent ? 'crumb--current' : ''}"
                         aria-current=${isCurrent ? 'page' : nothing}
                       >
-                        ${this._renderIcon(item)}${item.label ? html`<span class="label">${item.label}</span>` : nothing}
+                        ${this._renderIcon(item)}${item.label
+                          ? html`<span class="label">${item.label}</span>`
+                          : nothing}
                       </span>
                     `}
                 ${isCurrent ? nothing : this._renderSeparator()}
