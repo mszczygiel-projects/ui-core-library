@@ -9123,10 +9123,10 @@
   --typography-heading-display-font-weight-strong: var(--font-weight-semibold);
   --typography-heading-display-font-size: var(--text-3xl);
   --typography-heading-display-line-height: var(--text-3xl--line-height);
-  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-display-large-font-size: var(--text-4xl);
   --typography-heading-display-large-line-height: var(--text-4xl--line-height);
   --typography-heading-display-large-letter-spacing: var(--tracking-normal);
+  --typography-heading-display-letter-spacing: var(--tracking-normal);
   --typography-heading-title-font-family: var(--typography-heading-font-family);
   --typography-heading-title-font-weight: var(--font-weight-light);
   --typography-heading-title-font-weight-strong: var(--font-weight-semibold);
@@ -9325,7 +9325,8 @@
   --select-option-gap: var(--spacing-2);
   --select-option-radius: var(--radius-sm-mobile);
   --select-dropdown-padding: var(--spacing-1);
-  --select-dropdown-radius: var(--spacing-2);
+  --select-dropdown-gap: var(--spacing-1);
+  --select-dropdown-radius: var(--radius-md-mobile);
   --select-dropdown-border-width: 0.0625rem;
   --select-dropdown-max-height: var(--size-100);
   --select-option-group-font-family: var(--typography-eyebrow-font-family);
@@ -9336,8 +9337,8 @@
   --select-option-group-text-transform: var(--typography-eyebrow-text-transform);
   --select-option-group-padding-inline: var(--spacing-2);
   --select-option-group-padding-stack: var(--spacing-2);
+  --notification-radius: var(--radius-md-mobile);
   --notification-font-family: var(--typography-body-font-family);
-  --notification-radius: var(--radius-md);
   --notification-font-size: var(--typography-body-font-size);
   --notification-line-height: var(--typography-body-line-height);
   --notification-font-weight: var(--typography-body-font-weight-strong);
@@ -9499,6 +9500,8 @@
     --button-small-padding-inline: var(--spacing-8);
     --button-large-padding-inline: var(--spacing-8);
     --select-option-radius: var(--radius-sm-desktop);
+    --select-dropdown-radius: var(--radius-md-desktop);
+    --notification-radius: var(--radius-md-desktop);
     --badge-square-radius: var(--radius-sm-desktop);
   }
 }

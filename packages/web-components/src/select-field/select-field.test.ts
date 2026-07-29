@@ -577,6 +577,35 @@ describe('UiSelectField', () => {
       expect(el.shadowRoot!.querySelector('.listbox__group-options')).to.not.equal(null);
     });
 
+    it('renders an unlabelled group as a bare separator', async () => {
+      const el = await fixture<UiSelectField>(html`<ui-select-field></ui-select-field>`);
+      el.options = [
+        { label: 'G', options: [{ value: 'a', label: 'Alpha' }] },
+        { options: [{ value: 'b', label: 'Bravo' }] },
+      ];
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      const groups = el.shadowRoot!.querySelectorAll('.listbox__group');
+      expect(groups.length).to.equal(2);
+      expect(groups[0].querySelector('.listbox__group-header')).to.not.equal(null);
+      expect(groups[1].querySelector('.listbox__group-header')).to.equal(null);
+      expect(groups[1].querySelector('.listbox__group-separator')).to.not.equal(null);
+      // Nothing to name the group with, so the reference is dropped entirely.
+      expect(groups[1].hasAttribute('aria-labelledby')).to.equal(false);
+    });
+
+    it('omits the separator above the first group', async () => {
+      const el = await fixture<UiSelectField>(html`<ui-select-field></ui-select-field>`);
+      el.options = [{ options: [{ value: 'a', label: 'Alpha' }] }];
+      await el.updateComplete;
+      el.shadowRoot!.querySelector<HTMLButtonElement>('button.trigger')!.click();
+      await el.updateComplete;
+
+      expect(el.shadowRoot!.querySelector('.listbox__group-separator')).to.equal(null);
+    });
+
     it('keeps the single-select row surface', async () => {
       const el = await makeEl();
       el.value = 'apple';

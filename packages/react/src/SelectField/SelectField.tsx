@@ -1,4 +1,5 @@
 import {
+  Fragment,
   useCallback,
   useEffect,
   useId,
@@ -458,15 +459,22 @@ export function SelectField({
               {placeholder}
             </option>
             {isGroupedItems(options)
-              ? options.map((group) => (
-                  <optgroup key={group.label} label={group.label}>
-                    {(group.options ?? []).map((opt) => (
-                      <option key={opt.value} value={opt.value} disabled={opt.disabled}>
-                        {opt.label}
-                      </option>
-                    ))}
-                  </optgroup>
-                ))
+              ? options.map((group, groupIndex) => {
+                  const groupOptions = (group.options ?? []).map((opt) => (
+                    <option key={opt.value} value={opt.value} disabled={opt.disabled}>
+                      {opt.label}
+                    </option>
+                  ));
+                  // A nameless optgroup renders as an empty row in the native
+                  // menu, so an unlabelled group contributes its options flat.
+                  return group.label ? (
+                    <optgroup key={`group-${groupIndex}`} label={group.label}>
+                      {groupOptions}
+                    </optgroup>
+                  ) : (
+                    <Fragment key={`group-${groupIndex}`}>{groupOptions}</Fragment>
+                  );
+                })
               : flatOptions.map((opt) => (
                   <option key={opt.value} value={opt.value} disabled={opt.disabled}>
                     {opt.label}

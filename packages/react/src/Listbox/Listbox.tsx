@@ -184,11 +184,23 @@ export function Listbox({
       const headerId = `${idPrefix}-group-${groupIndex}`;
       const groupRows = (group.options ?? []).map((_, i) => rows[cursor + i]);
       cursor += group.options?.length ?? 0;
+      // An unlabelled group takes the header's border-only variant. A rule
+      // above the first group would separate it from nothing, so it is skipped.
+      const labelled = !!group.label;
       return (
-        <div key={headerId} className="ui-listbox__group" role="group" aria-labelledby={headerId}>
-          <div className="ui-listbox__group-header" id={headerId} role="presentation">
-            {group.label}
-          </div>
+        <div
+          key={headerId}
+          className="ui-listbox__group"
+          role="group"
+          aria-labelledby={labelled ? headerId : undefined}
+        >
+          {labelled ? (
+            <div className="ui-listbox__group-header" id={headerId} role="presentation">
+              {group.label}
+            </div>
+          ) : (
+            groupIndex > 0 && <div className="ui-listbox__group-separator" role="presentation" />
+          )}
           <div className="ui-listbox__group-options">
             {groupRows.map((row) => (row?.kind === 'option' ? renderOption(row) : null))}
           </div>

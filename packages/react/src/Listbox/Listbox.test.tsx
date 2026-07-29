@@ -84,6 +84,37 @@ describe('Listbox', () => {
     expect(flatList.container.querySelector('.ui-listbox--grouped')).toBeNull();
   });
 
+  it('renders an unlabelled group as a bare separator', () => {
+    const { container } = render(
+      <Listbox
+        idPrefix="t"
+        items={[
+          { label: 'Recent', options: [{ value: 'a', label: 'Alpha' }] },
+          { options: [{ value: 'c', label: 'Charlie' }] },
+        ]}
+        onSelect={vi.fn()}
+      />,
+    );
+    const groups = container.querySelectorAll('.ui-listbox__group');
+    expect(groups.length).toBe(2);
+    expect(groups[0].querySelector('.ui-listbox__group-header')).not.toBeNull();
+    expect(groups[1].querySelector('.ui-listbox__group-header')).toBeNull();
+    expect(groups[1].querySelector('.ui-listbox__group-separator')).not.toBeNull();
+    // Nothing to name the group with, so the reference is dropped entirely.
+    expect(groups[1].hasAttribute('aria-labelledby')).toBe(false);
+  });
+
+  it('omits the separator above the first group', () => {
+    const { container } = render(
+      <Listbox
+        idPrefix="t"
+        items={[{ options: [{ value: 'a', label: 'Alpha' }] }]}
+        onSelect={vi.fn()}
+      />,
+    );
+    expect(container.querySelector('.ui-listbox__group-separator')).toBeNull();
+  });
+
   it('reserves the row surface for single-select', () => {
     const single = render(<Listbox idPrefix="t" items={flat} value="a" onSelect={vi.fn()} />);
     expect(single.container.querySelector('.ui-listbox--multiple')).toBeNull();

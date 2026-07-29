@@ -12,10 +12,13 @@ export interface ListboxOption {
   icon?: ReactNode;
 }
 
-/** Named set of options rendered under a sticky header. */
+/** Set of options rendered under a sticky header. */
 export interface ListboxOptionGroup {
-  /** Header text for the group. */
-  label: string;
+  /**
+   * Header text for the group. Leave it out to get the header's border-only
+   * variant — a bare rule separating this group from the one above it.
+   */
+  label?: string;
   /** Options belonging to this group. */
   options: ListboxOption[];
 }

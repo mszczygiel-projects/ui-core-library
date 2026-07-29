@@ -53,11 +53,27 @@
  */
 .ui-listbox--grouped {
   padding-inline: 0;
-  gap: var(--spacing-1);
+  gap: var(--select-dropdown-gap);
+}
+
+/* Header and options sit one gap apart, same as two adjacent groups do. */
+.ui-listbox__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--select-dropdown-gap);
 }
 
 .ui-listbox__group-options {
   padding-inline: var(--select-dropdown-padding);
+}
+
+/*
+ * Border-only variant of the group header: an unlabelled group is announced by
+ * nothing but the rule that divides it from the group above.
+ */
+.ui-listbox__group-separator {
+  flex: none;
+  border-block-end: var(--select-dropdown-border-width) solid var(--color-select-dropdown-border);
 }
 
 .ui-listbox__group-header {

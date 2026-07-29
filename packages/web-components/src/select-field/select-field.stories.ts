@@ -189,6 +189,23 @@ export const GroupedOptions: Story = {
   args: { label: 'Fruit', options: GROUPED_OPTIONS },
 };
 
+/** A group with no label is divided from the one above by a bare rule. */
+export const SeparatedGroups: Story = {
+  args: {
+    label: 'Fruit',
+    options: [
+      { options: [{ value: 'lemon', label: 'Lemon' }] },
+      {
+        options: [
+          { value: 'strawberry', label: 'Strawberry' },
+          { value: 'raspberry', label: 'Raspberry' },
+        ],
+      },
+      { label: 'Stone fruit', options: [{ value: 'peach', label: 'Peach' }] },
+    ] satisfies SelectOptionGroup[],
+  },
+};
+
 /** A value set up front renders instead of the placeholder. */
 export const WithDefaultValue: Story = {
   args: { label: 'Fruit', value: 'banana' },

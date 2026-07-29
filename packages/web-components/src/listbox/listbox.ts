@@ -18,10 +18,13 @@ export interface ListboxOption {
   icon?: string;
 }
 
-/** Named set of options rendered under a sticky header. */
+/** Set of options rendered under a sticky header. */
 export interface ListboxOptionGroup {
-  /** Header text for the group. */
-  label: string;
+  /**
+   * Header text for the group. Leave it out to get the header's border-only
+   * variant — a bare rule separating this group from the one above it.
+   */
+  label?: string;
   /** Options belonging to this group. */
   options: ListboxOption[];
 }
@@ -273,9 +276,18 @@ export function renderListbox(config: ListboxRenderConfig): TemplateResult {
       const headerId = `${config.idPrefix}-group-${groupIndex}`;
       const groupRows = (group.options ?? []).map((_, i) => rows[cursor + i]);
       cursor += group.options?.length ?? 0;
+      // An unlabelled group takes the header's border-only variant. A rule
+      // above the first group would separate it from nothing, so it is skipped.
+      const labelled = !!group.label;
       return html`
-        <div class="listbox__group" role="group" aria-labelledby=${headerId}>
-          <div class="listbox__group-header" id=${headerId} role="presentation">${group.label}</div>
+        <div class="listbox__group" role="group" aria-labelledby=${labelled ? headerId : nothing}>
+          ${labelled
+            ? html`<div class="listbox__group-header" id=${headerId} role="presentation">
+                ${group.label}
+              </div>`
+            : groupIndex > 0
+              ? html`<div class="listbox__group-separator" role="presentation"></div>`
+              : nothing}
           <div class="listbox__group-options">
             ${groupRows.map((row) =>
               row?.kind === 'option' ? renderOptionRow(row, config) : nothing,
