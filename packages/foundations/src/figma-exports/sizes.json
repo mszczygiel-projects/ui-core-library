@@ -1649,10 +1649,17 @@
         },
         "$type": "number"
       },
+      "gap": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "number"
+      },
       "radius": {
         "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
+          "Mobile": "{Themes.radius.md.mobile}",
+          "Desktop": "{Themes.radius.md.desktop}"
         },
         "$type": "number"
       },
