@@ -32,18 +32,20 @@ The current `value` is included in `FormData` under `name`.
 
 ## Props
 
-| Property      | Attribute     | Type                                              | Default       |
-| ------------- | ------------- | ------------------------------------------------- | ------------- |
-| `variant`     | `variant`     | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`   |
-| `size`        | `data-size`   | `'small' \| 'default' \| 'large'`                 | `'default'`   |
-| `value`       | `value`       | `string`                                          | `''`          |
-| `placeholder` | `placeholder` | `string`                                          | `'Search...'` |
-| `hint`        | `hint`        | `string`                                          | —             |
-| `state`       | `state`       | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`   |
-| `name`        | `name`        | `string`                                          | —             |
-| `disabled`    | `disabled`    | `boolean`                                         | `false`       |
-| `required`    | `required`    | `boolean`                                         | `false`       |
-| `readonly`    | `readonly`    | `boolean`                                         | `false`       |
+| Property         | Attribute         | Type                                              | Default       |
+| ---------------- | ----------------- | ------------------------------------------------- | ------------- |
+| `variant`        | `variant`         | `'outline' \| 'filled' \| 'underlined'`           | `'outline'`   |
+| `size`           | `data-size`       | `'small' \| 'default' \| 'large'`                 | `'default'`   |
+| `label`          | `label`           | `string`                                          | —             |
+| `labelPlacement` | `label-placement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`       |
+| `value`          | `value`           | `string`                                          | `''`          |
+| `placeholder`    | `placeholder`     | `string`                                          | `'Search...'` |
+| `hint`           | `hint`            | `string`                                          | —             |
+| `state`          | `state`           | `'default' \| 'success' \| 'error' \| 'disabled'` | `'default'`   |
+| `name`           | `name`            | `string`                                          | —             |
+| `disabled`       | `disabled`        | `boolean`                                         | `false`       |
+| `required`       | `required`        | `boolean`                                         | `false`       |
+| `readonly`       | `readonly`        | `boolean`                                         | `false`       |
 
 ## Accessibility notes
 

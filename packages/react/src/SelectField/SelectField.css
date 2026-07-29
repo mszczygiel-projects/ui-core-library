@@ -1,133 +1,10 @@
+@import "../styles/control-field.css";
+
 .ui-select-field {
   display: block;
   font-family: var(--control-font-family);
   font-weight: var(--control-font-weight);
   letter-spacing: var(--control-letter-spacing);
-
-  /* Size: default */
-  --_font-size: var(--control-font-size);
-  --_padding-inline: var(--control-padding-inline);
-  --_padding-stack: var(--control-padding-stack);
-  --_padding-inline-icon: var(--control-padding-inline-has-icon);
-  --_radius: var(--control-radius);
-  --_icon-size: var(--control-icon-size);
-  --_option-padding-stack: var(--select-option-padding-stack);
-  --_option-gap: var(--select-option-gap);
-}
-
-/* ---- Sizes ---- */
-
-.ui-select-field--small {
-  --_font-size: var(--control-small-font-size);
-  --_padding-inline: var(--control-small-padding-inline);
-  --_padding-stack: var(--control-small-padding-stack);
-  --_padding-inline-icon: var(--control-small-padding-inline-has-icon);
-  --_radius: var(--control-small-radius);
-  --_icon-size: var(--control-small-icon-size);
-  --_option-padding-stack: var(--select-option-small-padding-stack);
-  --_option-gap: var(--select-option-small-gap);
-}
-
-.ui-select-field--large {
-  --_font-size: var(--control-large-font-size);
-  --_padding-inline: var(--control-large-padding-inline);
-  --_padding-stack: var(--control-large-padding-stack);
-  --_padding-inline-icon: var(--control-large-padding-inline-has-icon);
-  --_radius: var(--control-large-radius);
-  --_icon-size: var(--control-large-icon-size);
-  --_option-padding-stack: var(--select-option-large-padding-stack);
-  --_option-gap: var(--select-option-gap);
-}
-
-/* ---- Variant color aliases: outline + underlined ---- */
-
-.ui-select-field--outline,
-.ui-select-field--underlined {
-  --_bg: var(--color-control-outline-background-default);
-  --_bg-hover: var(--color-control-outline-background-hover);
-  --_bg-active: var(--color-control-outline-background-active);
-  --_bg-success: var(--color-control-outline-background-success);
-  --_bg-error: var(--color-control-outline-background-error);
-  --_bg-disabled: var(--color-control-outline-background-disabled);
-
-  --_border: var(--color-control-outline-border-default);
-  --_border-hover: var(--color-control-outline-border-hover);
-  --_border-active: var(--color-control-outline-border-active);
-  --_border-success: var(--color-control-outline-border-success);
-  --_border-error: var(--color-control-outline-border-error);
-  --_border-disabled: var(--color-control-outline-border-disabled);
-
-  --_text: var(--color-control-outline-text-default);
-  --_text-disabled: var(--color-control-outline-text-disabled);
-
-  --_placeholder: var(--color-control-outline-placeholder-default);
-  --_placeholder-disabled: var(--color-control-outline-placeholder-disabled);
-
-  --_label: var(--color-control-outline-label-default);
-  --_label-hover: var(--color-control-outline-label-hover);
-  --_label-active: var(--color-control-outline-label-active);
-  --_label-success: var(--color-control-outline-label-success);
-  --_label-error: var(--color-control-outline-label-error);
-  --_label-disabled: var(--color-control-outline-label-disabled);
-
-  --_hint: var(--color-control-outline-hint-default);
-  --_hint-success: var(--color-control-outline-hint-success);
-  --_hint-error: var(--color-control-outline-hint-error);
-  --_hint-disabled: var(--color-control-outline-hint-disabled);
-
-  --_icon: var(--color-control-outline-icon-default);
-  --_icon-hover: var(--color-control-outline-icon-hover);
-  --_icon-active: var(--color-control-outline-icon-active);
-  --_icon-success: var(--color-control-outline-icon-success);
-  --_icon-error: var(--color-control-outline-icon-error);
-  --_icon-disabled: var(--color-control-outline-icon-disabled);
-
-  --_border-width: var(--control-border-width);
-}
-
-/* ---- Variant color aliases: filled ---- */
-
-.ui-select-field--filled {
-  --_bg: var(--color-control-filled-background-default);
-  --_bg-hover: var(--color-control-filled-background-hover);
-  --_bg-active: var(--color-control-filled-background-active);
-  --_bg-success: var(--color-control-filled-background-success);
-  --_bg-error: var(--color-control-filled-background-error);
-  --_bg-disabled: var(--color-control-filled-background-disabled);
-
-  --_border: var(--color-control-filled-border-default);
-  --_border-hover: var(--color-control-filled-border-hover);
-  --_border-active: var(--color-control-filled-border-active);
-  --_border-success: var(--color-control-filled-border-success);
-  --_border-error: var(--color-control-filled-border-error);
-  --_border-disabled: var(--color-control-filled-border-disabled);
-
-  --_text: var(--color-control-filled-text-default);
-  --_text-disabled: var(--color-control-filled-text-disabled);
-
-  --_placeholder: var(--color-control-filled-placeholder-default);
-  --_placeholder-disabled: var(--color-control-filled-placeholder-disabled);
-
-  --_label: var(--color-control-filled-label-default);
-  --_label-hover: var(--color-control-filled-label-hover);
-  --_label-active: var(--color-control-filled-label-active);
-  --_label-success: var(--color-control-filled-label-success);
-  --_label-error: var(--color-control-filled-label-error);
-  --_label-disabled: var(--color-control-filled-label-disabled);
-
-  --_hint: var(--color-control-filled-hint-default);
-  --_hint-success: var(--color-control-filled-hint-success);
-  --_hint-error: var(--color-control-filled-hint-error);
-  --_hint-disabled: var(--color-control-filled-hint-disabled);
-
-  --_icon: var(--color-control-filled-icon-default);
-  --_icon-hover: var(--color-control-filled-icon-hover);
-  --_icon-active: var(--color-control-filled-icon-active);
-  --_icon-success: var(--color-control-filled-icon-success);
-  --_icon-error: var(--color-control-filled-icon-error);
-  --_icon-disabled: var(--color-control-filled-icon-disabled);
-
-  --_border-width: var(--control-border-width);
 }
 
 /* ---- Label ---- */
@@ -162,6 +39,69 @@
 }
 
 .ui-select-field--state-disabled .ui-select-field__label {
+  color: var(--_label-disabled);
+}
+
+/* ---- Inner label ---- */
+
+/*
+ * Inner-label is absolutely positioned at the top of the trigger.
+ * The trigger's horizontal flex layout (leading-icon → value → trailing) stays intact,
+ * so placeholder/value render normally. Extra padding-block-start makes room for the label.
+ * Same height formula as TextField inner label.
+ */
+
+.ui-select-field--inner {
+  --_inner-label-size: var(--size-4);
+}
+
+.ui-select-field--inner .ui-select-field__trigger {
+  position: relative;
+  padding-block-start: calc(
+    var(--_padding-stack) - 2 * var(--_border-width) + var(--_inner-label-size) +
+      var(--_inside_label_vertical_gap)
+  );
+  padding-block-end: calc(var(--_padding-stack) - 2 * var(--_border-width));
+}
+
+.ui-select-field__inner-label {
+  position: absolute;
+  top: var(--_padding-stack);
+  inset-inline-start: var(--_padding-inline);
+  font-size: var(--control-label-inner-font-size);
+  line-height: var(--control-label-inner-line-height);
+  font-weight: var(--control-label-inner-font-weight);
+  font-family: var(--control-label-inner-font-family);
+  text-transform: var(--control-label-inner-text-transform);
+  letter-spacing: var(--control-label-inner-letter-spacing);
+  color: var(--_label);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events: none;
+}
+
+.ui-select-field--inner.ui-select-field--has-leading-icon .ui-select-field__inner-label {
+  inset-inline-start: var(--_padding-inline);
+}
+
+.ui-select-field--inner .ui-select-field__trigger:hover .ui-select-field__inner-label {
+  color: var(--_label-hover);
+}
+
+.ui-select-field--inner.ui-select-field--open .ui-select-field__inner-label {
+  color: var(--_label-active);
+}
+
+.ui-select-field--inner.ui-select-field--state-success .ui-select-field__inner-label {
+  color: var(--_label-success);
+}
+
+.ui-select-field--inner.ui-select-field--state-error .ui-select-field__inner-label {
+  color: var(--_label-error);
+}
+
+.ui-select-field--inner.ui-select-field--state-disabled .ui-select-field__inner-label {
   color: var(--_label-disabled);
 }
 
@@ -246,11 +186,14 @@
 
 /* Underlined: bottom border only, no radius */
 
+.ui-select-field--underlined {
+  --_padding-inline: 0px;
+}
+
 .ui-select-field--underlined .ui-select-field__trigger {
   border: none;
   border-bottom: var(--control-underlined-border-width-default) solid var(--_border);
   border-radius: 0;
-  padding-inline: 0;
 }
 
 .ui-select-field--underlined .ui-select-field__trigger:hover {
@@ -289,9 +232,11 @@
   width: var(--_icon-size);
   height: var(--_icon-size);
   color: var(--_icon);
-  margin-inline-start: calc(
-    var(--_padding-inline-icon) - var(--_padding-inline) - var(--_icon-size)
-  );
+  margin-inline-start: var(--_padding-inline);
+}
+
+.ui-select-field--has-leading-icon .ui-select-field__trigger {
+  padding-inline-start: 0;
 }
 
 .ui-select-field__field-container:hover .ui-select-field__leading-icon {
@@ -316,6 +261,43 @@
 
 /* ---- Value / Placeholder ---- */
 
+/* Wraps the inline label and the value so they share one baseline row. */
+.ui-select-field__content {
+  display: flex;
+  align-items: center;
+  gap: var(--control-label-inline-gap);
+  flex: 1;
+  min-width: 0;
+}
+
+/* ---- Inline label ---- */
+
+.ui-select-field__inline-label {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  color: var(--_label);
+}
+
+.ui-select-field__trigger:hover .ui-select-field__inline-label {
+  color: var(--_label-hover);
+}
+
+.ui-select-field--open .ui-select-field__inline-label {
+  color: var(--_label-active);
+}
+
+.ui-select-field--state-success .ui-select-field__inline-label {
+  color: var(--_label-success);
+}
+
+.ui-select-field--state-error .ui-select-field__inline-label {
+  color: var(--_label-error);
+}
+
+.ui-select-field--state-disabled .ui-select-field__inline-label {
+  color: var(--_label-disabled);
+}
+
 .ui-select-field__value {
   flex: 1;
   min-width: 0;
@@ -327,6 +309,38 @@
 
 .ui-select-field__value--placeholder {
   color: var(--_placeholder);
+}
+
+.ui-select-field__trigger:hover .ui-select-field__value {
+  color: var(--_text-hover);
+}
+
+.ui-select-field__trigger:hover .ui-select-field__value--placeholder {
+  color: var(--_placeholder-hover);
+}
+
+.ui-select-field--open .ui-select-field__trigger .ui-select-field__value {
+  color: var(--_text-active);
+}
+
+.ui-select-field--open .ui-select-field__trigger .ui-select-field__value--placeholder {
+  color: var(--_placeholder-active);
+}
+
+.ui-select-field--state-success .ui-select-field__value {
+  color: var(--_text-success);
+}
+
+.ui-select-field--state-success .ui-select-field__value--placeholder {
+  color: var(--_placeholder-success);
+}
+
+.ui-select-field--state-error .ui-select-field__value {
+  color: var(--_text-error);
+}
+
+.ui-select-field--state-error .ui-select-field__value--placeholder {
+  color: var(--_placeholder-error);
 }
 
 .ui-select-field--state-disabled .ui-select-field__value {
@@ -355,7 +369,7 @@
   width: var(--_icon-size);
   height: var(--_icon-size);
   cursor: pointer;
-  color: var(--_icon);
+  color: var(--_icon-action);
   border-radius: var(--radius-sm);
   flex-shrink: 0;
 }
@@ -380,7 +394,7 @@
   justify-content: center;
   width: var(--_icon-size);
   height: var(--_icon-size);
-  color: var(--_icon);
+  color: var(--_icon-action);
   flex-shrink: 0;
 }
 
@@ -393,14 +407,14 @@
 
 .ui-select-field__trigger:hover .ui-select-field__clear,
 .ui-select-field__trigger:hover .ui-select-field__chevron {
-  color: var(--_icon-hover);
+  color: var(--_icon-action-hover);
 }
 
 .ui-select-field--open .ui-select-field__clear,
 .ui-select-field--open .ui-select-field__chevron,
 .ui-select-field__trigger:focus-visible .ui-select-field__clear,
 .ui-select-field__trigger:focus-visible .ui-select-field__chevron {
-  color: var(--_icon-active);
+  color: var(--_icon-action-active);
 }
 
 .ui-select-field--state-error .ui-select-field__clear,
@@ -418,69 +432,32 @@
   color: var(--_icon-disabled);
 }
 
-/* ---- Dropdown panel ---- */
+/* ---- Floating list ---- */
 
-.ui-select-field__dropdown {
-  position: absolute;
-  top: calc(100% + var(--spacing-1));
-  left: 0;
-  right: 0;
-  z-index: 100;
-  list-style: none;
-  margin: 0;
-  padding: var(--select-dropdown-padding);
-  background-color: var(--color-select-dropdown-background);
-  border: var(--select-dropdown-border-width) solid var(--color-select-dropdown-border);
-  border-radius: var(--select-dropdown-radius);
-  box-shadow: var(--shadow-md);
-  overflow-y: auto;
-  max-height: 20rem;
+/*
+ * The panel chrome lives on the listbox (select-dropdown-* tokens), so the
+ * popover contributes positioning only — otherwise two surfaces would stack.
+ */
+.ui-select-field__popover {
+  display: block;
+  width: 100%;
 }
 
-/* ---- Option ---- */
-
-.ui-select-field__option {
-  display: flex;
-  align-items: center;
-  gap: var(--_option-gap);
-  padding-block: var(--_option-padding-stack);
-  padding-inline: var(--select-option-padding-inline);
-  border-radius: var(--select-option-radius);
-  cursor: pointer;
-  font-family: var(--control-font-family);
-  font-size: var(--_font-size);
-  font-weight: var(--control-font-weight);
-  line-height: var(--size-6);
-  letter-spacing: var(--control-letter-spacing);
-  color: var(--color-select-option-text-default);
-  background-color: var(--color-select-option-background-default);
-  transition:
-    background-color var(--duration-100) ease,
-    color var(--duration-100) ease;
+.ui-select-field__popover .ui-popover__anchor {
+  display: block;
+  width: 100%;
 }
 
-.ui-select-field__option:hover,
-.ui-select-field__option--focused {
-  background-color: var(--color-select-option-background-hover);
-  color: var(--color-select-option-text-hover);
+.ui-select-field__popover .ui-popover__panel {
+  width: var(--ui-select-field-dropdown-width, auto);
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
 }
 
-.ui-select-field__option--selected {
-  background-color: var(--color-select-option-background-active);
-  color: var(--color-select-option-text-active);
-}
-
-.ui-select-field__option--selected:hover,
-.ui-select-field__option--selected.ui-select-field__option--focused {
-  background-color: var(--color-select-option-background-active);
-  color: var(--color-select-option-text-active);
-}
-
-.ui-select-field__option--disabled {
-  color: var(--color-select-option-text-disabled);
-  background-color: var(--color-select-option-background-disabled);
-  cursor: not-allowed;
-  pointer-events: none;
+.ui-select-field__popover .ui-popover__content {
+  padding: 0;
 }
 
 /* ---- Hint ---- */
@@ -510,8 +487,7 @@
 /* ---- Reduced motion ---- */
 
 @media (prefers-reduced-motion: reduce) {
-  .ui-select-field__trigger,
-  .ui-select-field__option {
+  .ui-select-field__trigger {
     transition: none;
   }
 }

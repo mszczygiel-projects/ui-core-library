@@ -14,10 +14,15 @@ const meta: Meta<typeof SearchField> = {
       control: 'select',
       options: ['small', 'default', 'large'],
     },
+    labelPlacement: {
+      control: 'select',
+      options: ['top', 'floating', 'inner'],
+    },
     state: {
       control: 'select',
       options: ['default', 'success', 'error', 'disabled'],
     },
+    label: { control: 'text' },
     placeholder: { control: 'text' },
     hint: { control: 'text' },
     disabled: { control: 'boolean' },
@@ -25,7 +30,9 @@ const meta: Meta<typeof SearchField> = {
   args: {
     variant: 'outline',
     size: 'default',
+    labelPlacement: 'top',
     state: 'default',
+    label: 'Search',
     placeholder: 'Search...',
   },
 };
@@ -33,48 +40,38 @@ const meta: Meta<typeof SearchField> = {
 export default meta;
 type Story = StoryObj<typeof SearchField>;
 
-export const Default: Story = {};
+export const Outline: Story = {};
 
-export const WithValue: Story = {
-  args: { value: 'Szczygieł Tartt' },
+export const Filled: Story = {
+  args: { variant: 'filled' },
 };
 
-export const WithHint: Story = {
-  args: { hint: 'Minimum of 8 characters.' },
+export const Underlined: Story = {
+  args: { variant: 'underlined' },
 };
 
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <SearchField size="small" placeholder="Search..." />
-      <SearchField size="default" placeholder="Search..." />
-      <SearchField size="large" placeholder="Search..." />
-    </div>
-  ),
+export const OutlineInnerLabel: Story = {
+  args: { labelPlacement: 'inner' },
 };
 
-export const AllSizes: Story = {
-  render: () => (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', maxWidth: 480 }}>
-      <SearchField size="small" placeholder="Search..." />
-      <SearchField size="small" value="Szczygieł Tartt" />
-      <SearchField size="default" placeholder="Search..." />
-      <SearchField size="default" value="Szczygieł Tartt" />
-      <SearchField size="large" placeholder="Search..." />
-      <SearchField size="large" value="Szczygieł Tartt" />
-    </div>
-  ),
+export const FilledInnerLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'inner' },
 };
 
-export const States: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <SearchField state="default" placeholder="Default state" />
-      <SearchField state="success" placeholder="Success state" hint="Results found." />
-      <SearchField state="error" placeholder="Error state" hint="No results found." />
-      <SearchField state="disabled" placeholder="Disabled state" />
-    </div>
-  ),
+export const UnderlinedInnerLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'inner' },
+};
+
+export const OutlineFloatingLabel: Story = {
+  args: { labelPlacement: 'floating', placeholder: '' },
+};
+
+export const FilledFloatingLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'floating', placeholder: '' },
+};
+
+export const UnderlinedFloatingLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'floating', placeholder: '' },
 };
 
 export const Controlled: Story = {

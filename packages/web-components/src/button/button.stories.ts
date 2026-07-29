@@ -1,4 +1,4 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { ReactNode } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { svgMap } from '@mszczygiel-projects/ui-core-icons';
@@ -8,6 +8,8 @@ const iconOptions = Object.keys(svgMap) as Array<keyof typeof svgMap>;
 
 const meta: Meta = {
   title: 'Web Components/Button',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-button' as unknown as ComponentType,
   argTypes: {
     variant: {
       control: 'select',
@@ -28,6 +30,14 @@ const meta: Meta = {
       control: 'select',
       options: ['', ...iconOptions],
     },
+    leadingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
+    trailingIcon: {
+      control: 'select',
+      options: ['', ...iconOptions],
+    },
   },
   args: {
     variant: 'primary',
@@ -37,6 +47,8 @@ const meta: Meta = {
     label: 'More information',
     iconLeft: '',
     iconRight: '',
+    leadingIcon: '',
+    trailingIcon: '',
   },
 };
 
@@ -51,6 +63,8 @@ type ButtonArgs = {
   label?: string;
   iconLeft?: keyof typeof svgMap | '';
   iconRight?: keyof typeof svgMap | '';
+  leadingIcon?: keyof typeof svgMap | '';
+  trailingIcon?: keyof typeof svgMap | '';
 };
 
 const btn = (text: string, props: ButtonArgs = {}, ...children: ReactNode[]) =>
@@ -151,19 +165,127 @@ export const WithIcons: Story = {
     ),
 };
 
-export const AllVariants: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', gap: '1rem' } },
-      ...(['small', 'default', 'large'] as const).map((size) =>
-        createElement(
-          'div',
-          { key: size, style: { display: 'flex', gap: '0.75rem', alignItems: 'center' } },
-          ...(['primary', 'secondary', 'outline', 'ghost', 'danger'] as const).map((variant) =>
-            btn(variant, { variant, size }),
-          ),
-        ),
-      ),
-    ),
+const iconBoxSpan = (slot: 'leading-icon' | 'trailing-icon', name: keyof typeof svgMap) =>
+  createElement('span', {
+    slot,
+    style: { display: 'inline-flex' },
+    dangerouslySetInnerHTML: { __html: svgMap[name] },
+  });
+
+const btnWithIconBoxes = (
+  text: string,
+  props: ButtonArgs & { splitLeading?: boolean; splitTrailing?: boolean } = {},
+) => {
+  const children: ReactNode[] = [];
+  if (props.leadingIcon) children.push(iconBoxSpan('leading-icon', props.leadingIcon));
+  if (props.trailingIcon) children.push(iconBoxSpan('trailing-icon', props.trailingIcon));
+  children.push(...iconChildren({ iconLeft: props.iconLeft, iconRight: props.iconRight }));
+
+  return createElement(
+    'ui-button',
+    {
+      variant: props.variant,
+      'data-size': props.size,
+      loading: props.loading || undefined,
+      disabled: props.disabled || undefined,
+      label: props.label,
+      'has-leading-icon': props.leadingIcon ? true : undefined,
+      'has-trailing-icon': props.trailingIcon ? true : undefined,
+      'split-leading': props.splitLeading || undefined,
+      'split-trailing': props.splitTrailing || undefined,
+    },
+    ...children,
+    text,
+  );
+};
+
+export const WithIconBoxes: Story = {
+  args: {
+    label: 'Buy tickets',
+    leadingIcon: 'icon-ticket',
+    trailingIcon: 'icon-chevron-right',
+  },
+  render: ({
+    variant,
+    size,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+    leadingIcon,
+    trailingIcon,
+  }: ButtonArgs) =>
+    btnWithIconBoxes(label ?? 'Buy tickets', {
+      variant,
+      size,
+      loading,
+      disabled,
+      iconLeft,
+      iconRight,
+      leadingIcon,
+      trailingIcon,
+    }),
+};
+
+export const SplitLeading: Story = {
+  name: 'Split — Leading (independent action)',
+  args: {
+    label: 'Buy tickets',
+    leadingIcon: 'icon-ticket',
+    trailingIcon: '',
+  },
+  render: ({
+    variant,
+    size,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+    leadingIcon,
+    trailingIcon,
+  }: ButtonArgs) =>
+    btnWithIconBoxes(label ?? 'Buy tickets', {
+      variant,
+      size,
+      loading,
+      disabled,
+      iconLeft,
+      iconRight,
+      leadingIcon,
+      trailingIcon,
+      splitLeading: true,
+    }),
+};
+
+export const SplitTrailing: Story = {
+  name: 'Split — Trailing (independent action)',
+  args: {
+    label: 'Buy tickets',
+    leadingIcon: '',
+    trailingIcon: 'icon-chevron-right',
+  },
+  render: ({
+    variant,
+    size,
+    loading,
+    disabled,
+    label,
+    iconLeft,
+    iconRight,
+    leadingIcon,
+    trailingIcon,
+  }: ButtonArgs) =>
+    btnWithIconBoxes(label ?? 'Buy tickets', {
+      variant,
+      size,
+      loading,
+      disabled,
+      iconLeft,
+      iconRight,
+      leadingIcon,
+      trailingIcon,
+      splitTrailing: true,
+    }),
 };

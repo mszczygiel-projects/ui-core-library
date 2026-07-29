@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from '@testing-library/react';
+import { render, screen, cleanup, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, it, expect, vi } from 'vitest';
 import { SelectField } from './SelectField.js';
@@ -309,5 +309,129 @@ describe('SelectField', () => {
 
     expect(onChange).toHaveBeenCalledWith('');
     expect(screen.queryByRole('listbox')).toBeNull();
+  });
+
+  describe('inline label placement', () => {
+    it('renders the label inside the trigger with a colon', () => {
+      const { container } = render(
+        <SelectField label="Season" labelPlacement="inline" options={OPTIONS} />,
+      );
+      const inline = container.querySelector('.ui-select-field__inline-label');
+      expect(inline).not.toBeNull();
+      expect(inline!.textContent).toBe('Season:');
+    });
+
+    it('does not render the standalone label element', () => {
+      const { container } = render(
+        <SelectField label="Season" labelPlacement="inline" options={OPTIONS} />,
+      );
+      expect(container.querySelector('.ui-select-field__label')).toBeNull();
+    });
+
+    it('names the trigger through the inline label', () => {
+      const { container } = render(
+        <SelectField label="Season" labelPlacement="inline" options={OPTIONS} />,
+      );
+      const trigger = container.querySelector('.ui-select-field__trigger')!;
+      const labelId = trigger.getAttribute('aria-labelledby');
+      expect(labelId).not.toBeNull();
+      expect(document.getElementById(labelId!)!.textContent).toBe('Season:');
+    });
+
+    it('keeps the top label for the default placement', () => {
+      const { container } = render(<SelectField label="Season" options={OPTIONS} />);
+      expect(container.querySelector('.ui-select-field__label')).not.toBeNull();
+      expect(container.querySelector('.ui-select-field__inline-label')).toBeNull();
+    });
+  });
+
+  describe('option groups', () => {
+    const GROUPS = [
+      { label: 'Recent', options: [{ value: 'apple', label: 'Apple' }] },
+      {
+        label: 'All',
+        options: [
+          { value: 'banana', label: 'Banana' },
+          { value: 'cherry', label: 'Cherry' },
+        ],
+      },
+    ];
+
+    it('renders one group per entry with a labelled header', () => {
+      const { container, getByRole } = render(<SelectField options={GROUPS} />);
+      fireEvent.click(getByRole('combobox'));
+      const groups = container.querySelectorAll('[role="group"]');
+      expect(groups.length).toBe(2);
+      const headerId = groups[0].getAttribute('aria-labelledby')!;
+      expect(document.getElementById(headerId)!.textContent).toBe('Recent');
+    });
+
+    it('selects an option from the second group', () => {
+      const onChange = vi.fn();
+      const { getByRole, getByText } = render(<SelectField options={GROUPS} onChange={onChange} />);
+      fireEvent.click(getByRole('combobox'));
+      fireEvent.mouseDown(getByText('Cherry'));
+      expect(onChange).toHaveBeenCalledWith('cherry');
+    });
+
+    it('mirrors groups into the native select as optgroups', () => {
+      const { container } = render(<SelectField name="fruit" options={GROUPS} />);
+      const optgroups = container.querySelectorAll('optgroup');
+      expect(optgroups.length).toBe(2);
+      expect(optgroups[0].getAttribute('label')).toBe('Recent');
+    });
+  });
+
+  describe('active descendant', () => {
+    it('is absent while the list is closed', () => {
+      const { getByRole } = render(<SelectField options={OPTIONS} />);
+      expect(getByRole('combobox').hasAttribute('aria-activedescendant')).toBe(false);
+    });
+
+    it('points at an option that exists in the document once open', () => {
+      const { getByRole } = render(<SelectField options={OPTIONS} />);
+      const trigger = getByRole('combobox');
+      fireEvent.click(trigger);
+      const active = trigger.getAttribute('aria-activedescendant');
+      expect(active).not.toBeNull();
+      expect(document.getElementById(active!)).not.toBeNull();
+    });
+
+    it('follows arrow navigation', () => {
+      const { getByRole } = render(<SelectField options={OPTIONS} />);
+      const trigger = getByRole('combobox');
+      fireEvent.click(trigger);
+      const first = trigger.getAttribute('aria-activedescendant');
+      fireEvent.keyDown(trigger, { key: 'ArrowDown' });
+      expect(trigger.getAttribute('aria-activedescendant')).not.toBe(first);
+    });
+  });
+
+  describe('floating list', () => {
+    it('renders the list inside the popover panel', () => {
+      const { getByRole, container } = render(<SelectField options={OPTIONS} />);
+      fireEvent.click(getByRole('combobox'));
+      const panel = container.querySelector('.ui-popover__panel')!;
+      expect(panel.querySelector('.ui-listbox')).not.toBeNull();
+    });
+
+    it('does not mount the list while closed', () => {
+      const { container } = render(<SelectField options={OPTIONS} />);
+      expect(container.querySelector('.ui-listbox')).toBeNull();
+    });
+
+    it('shows the empty message when there are no options', () => {
+      const { getByRole, getByText } = render(<SelectField options={[]} />);
+      fireEvent.click(getByRole('combobox'));
+      expect(getByText('No results found')).not.toBeNull();
+    });
+
+    it('keeps aria-expanded despite the popover manual mode', () => {
+      const { getByRole } = render(<SelectField options={OPTIONS} />);
+      const trigger = getByRole('combobox');
+      expect(trigger.getAttribute('aria-expanded')).toBe('false');
+      fireEvent.click(trigger);
+      expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    });
   });
 });

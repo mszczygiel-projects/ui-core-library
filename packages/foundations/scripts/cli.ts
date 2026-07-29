@@ -17,6 +17,7 @@ interface ParsedArgs {
   command: string | undefined;
   inputDir: string;
   outputDir: string;
+  autoDarkMode: boolean;
   help: boolean;
 }
 
@@ -25,6 +26,7 @@ function parseArgs(argv: string[]): ParsedArgs {
     command: undefined,
     inputDir: DEFAULT_INPUT_DIR,
     outputDir: DEFAULT_OUTPUT_DIR,
+    autoDarkMode: true,
     help: false,
   };
   const args = [...argv];
@@ -47,6 +49,9 @@ function parseArgs(argv: string[]): ParsedArgs {
         out.outputDir = resolve(v!);
         break;
       }
+      case '--no-auto-dark':
+        out.autoDarkMode = false;
+        break;
       case '--help':
       case '-h':
         out.help = true;
@@ -75,7 +80,15 @@ Options:
                        (primitives.json, themes.json, surfaces.json, sizes.json, text-styles.json)
   -o, --output <dir>   Directory for generated files
                        (tokens.css, tailwind.css, tokens.ts, typography.css)
+      --no-auto-dark   Do not mirror the Figma "Dark" mode into
+                       @media (prefers-color-scheme: dark). Every mode is still emitted
+                       as [data-theme="<mode>"]; this only drops the OS-preference
+                       fallback that applies when no data-theme attribute is set.
   -h, --help           Show this help
+
+Every Figma mode of the Themes collection becomes its own selector: the "Default" mode
+(or the first mode, if there is none) lands on :root, every other mode on
+[data-theme="<kebab-case mode name>"] — e.g. DarkGreen → [data-theme="dark-green"].
 
 Example:
   ui-core-foundations build --input ./figma-exports --output ./src/generated/foundations
@@ -94,7 +107,11 @@ function main(): void {
     fail(`Unknown command: ${args.command}`);
   }
 
-  buildTokens({ inputDir: args.inputDir, outputDir: args.outputDir });
+  buildTokens({
+    inputDir: args.inputDir,
+    outputDir: args.outputDir,
+    autoDarkMode: args.autoDarkMode,
+  });
   // buildTypography({ inputDir: args.inputDir, outputDir: args.outputDir });
 }
 

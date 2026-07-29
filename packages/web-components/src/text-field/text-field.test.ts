@@ -84,9 +84,24 @@ describe('UiTextField', () => {
     expect(label).to.not.equal(null);
   });
 
-  it('variant=underlined always uses floating label', async () => {
+  it('variant=underlined with label-placement=top renders top label outside field-wrapper', async () => {
     const el = await fixture<UiTextField>(
       html`<ui-text-field variant="underlined" label="Name" label-placement="top"></ui-text-field>`,
+    );
+    const shadow = el.shadowRoot!;
+    const fieldWrapper = shadow.querySelector('.field-wrapper');
+    const label = shadow.querySelector('label');
+    expect(label).to.not.equal(null);
+    expect(fieldWrapper!.contains(label)).to.equal(false);
+  });
+
+  it('variant=underlined with label-placement=floating renders floating label inside field-wrapper', async () => {
+    const el = await fixture<UiTextField>(
+      html`<ui-text-field
+        variant="underlined"
+        label="Name"
+        label-placement="floating"
+      ></ui-text-field>`,
     );
     const shadow = el.shadowRoot!;
     const fieldWrapper = shadow.querySelector('.field-wrapper');
@@ -94,7 +109,7 @@ describe('UiTextField', () => {
     expect(label).to.not.equal(null);
   });
 
-  it('variant=filled always uses top label', async () => {
+  it('variant=filled with label-placement=floating renders floating label inside field-wrapper', async () => {
     const el = await fixture<UiTextField>(
       html`<ui-text-field
         variant="filled"
@@ -104,8 +119,8 @@ describe('UiTextField', () => {
     );
     const shadow = el.shadowRoot!;
     const fieldWrapper = shadow.querySelector('.field-wrapper');
-    const labelInsideWrapper = fieldWrapper!.querySelector('label');
-    expect(labelInsideWrapper).to.equal(null);
+    const label = fieldWrapper!.querySelector('label');
+    expect(label).to.not.equal(null);
   });
 
   it('renders hint when provided', async () => {

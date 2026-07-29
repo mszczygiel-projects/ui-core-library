@@ -178,4 +178,68 @@ describe('LinkButton', () => {
     fireEvent.click(container.querySelector('a')!);
     expect(handleClick).toHaveBeenCalledOnce();
   });
+
+  it('renders leading icon box and separator when leadingIcon is provided', () => {
+    const { container } = render(
+      <LinkButton href="/page" leadingIcon={<span>★</span>}>
+        Click
+      </LinkButton>,
+    );
+    expect(container.querySelector('.ui-button__icon-box--leading')).not.toBeNull();
+    expect(container.querySelector('.ui-button__separator')).not.toBeNull();
+  });
+
+  it('renders trailing icon box and separator when trailingIcon is provided', () => {
+    const { container } = render(
+      <LinkButton href="/page" trailingIcon={<span>→</span>}>
+        Click
+      </LinkButton>,
+    );
+    expect(container.querySelector('.ui-button__icon-box--trailing')).not.toBeNull();
+    expect(container.querySelector('.ui-button__separator')).not.toBeNull();
+  });
+
+  it('renders two separators when both icon boxes are provided', () => {
+    const { container } = render(
+      <LinkButton href="/page" leadingIcon={<span>★</span>} trailingIcon={<span>→</span>}>
+        Click
+      </LinkButton>,
+    );
+    expect(container.querySelectorAll('.ui-button__separator')).toHaveLength(2);
+  });
+
+  it('does not render icon boxes when neither prop is provided', () => {
+    const { container } = render(<LinkButton href="/page">Click</LinkButton>);
+    expect(container.querySelector('.ui-button__icon-box')).toBeNull();
+    expect(container.querySelector('.ui-button__separator')).toBeNull();
+  });
+
+  it('icon boxes have no role or tabIndex — no split mode on LinkButton', () => {
+    const { container } = render(
+      <LinkButton href="/page" leadingIcon={<span>★</span>} trailingIcon={<span>→</span>}>
+        Click
+      </LinkButton>,
+    );
+    const boxes = container.querySelectorAll('.ui-button__icon-box');
+    boxes.forEach((box) => {
+      expect(box.getAttribute('role')).toBeNull();
+      expect(box.getAttribute('tabindex')).toBeNull();
+    });
+  });
+
+  it('content wrapper is rendered', () => {
+    const { container } = render(<LinkButton href="/page">Click</LinkButton>);
+    expect(container.querySelector('.ui-button__content')).not.toBeNull();
+  });
+
+  it('forwards aria-* props to the root anchor, with computed aria-disabled winning', () => {
+    const { container } = render(
+      <LinkButton href="/p" disabled aria-current="page" aria-disabled="false">
+        Go
+      </LinkButton>,
+    );
+    const a = container.querySelector('a')!;
+    expect(a.getAttribute('aria-current')).toBe('page');
+    expect(a.getAttribute('aria-disabled')).toBe('true');
+  });
 });

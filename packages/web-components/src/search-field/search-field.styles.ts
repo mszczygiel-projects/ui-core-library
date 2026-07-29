@@ -27,7 +27,7 @@ export const searchFieldStyles = css`
     margin-inline-end: var(--_padding-inline);
     width: var(--_icon-size);
     height: var(--_icon-size);
-    color: var(--_icon);
+    color: var(--_icon-action);
   }
 
   .clear svg {
@@ -45,11 +45,11 @@ export const searchFieldStyles = css`
   }
 
   .field-wrapper:hover .clear {
-    color: var(--_icon-hover);
+    color: var(--_icon-action-hover);
   }
 
   .field-wrapper:focus-within .clear {
-    color: var(--_icon-active);
+    color: var(--_icon-action-active);
   }
 
   :host([state='success']) .clear {

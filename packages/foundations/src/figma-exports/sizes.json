@@ -37,6 +37,13 @@
           },
           "$type": "number"
         },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
+        },
         "large": {
           "font-size": {
             "$value": {
@@ -59,13 +66,6 @@
             },
             "$type": "string"
           }
-        },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
         }
       },
       "title": {
@@ -1742,19 +1742,19 @@
     }
   },
   "notification": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Themes.radius.md.mobile}",
-        "Desktop": "{Themes.radius.md.desktop}"
-      },
-      "$type": "number"
-    },
     "font-family": {
       "$value": {
         "Mobile": "{Themes.typography.body.font-family}",
         "Desktop": "{Themes.typography.body.font-family}"
       },
       "$type": "string"
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.radius.md}",
+        "Desktop": "{Sizes.radius.md}"
+      },
+      "$type": "number"
     },
     "font-size": {
       "$value": {

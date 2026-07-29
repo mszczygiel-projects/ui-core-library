@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, afterEach } from 'vitest';
 import { render, cleanup, fireEvent } from '@testing-library/react';
-import { Button } from './Button.js';
+import { Button, type ButtonProps } from './Button.js';
 
 afterEach(() => cleanup());
 
@@ -109,5 +109,155 @@ describe('Button', () => {
     );
     fireEvent.click(container.querySelector('button')!);
     expect(handleClick).not.toHaveBeenCalled();
+  });
+
+  it('renders leading icon box and separator when leadingIcon is provided', () => {
+    const { container } = render(<Button leadingIcon={<span>L</span>}>Click</Button>);
+    expect(container.querySelector('.ui-button__icon-box--leading')).not.toBeNull();
+    expect(container.querySelector('.ui-button__separator')).not.toBeNull();
+  });
+
+  it('renders trailing icon box and separator when trailingIcon is provided', () => {
+    const { container } = render(<Button trailingIcon={<span>R</span>}>Click</Button>);
+    expect(container.querySelector('.ui-button__icon-box--trailing')).not.toBeNull();
+    expect(container.querySelector('.ui-button__separator')).not.toBeNull();
+  });
+
+  it('renders two separators when both icon boxes are provided', () => {
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} trailingIcon={<span>R</span>}>
+        Click
+      </Button>,
+    );
+    expect(container.querySelectorAll('.ui-button__separator')).toHaveLength(2);
+  });
+
+  it('does not add split class when onLeadingIconClick is absent', () => {
+    const { container } = render(<Button leadingIcon={<span>L</span>}>Click</Button>);
+    expect(container.querySelector('.ui-button__icon-box--split')).toBeNull();
+  });
+
+  it('adds split class and role=button when onLeadingIconClick is provided', () => {
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onLeadingIconClick={vi.fn()}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading');
+    expect(box?.classList.contains('ui-button__icon-box--split')).toBe(true);
+    expect(box?.getAttribute('role')).toBe('button');
+    expect(box?.getAttribute('tabindex')).toBe('0');
+  });
+
+  it('calls onLeadingIconClick and stops propagation when split leading is clicked', () => {
+    const onLeadingIconClick = vi.fn();
+    const onClick = vi.fn();
+    const { container } = render(
+      <Button
+        leadingIcon={<span>L</span>}
+        onLeadingIconClick={onLeadingIconClick}
+        onClick={onClick}
+      >
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.click(box);
+    expect(onLeadingIconClick).toHaveBeenCalledOnce();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('calls onTrailingIconClick and stops propagation when split trailing is clicked', () => {
+    const onTrailingIconClick = vi.fn();
+    const onClick = vi.fn();
+    const { container } = render(
+      <Button
+        trailingIcon={<span>R</span>}
+        onTrailingIconClick={onTrailingIconClick}
+        onClick={onClick}
+      >
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--trailing')!;
+    fireEvent.click(box);
+    expect(onTrailingIconClick).toHaveBeenCalledOnce();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('click on icon box without split handler propagates to button onClick', () => {
+    const onClick = vi.fn();
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onClick={onClick}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.click(box);
+    expect(onClick).toHaveBeenCalledOnce();
+  });
+
+  it('split mode disabled when button is disabled — no role/tabIndex on icon box', () => {
+    const { container } = render(
+      <Button disabled leadingIcon={<span>L</span>} onLeadingIconClick={vi.fn()}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading');
+    expect(box?.getAttribute('role')).toBeNull();
+    expect(box?.getAttribute('tabindex')).toBeNull();
+  });
+
+  it('calls onLeadingIconClick on Enter key in split mode', () => {
+    const onLeadingIconClick = vi.fn();
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onLeadingIconClick={onLeadingIconClick}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.keyDown(box, { key: 'Enter' });
+    expect(onLeadingIconClick).toHaveBeenCalledOnce();
+  });
+
+  it('calls onLeadingIconClick on Space key in split mode', () => {
+    const onLeadingIconClick = vi.fn();
+    const { container } = render(
+      <Button leadingIcon={<span>L</span>} onLeadingIconClick={onLeadingIconClick}>
+        Click
+      </Button>,
+    );
+    const box = container.querySelector('.ui-button__icon-box--leading')!;
+    fireEvent.keyDown(box, { key: ' ' });
+    expect(onLeadingIconClick).toHaveBeenCalledOnce();
+  });
+
+  it('forwards aria-* props to the root button', () => {
+    const { container } = render(
+      <Button aria-expanded={false} aria-haspopup="dialog" aria-controls="panel-1">
+        Click
+      </Button>,
+    );
+    const btn = container.querySelector('button')!;
+    expect(btn.getAttribute('aria-expanded')).toBe('false');
+    expect(btn.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(btn.getAttribute('aria-controls')).toBe('panel-1');
+  });
+
+  it('component-managed aria-busy wins over a forwarded value while loading', () => {
+    const { container } = render(
+      <Button loading aria-busy="false">
+        Click
+      </Button>,
+    );
+    expect(container.querySelector('button')!.getAttribute('aria-busy')).toBe('true');
+  });
+
+  it('non-aria unknown props never reach the DOM', () => {
+    const rogue = { 'data-rogue': 'x', id: 'nope' } as unknown as ButtonProps;
+    const { container } = render(<Button {...rogue}>Click</Button>);
+    const btn = container.querySelector('button')!;
+    expect(btn.hasAttribute('data-rogue')).toBe(false);
+    expect(btn.hasAttribute('id')).toBe(false);
   });
 });

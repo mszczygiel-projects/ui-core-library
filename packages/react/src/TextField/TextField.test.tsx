@@ -67,18 +67,25 @@ describe('TextField', () => {
     expect(container.firstElementChild!.classList.contains('ui-text-field--floating')).toBe(true);
   });
 
-  it('underlined always uses floating label', () => {
+  it('underlined with top labelPlacement renders top label (no floating class)', () => {
     const { container } = render(
       <TextField variant="underlined" label="Name" labelPlacement="top" />,
+    );
+    expect(container.firstElementChild!.classList.contains('ui-text-field--floating')).toBe(false);
+  });
+
+  it('underlined with floating labelPlacement renders floating label', () => {
+    const { container } = render(
+      <TextField variant="underlined" label="Name" labelPlacement="floating" />,
     );
     expect(container.firstElementChild!.classList.contains('ui-text-field--floating')).toBe(true);
   });
 
-  it('filled always uses top label', () => {
+  it('filled with floating labelPlacement renders floating label', () => {
     const { container } = render(
       <TextField variant="filled" label="Name" labelPlacement="floating" />,
     );
-    expect(container.firstElementChild!.classList.contains('ui-text-field--floating')).toBe(false);
+    expect(container.firstElementChild!.classList.contains('ui-text-field--floating')).toBe(true);
   });
 
   it('renders hint when provided', () => {

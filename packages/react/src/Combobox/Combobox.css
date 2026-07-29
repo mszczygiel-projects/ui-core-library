@@ -1,0 +1,370 @@
+@import "../styles/control-field.css";
+
+.ui-combobox {
+  display: block;
+  font-family: var(--control-font-family);
+  font-weight: var(--control-font-weight);
+  letter-spacing: var(--control-letter-spacing);
+}
+
+.ui-combobox--state-disabled {
+  cursor: not-allowed;
+}
+
+/* ---- Label ---- */
+
+.ui-combobox__label {
+  display: block;
+  margin-block-end: var(--spacing-2);
+  font-size: var(--control-label-font-size);
+  line-height: var(--control-label-line-height);
+  font-weight: var(--control-label-font-weight);
+  text-transform: var(--control-label-text-transform);
+  font-family: var(--control-label-font-family);
+  letter-spacing: var(--control-label-letter-spacing);
+  color: var(--_label);
+}
+
+.ui-combobox--open .ui-combobox__label {
+  color: var(--_label-active);
+}
+
+.ui-combobox--state-success .ui-combobox__label {
+  color: var(--_label-success);
+}
+
+.ui-combobox--state-error .ui-combobox__label {
+  color: var(--_label-error);
+}
+
+.ui-combobox--state-disabled .ui-combobox__label {
+  color: var(--_label-disabled);
+}
+
+/* ---- Field ---- */
+
+.ui-combobox__field-container {
+  position: relative;
+}
+
+/*
+ * The field box is a plain div rather than a button: the interactive element
+ * is the input inside it, which owns the combobox role and its ARIA.
+ */
+.ui-combobox__field {
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-2);
+  width: 100%;
+  cursor: text;
+
+  padding-block: var(--_padding-stack);
+  padding-inline: var(--_padding-inline);
+
+  background-color: var(--_bg);
+  border: var(--_border-width) solid var(--_border);
+  border-radius: var(--_radius);
+
+  transition:
+    background-color var(--duration-150) ease,
+    border-color var(--duration-150) ease;
+}
+
+.ui-combobox__field:hover {
+  background-color: var(--_bg-hover);
+  border-color: var(--_border-hover);
+}
+
+.ui-combobox--open .ui-combobox__field,
+.ui-combobox__field:focus-within {
+  background-color: var(--_bg-active);
+  border-color: var(--_border-active);
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-combobox--state-success .ui-combobox__field {
+  background-color: var(--_bg-success);
+  border-color: var(--_border-success);
+}
+
+.ui-combobox--state-error .ui-combobox__field {
+  background-color: var(--_bg-error);
+  border-color: var(--_border-error);
+}
+
+.ui-combobox--state-disabled .ui-combobox__field {
+  background-color: var(--_bg-disabled);
+  border-color: var(--_border-disabled);
+  cursor: not-allowed;
+}
+
+/* Underlined: bottom border only, no radius */
+
+.ui-combobox--underlined {
+  --_padding-inline: 0px;
+}
+
+.ui-combobox--underlined .ui-combobox__field {
+  border: none;
+  border-bottom: var(--control-underlined-border-width-default) solid var(--_border);
+  border-radius: 0;
+}
+
+.ui-combobox--underlined .ui-combobox__field:hover {
+  border-bottom-color: var(--_border-hover);
+  border-bottom-width: var(--control-underlined-border-width-hover);
+}
+
+.ui-combobox--underlined.ui-combobox--open .ui-combobox__field,
+.ui-combobox--underlined .ui-combobox__field:focus-within {
+  border-bottom-color: var(--_border-active);
+  border-bottom-width: var(--control-underlined-border-width-active);
+  outline: none;
+}
+
+.ui-combobox--underlined.ui-combobox--state-success .ui-combobox__field {
+  border-bottom-color: var(--_border-success);
+  border-bottom-width: var(--control-underlined-border-width-success);
+}
+
+.ui-combobox--underlined.ui-combobox--state-error .ui-combobox__field {
+  border-bottom-color: var(--_border-error);
+  border-bottom-width: var(--control-underlined-border-width-error);
+}
+
+.ui-combobox--underlined.ui-combobox--state-disabled .ui-combobox__field {
+  border-bottom-width: var(--control-underlined-border-width-disabled);
+}
+
+/* ---- Leading icon ---- */
+
+.ui-combobox__leading-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  /* Aligns with the first chip row when the field grows. */
+  margin-block-start: calc((var(--size-6) - var(--_icon-size)) / 2);
+  color: var(--_icon);
+}
+
+.ui-combobox__leading-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-combobox__field:hover .ui-combobox__leading-icon {
+  color: var(--_icon-hover);
+}
+
+.ui-combobox--open .ui-combobox__leading-icon {
+  color: var(--_icon-active);
+}
+
+.ui-combobox--state-error .ui-combobox__leading-icon {
+  color: var(--_icon-error);
+}
+
+.ui-combobox--state-success .ui-combobox__leading-icon {
+  color: var(--_icon-success);
+}
+
+.ui-combobox--state-disabled .ui-combobox__leading-icon {
+  color: var(--_icon-disabled);
+}
+
+/* ---- Content: chips + input ---- */
+
+.ui-combobox__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--combobox-chips-gap);
+  flex: 1;
+  min-width: 0;
+}
+
+/* Chips wrap in their own row; the query keeps a line of its own below. */
+.ui-combobox__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--combobox-chips-gap);
+}
+
+/* ---- Input ---- */
+
+.ui-combobox__input {
+  all: unset;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  font-family: var(--control-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--control-font-weight);
+  line-height: var(--size-6);
+  letter-spacing: var(--control-letter-spacing);
+  color: var(--_text);
+  cursor: text;
+}
+
+.ui-combobox__input::placeholder {
+  color: var(--_placeholder);
+}
+
+.ui-combobox__field:hover .ui-combobox__input::placeholder {
+  color: var(--_placeholder-hover);
+}
+
+.ui-combobox--open .ui-combobox__input::placeholder {
+  color: var(--_placeholder-active);
+}
+
+.ui-combobox--state-disabled .ui-combobox__input {
+  color: var(--_text-disabled);
+  cursor: not-allowed;
+}
+
+.ui-combobox--state-disabled .ui-combobox__input::placeholder {
+  color: var(--_placeholder-disabled);
+}
+
+/* ---- Trailing area (clear + chevron) ---- */
+
+.ui-combobox__trailing {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-1);
+  flex-shrink: 0;
+  /* Aligns with the first chip row when the field grows. */
+  margin-block-start: calc((var(--size-6) - var(--_icon-size)) / 2);
+  margin-inline-end: calc(var(--_padding-inline) * -0.5);
+}
+
+.ui-combobox--underlined .ui-combobox__trailing {
+  margin-inline-end: 0;
+}
+
+.ui-combobox__clear {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  cursor: pointer;
+  color: var(--_icon-action);
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.ui-combobox__clear:focus-visible {
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-combobox__clear svg,
+.ui-combobox__chevron svg {
+  display: inline-flex;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  color: inherit;
+}
+
+.ui-combobox__chevron {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--_icon-size);
+  height: var(--_icon-size);
+  color: var(--_icon-action);
+  flex-shrink: 0;
+}
+
+.ui-combobox__field:hover .ui-combobox__clear,
+.ui-combobox__field:hover .ui-combobox__chevron {
+  color: var(--_icon-action-hover);
+}
+
+.ui-combobox--open .ui-combobox__chevron,
+.ui-combobox--open .ui-combobox__clear {
+  color: var(--_icon-action-active);
+}
+
+.ui-combobox--state-error .ui-combobox__chevron,
+.ui-combobox--state-error .ui-combobox__clear {
+  color: var(--_icon-error);
+}
+
+.ui-combobox--state-success .ui-combobox__chevron,
+.ui-combobox--state-success .ui-combobox__clear {
+  color: var(--_icon-success);
+}
+
+.ui-combobox--state-disabled .ui-combobox__chevron,
+.ui-combobox--state-disabled .ui-combobox__clear {
+  color: var(--_icon-disabled);
+}
+
+/* ---- Floating list ---- */
+
+/*
+ * The panel chrome lives on the listbox (select-dropdown-* tokens), so the
+ * popover contributes positioning only — otherwise two surfaces would stack.
+ */
+.ui-combobox__popover {
+  display: block;
+  width: 100%;
+}
+
+.ui-combobox__popover .ui-popover__anchor {
+  display: block;
+  width: 100%;
+}
+
+.ui-combobox__popover .ui-popover__panel {
+  width: var(--ui-combobox-dropdown-width, auto);
+  background: none;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.ui-combobox__popover .ui-popover__content {
+  padding: 0;
+}
+
+/* ---- Hint ---- */
+
+.ui-combobox__hint {
+  display: block;
+  margin: 0;
+  margin-block-start: var(--spacing-2);
+  font-size: var(--control-hint-font-size);
+  line-height: var(--control-hint-line-height);
+  font-weight: var(--control-hint-font-weight);
+  color: var(--_hint);
+}
+
+.ui-combobox--state-success .ui-combobox__hint {
+  color: var(--_hint-success);
+}
+
+.ui-combobox--state-error .ui-combobox__hint {
+  color: var(--_hint-error);
+}
+
+.ui-combobox--state-disabled .ui-combobox__hint {
+  color: var(--_hint-disabled);
+}
+
+/* ---- Reduced motion ---- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ui-combobox__field {
+    transition: none;
+  }
+}

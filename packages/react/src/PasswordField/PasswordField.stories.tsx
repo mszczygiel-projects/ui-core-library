@@ -16,7 +16,7 @@ const meta: Meta<typeof PasswordField> = {
     },
     labelPlacement: {
       control: 'select',
-      options: ['top', 'floating'],
+      options: ['top', 'floating', 'inner'],
     },
     state: {
       control: 'select',
@@ -40,45 +40,38 @@ const meta: Meta<typeof PasswordField> = {
 export default meta;
 type Story = StoryObj<typeof PasswordField>;
 
-export const Default: Story = {};
+export const Outline: Story = {};
 
-export const Sizes: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <PasswordField size="small" label="Small" placeholder="Small password input" />
-      <PasswordField size="default" label="Default" placeholder="Default password input" />
-      <PasswordField size="large" label="Large" placeholder="Large password input" />
-    </div>
-  ),
+export const Filled: Story = {
+  args: { variant: 'filled' },
 };
 
-export const States: Story = {
-  render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 }}>
-      <PasswordField state="default" label="Default" placeholder="Default state" />
-      <PasswordField
-        state="success"
-        label="Success"
-        placeholder="Success state"
-        hint="Password is strong."
-      />
-      <PasswordField
-        state="error"
-        label="Error"
-        placeholder="Error state"
-        hint="Minimum of 8 characters."
-      />
-      <PasswordField state="disabled" label="Disabled" placeholder="Disabled state" />
-    </div>
-  ),
+export const Underlined: Story = {
+  args: { variant: 'underlined' },
 };
 
-export const WithHint: Story = {
-  args: { hint: 'Minimum of 8 characters.' },
+export const OutlineInnerLabel: Story = {
+  args: { labelPlacement: 'inner' },
 };
 
-export const FloatingLabel: Story = {
+export const FilledInnerLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'inner' },
+};
+
+export const UnderlinedInnerLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'inner' },
+};
+
+export const OutlineFloatingLabel: Story = {
   args: { labelPlacement: 'floating', placeholder: '' },
+};
+
+export const FilledFloatingLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'floating', placeholder: '' },
+};
+
+export const UnderlinedFloatingLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'floating', placeholder: '' },
 };
 
 export const Controlled: Story = {

@@ -8,6 +8,7 @@ import {
   buildReactComponent,
   ensureIconPrefixInSvgFilenames,
 } from './icons-transformer.ts';
+import { REQUIRED_ICONS, missingRequiredIcons } from './required-icons.ts';
 
 // ─── Test helpers ─────────────────────────────────────────────────────────────
 
@@ -365,5 +366,70 @@ describe('buildIcons integration — dist output', async () => {
     expect(fs.existsSync(path.join(svgDir, 'search.svg'))).toBe(false);
     const content = fs.readFileSync(path.join(distDir, 'svg-map.js'), 'utf8');
     expect(content).toContain('"icon-search"');
+  });
+});
+
+describe('required-icons contract', () => {
+  it('reports nothing missing when the set covers the contract', () => {
+    expect(missingRequiredIcons(REQUIRED_ICONS)).toEqual([]);
+  });
+
+  it('reports nothing missing when the set is a superset', () => {
+    expect(missingRequiredIcons([...REQUIRED_ICONS, 'icon-rocket'])).toEqual([]);
+  });
+
+  it('lists every missing icon, in contract order', () => {
+    const partial = REQUIRED_ICONS.filter((n) => n !== 'icon-calendar' && n !== 'icon-search');
+    expect(missingRequiredIcons(partial)).toEqual(['icon-calendar', 'icon-search']);
+  });
+
+  it('reports the whole contract as missing for an empty set', () => {
+    expect(missingRequiredIcons([])).toEqual([...REQUIRED_ICONS]);
+  });
+
+  it('covers every icon the shipped component packages use', () => {
+    // Guards against a component starting to use an icon without extending the
+    // contract — the failure this whole mechanism exists to prevent.
+    //
+    // Both surfaces are scanned deliberately: `svgMap[…]` keys on the Lit side
+    // (including computed ones like `svgMap[x ? 'icon-minus' : 'icon-plus']`)
+    // and the named React imports. A bare /'icon-[a-z-]+'/ sweep would be wrong
+    // here — it also matches CSS class names such as `icon-box--leading`.
+    const used = new Set<string>();
+
+    const kebab = (component: string) =>
+      component.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+
+    const collect = (src: string) => {
+      for (const expr of src.matchAll(/svgMap\[([^\]]*)\]/g)) {
+        for (const lit of expr[1].matchAll(/'(icon-[a-z0-9-]+)'/g)) used.add(lit[1]);
+      }
+      const importRe =
+        /import\s*\{([^}]*)\}\s*from\s*'@mszczygiel-projects\/ui-core-icons\/react'/g;
+      for (const block of src.matchAll(importRe)) {
+        for (const name of block[1].matchAll(/\bIcon[A-Z][A-Za-z0-9]*/g)) used.add(kebab(name[0]));
+      }
+    };
+
+    const walk = (dir: string) => {
+      for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const full = path.join(dir, entry.name);
+        if (entry.isDirectory()) {
+          walk(full);
+          continue;
+        }
+        if (!/\.tsx?$/.test(entry.name)) continue;
+        if (/\.(test|stories)\.tsx?$/.test(entry.name)) continue;
+        collect(fs.readFileSync(full, 'utf8'));
+      }
+    };
+    walk(path.resolve(__dirname, '../../web-components/src'));
+    walk(path.resolve(__dirname, '../../react/src'));
+
+    // Sanity: the scan must actually find something, or it proves nothing.
+    expect(used.size).toBeGreaterThan(10);
+
+    const uncovered = [...used].filter((n) => !REQUIRED_ICONS.includes(n as never)).sort();
+    expect(uncovered).toEqual([]);
   });
 });

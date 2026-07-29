@@ -32,7 +32,7 @@ Use `defaultValue` in uncontrolled mode to restore the initial value on `form.re
 | `variant`            | `'outline' \| 'filled' \| 'underlined'`           | `'outline'` | Visual style                                   |
 | `size`               | `'small' \| 'default' \| 'large'`                 | `'default'` | Field size                                     |
 | `label`              | `string`                                          | —           | Label text                                     |
-| `labelPlacement`     | `'top' \| 'floating'`                             | —           | Label placement                                |
+| `labelPlacement`     | `'top' \| 'floating' \| 'inner'`                  | `'top'`     | Label placement                                |
 | `placeholder`        | `string`                                          | —           | Placeholder text                               |
 | `value`              | `string`                                          | —           | Controlled value                               |
 | `defaultValue`       | `string`                                          | —           | Initial uncontrolled value                     |

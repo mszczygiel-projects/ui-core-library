@@ -86,4 +86,13 @@ describe('IconButton', () => {
     fireEvent.click(container.querySelector('button')!);
     expect(handleClick).not.toHaveBeenCalled();
   });
+
+  it('forwards aria-* props to the root button', () => {
+    const { container } = render(
+      <IconButton aria-label="Menu" aria-expanded aria-controls="menu-1" />,
+    );
+    const btn = container.querySelector('button')!;
+    expect(btn.getAttribute('aria-expanded')).toBe('true');
+    expect(btn.getAttribute('aria-controls')).toBe('menu-1');
+  });
 });

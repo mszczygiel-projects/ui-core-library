@@ -1,9 +1,11 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import './search-field.js';
 
 const meta: Meta = {
   title: 'Web Components/SearchField',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-search-field' as unknown as ComponentType,
   argTypes: {
     variant: {
       control: 'select',
@@ -13,10 +15,15 @@ const meta: Meta = {
       control: 'select',
       options: ['small', 'default', 'large'],
     },
+    labelPlacement: {
+      control: 'select',
+      options: ['top', 'floating', 'inner'],
+    },
     state: {
       control: 'select',
       options: ['default', 'success', 'error', 'disabled'],
     },
+    label: { control: 'text' },
     placeholder: { control: 'text' },
     hint: { control: 'text' },
     value: { control: 'text' },
@@ -25,7 +32,9 @@ const meta: Meta = {
   args: {
     variant: 'outline',
     size: 'default',
+    labelPlacement: 'top',
     state: 'default',
+    label: 'Search',
     placeholder: 'Search...',
     disabled: false,
   },
@@ -37,7 +46,9 @@ type Story = StoryObj;
 type SearchFieldArgs = {
   variant?: string;
   size?: string;
+  labelPlacement?: string;
   state?: string;
+  label?: string;
   placeholder?: string;
   hint?: string;
   value?: string;
@@ -48,64 +59,55 @@ const input = (props: SearchFieldArgs = {}) =>
   createElement('ui-search-field', {
     variant: props.variant,
     'data-size': props.size,
+    'label-placement': props.labelPlacement,
     state: props.state,
+    label: props.label,
     placeholder: props.placeholder,
     hint: props.hint,
     value: props.value,
     disabled: props.disabled || undefined,
   });
 
-export const Default: Story = {
+export const Outline: Story = {
   render: (args: SearchFieldArgs) => input(args),
 };
 
-export const WithValue: Story = {
-  args: { value: 'Szczygieł Tartt' },
+export const Filled: Story = {
+  args: { variant: 'filled' },
   render: (args: SearchFieldArgs) => input(args),
 };
 
-export const WithHint: Story = {
-  args: { hint: 'Minimum of 8 characters.' },
+export const Underlined: Story = {
+  args: { variant: 'underlined' },
   render: (args: SearchFieldArgs) => input(args),
 };
 
-export const Sizes: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 } },
-      input({ size: 'small', placeholder: 'Search...' }),
-      input({ size: 'default', placeholder: 'Search...' }),
-      input({ size: 'large', placeholder: 'Search...' }),
-    ),
+export const OutlineInnerLabel: Story = {
+  args: { labelPlacement: 'inner' },
+  render: (args: SearchFieldArgs) => input(args),
 };
 
-export const AllSizes: Story = {
-  args: {
-    variant: 'outline',
-  },
-
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', maxWidth: 480 } },
-      input({ size: 'small', placeholder: 'Search...' }),
-      input({ size: 'small', value: 'Szczygieł Tartt' }),
-      input({ size: 'default', placeholder: 'Search...' }),
-      input({ size: 'default', value: 'Szczygieł Tartt' }),
-      input({ size: 'large', placeholder: 'Search...' }),
-      input({ size: 'large', value: 'Szczygieł Tartt' }),
-    ),
+export const FilledInnerLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'inner' },
+  render: (args: SearchFieldArgs) => input(args),
 };
 
-export const States: Story = {
-  render: () =>
-    createElement(
-      'div',
-      { style: { display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: 320 } },
-      input({ state: 'default', placeholder: 'Default state' }),
-      input({ state: 'success', placeholder: 'Success state', hint: 'Results found.' }),
-      input({ state: 'error', placeholder: 'Error state', hint: 'No results found.' }),
-      input({ state: 'disabled', placeholder: 'Disabled state' }),
-    ),
+export const UnderlinedInnerLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'inner' },
+  render: (args: SearchFieldArgs) => input(args),
+};
+
+export const OutlineFloatingLabel: Story = {
+  args: { labelPlacement: 'floating', placeholder: '' },
+  render: (args: SearchFieldArgs) => input(args),
+};
+
+export const FilledFloatingLabel: Story = {
+  args: { variant: 'filled', labelPlacement: 'floating', placeholder: '' },
+  render: (args: SearchFieldArgs) => input(args),
+};
+
+export const UnderlinedFloatingLabel: Story = {
+  args: { variant: 'underlined', labelPlacement: 'floating', placeholder: '' },
+  render: (args: SearchFieldArgs) => input(args),
 };

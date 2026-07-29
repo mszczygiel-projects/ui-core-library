@@ -37,7 +37,7 @@ The current `value` is included in `FormData` under `name`.
 | `variant`        | `variant`         | `'outline' \| 'filled' \| 'underlined'`           | `'outline'` |
 | `size`           | `data-size`       | `'small' \| 'default' \| 'large'`                 | `'default'` |
 | `label`          | `label`           | `string`                                          | —           |
-| `labelPlacement` | `label-placement` | `'top' \| 'floating'`                             | `'top'`     |
+| `labelPlacement` | `label-placement` | `'top' \| 'floating' \| 'inner'`                  | `'top'`     |
 | `placeholder`    | `placeholder`     | `string`                                          | `''`        |
 | `value`          | `value`           | `string`                                          | `''`        |
 | `hint`           | `hint`            | `string`                                          | —           |

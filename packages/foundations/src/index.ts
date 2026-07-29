@@ -1,5 +1,11 @@
 export { tokens } from './tokens.js';
 export type { TokenKey } from './tokens.js';
 
-export { getUiCoreConfig } from './config.js';
-export type { UiCoreConfig, LoaderVariant, IconSet } from './config.js';
+export { configureUiCore, getUiCoreConfig, resetUiCoreLabels, defaultLabels } from './config.js';
+export type {
+  UiCoreConfig,
+  UiCoreConfigOverrides,
+  UiCoreLabels,
+  UiCoreLabelsOverrides,
+  LoaderVariant,
+} from './config.js';

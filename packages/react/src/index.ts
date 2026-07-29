@@ -19,14 +19,57 @@ export type {
   TextFieldState,
   TextFieldLabelPlacement,
 } from './TextField/TextField.js';
+export { TextareaField } from './TextareaField/TextareaField.js';
+export type {
+  TextareaFieldProps,
+  TextareaFieldVariant,
+  TextareaFieldSize,
+  TextareaFieldState,
+  TextareaFieldLabelPlacement,
+  TextareaFieldResize,
+} from './TextareaField/TextareaField.js';
 export { PasswordField } from './PasswordField/PasswordField.js';
 export type { PasswordFieldProps } from './PasswordField/PasswordField.js';
 export { SearchField } from './SearchField/SearchField.js';
 export type { SearchFieldProps } from './SearchField/SearchField.js';
+export { NumberField } from './NumberField/NumberField.js';
+export type {
+  NumberFieldProps,
+  NumberFieldVariant,
+  NumberFieldSize,
+  NumberFieldState,
+  NumberFieldLabelPlacement,
+  NumberFieldControls,
+} from './NumberField/NumberField.js';
 export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';
 export type { RadioFieldProps, RadioFieldState } from './RadioField/RadioField.js';
+export { SwitchField } from './SwitchField/SwitchField.js';
+export type {
+  SwitchFieldProps,
+  SwitchFieldState,
+  SwitchFieldLabelPosition,
+} from './SwitchField/SwitchField.js';
+export { Listbox } from './Listbox/Listbox.js';
+export type { ListboxProps, ListboxSize } from './Listbox/Listbox.js';
+export {
+  buildRows,
+  flattenOptions,
+  isGroupedItems,
+  isOptionSelected,
+  toggleValue,
+  nextEnabledRow,
+  firstEnabledRow,
+  rowIndexOfValue,
+  listboxOptionId,
+} from './Listbox/listbox-navigation.js';
+export type {
+  ListboxOption,
+  ListboxOptionGroup,
+  ListboxItems,
+  ListboxRow,
+} from './Listbox/listbox-navigation.js';
 export { SelectField } from './SelectField/SelectField.js';
 export type {
   SelectFieldProps,
@@ -35,3 +78,75 @@ export type {
   SelectFieldState,
   SelectOption,
 } from './SelectField/SelectField.js';
+export { Combobox } from './Combobox/Combobox.js';
+export type {
+  ComboboxProps,
+  ComboboxVariant,
+  ComboboxSize,
+  ComboboxState,
+  ComboboxFilterMode,
+  ComboboxOption,
+  ComboboxOptionGroup,
+} from './Combobox/Combobox.js';
+export { Notification } from './Notification/Notification.js';
+export type {
+  NotificationProps,
+  NotificationStatus,
+  NotificationVariant,
+} from './Notification/Notification.js';
+export { Badge } from './Badge/Badge.js';
+export type {
+  BadgeProps,
+  BadgeVariant,
+  BadgeAppearance,
+  BadgeSize,
+  BadgeShape,
+} from './Badge/Badge.js';
+export { Chip } from './Chip/Chip.js';
+export type { ChipProps, ChipVariant, ChipAppearance, ChipSize } from './Chip/Chip.js';
+export { Popover } from './Popover/Popover.js';
+export type {
+  PopoverProps,
+  PopoverPlacement,
+  PopoverTrigger,
+  PopoverDismiss,
+  PopoverOpenChangeReason,
+  PopoverOpenChangeDetail,
+} from './Popover/Popover.js';
+export { Calendar } from './Calendar/Calendar.js';
+export type {
+  CalendarProps,
+  CalendarSelectionMode,
+  CalendarDateSelectDetail,
+  CalendarMonthChangeDetail,
+} from './Calendar/Calendar.js';
+export { DatePicker } from './DatePicker/DatePicker.js';
+export type {
+  DatePickerProps,
+  DatePickerDateChangeDetail,
+  DatePickerRangeChangeDetail,
+  DatePickerOpenChangeDetail,
+  DatePickerOpenChangeReason,
+} from './DatePicker/DatePicker.js';
+export { DateField } from './DateField/DateField.js';
+export type { DateFieldProps, DateFieldChangeDetail } from './DateField/DateField.js';
+export { Pagination } from './Pagination/Pagination.js';
+export type { PaginationProps, PaginationEntry } from './Pagination/Pagination.js';
+export { useDragDismiss } from './hooks/useDragDismiss.js';
+export type { DragDismissDirection, UseDragDismissOptions } from './hooks/useDragDismiss.js';
+export { Dialog } from './Dialog/Dialog.js';
+export type {
+  DialogProps,
+  DialogSize,
+  DialogVariant,
+  DialogDismiss,
+  DialogOpenChangeReason,
+  DialogOpenChangeDetail,
+} from './Dialog/Dialog.js';
+export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs.js';
+export type {
+  BreadcrumbsProps,
+  BreadcrumbsItem,
+  BreadcrumbsSize,
+  BreadcrumbsSeparator,
+} from './Breadcrumbs/Breadcrumbs.js';

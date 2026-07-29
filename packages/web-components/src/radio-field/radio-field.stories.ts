@@ -1,9 +1,11 @@
-import { createElement } from 'react';
+import { createElement, type ComponentType } from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import './radio-field.js';
 
 const meta: Meta = {
   title: 'Web Components/RadioField',
+  // Tag-name string routes autodocs to the CEM extractor (see .storybook/preview.ts).
+  component: 'ui-radio-field' as unknown as ComponentType,
   argTypes: {
     state: {
       control: 'select',

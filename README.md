@@ -151,6 +151,121 @@ Per-client brand overrides go on `:root` after the imports:
 }
 ```
 
+## Theming — `data-theme`
+
+Every mode of the Figma `Themes` collection is generated as its own attribute selector, so
+one attribute on `<html>` (or any container) switches the whole subtree:
+
+```html
+<html data-theme="dark">
+  <!-- everything below renders in the Dark theme -->
+</html>
+```
+
+```ts
+document.documentElement.dataset.theme = 'dark';
+delete document.documentElement.dataset.theme; // back to the default theme
+```
+
+| Figma mode    | Attribute value     |
+| ------------- | ------------------- |
+| `Default`     | `default` (or none) |
+| `Dark`        | `dark`              |
+| `DarkGreen`   | `dark-green`        |
+| `TenantLight` | `tenant-light`      |
+
+The mode name is kebab-cased: camelCase is split, spaces and underscores become hyphens.
+The Core library ships `Default` and `Dark`; a project generating tokens from its own Figma
+file (see below) gets a selector for **every** mode in that file, with no build changes.
+
+**Theme vs. surface.** `data-theme` picks the palette; `data-surface` picks a context
+_within_ the current theme. They compose — `data-surface="inverse"` inside `data-theme="dark"`
+is the dark theme's inverse surface, not the light one.
+
+**System dark mode.** `Dark` is additionally mirrored into
+`@media (prefers-color-scheme: dark)`, scoped so it only applies when no `data-theme` is set.
+The OS setting is therefore the default, and an explicit attribute always wins —
+`data-theme="default"` forces the light theme even on a dark OS. Generate with
+`--no-auto-dark` to drop the mirror entirely in a project that always sets the attribute.
+
+## Runtime configuration — `configureUiCore()`
+
+Call it **once at app boot**, before anything renders. The config is a plain module-level object, so components read it as they render — React does not re-render a component that already read a value.
+
+```ts
+import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations';
+
+configureUiCore({
+  locale: 'pl-PL',
+  labels: {
+    dialog: { close: 'Zamknij okno' },
+    pagination: { item: (page) => `Strona ${page}` },
+  },
+});
+```
+
+| Option          | Type                    | Default     | What it does                                                    |
+| --------------- | ----------------------- | ----------- | --------------------------------------------------------------- |
+| `labels`        | `UiCoreLabelsOverrides` | English     | Every UI string the components render on their own — see below  |
+| `locale`        | `string`                | `''`        | BCP 47 tag for formatting dates the components own              |
+| `loaderVariant` | `'spinner'`             | `'spinner'` | Spinner style used by `Loader` and every button's loading state |
+
+### UI text (`labels`)
+
+**Components never own translated text.** Every string one can render on its own has an English default in the library and is replaced by your i18n stack — either globally here, or per instance via a prop.
+
+Merging is **per leaf**: overriding `labels.listbox.empty` leaves `create` and `loading` on their English defaults.
+
+A label is a **plain string** when it is fully static, and a **function** when it contains a variable — the whole sentence belongs to the translator, because word order differs between languages:
+
+```ts
+configureUiCore({
+  labels: {
+    searchField: { clear: 'Wyczyść' }, // static  → string
+    combobox: { removeChip: (option) => `Usuń ${option}` }, // dynamic → function
+  },
+});
+```
+
+Every label also has a matching per-instance prop that wins over the global config, with the same type:
+
+```tsx
+<Dialog closeLabel="Zamknij" />
+<Pagination getItemAriaLabel={(page) => `Strona ${page}`} />
+```
+
+```html
+<ui-dialog close-label="Zamknij"></ui-dialog>
+```
+
+The full list of paths lives in `UiCoreLabels` in [`packages/foundations/src/config.ts`](packages/foundations/src/config.ts) — it is exported, so your i18n layer can type against it:
+
+```ts
+import type { UiCoreLabels, UiCoreLabelsOverrides } from '@mszczygiel-projects/ui-core-foundations';
+```
+
+### Dates and numbers (`locale`)
+
+`locale` affects only the data a component formats itself — Calendar's day names and cell labels, DateField's display and parsing. It never affects UI copy, which always comes from `labels`.
+
+Resolution order, most specific first:
+
+```
+component prop  ??  configureUiCore({ locale })  ??  navigator.language  ??  'en-US'
+```
+
+Leaving it empty (the default) keeps the runtime locale in charge.
+
+**Pluralization, date and number formatting of your own data are out of scope.** The library never embeds `Intl` logic for copy and never picks a plural form — pass pre-formatted strings, or a formatter callback prop.
+
+### RTL
+
+There is no `dir` option. The components' CSS uses logical properties throughout, so right-to-left works from the native HTML attribute:
+
+```html
+<html dir="rtl"></html>
+```
+
 ## Generating your own tokens / icons
 
 Both `@mszczygiel-projects/ui-core-foundations` and `@mszczygiel-projects/ui-core-icons` ship a CLI so a consumer project can regenerate `tokens.css` / `tailwind.css` / `tokens.ts` from its own Luckino export, or build an icon set from its own SVG sources.
@@ -161,6 +276,9 @@ pnpm exec ui-core-foundations build \
   --input ./figma-exports \
   --output ./src/generated/foundations
 
+# …add --no-auto-dark if the project always drives the theme from data-theme
+# and does not want the prefers-color-scheme fallback for the Dark mode.
+
 # Icons — input dir must contain icon-*.svg files.
 pnpm exec ui-core-icons build \
   --input ./brand-icons \
@@ -169,14 +287,85 @@ pnpm exec ui-core-icons build \
 
 The generated `tokens.css` / `tailwind.css` are drop-in replacements for the versions exported from the package — import them instead when the project needs its own brand tokens. The generated `svg-map.js` and `react/` folder likewise replace the default icon set.
 
+### Using your own icon set inside the components
+
+Tokens and icons are both replaceable, but they bind at different moments. A token is late-bound: the browser resolves `var(--color-brand-primary)` at paint time, so a `:root` override is enough. An icon is **early-bound by the bundler**, so swapping the set the components use is a build-time alias, not a runtime option — there is deliberately no `iconSet` config field.
+
+This works because the published `dist` keeps the bare specifier rather than inlining the SVG:
+
+```js
+import { svgMap } from '@mszczygiel-projects/ui-core-icons'; // Lit
+import { IconClose } from '@mszczygiel-projects/ui-core-icons/react'; // React
+```
+
+`@mszczygiel-projects/ui-core-icons` is a **peer dependency** of both component packages, so your app owns the single installed copy and an alias reliably reaches the components' own imports.
+
+**1. Generate a set from your SVGs** with the CLI above. The build fails if your sources do not cover every icon the components render themselves.
+
+**2. Point the bundler at it.**
+
+```ts
+// vite.config.ts
+export default {
+  resolve: {
+    alias: {
+      '@mszczygiel-projects/ui-core-icons/react': '/src/generated/icons/react/index.js',
+      '@mszczygiel-projects/ui-core-icons': '/src/generated/icons/svg-map.js',
+    },
+  },
+};
+```
+
+```js
+// webpack.config.js — longest specifier first, same as Vite
+module.exports = {
+  resolve: {
+    alias: {
+      '@mszczygiel-projects/ui-core-icons/react': path.resolve(
+        __dirname,
+        'src/generated/icons/react/index.js',
+      ),
+      '@mszczygiel-projects/ui-core-icons$': path.resolve(
+        __dirname,
+        'src/generated/icons/svg-map.js',
+      ),
+    },
+  },
+};
+```
+
+Order matters: the `/react` entry must come first, or the shorter key swallows it.
+
+#### The contract
+
+A replacement set must provide **14 icons** — as `icon-*` keys in `svgMap`, and as the matching PascalCase React exports (`icon-eye-slash` → `IconEyeSlash`):
+
+```
+calendar · check · chevron-down · chevron-left · chevron-right · chevron-up
+close · danger · eye · eye-slash · info · minus · plus · search
+```
+
+The list is published, so your own tooling can type against it instead of copying it:
+
+```ts
+import { REQUIRED_ICONS } from '@mszczygiel-projects/ui-core-icons/required-icons';
+import type { RequiredIconName } from '@mszczygiel-projects/ui-core-icons/required-icons';
+```
+
+A missing icon is not a graceful degradation the way a missing CSS variable is — the component renders nothing at all, with no error. That is why the CLI treats an incomplete set as a hard build failure rather than a warning.
+
+Icons you pass **into** components (`<IconButton icon={…} />`, slots, `leadingIcon`) need none of this — import whatever you like and pass it in.
+
 ## Component docs
 
 Component-specific behavior is documented next to implementation files:
 
 - [React Button](packages/react/src/Button/README.md)
 - [React IconButton](packages/react/src/IconButton/README.md)
+- [React LinkButton](packages/react/src/LinkButton/README.md)
 - [React Loader](packages/react/src/Loader/README.md)
 - [React CheckboxField](packages/react/src/CheckboxField/README.md)
+- [React Notification](packages/react/src/Notification/README.md)
 - [React RadioField](packages/react/src/RadioField/README.md)
 - [React PasswordField](packages/react/src/PasswordField/README.md)
 - [React SearchField](packages/react/src/SearchField/README.md)
@@ -184,8 +373,10 @@ Component-specific behavior is documented next to implementation files:
 - [React TextField](packages/react/src/TextField/README.md)
 - [Web Components Button](packages/web-components/src/button/README.md)
 - [Web Components IconButton](packages/web-components/src/icon-button/README.md)
+- [Web Components LinkButton](packages/web-components/src/link-button/README.md)
 - [Web Components Loader](packages/web-components/src/loader/README.md)
 - [Web Components CheckboxField](packages/web-components/src/checkbox-field/README.md)
+- [Web Components Notification](packages/web-components/src/notification/README.md)
 - [Web Components RadioField](packages/web-components/src/radio-field/README.md)
 - [Web Components PasswordField](packages/web-components/src/password-field/README.md)
 - [Web Components SearchField](packages/web-components/src/search-field/README.md)

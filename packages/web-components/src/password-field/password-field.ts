@@ -6,33 +6,99 @@ import { textFieldStyles } from '../text-field/text-field.styles.js';
 import { passwordFieldStyles } from './password-field.styles.js';
 import { motionStyles } from '../styles/motion.styles.js';
 import { resetStyles } from '../styles/reset.styles.js';
+import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type PasswordFieldVariant = 'outline' | 'filled' | 'underlined';
 export type PasswordFieldSize = 'small' | 'default' | 'large';
 export type PasswordFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type PasswordFieldLabelPlacement = 'top' | 'floating';
+export type PasswordFieldLabelPlacement = 'top' | 'floating' | 'inner';
 
+/**
+ * Form-associated password input with a show/hide visibility toggle.
+ *
+ * @element ui-password-field
+ *
+ * @example
+ * ```html
+ * <ui-password-field label="Password" hint="Minimum 12 characters"></ui-password-field>
+ * ```
+ *
+ * @fires {Event} input - Native-like input event on every keystroke.
+ * @fires {CustomEvent} ui-input - Same moment as `input`; `detail.value` carries the current value.
+ * @fires {Event} change - Native-like change event when the value is committed.
+ * @fires {CustomEvent} ui-change - Same moment as `change`; `detail.value` carries the current value.
+ * @fires {CustomEvent} ui-toggle - Visibility toggle clicked; `detail.showPassword` carries the new state.
+ */
 @customElement('ui-password-field')
 export class UiPasswordField extends LitElement {
   static readonly formAssociated = true;
   static override shadowRootOptions = { ...LitElement.shadowRootOptions, delegatesFocus: true };
   static override styles = [resetStyles, motionStyles, textFieldStyles, passwordFieldStyles];
 
+  /**
+   * Container style: bordered, filled background, or bottom border only.
+   * @default 'outline'
+   */
   @property({ type: String, reflect: true }) variant: PasswordFieldVariant = 'outline';
+
+  /**
+   * Field height and typography scale.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true, attribute: 'data-size' }) size: PasswordFieldSize =
     'default';
+
+  /** Label text. */
   @property({ type: String, reflect: true }) label?: string;
+
+  /**
+   * Label position: above the field, floating over it, or inline inside it.
+   * @default 'top'
+   */
   @property({ type: String, reflect: true, attribute: 'label-placement' })
   labelPlacement: PasswordFieldLabelPlacement = 'top';
+
+  /** Placeholder text shown while empty. */
   @property({ type: String, reflect: true }) placeholder = '';
+
+  /** Current value; the attribute also sets the initial value restored on form reset. */
   @property({ type: String, reflect: true }) value = '';
+
+  /** Helper text rendered below the field, linked via `aria-describedby`. */
   @property({ type: String, reflect: true }) hint?: string;
+
+  /**
+   * Validation state; `disabled` also disables the input.
+   * @default 'default'
+   */
   @property({ type: String, reflect: true }) state: PasswordFieldState = 'default';
+
+  /** Form field name used on submission. */
   @property({ type: String }) name?: string;
+
+  /** Disables the input and the visibility toggle. */
   @property({ type: Boolean, reflect: true }) disabled = false;
+
+  /** Marks the field as required for form submission. */
   @property({ type: Boolean, reflect: true }) required = false;
+
+  /** Makes the input read-only. */
   @property({ type: Boolean, reflect: true }) readonly = false;
+
+  /** Shows the password as plain text; toggled by the built-in eye button. */
   @property({ type: Boolean, reflect: true, attribute: 'show-password' }) showPassword = false;
+
+  /**
+   * Accessible name of the visibility toggle while the password is hidden.
+   * @default `getUiCoreConfig().labels.passwordField.show`
+   */
+  @property({ type: String, attribute: 'show-label' }) showLabel?: string;
+
+  /**
+   * Accessible name of the visibility toggle while the password is visible.
+   * @default `getUiCoreConfig().labels.passwordField.hide`
+   */
+  @property({ type: String, attribute: 'hide-label' }) hideLabel?: string;
 
   @state() private _formDisabled = false;
 
@@ -51,9 +117,11 @@ export class UiPasswordField extends LitElement {
   }
 
   private get _isFloating(): boolean {
-    if (this.variant === 'filled') return false;
-    if (this.variant === 'underlined') return true;
     return this.labelPlacement === 'floating';
+  }
+
+  private get _isInner(): boolean {
+    return this.labelPlacement === 'inner';
   }
 
   private get _isDisabled(): boolean {
@@ -124,17 +192,24 @@ export class UiPasswordField extends LitElement {
 
   override render() {
     const isFloating = this._isFloating;
+    const isInner = this._isInner;
     const isDisabled = this._isDisabled;
     const hintId = 'hint';
     const inputType = this.showPassword ? 'text' : 'password';
-    const toggleLabel = this.showPassword ? 'Hide password' : 'Show password';
+    const labels = getUiCoreConfig().labels.passwordField;
+    const toggleLabel = this.showPassword
+      ? (this.hideLabel ?? labels.hide)
+      : (this.showLabel ?? labels.show);
     const toggleIcon = this.showPassword ? svgMap['icon-eye'] : svgMap['icon-eye-slash'];
 
     return html`
-      ${!isFloating && this.label
+      ${!isFloating && !isInner && this.label
         ? html`<label class="label" for="input">${this.label}</label>`
         : nothing}
       <div class="field-wrapper">
+        ${isInner && this.label
+          ? html`<label class="label" for="input">${this.label}</label>`
+          : nothing}
         <input
           id="input"
           class="input"

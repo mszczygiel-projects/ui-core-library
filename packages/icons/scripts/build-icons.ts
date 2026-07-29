@@ -7,6 +7,7 @@ import {
   buildReactComponent,
   ensureIconPrefixInSvgFilenames,
 } from './icons-transformer.js';
+import { REQUIRED_ICONS, missingRequiredIcons } from './required-icons.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 export const DEFAULT_SVG_DIR = path.resolve(__dirname, '../src/svg');
@@ -88,6 +89,32 @@ export async function buildIcons(
     .map((e) => `export { ${e.componentName} } from './${e.componentName}.js';`)
     .join('\n');
   fs.writeFileSync(path.join(reactOutputDir, 'index.d.ts'), dtsExports + '\n');
+
+  // Publish the contract alongside the set, so a consumer can type their own
+  // replacement against it instead of copying the list by hand.
+  const requiredLiterals = REQUIRED_ICONS.map((n) => `'${n}'`);
+  fs.writeFileSync(
+    path.join(outputDir, 'required-icons.js'),
+    `export const REQUIRED_ICONS = [\n${REQUIRED_ICONS.map((n) => `  '${n}',`).join('\n')}\n];\n`,
+  );
+  fs.writeFileSync(
+    path.join(outputDir, 'required-icons.d.ts'),
+    `export type RequiredIconName = ${requiredLiterals.join(' | ')};\n` +
+      `export declare const REQUIRED_ICONS: readonly RequiredIconName[];\n`,
+  );
+
+  const missing = missingRequiredIcons(entries.map((e) => e.iconName));
+  if (missing.length > 0) {
+    console.error(
+      `\n✗ Icon set is incomplete — the component packages need ${REQUIRED_ICONS.length} icons ` +
+        `and ${missing.length} are missing:\n` +
+        missing.map((n) => `    ${n}  (expected ${n}.svg in ${inputDir})`).join('\n') +
+        `\n\n  Components using a missing icon render nothing at all, so this is a hard failure.\n` +
+        `  Add the files, or drop the components that need them.\n`,
+    );
+    process.exitCode = 1;
+    return;
+  }
 
   console.log(`✓ Built ${entries.length} icons in ${outputDir}`);
 }

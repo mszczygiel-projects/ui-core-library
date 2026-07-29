@@ -1,0 +1,15 @@
+/*
+ * The popover panel already provides surface, border, radius, shadow, and
+ * padding via popover/* tokens — this component only arranges its content.
+ */
+.ui-date-picker__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--date-picker-gap);
+}
+
+.ui-date-picker__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--date-picker-gap);
+}

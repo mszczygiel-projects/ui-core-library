@@ -11,22 +11,51 @@ import './TextField.css';
 export type TextFieldVariant = 'outline' | 'filled' | 'underlined';
 export type TextFieldSize = 'small' | 'default' | 'large';
 export type TextFieldState = 'default' | 'success' | 'error' | 'disabled';
-export type TextFieldLabelPlacement = 'top' | 'floating';
+export type TextFieldLabelPlacement = 'top' | 'floating' | 'inner';
 
+/**
+ * Single-line text input with label, hint, validation states, and optional icons.
+ *
+ * @example
+ * <TextField label="Email" type="email" hint="Work address preferred" onChange={setEmail} />
+ */
 export interface TextFieldProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
   'size' | 'onChange'
 > {
+  /**
+   * Container style: bordered, filled background, or bottom border only.
+   * @default 'outline'
+   */
   variant?: TextFieldVariant;
+  /**
+   * Field height and typography scale.
+   * @default 'default'
+   */
   size?: TextFieldSize;
+  /** Label text. */
   label?: string;
+  /**
+   * Label position: above the field, floating over it, or inline inside it.
+   * @default 'top'
+   */
   labelPlacement?: TextFieldLabelPlacement;
+  /** Helper text rendered below the field, linked via `aria-describedby`. */
   hint?: string;
+  /**
+   * Validation state; `error` shows a danger icon, `disabled` also disables the input.
+   * @default 'default'
+   */
   state?: TextFieldState;
+  /** Icon rendered inside the field, at the start. */
   leadingIcon?: ReactNode;
+  /** Icon rendered inside the field, at the end; `error` state provides a default. */
   trailingIcon?: ReactNode;
+  /** Called with the input's string value on every change. */
   onChange?: (value: string) => void;
+  /** Extra class names appended to the root element. */
   className?: string;
+  /** Inline styles forwarded to the root element (positioning only — never visual styles). */
   style?: CSSProperties;
 }
 
@@ -62,19 +91,15 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
   const isDisabled = disabled || state === 'disabled';
   const effectiveTrailingIcon = trailingIcon ?? (state === 'error' ? <IconDanger /> : undefined);
 
-  const effectivePlacement = (): TextFieldLabelPlacement => {
-    if (variant === 'filled') return 'top';
-    if (variant === 'underlined') return 'floating';
-    return labelPlacement;
-  };
-
-  const isFloating = effectivePlacement() === 'floating';
+  const isFloating = labelPlacement === 'floating';
+  const isInner = labelPlacement === 'inner';
 
   const rootClass = [
     'ui-text-field',
     `ui-text-field--${variant}`,
     size !== 'default' && `ui-text-field--${size}`,
     isFloating && 'ui-text-field--floating',
+    isInner && 'ui-text-field--inner',
     state !== 'default' && `ui-text-field--state-${state}`,
     leadingIcon && 'ui-text-field--has-leading-icon',
     effectiveTrailingIcon && 'ui-text-field--has-trailing-icon',
@@ -91,8 +116,9 @@ export const TextField = forwardRef<HTMLInputElement, TextFieldProps>(function T
 
   return (
     <div className={rootClass} style={style}>
-      {!isFloating && labelEl}
+      {!isFloating && !isInner && labelEl}
       <div className="ui-text-field__field-wrapper">
+        {isInner && labelEl}
         {leadingIcon && (
           <span className="ui-text-field__icon ui-text-field__icon--leading">{leadingIcon}</span>
         )}
