@@ -143,6 +143,14 @@ export type {
   DialogOpenChangeReason,
   DialogOpenChangeDetail,
 } from './Dialog/Dialog.js';
+export { Drawer } from './Drawer/Drawer.js';
+export type {
+  DrawerProps,
+  DrawerPlacement,
+  DrawerDismiss,
+  DrawerOpenChangeReason,
+  DrawerOpenChangeDetail,
+} from './Drawer/Drawer.js';
 export { Breadcrumbs } from './Breadcrumbs/Breadcrumbs.js';
 export type {
   BreadcrumbsProps,

@@ -137,6 +137,13 @@ export type {
   DialogOpenChangeReason,
   DialogOpenChangeDetail,
 } from './dialog/dialog.js';
+export { UiDrawer } from './drawer/drawer.js';
+export type {
+  DrawerPlacement,
+  DrawerDismiss,
+  DrawerOpenChangeReason,
+  DrawerOpenChangeDetail,
+} from './drawer/drawer.js';
 export { UiBreadcrumbs } from './breadcrumbs/breadcrumbs.js';
 export type {
   BreadcrumbsItem,

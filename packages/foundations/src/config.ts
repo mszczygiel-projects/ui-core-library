@@ -87,6 +87,10 @@ export interface UiCoreLabels {
     /** Accessible name of the close button. */
     close: string;
   };
+  drawer: {
+    /** Accessible name of the close button. */
+    close: string;
+  };
   calendar: {
     /** Accessible name of the previous-month button. */
     previousMonth: string;
@@ -162,6 +166,9 @@ export const defaultLabels: UiCoreLabels = {
   },
   dialog: {
     close: 'Close dialog',
+  },
+  drawer: {
+    close: 'Close drawer',
   },
   calendar: {
     previousMonth: 'Previous month',
