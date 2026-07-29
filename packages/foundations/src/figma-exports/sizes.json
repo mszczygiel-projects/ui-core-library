@@ -453,19 +453,19 @@
           },
           "$type": "number"
         },
-        "line-height": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.lg--line-height}",
-            "Desktop": "{Primitives Sizes.text.lg--line-height}"
-          },
-          "$type": "number"
-        },
         "letter-spacing": {
           "$value": {
             "Mobile": "{Primitives Sizes.tracking.normal}",
             "Desktop": "{Primitives Sizes.tracking.normal}"
           },
           "$type": "string"
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.lg--line-height}",
+            "Desktop": "{Primitives Sizes.text.lg--line-height}"
+          },
+          "$type": "number"
         }
       }
     },
@@ -653,8 +653,8 @@
         },
         "xl": {
           "$value": {
-            "Mobile": "{Primitives Sizes.spacing.8}",
-            "Desktop": "{Primitives Sizes.spacing.8}"
+            "Mobile": "{Primitives Sizes.spacing.4}",
+            "Desktop": "{Primitives Sizes.spacing.4}"
           },
           "$type": "number"
         }
@@ -683,8 +683,8 @@
         },
         "xl": {
           "$value": {
-            "Mobile": "{Primitives Sizes.spacing.8}",
-            "Desktop": "{Primitives Sizes.spacing.8}"
+            "Mobile": "{Primitives Sizes.spacing.5}",
+            "Desktop": "{Primitives Sizes.spacing.5}"
           },
           "$type": "number"
         }
@@ -756,7 +756,7 @@
       "max-width": {
         "$value": {
           "Mobile": 768,
-          "Desktop": 1920
+          "Desktop": 1440
         },
         "$type": "number"
       },
@@ -772,8 +772,8 @@
   "icon": {
     "sm": {
       "$value": {
-        "Mobile": "{Primitives Sizes.size.4}",
-        "Desktop": "{Primitives Sizes.size.4}"
+        "Mobile": "{Primitives Sizes.size.5}",
+        "Desktop": "{Primitives Sizes.size.5}"
       },
       "$type": "number"
     },
@@ -1644,15 +1644,15 @@
     "dropdown": {
       "padding": {
         "$value": {
-          "Mobile": "{Primitives Sizes.spacing.0}",
-          "Desktop": "{Primitives Sizes.spacing.0}"
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}"
         },
         "$type": "number"
       },
       "gap": {
         "$value": {
-          "Mobile": "{Primitives Sizes.spacing.0}",
-          "Desktop": "{Primitives Sizes.spacing.0}"
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}"
         },
         "$type": "number"
       },
@@ -1666,8 +1666,8 @@
       "border": {
         "width": {
           "$value": {
-            "Mobile": 0,
-            "Desktop": 0
+            "Mobile": 1,
+            "Desktop": 1
           },
           "$type": "number"
         }
@@ -2010,7 +2010,7 @@
       "height": {
         "$value": {
           "Mobile": "{Primitives Sizes.size.6}",
-          "Desktop": "{Primitives Sizes.size.8}"
+          "Desktop": "{Primitives Sizes.size.6}"
         },
         "$type": "number"
       },
@@ -2018,7 +2018,7 @@
         "inline": {
           "$value": {
             "Mobile": "{Primitives Sizes.spacing.3}",
-            "Desktop": "{Primitives Sizes.spacing.4}"
+            "Desktop": "{Primitives Sizes.spacing.3}"
           },
           "$type": "number"
         }
@@ -2034,15 +2034,15 @@
       },
       "font-size": {
         "$value": {
-          "Mobile": "{Primitives Sizes.text.xs}",
-          "Desktop": "{Primitives Sizes.text.xs}"
+          "Mobile": "{Primitives Sizes.text.sm}",
+          "Desktop": "{Primitives Sizes.text.sm}"
         },
         "$type": "number"
       },
       "line-height": {
         "$value": {
-          "Mobile": "{Primitives Sizes.text.xs--line-height}",
-          "Desktop": "{Primitives Sizes.text.xs--line-height}"
+          "Mobile": "{Primitives Sizes.text.sm--line-height}",
+          "Desktop": "{Primitives Sizes.text.sm--line-height}"
         },
         "$type": "number"
       }
@@ -2770,8 +2770,8 @@
       },
       "gap": {
         "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}"
         },
         "$type": "number"
       }
