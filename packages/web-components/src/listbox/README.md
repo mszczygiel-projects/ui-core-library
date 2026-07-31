@@ -72,7 +72,21 @@ el.options = [{ value: 'settings', label: 'Settings', icon: 'icon-settings' }];
 Grouped lists move the inline padding from the panel onto each group's option
 wrapper (`.listbox--grouped`). That lets the sticky header and its bottom rule
 run the full width of the panel while the options stay inset. Headers are at
-least `--size-12` tall.
+least `--size-12` tall. Everything in the panel — headers, separators and
+option wrappers alike — is spaced by `--select-dropdown-gap`.
+
+A group whose `label` is omitted takes the header's **border-only** variant: no
+text, no sticky behaviour, just the rule (`.listbox__group-separator`). Use it
+to divide runs of options that need no naming. A rule above the _first_ group
+would separate it from nothing, so it is left out, and the group drops its
+`aria-labelledby` rather than pointing at an empty name.
+
+```ts
+el.options = [
+  { options: [{ value: 'lemon', label: 'Lemon' }] },
+  { options: [{ value: 'peach', label: 'Peach' }] }, // preceded by a bare rule
+];
+```
 
 ## Rows
 
@@ -109,14 +123,14 @@ ui-popover::part(content) {
 
 ## Tokens
 
-| Area            | Tokens                                                                                                                                                                                            |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Panel           | `--color-select-dropdown-background`, `--color-select-dropdown-border`, `--select-dropdown-padding`, `--select-dropdown-radius`, `--select-dropdown-border-width`, `--select-dropdown-max-height` |
-| Option          | `--color-select-option-{background,text,icon}-{default,hover,active,disabled}`, `--select-option-{gap,padding-inline,padding-stack,radius}`                                                       |
-| Group header    | `--color-select-option-group-{text,background}`, `--select-option-group-*`                                                                                                                        |
-| Check mark      | `--color-select-option-check-{default,active}`                                                                                                                                                    |
-| Create row      | `--color-select-option-create-text`                                                                                                                                                               |
-| Empty / loading | `--color-select-empty-text`                                                                                                                                                                       |
+| Area            | Tokens                                                                                                                                                                                                                     |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Panel           | `--color-select-dropdown-background`, `--color-select-dropdown-border`, `--select-dropdown-padding`, `--select-dropdown-gap`, `--select-dropdown-radius`, `--select-dropdown-border-width`, `--select-dropdown-max-height` |
+| Option          | `--color-select-option-{background,text,icon}-{default,hover,active,disabled}`, `--select-option-{gap,padding-inline,padding-stack,radius}`                                                                                |
+| Group header    | `--color-select-option-group-{text,background}`, `--select-option-group-*`                                                                                                                                                 |
+| Check mark      | `--color-select-option-check-{default,active}`                                                                                                                                                                             |
+| Create row      | `--color-select-option-create-text`                                                                                                                                                                                        |
+| Empty / loading | `--color-select-empty-text`                                                                                                                                                                                                |
 
 The check mark is drawn in CSS the same way `ui-checkbox-field` draws its own —
 the icon set has no check glyph.

@@ -380,6 +380,20 @@ describe('SelectField', () => {
       expect(optgroups.length).toBe(2);
       expect(optgroups[0].getAttribute('label')).toBe('Recent');
     });
+
+    it('contributes an unlabelled group flat, so the native menu gets no empty row', () => {
+      const { container } = render(
+        <SelectField
+          name="fruit"
+          options={[
+            { label: 'Recent', options: [{ value: 'apple', label: 'Apple' }] },
+            { options: [{ value: 'cherry', label: 'Cherry' }] },
+          ]}
+        />,
+      );
+      expect(container.querySelectorAll('optgroup').length).toBe(1);
+      expect(container.querySelector('select option[value="cherry"]')).not.toBeNull();
+    });
   });
 
   describe('active descendant', () => {

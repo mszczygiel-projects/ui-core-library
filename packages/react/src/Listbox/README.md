@@ -69,7 +69,25 @@ items={[{ value: 'settings', label: 'Settings', icon: <IconSettings /> }]}
 Grouped lists move the inline padding from the panel onto each group's option
 wrapper (`.ui-listbox--grouped`). That lets the sticky header and its bottom rule
 run the full width of the panel while the options stay inset. Headers are at
-least `--size-12` tall.
+least `--size-12` tall. Everything in the panel — headers, separators and
+option wrappers alike — is spaced by `--select-dropdown-gap`.
+
+A group whose `label` is omitted takes the header's **border-only** variant: no
+text, no sticky behaviour, just the rule (`.ui-listbox__group-separator`). Use
+it to divide runs of options that need no naming. A rule above the _first_ group
+would separate it from nothing, so it is left out, and the group drops its
+`aria-labelledby` rather than pointing at an empty name.
+
+```tsx
+items={[
+  { options: [{ value: 'lemon', label: 'Lemon' }] },
+  { options: [{ value: 'peach', label: 'Peach' }] }, // preceded by a bare rule
+]}
+```
+
+`SelectField`'s native `<select>` mirror follows suit: an unlabelled group
+contributes its `<option>`s flat, since a nameless `<optgroup>` shows up as an
+empty row in the platform menu.
 
 ## Rows
 

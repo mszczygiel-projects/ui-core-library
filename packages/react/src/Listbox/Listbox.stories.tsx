@@ -41,6 +41,17 @@ const grouped: ListboxOptionGroup[] = [
   },
 ];
 
+const separated: ListboxOptionGroup[] = [
+  { options: [{ value: '2025', label: '2025/26' }] },
+  {
+    options: [
+      { value: '2024', label: '2024/25' },
+      { value: '2023', label: '2023/24' },
+    ],
+  },
+  { label: 'Archive', options: [{ value: '2022', label: '2022/23' }] },
+];
+
 const frame: CSSProperties = { width: 260 };
 const columnStyle: CSSProperties = { display: 'flex', flexDirection: 'column', gap: 24 };
 const rowStyle: CSSProperties = { display: 'flex', gap: 24, alignItems: 'flex-start' };
@@ -72,6 +83,23 @@ export const Grouped: Story = {
         <Listbox
           {...args}
           items={grouped}
+          value={value}
+          onSelect={(row) => row.kind === 'option' && setValue(row.option.value)}
+        />
+      </div>
+    );
+  },
+};
+
+/** A group with no label is divided from the one above by a bare rule. */
+export const SeparatedGroups: Story = {
+  render: (args) => {
+    const [value, setValue] = useState('2024');
+    return (
+      <div style={frame}>
+        <Listbox
+          {...args}
+          items={separated}
           value={value}
           onSelect={(row) => row.kind === 'option' && setValue(row.option.value)}
         />
