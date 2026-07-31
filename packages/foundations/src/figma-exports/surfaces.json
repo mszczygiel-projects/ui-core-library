@@ -7514,6 +7514,35 @@
           "$type": "color"
         }
       }
+    },
+    "drawer": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.drawer.background}",
+          "Subtle": "{Themes.color.on-subtle.drawer.background}",
+          "Inverse": "{Themes.color.on-inverse.drawer.background}",
+          "Primary": "{Themes.color.on-brand-primary.drawer.background}"
+        },
+        "$type": "color"
+      },
+      "border": {
+        "$value": {
+          "Default": "{Themes.color.drawer.border}",
+          "Subtle": "{Themes.color.on-subtle.drawer.border}",
+          "Inverse": "{Themes.color.on-inverse.drawer.border}",
+          "Primary": "{Themes.color.on-brand-primary.drawer.border}"
+        },
+        "$type": "color"
+      },
+      "grabber": {
+        "$value": {
+          "Default": "{Themes.color.drawer.grabber}",
+          "Subtle": "{Themes.color.on-subtle.drawer.grabber}",
+          "Inverse": "{Themes.color.on-inverse.drawer.grabber}",
+          "Primary": "{Themes.color.on-brand-primary.drawer.grabber}"
+        },
+        "$type": "color"
+      }
     }
   }
 }

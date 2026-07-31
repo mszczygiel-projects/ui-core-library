@@ -45,19 +45,19 @@
             },
             "$type": "number"
           },
-          "line-height": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
-              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
-            },
-            "$type": "number"
-          },
           "letter-spacing": {
             "$value": {
               "Mobile": "{Primitives Sizes.tracking.normal}",
               "Desktop": "{Primitives Sizes.tracking.normal}"
             },
             "$type": "string"
+          },
+          "line-height": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
+              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
+            },
+            "$type": "number"
           }
         },
         "letter-spacing": {
@@ -1431,13 +1431,6 @@
     }
   },
   "checkbox": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
     "field": {
       "gap": {
         "$value": {
@@ -1481,6 +1474,13 @@
         },
         "$type": "string"
       }
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Sizes.control.radius}",
+        "Desktop": "{Sizes.control.radius}"
+      },
+      "$type": "number"
     },
     "border": {
       "width": {
@@ -2813,6 +2813,77 @@
         "$value": {
           "Mobile": "{Primitives Sizes.spacing.2}",
           "Desktop": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "number"
+      }
+    }
+  },
+  "drawer": {
+    "width": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.100}",
+        "Desktop": "{Primitives Sizes.size.100}"
+      },
+      "$type": "number"
+    },
+    "radius": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.radius.lg}",
+        "Desktop": "{Primitives Sizes.radius.lg}"
+      },
+      "$type": "number"
+    },
+    "padding": {
+      "inline": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.6}",
+          "Desktop": "{Primitives Sizes.spacing.6}"
+        },
+        "$type": "number"
+      },
+      "stack": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.6}",
+          "Desktop": "{Primitives Sizes.spacing.6}"
+        },
+        "$type": "number"
+      }
+    },
+    "gap": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.4}",
+        "Desktop": "{Primitives Sizes.spacing.4}"
+      },
+      "$type": "number"
+    },
+    "grabber": {
+      "width": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.size.8}",
+          "Desktop": "{Primitives Sizes.size.8}"
+        },
+        "$type": "number"
+      },
+      "height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.size.1}",
+          "Desktop": "{Primitives Sizes.size.1}"
+        },
+        "$type": "number"
+      },
+      "gap": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "number"
+      }
+    },
+    "border": {
+      "width": {
+        "$value": {
+          "Mobile": "{Sizes.stroke.border}",
+          "Desktop": "{Sizes.stroke.border}"
         },
         "$type": "number"
       }

@@ -1237,6 +1237,11 @@ export const tokens = {
             foreground: 'var(--color-on-subtle-breadcrumbs-ellipsis-foreground)',
           },
         },
+        drawer: {
+          background: 'var(--color-on-subtle-drawer-background)',
+          border: 'var(--color-on-subtle-drawer-border)',
+          grabber: 'var(--color-on-subtle-drawer-grabber)',
+        },
       },
       onInverse: {
         brand: {
@@ -2472,6 +2477,11 @@ export const tokens = {
             foreground: 'var(--color-on-inverse-breadcrumbs-ellipsis-foreground)',
           },
         },
+        drawer: {
+          background: 'var(--color-on-inverse-drawer-background)',
+          border: 'var(--color-on-inverse-drawer-border)',
+          grabber: 'var(--color-on-inverse-drawer-grabber)',
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -3706,6 +3716,11 @@ export const tokens = {
           ellipsis: {
             foreground: 'var(--color-on-brand-primary-breadcrumbs-ellipsis-foreground)',
           },
+        },
+        drawer: {
+          background: 'var(--color-on-brand-primary-drawer-background)',
+          border: 'var(--color-on-brand-primary-drawer-border)',
+          grabber: 'var(--color-on-brand-primary-drawer-grabber)',
         },
       },
       selection: {
@@ -5013,6 +5028,11 @@ export const tokens = {
           foreground: 'var(--color-breadcrumbs-ellipsis-foreground)',
         },
       },
+      drawer: {
+        background: 'var(--color-drawer-background)',
+        border: 'var(--color-drawer-border)',
+        grabber: 'var(--color-drawer-grabber)',
+      },
     },
   },
   sizes: {
@@ -5026,8 +5046,8 @@ export const tokens = {
           lineHeight: 'var(--typography-heading-display-line-height)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
@@ -5326,7 +5346,6 @@ export const tokens = {
       },
     },
     checkbox: {
-      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -5335,6 +5354,7 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
+      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -5679,6 +5699,23 @@ export const tokens = {
           size: 'var(--breadcrumbs-medium-separator-size)',
         },
         gap: 'var(--breadcrumbs-medium-gap)',
+      },
+    },
+    drawer: {
+      width: 'var(--drawer-width)',
+      radius: 'var(--drawer-radius)',
+      padding: {
+        inline: 'var(--drawer-padding-inline)',
+        stack: 'var(--drawer-padding-stack)',
+      },
+      gap: 'var(--drawer-gap)',
+      grabber: {
+        width: 'var(--drawer-grabber-width)',
+        height: 'var(--drawer-grabber-height)',
+        gap: 'var(--drawer-grabber-gap)',
+      },
+      border: {
+        width: 'var(--drawer-border-width)',
       },
     },
   },

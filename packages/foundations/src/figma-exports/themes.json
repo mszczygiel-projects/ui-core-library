@@ -8476,6 +8476,29 @@
             "$type": "color"
           }
         }
+      },
+      "drawer": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.on-subtle.background.default}",
+            "Dark": "{Themes.color.on-subtle.background.default}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.on-subtle.border.default}",
+            "Dark": "{Themes.color.on-subtle.border.default}"
+          },
+          "$type": "color"
+        },
+        "grabber": {
+          "$value": {
+            "Default": "{Themes.color.on-subtle.text.muted}",
+            "Dark": "{Themes.color.on-subtle.text.muted}"
+          },
+          "$type": "color"
+        }
       }
     },
     "on-inverse": {
@@ -14422,6 +14445,29 @@
             },
             "$type": "color"
           }
+        }
+      },
+      "drawer": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.on-inverse.background.default}",
+            "Dark": "{Themes.color.on-inverse.background.default}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.on-inverse.border.default}",
+            "Dark": "{Themes.color.on-inverse.border.default}"
+          },
+          "$type": "color"
+        },
+        "grabber": {
+          "$value": {
+            "Default": "{Themes.color.on-inverse.text.muted}",
+            "Dark": "{Themes.color.on-inverse.text.muted}"
+          },
+          "$type": "color"
         }
       }
     },
@@ -20370,6 +20416,29 @@
             "$type": "color"
           }
         }
+      },
+      "drawer": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.on-brand-primary.background.default}",
+            "Dark": "{Themes.color.on-brand-primary.background.default}"
+          },
+          "$type": "color"
+        },
+        "border": {
+          "$value": {
+            "Default": "{Themes.color.on-brand-primary.border.default}",
+            "Dark": "{Themes.color.on-brand-primary.border.default}"
+          },
+          "$type": "color"
+        },
+        "grabber": {
+          "$value": {
+            "Default": "{Themes.color.on-brand-primary.text.muted}",
+            "Dark": "{Themes.color.on-brand-primary.text.muted}"
+          },
+          "$type": "color"
+        }
       }
     },
     "selection": {
@@ -23800,6 +23869,29 @@
           },
           "$type": "color"
         }
+      }
+    },
+    "drawer": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.background.default}",
+          "Dark": "{Themes.color.background.default}"
+        },
+        "$type": "color"
+      },
+      "border": {
+        "$value": {
+          "Default": "{Themes.color.border.default}",
+          "Dark": "{Themes.color.border.default}"
+        },
+        "$type": "color"
+      },
+      "grabber": {
+        "$value": {
+          "Default": "{Themes.color.text.muted}",
+          "Dark": "{Themes.color.text.muted}"
+        },
+        "$type": "color"
       }
     }
   },

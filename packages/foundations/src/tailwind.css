@@ -1330,6 +1330,9 @@
   --color-on-subtle-breadcrumbs-current-foreground: var(--color-on-subtle-breadcrumbs-current-foreground);
   --color-on-subtle-breadcrumbs-separator-foreground: var(--color-on-subtle-breadcrumbs-separator-foreground);
   --color-on-subtle-breadcrumbs-ellipsis-foreground: var(--color-on-subtle-breadcrumbs-ellipsis-foreground);
+  --color-on-subtle-drawer-background: var(--color-on-subtle-drawer-background);
+  --color-on-subtle-drawer-border: var(--color-on-subtle-drawer-border);
+  --color-on-subtle-drawer-grabber: var(--color-on-subtle-drawer-grabber);
   --color-on-inverse-brand-primary: var(--color-on-inverse-brand-primary);
   --color-on-inverse-brand-secondary: var(--color-on-inverse-brand-secondary);
   --color-on-inverse-brand-tertiary: var(--color-on-inverse-brand-tertiary);
@@ -2115,6 +2118,9 @@
   --color-on-inverse-breadcrumbs-current-foreground: var(--color-on-inverse-breadcrumbs-current-foreground);
   --color-on-inverse-breadcrumbs-separator-foreground: var(--color-on-inverse-breadcrumbs-separator-foreground);
   --color-on-inverse-breadcrumbs-ellipsis-foreground: var(--color-on-inverse-breadcrumbs-ellipsis-foreground);
+  --color-on-inverse-drawer-background: var(--color-on-inverse-drawer-background);
+  --color-on-inverse-drawer-border: var(--color-on-inverse-drawer-border);
+  --color-on-inverse-drawer-grabber: var(--color-on-inverse-drawer-grabber);
   --color-on-brand-primary-brand-primary: var(--color-on-brand-primary-brand-primary);
   --color-on-brand-primary-brand-secondary: var(--color-on-brand-primary-brand-secondary);
   --color-on-brand-primary-brand-tertiary: var(--color-on-brand-primary-brand-tertiary);
@@ -2900,6 +2906,9 @@
   --color-on-brand-primary-breadcrumbs-current-foreground: var(--color-on-brand-primary-breadcrumbs-current-foreground);
   --color-on-brand-primary-breadcrumbs-separator-foreground: var(--color-on-brand-primary-breadcrumbs-separator-foreground);
   --color-on-brand-primary-breadcrumbs-ellipsis-foreground: var(--color-on-brand-primary-breadcrumbs-ellipsis-foreground);
+  --color-on-brand-primary-drawer-background: var(--color-on-brand-primary-drawer-background);
+  --color-on-brand-primary-drawer-border: var(--color-on-brand-primary-drawer-border);
+  --color-on-brand-primary-drawer-grabber: var(--color-on-brand-primary-drawer-grabber);
   --color-selection-background: var(--color-selection-background);
   --color-selection-text: var(--color-selection-text);
   --color-badge-neutral-solid-background: var(--color-badge-neutral-solid-background);
@@ -3352,4 +3361,7 @@
   --color-breadcrumbs-current-foreground: var(--color-breadcrumbs-current-foreground);
   --color-breadcrumbs-separator-foreground: var(--color-breadcrumbs-separator-foreground);
   --color-breadcrumbs-ellipsis-foreground: var(--color-breadcrumbs-ellipsis-foreground);
+  --color-drawer-background: var(--color-drawer-background);
+  --color-drawer-border: var(--color-drawer-border);
+  --color-drawer-grabber: var(--color-drawer-grabber);
 }
