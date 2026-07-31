@@ -124,8 +124,8 @@ export const DragToDismiss: Story = {
   render: (args) => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12, alignItems: 'flex-start' }}>
       <p style={{ margin: 0, font: '14px/1.5 sans-serif' }}>
-        The sheet can be flicked downwards. Escape, the backdrop and the close button all stay live —
-        a pointer gesture is never the only way out.
+        The sheet can be flicked downwards. Escape, the backdrop and the close button all stay live
+        — a pointer gesture is never the only way out.
       </p>
       <Host
         args={{ ...args, placement: 'bottom', dragToDismiss: true }}

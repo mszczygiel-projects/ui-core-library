@@ -5044,12 +5044,12 @@ export const tokens = {
           fontWeightStrong: 'var(--typography-heading-display-font-weight-strong)',
           fontSize: 'var(--typography-heading-display-font-size)',
           lineHeight: 'var(--typography-heading-display-line-height)',
+          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
-          letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
         title: {
           fontFamily: 'var(--typography-heading-title-font-family)',
@@ -5423,8 +5423,8 @@ export const tokens = {
       },
     },
     notification: {
-      radius: 'var(--notification-radius)',
       fontFamily: 'var(--notification-font-family)',
+      radius: 'var(--notification-radius)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
