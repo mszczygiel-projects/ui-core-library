@@ -19,15 +19,15 @@ Fully **controlled**: the component never mutates its own `open` state. Escape, 
 
 ## Props
 
-| Property         | Attribute          | Type                                            | Default   |
-| ---------------- | ------------------ | ----------------------------------------------- | --------- |
-| `open`           | `open`             | boolean (controlled)                            | `false`   |
-| `placement`      | `placement`        | `right` / `left` / `bottom`                     | `right`   |
-| `dismissOn`      | `dismiss-on`       | `outside-click` / `escape` / `both` / `none`    | `both`    |
-| `hasCloseButton` | `has-close-button` | boolean                                         | `true`    |
-| `label`          | `label`            | string — accessible name of the drawer          | —         |
-| `closeLabel`     | `close-label`      | string — accessible name of the close button    | config    |
-| `dragToDismiss`  | `drag-to-dismiss`  | boolean — flick the sheet away (bottom only)    | `false`   |
+| Property         | Attribute          | Type                                         | Default |
+| ---------------- | ------------------ | -------------------------------------------- | ------- |
+| `open`           | `open`             | boolean (controlled)                         | `false` |
+| `placement`      | `placement`        | `right` / `left` / `bottom`                  | `right` |
+| `dismissOn`      | `dismiss-on`       | `outside-click` / `escape` / `both` / `none` | `both`  |
+| `hasCloseButton` | `has-close-button` | boolean                                      | `true`  |
+| `label`          | `label`            | string — accessible name of the drawer       | —       |
+| `closeLabel`     | `close-label`      | string — accessible name of the close button | config  |
+| `dragToDismiss`  | `drag-to-dismiss`  | boolean — flick the sheet away (bottom only) | `false` |
 
 ## Events
 
@@ -47,8 +47,8 @@ That has one consequence worth stating plainly: **there is nothing for `role="di
 
 | Placement | Geometry                                            | Bordered edge |
 | --------- | --------------------------------------------------- | ------------- |
-| `right`   | full viewport height, `--drawer-width` wide          | left          |
-| `left`    | full viewport height, `--drawer-width` wide          | right         |
+| `right`   | full viewport height, `--drawer-width` wide         | left          |
+| `left`    | full viewport height, `--drawer-width` wide         | right         |
 | `bottom`  | full width, **hugs its content**, capped at `90dvh` | top           |
 
 There is **no size axis**. Side drawers have one standard width; override `--drawer-width` (globally or per instance) when a particular drawer needs another. The bottom sheet is content-driven by design, so a height preset would only fight the content.

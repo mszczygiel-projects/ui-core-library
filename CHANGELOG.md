@@ -12,6 +12,96 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.13.0] — 2026-07-31
+
+A new Drawer component in both rendering targets, plus a border-only group
+separator in the listbox surface.
+
+### Added
+
+- **`Drawer` for React (`@mszczygiel-projects/ui-core-react`)** and
+  **`<ui-drawer>` for Web Components (`@mszczygiel-projects/ui-core-wc`)** —
+  an edge-anchored modal panel built on the native `<dialog>` element and
+  rendered in the browser top layer via `showModal()`, so focus trapping,
+  inerting the page behind and Escape all come from the platform and no
+  `z-index` is involved.
+
+  It is a deliberately plain container: it owns the surface, the scroll and the
+  close affordance, and nothing else. Unlike `Dialog` / `<ui-dialog>` it has no
+  title, description or footer regions — headings, toolbars and action rows are
+  the consumer's to compose. That means **there is nothing for `role="dialog"`
+  to be named by unless you name it**: set `label`, or point `aria-labelledby`
+  at your own heading.
+
+  It is also fully **controlled** — the component never applies its own open
+  state. Escape, the backdrop, the close button and the drag gesture only
+  report the request:
+
+  ```tsx
+  const [open, setOpen] = useState(false);
+  <Drawer open={open} onOpenChange={(d) => setOpen(d.open)} placement="right" label="Filters">
+    <h2>Filters</h2>
+  </Drawer>;
+  ```
+
+  ```html
+  <ui-drawer open placement="right" label="Filters">…</ui-drawer>
+  <script>
+    drawer.addEventListener('open-change', (e) => (drawer.open = e.detail.open));
+  </script>
+  ```
+
+- **Three placements, no size axis.** `right` / `left` span the full viewport
+  height at `--drawer-width`; `bottom` is a sheet that hugs its content, capped
+  at `90dvh`, with only its top corners rounded. Below `48rem` a side drawer
+  keeps its edge and its animation and only widens to the full viewport — it
+  deliberately does not turn into a bottom sheet.
+- **Opt-in drag-to-dismiss on the bottom sheet** (`dragToDismiss` /
+  `drag-to-dismiss`), via the `DragDismissController` / `useDragDismiss`
+  primitive already shared with the dialog. Release dismisses past 25% of the
+  sheet's height, or on a flick above 0.5 px/ms measured over the last 100 ms.
+  It is bottom-only and never the only way out — Escape, the backdrop and the
+  close button all stay live, since a pointer gesture is unreachable by keyboard
+  and screen reader.
+- **`labels.drawer.close`** in `UiCoreLabels` (English default: `Close drawer`),
+  overridable globally through `configureUiCore` or per instance via
+  `closeLabel` / `close-label`.
+- **Drawer tokens**, surface-aware like every other component family:
+  `--color-drawer-{background,border,grabber}` plus the `on-subtle`,
+  `on-inverse` and `on-brand-primary` variants, and the geometry set
+  `--drawer-{width,radius,border-width,padding-inline,padding-stack,gap}` and
+  `--drawer-grabber-{width,height,gap}`.
+- **Unlabelled groups in the listbox surface render as a bare rule.** A group
+  whose `label` is omitted takes the group header's border-only variant — no
+  text, no sticky behaviour — for dividing runs of options that need no naming.
+  A rule above the first group would separate it from nothing, so it is left
+  out, and such a group drops its `aria-labelledby` rather than pointing at an
+  empty name. Applies to `Listbox`, `SelectField` and `Combobox` in both
+  packages.
+- **`--select-dropdown-gap`** — one token now spaces everything in the dropdown
+  panel: headers, separators and option wrappers alike.
+
+### Changed
+
+- `SelectField`'s native `<select>` mirror contributes an unlabelled group's
+  `<option>`s flat, because a nameless `<optgroup>` renders as an empty row in
+  the platform menu.
+- Foundations token outputs (`figma-exports`, `tokens.css`, `tokens.ts`,
+  `tailwind.css`) were regenerated. Besides the drawer tokens above,
+  `--select-dropdown-radius` and `--notification-radius` now resolve through the
+  responsive `--radius-md-mobile` / `--radius-md-desktop` pair instead of the
+  flat `--radius-md`.
+
+### Known issues
+
+- `--color-drawer-grabber` resolves to `text/muted`, which lands at 2.45–3.85:1
+  against the drawer background on light surfaces — below the 3:1 WCAG 1.4.11
+  asks of a control affordance. Accepted for now because the grabber is
+  decorative and `aria-hidden` and the gesture is never the only way out; the
+  real fix is a neutral token in the 3–4.5:1 band, which Foundations lacks
+  (the ramp jumps from `border/default` at 1.2:1 straight to `text/secondary`
+  at 8:1).
+
 ## [0.12.0] — 2026-07-28
 
 The token build no longer knows a fixed list of theme names. Every mode of the
@@ -35,6 +125,7 @@ each of its modes without touching the build.
   A mode block carries only the tokens whose value differs from the base mode,
   plus the aliases that transitively depend on them — everything else inherits
   from `:root`.
+
 - **`data-theme="default"` is now an explicit selector**, so the base theme can be
   pinned rather than relied on through the absence of the attribute. This is how a
   page forces the light theme on a dark-mode OS.

@@ -23,20 +23,20 @@ const [open, setOpen] = useState(false);
 
 ## Props
 
-| Prop              | Type                                             | Default |
-| ----------------- | ------------------------------------------------ | ------- |
-| `open`            | `boolean` (controlled)                           | `false` |
-| `placement`       | `'right' \| 'left' \| 'bottom'`                  | `right` |
+| Prop              | Type                                              | Default |
+| ----------------- | ------------------------------------------------- | ------- |
+| `open`            | `boolean` (controlled)                            | `false` |
+| `placement`       | `'right' \| 'left' \| 'bottom'`                   | `right` |
 | `dismissOn`       | `'outside-click' \| 'escape' \| 'both' \| 'none'` | `both`  |
-| `hasCloseButton`  | `boolean`                                        | `true`  |
-| `label`           | `string` — accessible name of the drawer         | —       |
-| `closeLabel`      | `string` — accessible name of the close button   | config  |
-| `dragToDismiss`   | `boolean` — flick the sheet away (bottom only)   | `false` |
-| `aria-labelledby` | `string` — id of your own heading                | —       |
-| `children`        | `ReactNode` — drawer content                     | —       |
-| `onOpenChange`    | `(detail) => void`                               | —       |
-| `className`       | `string`                                         | —       |
-| `style`           | `CSSProperties` — positioning only               | —       |
+| `hasCloseButton`  | `boolean`                                         | `true`  |
+| `label`           | `string` — accessible name of the drawer          | —       |
+| `closeLabel`      | `string` — accessible name of the close button    | config  |
+| `dragToDismiss`   | `boolean` — flick the sheet away (bottom only)    | `false` |
+| `aria-labelledby` | `string` — id of your own heading                 | —       |
+| `children`        | `ReactNode` — drawer content                      | —       |
+| `onOpenChange`    | `(detail) => void`                                | —       |
+| `className`       | `string`                                          | —       |
+| `style`           | `CSSProperties` — positioning only                | —       |
 
 `onOpenChange` receives `{ open: boolean, reason: 'close-button' | 'outside-click' | 'escape' | 'drag' }`. It is the only way the component asks for a state change; it never applies it itself.
 
@@ -50,8 +50,8 @@ That has one consequence worth stating plainly: **there is nothing for `role="di
 
 | Placement | Geometry                                            | Bordered edge |
 | --------- | --------------------------------------------------- | ------------- |
-| `right`   | full viewport height, `--drawer-width` wide          | left          |
-| `left`    | full viewport height, `--drawer-width` wide          | right         |
+| `right`   | full viewport height, `--drawer-width` wide         | left          |
+| `left`    | full viewport height, `--drawer-width` wide         | right         |
 | `bottom`  | full width, **hugs its content**, capped at `90dvh` | top           |
 
 There is **no size prop**. Side drawers have one standard width; override `--drawer-width` (globally or per instance) when a particular drawer needs another. The bottom sheet is content-driven by design, so a height preset would only fight the content.
