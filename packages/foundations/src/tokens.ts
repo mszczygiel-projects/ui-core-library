@@ -1242,6 +1242,33 @@ export const tokens = {
           border: 'var(--color-on-subtle-drawer-border)',
           grabber: 'var(--color-on-subtle-drawer-grabber)',
         },
+        fileInput: {
+          dropzone: {
+            background: {
+              dragover: 'var(--color-on-subtle-file-input-dropzone-background-dragover)',
+            },
+            border: {
+              dragover: 'var(--color-on-subtle-file-input-dropzone-border-dragover)',
+            },
+            icon: {
+              dragover: 'var(--color-on-subtle-file-input-dropzone-icon-dragover)',
+            },
+          },
+          item: {
+            background: {
+              default: 'var(--color-on-subtle-file-input-item-background-default)',
+              hover: 'var(--color-on-subtle-file-input-item-background-hover)',
+            },
+            border: {
+              default: 'var(--color-on-subtle-file-input-item-border-default)',
+            },
+            name: 'var(--color-on-subtle-file-input-item-name)',
+            meta: 'var(--color-on-subtle-file-input-item-meta)',
+          },
+          preview: {
+            background: 'var(--color-on-subtle-file-input-preview-background)',
+          },
+        },
       },
       onInverse: {
         brand: {
@@ -2482,6 +2509,33 @@ export const tokens = {
           border: 'var(--color-on-inverse-drawer-border)',
           grabber: 'var(--color-on-inverse-drawer-grabber)',
         },
+        fileInput: {
+          dropzone: {
+            background: {
+              dragover: 'var(--color-on-inverse-file-input-dropzone-background-dragover)',
+            },
+            border: {
+              dragover: 'var(--color-on-inverse-file-input-dropzone-border-dragover)',
+            },
+            icon: {
+              dragover: 'var(--color-on-inverse-file-input-dropzone-icon-dragover)',
+            },
+          },
+          item: {
+            background: {
+              default: 'var(--color-on-inverse-file-input-item-background-default)',
+              hover: 'var(--color-on-inverse-file-input-item-background-hover)',
+            },
+            border: {
+              default: 'var(--color-on-inverse-file-input-item-border-default)',
+            },
+            name: 'var(--color-on-inverse-file-input-item-name)',
+            meta: 'var(--color-on-inverse-file-input-item-meta)',
+          },
+          preview: {
+            background: 'var(--color-on-inverse-file-input-preview-background)',
+          },
+        },
       },
       onBrandPrimary: {
         brand: {
@@ -3721,6 +3775,33 @@ export const tokens = {
           background: 'var(--color-on-brand-primary-drawer-background)',
           border: 'var(--color-on-brand-primary-drawer-border)',
           grabber: 'var(--color-on-brand-primary-drawer-grabber)',
+        },
+        fileInput: {
+          dropzone: {
+            background: {
+              dragover: 'var(--color-on-brand-primary-file-input-dropzone-background-dragover)',
+            },
+            border: {
+              dragover: 'var(--color-on-brand-primary-file-input-dropzone-border-dragover)',
+            },
+            icon: {
+              dragover: 'var(--color-on-brand-primary-file-input-dropzone-icon-dragover)',
+            },
+          },
+          item: {
+            background: {
+              default: 'var(--color-on-brand-primary-file-input-item-background-default)',
+              hover: 'var(--color-on-brand-primary-file-input-item-background-hover)',
+            },
+            border: {
+              default: 'var(--color-on-brand-primary-file-input-item-border-default)',
+            },
+            name: 'var(--color-on-brand-primary-file-input-item-name)',
+            meta: 'var(--color-on-brand-primary-file-input-item-meta)',
+          },
+          preview: {
+            background: 'var(--color-on-brand-primary-file-input-preview-background)',
+          },
         },
       },
       selection: {
@@ -5033,6 +5114,33 @@ export const tokens = {
         border: 'var(--color-drawer-border)',
         grabber: 'var(--color-drawer-grabber)',
       },
+      fileInput: {
+        dropzone: {
+          background: {
+            dragover: 'var(--color-file-input-dropzone-background-dragover)',
+          },
+          border: {
+            dragover: 'var(--color-file-input-dropzone-border-dragover)',
+          },
+          icon: {
+            dragover: 'var(--color-file-input-dropzone-icon-dragover)',
+          },
+        },
+        item: {
+          background: {
+            default: 'var(--color-file-input-item-background-default)',
+            hover: 'var(--color-file-input-item-background-hover)',
+          },
+          border: {
+            default: 'var(--color-file-input-item-border-default)',
+          },
+          name: 'var(--color-file-input-item-name)',
+          meta: 'var(--color-file-input-item-meta)',
+        },
+        preview: {
+          background: 'var(--color-file-input-preview-background)',
+        },
+      },
     },
   },
   sizes: {
@@ -5047,8 +5155,8 @@ export const tokens = {
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
+            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
         },
         title: {
@@ -5262,8 +5370,8 @@ export const tokens = {
         floating: {
           fontSize: 'var(--control-label-floating-font-size)',
           lineHeight: 'var(--control-label-floating-line-height)',
-          fontWeight: 'var(--control-label-floating-font-weight)',
           letterSpacing: 'var(--control-label-floating-letter-spacing)',
+          fontWeight: 'var(--control-label-floating-font-weight)',
           fontFamily: 'var(--control-label-floating-font-family)',
           textTransform: 'var(--control-label-floating-text-transform)',
         },
@@ -5346,6 +5454,7 @@ export const tokens = {
       },
     },
     checkbox: {
+      radius: 'var(--checkbox-radius)',
       field: {
         gap: 'var(--checkbox-field-gap)',
         fontFamily: 'var(--checkbox-field-font-family)',
@@ -5354,7 +5463,6 @@ export const tokens = {
         lineHeight: 'var(--checkbox-field-line-height)',
         letterSpacing: 'var(--checkbox-field-letter-spacing)',
       },
-      radius: 'var(--checkbox-radius)',
       border: {
         width: 'var(--checkbox-border-width)',
       },
@@ -5402,6 +5510,7 @@ export const tokens = {
       },
       dropdown: {
         padding: 'var(--select-dropdown-padding)',
+        padding2: 'var(--select-dropdown-padding-2)',
         gap: 'var(--select-dropdown-gap)',
         radius: 'var(--select-dropdown-radius)',
         border: {
@@ -5423,8 +5532,8 @@ export const tokens = {
       },
     },
     notification: {
-      fontFamily: 'var(--notification-font-family)',
       radius: 'var(--notification-radius)',
+      fontFamily: 'var(--notification-font-family)',
       fontSize: 'var(--notification-font-size)',
       lineHeight: 'var(--notification-line-height)',
       fontWeight: 'var(--notification-font-weight)',
@@ -5716,6 +5825,89 @@ export const tokens = {
       },
       border: {
         width: 'var(--drawer-border-width)',
+      },
+    },
+    fileInput: {
+      small: {
+        minHeight: 'var(--file-input-small-min-height)',
+        padding: {
+          stack: 'var(--file-input-small-padding-stack)',
+          inline: 'var(--file-input-small-padding-inline)',
+        },
+        icon: {
+          size: 'var(--file-input-small-icon-size)',
+        },
+        title: {
+          fontSize: 'var(--file-input-small-title-font-size)',
+          lineHeight: 'var(--file-input-small-title-line-height)',
+        },
+        gap: 'var(--file-input-small-gap)',
+      },
+      minHeight: 'var(--file-input-min-height)',
+      large: {
+        minHeight: 'var(--file-input-large-min-height)',
+        padding: {
+          stack: 'var(--file-input-large-padding-stack)',
+          inline: 'var(--file-input-large-padding-inline)',
+        },
+        icon: {
+          size: 'var(--file-input-large-icon-size)',
+        },
+        title: {
+          fontSize: 'var(--file-input-large-title-font-size)',
+          lineHeight: 'var(--file-input-large-title-line-height)',
+        },
+        gap: 'var(--file-input-large-gap)',
+      },
+      padding: {
+        stack: 'var(--file-input-padding-stack)',
+        inline: 'var(--file-input-padding-inline)',
+      },
+      icon: {
+        size: 'var(--file-input-icon-size)',
+      },
+      title: {
+        fontSize: 'var(--file-input-title-font-size)',
+        lineHeight: 'var(--file-input-title-line-height)',
+        fontFamily: 'var(--file-input-title-font-family)',
+        fontWeight: 'var(--file-input-title-font-weight)',
+        letterSpacing: 'var(--file-input-title-letter-spacing)',
+      },
+      gap: 'var(--file-input-gap)',
+      radius: 'var(--file-input-radius)',
+      border: {
+        width: 'var(--file-input-border-width)',
+      },
+      list: {
+        gap: 'var(--file-input-list-gap)',
+      },
+      actions: {
+        gap: 'var(--file-input-actions-gap)',
+      },
+      preview: {
+        maxHeight: 'var(--file-input-preview-max-height)',
+        radius: 'var(--file-input-preview-radius)',
+      },
+      item: {
+        height: 'var(--file-input-item-height)',
+        gap: 'var(--file-input-item-gap)',
+        padding: {
+          inline: 'var(--file-input-item-padding-inline)',
+          stack: 'var(--file-input-item-padding-stack)',
+        },
+        radius: 'var(--file-input-item-radius)',
+        thumb: {
+          size: 'var(--file-input-item-thumb-size)',
+        },
+        name: {
+          fontSize: 'var(--file-input-item-name-font-size)',
+          lineHeight: 'var(--file-input-item-name-line-height)',
+          fontWeight: 'var(--file-input-item-name-font-weight)',
+        },
+        meta: {
+          fontSize: 'var(--file-input-item-meta-font-size)',
+          lineHeight: 'var(--file-input-item-meta-line-height)',
+        },
       },
     },
   },

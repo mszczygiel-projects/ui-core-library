@@ -107,6 +107,14 @@ export interface UiCoreLabels {
     /** Accessible name of the calendar toggle button. */
     openCalendar: string;
   };
+  fileInput: {
+    /** Default prompt inside the drop zone, shown when no file is selected. */
+    browse: string;
+    /** Label of the button that swaps the currently selected file. */
+    replace: string;
+    /** Accessible name of a file's remove button. */
+    remove: (fileName: string) => string;
+  };
 }
 
 /** A partial `UiCoreLabels` — every group and every leaf is independently optional. */
@@ -180,6 +188,11 @@ export const defaultLabels: UiCoreLabels = {
   },
   dateField: {
     openCalendar: 'Open calendar',
+  },
+  fileInput: {
+    browse: 'Drag & drop or browse',
+    replace: 'Replace',
+    remove: (fileName) => `Remove ${fileName}`,
   },
 };
 

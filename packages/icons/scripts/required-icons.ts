@@ -22,12 +22,15 @@ export const REQUIRED_ICONS = [
   'icon-chevron-up',
   'icon-close',
   'icon-danger',
+  'icon-delete',
   'icon-eye',
   'icon-eye-slash',
+  'icon-file',
   'icon-info',
   'icon-minus',
   'icon-plus',
   'icon-search',
+  'icon-upload',
 ] as const;
 
 export type RequiredIconName = (typeof REQUIRED_ICONS)[number];
