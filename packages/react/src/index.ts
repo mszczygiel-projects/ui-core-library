@@ -41,6 +41,16 @@ export type {
   NumberFieldLabelPlacement,
   NumberFieldControls,
 } from './NumberField/NumberField.js';
+export { FileInputField } from './FileInputField/FileInputField.js';
+export type {
+  FileInputFieldProps,
+  FileInputFieldVariant,
+  FileInputFieldSize,
+  FileInputFieldState,
+  FileInputFieldMode,
+  FileInputFieldRejectReason,
+  FileInputFieldRejection,
+} from './FileInputField/FileInputField.js';
 export { CheckboxField } from './CheckboxField/CheckboxField.js';
 export type { CheckboxFieldProps, CheckboxFieldState } from './CheckboxField/CheckboxField.js';
 export { RadioField } from './RadioField/RadioField.js';

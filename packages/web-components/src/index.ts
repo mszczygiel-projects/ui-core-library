@@ -48,6 +48,15 @@ export type {
   NumberFieldLabelPlacement,
   NumberFieldControls,
 } from './number-field/number-field.js';
+export { UiFileInputField } from './file-input-field/file-input-field.js';
+export type {
+  FileInputFieldVariant,
+  FileInputFieldSize,
+  FileInputFieldState,
+  FileInputFieldMode,
+  FileInputFieldRejectReason,
+  FileInputFieldRejection,
+} from './file-input-field/file-input-field.js';
 export { UiCheckboxField } from './checkbox-field/checkbox-field.js';
 export type { CheckboxFieldState } from './checkbox-field/checkbox-field.js';
 export { UiRadioField } from './radio-field/radio-field.js';

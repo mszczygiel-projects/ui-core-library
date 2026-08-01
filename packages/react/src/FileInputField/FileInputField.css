@@ -1,0 +1,366 @@
+@import "../styles/control-field.css";
+
+.ui-file-input-field {
+  display: block;
+  font-family: var(--control-font-family);
+  font-weight: var(--control-font-weight);
+  letter-spacing: var(--control-letter-spacing);
+
+  /*
+   * File-input size ramp. The root also carries `ui-control-field*`, which
+   * supplies the colour aliases and the generic control ramp; a drop zone is a
+   * box rather than a one-line control, so its geometry comes from the
+   * file-input/* family. Default size first — the modifiers below override it.
+   */
+  --_zone-min-height: var(--file-input-min-height);
+  --_zone-padding-stack: var(--file-input-padding-stack);
+  --_zone-padding-inline: var(--file-input-padding-inline);
+  --_zone-gap: var(--file-input-gap);
+  --_zone-icon-size: var(--file-input-icon-size);
+  --_prompt-font-size: var(--file-input-title-font-size);
+  --_prompt-line-height: var(--file-input-title-line-height);
+}
+
+.ui-file-input-field--small {
+  --_zone-min-height: var(--file-input-small-min-height);
+  --_zone-padding-stack: var(--file-input-small-padding-stack);
+  --_zone-padding-inline: var(--file-input-small-padding-inline);
+  --_zone-gap: var(--file-input-small-gap);
+  --_zone-icon-size: var(--file-input-small-icon-size);
+  --_prompt-font-size: var(--file-input-small-title-font-size);
+  --_prompt-line-height: var(--file-input-small-title-line-height);
+}
+
+.ui-file-input-field--large {
+  --_zone-min-height: var(--file-input-large-min-height);
+  --_zone-padding-stack: var(--file-input-large-padding-stack);
+  --_zone-padding-inline: var(--file-input-large-padding-inline);
+  --_zone-gap: var(--file-input-large-gap);
+  --_zone-icon-size: var(--file-input-large-icon-size);
+  --_prompt-font-size: var(--file-input-large-title-font-size);
+  --_prompt-line-height: var(--file-input-large-title-line-height);
+}
+
+.ui-file-input-field__label {
+  display: block;
+  margin-block-end: var(--spacing-2);
+  color: var(--_label);
+  font-family: var(--control-label-font-family);
+  font-size: var(--control-label-font-size);
+  line-height: var(--control-label-line-height);
+  font-weight: var(--control-label-font-weight);
+  letter-spacing: var(--control-label-letter-spacing);
+  text-transform: var(--control-label-text-transform);
+}
+
+/*
+ * Visually hidden, deliberately still focusable and still the accessibility
+ * root of the whole field: it carries the label, the description and the
+ * keyboard behaviour, so no ARIA emulation is needed on the zone itself.
+ */
+.ui-file-input-field__input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  border: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+}
+
+.ui-file-input-field__dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: var(--_zone-min-height);
+  padding: var(--_zone-padding-stack) var(--_zone-padding-inline);
+  gap: var(--_zone-gap);
+  border-radius: var(--file-input-radius);
+  border: var(--file-input-border-width) dashed var(--_border);
+  background-color: var(--_bg);
+  color: var(--_text);
+  cursor: pointer;
+  text-align: center;
+}
+
+/* The dashed edge is the drop affordance; a filled zone carries it as fill. */
+.ui-file-input-field--filled .ui-file-input-field__dropzone {
+  border-style: solid;
+}
+
+/*
+ * The input sits before the zone in the DOM so the focus ring can be expressed
+ * as an adjacent-sibling rule rather than :has().
+ */
+.ui-file-input-field__input:focus-visible + .ui-file-input-field__dropzone {
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-file-input-field__dropzone:hover {
+  background-color: var(--_bg-hover);
+  border-color: var(--_border-hover);
+  color: var(--_text-hover);
+}
+
+.ui-file-input-field__icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  width: var(--_zone-icon-size);
+  height: var(--_zone-icon-size);
+  color: var(--_icon);
+}
+.ui-file-input-field__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ui-file-input-field__prompt {
+  margin: 0;
+  font-family: var(--file-input-title-font-family);
+  font-size: var(--_prompt-font-size);
+  line-height: var(--_prompt-line-height);
+  font-weight: var(--file-input-title-font-weight);
+  letter-spacing: var(--file-input-title-letter-spacing);
+  color: inherit;
+}
+
+.ui-file-input-field__description,
+.ui-file-input-field__hint {
+  margin: 0;
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  line-height: var(--control-hint-line-height);
+  font-weight: var(--control-hint-font-weight);
+}
+
+.ui-file-input-field__hint {
+  margin-block-start: var(--spacing-1);
+}
+
+/* ---- Drag-over ---- */
+
+/*
+ * The dragover background token is a translucent tint, not an opaque colour:
+ * it has to sit on top of the field background rather than replace it, or a
+ * filled zone would get *lighter* on drag-over. A one-colour gradient is the
+ * only way to add a second background layer in CSS.
+ */
+.ui-file-input-field--dragover .ui-file-input-field__dropzone {
+  border-color: var(--color-file-input-dropzone-border-dragover);
+  background-image: linear-gradient(
+    var(--color-file-input-dropzone-background-dragover),
+    var(--color-file-input-dropzone-background-dragover)
+  );
+}
+.ui-file-input-field--dragover .ui-file-input-field__icon {
+  color: var(--color-file-input-dropzone-icon-dragover);
+}
+
+/* ---- Preview (single image) ---- */
+
+.ui-file-input-field__preview {
+  display: block;
+  width: 100%;
+  max-height: var(--file-input-preview-max-height);
+  border-radius: var(--file-input-preview-radius);
+  background-color: var(--color-file-input-preview-background);
+  overflow: hidden;
+}
+.ui-file-input-field__preview img {
+  display: block;
+  width: 100%;
+  max-height: var(--file-input-preview-max-height);
+  object-fit: contain;
+}
+
+.ui-file-input-field__actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--file-input-actions-gap);
+}
+
+.ui-file-input-field__action {
+  all: unset;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--_icon-action);
+  font-family: inherit;
+  font-size: var(--control-hint-font-size);
+  line-height: var(--control-hint-line-height);
+  font-weight: var(--file-input-title-font-weight);
+}
+.ui-file-input-field__action--icon {
+  width: var(--control-icon-size);
+  height: var(--control-icon-size);
+}
+.ui-file-input-field__action svg {
+  width: var(--control-icon-size);
+  height: var(--control-icon-size);
+  color: inherit;
+}
+.ui-file-input-field__action:hover {
+  color: var(--_icon-action-hover);
+}
+.ui-file-input-field__action:active {
+  color: var(--_icon-action-active);
+}
+.ui-file-input-field__action:focus-visible {
+  outline: var(--stroke-ring) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* ---- File list ---- */
+
+.ui-file-input-field__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--file-input-list-gap);
+  margin: var(--spacing-2) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-file-input-field__item {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  min-height: var(--file-input-item-height);
+  gap: var(--file-input-item-gap);
+  padding: var(--file-input-item-padding-stack) var(--file-input-item-padding-inline);
+  border: var(--file-input-border-width) solid var(--color-file-input-item-border-default);
+  border-radius: var(--file-input-item-radius);
+  background-color: var(--color-file-input-item-background-default);
+}
+
+/* Same compositing rule as drag-over — the hover token is a tint. */
+.ui-file-input-field__item:hover {
+  background-image: linear-gradient(
+    var(--color-file-input-item-background-hover),
+    var(--color-file-input-item-background-hover)
+  );
+}
+
+.ui-file-input-field__thumb {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: var(--file-input-item-thumb-size);
+  height: var(--file-input-item-thumb-size);
+  border-radius: var(--file-input-item-radius);
+  background-color: var(--color-file-input-preview-background);
+  color: var(--_icon);
+  overflow: hidden;
+}
+.ui-file-input-field__thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.ui-file-input-field__thumb svg {
+  width: var(--control-small-icon-size);
+  height: var(--control-small-icon-size);
+}
+
+.ui-file-input-field__info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+
+.ui-file-input-field__name {
+  margin: 0;
+  color: var(--color-file-input-item-name);
+  font-size: var(--file-input-item-name-font-size);
+  line-height: var(--file-input-item-name-line-height);
+  font-weight: var(--file-input-item-name-font-weight);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ui-file-input-field__meta {
+  margin: 0;
+  color: var(--color-file-input-item-meta);
+  font-size: var(--file-input-item-meta-font-size);
+  line-height: var(--file-input-item-meta-line-height);
+}
+
+/* ---- Validation states ---- */
+
+.ui-file-input-field--state-success .ui-file-input-field__dropzone {
+  background-color: var(--_bg-success);
+  border-color: var(--_border-success);
+  color: var(--_text-success);
+}
+.ui-file-input-field--state-success .ui-file-input-field__icon {
+  color: var(--_icon-success);
+}
+.ui-file-input-field--state-success .ui-file-input-field__description,
+.ui-file-input-field--state-success .ui-file-input-field__hint {
+  color: var(--_hint-success);
+}
+.ui-file-input-field--state-success .ui-file-input-field__label {
+  color: var(--_label-success);
+}
+
+.ui-file-input-field--state-error .ui-file-input-field__dropzone {
+  background-color: var(--_bg-error);
+  border-color: var(--_border-error);
+  color: var(--_text-error);
+}
+.ui-file-input-field--state-error .ui-file-input-field__icon {
+  color: var(--_icon-error);
+}
+.ui-file-input-field--state-error .ui-file-input-field__description,
+.ui-file-input-field--state-error .ui-file-input-field__hint {
+  color: var(--_hint-error);
+}
+.ui-file-input-field--state-error .ui-file-input-field__label {
+  color: var(--_label-error);
+}
+
+/*
+ * In success / error / disabled the interactive controls follow the field
+ * state rather than action/primary — a red remove button reads as "this field
+ * is broken", which is the point.
+ */
+.ui-file-input-field--state-success .ui-file-input-field__action {
+  color: var(--_icon-success);
+}
+.ui-file-input-field--state-error .ui-file-input-field__action {
+  color: var(--_icon-error);
+}
+
+.ui-file-input-field--state-disabled .ui-file-input-field__dropzone,
+.ui-file-input-field--state-disabled .ui-file-input-field__dropzone:hover {
+  background-color: var(--_bg-disabled);
+  border-color: var(--_border-disabled);
+  color: var(--_text-disabled);
+  cursor: not-allowed;
+}
+.ui-file-input-field--state-disabled .ui-file-input-field__icon,
+.ui-file-input-field--state-disabled .ui-file-input-field__action {
+  color: var(--_icon-disabled);
+}
+.ui-file-input-field--state-disabled .ui-file-input-field__action {
+  cursor: not-allowed;
+}
+.ui-file-input-field--state-disabled .ui-file-input-field__description,
+.ui-file-input-field--state-disabled .ui-file-input-field__hint {
+  color: var(--_hint-disabled);
+}
+.ui-file-input-field--state-disabled .ui-file-input-field__label {
+  color: var(--_label-disabled);
+}

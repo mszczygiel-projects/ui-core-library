@@ -8499,6 +8499,87 @@
           },
           "$type": "color"
         }
+      },
+      "file-input": {
+        "dropzone": {
+          "background": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.background.tint}",
+                "Dark": "{Themes.color.on-subtle.background.tint}"
+              },
+              "$type": "color"
+            }
+          },
+          "border": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.action.primary.base.default}",
+                "Dark": "{Themes.color.on-subtle.action.primary.base.default}"
+              },
+              "$type": "color"
+            }
+          },
+          "icon": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.action.primary.base.default}",
+                "Dark": "{Themes.color.on-subtle.action.primary.base.default}"
+              },
+              "$type": "color"
+            }
+          }
+        },
+        "item": {
+          "background": {
+            "default": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.background.default}",
+                "Dark": "{Themes.color.on-subtle.background.default}"
+              },
+              "$type": "color"
+            },
+            "hover": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.background.tint}",
+                "Dark": "{Themes.color.on-subtle.background.tint}"
+              },
+              "$type": "color"
+            }
+          },
+          "border": {
+            "default": {
+              "$value": {
+                "Default": "{Themes.color.on-subtle.border.default}",
+                "Dark": "{Themes.color.on-subtle.border.default}"
+              },
+              "$type": "color"
+            }
+          },
+          "name": {
+            "$value": {
+              "Default": "{Themes.color.on-subtle.text.primary}",
+              "Dark": "{Themes.color.on-subtle.text.primary}"
+            },
+            "$type": "color"
+          },
+          "meta": {
+            "$value": {
+              "Default": "{Themes.color.on-subtle.text.secondary}",
+              "Dark": "{Themes.color.on-subtle.text.secondary}"
+            },
+            "$type": "color"
+          }
+        },
+        "preview": {
+          "background": {
+            "$value": {
+              "Default": "{Themes.color.on-subtle.background.sunken}",
+              "Dark": "{Themes.color.on-subtle.background.sunken}"
+            },
+            "$type": "color"
+          }
+        }
       }
     },
     "on-inverse": {
@@ -14468,6 +14549,87 @@
             "Dark": "{Themes.color.on-inverse.text.muted}"
           },
           "$type": "color"
+        }
+      },
+      "file-input": {
+        "dropzone": {
+          "background": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.background.tint}",
+                "Dark": "{Themes.color.on-inverse.background.tint}"
+              },
+              "$type": "color"
+            }
+          },
+          "border": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.action.primary.base.default}",
+                "Dark": "{Themes.color.on-inverse.action.primary.base.default}"
+              },
+              "$type": "color"
+            }
+          },
+          "icon": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.action.primary.base.default}",
+                "Dark": "{Themes.color.on-inverse.action.primary.base.default}"
+              },
+              "$type": "color"
+            }
+          }
+        },
+        "item": {
+          "background": {
+            "default": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.background.default}",
+                "Dark": "{Themes.color.on-inverse.background.default}"
+              },
+              "$type": "color"
+            },
+            "hover": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.background.tint}",
+                "Dark": "{Themes.color.on-inverse.background.tint}"
+              },
+              "$type": "color"
+            }
+          },
+          "border": {
+            "default": {
+              "$value": {
+                "Default": "{Themes.color.on-inverse.border.default}",
+                "Dark": "{Themes.color.on-inverse.border.default}"
+              },
+              "$type": "color"
+            }
+          },
+          "name": {
+            "$value": {
+              "Default": "{Themes.color.on-inverse.text.primary}",
+              "Dark": "{Themes.color.on-inverse.text.primary}"
+            },
+            "$type": "color"
+          },
+          "meta": {
+            "$value": {
+              "Default": "{Themes.color.on-inverse.text.secondary}",
+              "Dark": "{Themes.color.on-inverse.text.secondary}"
+            },
+            "$type": "color"
+          }
+        },
+        "preview": {
+          "background": {
+            "$value": {
+              "Default": "{Themes.color.on-inverse.background.sunken}",
+              "Dark": "{Themes.color.on-inverse.background.sunken}"
+            },
+            "$type": "color"
+          }
         }
       }
     },
@@ -20439,6 +20601,87 @@
           },
           "$type": "color"
         }
+      },
+      "file-input": {
+        "dropzone": {
+          "background": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.background.tint}",
+                "Dark": "{Themes.color.on-brand-primary.background.tint}"
+              },
+              "$type": "color"
+            }
+          },
+          "border": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.action.primary.base.default}",
+                "Dark": "{Themes.color.on-brand-primary.action.primary.base.default}"
+              },
+              "$type": "color"
+            }
+          },
+          "icon": {
+            "dragover": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.action.primary.base.default}",
+                "Dark": "{Themes.color.on-brand-primary.action.primary.base.default}"
+              },
+              "$type": "color"
+            }
+          }
+        },
+        "item": {
+          "background": {
+            "default": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.background.default}",
+                "Dark": "{Themes.color.on-brand-primary.background.default}"
+              },
+              "$type": "color"
+            },
+            "hover": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.background.tint}",
+                "Dark": "{Themes.color.on-brand-primary.background.tint}"
+              },
+              "$type": "color"
+            }
+          },
+          "border": {
+            "default": {
+              "$value": {
+                "Default": "{Themes.color.on-brand-primary.border.default}",
+                "Dark": "{Themes.color.on-brand-primary.border.default}"
+              },
+              "$type": "color"
+            }
+          },
+          "name": {
+            "$value": {
+              "Default": "{Themes.color.on-brand-primary.text.primary}",
+              "Dark": "{Themes.color.on-brand-primary.text.primary}"
+            },
+            "$type": "color"
+          },
+          "meta": {
+            "$value": {
+              "Default": "{Themes.color.on-brand-primary.text.secondary}",
+              "Dark": "{Themes.color.on-brand-primary.text.secondary}"
+            },
+            "$type": "color"
+          }
+        },
+        "preview": {
+          "background": {
+            "$value": {
+              "Default": "{Themes.color.on-brand-primary.background.sunken}",
+              "Dark": "{Themes.color.on-brand-primary.background.sunken}"
+            },
+            "$type": "color"
+          }
+        }
       }
     },
     "selection": {
@@ -23892,6 +24135,87 @@
           "Dark": "{Themes.color.text.muted}"
         },
         "$type": "color"
+      }
+    },
+    "file-input": {
+      "dropzone": {
+        "background": {
+          "dragover": {
+            "$value": {
+              "Default": "{Themes.color.background.tint}",
+              "Dark": "{Themes.color.background.tint}"
+            },
+            "$type": "color"
+          }
+        },
+        "border": {
+          "dragover": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.base.default}",
+              "Dark": "{Themes.color.action.primary.base.default}"
+            },
+            "$type": "color"
+          }
+        },
+        "icon": {
+          "dragover": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.base.default}",
+              "Dark": "{Themes.color.action.primary.base.default}"
+            },
+            "$type": "color"
+          }
+        }
+      },
+      "item": {
+        "background": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.background.default}",
+              "Dark": "{Themes.color.background.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.background.tint}",
+              "Dark": "{Themes.color.background.tint}"
+            },
+            "$type": "color"
+          }
+        },
+        "border": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.border.default}",
+              "Dark": "{Themes.color.border.default}"
+            },
+            "$type": "color"
+          }
+        },
+        "name": {
+          "$value": {
+            "Default": "{Themes.color.text.primary}",
+            "Dark": "{Themes.color.text.primary}"
+          },
+          "$type": "color"
+        },
+        "meta": {
+          "$value": {
+            "Default": "{Themes.color.text.secondary}",
+            "Dark": "{Themes.color.text.secondary}"
+          },
+          "$type": "color"
+        }
+      },
+      "preview": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.background.sunken}",
+            "Dark": "{Themes.color.background.sunken}"
+          },
+          "$type": "color"
+        }
       }
     }
   },

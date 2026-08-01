@@ -7543,6 +7543,105 @@
         },
         "$type": "color"
       }
+    },
+    "file-input": {
+      "dropzone": {
+        "background": {
+          "dragover": {
+            "$value": {
+              "Default": "{Themes.color.file-input.dropzone.background.dragover}",
+              "Subtle": "{Themes.color.on-subtle.file-input.dropzone.background.dragover}",
+              "Inverse": "{Themes.color.on-inverse.file-input.dropzone.background.dragover}",
+              "Primary": "{Themes.color.on-brand-primary.file-input.dropzone.background.dragover}"
+            },
+            "$type": "color"
+          }
+        },
+        "border": {
+          "dragover": {
+            "$value": {
+              "Default": "{Themes.color.file-input.dropzone.border.dragover}",
+              "Subtle": "{Themes.color.on-subtle.file-input.dropzone.border.dragover}",
+              "Inverse": "{Themes.color.on-inverse.file-input.dropzone.border.dragover}",
+              "Primary": "{Themes.color.on-brand-primary.file-input.dropzone.border.dragover}"
+            },
+            "$type": "color"
+          }
+        },
+        "icon": {
+          "dragover": {
+            "$value": {
+              "Default": "{Themes.color.file-input.dropzone.icon.dragover}",
+              "Subtle": "{Themes.color.on-subtle.file-input.dropzone.icon.dragover}",
+              "Inverse": "{Themes.color.on-inverse.file-input.dropzone.icon.dragover}",
+              "Primary": "{Themes.color.on-brand-primary.file-input.dropzone.icon.dragover}"
+            },
+            "$type": "color"
+          }
+        }
+      },
+      "item": {
+        "background": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.file-input.item.background.default}",
+              "Subtle": "{Themes.color.on-subtle.file-input.item.background.default}",
+              "Inverse": "{Themes.color.on-inverse.file-input.item.background.default}",
+              "Primary": "{Themes.color.on-brand-primary.file-input.item.background.default}"
+            },
+            "$type": "color"
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.file-input.item.background.hover}",
+              "Subtle": "{Themes.color.on-subtle.file-input.item.background.hover}",
+              "Inverse": "{Themes.color.on-inverse.file-input.item.background.hover}",
+              "Primary": "{Themes.color.on-brand-primary.file-input.item.background.hover}"
+            },
+            "$type": "color"
+          }
+        },
+        "border": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.file-input.item.border.default}",
+              "Subtle": "{Themes.color.on-subtle.file-input.item.border.default}",
+              "Inverse": "{Themes.color.on-inverse.file-input.item.border.default}",
+              "Primary": "{Themes.color.on-brand-primary.file-input.item.border.default}"
+            },
+            "$type": "color"
+          }
+        },
+        "name": {
+          "$value": {
+            "Default": "{Themes.color.file-input.item.name}",
+            "Subtle": "{Themes.color.on-subtle.file-input.item.name}",
+            "Inverse": "{Themes.color.on-inverse.file-input.item.name}",
+            "Primary": "{Themes.color.on-brand-primary.file-input.item.name}"
+          },
+          "$type": "color"
+        },
+        "meta": {
+          "$value": {
+            "Default": "{Themes.color.file-input.item.meta}",
+            "Subtle": "{Themes.color.on-subtle.file-input.item.meta}",
+            "Inverse": "{Themes.color.on-inverse.file-input.item.meta}",
+            "Primary": "{Themes.color.on-brand-primary.file-input.item.meta}"
+          },
+          "$type": "color"
+        }
+      },
+      "preview": {
+        "background": {
+          "$value": {
+            "Default": "{Themes.color.file-input.preview.background}",
+            "Subtle": "{Themes.color.on-subtle.file-input.preview.background}",
+            "Inverse": "{Themes.color.on-inverse.file-input.preview.background}",
+            "Primary": "{Themes.color.on-brand-primary.file-input.preview.background}"
+          },
+          "$type": "color"
+        }
+      }
     }
   }
 }
