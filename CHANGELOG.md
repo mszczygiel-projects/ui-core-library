@@ -12,6 +12,94 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.14.0] — 2026-08-01
+
+A file input with a drag-and-drop zone in both rendering targets, plus the
+tokens, labels and icons it needs.
+
+### Added
+
+- **`FileInputField` for React (`@mszczygiel-projects/ui-core-react`)** and
+  **`<ui-file-input-field>` for Web Components (`@mszczygiel-projects/ui-core-wc`)** —
+  a drop zone wrapping a real, visually hidden `<input type="file">`. The
+  picker, the keyboard behaviour and the accessible name come from the platform
+  rather than from ARIA emulation, and the Lit element is
+  **form-associated** (`ElementInternals` + `setFormValue`), so it submits with
+  a surrounding `<form>` under its `name`.
+
+  ```tsx
+  const [files, setFiles] = useState<File[]>([]);
+  <FileInputField
+    label="Photo"
+    description="PNG, SVG — max 2 MB"
+    accept="image/png,image/svg+xml"
+    maxSize={2 * 1024 * 1024}
+    files={files}
+    onChange={setFiles}
+  />;
+  ```
+
+  ```html
+  <ui-file-input-field label="Photo" accept="image/png" max-size="2097152"></ui-file-input-field>
+  <script>
+    field.addEventListener('ui-change', (e) => console.log(e.detail.files));
+  </script>
+  ```
+
+  React follows the usual controlled/uncontrolled split (`files` + `onChange`,
+  or `defaultFiles`); Lit reports through `ui-change`, `ui-reject` and
+  `ui-remove`.
+
+- **The presentation is derived from the selection, never set.** There is no
+  `mode` prop — the field resolves `empty` / `filled` / `list` itself and
+  reflects the result as `data-value`, mirroring the `Value` axis of the Figma
+  Component Set. A single **image** in single-file mode gets an in-place
+  preview with Replace / Remove; anything else — multiple files, or a
+  non-image — stacks as a file list below the zone, because there is nothing
+  to preview and a name with its size says more than a generic glyph blown up.
+- **Validation is reported, not displayed.** `accept` (enforced on drops as
+  well as through the native dialog), `maxSize` and `maxFiles` decide what
+  enters the selection; everything refused is handed back through `onReject` /
+  `ui-reject` with a `type` / `size` / `count` reason. The component renders no
+  error message of its own — the wording depends on the app's tone and
+  language, so `state="error"` plus `hint` stay the consumer's call.
+- **Object URLs are owned by the component.** One per image in the current
+  selection, revoked when the selection changes or the component goes away, so
+  repeatedly swapping files does not leak blobs. Pass `File` objects, never
+  URLs.
+- **Two variants, three sizes.** `outline` draws a dashed border over the page
+  background — the dash is the drop affordance, which is why it rides on the
+  variant rather than on a token CSS `border-style` could not honour anyway;
+  `filled` is a solid block with no visible edge. Field chrome otherwise rides
+  on the shared `control/*` family, exactly like `TextField`.
+- **`labels.fileInput`** in `UiCoreLabels` — `browse`
+  (`Drag & drop or browse`), `replace` (`Replace`) and the dynamic
+  `remove(fileName)` (`` `Remove ${fileName}` ``), overridable globally through
+  `configureUiCore` or per instance via `prompt` / `replaceLabel` /
+  `removeLabel`.
+- **File input tokens**, surface-aware like every other component family:
+  `--color-file-input-dropzone-*-dragover`, `--color-file-input-item-*` and
+  `--color-file-input-preview-background`, plus the `on-subtle`, `on-inverse`
+  and `on-brand-primary` variants, and the geometry set `--file-input-*`
+  (including the `small-` / `large-` size ramps and the `item-` row metrics).
+
+  Two of them are **translucent tints** —
+  `--color-file-input-dropzone-background-dragover` and
+  `--color-file-input-item-background-hover`. They are composited over the
+  existing background with a one-colour `linear-gradient` and must never be
+  assigned to `background-color`: substituting them directly replaces the
+  opaque background and makes a `filled` zone get _lighter_ on hover.
+
+- **`icon-file` and `icon-upload`** in `@mszczygiel-projects/ui-core-icons`.
+  They join `icon-delete` in `REQUIRED_ICONS`, so a replacement icon set now
+  has to cover all three.
+
+### Changed
+
+- Foundations token outputs (`figma-exports`, `tokens.css`, `tokens.ts`,
+  `tailwind.css`) were regenerated to include the file input token families
+  above.
+
 ## [0.13.0] — 2026-07-31
 
 A new Drawer component in both rendering targets, plus a border-only group
