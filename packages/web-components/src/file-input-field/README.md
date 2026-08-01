@@ -28,6 +28,9 @@ Form-associated file input with a drag-and-drop zone. Wraps a real, visually hid
 | `description`  | `description`   | string — second line under the prompt          | —         |
 | `hint`         | `hint`          | string — helper text below the field           | —         |
 | `state`        | `state`         | `default` / `success` / `error` / `disabled`   | `default` |
+| `name`         | `name`          | string — form field name                        | —         |
+| `required`     | `required`      | boolean                                        | `false`   |
+| `disabled`     | `disabled`      | boolean                                        | `false`   |
 | `accept`       | `accept`        | string — native filter, also applied to drops  | —         |
 | `multiple`     | `multiple`      | boolean                                        | `false`   |
 | `maxSize`      | `max-size`      | number — bytes                                 | —         |
