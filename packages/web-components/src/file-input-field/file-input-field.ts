@@ -204,12 +204,12 @@ export class UiFileInputField extends LitElement {
   }
 
   private _syncFormValue() {
-    if (this._isDisabled || this.files.length === 0) {
+    if (this._isDisabled || this.files.length === 0 || !this.name) {
       this._internals.setFormValue(null);
       return;
     }
     const data = new FormData();
-    for (const file of this.files) data.append(this.name ?? 'files', file);
+    for (const file of this.files) data.append(this.name, file);
     this._internals.setFormValue(data);
   }
 
