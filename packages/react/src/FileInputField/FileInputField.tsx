@@ -161,6 +161,7 @@ export const FileInputField = forwardRef<HTMLInputElement, FileInputFieldProps>(
       removeLabel,
       formatSize,
       actions,
+      disabled,
       className,
       style,
     }: FileInputFieldProps,
@@ -179,7 +180,7 @@ export const FileInputField = forwardRef<HTMLInputElement, FileInputFieldProps>(
 
     const isControlled = files !== undefined;
     const selected = isControlled ? files : internalFiles;
-    const isDisabled = state === 'disabled';
+    const isDisabled = disabled || state === 'disabled';
 
     const labels = getUiCoreConfig().labels.fileInput;
     const resolveRemoveLabel = removeLabel ?? labels.remove;
