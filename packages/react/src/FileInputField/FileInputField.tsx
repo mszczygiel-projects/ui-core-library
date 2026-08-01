@@ -98,6 +98,8 @@ export interface FileInputFieldProps {
    * @default 'default'
    */
   state?: FileInputFieldState;
+  /** Disables the input and drop zone interactions. */
+  disabled?: boolean;
   /** Native `accept` filter, also enforced on dropped files. */
   accept?: string;
   /** Allows selecting more than one file. */
