@@ -509,6 +509,38 @@ Sizes: `button/small/*` and `button/large/*`
 
 ---
 
+## Collection 7: Density
+
+Modes: **Comfortable** (base) | **Compact**. Emitted as `:root, [data-density="comfortable"]`
+and `[data-density="compact"]`.
+
+32 slots. Every component dimension in scope aliases one of these instead of a ramp step or a
+primitive, which is what makes a single attribute retune the whole layout.
+
+| Slot group                  | Slots                                      | Comfortable → Compact                      |
+| --------------------------- | ------------------------------------------ | ------------------------------------------ |
+| `gap/*`                     | `2xs`, `xs`, `sm`, `md`                    | 4→4, 8→4, 12→8, 16→12                      |
+| `padding/inline/*`          | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`        | 4→4, 8→4, 12→8, 16→12, 24→16, 32→24        |
+| `padding/inline/adaptive`   | —                                          | 16→32 becomes 12→24 (stays responsive)     |
+| `padding/stack/*`           | `2xs`, `xs`, `sm`, `md`, `lg`, `xl`, `2xl` | 4→4, 8→4, 12→8, 16→12, 20→16, 24→20, 32→24 |
+| `icon/size/*`               | `2xs`, `xs`, `sm`, `md`, `lg`, `hit-area`  | 12→12, 16→12, 20→16, 24→20, 32→24, 40→32   |
+| `control/height/*`          | `2xs`, `xs`, `sm`, `md`                    | 20→20, 24→20, 32→24, 48→40                 |
+| `control/area/min-height/*` | `sm`, `md`, `lg`                           | 80→64, 96→80, 128→96                       |
+| `control/separator/inset`   | —                                          | 4→4 (exists to remove a hardcoded value)   |
+
+**Compact is a re-mapping, not a second set of numbers.** Each slot points one step further
+down the `layout/*` and `icon/*` ramps in `Sizes`. A client who changes those ramps gets a
+consistent Compact for free; a client who wants a different tightening re-points ~32 aliases
+rather than re-deciding ~83 values.
+
+Where a step-down would collapse the layout the slot stays put — a 4px gap, a 4px padding, a
+12px icon and a 20px control height are already minimal.
+
+Three tokens are deliberately outside density because their value is geometry rather than
+spacing: `calendar/day/gap` (a deliberate 0), `drawer/grabber/height` and `popover/arrow/size`.
+
+---
+
 ## Summary: What to Update Per Client
 
 | Priority | Collection                   | Variables to update                                             |

@@ -12,6 +12,172 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.15.0] — 2026-08-12
+
+The Figma token set went from **4638 variables to 2078** without changing a single
+rendered value. Setting up a design system for a new client is now ~138 semantic
+roles instead of ~4000 rows. A **Comfortable / Compact density switch** then
+landed on top, costing 36 more variables.
+
+Nothing in the components moved: all 708 `--color-*` references in Lit and React
+resolve exactly as before, verified against a pre-migration snapshot of every
+token in all eight theme × surface combinations, and again by diffing the
+generated CSS in a real browser. The same check covers density — every resolved
+value in Comfortable is byte-identical to 0.14.0 across all 1974 custom
+properties.
+
+### Migration
+
+**1. `--color-on-subtle-*`, `--color-on-inverse-*` and `--color-on-brand-primary-*`
+are largely gone.** 2178 of the 2391 were removed; 414 remain (the ~138 semantic
+roles × 3). These were always the internal machinery of the surface system — the
+copies `[data-surface]` switches between — and `AGENTS.md` said not to use them,
+but they were emitted, so this is a breaking change either way.
+
+If you referenced one, use the surface-aware token instead. It already resolves to
+the right value in every surface context, which is the entire point:
+
+```css
+/* before — pinned to one surface, ignored [data-surface] */
+color: var(--color-on-inverse-text-primary);
+
+/* after — follows the surface it is rendered in */
+color: var(--color-text-primary);
+```
+
+**2. `--typography-eyebrow-font-familly` → `--typography-eyebrow-font-family`.**
+The misspelling had also been suppressing the build's quoting rule, so the value
+was emitted bare (`Ubuntu`) while every other font family was quoted. It is now
+`"Ubuntu"`, consistent with the rest. Rendered output is unchanged.
+
+**3. If you read the `tokens` TypeScript object**, per-component tokens moved:
+
+```ts
+tokens.surfaces.color.chip.neutral.solid.background.default; // before
+tokens.components.color.chip.neutral.solid.background.default; // after
+
+tokens.sizes.button.fontSize; // before
+tokens.components.button.fontSize; // after
+```
+
+`tokens.surfaces` and `tokens.sizes` now hold only the semantic roles. The CSS
+custom property names are untouched, so nothing changes if you use `var(--…)`.
+
+### Added
+
+- **Layout density — `data-density="compact"`.** A third context axis beside
+  theme and surface, switching spacing, control heights and icon sizes.
+  Typography, radius, stroke and colour do not react to it.
+
+  ```html
+  <html data-density="compact">
+    <!-- or on any container, with nesting -->
+    <table data-density="compact">
+      <div data-density="comfortable">back to the roomier scale</div>
+    </table>
+  </html>
+  ```
+
+  `comfortable` is the default and needs no attribute — set it explicitly only to
+  reset out of a compact ancestor. **Nothing changes for consumers who never set
+  it:** every resolved value in Comfortable is identical to 0.14.0, checked
+  property by property in a browser across all 1974 custom properties.
+
+  Density composes with the other axes rather than multiplying them. A compact
+  container inside `data-surface="subtle"` keeps the subtle palette, and a
+  compact control on a wide viewport picks up the desktop step of the size ramp,
+  not the mobile one — 113 custom properties move in Compact.
+
+- **A `Density` collection** of 32 slots (`gap/*`, `padding/inline/*`,
+  `padding/stack/*`, `icon/size/*`, `control/height/*`,
+  `control/area/min-height/*`, `control/separator/inset`), read from
+  `figma-exports/density.json` when present and skipped when absent, like
+  `components.json`. Compact is a re-mapping rather than a second set of numbers:
+  each slot points one step further down the ramps that already exist in `Sizes`,
+  so a client fork re-points ~32 aliases instead of re-deciding ~83 values.
+
+### Changed
+
+- **A `Components` collection now holds every per-component token**, colour and
+  dimension alike — 978 of them, each a single alias to a role. `Themes` and
+  `Surfaces` carry the ~138 roles; `Sizes` carries the responsive roles. The
+  layering is what shrank the set: the surface mirrors used to be duplicated
+  across all 797 component-facing tokens, and now cover only the roles beneath
+  them.
+- **`build-tokens.ts` reads `figma-exports/components.json`** when it is present
+  and ignores its absence, so a Figma file that has not been migrated still
+  builds.
+- **Precedence in `tokens.ts` is `Components > Surfaces > Themes`.** The
+  collections share CSS variable names once the collection prefix is dropped, so
+  only the most specific definition of a path reaches the public API.
+- **A declaration is repeated into every scope where its value can change, and
+  only there.** A custom property containing `var()` is substituted on the
+  element the declaration applies to, and descendants inherit the substituted
+  result — so an alias declared only on `:root` freezes there and ignores a
+  `[data-surface]` or `[data-density]` container below it. Colours therefore
+  repeat per theme and surface scope, and a dimension repeats per density scope
+  **only when its alias chain reaches `Density`** (100 of 252 do). The rest stay
+  on `:root` once, because the media query that drives them redeclares on the
+  same element.
+- **`Sizes` may now reference `Density`.** It always held two layers that were
+  never separated — the `layout/*` / `icon/*` ramp and the `control/*` slots that
+  alias it — and density belongs between them. Eight `control/*` roles now
+  resolve through a density slot. This matters more than it sounds: form controls
+  have no height token at all, so a text field's height is `padding-block` plus
+  line-height, and without it density would visibly skip every field while
+  buttons tightened around them.
+- Generated output — `tokens.css` 859 → 497 KB, `tailwind.css` 335 → 120 KB,
+  `tokens.ts` 305 → 135 KB, and declarations in `tokens.css` from 9658 to 6762.
+
+### Removed
+
+- **BREAKING — 2178 `on-*` mirror custom properties** from `tokens.css` and their
+  `@theme` entries in `tailwind.css`. See Migration.
+- **BREAKING — `--typography-eyebrow-font-familly`.** See Migration.
+
+### Fixed
+
+- **Two backwards layer references** (`Themes.color.radio.background.default` and
+  `.hover` pointing down into `Surfaces`) that had been reported on every build.
+  `pnpm foundations:build` is now warning-free.
+- **`typography/eyebrow/font-family` was defined twice** — once in `Themes` as a
+  raw value, once in `Sizes` aliasing _caption_ rather than eyebrow. The
+  misspelling had kept the two from colliding. They now resolve through one
+  source.
+- **`packages/foundations/README.md` demonstrated the token object with
+  `tokens.themes.color.onSubtle.brand.primary`** — the exact usage the
+  architecture forbids. It now shows `tokens.surfaces.*`.
+- **React's `Button` spaced its content with a raw ramp step**
+  (`--layout-gap-inline-lg`) where the Lit element used the component token
+  (`--button-gap`), and its `small` and `large` variants overrode no gap at all.
+  Both resolve to 12px, so the two implementations looked identical — until
+  density, under which Lit would have tightened and React would not.
+- **42 component dimension tokens bypassed the semantic layer**, pointing
+  straight at primitives, and three (`button/*/separator/inset`) held a hardcoded
+  `4`. Adding density required a slot for each, so the layering defect is fixed
+  as a side effect rather than as separate work.
+
+### Known issues
+
+- **`--color-transparent` is declared by both the `transparent` primitive and the
+  new `transparent` role**, so the role wins inside a surface block. Both are
+  fully transparent, so there is no visual difference, but the name is owned
+  twice.
+- **`letter-spacing` is typed inconsistently across the token set** —
+  `notification/letter-spacing` is a number while the rest are percentage
+  strings. Figma cannot change a variable's type in place, so straightening this
+  out means recreating those variables.
+- Two `transparent` roles exist (`rgba(0,0,0,0)` and `rgba(255,255,255,0)`)
+  backing 59 tokens between them. They render identically and should be merged,
+  but that changes value strings, so it was kept out of a migration whose
+  contract was that no value moves.
+- **In Figma only, 94 `*/icon/size` bindings in `[Core] UI Library` will not
+  follow density.** They sit on instance sub-nodes carrying an explicit
+  `boundVariables` override, and the Plugin API cannot write those — it accepts
+  the call and silently does nothing, while `resetOverrides()` drops the value
+  rather than restoring it. Generated CSS is unaffected; this is a design-file
+  authoring artefact and clearing it needs a manual pass in the Figma UI.
+
 ## [0.14.0] — 2026-08-01
 
 A file input with a drag-and-drop zone in both rendering targets, plus the

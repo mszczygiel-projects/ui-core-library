@@ -59,6 +59,12 @@ const preview: Preview = {
         if (attr === null) storybookRoot.removeAttribute('data-surface');
         else storybookRoot.setAttribute('data-surface', attr);
 
+        // Always written, including Comfortable. That is deliberate: the base mode claims
+        // `[data-density="comfortable"]` as well as `:root`, and setting it here is what
+        // exercises the nested-reset selector rather than only the `:root` fallback.
+        const density = (context.globals?.density as string | undefined) ?? 'comfortable';
+        storybookRoot.setAttribute('data-density', density);
+
         const rootBackground = getComputedStyle(storybookRoot)
           .getPropertyValue('--color-background-default')
           .trim();
@@ -68,7 +74,21 @@ const preview: Preview = {
       return Story();
     },
   ],
-  globalTypes: {},
+  globalTypes: {
+    density: {
+      description: 'Layout density — spacing, control heights and icon sizes',
+      toolbar: {
+        title: 'Density',
+        icon: 'component',
+        items: [
+          { value: 'comfortable', title: 'Comfortable' },
+          { value: 'compact', title: 'Compact' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+  initialGlobals: { density: 'comfortable' },
   tags: ['autodocs'],
   parameters: {
     docs: {

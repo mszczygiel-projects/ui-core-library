@@ -59,11 +59,37 @@ function loadJson(inputDir: string, filename: string): unknown {
   }
 }
 
+/**
+ * Reads an export that may legitimately be absent.
+ *
+ * `components.json` only exists once the token restructure has run in Figma
+ * (see packages/foundations/docs/token-audit.md), and `density.json` only once the
+ * Comfortable/Compact layer has been added. Before that the collections simply are not there,
+ * and a missing file is not an error — unlike the four required exports, where a missing file
+ * means a broken Luckino export and has to stop the build. A client fork that has neither
+ * still builds, it just emits no density scopes.
+ */
+function loadOptionalJson(inputDir: string, filename: string): unknown | null {
+  const path = join(inputDir, filename);
+  try {
+    return JSON.parse(readFileSync(path, 'utf8'));
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') return null;
+    console.error(`✗ Failed to read ${path}:`, err);
+    process.exit(1);
+  }
+}
+
 function loadAllTokens(inputDir: string): Token[] {
   const primitives = loadJson(inputDir, 'primitives.json') as Record<string, unknown>;
   const themes = loadJson(inputDir, 'themes.json') as Record<string, unknown>;
   const surfaces = loadJson(inputDir, 'surfaces.json') as Record<string, unknown>;
+  const components = loadOptionalJson(inputDir, 'components.json') as Record<
+    string,
+    unknown
+  > | null;
   const sizes = loadJson(inputDir, 'sizes.json') as Record<string, unknown>;
+  const density = loadOptionalJson(inputDir, 'density.json') as Record<string, unknown> | null;
 
   const tokens: Token[] = [];
   for (const key of [
@@ -76,7 +102,9 @@ function loadAllTokens(inputDir: string): Token[] {
   }
   walk(themes, 'Themes', [], tokens);
   walk(surfaces, 'Surfaces', [], tokens);
+  if (components) walk(components, 'Components', [], tokens);
   walk(sizes, 'Sizes', [], tokens);
+  if (density) walk(density, 'Density', [], tokens);
   return tokens;
 }
 
@@ -126,8 +154,15 @@ export function buildTokens(
     .map((m) => (m === baseThemeMode ? `${m} (:root)` : `${m} ([data-theme="${modeSlug(m)}"])`))
     .join(', ');
 
+  const componentCount = tokens.filter((t) => t.collection === 'Components').length;
+
   console.log(`\n✓ Generated tokens.css, tailwind.css, tokens.ts in ${outputDir}`);
   console.log(`  — ${tokens.length} tokens processed`);
+  console.log(
+    componentCount > 0
+      ? `  — ${componentCount} component tokens (Components collection)`
+      : `  — no components.json — component tokens still live in Themes/Surfaces`,
+  );
   console.log(`  — ${themeModes.length} theme modes: ${themeSummary || '(none)'}`);
   console.log(
     `  — ${total} warnings (${warnings.circular.length} circular, ${warnings.violations.length} violations, ${warnings.broken.length} broken)`,

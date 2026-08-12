@@ -37,25 +37,11 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "large": {
           "font-size": {
             "$value": {
               "Mobile": "{Primitives Sizes.text.4xl}",
               "Desktop": "{Primitives Sizes.text.7xl}"
-            },
-            "$type": "number"
-          },
-          "line-height": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
-              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
             },
             "$type": "number"
           },
@@ -65,7 +51,21 @@
               "Desktop": "{Primitives Sizes.tracking.normal}"
             },
             "$type": "string"
+          },
+          "line-height": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl--line-height}",
+              "Desktop": "{Primitives Sizes.text.7xl--line-height}"
+            },
+            "$type": "number"
           }
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         }
       },
       "title": {
@@ -453,19 +453,19 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "line-height": {
           "$value": {
             "Mobile": "{Primitives Sizes.text.lg--line-height}",
             "Desktop": "{Primitives Sizes.text.lg--line-height}"
           },
           "$type": "number"
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         }
       }
     },
@@ -516,8 +516,8 @@
     "eyebrow": {
       "font-family": {
         "$value": {
-          "Mobile": "{Themes.typography.caption.font-family}",
-          "Desktop": "{Themes.typography.caption.font-family}"
+          "Mobile": "{Themes.typography.eyebrow.font-family}",
+          "Desktop": "{Themes.typography.eyebrow.font-family}"
         },
         "$type": "string"
       },
@@ -618,6 +618,13 @@
         "Desktop": 2
       },
       "$type": "number"
+    },
+    "accent": {
+      "$value": {
+        "Mobile": 2,
+        "Desktop": 2
+      },
+      "$type": "number"
     }
   },
   "layout": {
@@ -657,6 +664,48 @@
             "Desktop": "{Primitives Sizes.spacing.4}"
           },
           "$type": "number"
+        },
+        "2xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.6}",
+            "Desktop": "{Primitives Sizes.spacing.6}"
+          },
+          "$type": "number"
+        },
+        "3xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.8}",
+            "Desktop": "{Primitives Sizes.spacing.8}"
+          },
+          "$type": "number"
+        },
+        "adaptive": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.4}",
+            "Desktop": "{Primitives Sizes.spacing.8}"
+          },
+          "$type": "number"
+        },
+        "adaptive-compact": {
+          "$value": {
+            "Mobile": "{Sizes.layout.padding.inline.md}",
+            "Desktop": "{Sizes.layout.padding.inline.2xl}"
+          },
+          "$type": "number"
+        },
+        "control-adaptive": {
+          "$value": {
+            "Mobile": "{Sizes.layout.padding.inline.md}",
+            "Desktop": "{Sizes.layout.padding.inline.lg}"
+          },
+          "$type": "number"
+        },
+        "control-adaptive-compact": {
+          "$value": {
+            "Mobile": "{Sizes.layout.padding.inline.sm}",
+            "Desktop": "{Sizes.layout.padding.inline.md}"
+          },
+          "$type": "number"
         }
       },
       "stack": {
@@ -685,6 +734,20 @@
           "$value": {
             "Mobile": "{Primitives Sizes.spacing.5}",
             "Desktop": "{Primitives Sizes.spacing.5}"
+          },
+          "$type": "number"
+        },
+        "2xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.6}",
+            "Desktop": "{Primitives Sizes.spacing.6}"
+          },
+          "$type": "number"
+        },
+        "3xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.8}",
+            "Desktop": "{Primitives Sizes.spacing.8}"
           },
           "$type": "number"
         }
@@ -790,6 +853,20 @@
         "Desktop": "{Primitives Sizes.size.8}"
       },
       "$type": "number"
+    },
+    "xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.4}",
+        "Desktop": "{Primitives Sizes.size.4}"
+      },
+      "$type": "number"
+    },
+    "2xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.3}",
+        "Desktop": "{Primitives Sizes.size.3}"
+      },
+      "$type": "number"
     }
   },
   "control": {
@@ -840,8 +917,8 @@
     "icon": {
       "size": {
         "$value": {
-          "Mobile": "{Sizes.icon.sm}",
-          "Desktop": "{Sizes.icon.sm}"
+          "Mobile": "{Density.icon.size.sm}",
+          "Desktop": "{Density.icon.size.sm}"
         },
         "$type": "number"
       }
@@ -871,8 +948,8 @@
       "icon": {
         "size": {
           "$value": {
-            "Mobile": "{Sizes.icon.md}",
-            "Desktop": "{Sizes.icon.md}"
+            "Mobile": "{Density.icon.size.md}",
+            "Desktop": "{Density.icon.size.md}"
           },
           "$type": "number"
         }
@@ -894,8 +971,8 @@
         },
         "stack": {
           "$value": {
-            "Mobile": "{Sizes.layout.padding.stack.lg}",
-            "Desktop": "{Sizes.layout.padding.stack.lg}"
+            "Mobile": "{Density.padding.stack.sm}",
+            "Desktop": "{Density.padding.stack.sm}"
           },
           "$type": "number"
         }
@@ -956,8 +1033,8 @@
         },
         "stack": {
           "$value": {
-            "Mobile": "{Sizes.layout.padding.stack.sm}",
-            "Desktop": "{Sizes.layout.padding.stack.sm}"
+            "Mobile": "{Density.padding.stack.2xs}",
+            "Desktop": "{Density.padding.stack.2xs}"
           },
           "$type": "number"
         }
@@ -966,8 +1043,8 @@
     "padding": {
       "inline": {
         "$value": {
-          "Mobile": "{Sizes.layout.padding.inline.md}",
-          "Desktop": "{Sizes.layout.padding.inline.lg}"
+          "Mobile": "{Density.padding.inline.control}",
+          "Desktop": "{Density.padding.inline.control}"
         },
         "$type": "number"
       },
@@ -980,8 +1057,8 @@
       },
       "stack": {
         "$value": {
-          "Mobile": "{Sizes.layout.padding.stack.md}",
-          "Desktop": "{Sizes.layout.padding.stack.md}"
+          "Mobile": "{Density.padding.stack.xs}",
+          "Desktop": "{Density.padding.stack.xs}"
         },
         "$type": "number"
       }
@@ -1071,19 +1148,19 @@
           },
           "$type": "number"
         },
-        "letter-spacing": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.tracking.normal}",
-            "Desktop": "{Primitives Sizes.tracking.normal}"
-          },
-          "$type": "string"
-        },
         "font-weight": {
           "$value": {
             "Mobile": "{Primitives Sizes.font-weight.normal}",
             "Desktop": "{Primitives Sizes.font-weight.normal}"
           },
           "$type": "number"
+        },
+        "letter-spacing": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.tracking.normal}",
+            "Desktop": "{Primitives Sizes.tracking.normal}"
+          },
+          "$type": "string"
         },
         "font-family": {
           "$value": {
@@ -1109,8 +1186,8 @@
       },
       "font-family": {
         "$value": {
-          "Mobile": "{Themes.typography.eyebrow.font-familly}",
-          "Desktop": "{Themes.typography.eyebrow.font-familly}"
+          "Mobile": "{Themes.typography.eyebrow.font-family}",
+          "Desktop": "{Themes.typography.eyebrow.font-family}"
         },
         "$type": "string"
       },
@@ -1197,2032 +1274,13 @@
         },
         "$type": "number"
       }
-    }
-  },
-  "button": {
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.eyebrow.font-familly}",
-        "Desktop": "{Themes.typography.eyebrow.font-familly}"
-      },
-      "$type": "string"
     },
-    "font-weight": {
+    "hit-area": {
       "$value": {
-        "Mobile": "{Primitives Sizes.font-weight.semibold}",
-        "Desktop": "{Primitives Sizes.font-weight.semibold}"
+        "Mobile": "{Primitives Sizes.size.10}",
+        "Desktop": "{Primitives Sizes.size.10}"
       },
       "$type": "number"
-    },
-    "font-size": {
-      "$value": {
-        "Mobile": "{Sizes.control.font-size}",
-        "Desktop": "{Sizes.control.font-size}"
-      },
-      "$type": "number"
-    },
-    "line-height": {
-      "$value": {
-        "Mobile": "{Sizes.control.line-height}",
-        "Desktop": "{Sizes.control.line-height}"
-      },
-      "$type": "number"
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
-    "letter-spacing": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.tracking.normal}",
-        "Desktop": "{Primitives Sizes.tracking.normal}"
-      },
-      "$type": "string"
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.stroke.border}",
-          "Desktop": "{Sizes.stroke.border}"
-        },
-        "$type": "number"
-      }
-    },
-    "icon": {
-      "size": {
-        "$value": {
-          "Mobile": "{Sizes.control.icon.size}",
-          "Desktop": "{Sizes.control.icon.size}"
-        },
-        "$type": "number"
-      }
-    },
-    "text-transform": {
-      "uppercase": {
-        "$value": {
-          "Mobile": "{Themes.button.text-transform.uppercase}",
-          "Desktop": "{Themes.button.text-transform.uppercase}"
-        },
-        "$type": "boolean"
-      }
-    },
-    "padding": {
-      "inline": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.4}",
-          "Desktop": "{Primitives Sizes.spacing.8}"
-        },
-        "$type": "number"
-      },
-      "stack": {
-        "$value": {
-          "Mobile": "{Sizes.control.padding.stack}",
-          "Desktop": "{Sizes.control.padding.stack}"
-        },
-        "$type": "number"
-      }
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.3}",
-        "Desktop": "{Primitives Sizes.spacing.3}"
-      },
-      "$type": "number"
-    },
-    "small": {
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.control.small.font-size}",
-          "Desktop": "{Sizes.control.small.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.control.small.line-height}",
-          "Desktop": "{Sizes.control.small.line-height}"
-        },
-        "$type": "number"
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Sizes.control.small.radius}",
-          "Desktop": "{Sizes.control.small.radius}"
-        },
-        "$type": "number"
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Sizes.control.small.icon.size}",
-            "Desktop": "{Sizes.control.small.icon.size}"
-          },
-          "$type": "number"
-        }
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.4}",
-            "Desktop": "{Primitives Sizes.spacing.8}"
-          },
-          "$type": "number"
-        },
-        "stack": {
-          "$value": {
-            "Mobile": "{Sizes.control.small.padding.stack}",
-            "Desktop": "{Sizes.control.small.padding.stack}"
-          },
-          "$type": "number"
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.3}",
-          "Desktop": "{Primitives Sizes.spacing.3}"
-        },
-        "$type": "number"
-      },
-      "separator": {
-        "inset": {
-          "$value": {
-            "Mobile": 4,
-            "Desktop": 4
-          },
-          "$type": "number"
-        }
-      }
-    },
-    "large": {
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.control.large.font-size}",
-          "Desktop": "{Sizes.control.large.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.control.large.line-height}",
-          "Desktop": "{Sizes.control.large.line-height}"
-        },
-        "$type": "number"
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Sizes.control.large.radius}",
-          "Desktop": "{Sizes.control.large.radius}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.4}",
-            "Desktop": "{Primitives Sizes.spacing.8}"
-          },
-          "$type": "number"
-        },
-        "stack": {
-          "$value": {
-            "Mobile": "{Sizes.control.large.padding.stack}",
-            "Desktop": "{Sizes.control.large.padding.stack}"
-          },
-          "$type": "number"
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.3}",
-          "Desktop": "{Primitives Sizes.spacing.3}"
-        },
-        "$type": "number"
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Sizes.control.large.icon.size}",
-            "Desktop": "{Sizes.control.large.icon.size}"
-          },
-          "$type": "number"
-        }
-      },
-      "separator": {
-        "inset": {
-          "$value": {
-            "Mobile": 4,
-            "Desktop": 4
-          },
-          "$type": "number"
-        }
-      }
-    },
-    "separator": {
-      "inset": {
-        "$value": {
-          "Mobile": 4,
-          "Desktop": 4
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "checkbox": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
-    "field": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.3}",
-          "Desktop": "{Primitives Sizes.spacing.3}"
-        },
-        "$type": "number"
-      },
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-family}",
-          "Desktop": "{Sizes.control.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-weight}",
-          "Desktop": "{Sizes.control.font-weight}"
-        },
-        "$type": "number"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-size}",
-          "Desktop": "{Sizes.control.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.checkbox.size.default}",
-          "Desktop": "{Sizes.checkbox.size.default}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.tracking.normal}",
-          "Desktop": "{Primitives Sizes.tracking.normal}"
-        },
-        "$type": "string"
-      }
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.control.border.width}",
-          "Desktop": "{Sizes.control.border.width}"
-        },
-        "$type": "number"
-      }
-    },
-    "size": {
-      "default": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.5}",
-          "Desktop": "{Primitives Sizes.size.5}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "radio": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.radius.full}",
-        "Desktop": "{Primitives Sizes.radius.full}"
-      },
-      "$type": "number"
-    },
-    "field": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.3}",
-          "Desktop": "{Primitives Sizes.spacing.3}"
-        },
-        "$type": "number"
-      },
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-family}",
-          "Desktop": "{Sizes.control.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-weight}",
-          "Desktop": "{Sizes.control.font-weight}"
-        },
-        "$type": "number"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-size}",
-          "Desktop": "{Sizes.control.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.radio.size.default}",
-          "Desktop": "{Sizes.radio.size.default}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.tracking.normal}",
-          "Desktop": "{Primitives Sizes.tracking.normal}"
-        },
-        "$type": "string"
-      }
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.control.border.width}",
-          "Desktop": "{Sizes.control.border.width}"
-        },
-        "$type": "number"
-      },
-      "inner-width": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.1}",
-          "Desktop": "{Primitives Sizes.size.1}"
-        },
-        "$type": "number"
-      }
-    },
-    "size": {
-      "default": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.5}",
-          "Desktop": "{Primitives Sizes.size.5}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "select": {
-    "option": {
-      "small": {
-        "padding": {
-          "stack": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.spacing.2}",
-              "Desktop": "{Primitives Sizes.spacing.2}"
-            },
-            "$type": "number"
-          }
-        },
-        "gap": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.1}",
-            "Desktop": "{Primitives Sizes.spacing.1}"
-          },
-          "$type": "number"
-        }
-      },
-      "padding": {
-        "stack": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.3}",
-            "Desktop": "{Primitives Sizes.spacing.3}"
-          },
-          "$type": "number"
-        },
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.2}",
-            "Desktop": "{Primitives Sizes.spacing.2}"
-          },
-          "$type": "number"
-        }
-      },
-      "large": {
-        "padding": {
-          "stack": {
-            "$value": {
-              "Mobile": "{Primitives Sizes.spacing.3}",
-              "Desktop": "{Primitives Sizes.spacing.3}"
-            },
-            "$type": "number"
-          }
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Themes.radius.sm.mobile}",
-          "Desktop": "{Themes.radius.sm.desktop}"
-        },
-        "$type": "number"
-      }
-    },
-    "dropdown": {
-      "padding": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      },
-      "padding-2": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Themes.radius.md.mobile}",
-          "Desktop": "{Themes.radius.md.desktop}"
-        },
-        "$type": "number"
-      },
-      "border": {
-        "width": {
-          "$value": {
-            "Mobile": 1,
-            "Desktop": 1
-          },
-          "$type": "number"
-        }
-      },
-      "max-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.100}",
-          "Desktop": "{Primitives Sizes.size.100}"
-        },
-        "$type": "number"
-      }
-    },
-    "option-group": {
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.typography.eyebrow.font-family}",
-          "Desktop": "{Sizes.typography.eyebrow.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.typography.eyebrow.font-size}",
-          "Desktop": "{Sizes.typography.eyebrow.font-size}"
-        },
-        "$type": "number"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.typography.eyebrow.font-weight}",
-          "Desktop": "{Sizes.typography.eyebrow.font-weight}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Sizes.typography.eyebrow.letter-spacing}",
-          "Desktop": "{Sizes.typography.eyebrow.letter-spacing}"
-        },
-        "$type": "string"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.typography.eyebrow.line-height}",
-          "Desktop": "{Sizes.typography.eyebrow.line-height}"
-        },
-        "$type": "number"
-      },
-      "text-transform": {
-        "$value": {
-          "Mobile": "{Sizes.typography.eyebrow.text-transform}",
-          "Desktop": "{Sizes.typography.eyebrow.text-transform}"
-        },
-        "$type": "string"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.2}",
-            "Desktop": "{Primitives Sizes.spacing.2}"
-          },
-          "$type": "number"
-        },
-        "stack": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.2}",
-            "Desktop": "{Primitives Sizes.spacing.2}"
-          },
-          "$type": "number"
-        }
-      }
-    }
-  },
-  "notification": {
-    "radius": {
-      "$value": {
-        "Mobile": "{Themes.radius.md.mobile}",
-        "Desktop": "{Themes.radius.md.desktop}"
-      },
-      "$type": "number"
-    },
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.body.font-family}",
-        "Desktop": "{Themes.typography.body.font-family}"
-      },
-      "$type": "string"
-    },
-    "font-size": {
-      "$value": {
-        "Mobile": "{Sizes.typography.body.font-size}",
-        "Desktop": "{Sizes.typography.body.font-size}"
-      },
-      "$type": "number"
-    },
-    "line-height": {
-      "$value": {
-        "Mobile": "{Sizes.typography.body.line-height}",
-        "Desktop": "{Sizes.typography.body.line-height}"
-      },
-      "$type": "number"
-    },
-    "font-weight": {
-      "$value": {
-        "Mobile": "{Sizes.typography.body.font-weight-strong}",
-        "Desktop": "{Sizes.typography.body.font-weight-strong}"
-      },
-      "$type": "number"
-    },
-    "letter-spacing": {
-      "$value": {
-        "Mobile": 0,
-        "Desktop": 0
-      },
-      "$type": "number"
-    },
-    "description": {
-      "font-family": {
-        "$value": {
-          "Mobile": "{Themes.typography.body.font-family}",
-          "Desktop": "{Themes.typography.body.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.font-size}",
-          "Desktop": "{Sizes.typography.body.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.line-height}",
-          "Desktop": "{Sizes.typography.body.line-height}"
-        },
-        "$type": "number"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.font-weight}",
-          "Desktop": "{Sizes.typography.body.font-weight}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": 0,
-          "Desktop": 0
-        },
-        "$type": "number"
-      }
-    },
-    "padding": {
-      "inline": {
-        "$value": {
-          "Mobile": "{Sizes.layout.padding.inline.lg}",
-          "Desktop": "{Sizes.layout.padding.inline.lg}"
-        },
-        "$type": "number"
-      },
-      "stack": {
-        "$value": {
-          "Mobile": "{Sizes.layout.padding.stack.lg}",
-          "Desktop": "{Sizes.layout.padding.stack.lg}"
-        },
-        "$type": "number"
-      }
-    },
-    "default": {
-      "border": {
-        "left": {
-          "$value": {
-            "Mobile": 2,
-            "Desktop": 2
-          },
-          "$type": "number"
-        },
-        "right": {
-          "$value": {
-            "Mobile": 2,
-            "Desktop": 2
-          },
-          "$type": "number"
-        },
-        "top": {
-          "$value": {
-            "Mobile": 2,
-            "Desktop": 2
-          },
-          "$type": "number"
-        },
-        "bottom": {
-          "$value": {
-            "Mobile": 2,
-            "Desktop": 2
-          },
-          "$type": "number"
-        }
-      }
-    },
-    "subtle": {
-      "show-icon": {
-        "$value": {
-          "Mobile": true,
-          "Desktop": true
-        },
-        "$type": "boolean"
-      },
-      "border": {
-        "left": {
-          "$value": {
-            "Mobile": 2,
-            "Desktop": 2
-          },
-          "$type": "number"
-        },
-        "right": {
-          "$value": {
-            "Mobile": 0,
-            "Desktop": 0
-          },
-          "$type": "number"
-        },
-        "top": {
-          "$value": {
-            "Mobile": 0,
-            "Desktop": 0
-          },
-          "$type": "number"
-        },
-        "bottom": {
-          "$value": {
-            "Mobile": 0,
-            "Desktop": 0
-          },
-          "$type": "number"
-        }
-      }
-    }
-  },
-  "badge": {
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.caption.font-family}",
-        "Desktop": "{Themes.typography.caption.font-family}"
-      },
-      "$type": "string"
-    },
-    "font-weight": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.font-weight.medium}",
-        "Desktop": "{Primitives Sizes.font-weight.medium}"
-      },
-      "$type": "number"
-    },
-    "letter-spacing": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.tracking.normal}",
-        "Desktop": "{Primitives Sizes.tracking.normal}"
-      },
-      "$type": "string"
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.1}",
-        "Desktop": "{Primitives Sizes.spacing.1}"
-      },
-      "$type": "number"
-    },
-    "padding": {
-      "inline-icon-only": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      }
-    },
-    "rounded": {
-      "radius": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.radius.full}",
-          "Desktop": "{Primitives Sizes.radius.full}"
-        },
-        "$type": "number"
-      }
-    },
-    "square": {
-      "radius": {
-        "$value": {
-          "Mobile": "{Themes.radius.sm.mobile}",
-          "Desktop": "{Themes.radius.sm.desktop}"
-        },
-        "$type": "number"
-      }
-    },
-    "small": {
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.5}",
-          "Desktop": "{Primitives Sizes.size.5}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.2}",
-            "Desktop": "{Primitives Sizes.spacing.2}"
-          },
-          "$type": "number"
-        }
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.3}",
-            "Desktop": "{Primitives Sizes.size.3}"
-          },
-          "$type": "number"
-        }
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.xs}",
-          "Desktop": "{Primitives Sizes.text.xs}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.xs--line-height}",
-          "Desktop": "{Primitives Sizes.text.xs--line-height}"
-        },
-        "$type": "number"
-      }
-    },
-    "medium": {
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.6}",
-          "Desktop": "{Primitives Sizes.size.6}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.3}",
-            "Desktop": "{Primitives Sizes.spacing.3}"
-          },
-          "$type": "number"
-        }
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.4}",
-            "Desktop": "{Primitives Sizes.size.4}"
-          },
-          "$type": "number"
-        }
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm}",
-          "Desktop": "{Primitives Sizes.text.sm}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm--line-height}",
-          "Desktop": "{Primitives Sizes.text.sm--line-height}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "chip": {
-    "small": {
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.6}",
-          "Desktop": "{Primitives Sizes.size.6}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.2}",
-            "Desktop": "{Primitives Sizes.spacing.2}"
-          },
-          "$type": "number"
-        }
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.3}",
-            "Desktop": "{Primitives Sizes.size.3}"
-          },
-          "$type": "number"
-        }
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.xs}",
-          "Desktop": "{Primitives Sizes.text.xs}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.xs--line-height}",
-          "Desktop": "{Primitives Sizes.text.xs--line-height}"
-        },
-        "$type": "number"
-      },
-      "dismiss": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.4}",
-            "Desktop": "{Primitives Sizes.size.4}"
-          },
-          "$type": "number"
-        }
-      }
-    },
-    "medium": {
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.8}",
-          "Desktop": "{Primitives Sizes.size.8}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.3}",
-            "Desktop": "{Primitives Sizes.spacing.3}"
-          },
-          "$type": "number"
-        }
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.4}",
-            "Desktop": "{Primitives Sizes.size.4}"
-          },
-          "$type": "number"
-        }
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm}",
-          "Desktop": "{Primitives Sizes.text.sm}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm--line-height}",
-          "Desktop": "{Primitives Sizes.text.sm--line-height}"
-        },
-        "$type": "number"
-      },
-      "dismiss": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.5}",
-            "Desktop": "{Primitives Sizes.size.5}"
-          },
-          "$type": "number"
-        }
-      }
-    },
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.caption.font-family}",
-        "Desktop": "{Themes.typography.caption.font-family}"
-      },
-      "$type": "string"
-    },
-    "font-weight": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.font-weight.medium}",
-        "Desktop": "{Primitives Sizes.font-weight.medium}"
-      },
-      "$type": "number"
-    },
-    "letter-spacing": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.tracking.normal}",
-        "Desktop": "{Primitives Sizes.tracking.normal}"
-      },
-      "$type": "string"
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.1}",
-        "Desktop": "{Primitives Sizes.spacing.1}"
-      },
-      "$type": "number"
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.radius.full}",
-        "Desktop": "{Primitives Sizes.radius.full}"
-      },
-      "$type": "number"
-    }
-  },
-  "popover": {
-    "padding": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.4}",
-        "Desktop": "{Primitives Sizes.spacing.4}"
-      },
-      "$type": "number"
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.2}",
-        "Desktop": "{Primitives Sizes.spacing.2}"
-      },
-      "$type": "number"
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": 1,
-          "Desktop": 1
-        },
-        "$type": "number"
-      }
-    },
-    "arrow": {
-      "size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      }
-    },
-    "offset": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.2}",
-        "Desktop": "{Primitives Sizes.spacing.2}"
-      },
-      "$type": "number"
-    }
-  },
-  "calendar": {
-    "day": {
-      "size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.10}",
-          "Desktop": "{Primitives Sizes.size.10}"
-        },
-        "$type": "number"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm}",
-          "Desktop": "{Primitives Sizes.text.sm}"
-        },
-        "$type": "number"
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.radius.full}",
-          "Desktop": "{Primitives Sizes.radius.full}"
-        },
-        "$type": "number"
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.0}",
-          "Desktop": "{Primitives Sizes.spacing.0}"
-        },
-        "$type": "number"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": 400,
-          "Desktop": 400
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": 20,
-          "Desktop": 20
-        },
-        "$type": "number"
-      }
-    },
-    "weekday": {
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.xs}",
-          "Desktop": "{Primitives Sizes.text.xs}"
-        },
-        "$type": "number"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.font-weight.medium}",
-          "Desktop": "{Primitives Sizes.font-weight.medium}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": 16,
-          "Desktop": 16
-        },
-        "$type": "number"
-      }
-    },
-    "header": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      }
-    },
-    "today": {
-      "border": {
-        "width": {
-          "$value": {
-            "Mobile": 1,
-            "Desktop": 1
-          },
-          "$type": "number"
-        }
-      }
-    },
-    "font-family": {
-      "$value": {
-        "Mobile": "{Themes.typography.caption.font-family}",
-        "Desktop": "{Themes.typography.caption.font-family}"
-      },
-      "$type": "string"
-    }
-  },
-  "date-picker": {
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.2}",
-        "Desktop": "{Primitives Sizes.spacing.2}"
-      },
-      "$type": "number"
-    }
-  },
-  "pagination": {
-    "item": {
-      "size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.10}",
-          "Desktop": "{Primitives Sizes.size.10}"
-        },
-        "$type": "number"
-      }
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.1}",
-        "Desktop": "{Primitives Sizes.spacing.1}"
-      },
-      "$type": "number"
-    },
-    "jump": {
-      "input": {
-        "width": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.20}",
-            "Desktop": "{Primitives Sizes.size.20}"
-          },
-          "$type": "number"
-        }
-      }
-    }
-  },
-  "textarea": {
-    "small": {
-      "min-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.20}",
-          "Desktop": "{Primitives Sizes.size.20}"
-        },
-        "$type": "number"
-      }
-    },
-    "min-height": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.size.24}",
-        "Desktop": "{Primitives Sizes.size.24}"
-      },
-      "$type": "number"
-    },
-    "large": {
-      "min-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.32}",
-          "Desktop": "{Primitives Sizes.size.32}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "dialog": {
-    "small": {
-      "max-width": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.100}",
-          "Desktop": "{Primitives Sizes.size.100}"
-        },
-        "$type": "number"
-      }
-    },
-    "medium": {
-      "max-width": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.140}",
-          "Desktop": "{Primitives Sizes.size.140}"
-        },
-        "$type": "number"
-      }
-    },
-    "large": {
-      "max-width": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.200}",
-          "Desktop": "{Primitives Sizes.size.200}"
-        },
-        "$type": "number"
-      }
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.radius.lg}",
-        "Desktop": "{Sizes.radius.lg}"
-      },
-      "$type": "number"
-    },
-    "sheet": {
-      "radius": {
-        "$value": {
-          "Mobile": "{Sizes.radius.lg}",
-          "Desktop": "{Sizes.radius.lg}"
-        },
-        "$type": "number"
-      }
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.stroke.border}",
-          "Desktop": "{Sizes.stroke.border}"
-        },
-        "$type": "number"
-      }
-    },
-    "margin": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.4}",
-        "Desktop": "{Primitives Sizes.spacing.4}"
-      },
-      "$type": "number"
-    },
-    "padding": {
-      "inline": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.6}",
-          "Desktop": "{Primitives Sizes.spacing.6}"
-        },
-        "$type": "number"
-      },
-      "stack": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.6}",
-          "Desktop": "{Primitives Sizes.spacing.6}"
-        },
-        "$type": "number"
-      }
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.4}",
-        "Desktop": "{Primitives Sizes.spacing.4}"
-      },
-      "$type": "number"
-    },
-    "header": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      }
-    },
-    "footer": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.3}",
-          "Desktop": "{Primitives Sizes.spacing.3}"
-        },
-        "$type": "number"
-      }
-    },
-    "title": {
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.typography.heading.title.font-family}",
-          "Desktop": "{Sizes.typography.heading.title.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.typography.heading.title.font-size}",
-          "Desktop": "{Sizes.typography.heading.title.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.typography.heading.title.line-height}",
-          "Desktop": "{Sizes.typography.heading.title.line-height}"
-        },
-        "$type": "number"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.typography.heading.title.font-weight-strong}",
-          "Desktop": "{Sizes.typography.heading.title.font-weight-strong}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Sizes.typography.heading.title.letter-spacing}",
-          "Desktop": "{Sizes.typography.heading.title.letter-spacing}"
-        },
-        "$type": "string"
-      }
-    },
-    "description": {
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.font-family}",
-          "Desktop": "{Sizes.typography.body.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.small.font-size}",
-          "Desktop": "{Sizes.typography.body.small.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.small.line-height}",
-          "Desktop": "{Sizes.typography.body.small.line-height}"
-        },
-        "$type": "number"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.font-weight}",
-          "Desktop": "{Sizes.typography.body.font-weight}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.small.letter-spacing}",
-          "Desktop": "{Sizes.typography.body.small.letter-spacing}"
-        },
-        "$type": "string"
-      }
-    }
-  },
-  "switch": {
-    "track": {
-      "width": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.10}",
-          "Desktop": "{Primitives Sizes.size.10}"
-        },
-        "$type": "number"
-      },
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.6}",
-          "Desktop": "{Primitives Sizes.size.6}"
-        },
-        "$type": "number"
-      }
-    },
-    "thumb": {
-      "size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.5}",
-          "Desktop": "{Primitives Sizes.size.5}"
-        },
-        "$type": "number"
-      }
-    },
-    "icon": {
-      "size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.3}",
-          "Desktop": "{Primitives Sizes.size.3}"
-        },
-        "$type": "number"
-      }
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.radius.full}",
-        "Desktop": "{Primitives Sizes.radius.full}"
-      },
-      "$type": "number"
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.control.border.width}",
-          "Desktop": "{Sizes.control.border.width}"
-        },
-        "$type": "number"
-      }
-    },
-    "field": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.3}",
-          "Desktop": "{Primitives Sizes.spacing.3}"
-        },
-        "$type": "number"
-      },
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-family}",
-          "Desktop": "{Sizes.control.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-weight}",
-          "Desktop": "{Sizes.control.font-weight}"
-        },
-        "$type": "number"
-      },
-      "font-size": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-size}",
-          "Desktop": "{Sizes.control.font-size}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Sizes.switch.track.height}",
-          "Desktop": "{Sizes.switch.track.height}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Sizes.control.letter-spacing}",
-          "Desktop": "{Sizes.control.letter-spacing}"
-        },
-        "$type": "string"
-      }
-    },
-    "description": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "combobox": {
-    "chips": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "stack": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.1}",
-            "Desktop": "{Primitives Sizes.spacing.1}"
-          },
-          "$type": "number"
-        }
-      }
-    }
-  },
-  "breadcrumbs": {
-    "font-family": {
-      "$value": {
-        "Mobile": "{Sizes.typography.body.font-family}",
-        "Desktop": "{Sizes.typography.body.font-family}"
-      },
-      "$type": "string"
-    },
-    "font-weight": {
-      "$value": {
-        "Mobile": "{Sizes.typography.body.font-weight}",
-        "Desktop": "{Sizes.typography.body.font-weight}"
-      },
-      "$type": "number"
-    },
-    "current": {
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Sizes.typography.body.font-weight-strong}",
-          "Desktop": "{Sizes.typography.body.font-weight-strong}"
-        },
-        "$type": "number"
-      }
-    },
-    "letter-spacing": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.tracking.normal}",
-        "Desktop": "{Primitives Sizes.tracking.normal}"
-      },
-      "$type": "string"
-    },
-    "item": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      }
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
-    "small": {
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm}",
-          "Desktop": "{Primitives Sizes.text.sm}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.sm--line-height}",
-          "Desktop": "{Primitives Sizes.text.sm--line-height}"
-        },
-        "$type": "number"
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.4}",
-            "Desktop": "{Primitives Sizes.size.4}"
-          },
-          "$type": "number"
-        }
-      },
-      "separator": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.3}",
-            "Desktop": "{Primitives Sizes.size.3}"
-          },
-          "$type": "number"
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.1}",
-          "Desktop": "{Primitives Sizes.spacing.1}"
-        },
-        "$type": "number"
-      }
-    },
-    "medium": {
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.base}",
-          "Desktop": "{Primitives Sizes.text.base}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.base--line-height}",
-          "Desktop": "{Primitives Sizes.text.base--line-height}"
-        },
-        "$type": "number"
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.4}",
-            "Desktop": "{Primitives Sizes.size.4}"
-          },
-          "$type": "number"
-        }
-      },
-      "separator": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.4}",
-            "Desktop": "{Primitives Sizes.size.4}"
-          },
-          "$type": "number"
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "drawer": {
-    "width": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.size.100}",
-        "Desktop": "{Primitives Sizes.size.100}"
-      },
-      "$type": "number"
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.radius.lg}",
-        "Desktop": "{Primitives Sizes.radius.lg}"
-      },
-      "$type": "number"
-    },
-    "padding": {
-      "inline": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.6}",
-          "Desktop": "{Primitives Sizes.spacing.6}"
-        },
-        "$type": "number"
-      },
-      "stack": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.6}",
-          "Desktop": "{Primitives Sizes.spacing.6}"
-        },
-        "$type": "number"
-      }
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.spacing.4}",
-        "Desktop": "{Primitives Sizes.spacing.4}"
-      },
-      "$type": "number"
-    },
-    "grabber": {
-      "width": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.8}",
-          "Desktop": "{Primitives Sizes.size.8}"
-        },
-        "$type": "number"
-      },
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.1}",
-          "Desktop": "{Primitives Sizes.size.1}"
-        },
-        "$type": "number"
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.2}",
-          "Desktop": "{Primitives Sizes.spacing.2}"
-        },
-        "$type": "number"
-      }
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.stroke.border}",
-          "Desktop": "{Sizes.stroke.border}"
-        },
-        "$type": "number"
-      }
-    }
-  },
-  "file-input": {
-    "small": {
-      "min-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.20}",
-          "Desktop": "{Primitives Sizes.size.20}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "stack": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.4}",
-            "Desktop": "{Primitives Sizes.spacing.4}"
-          },
-          "$type": "number"
-        },
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.4}",
-            "Desktop": "{Primitives Sizes.spacing.4}"
-          },
-          "$type": "number"
-        }
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Sizes.icon.md}",
-            "Desktop": "{Sizes.icon.md}"
-          },
-          "$type": "number"
-        }
-      },
-      "title": {
-        "font-size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.sm}",
-            "Desktop": "{Primitives Sizes.text.sm}"
-          },
-          "$type": "number"
-        },
-        "line-height": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.sm--line-height}",
-            "Desktop": "{Primitives Sizes.text.sm--line-height}"
-          },
-          "$type": "number"
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Sizes.layout.gap.stack.sm}",
-          "Desktop": "{Sizes.layout.gap.stack.sm}"
-        },
-        "$type": "number"
-      }
-    },
-    "min-height": {
-      "$value": {
-        "Mobile": "{Primitives Sizes.size.24}",
-        "Desktop": "{Primitives Sizes.size.24}"
-      },
-      "$type": "number"
-    },
-    "large": {
-      "min-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.32}",
-          "Desktop": "{Primitives Sizes.size.32}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "stack": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.8}",
-            "Desktop": "{Primitives Sizes.spacing.8}"
-          },
-          "$type": "number"
-        },
-        "inline": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.spacing.8}",
-            "Desktop": "{Primitives Sizes.spacing.8}"
-          },
-          "$type": "number"
-        }
-      },
-      "icon": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.10}",
-            "Desktop": "{Primitives Sizes.size.10}"
-          },
-          "$type": "number"
-        }
-      },
-      "title": {
-        "font-size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.lg}",
-            "Desktop": "{Primitives Sizes.text.lg}"
-          },
-          "$type": "number"
-        },
-        "line-height": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.lg--line-height}",
-            "Desktop": "{Primitives Sizes.text.lg--line-height}"
-          },
-          "$type": "number"
-        }
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Sizes.layout.gap.stack.lg}",
-          "Desktop": "{Sizes.layout.gap.stack.lg}"
-        },
-        "$type": "number"
-      }
-    },
-    "padding": {
-      "stack": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.6}",
-          "Desktop": "{Primitives Sizes.spacing.6}"
-        },
-        "$type": "number"
-      },
-      "inline": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.spacing.6}",
-          "Desktop": "{Primitives Sizes.spacing.6}"
-        },
-        "$type": "number"
-      }
-    },
-    "icon": {
-      "size": {
-        "$value": {
-          "Mobile": "{Sizes.icon.lg}",
-          "Desktop": "{Sizes.icon.lg}"
-        },
-        "$type": "number"
-      }
-    },
-    "title": {
-      "font-size": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.base}",
-          "Desktop": "{Primitives Sizes.text.base}"
-        },
-        "$type": "number"
-      },
-      "line-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.text.base--line-height}",
-          "Desktop": "{Primitives Sizes.text.base--line-height}"
-        },
-        "$type": "number"
-      },
-      "font-family": {
-        "$value": {
-          "Mobile": "{Sizes.control.font-family}",
-          "Desktop": "{Sizes.control.font-family}"
-        },
-        "$type": "string"
-      },
-      "font-weight": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.font-weight.semibold}",
-          "Desktop": "{Primitives Sizes.font-weight.semibold}"
-        },
-        "$type": "number"
-      },
-      "letter-spacing": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.tracking.normal}",
-          "Desktop": "{Primitives Sizes.tracking.normal}"
-        },
-        "$type": "string"
-      }
-    },
-    "gap": {
-      "$value": {
-        "Mobile": "{Sizes.layout.gap.stack.md}",
-        "Desktop": "{Sizes.layout.gap.stack.md}"
-      },
-      "$type": "number"
-    },
-    "radius": {
-      "$value": {
-        "Mobile": "{Sizes.control.radius}",
-        "Desktop": "{Sizes.control.radius}"
-      },
-      "$type": "number"
-    },
-    "border": {
-      "width": {
-        "$value": {
-          "Mobile": "{Sizes.control.border.width}",
-          "Desktop": "{Sizes.control.border.width}"
-        },
-        "$type": "number"
-      }
-    },
-    "list": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Sizes.layout.gap.stack.sm}",
-          "Desktop": "{Sizes.layout.gap.stack.sm}"
-        },
-        "$type": "number"
-      }
-    },
-    "actions": {
-      "gap": {
-        "$value": {
-          "Mobile": "{Sizes.layout.gap.inline.md}",
-          "Desktop": "{Sizes.layout.gap.inline.md}"
-        },
-        "$type": "number"
-      }
-    },
-    "preview": {
-      "max-height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.32}",
-          "Desktop": "{Primitives Sizes.size.32}"
-        },
-        "$type": "number"
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Sizes.radius.sm}",
-          "Desktop": "{Sizes.radius.sm}"
-        },
-        "$type": "number"
-      }
-    },
-    "item": {
-      "height": {
-        "$value": {
-          "Mobile": "{Primitives Sizes.size.12}",
-          "Desktop": "{Primitives Sizes.size.12}"
-        },
-        "$type": "number"
-      },
-      "gap": {
-        "$value": {
-          "Mobile": "{Sizes.layout.gap.inline.md}",
-          "Desktop": "{Sizes.layout.gap.inline.md}"
-        },
-        "$type": "number"
-      },
-      "padding": {
-        "inline": {
-          "$value": {
-            "Mobile": "{Sizes.layout.padding.inline.sm}",
-            "Desktop": "{Sizes.layout.padding.inline.sm}"
-          },
-          "$type": "number"
-        },
-        "stack": {
-          "$value": {
-            "Mobile": "{Sizes.layout.padding.stack.sm}",
-            "Desktop": "{Sizes.layout.padding.stack.sm}"
-          },
-          "$type": "number"
-        }
-      },
-      "radius": {
-        "$value": {
-          "Mobile": "{Sizes.radius.sm}",
-          "Desktop": "{Sizes.radius.sm}"
-        },
-        "$type": "number"
-      },
-      "thumb": {
-        "size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.size.8}",
-            "Desktop": "{Primitives Sizes.size.8}"
-          },
-          "$type": "number"
-        }
-      },
-      "name": {
-        "font-size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.sm}",
-            "Desktop": "{Primitives Sizes.text.sm}"
-          },
-          "$type": "number"
-        },
-        "line-height": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.sm--line-height}",
-            "Desktop": "{Primitives Sizes.text.sm--line-height}"
-          },
-          "$type": "number"
-        },
-        "font-weight": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.font-weight.medium}",
-            "Desktop": "{Primitives Sizes.font-weight.medium}"
-          },
-          "$type": "number"
-        }
-      },
-      "meta": {
-        "font-size": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.xs}",
-            "Desktop": "{Primitives Sizes.text.xs}"
-          },
-          "$type": "number"
-        },
-        "line-height": {
-          "$value": {
-            "Mobile": "{Primitives Sizes.text.xs--line-height}",
-            "Desktop": "{Primitives Sizes.text.xs--line-height}"
-          },
-          "$type": "number"
-        }
-      }
     }
   }
 }

@@ -69,6 +69,29 @@ Pass `--no-auto-dark` to the CLI to omit that mirror.
 picks a context inside it. `data-surface="inverse"` under `data-theme="dark"` resolves
 against the dark palette.
 
+### Density — `data-density`
+
+A third, independent switch controls layout density: spacing, control heights and icon sizes.
+Typography, radius and colour do not react to it.
+
+```html
+<html data-density="compact">
+  <!-- or on any container -->
+  <table data-density="compact">
+    …
+    <div data-density="comfortable">back to the roomier scale</div>
+  </table>
+</html>
+```
+
+`comfortable` is the default and needs no attribute — set it explicitly only to reset out of a
+compact ancestor. Density composes with both other axes and with breakpoints: a compact
+container inside `data-surface="subtle"` keeps the subtle palette, and a compact control on a
+wide viewport still picks up the desktop step of the size ramp rather than the mobile one.
+
+Consumers who never switch density pay nothing — without the `Density` collection in the
+Figma export the build emits no density scopes at all.
+
 ### JS — typed token values
 
 `tokens` is a deeply nested object where each leaf is a CSS custom property reference (`var(--…)`). Use it for dynamic styles or to avoid magic strings when accessing token values in JS/TS.
@@ -77,12 +100,16 @@ against the dark palette.
 import { tokens } from '@mszczygiel-projects/ui-core-foundations';
 import type { TokenKey } from '@mszczygiel-projects/ui-core-foundations';
 
-// Access a token value — returns e.g. "var(--color-on-subtle-brand-primary)"
-const brandColor = tokens.themes.color.onSubtle.brand.primary;
+// Access a token value — returns e.g. "var(--color-brand-primary)"
+const brandColor = tokens.surfaces.color.brand.primary;
 
 // TokenKey is a union of all valid dot-separated token paths
 function getToken(key: TokenKey) { ... }
 ```
+
+Reach for `tokens.surfaces.*` — those are the surface-aware semantic tokens. `tokens.themes.color.onSubtle.*`, `.onInverse.*` and `.onBrandPrimary.*` are internal plumbing for the
+surface system: they are what a `data-surface` container switches between, so reading one
+directly pins you to a single surface context and the value stops adapting.
 
 ## Build
 

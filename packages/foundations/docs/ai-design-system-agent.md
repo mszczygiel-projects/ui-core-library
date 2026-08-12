@@ -731,6 +731,7 @@ Before signalling completion, verify:
 | `Themes`             | `Default`, `Dark`                         |
 | `Surfaces`           | `Default`, `Subtle`, `Inverse`, `Primary` |
 | `Sizes`              | `Mobile`, `Desktop`                       |
+| `Density`            | `Comfortable`, `Compact`                  |
 
 These are the modes the fork starts with, and filling in their values is the whole of this
 workflow — you never add a mode as part of it.
