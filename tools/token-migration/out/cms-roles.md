@@ -1,6 +1,7 @@
-# [CMS] Foundations — proposed roles
+# [CMS] Foundations — roles and density
 
-Derived from the live fork (`3UC0Ha7bDOp0gyIrqFI923`) on 2026-08-12, before any change.
+Derived from the live fork (`3UC0Ha7bDOp0gyIrqFI923`) on 2026-08-12. Two passes: the colour
+role migration (below) and the density layer (at the end).
 
 ## Baseline
 
@@ -259,3 +260,51 @@ another class. Reusing it would have silently changed a colour.
 The pre-flight guard refused to write and reported the two mismatched modes. The fix is to
 reserve **every** generic name a class carries, not just the one it adopts. Worth remembering:
 the guard, not the derivation, is what made this safe.
+
+---
+
+## Density pass — migrated 2026-08-12
+
+The fork has no `Components` collection, so its dimension tokens live in `Sizes` alongside the
+ramp. Density therefore targets `Sizes` directly rather than a separate component layer — the
+same result, different mechanics.
+
+|                                   | Value                                              |
+| --------------------------------- | -------------------------------------------------- |
+| Dimension tokens in `Sizes`       | 368                                                |
+| In scope for density              | 90 (80 component consumers + 10 `control/*` roles) |
+| Repointed onto slots              | **83**                                             |
+| New `Density` slots               | 26                                                 |
+| New ramp entries in `Sizes`       | 4                                                  |
+| Tokens that move in Compact       | 66                                                 |
+| Baseline digest, before and after | `db8fcda8` — **unchanged**                         |
+
+### The fork's numbers are its own
+
+Core's slot table could not be copied. The fork's ramps are thinner and several values differ:
+
+|                        | Core                     | Fork                 |
+| ---------------------- | ------------------------ | -------------------- |
+| `icon/*` ramp          | 5 steps (12–32)          | 3 steps (16, 24, 32) |
+| `layout/padding/stack` | sm, md, lg, xl, 2xl, 3xl | sm, md, lg, xl       |
+| `control/icon/size`    | 20                       | **16**               |
+| `chip/medium/height`   | 32                       | **40**               |
+
+Where the fork's ramp has no step at a needed value, the slot aliases a primitive instead. Slot
+_names_ still follow Core, so the two files stay legible side by side even though the numbers
+diverge.
+
+### Excluded from density — 7 tokens
+
+Four resolve to `0` (`calendar/day/gap`, `select/dropdown/gap`, `drawer/padding/inline`,
+`select/dropdown/padding`) and cannot shrink. Two are geometry rather than spacing
+(`popover/arrow/size`, `drawer/grabber/height`). One, `badge/medium/height`, is the fork's only
+responsive height (24 → 32); giving it density would need a second responsive ramp pair for a
+single token, so it stays put — visible as a badge that does not tighten while chips do.
+
+### Consuming this in the CMS repo
+
+Export `density.json` alongside the rest and rebuild. The build reads it when present and skips
+it when absent, so the order of operations does not matter — but the CMS project must be on
+`@mszczygiel-projects/ui-core-foundations` **0.15.0 or later**, since earlier versions do not
+know the `Density` collection and would silently drop it.
