@@ -915,6 +915,57 @@ describe('Components collection', () => {
     expect(css.split(colourDecl).length - 1).toBeGreaterThan(1);
   });
 
+  // A fork that kept its component tokens in `Surfaces` (rather than moving them into
+  // `Components`) emits them from the Default surface block, which lands on `:root`. Declared
+  // only there, a value reaching `Themes` is substituted at `:root` and inherited already
+  // resolved — a second brand under `[data-theme]` silently kept the base theme's colour.
+  // Measured on the CMS fork: 76 properties wrong in `Blue`, 329 in `DarkGreen`.
+  describe('Surfaces Default under multiple themes', () => {
+    const brandPrim = prim('brand', '500', '#2f9e63');
+    const brandPrimBlue = prim('brand', '600', '#0a1e3c');
+    const brandRole: Token = {
+      collection: 'Themes',
+      path: ['color', 'brand', 'primary'],
+      type: 'color',
+      value: {
+        Green: '{Primitives Colors.brand.500}',
+        Blue: '{Primitives Colors.brand.600}',
+      },
+    };
+    const componentToken: Token = {
+      collection: 'Surfaces',
+      path: ['color', 'badge', 'brand', 'solid', 'background'],
+      type: 'color',
+      value: { Default: '{Themes.color.brand.primary}' },
+    };
+    const tokens = [brandPrim, brandPrimBlue, brandRole, componentToken];
+    const decl = '--color-badge-brand-solid-background: var(--color-brand-primary);';
+
+    it('repeats a theme-dependent Default-surface line into every theme scope', () => {
+      const css = buildTokensCss(tokens, makeRegistry(tokens), freshWarnings());
+      expect(css.split(decl).length - 1, 'one declaration per theme scope').toBe(2);
+      const blue = css.slice(css.indexOf('/* === Surfaces (Default — Blue) === */'));
+      expect(blue.slice(0, blue.indexOf('}'))).toContain(decl);
+    });
+
+    it('leaves the other surface modes on their own selector', () => {
+      // They are safe: the selector matches the element, and the role they read was already
+      // re-declared in the theme scope above.
+      const withSubtle: Token = {
+        ...componentToken,
+        value: {
+          Default: '{Themes.color.brand.primary}',
+          Subtle: '{Themes.color.brand.primary}',
+        },
+      };
+      const t2 = [brandPrim, brandPrimBlue, brandRole, withSubtle];
+      const css = buildTokensCss(t2, makeRegistry(t2), freshWarnings());
+      const subtle = css.slice(css.indexOf('/* === Surfaces (Subtle) === */'));
+      expect(subtle.slice(0, subtle.indexOf('}'))).toContain(decl);
+      expect(css).not.toContain('/* === Surfaces (Subtle — Blue) === */');
+    });
+  });
+
   // Density is the second attribute-driven context layer. Verified in Chromium at 376px and
   // 1280px: a dimension alias declared only on `:root` stays frozen inside a
   // `[data-density="compact"]` container, exactly as a colour alias does inside `[data-surface]`.

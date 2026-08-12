@@ -777,16 +777,44 @@ export function buildTokensCss(
   for (const mode of orderedSurfaceModes) {
     const selector = SURFACE_MODE_SELECTOR[mode] ?? `[data-surface="${modeSlug(mode)}"]`;
     const surfaceLines: string[] = [];
+    const themeDependentLines: string[] = [];
     for (const t of surfaces) {
       const modeValues = valuesByMode(t);
       const entry = modeValues.find((m) => m.mode === mode) ?? modeValues[0];
       if (!entry) continue;
       const line = resolveCssLine(t, entry.raw, mode, registry, warnings);
-      if (line !== null) surfaceLines.push(line);
+      if (line === null) continue;
+      surfaceLines.push(line);
+      if (dependsOnCollection(t, 'Themes', registry)) themeDependentLines.push(line);
     }
-    if (surfaceLines.length > 0) {
+    if (surfaceLines.length === 0) continue;
+
+    // The Default surface lands on `:root`, where a value that reaches `Themes` is substituted
+    // and then inherited already-resolved — a `[data-theme]` container below has nothing left
+    // to re-declare it, so a second brand or a dark mode silently keeps the base theme's
+    // colour. The other surface modes are safe without this: their own selector matches the
+    // element, and the role they read has been re-declared in the theme scope above.
+    //
+    // Only files that keep component tokens in `Surfaces` reach this. Where the restructure
+    // moved them into `Components`, the Default block is entirely self-referential and never
+    // emits a line.
+    if (selector !== ':root') {
       chunks.push(`/* === Surfaces (${mode}) === */\n${selector} {`);
       chunks.push(...surfaceLines);
+      chunks.push('}\n');
+      continue;
+    }
+
+    chunks.push(`/* === Surfaces (${mode}) === */\n${themeModeSelector(baseThemeMode, true)} {`);
+    chunks.push(...surfaceLines);
+    chunks.push('}\n');
+
+    for (const themeMode of themeModes) {
+      if (themeMode === baseThemeMode || themeDependentLines.length === 0) continue;
+      chunks.push(
+        `/* === Surfaces (${mode} — ${themeMode}) === */\n${themeModeSelector(themeMode, false)} {`,
+      );
+      chunks.push(...themeDependentLines);
       chunks.push('}\n');
     }
   }

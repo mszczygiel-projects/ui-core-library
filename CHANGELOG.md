@@ -12,6 +12,31 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.15.1] — 2026-08-12
+
+### Fixed
+
+- **A fork with more than one theme mode rendered its non-base themes with the
+  base theme's colours.** The Default surface block is emitted on `:root`, so any
+  value reaching `Themes` was substituted there and then inherited already
+  resolved — a `[data-theme]` container below had nothing left to re-declare it.
+  Measured on a client fork with four theme modes: **76 properties wrong in one
+  brand, 329 in another**, including a blue brand badge rendering green. The
+  block is now repeated into every theme scope, the way the `Components` block
+  already was.
+
+  Only files that kept their component tokens in `Surfaces` are affected. Where
+  the 0.15.0 restructure moved them into `Components`, the Default surface block
+  is entirely self-referential and emits no line at all — which is why the Core
+  package shows no difference before and after this fix, and why the regression
+  reached a release: the file the build and the tests exercise cannot reproduce
+  it. The new tests construct the fork's shape explicitly instead.
+
+  **If you consume the tokens rather than generate them, nothing changes.** If
+  you generate them from a multi-theme Figma file, rerun
+  `ui-core-foundations build` — the previous output was wrong for every theme but
+  the first.
+
 ## [0.15.0] — 2026-08-12
 
 The Figma token set went from **4638 variables to 2078** without changing a single
