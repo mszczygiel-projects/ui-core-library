@@ -3352,7 +3352,7 @@
     },
     "icon": {
       "size": {
-        "$value": "{Sizes.control.icon.size}",
+        "$value": "{Density.icon.size.sm}",
         "$type": "number"
       }
     },
@@ -3364,11 +3364,11 @@
     },
     "padding": {
       "inline": {
-        "$value": "{Sizes.layout.padding.inline.adaptive}",
+        "$value": "{Density.padding.inline.adaptive}",
         "$type": "number"
       },
       "stack": {
-        "$value": "{Sizes.control.padding.stack}",
+        "$value": "{Density.padding.stack.xs}",
         "$type": "number"
       }
     },
@@ -3387,28 +3387,28 @@
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.control.small.icon.size}",
+          "$value": "{Density.icon.size.sm}",
           "$type": "number"
         }
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.adaptive}",
+          "$value": "{Density.padding.inline.adaptive}",
           "$type": "number"
         },
         "stack": {
-          "$value": "{Sizes.control.small.padding.stack}",
+          "$value": "{Density.padding.stack.2xs}",
           "$type": "number"
         }
       },
       "separator": {
         "inset": {
-          "$value": 4,
+          "$value": "{Density.control.separator.inset}",
           "$type": "number"
         }
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.3}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       }
     },
@@ -3427,39 +3427,39 @@
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.adaptive}",
+          "$value": "{Density.padding.inline.adaptive}",
           "$type": "number"
         },
         "stack": {
-          "$value": "{Sizes.control.large.padding.stack}",
+          "$value": "{Density.padding.stack.sm}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.control.large.icon.size}",
+          "$value": "{Density.icon.size.md}",
           "$type": "number"
         }
       },
       "separator": {
         "inset": {
-          "$value": 4,
+          "$value": "{Density.control.separator.inset}",
           "$type": "number"
         }
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.3}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       }
     },
     "separator": {
       "inset": {
-        "$value": 4,
+        "$value": "{Density.control.separator.inset}",
         "$type": "number"
       }
     },
     "gap": {
-      "$value": "{Primitives Sizes.spacing.3}",
+      "$value": "{Density.gap.sm}",
       "$type": "number"
     },
     "letter-spacing": {
@@ -3486,7 +3486,7 @@
     },
     "field": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.3}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       },
       "font-family": {
@@ -3518,7 +3518,7 @@
     },
     "field": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.3}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       },
       "font-family": {
@@ -3564,35 +3564,35 @@
       "small": {
         "padding": {
           "stack": {
-            "$value": "{Sizes.layout.padding.stack.md}",
+            "$value": "{Density.padding.stack.xs}",
             "$type": "number"
           }
         },
         "gap": {
-          "$value": "{Primitives Sizes.spacing.1}",
+          "$value": "{Density.gap.2xs}",
           "$type": "number"
         }
       },
       "padding": {
         "stack": {
-          "$value": "{Sizes.layout.padding.stack.lg}",
+          "$value": "{Density.padding.stack.sm}",
           "$type": "number"
         },
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.sm}",
+          "$value": "{Density.padding.inline.xs}",
           "$type": "number"
         }
       },
       "large": {
         "padding": {
           "stack": {
-            "$value": "{Sizes.layout.padding.stack.lg}",
+            "$value": "{Density.padding.stack.sm}",
             "$type": "number"
           }
         }
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.2}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       },
       "radius": {
@@ -3602,7 +3602,7 @@
     },
     "dropdown": {
       "padding": {
-        "$value": "{Primitives Sizes.spacing.1}",
+        "$value": "{Density.padding.inline.2xs}",
         "$type": "number"
       },
       "radius": {
@@ -3620,7 +3620,7 @@
         "$type": "number"
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.1}",
+        "$value": "{Density.gap.2xs}",
         "$type": "number"
       },
       "padding-2": {
@@ -3651,11 +3651,11 @@
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.sm}",
+          "$value": "{Density.padding.inline.xs}",
           "$type": "number"
         },
         "stack": {
-          "$value": "{Sizes.layout.padding.stack.md}",
+          "$value": "{Density.padding.stack.xs}",
           "$type": "number"
         }
       },
@@ -3668,11 +3668,11 @@
   "notification": {
     "padding": {
       "inline": {
-        "$value": "{Sizes.layout.padding.inline.lg}",
+        "$value": "{Density.padding.inline.md}",
         "$type": "number"
       },
       "stack": {
-        "$value": "{Sizes.layout.padding.stack.lg}",
+        "$value": "{Density.padding.stack.sm}",
         "$type": "number"
       }
     },
@@ -3777,7 +3777,7 @@
       "$type": "number"
     },
     "gap": {
-      "$value": "{Primitives Sizes.spacing.1}",
+      "$value": "{Density.gap.2xs}",
       "$type": "number"
     },
     "padding": {
@@ -3800,18 +3800,18 @@
     },
     "small": {
       "height": {
-        "$value": "{Sizes.icon.sm}",
+        "$value": "{Density.control.height.2xs}",
         "$type": "number"
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.sm}",
+          "$value": "{Density.padding.inline.xs}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.2xs}",
+          "$value": "{Density.icon.size.2xs}",
           "$type": "number"
         }
       },
@@ -3826,18 +3826,18 @@
     },
     "medium": {
       "height": {
-        "$value": "{Sizes.icon.md}",
+        "$value": "{Density.control.height.xs}",
         "$type": "number"
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.md}",
+          "$value": "{Density.padding.inline.sm}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.xs}",
+          "$value": "{Density.icon.size.xs}",
           "$type": "number"
         }
       },
@@ -3858,18 +3858,18 @@
   "chip": {
     "small": {
       "height": {
-        "$value": "{Sizes.icon.md}",
+        "$value": "{Density.control.height.xs}",
         "$type": "number"
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.sm}",
+          "$value": "{Density.padding.inline.xs}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.2xs}",
+          "$value": "{Density.icon.size.2xs}",
           "$type": "number"
         }
       },
@@ -3883,25 +3883,25 @@
       },
       "dismiss": {
         "size": {
-          "$value": "{Sizes.icon.xs}",
+          "$value": "{Density.icon.size.xs}",
           "$type": "number"
         }
       }
     },
     "medium": {
       "height": {
-        "$value": "{Sizes.icon.lg}",
+        "$value": "{Density.control.height.sm}",
         "$type": "number"
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.md}",
+          "$value": "{Density.padding.inline.sm}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.xs}",
+          "$value": "{Density.icon.size.xs}",
           "$type": "number"
         }
       },
@@ -3915,7 +3915,7 @@
       },
       "dismiss": {
         "size": {
-          "$value": "{Sizes.icon.sm}",
+          "$value": "{Density.icon.size.sm}",
           "$type": "number"
         }
       }
@@ -3929,7 +3929,7 @@
       "$type": "number"
     },
     "gap": {
-      "$value": "{Primitives Sizes.spacing.1}",
+      "$value": "{Density.gap.2xs}",
       "$type": "number"
     },
     "radius": {
@@ -3943,7 +3943,7 @@
   },
   "popover": {
     "padding": {
-      "$value": "{Primitives Sizes.spacing.4}",
+      "$value": "{Density.padding.inline.md}",
       "$type": "number"
     },
     "radius": {
@@ -3970,7 +3970,7 @@
   "calendar": {
     "day": {
       "size": {
-        "$value": "{Sizes.control.hit-area}",
+        "$value": "{Density.icon.size.hit-area}",
         "$type": "number"
       },
       "font-size": {
@@ -4010,7 +4010,7 @@
     },
     "header": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.2}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       }
     },
@@ -4029,19 +4029,19 @@
   },
   "date-picker": {
     "gap": {
-      "$value": "{Primitives Sizes.spacing.2}",
+      "$value": "{Density.gap.xs}",
       "$type": "number"
     }
   },
   "pagination": {
     "item": {
       "size": {
-        "$value": "{Sizes.control.hit-area}",
+        "$value": "{Density.icon.size.hit-area}",
         "$type": "number"
       }
     },
     "gap": {
-      "$value": "{Primitives Sizes.spacing.1}",
+      "$value": "{Density.gap.2xs}",
       "$type": "number"
     },
     "jump": {
@@ -4056,17 +4056,17 @@
   "textarea": {
     "small": {
       "min-height": {
-        "$value": "{Primitives Sizes.size.20}",
+        "$value": "{Density.control.area.min-height.sm}",
         "$type": "number"
       }
     },
     "min-height": {
-      "$value": "{Primitives Sizes.size.24}",
+      "$value": "{Density.control.area.min-height.md}",
       "$type": "number"
     },
     "large": {
       "min-height": {
-        "$value": "{Primitives Sizes.size.32}",
+        "$value": "{Density.control.area.min-height.lg}",
         "$type": "number"
       }
     }
@@ -4112,27 +4112,27 @@
     },
     "padding": {
       "inline": {
-        "$value": "{Sizes.layout.padding.inline.2xl}",
+        "$value": "{Density.padding.inline.lg}",
         "$type": "number"
       },
       "stack": {
-        "$value": "{Sizes.layout.padding.stack.2xl}",
+        "$value": "{Density.padding.stack.xl}",
         "$type": "number"
       }
     },
     "gap": {
-      "$value": "{Primitives Sizes.spacing.4}",
+      "$value": "{Density.gap.md}",
       "$type": "number"
     },
     "header": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.2}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       }
     },
     "footer": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.3}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       }
     },
@@ -4188,19 +4188,19 @@
         "$type": "number"
       },
       "height": {
-        "$value": "{Sizes.icon.md}",
+        "$value": "{Density.control.height.xs}",
         "$type": "number"
       }
     },
     "thumb": {
       "size": {
-        "$value": "{Sizes.icon.sm}",
+        "$value": "{Density.icon.size.sm}",
         "$type": "number"
       }
     },
     "icon": {
       "size": {
-        "$value": "{Sizes.icon.2xs}",
+        "$value": "{Density.icon.size.2xs}",
         "$type": "number"
       }
     },
@@ -4216,7 +4216,7 @@
     },
     "field": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.3}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       },
       "font-family": {
@@ -4242,7 +4242,7 @@
     },
     "description": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.1}",
+        "$value": "{Density.gap.2xs}",
         "$type": "number"
       }
     }
@@ -4250,12 +4250,12 @@
   "combobox": {
     "chips": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.1}",
+        "$value": "{Density.gap.2xs}",
         "$type": "number"
       },
       "padding": {
         "stack": {
-          "$value": "{Sizes.layout.padding.stack.sm}",
+          "$value": "{Density.padding.stack.2xs}",
           "$type": "number"
         }
       }
@@ -4278,7 +4278,7 @@
     },
     "item": {
       "gap": {
-        "$value": "{Primitives Sizes.spacing.2}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       }
     },
@@ -4297,18 +4297,18 @@
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.xs}",
+          "$value": "{Density.icon.size.xs}",
           "$type": "number"
         }
       },
       "separator": {
         "size": {
-          "$value": "{Sizes.icon.2xs}",
+          "$value": "{Density.icon.size.2xs}",
           "$type": "number"
         }
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.1}",
+        "$value": "{Density.gap.2xs}",
         "$type": "number"
       }
     },
@@ -4323,18 +4323,18 @@
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.xs}",
+          "$value": "{Density.icon.size.xs}",
           "$type": "number"
         }
       },
       "separator": {
         "size": {
-          "$value": "{Sizes.icon.xs}",
+          "$value": "{Density.icon.size.xs}",
           "$type": "number"
         }
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.2}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       }
     },
@@ -4354,16 +4354,16 @@
     },
     "padding": {
       "inline": {
-        "$value": "{Sizes.layout.padding.inline.2xl}",
+        "$value": "{Density.padding.inline.lg}",
         "$type": "number"
       },
       "stack": {
-        "$value": "{Sizes.layout.padding.stack.2xl}",
+        "$value": "{Density.padding.stack.xl}",
         "$type": "number"
       }
     },
     "gap": {
-      "$value": "{Primitives Sizes.spacing.4}",
+      "$value": "{Density.gap.md}",
       "$type": "number"
     },
     "grabber": {
@@ -4376,7 +4376,7 @@
         "$type": "number"
       },
       "gap": {
-        "$value": "{Primitives Sizes.spacing.2}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       }
     },
@@ -4390,22 +4390,22 @@
   "file-input": {
     "small": {
       "min-height": {
-        "$value": "{Primitives Sizes.size.20}",
+        "$value": "{Density.control.area.min-height.sm}",
         "$type": "number"
       },
       "padding": {
         "stack": {
-          "$value": "{Primitives Sizes.spacing.4}",
+          "$value": "{Density.padding.stack.md}",
           "$type": "number"
         },
         "inline": {
-          "$value": "{Primitives Sizes.spacing.4}",
+          "$value": "{Density.padding.inline.md}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Sizes.icon.md}",
+          "$value": "{Density.icon.size.md}",
           "$type": "number"
         }
       },
@@ -4420,32 +4420,32 @@
         }
       },
       "gap": {
-        "$value": "{Sizes.layout.gap.stack.sm}",
+        "$value": "{Density.gap.2xs}",
         "$type": "number"
       }
     },
     "min-height": {
-      "$value": "{Primitives Sizes.size.24}",
+      "$value": "{Density.control.area.min-height.md}",
       "$type": "number"
     },
     "large": {
       "min-height": {
-        "$value": "{Primitives Sizes.size.32}",
+        "$value": "{Density.control.area.min-height.lg}",
         "$type": "number"
       },
       "padding": {
         "stack": {
-          "$value": "{Sizes.layout.padding.stack.3xl}",
+          "$value": "{Density.padding.stack.2xl}",
           "$type": "number"
         },
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.3xl}",
+          "$value": "{Density.padding.inline.xl}",
           "$type": "number"
         }
       },
       "icon": {
         "size": {
-          "$value": "{Primitives Sizes.size.10}",
+          "$value": "{Density.icon.size.hit-area}",
           "$type": "number"
         }
       },
@@ -4460,23 +4460,23 @@
         }
       },
       "gap": {
-        "$value": "{Sizes.layout.gap.stack.lg}",
+        "$value": "{Density.gap.sm}",
         "$type": "number"
       }
     },
     "padding": {
       "stack": {
-        "$value": "{Sizes.layout.padding.stack.2xl}",
+        "$value": "{Density.padding.stack.xl}",
         "$type": "number"
       },
       "inline": {
-        "$value": "{Sizes.layout.padding.inline.2xl}",
+        "$value": "{Density.padding.inline.lg}",
         "$type": "number"
       }
     },
     "icon": {
       "size": {
-        "$value": "{Sizes.icon.lg}",
+        "$value": "{Density.icon.size.lg}",
         "$type": "number"
       }
     },
@@ -4503,7 +4503,7 @@
       }
     },
     "gap": {
-      "$value": "{Sizes.layout.gap.stack.md}",
+      "$value": "{Density.gap.xs}",
       "$type": "number"
     },
     "radius": {
@@ -4518,13 +4518,13 @@
     },
     "list": {
       "gap": {
-        "$value": "{Sizes.layout.gap.stack.sm}",
+        "$value": "{Density.gap.2xs}",
         "$type": "number"
       }
     },
     "actions": {
       "gap": {
-        "$value": "{Sizes.layout.gap.inline.md}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       }
     },
@@ -4540,20 +4540,20 @@
     },
     "item": {
       "height": {
-        "$value": "{Primitives Sizes.size.12}",
+        "$value": "{Density.control.height.md}",
         "$type": "number"
       },
       "gap": {
-        "$value": "{Sizes.layout.gap.inline.md}",
+        "$value": "{Density.gap.xs}",
         "$type": "number"
       },
       "padding": {
         "inline": {
-          "$value": "{Sizes.layout.padding.inline.sm}",
+          "$value": "{Density.padding.inline.xs}",
           "$type": "number"
         },
         "stack": {
-          "$value": "{Sizes.layout.padding.stack.sm}",
+          "$value": "{Density.padding.stack.2xs}",
           "$type": "number"
         }
       },
@@ -4563,7 +4563,7 @@
       },
       "thumb": {
         "size": {
-          "$value": "{Sizes.icon.lg}",
+          "$value": "{Density.icon.size.lg}",
           "$type": "number"
         }
       },

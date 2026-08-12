@@ -1,0 +1,255 @@
+{
+  "gap": {
+    "2xs": {
+      "$value": {
+        "Comfortable": "{Primitives Sizes.spacing.1}",
+        "Compact": "{Primitives Sizes.spacing.1}"
+      },
+      "$type": "number"
+    },
+    "xs": {
+      "$value": {
+        "Comfortable": "{Primitives Sizes.spacing.2}",
+        "Compact": "{Primitives Sizes.spacing.1}"
+      },
+      "$type": "number"
+    },
+    "sm": {
+      "$value": {
+        "Comfortable": "{Primitives Sizes.spacing.3}",
+        "Compact": "{Primitives Sizes.spacing.2}"
+      },
+      "$type": "number"
+    },
+    "md": {
+      "$value": {
+        "Comfortable": "{Primitives Sizes.spacing.4}",
+        "Compact": "{Primitives Sizes.spacing.3}"
+      },
+      "$type": "number"
+    }
+  },
+  "padding": {
+    "inline": {
+      "2xs": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.xs}",
+          "Compact": "{Sizes.layout.padding.inline.xs}"
+        },
+        "$type": "number"
+      },
+      "xs": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.sm}",
+          "Compact": "{Sizes.layout.padding.inline.xs}"
+        },
+        "$type": "number"
+      },
+      "sm": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.md}",
+          "Compact": "{Sizes.layout.padding.inline.sm}"
+        },
+        "$type": "number"
+      },
+      "md": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.lg}",
+          "Compact": "{Sizes.layout.padding.inline.md}"
+        },
+        "$type": "number"
+      },
+      "lg": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.2xl}",
+          "Compact": "{Sizes.layout.padding.inline.lg}"
+        },
+        "$type": "number"
+      },
+      "xl": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.3xl}",
+          "Compact": "{Sizes.layout.padding.inline.2xl}"
+        },
+        "$type": "number"
+      },
+      "adaptive": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.adaptive}",
+          "Compact": "{Sizes.layout.padding.inline.adaptive-compact}"
+        },
+        "$type": "number"
+      },
+      "control": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.inline.control-adaptive}",
+          "Compact": "{Sizes.layout.padding.inline.control-adaptive-compact}"
+        },
+        "$type": "number"
+      }
+    },
+    "stack": {
+      "2xs": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.stack.sm}",
+          "Compact": "{Sizes.layout.padding.stack.sm}"
+        },
+        "$type": "number"
+      },
+      "xs": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.stack.md}",
+          "Compact": "{Sizes.layout.padding.stack.sm}"
+        },
+        "$type": "number"
+      },
+      "sm": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.stack.lg}",
+          "Compact": "{Sizes.layout.padding.stack.md}"
+        },
+        "$type": "number"
+      },
+      "md": {
+        "$value": {
+          "Comfortable": "{Primitives Sizes.spacing.4}",
+          "Compact": "{Sizes.layout.padding.stack.lg}"
+        },
+        "$type": "number"
+      },
+      "lg": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.stack.xl}",
+          "Compact": "{Primitives Sizes.spacing.4}"
+        },
+        "$type": "number"
+      },
+      "xl": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.stack.2xl}",
+          "Compact": "{Sizes.layout.padding.stack.xl}"
+        },
+        "$type": "number"
+      },
+      "2xl": {
+        "$value": {
+          "Comfortable": "{Sizes.layout.padding.stack.3xl}",
+          "Compact": "{Sizes.layout.padding.stack.2xl}"
+        },
+        "$type": "number"
+      }
+    }
+  },
+  "icon": {
+    "size": {
+      "2xs": {
+        "$value": {
+          "Comfortable": "{Sizes.icon.2xs}",
+          "Compact": "{Sizes.icon.2xs}"
+        },
+        "$type": "number"
+      },
+      "xs": {
+        "$value": {
+          "Comfortable": "{Sizes.icon.xs}",
+          "Compact": "{Sizes.icon.2xs}"
+        },
+        "$type": "number"
+      },
+      "sm": {
+        "$value": {
+          "Comfortable": "{Sizes.icon.sm}",
+          "Compact": "{Sizes.icon.xs}"
+        },
+        "$type": "number"
+      },
+      "md": {
+        "$value": {
+          "Comfortable": "{Sizes.icon.md}",
+          "Compact": "{Sizes.icon.sm}"
+        },
+        "$type": "number"
+      },
+      "lg": {
+        "$value": {
+          "Comfortable": "{Sizes.icon.lg}",
+          "Compact": "{Sizes.icon.md}"
+        },
+        "$type": "number"
+      },
+      "hit-area": {
+        "$value": {
+          "Comfortable": "{Sizes.control.hit-area}",
+          "Compact": "{Sizes.icon.lg}"
+        },
+        "$type": "number"
+      }
+    }
+  },
+  "control": {
+    "height": {
+      "2xs": {
+        "$value": {
+          "Comfortable": "{Primitives Sizes.size.5}",
+          "Compact": "{Primitives Sizes.size.5}"
+        },
+        "$type": "number"
+      },
+      "xs": {
+        "$value": {
+          "Comfortable": "{Primitives Sizes.size.6}",
+          "Compact": "{Primitives Sizes.size.5}"
+        },
+        "$type": "number"
+      },
+      "sm": {
+        "$value": {
+          "Comfortable": "{Primitives Sizes.size.8}",
+          "Compact": "{Primitives Sizes.size.6}"
+        },
+        "$type": "number"
+      },
+      "md": {
+        "$value": {
+          "Comfortable": "{Primitives Sizes.size.12}",
+          "Compact": "{Primitives Sizes.size.10}"
+        },
+        "$type": "number"
+      }
+    },
+    "area": {
+      "min-height": {
+        "sm": {
+          "$value": {
+            "Comfortable": "{Primitives Sizes.size.20}",
+            "Compact": "{Primitives Sizes.size.16}"
+          },
+          "$type": "number"
+        },
+        "md": {
+          "$value": {
+            "Comfortable": "{Primitives Sizes.size.24}",
+            "Compact": "{Primitives Sizes.size.20}"
+          },
+          "$type": "number"
+        },
+        "lg": {
+          "$value": {
+            "Comfortable": "{Primitives Sizes.size.32}",
+            "Compact": "{Primitives Sizes.size.24}"
+          },
+          "$type": "number"
+        }
+      }
+    },
+    "separator": {
+      "inset": {
+        "$value": {
+          "Comfortable": "{Primitives Sizes.size.1}",
+          "Compact": "{Primitives Sizes.size.1}"
+        },
+        "$type": "number"
+      }
+    }
+  }
+}

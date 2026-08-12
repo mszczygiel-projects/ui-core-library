@@ -128,7 +128,7 @@ Consumers choose exactly what they need:
 
 ### Token collection architecture
 
-Tokens are organized in 5 Figma collections. The structure represents a layered reference chain:
+Tokens are organized in 6 Figma collections. The structure represents a layered reference chain:
 
 ```
 Primitives Colors + Primitives Sizes  ← raw values, no modes
@@ -137,19 +137,29 @@ Primitives Colors + Primitives Sizes  ← raw values, no modes
            ↓
         Surfaces                      ← context aliases, modes: Default | Subtle | Inverse | Primary
         Sizes                         ← responsive aliases, modes: Mobile | Desktop
+        Density                       ← context aliases, modes: Comfortable | Compact
 ```
 
-Each layer references only the layer above it — never below or across.
+Each layer references only the layer above it — never below or across. `Surfaces` and
+`Density` are both context layers and both switch on an attribute; they differ only in what
+they carry, colour versus dimension, and they compose without interfering.
 
 > **This layering was restructured on 2026-08-10.** The set went from 4638 variables to
-> **2069** without changing a single rendered value: the `on-subtle` / `on-inverse` /
+> **2078** without changing a single rendered value: the `on-subtle` / `on-inverse` /
 > `on-brand-primary` mirrors now carry ~138 semantic roles instead of all 797
 > component-facing tokens, and the per-component tokens moved into a `Components` collection
 > of single aliases. A client now configures **138 roles** instead of ~4000 rows.
 > Measurements, rationale and the migration scripts:
 > [`packages/foundations/docs/token-audit.md`](packages/foundations/docs/token-audit.md)
 > and [`tools/token-migration/`](tools/token-migration/README.md).
-> `[CMS] Foundations` has **not** been migrated — forks do not inherit from Core.
+>
+> **`[CMS] Foundations` was migrated separately on 2026-08-12** (4633 → 2027), with one
+> deliberate difference: its component tokens stayed in `Surfaces` instead of moving to a new
+> `Components` collection, because that would have reissued their ids and `[CMS] Panel` holds
+> 196 explicit `Surfaces` mode assignments on instance sub-nodes that the Plugin API cannot
+> rewrite. Same reduction, same 134 client-facing roles, zero rebinding —
+> [`tools/token-migration/out/cms-roles.md`](tools/token-migration/out/cms-roles.md).
+> Forks still do not inherit from Core; each migration is its own pass.
 
 ### Layer 5 — Components
 
@@ -265,6 +275,64 @@ query and the build has no breakpoint for a name it does not know. Any other mod
 reported as `⚠ UNMAPPED MODE` rather than dropped silently — add the breakpoint handling
 before adding the mode in Figma.
 
+### Layer 6 — Density
+
+Layout density, switched by an attribute: **Comfortable** (base) → `:root` and
+`[data-density="comfortable"]`, **Compact** → `[data-density="compact"]`. It carries 32
+**slots** — `gap/*`, `padding/inline/*`, `padding/stack/*`, `icon/size/*`,
+`control/height/*`, `control/area/min-height/*`, `control/separator/inset` — and every
+component dimension in scope aliases a slot instead of a ramp step or a primitive.
+
+Compact is a **re-mapping, not a second set of numbers**: each slot points one step further
+down the `layout/*` and `icon/*` ramps that already exist in `Sizes`. That is why adding
+density cost ~32 aliases rather than ~83 new values, and why a client fork re-points slots
+instead of re-deciding sizes.
+
+Only spacing, control heights and icon sizes react to density. Typography, radius, stroke and
+colour do not.
+
+**The base mode names its own attribute as well as `:root`.** Without
+`[data-density="comfortable"]` in that selector, a comfortable container nested inside a
+compact one would keep inheriting the compact values, because `:root` never matches a
+container further down the tree. `Surfaces` solves the same problem with its
+`[data-theme="x"] [data-surface="default"]` pair.
+
+**The two axes compose without a cartesian.** A slot aliases a ramp step, and the ramp step
+may be responsive; substitution happens on the `[data-density]` element, which has already
+inherited the media-query-adjusted ramp value from `:root`. Verified in Chromium at 376px and
+1280px: Compact on desktop resolves to the desktop step, not the mobile one. The single
+responsive slot, `padding/inline/adaptive`, therefore needs a responsive counterpart in
+`Sizes` (`layout/padding/inline/adaptive-compact`) rather than a frozen value.
+
+**Emission is asymmetric and it matters.** `buildTokensCss` repeats a declaration into every
+density scope **only when its alias chain reaches `Density`** — `dependsOnCollection()`
+decides. A dimension that stops at a `Sizes` role stays on `:root` once, because a media query
+redeclares that role on the same element and the declaration recomputes on its own. Repeating
+all 252 dimensions instead would emit ~750 lines that could never change.
+
+**`Sizes` is allowed to reference `Density`, and that is not an oversight.** `Sizes` conflates
+two layers that were never separated: the ramp (`layout/*`, `icon/*`) and the `control/*` slots
+that alias it. Density belongs between them, so eight `control/*` roles now point at Density
+slots — `control/padding/stack` → `Density.padding/stack/xs` → `Sizes.layout/padding/stack/md`.
+The variable graph stays acyclic; only the collection order does not.
+
+Splitting the collection instead is not available: **1583 live bindings in `[Core] UI Library`
+point at those roles, 193 of them on instance sub-nodes the Plugin API cannot rewrite.** The
+same emission rule covers them — a `control/*` role that reaches Density moves out of the
+`:root` block into the density scopes.
+
+This matters far beyond the eight roles: **form controls have no height token at all.** A
+TextField's height is `padding-block` plus line-height, and its padding comes from
+`--control-padding-stack` read straight from CSS. 89 references across the two component
+packages resolve through these roles, so without them density would visibly skip every field
+while buttons and chips tightened around them.
+
+**A density-aware `Sizes` role must not also vary by breakpoint.** The Desktop block writes to
+`:root`, so such a role would freeze there and stop following the attribute. Put the responsive
+step in the ramp entry the slot aliases instead — that is what
+`layout/padding/inline/control-adaptive` exists for. The build warns with
+`⚠ DENSITY × BREAKPOINT` rather than emitting something that silently half-works.
+
 ### Build pipeline: Figma → Code
 
 Two separate scripts, one shared `pnpm foundations:build` command that runs both.
@@ -272,7 +340,7 @@ Two separate scripts, one shared `pnpm foundations:build` command that runs both
 **Script 1 — `build-tokens.ts`** (Variables → CSS/TS/Tailwind)
 
 1. Export Variables from Figma using **Luckino** (W3C Design Tokens JSON, one file per collection).
-2. Drop 4 files into `src/figma-exports/`: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json`. A fifth, `components.json`, is read when present and skipped when not (see "Layer 5").
+2. Drop 4 files into `src/figma-exports/`: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json`. Two more, `components.json` and `density.json`, are read when present and skipped when not (see "Layer 5" and "Layer 6") — a fork that has neither still builds, byte for byte as before.
 3. Run `pnpm foundations:build` — generates:
 
 | Output file    | Purpose                                                                                    |

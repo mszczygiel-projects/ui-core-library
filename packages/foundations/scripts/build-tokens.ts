@@ -63,9 +63,11 @@ function loadJson(inputDir: string, filename: string): unknown {
  * Reads an export that may legitimately be absent.
  *
  * `components.json` only exists once the token restructure has run in Figma
- * (see packages/foundations/docs/token-audit.md). Before that the collection simply
- * is not there, and a missing file is not an error — unlike the four required exports,
- * where a missing file means a broken Luckino export and has to stop the build.
+ * (see packages/foundations/docs/token-audit.md), and `density.json` only once the
+ * Comfortable/Compact layer has been added. Before that the collections simply are not there,
+ * and a missing file is not an error — unlike the four required exports, where a missing file
+ * means a broken Luckino export and has to stop the build. A client fork that has neither
+ * still builds, it just emits no density scopes.
  */
 function loadOptionalJson(inputDir: string, filename: string): unknown | null {
   const path = join(inputDir, filename);
@@ -87,6 +89,7 @@ function loadAllTokens(inputDir: string): Token[] {
     unknown
   > | null;
   const sizes = loadJson(inputDir, 'sizes.json') as Record<string, unknown>;
+  const density = loadOptionalJson(inputDir, 'density.json') as Record<string, unknown> | null;
 
   const tokens: Token[] = [];
   for (const key of [
@@ -101,6 +104,7 @@ function loadAllTokens(inputDir: string): Token[] {
   walk(surfaces, 'Surfaces', [], tokens);
   if (components) walk(components, 'Components', [], tokens);
   walk(sizes, 'Sizes', [], tokens);
+  if (density) walk(density, 'Density', [], tokens);
   return tokens;
 }
 

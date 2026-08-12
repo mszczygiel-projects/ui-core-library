@@ -3055,8 +3055,8 @@ export const tokens = {
           lineHeight: 'var(--typography-heading-display-line-height)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            lineHeight: 'var(--typography-heading-display-large-line-height)',
             letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
+            lineHeight: 'var(--typography-heading-display-large-line-height)',
           },
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
@@ -3180,6 +3180,9 @@ export const tokens = {
           "2xl": 'var(--layout-padding-inline-2xl)',
           "3xl": 'var(--layout-padding-inline-3xl)',
           adaptive: 'var(--layout-padding-inline-adaptive)',
+          adaptiveCompact: 'var(--layout-padding-inline-adaptive-compact)',
+          controlAdaptive: 'var(--layout-padding-inline-control-adaptive)',
+          controlAdaptiveCompact: 'var(--layout-padding-inline-control-adaptive-compact)',
         },
         stack: {
           sm: 'var(--layout-padding-stack-sm)',
@@ -3305,6 +3308,63 @@ export const tokens = {
         fontWeight: 'var(--control-hint-font-weight)',
       },
       hitArea: 'var(--control-hit-area)',
+    },
+  },
+  density: {
+    gap: {
+      "2xs": 'var(--gap-2xs)',
+      xs: 'var(--gap-xs)',
+      sm: 'var(--gap-sm)',
+      md: 'var(--gap-md)',
+    },
+    padding: {
+      inline: {
+        "2xs": 'var(--padding-inline-2xs)',
+        xs: 'var(--padding-inline-xs)',
+        sm: 'var(--padding-inline-sm)',
+        md: 'var(--padding-inline-md)',
+        lg: 'var(--padding-inline-lg)',
+        xl: 'var(--padding-inline-xl)',
+        adaptive: 'var(--padding-inline-adaptive)',
+        control: 'var(--padding-inline-control)',
+      },
+      stack: {
+        "2xs": 'var(--padding-stack-2xs)',
+        xs: 'var(--padding-stack-xs)',
+        sm: 'var(--padding-stack-sm)',
+        md: 'var(--padding-stack-md)',
+        lg: 'var(--padding-stack-lg)',
+        xl: 'var(--padding-stack-xl)',
+        "2xl": 'var(--padding-stack-2xl)',
+      },
+    },
+    icon: {
+      size: {
+        "2xs": 'var(--icon-size-2xs)',
+        xs: 'var(--icon-size-xs)',
+        sm: 'var(--icon-size-sm)',
+        md: 'var(--icon-size-md)',
+        lg: 'var(--icon-size-lg)',
+        hitArea: 'var(--icon-size-hit-area)',
+      },
+    },
+    control: {
+      height: {
+        "2xs": 'var(--control-height-2xs)',
+        xs: 'var(--control-height-xs)',
+        sm: 'var(--control-height-sm)',
+        md: 'var(--control-height-md)',
+      },
+      area: {
+        minHeight: {
+          sm: 'var(--control-area-min-height-sm)',
+          md: 'var(--control-area-min-height-md)',
+          lg: 'var(--control-area-min-height-lg)',
+        },
+      },
+      separator: {
+        inset: 'var(--control-separator-inset)',
+      },
     },
   },
 } as const;

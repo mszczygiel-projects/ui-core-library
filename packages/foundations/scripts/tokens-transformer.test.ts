@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, vi } from 'vitest';
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import {
@@ -883,7 +883,7 @@ describe('Components collection', () => {
     }
   });
 
-  it('emits dimension tokens once on :root, not once per scope', () => {
+  it('emits a density-independent dimension once on :root, not once per scope', () => {
     const primSize: Token = {
       collection: 'Primitives Sizes',
       path: ['spacing', '4'],
@@ -913,6 +913,153 @@ describe('Components collection', () => {
     // The colour half still repeats, or surfaces stop working.
     const colourDecl = '--color-chip-neutral-solid-background-default:';
     expect(css.split(colourDecl).length - 1).toBeGreaterThan(1);
+  });
+
+  // Density is the second attribute-driven context layer. Verified in Chromium at 376px and
+  // 1280px: a dimension alias declared only on `:root` stays frozen inside a
+  // `[data-density="compact"]` container, exactly as a colour alias does inside `[data-surface]`.
+  // Repeating the declaration is what makes the switch work; nesting in both directions and
+  // combination with a media query were confirmed at the same time.
+  describe('Density', () => {
+    const spacing3: Token = {
+      collection: 'Primitives Sizes',
+      path: ['spacing', '3'],
+      type: 'number',
+      value: 12,
+    };
+    const spacing4: Token = {
+      collection: 'Primitives Sizes',
+      path: ['spacing', '4'],
+      type: 'number',
+      value: 16,
+    };
+    const gapSlot: Token = {
+      collection: 'Density',
+      path: ['gap', 'md'],
+      type: 'number',
+      value: {
+        Comfortable: '{Primitives Sizes.spacing.4}',
+        Compact: '{Primitives Sizes.spacing.3}',
+      },
+    };
+    const buttonGap: Token = {
+      collection: 'Components',
+      path: ['button', 'gap'],
+      type: 'number',
+      value: '{Density.gap.md}',
+    };
+    const sizeRole: Token = {
+      collection: 'Sizes',
+      path: ['layout', 'padding', 'inline', 'lg'],
+      type: 'number',
+      value: { Mobile: '{Primitives Sizes.spacing.4}', Desktop: '{Primitives Sizes.spacing.4}' },
+    };
+    const buttonPadding: Token = {
+      collection: 'Components',
+      path: ['button', 'padding', 'inline'],
+      type: 'number',
+      value: '{Sizes.layout.padding.inline.lg}',
+    };
+    const base = [spacing3, spacing4, gapSlot, buttonGap, sizeRole, buttonPadding];
+    const build = (tokens: Token[]) =>
+      buildTokensCss(tokens, makeRegistry(tokens), freshWarnings());
+
+    it('gives Comfortable the :root scope and its own attribute, Compact only the attribute', () => {
+      const css = build(base);
+      expect(css).toContain(
+        '/* === Density (Comfortable) === */\n:root,\n[data-density="comfortable"] {',
+      );
+      expect(css).toContain('/* === Density (Compact) === */\n[data-density="compact"] {');
+    });
+
+    it('lets a nested comfortable container reset out of a compact ancestor', () => {
+      // Without the attribute on the base mode there is nothing to reset to, because `:root`
+      // alone never matches a container further down the tree.
+      const css = build(base);
+      const comfortable = css.slice(css.indexOf('/* === Density (Comfortable) === */'));
+      expect(comfortable.slice(0, comfortable.indexOf('}'))).toContain(
+        '--gap-md: var(--spacing-4);',
+      );
+      const compact = css.slice(css.indexOf('/* === Density (Compact) === */'));
+      expect(compact.slice(0, compact.indexOf('}'))).toContain('--gap-md: var(--spacing-3);');
+    });
+
+    it('repeats a density-dependent dimension into every density scope', () => {
+      const css = build(base);
+      const decl = '--button-gap: var(--gap-md);';
+      expect(css.split(decl).length - 1, 'one declaration per density scope').toBe(2);
+      expect(css).toContain('/* === Components — dimensions (density) === */');
+    });
+
+    it('leaves a dimension that never reaches Density on :root once', () => {
+      // It resolves through a Sizes role, and a media query redeclares that role on `:root` —
+      // the same element — so the single declaration recomputes on its own.
+      const css = build(base);
+      const decl = '--button-padding-inline: var(--layout-padding-inline-lg);';
+      expect(css.split(decl).length - 1).toBe(1);
+      const staticBlock = css.slice(css.indexOf('/* === Components — dimensions === */'));
+      expect(staticBlock.slice(0, staticBlock.indexOf('}'))).toContain(decl);
+    });
+
+    it('emits no density scopes at all when the collection is absent', () => {
+      const css = build([spacing4, sizeRole, buttonPadding]);
+      expect(css).not.toContain('data-density');
+      expect(css).not.toContain('/* === Density');
+      expect(css).toContain('--button-padding-inline: var(--layout-padding-inline-lg);');
+    });
+
+    it('follows the alias chain, so a slot reached through another component token counts', () => {
+      const inner: Token = {
+        collection: 'Components',
+        path: ['chip', 'gap'],
+        type: 'number',
+        value: '{Components.button.gap}',
+      };
+      const css = build([...base, inner]);
+      expect(css.split('--chip-gap: var(--button-gap);').length - 1).toBe(2);
+    });
+
+    // `Sizes` conflates two layers: the ramp and the `control/*` slots that alias it. A slot is
+    // allowed to reach Density, and when it does it needs the same per-scope repetition as a
+    // component dimension — otherwise a form control's padding stops following the attribute.
+    const controlSlot: Token = {
+      collection: 'Sizes',
+      path: ['control', 'padding', 'stack'],
+      type: 'number',
+      value: { Mobile: '{Density.gap.md}', Desktop: '{Density.gap.md}' },
+    };
+
+    it('allows a Sizes control slot to alias a Density slot', () => {
+      const warnings = freshWarnings();
+      const tokens = [...base, controlSlot];
+      buildTokensCss(tokens, makeRegistry(tokens), warnings);
+      expect(warnings.violations.join(' ')).not.toContain('Density');
+    });
+
+    it('moves a density-aware Sizes role out of :root into the density scopes', () => {
+      const css = build([...base, controlSlot]);
+      const decl = '--control-padding-stack: var(--gap-md);';
+      expect(css.split(decl).length - 1, 'one declaration per density scope').toBe(2);
+      const plainSizes = css.slice(css.indexOf('/* === Sizes (Mobile — default) === */'));
+      expect(plainSizes.slice(0, plainSizes.indexOf('}'))).not.toContain(decl);
+      expect(css).toContain('/* === Sizes — density-aware roles === */');
+    });
+
+    it('warns when a density-aware Sizes role also varies by breakpoint', () => {
+      // Both axes cannot live on the same declaration: the media query writes to `:root`, so
+      // the value would freeze there and stop following `[data-density]`.
+      const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+      const responsiveSlot: Token = {
+        collection: 'Sizes',
+        path: ['control', 'padding', 'inline'],
+        type: 'number',
+        value: { Mobile: '{Density.gap.md}', Desktop: '{Primitives Sizes.spacing.4}' },
+      };
+      const tokens = [...base, responsiveSlot];
+      buildTokensCss(tokens, makeRegistry(tokens), freshWarnings());
+      expect(warn.mock.calls.flat().join(' ')).toContain('DENSITY × BREAKPOINT');
+      warn.mockRestore();
+    });
   });
 
   it('does not emit a Components section when the collection is absent', () => {

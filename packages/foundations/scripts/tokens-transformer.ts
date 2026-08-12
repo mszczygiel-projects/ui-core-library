@@ -23,7 +23,8 @@ export type Collection =
   | 'Themes'
   | 'Surfaces'
   | 'Components'
-  | 'Sizes';
+  | 'Sizes'
+  | 'Density';
 
 export type Token = {
   collection: Collection;
@@ -51,6 +52,7 @@ export const COLLECTIONS: Collection[] = [
   'Surfaces',
   'Components',
   'Sizes',
+  'Density',
 ];
 
 export const SURFACE_MODE_SELECTOR: Record<string, string> = {
@@ -62,6 +64,22 @@ export const SURFACE_MODE_SELECTOR: Record<string, string> = {
 
 /** Emission order for the Surfaces modes the Core library ships. Extra client modes follow. */
 export const KNOWN_SURFACE_MODES = Object.keys(SURFACE_MODE_SELECTOR);
+
+/**
+ * Density is a second context layer beside Surfaces, switched by an attribute rather than a
+ * media query. Unlike `Surfaces.Default`, the base mode names its own attribute as well as
+ * `:root`: without that, a `[data-density="comfortable"]` container nested inside a compact
+ * one would keep inheriting the compact values with nothing to reset it.
+ */
+export const DENSITY_MODE_SELECTOR: Record<string, string> = {
+  Comfortable: ':root,\n[data-density="comfortable"]',
+  Compact: '[data-density="compact"]',
+};
+
+export const KNOWN_DENSITY_MODES = Object.keys(DENSITY_MODE_SELECTOR);
+
+/** The mode that lands on `:root`. Everything else is opt-in through the attribute. */
+export const BASE_DENSITY_MODE = 'Comfortable';
 
 /** Sizes modes the build knows how to map to a media query. Anything else is reported. */
 export const KNOWN_SIZE_MODES = ['Mobile', 'Desktop'];
@@ -98,8 +116,15 @@ export const ALLOWED_DEPS: Record<Collection, Set<Collection>> = {
     'Themes',
     'Surfaces',
     'Sizes',
+    'Density',
     'Components',
   ]),
+  // `Sizes` holds two layers that were never separated: the ramp (`layout/*`, `icon/*`) and the
+  // control slots (`control/*`) that alias it. Density belongs between them, so the slots have
+  // to be allowed to reach down into it — `control/padding/stack` → `Density.padding/stack/xs`
+  // → `Sizes.layout/padding/stack/md`. The variable graph stays acyclic; only the collection
+  // order does not, and splitting the collection is not an option: 1583 live bindings in
+  // `[Core] UI Library` point at these roles, 193 of them on unwritable instance sub-nodes.
   Sizes: new Set([
     'Primitives Colors',
     'Primitives Sizes',
@@ -107,7 +132,12 @@ export const ALLOWED_DEPS: Record<Collection, Set<Collection>> = {
     'Primitives Shadows',
     'Themes',
     'Sizes',
+    'Density',
   ]),
+  // A density slot points at a step of the responsive ramp, which is what lets the two axes
+  // combine without a cartesian: the slot resolves on the `[data-density]` element, reading a
+  // ramp value the media query has already adjusted on `:root`.
+  Density: new Set(['Primitives Sizes', 'Sizes', 'Density']),
 };
 
 export const SHADOW_COMPOSITES: [string, string, string][] = [
@@ -255,7 +285,7 @@ export function cssVarName(collection: Collection, path: string[]): string {
     return `--${norm.join('-').toLowerCase()}`;
   }
 
-  // Themes, Surfaces, Components, Sizes — no collection prefix
+  // Themes, Surfaces, Components, Sizes, Density — no collection prefix
   return `--${norm.join('-').toLowerCase()}`;
 }
 
@@ -371,6 +401,38 @@ export function resolveNumericValue(
     return resolveNumericValue(target, targetMode, registry, warnings, visitedAliases);
   }
   return null;
+}
+
+/**
+ * Does this token's alias chain reach `target` in any mode?
+ *
+ * Used to pick out the component dimensions that have to be repeated per density scope.
+ * Repeating all of them instead would turn 252 declarations into ~750 identical ones, and the
+ * surplus would be inert — a dimension that never resolves through `Density` cannot change.
+ */
+export function dependsOnCollection(
+  token: Token,
+  target: Collection,
+  registry: Map<string, Token>,
+  seen: Set<string> = new Set(),
+): boolean {
+  const key = tokenKey(token.collection, token.path);
+  if (seen.has(key)) return false;
+  seen.add(key);
+
+  const values = isModeMap(token.value)
+    ? Object.values(token.value as Record<string, Primitive>)
+    : [token.value as Primitive];
+
+  for (const v of values) {
+    if (!isAlias(v)) continue;
+    const parsed = parseAlias(v);
+    if (!parsed) continue;
+    if (parsed.collection === target) return true;
+    const next = registry.get(tokenKey(parsed.collection, normalizedPath(parsed.path)));
+    if (next && dependsOnCollection(next, target, registry, seen)) return true;
+  }
+  return false;
 }
 
 export function formatLineHeight(
@@ -628,6 +690,7 @@ export function buildTokensCss(
   const surfaces = tokens.filter((t) => t.collection === 'Surfaces');
   const components = tokens.filter((t) => t.collection === 'Components');
   const sizes = tokens.filter((t) => t.collection === 'Sizes');
+  const density = tokens.filter((t) => t.collection === 'Density');
 
   const chunks: string[] = [HEADER];
 
@@ -728,6 +791,33 @@ export function buildTokensCss(
     }
   }
 
+  // Density — the second context layer. Like Surfaces it is attribute-driven, but it carries
+  // dimensions rather than colour, and its base mode claims `[data-density="comfortable"]`
+  // alongside `:root` so a nested comfortable container can reset out of a compact ancestor.
+  const densityModes = collectModes(density);
+  const orderedDensityModes = [
+    ...KNOWN_DENSITY_MODES.filter((m) => densityModes.includes(m)),
+    ...densityModes.filter((m) => !KNOWN_DENSITY_MODES.includes(m)),
+  ];
+  const densityScopes: string[] = [];
+  for (const mode of orderedDensityModes) {
+    const selector = DENSITY_MODE_SELECTOR[mode] ?? `[data-density="${modeSlug(mode)}"]`;
+    densityScopes.push(selector);
+    const densityLines: string[] = [];
+    for (const t of density) {
+      const modeValues = valuesByMode(t);
+      const entry = modeValues.find((m) => m.mode === mode) ?? modeValues[0];
+      if (!entry) continue;
+      const line = resolveCssLine(t, entry.raw, mode, registry, warnings);
+      if (line !== null) densityLines.push(line);
+    }
+    if (densityLines.length > 0) {
+      chunks.push(`/* === Density (${mode}) === */\n${selector} {`);
+      chunks.push(...densityLines);
+      chunks.push('}\n');
+    }
+  }
+
   // Components — a single-mode collection whose every token is one alias to a role.
   //
   // The identical declaration list is repeated into every scope where a role can change.
@@ -740,24 +830,37 @@ export function buildTokensCss(
   // In Figma the same token needs no modes at all, because an alias there resolves in the
   // mode context of the consuming node. The asymmetry is why the collection stays small in
   // Figma while its CSS is emitted once per scope.
-  // Only the colour half needs that repetition. A dimension token is not surface-aware and
-  // not theme-aware: the role it points at changes with a media query, which redeclares on
-  // `:root` — the same element — so a single `:root` declaration recomputes on its own.
-  // Emitting dimensions per scope would multiply 252 tokens into ~1500 identical lines.
+  // A dimension is neither surface-aware nor theme-aware, so it stays out of those scopes.
+  // Whether it needs the density scopes depends on the token: one that resolves through
+  // `Density` must be repeated for the same substitution reason as colour, while one that only
+  // reaches a `Sizes` role recomputes on its own, because a media query redeclares that role on
+  // `:root` — the same element the declaration applies to.
   const componentLines: string[] = [];
-  const componentDimensionLines: string[] = [];
+  const staticDimensionLines: string[] = [];
+  const densityDimensionLines: string[] = [];
   for (const t of components) {
     const entry = valuesByMode(t)[0];
     if (!entry) continue;
     const line = resolveCssLine(t, entry.raw, entry.mode, registry, warnings);
     if (line === null) continue;
-    (t.type === 'color' ? componentLines : componentDimensionLines).push(line);
+    if (t.type === 'color') componentLines.push(line);
+    else if (dependsOnCollection(t, 'Density', registry)) densityDimensionLines.push(line);
+    else staticDimensionLines.push(line);
   }
 
-  if (componentDimensionLines.length > 0) {
+  if (staticDimensionLines.length > 0) {
     chunks.push('/* === Components — dimensions === */\n:root {');
-    chunks.push(...componentDimensionLines);
+    chunks.push(...staticDimensionLines);
     chunks.push('}\n');
+  }
+
+  if (densityDimensionLines.length > 0) {
+    const scopes = densityScopes.length > 0 ? densityScopes : [':root'];
+    for (const selector of scopes) {
+      chunks.push(`/* === Components — dimensions (density) === */\n${selector} {`);
+      chunks.push(...densityDimensionLines);
+      chunks.push('}\n');
+    }
   }
 
   if (componentLines.length > 0) {
@@ -808,19 +911,34 @@ export function buildTokensCss(
   }
 
   // Sizes — Mobile (default → :root)
+  //
+  // A `control/*` slot may alias a Density slot, and then it needs the same per-scope
+  // repetition as a component dimension: declared once on `:root` it would be substituted
+  // there and ignore a `[data-density]` container below. Everything else stays on `:root`.
   const mobileSizeLines: string[] = [];
+  const densitySizeLines: string[] = [];
   for (const t of sizes) {
     if (primitiveSizeVarNames.has(cssVarName(t.collection, t.path))) continue;
     const modeValues = valuesByMode(t);
     const entry = modeValues.find((m) => m.mode === 'Mobile') ?? modeValues[0];
     if (!entry) continue;
     const line = resolveCssLine(t, entry.raw, 'Mobile', registry, warnings);
-    if (line !== null) mobileSizeLines.push(line);
+    if (line === null) continue;
+    if (dependsOnCollection(t, 'Density', registry)) densitySizeLines.push(line);
+    else mobileSizeLines.push(line);
   }
   if (mobileSizeLines.length > 0) {
     chunks.push('/* === Sizes (Mobile — default) === */\n:root {');
     chunks.push(...mobileSizeLines);
     chunks.push('}\n');
+  }
+  if (densitySizeLines.length > 0) {
+    const scopes = densityScopes.length > 0 ? densityScopes : [':root'];
+    for (const selector of scopes) {
+      chunks.push(`/* === Sizes — density-aware roles === */\n${selector} {`);
+      chunks.push(...densitySizeLines);
+      chunks.push('}\n');
+    }
   }
 
   // Sizes — Desktop (only vars whose Desktop value differs from Mobile, inside @media)
@@ -832,6 +950,17 @@ export function buildTokensCss(
     const mobileEntry = modeValues.find((m) => m.mode === 'Mobile') ?? modeValues[0];
     const desktopEntry = modeValues.find((m) => m.mode === 'Desktop');
     if (!desktopEntry || !mobileEntry || desktopEntry.raw === mobileEntry.raw) continue;
+    // The two axes cannot both be expressed here: this block declares on `:root`, so a
+    // density-aware role redeclared inside the media query would freeze at the `:root` value
+    // and stop following `[data-density]`. Put the breakpoint in the ramp entry the density
+    // slot points at instead — that is what `layout/padding/inline/control-adaptive` is for.
+    if (dependsOnCollection(t, 'Density', registry)) {
+      console.warn(
+        `⚠ DENSITY × BREAKPOINT: Sizes."${t.path.join('/')}" reaches Density and also varies by ` +
+          `Sizes mode — move the responsive step into the ramp entry the slot aliases`,
+      );
+      continue;
+    }
     const line = resolveCssLine(t, desktopEntry.raw, 'Desktop', registry, warnings);
     if (line !== null) desktopSizeLines.push(line);
   }
