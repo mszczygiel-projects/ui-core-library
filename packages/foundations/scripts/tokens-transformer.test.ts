@@ -61,6 +61,11 @@ function surfaceColor(path: string[], modes: Record<string, string>): Token {
   return { collection: 'Surfaces', path, type: 'color', value: modes };
 }
 
+/** A component token is a single alias to a role — the collection has one mode by design. */
+function componentColor(path: string[], alias: string): Token {
+  return { collection: 'Components', path, type: 'color', value: alias };
+}
+
 // ─── 1. cssVarName — naming convention ───────────────────────────────────
 
 describe('cssVarName', () => {
@@ -790,6 +795,146 @@ describe('buildTsTree — Surfaces precedence', () => {
     const tree = buildTsTree([prim500, themeBrand, surfBrand]);
     expect(tree['primitives colors']).toBeUndefined();
     expect(tree['primitives sizes']).toBeUndefined();
+  });
+});
+
+// ─── Components collection ────────────────────────────────────────────────
+// The restructure in docs/token-audit.md moves per-component colour tokens into their
+// own single-mode collection, where each one is an alias to a surface-aware role.
+
+describe('Components collection', () => {
+  const chipPath = ['color', 'chip', 'neutral', 'solid', 'background', 'default'];
+  const rolePath = ['color', 'neutral', 'solid', 'background', 'default'];
+
+  const primGray = prim('gray', '900', '#151419');
+  const themeRole = themeColor(rolePath, '{Primitives Colors.gray.900}');
+  const surfRole = surfaceColor(rolePath, {
+    Default: '{Themes.color.neutral.solid.background.default}',
+    Subtle: '{Themes.color.on-subtle.neutral.solid.background.default}',
+  });
+  const chip = componentColor(chipPath, '{Surfaces.color.neutral.solid.background.default}');
+
+  it('gets no collection prefix in the CSS variable name', () => {
+    expect(cssVarName('Components', chipPath)).toBe(
+      '--color-chip-neutral-solid-background-default',
+    );
+  });
+
+  it('is a parseable alias target', () => {
+    expect(parseAlias('{Components.color.chip.neutral.solid.background.default}')).toEqual({
+      collection: 'Components',
+      path: ['color', 'chip', 'neutral', 'solid', 'background', 'default'],
+    });
+  });
+
+  it('may reference Surfaces without raising a layer violation', () => {
+    const warnings = freshWarnings();
+    const tokens = [primGray, themeRole, surfRole, chip];
+    const css = valueToCss(chip, chip.value as string, null, makeRegistry(tokens), warnings);
+    expect(css).toBe('var(--color-neutral-solid-background-default)');
+    expect(warnings.violations).toEqual([]);
+    expect(warnings.broken).toEqual([]);
+  });
+
+  it('flags a Surfaces token that references Components — the layering only goes one way', () => {
+    const warnings = freshWarnings();
+    const alias = `{Components.${chipPath.join('.')}}`;
+    const backwards = surfaceColor(rolePath, { Default: alias });
+    // The target has to be in the registry: an unresolvable alias is reported as a broken
+    // reference and never reaches the layer check.
+    valueToCss(backwards, alias, 'Default', makeRegistry([chip, backwards]), warnings);
+    expect(warnings.broken).toEqual([]);
+    expect(warnings.violations).toHaveLength(1);
+    expect(warnings.violations[0]).toContain('should not reference Components');
+  });
+
+  // Verified in Chromium: a custom property containing `var()` is substituted on the element
+  // the declaration applies to, and descendants inherit the substituted result. A component
+  // alias emitted only on `:root` therefore freezes at the `:root` value and ignores a
+  // `[data-surface]` container below it. The repetition is what makes surfaces work.
+  it('repeats its declarations into every scope where a role can change', () => {
+    const themeDark = themeColor(
+      rolePath,
+      '{Primitives Colors.gray.900}',
+      '{Primitives Colors.gray.800}',
+    );
+    const surfAll = surfaceColor(rolePath, {
+      Default: '{Themes.color.neutral.solid.background.default}',
+      Subtle: '{Themes.color.on-subtle.neutral.solid.background.default}',
+      Inverse: '{Themes.color.on-inverse.neutral.solid.background.default}',
+    });
+    const tokens = [primGray, prim('gray', '800', '#2d2f31'), themeDark, surfAll, chip];
+    const css = buildTokensCss(tokens, makeRegistry(tokens), freshWarnings());
+
+    const decl =
+      '  --color-chip-neutral-solid-background-default: var(--color-neutral-solid-background-default);';
+    const scopeOf = (selector: string) => {
+      const at = css.indexOf(`/* === Components === */\n${selector} {`);
+      return at === -1 ? null : css.slice(at, css.indexOf('}', at));
+    };
+
+    for (const selector of [
+      ':root,\n[data-theme="default"],\n[data-surface="default"]',
+      '[data-theme="dark"],\n[data-theme="dark"] [data-surface="default"]',
+      '[data-surface="subtle"]',
+      '[data-surface="inverse"]',
+    ]) {
+      expect(scopeOf(selector), `no Components block for ${selector}`).toContain(decl);
+    }
+  });
+
+  it('emits dimension tokens once on :root, not once per scope', () => {
+    const primSize: Token = {
+      collection: 'Primitives Sizes',
+      path: ['spacing', '4'],
+      type: 'number',
+      value: 16,
+    };
+    const sizeRole: Token = {
+      collection: 'Sizes',
+      path: ['layout', 'padding', 'inline', 'lg'],
+      type: 'number',
+      value: { Mobile: '{Primitives Sizes.spacing.4}', Desktop: '{Primitives Sizes.spacing.4}' },
+    };
+    const dimension: Token = {
+      collection: 'Components',
+      path: ['button', 'padding', 'inline'],
+      type: 'number',
+      value: '{Sizes.layout.padding.inline.lg}',
+    };
+    const tokens = [primGray, themeRole, surfRole, chip, primSize, sizeRole, dimension];
+    const css = buildTokensCss(tokens, makeRegistry(tokens), freshWarnings());
+
+    const decl = '--button-padding-inline: var(--layout-padding-inline-lg);';
+    const occurrences = css.split(decl).length - 1;
+    expect(occurrences, 'a dimension is not surface-aware — one declaration is enough').toBe(1);
+    expect(css).toContain('/* === Components — dimensions === */');
+
+    // The colour half still repeats, or surfaces stop working.
+    const colourDecl = '--color-chip-neutral-solid-background-default:';
+    expect(css.split(colourDecl).length - 1).toBeGreaterThan(1);
+  });
+
+  it('does not emit a Components section when the collection is absent', () => {
+    const tokens = [primGray, themeRole, surfRole];
+    expect(buildTokensCss(tokens, makeRegistry(tokens), freshWarnings())).not.toContain(
+      '=== Components ===',
+    );
+  });
+
+  it('takes precedence over Surfaces and Themes for the same path in the TS tree', () => {
+    const themeChip = themeColor(chipPath, '{Primitives Colors.gray.900}');
+    const surfChip = surfaceColor(chipPath, { Default: '{Themes.color.chip.neutral}' });
+    const tree = buildTsTree([primGray, themeChip, surfChip, chip]);
+
+    const dig = (root: unknown, keys: string[]) =>
+      keys.reduce<unknown>((n, k) => (n as Record<string, unknown> | undefined)?.[k], root);
+
+    expect(dig(tree, ['components', 'color', 'chip', 'neutral', 'solid', 'background'])).toEqual({
+      default: 'var(--color-chip-neutral-solid-background-default)',
+    });
+    expect(dig(tree, ['surfaces', 'color', 'chip'])).toBeUndefined();
+    expect(dig(tree, ['themes', 'color', 'chip'])).toBeUndefined();
   });
 });
 

@@ -22,6 +22,7 @@ export type Collection =
   | 'Primitives Shadows'
   | 'Themes'
   | 'Surfaces'
+  | 'Components'
   | 'Sizes';
 
 export type Token = {
@@ -48,6 +49,7 @@ export const COLLECTIONS: Collection[] = [
   'Primitives Shadows',
   'Themes',
   'Surfaces',
+  'Components',
   'Sizes',
 ];
 
@@ -82,6 +84,21 @@ export const ALLOWED_DEPS: Record<Collection, Set<Collection>> = {
     'Primitives Motions',
     'Primitives Shadows',
     'Themes',
+  ]),
+  // Component tokens are single aliases to a role — that indirection is the whole point.
+  // `Surfaces` is the expected target for colour, `Sizes` for dimensions; `Themes` covers the
+  // roles that have no surface counterpart (typography, radius, ring). `Components` itself is
+  // allowed because a few tokens legitimately follow another component token
+  // (`checkbox/field/line-height` → `checkbox/size/default`).
+  Components: new Set([
+    'Primitives Colors',
+    'Primitives Sizes',
+    'Primitives Motions',
+    'Primitives Shadows',
+    'Themes',
+    'Surfaces',
+    'Sizes',
+    'Components',
   ]),
   Sizes: new Set([
     'Primitives Colors',
@@ -238,7 +255,7 @@ export function cssVarName(collection: Collection, path: string[]): string {
     return `--${norm.join('-').toLowerCase()}`;
   }
 
-  // Themes, Surfaces, Sizes — no collection prefix
+  // Themes, Surfaces, Components, Sizes — no collection prefix
   return `--${norm.join('-').toLowerCase()}`;
 }
 
@@ -609,6 +626,7 @@ export function buildTokensCss(
   const primShadows = tokens.filter((t) => t.collection === 'Primitives Shadows');
   const themes = tokens.filter((t) => t.collection === 'Themes');
   const surfaces = tokens.filter((t) => t.collection === 'Surfaces');
+  const components = tokens.filter((t) => t.collection === 'Components');
   const sizes = tokens.filter((t) => t.collection === 'Sizes');
 
   const chunks: string[] = [HEADER];
@@ -707,6 +725,66 @@ export function buildTokensCss(
       chunks.push(`/* === Surfaces (${mode}) === */\n${selector} {`);
       chunks.push(...surfaceLines);
       chunks.push('}\n');
+    }
+  }
+
+  // Components — a single-mode collection whose every token is one alias to a role.
+  //
+  // The identical declaration list is repeated into every scope where a role can change.
+  // That repetition is required, not defensive: a custom property containing `var()` is
+  // substituted at computed-value time **on the element the declaration applies to**, and
+  // descendants inherit the already-substituted result. Declared only on `:root`,
+  // `--color-chip-x: var(--color-role-y)` would freeze at the `:root` value and ignore a
+  // `[data-surface="subtle"]` container further down — verified in Chromium.
+  //
+  // In Figma the same token needs no modes at all, because an alias there resolves in the
+  // mode context of the consuming node. The asymmetry is why the collection stays small in
+  // Figma while its CSS is emitted once per scope.
+  // Only the colour half needs that repetition. A dimension token is not surface-aware and
+  // not theme-aware: the role it points at changes with a media query, which redeclares on
+  // `:root` — the same element — so a single `:root` declaration recomputes on its own.
+  // Emitting dimensions per scope would multiply 252 tokens into ~1500 identical lines.
+  const componentLines: string[] = [];
+  const componentDimensionLines: string[] = [];
+  for (const t of components) {
+    const entry = valuesByMode(t)[0];
+    if (!entry) continue;
+    const line = resolveCssLine(t, entry.raw, entry.mode, registry, warnings);
+    if (line === null) continue;
+    (t.type === 'color' ? componentLines : componentDimensionLines).push(line);
+  }
+
+  if (componentDimensionLines.length > 0) {
+    chunks.push('/* === Components — dimensions === */\n:root {');
+    chunks.push(...componentDimensionLines);
+    chunks.push('}\n');
+  }
+
+  if (componentLines.length > 0) {
+    const scopes: string[] = [themeModeSelector(baseThemeMode, true)];
+    for (const mode of themeModes) {
+      if (mode !== baseThemeMode) scopes.push(themeModeSelector(mode, false));
+    }
+    for (const mode of orderedSurfaceModes) {
+      const selector = SURFACE_MODE_SELECTOR[mode] ?? `[data-surface="${modeSlug(mode)}"]`;
+      if (selector !== ':root') scopes.push(selector);
+    }
+
+    for (const selector of scopes) {
+      chunks.push(`/* === Components === */\n${selector} {`);
+      chunks.push(...componentLines);
+      chunks.push('}\n');
+    }
+
+    if (autoDarkMode && themeModes.some((m) => modeSlug(m) === 'dark')) {
+      chunks.push(
+        '/* === Components (system preference) === */\n' +
+          '@media (prefers-color-scheme: dark) {\n' +
+          '  :root:not([data-theme]),\n' +
+          '  :root:not([data-theme]) [data-surface="default"] {',
+      );
+      chunks.push(...componentLines.map((l) => '  ' + l));
+      chunks.push('  }\n}\n');
     }
   }
 
@@ -893,7 +971,8 @@ export function buildTailwindCss(tokens: Token[]): string {
 
   const seenSemanticVars = new Set<string>();
   for (const t of tokens) {
-    if (t.collection !== 'Themes' && t.collection !== 'Surfaces') continue;
+    if (t.collection !== 'Themes' && t.collection !== 'Surfaces' && t.collection !== 'Components')
+      continue;
     const varName = cssVarName(t.collection, t.path);
     if (!varName.startsWith('--color-')) continue;
     if (seenSemanticVars.has(varName)) continue;
@@ -919,11 +998,15 @@ export function tsKey(key: string): string {
 }
 
 export function buildTsTree(tokens: Token[]): TsNode {
-  // Surfaces-precedence: collect all Surfaces paths so Themes tokens with a
-  // Surfaces counterpart are excluded from the public TS API (use --surfaces-* instead).
+  // Precedence Components > Surfaces > Themes. The collections share CSS variable names
+  // after the collection prefix is dropped, so only the most specific definition of a path
+  // may reach the public TS API — otherwise `tokens.color.chip.…` would be emitted several
+  // times and the last writer would win by accident.
   const surfacesPaths = new Set<string>();
+  const componentsPaths = new Set<string>();
   for (const t of tokens) {
     if (t.collection === 'Surfaces') surfacesPaths.add(normalizedPath(t.path).join('.'));
+    if (t.collection === 'Components') componentsPaths.add(normalizedPath(t.path).join('.'));
   }
 
   const root: TsNode = {};
@@ -936,8 +1019,10 @@ export function buildTsTree(tokens: Token[]): TsNode {
     )
       continue;
 
-    // Surfaces takes precedence: skip Themes tokens that have a Surfaces counterpart.
-    if (t.collection === 'Themes' && surfacesPaths.has(normalizedPath(t.path).join('.'))) continue;
+    const pathKey = normalizedPath(t.path).join('.');
+    if (t.collection === 'Themes' && (surfacesPaths.has(pathKey) || componentsPaths.has(pathKey)))
+      continue;
+    if (t.collection === 'Surfaces' && componentsPaths.has(pathKey)) continue;
     const collectionKey = t.collection.toLowerCase();
     const ref = `var(${cssVarName(t.collection, t.path)})`;
 

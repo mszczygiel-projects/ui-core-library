@@ -77,12 +77,16 @@ against the dark palette.
 import { tokens } from '@mszczygiel-projects/ui-core-foundations';
 import type { TokenKey } from '@mszczygiel-projects/ui-core-foundations';
 
-// Access a token value — returns e.g. "var(--color-on-subtle-brand-primary)"
-const brandColor = tokens.themes.color.onSubtle.brand.primary;
+// Access a token value — returns e.g. "var(--color-brand-primary)"
+const brandColor = tokens.surfaces.color.brand.primary;
 
 // TokenKey is a union of all valid dot-separated token paths
 function getToken(key: TokenKey) { ... }
 ```
+
+Reach for `tokens.surfaces.*` — those are the surface-aware semantic tokens. `tokens.themes.color.onSubtle.*`, `.onInverse.*` and `.onBrandPrimary.*` are internal plumbing for the
+surface system: they are what a `data-surface` container switches between, so reading one
+directly pins you to a single surface context and the value stops adapting.
 
 ## Build
 

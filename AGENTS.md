@@ -141,6 +141,53 @@ Primitives Colors + Primitives Sizes  ← raw values, no modes
 
 Each layer references only the layer above it — never below or across.
 
+> **This layering was restructured on 2026-08-10.** The set went from 4638 variables to
+> **2069** without changing a single rendered value: the `on-subtle` / `on-inverse` /
+> `on-brand-primary` mirrors now carry ~138 semantic roles instead of all 797
+> component-facing tokens, and the per-component tokens moved into a `Components` collection
+> of single aliases. A client now configures **138 roles** instead of ~4000 rows.
+> Measurements, rationale and the migration scripts:
+> [`packages/foundations/docs/token-audit.md`](packages/foundations/docs/token-audit.md)
+> and [`tools/token-migration/`](tools/token-migration/README.md).
+> `[CMS] Foundations` has **not** been migrated — forks do not inherit from Core.
+
+### Layer 5 — Components
+
+Every per-component token, colour and dimension alike, in one **single-mode** collection:
+`color/chip/*`, `color/button/*` alias a `Surfaces` role; `button/font-size`,
+`chip/small/height` alias a `Sizes` role. `build-tokens.ts` picks up
+`figma-exports/components.json` when it exists and ignores its absence, so a fork that has not
+been migrated still builds.
+
+The rule holds without exceptions: if a token is component-scoped, it is in `Components`.
+`Sizes` keeps only the responsive roles.
+
+**One accepted cost.** Roughly 100 bindings in `[Core] UI Library` still point at the old
+`Sizes` variables — icon `width`/`height` and a few text properties on instances nested
+inside instances, where `setBoundVariable` reports success and silently does nothing. They
+render the last resolved value, so nothing looks wrong, but the references are stale and only
+a manual pass in the Figma UI clears them.
+
+**`letter-spacing` is typed inconsistently** and it bites on every operation:
+`notification/letter-spacing` is `FLOAT` while the rest are `STRING` percentages, and Figma
+refuses to bind a `STRING` variable to a node's `letterSpacing` property — which is why those
+tokens' bindings could not be moved even though the tokens themselves were. Figma cannot
+change a variable's type in place, so fixing it means recreating them.
+
+Two asymmetries make this work, and both are easy to get backwards:
+
+- **In Figma one mode is enough.** An alias resolves in the mode context of the consuming
+  node, so a component token follows theme and surface through the role it points at.
+- **In CSS it is not.** A custom property containing `var()` is substituted on the element
+  the declaration applies to, and descendants inherit the substituted result — so an alias
+  emitted only on `:root` freezes there and ignores a `[data-surface]` container below it.
+  `buildTokensCss` therefore repeats the whole Components block into every theme and surface
+  scope. Verified in Chromium; locked in by `tokens-transformer.test.ts`.
+
+Precedence in `tokens.ts` is **Components > Surfaces > Themes**: the collections share CSS
+variable names once the collection prefix is dropped, so only the most specific definition of
+a path reaches the public API.
+
 **Surfaces take precedence over Themes in `tokens.ts`.** If a Themes variable has a corresponding Surfaces alias, only the Surfaces version is exported (it is surface-aware). If a Themes variable has no Surfaces counterpart, it is exported directly from Themes.
 
 ### Layer 1 — Primitives
@@ -225,7 +272,7 @@ Two separate scripts, one shared `pnpm foundations:build` command that runs both
 **Script 1 — `build-tokens.ts`** (Variables → CSS/TS/Tailwind)
 
 1. Export Variables from Figma using **Luckino** (W3C Design Tokens JSON, one file per collection).
-2. Drop 4 files into `src/figma-exports/`: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json`.
+2. Drop 4 files into `src/figma-exports/`: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json`. A fifth, `components.json`, is read when present and skipped when not (see "Layer 5").
 3. Run `pnpm foundations:build` — generates:
 
 | Output file    | Purpose                                                                                    |
