@@ -170,7 +170,7 @@ export class UiCombobox extends LitElement {
   @property({ type: Boolean, reflect: true }) clearable = false;
 
   /** Form field name used on submission. */
-  @property({ type: String }) name?: string;
+  @property({ type: String, reflect: true }) name?: string;
 
   /**
    * Text shown when nothing matches.
@@ -285,7 +285,11 @@ export class UiCombobox extends LitElement {
       changed.has('value') ||
       changed.has('values') ||
       changed.has('disabled') ||
-      changed.has('state')
+      changed.has('state') ||
+      // In `multiple` mode the entry names are baked into the FormData at sync
+      // time rather than read from the host attribute at submission, so a later
+      // `name` change would otherwise leave stale entries behind.
+      changed.has('name')
     ) {
       this._syncFormValue();
     }
@@ -295,7 +299,12 @@ export class UiCombobox extends LitElement {
   }
 
   formDisabledCallback(disabled: boolean): void {
-    this._formDisabled = disabled;
+    // Fires for our own reflected `disabled` attribute as well as for an ancestor
+    // <fieldset disabled>. The first case is redundant — `disabled` is already a
+    // reactive property — and it arrives mid-update, after render() has read its
+    // values, so the write is dropped and leaves the control stale. Track only the
+    // ancestor case; `_isDisabled` already ORs in `disabled` itself.
+    this._formDisabled = disabled && !this.disabled;
   }
 
   formResetCallback(): void {

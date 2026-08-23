@@ -205,4 +205,17 @@ describe('UiDateField', () => {
     await el.updateComplete;
     expect(picker(el).open).to.equal(false);
   });
+
+  it('stretches the field to the full host width', async () => {
+    const holder = await fixture<HTMLDivElement>(html`
+      <div style="width: 420px">
+        <ui-date-field label="Date" today="2026-07-19"></ui-date-field>
+      </div>
+    `);
+    const el = holder.querySelector<UiDateField>('ui-date-field')!;
+    await el.updateComplete;
+    const wrapper = el.shadowRoot!.querySelector('.field-wrapper')!;
+    expect(el.getBoundingClientRect().width).to.equal(420);
+    expect(wrapper.getBoundingClientRect().width).to.equal(420);
+  });
 });

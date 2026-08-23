@@ -1,3 +1,16 @@
+/*
+ * Popover (the rendered root here) and its anchor span are inline-block on
+ * their own — they usually wrap a button — which shrink-wraps the field to the
+ * input's intrinsic width instead of filling the container. The compound
+ * selector outranks .ui-popover regardless of stylesheet order.
+ * Mirrors the Lit fix in date-picker.styles.ts.
+ */
+.ui-popover.ui-date-field,
+.ui-date-field .ui-popover__anchor {
+  display: block;
+  width: 100%;
+}
+
 /* Anchor wrapper keeps the popover panel aligned to the full field width. */
 .ui-date-field__anchor {
   display: block;

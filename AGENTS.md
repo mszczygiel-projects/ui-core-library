@@ -477,11 +477,12 @@ There is **no runtime icon-set switch** and no `iconSet` config field. Selection
 | Option list  | `renderListbox()` + `listboxStyles` | `<Listbox>`                | options, sticky group headers, empty/loading, check marks, create row        |
 | Field chrome | `controlFieldStyles`                | `styles/control-field.css` | size ramp and per-variant colour aliases (`--_bg`, `--_text`, `--_label`, …) |
 
-Three things about this that are easy to get wrong:
+Four things about this that are easy to get wrong:
 
 1. **There is no `<ui-listbox>` element.** `aria-activedescendant` and `aria-controls` are id references, and **id references do not resolve across a shadow boundary**. So on the Lit side the list is a render function that draws into the _caller's_ shadow root, keeping the trigger and the options in one tree. React has no such constraint and ships a real `<Listbox>` component. The asymmetry is deliberate — see `packages/web-components/src/listbox/README.md`.
 2. **The panel surface belongs to the listbox, not to the popover.** The listbox owns background, border, radius, padding, max-height and scrolling (`select-dropdown-*` tokens) so it also works inline. Whenever it is floated inside a popover, neutralise the popover chrome (`::part(panel)` / `::part(content)` in Lit, descendant rules in React) or two surfaces will stack.
-3. **The `select-*` token family is shared.** `--color-select-option-*`, `--color-select-dropdown-*`, `--select-option-group-*` and friends back _every_ listbox surface, including the Combobox — the prefix is historical, not a scope. Do not rename it to `listbox-*` without a full audit; it is published API.
+3. **The popover shrink-wraps its trigger, and a full-width field must undo that.** `ui-popover` / `.ui-popover` is `display: inline-block` — right when it wraps a button, wrong when it wraps a field, because the field then collapses to the input's intrinsic width (~20 characters) instead of filling its host. Every field built on it un-shrinks the chain itself: SelectField and Combobox style their own `<ui-popover>`, DateField reaches it through `ui-date-picker` (which passes `display: block` down to its popover in `date-picker.styles.ts`, since `::part()` stops at the first shadow boundary). A consumer cannot fix this from outside — nothing is exported across those roots — so a new field composition owns the rule from day one. In React the same fix needs a compound selector (`.ui-popover.ui-date-field`) or `width: 100%`, or stylesheet order decides which single-class rule wins.
+4. **The `select-*` token family is shared.** `--color-select-option-*`, `--color-select-dropdown-*`, `--select-option-group-*` and friends back _every_ listbox surface, including the Combobox — the prefix is historical, not a scope. Do not rename it to `listbox-*` without a full audit; it is published API.
 
 ### Icons inside a field: chrome vs. action
 

@@ -132,7 +132,7 @@ export class UiFileInputField extends LitElement {
   @property({ attribute: false }) files: File[] = [];
 
   /** Form field name used on submission. */
-  @property({ type: String }) name?: string;
+  @property({ type: String, reflect: true }) name?: string;
 
   /** Disables the whole field. */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -187,7 +187,15 @@ export class UiFileInputField extends LitElement {
   }
 
   protected override updated(changed: PropertyValues<this>): void {
-    if (changed.has('files') || changed.has('disabled') || changed.has('state')) {
+    if (
+      changed.has('files') ||
+      changed.has('disabled') ||
+      changed.has('state') ||
+      // File entries carry their name inside the FormData rather than reading the
+      // host attribute at submission, so a later `name` change has to re-sync —
+      // and a field named after its files were picked starts out as `null`.
+      changed.has('name')
+    ) {
       this._syncFormValue();
     }
     if (changed.has('files')) this._revokeStalePreviews();
@@ -195,7 +203,12 @@ export class UiFileInputField extends LitElement {
   }
 
   formDisabledCallback(disabled: boolean) {
-    this._formDisabled = disabled;
+    // Fires for our own reflected `disabled` attribute as well as for an ancestor
+    // <fieldset disabled>. The first case is redundant — `disabled` is already a
+    // reactive property — and it arrives mid-update, after render() has read its
+    // values, so the write is dropped and leaves the control stale. Track only the
+    // ancestor case; `_isDisabled` already ORs in `disabled` itself.
+    this._formDisabled = disabled && !this.disabled;
     this._syncFormValue();
   }
 

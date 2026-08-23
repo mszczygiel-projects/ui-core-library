@@ -1,10 +1,11 @@
 import { css } from 'lit';
 
 export const dateFieldStyles = css`
-  /* Stretch the nested picker/popover chain so the panel anchors to the
-     full-width field wrapper. */
-  ui-date-picker,
-  ui-date-picker::part(host) {
+  /* Stretch the nested picker/popover chain so the field — and the panel
+     anchored to it — spans the host. The picker passes this down to its own
+     popover (date-picker.styles.ts); ::part() cannot cross that second shadow
+     boundary. */
+  ui-date-picker {
     display: block;
   }
 

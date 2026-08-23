@@ -82,7 +82,7 @@ export class UiTextareaField extends LitElement {
   @property({ type: String, reflect: true }) resize: TextareaFieldResize = 'vertical';
 
   /** Form field name used on submission. */
-  @property({ type: String }) name?: string;
+  @property({ type: String, reflect: true }) name?: string;
 
   /** Disables the textarea. */
   @property({ type: Boolean, reflect: true }) disabled = false;
@@ -135,7 +135,12 @@ export class UiTextareaField extends LitElement {
   }
 
   formDisabledCallback(disabled: boolean) {
-    this._formDisabled = disabled;
+    // Fires for our own reflected `disabled` attribute as well as for an ancestor
+    // <fieldset disabled>. The first case is redundant — `disabled` is already a
+    // reactive property — and it arrives mid-update, after render() has read its
+    // values, so the write is dropped and leaves the control stale. Track only the
+    // ancestor case; `_isDisabled` already ORs in `disabled` itself.
+    this._formDisabled = disabled && !this.disabled;
     this._syncFormValue();
   }
 
