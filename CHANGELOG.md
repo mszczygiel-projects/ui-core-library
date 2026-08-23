@@ -12,6 +12,81 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.16.0] — 2026-08-23
+
+A month/year picker behind the Calendar heading, plus a round of Web
+Components form-field fixes: `name` now reflects to an attribute so form
+submission actually includes it, re-enabling a field no longer leaves its
+native control stuck disabled, and `DateField`/`DatePicker` no longer collapse
+to the input's intrinsic width.
+
+### Added
+
+- **A month/year picker behind the `Calendar` / `<ui-calendar>` heading.**
+  Clicking the month/year label zooms out from the day grid to a 12-month
+  grid, then to a 24-year page, so a distant date — October 1987 from July
+  2026, say — takes a few clicks instead of hundreds of chevron presses.
+  Picking a year returns to its months, picking a month returns to its days;
+  `Escape` steps back one level at a time. The same two header chevrons carry
+  through every level and only change their stride (month → year → year
+  page); year pages are aligned to fixed 24-year blocks so paging back and
+  forth always lands on the same boundaries. A month or year is disabled only
+  when `minDate`/`maxDate` rule it out entirely — a `disabledDates` predicate
+  is deliberately left to the day grid, since one blocked day must not hide
+  its whole month.
+
+  ```tsx
+  <Calendar startDate="1987-10-12" />
+  ```
+
+  ```html
+  <ui-calendar start-date="1987-10-12"></ui-calendar>
+  ```
+
+- **Six new labels under `labels.calendar`** in `UiCoreLabels`: `previousYear`
+  / `nextYear` (month-grid chevrons), `previousYears` / `nextYears`
+  (year-grid chevrons), and the dynamic `chooseMonth(monthAndYear)` /
+  `chooseYear(year)` naming the heading button — both receive the visible
+  heading text, so the accessible name always contains what is on screen.
+  Overridable globally through `configureUiCore` or per instance via the
+  matching `Calendar` props / `ui-calendar` attributes (`prevYearLabel` /
+  `prev-year-label`, and so on); `chooseMonthLabel` / `chooseYearLabel` are
+  property-only, like every other function-shaped label. `DatePicker` /
+  `ui-date-picker` do not forward these six — override them globally, or per
+  instance on a standalone `Calendar`.
+
+### Fixed
+
+- **`name` on every form-associated Web Component was never reflected to an
+  HTML attribute** (`CheckboxField`, `Combobox`, `DateField`,
+  `FileInputField`, `NumberField`, `PasswordField`, `RadioField`,
+  `SearchField`, `SelectField`, `SwitchField`, `TextField`, `TextareaField`).
+  `ElementInternals.setFormValue(value)` takes the form-data entry's name from
+  the host's `name` **content attribute**, not the JS property, so a `name`
+  set only as a property — the common case under a framework binding —
+  submitted with no name at all. The property is now `reflect: true`.
+  `Combobox` (`multiple` mode) and `FileInputField` build their `FormData`
+  entries directly and bake the name in at sync time, so they additionally
+  now re-sync on a `name` change made after the first render, which they
+  previously missed.
+- **`formDisabledCallback` could drop its own write mid-update.** The callback
+  fires both for an ancestor `<fieldset disabled>` and for the component's own
+  reflected `disabled` attribute — the second case is redundant and arrives
+  after `render()` has already read the old value, so the assignment landed
+  too late and the control stayed stale. Most visibly: toggling `disabled`
+  back off could leave the native control disabled. All twelve
+  form-associated components above now track only the ancestor case
+  (`disabled && !this.disabled`); `_isDisabled` already ORs in the property
+  directly.
+- **`DateField` / `DatePicker` collapsed to the input's intrinsic width
+  instead of filling the field.** `ui-popover` / `Popover` is `inline-block`
+  by default — correct when it wraps a trigger button, wrong once `DateField`
+  wraps a full-width input — and nothing outside the picker's shadow root
+  could reach in to override it. `ui-date-picker` and its React counterpart
+  now push `display: block` down through the popover chain
+  (`date-picker.styles.ts` in Lit; a compound `.ui-popover.ui-date-field`
+  selector in React, since stylesheet order alone cannot be trusted to win).
+
 ## [0.15.1] — 2026-08-12
 
 ### Fixed
