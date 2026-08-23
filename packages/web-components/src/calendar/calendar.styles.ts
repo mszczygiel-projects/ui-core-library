@@ -29,6 +29,33 @@ export const calendarStyles = css`
     text-transform: capitalize;
   }
 
+  .zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-1);
+    border: none;
+    padding-block: var(--spacing-1);
+    padding-inline: var(--spacing-2);
+    background-color: var(--color-calendar-day-background-default);
+    color: var(--color-calendar-header-text);
+    border-radius: var(--calendar-day-radius);
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  .zoom:hover {
+    background-color: var(--color-calendar-day-background-hover);
+  }
+
+  .zoom-icon {
+    display: inline-flex;
+  }
+
+  .zoom-icon svg {
+    inline-size: var(--size-4);
+    block-size: var(--size-4);
+  }
+
   .nav {
     display: inline-flex;
     align-items: center;
@@ -157,6 +184,78 @@ export const calendarStyles = css`
   }
 
   .day--disabled:hover {
+    background-color: var(--color-calendar-day-background-default);
+  }
+  /* ---- Month / year picker ---- */
+
+  /* Sized off the day grid so zooming out never resizes the panel around it.
+     The six inter-cell gaps are left out of the sum on purpose: --calendar-day-gap
+     resolves to a bare zero, which is a length in a declaration but a *number*
+     inside calc() — including it would invalidate the whole expression. */
+  .picker {
+    display: flex;
+    flex-direction: column;
+    gap: var(--calendar-day-gap);
+    inline-size: calc(var(--calendar-day-size) * 7);
+    min-block-size: calc(var(--calendar-day-size) * 6);
+  }
+
+  .picker-row {
+    display: flex;
+    flex: 1;
+    gap: var(--calendar-day-gap);
+  }
+
+  /* Rows share the panel height evenly; the button keeps the day-cell height so
+     a month pill never stretches into a lozenge. */
+  .picker-cell {
+    display: flex;
+    flex: 1;
+    align-items: center;
+  }
+
+  .picker-item {
+    inline-size: 100%;
+    block-size: var(--calendar-day-size);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    padding: 0;
+    background-color: var(--color-calendar-day-background-default);
+    color: var(--color-calendar-day-text-default);
+    border-radius: var(--calendar-day-radius);
+    font-family: inherit;
+    font-size: var(--calendar-day-font-size);
+    font-weight: var(--calendar-day-font-weight);
+    line-height: var(--calendar-day-line-height);
+    text-transform: capitalize;
+    cursor: pointer;
+  }
+
+  .picker-item:hover {
+    background-color: var(--color-calendar-day-background-hover);
+  }
+
+  .picker-item--current {
+    border: var(--calendar-today-border-width) solid var(--color-calendar-day-border-today);
+  }
+
+  .picker-item--selected {
+    background-color: var(--color-calendar-day-background-selected);
+    color: var(--color-calendar-day-text-selected);
+  }
+
+  .picker-item--selected:hover {
+    background-color: var(--color-calendar-day-background-selected);
+  }
+
+  .picker-item--disabled {
+    color: var(--color-calendar-day-text-disabled);
+    cursor: not-allowed;
+  }
+
+  .picker-item--disabled:hover {
     background-color: var(--color-calendar-day-background-default);
   }
 `;

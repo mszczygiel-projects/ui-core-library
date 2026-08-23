@@ -7,6 +7,24 @@ afterEach(() => cleanup());
 const day = (container: HTMLElement, iso: string) =>
   container.querySelector<HTMLButtonElement>(`button[data-iso="${iso}"]`);
 
+const zoom = (container: HTMLElement) =>
+  container.querySelector<HTMLButtonElement>('.ui-calendar__zoom')!;
+
+const heading = (container: HTMLElement) =>
+  container.querySelector('.ui-calendar__month-label')!.textContent!.trim();
+
+/** Month/year picker cells, in grid order. */
+const pickerItems = (container: HTMLElement) =>
+  Array.from(container.querySelectorAll<HTMLButtonElement>('.ui-calendar__picker-item'));
+
+const pickerItem = (container: HTMLElement, text: string) =>
+  pickerItems(container).find((b) => b.textContent!.trim() === text);
+
+const focusedItem = (container: HTMLElement) =>
+  pickerItems(container)
+    .find((b) => b.getAttribute('tabindex') === '0')!
+    .textContent!.trim();
+
 describe('Calendar', () => {
   it('renders a full July 2026 grid with adjacent-month padding', () => {
     const { container } = render(<Calendar today="2026-07-19" locale="pl-PL" />);
@@ -168,5 +186,164 @@ describe('Calendar', () => {
     expect(container.querySelector('[role="grid"]')!.getAttribute('aria-describedby')).toBe(
       'hint-1',
     );
+  });
+  describe('month / year picker', () => {
+    it('the heading opens the month grid, then the year grid', () => {
+      const { container } = render(<Calendar today="2026-07-19" locale="en-US" />);
+      expect(heading(container)).toContain('July');
+
+      fireEvent.click(zoom(container));
+      expect(pickerItems(container)).toHaveLength(12);
+      expect(heading(container)).toBe('2026');
+
+      fireEvent.click(zoom(container));
+      expect(pickerItems(container)).toHaveLength(24);
+      // Pages are aligned to fixed 24-year blocks: 2016-2039 holds 2026.
+      expect(pickerItems(container)[0].textContent).toBe('2016');
+      expect(heading(container)).toContain('2016');
+      expect(heading(container)).toContain('2039');
+      // Top level — the heading is a plain label again.
+      expect(container.querySelector('.ui-calendar__zoom')).toBeNull();
+    });
+
+    it('picking a year then a month lands on that month of the day grid', () => {
+      const onMonthChange = vi.fn();
+      const { container, getByLabelText } = render(
+        <Calendar today="2026-07-19" locale="en-US" onMonthChange={onMonthChange} />,
+      );
+      fireEvent.click(zoom(container));
+      fireEvent.click(zoom(container));
+
+      // Two pages back reaches 1968-1991.
+      fireEvent.click(getByLabelText('Previous years'));
+      fireEvent.click(getByLabelText('Previous years'));
+      fireEvent.click(pickerItem(container, '1987')!);
+      expect(heading(container)).toBe('1987');
+      expect(onMonthChange).toHaveBeenCalledWith({ year: 1987, month: 7 });
+
+      fireEvent.click(pickerItem(container, 'Oct')!);
+      expect(onMonthChange).toHaveBeenCalledWith({ year: 1987, month: 10 });
+      expect(day(container, '1987-10-01')).not.toBeNull();
+      expect(heading(container)).toContain('October');
+      expect(heading(container)).toContain('1987');
+    });
+
+    it('keeps the roving day focus inside the month picked', () => {
+      const { container } = render(<Calendar today="2026-07-31" locale="en-US" />);
+      fireEvent.click(zoom(container));
+      fireEvent.click(pickerItem(container, 'Feb')!);
+      // Feb has no 31st — the focus clamps to the last day of the month.
+      expect(day(container, '2026-02-28')!.getAttribute('tabindex')).toBe('0');
+    });
+
+    it('marks the selected month and year, and disables what min/max exclude', () => {
+      const { container } = render(
+        <Calendar
+          today="2026-07-19"
+          locale="en-US"
+          startDate="2026-07-08"
+          minDate="2026-03-01"
+          maxDate="2026-09-30"
+        />,
+      );
+      fireEvent.click(zoom(container));
+      expect(pickerItem(container, 'Jul')!.className).toContain(
+        'ui-calendar__picker-item--selected',
+      );
+      expect(pickerItem(container, 'Feb')!.className).toContain(
+        'ui-calendar__picker-item--disabled',
+      );
+      expect(pickerItem(container, 'Oct')!.className).toContain(
+        'ui-calendar__picker-item--disabled',
+      );
+
+      fireEvent.click(pickerItem(container, 'Feb')!);
+      // Still on the month grid — a disabled month is not a selection.
+      expect(pickerItems(container)).toHaveLength(12);
+
+      fireEvent.click(zoom(container));
+      expect(pickerItem(container, '2026')!.className).toContain(
+        'ui-calendar__picker-item--selected',
+      );
+      expect(pickerItem(container, '2025')!.className).toContain(
+        'ui-calendar__picker-item--disabled',
+      );
+    });
+
+    it('arrow keys rove the month grid without leaving the year', () => {
+      const { container } = render(<Calendar today="2026-07-19" locale="en-US" />);
+      fireEvent.click(zoom(container));
+      const grid = container.querySelector('.ui-calendar__picker')!;
+      expect(focusedItem(container)).toBe('Jul');
+
+      fireEvent.keyDown(grid, { key: 'ArrowDown' });
+      expect(focusedItem(container)).toBe('Oct');
+
+      fireEvent.keyDown(grid, { key: 'End' });
+      expect(focusedItem(container)).toBe('Dec');
+
+      // December + 1 would be January of the next year — the roving focus stays put.
+      fireEvent.keyDown(grid, { key: 'ArrowRight' });
+      expect(focusedItem(container)).toBe('Dec');
+    });
+
+    it('arrow keys past a year-grid edge turn the page', () => {
+      const { container } = render(<Calendar today="2026-07-19" locale="en-US" />);
+      fireEvent.click(zoom(container));
+      fireEvent.click(zoom(container));
+
+      const grid = container.querySelector('.ui-calendar__picker')!;
+      fireEvent.keyDown(grid, { key: 'Home' });
+      fireEvent.keyDown(grid, { key: 'ArrowLeft' });
+      expect(pickerItems(container)[0].textContent).toBe('1992');
+      expect(focusedItem(container)).toBe('2015');
+    });
+
+    it('the header chevrons step by year, then by page', () => {
+      const onMonthChange = vi.fn();
+      const { container, getByLabelText } = render(
+        <Calendar today="2026-07-19" locale="en-US" onMonthChange={onMonthChange} />,
+      );
+      fireEvent.click(zoom(container));
+      fireEvent.click(getByLabelText('Next year'));
+      expect(onMonthChange).toHaveBeenCalledWith({ year: 2027, month: 7 });
+      expect(heading(container)).toBe('2027');
+
+      fireEvent.click(zoom(container));
+      fireEvent.click(getByLabelText('Next years'));
+      expect(pickerItems(container)[0].textContent).toBe('2040');
+    });
+
+    it('Escape steps one level back down', () => {
+      const { container } = render(<Calendar today="2026-07-19" locale="en-US" />);
+      fireEvent.click(zoom(container));
+      fireEvent.click(zoom(container));
+
+      const root = container.querySelector('.ui-calendar')!;
+      fireEvent.keyDown(root, { key: 'Escape' });
+      expect(pickerItems(container)).toHaveLength(12);
+
+      fireEvent.keyDown(root, { key: 'Escape' });
+      expect(pickerItems(container)).toHaveLength(0);
+      expect(day(container, '2026-07-19')).not.toBeNull();
+    });
+
+    it('the picker grids expose the same ARIA pattern as the day grid', () => {
+      const { container } = render(
+        <Calendar today="2026-07-19" locale="en-US" startDate="2026-07-08" />,
+      );
+      expect(zoom(container).getAttribute('aria-label')).toBe('July 2026, choose month and year');
+
+      fireEvent.click(zoom(container));
+      const grid = container.querySelector('.ui-calendar__picker')!;
+      expect(grid.getAttribute('role')).toBe('grid');
+      expect(grid.getAttribute('aria-labelledby')).toBe(
+        container.querySelector('.ui-calendar__month-label')!.id,
+      );
+      expect(grid.querySelectorAll('[role="row"]')).toHaveLength(4);
+      expect(pickerItem(container, 'Jul')!.getAttribute('aria-label')).toBe('July 2026');
+      expect(pickerItem(container, 'Jul')!.getAttribute('aria-current')).toBe('date');
+      expect(zoom(container).getAttribute('aria-label')).toBe('2026, choose year');
+    });
   });
 });

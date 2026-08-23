@@ -27,18 +27,23 @@ Opening seeds the pending range from the committed values.
 
 ## Props
 
-| Prop                                                                            | Type                          | Default               |
-| ------------------------------------------------------------------------------- | ----------------------------- | --------------------- |
-| `selectionMode`                                                                 | `'single' \| 'range'`         | `'single'`            |
-| `open`                                                                          | boolean (controlled)          | `false`               |
-| `placement`                                                                     | popover placement             | `'bottom-start'`      |
-| `startDate` / `endDate`                                                         | ISO `YYYY-MM-DD`              | —                     |
-| `minDate` / `maxDate` / `disabledDates` / `firstDayOfWeek` / `locale` / `today` | forwarded to `Calendar`       | —                     |
-| `applyLabel` / `clearLabel`                                                     | string                        | `'Apply'` / `'Clear'` |
-| `prevMonthLabel` / `nextMonthLabel`                                             | string                        | English defaults      |
-| `anchor`                                                                        | `ReactNode`                   | —                     |
-| `onDateChange` / `onRangeChange` / `onOpenChange`                               | callbacks                     | —                     |
-| `className` / `style`                                                           | forwarded to the Popover root | —                     |
+| Prop                                                                            | Type                    | Default               |
+| ------------------------------------------------------------------------------- | ----------------------- | --------------------- |
+| `selectionMode`                                                                 | `'single' \| 'range'`   | `'single'`            |
+| `open`                                                                          | boolean (controlled)    | `false`               |
+| `placement`                                                                     | popover placement       | `'bottom-start'`      |
+| `startDate` / `endDate`                                                         | ISO `YYYY-MM-DD`        | —                     |
+| `minDate` / `maxDate` / `disabledDates` / `firstDayOfWeek` / `locale` / `today` | forwarded to `Calendar` | —                     |
+| `applyLabel` / `clearLabel`                                                     | string                  | `'Apply'` / `'Clear'` |
+| `prevMonthLabel` / `nextMonthLabel`                                             | string                  | English defaults      |
+
+The calendar heading opens a month grid and then a 24-year page (see the
+`Calendar` README). Those six extra labels have no picker-level prop — override
+them globally through `configureUiCore({ labels: { calendar: … } })`, or per
+instance on a standalone `Calendar`.
+| `anchor` | `ReactNode` | — |
+| `onDateChange` / `onRangeChange` / `onOpenChange` | callbacks | — |
+| `className` / `style` | forwarded to the Popover root | — |
 
 ## Tokens
 

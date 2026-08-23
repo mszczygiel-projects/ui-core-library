@@ -44,6 +44,16 @@ export const MinMaxAndDisabled: Story = {
   },
 };
 
+/**
+ * Reaching a distant date: the heading zooms out to a month grid, then to a
+ * 24-year page — October 1987 is four clicks away instead of 470 chevrons.
+ */
+export const MonthAndYearPicker: Story = {
+  args: {
+    startDate: '1987-10-12',
+  },
+};
+
 export const Locales: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>

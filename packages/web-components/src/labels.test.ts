@@ -80,6 +80,20 @@ describe('i18n labels', () => {
       const current = el.shadowRoot?.querySelector('[aria-current="page"]');
       expect(current?.getAttribute('aria-label')).to.equal('Karta 2');
     });
+
+    it('carries the visible heading into an overridden calendar label', async () => {
+      configureUiCore({
+        labels: { calendar: { chooseMonth: (m) => `${m} — wybierz miesiąc` } },
+      });
+      const el = await fixture<UiCalendar>(
+        html`<ui-calendar start-date="2026-07-15" locale="en-US"></ui-calendar>`,
+      );
+      expect(ariaLabelOf(el, '.zoom')).to.equal('July 2026 — wybierz miesiąc');
+
+      el.chooseMonthLabel = (m) => `${m} (miesiąc)`;
+      await el.updateComplete;
+      expect(ariaLabelOf(el, '.zoom')).to.equal('July 2026 (miesiąc)');
+    });
   });
 });
 

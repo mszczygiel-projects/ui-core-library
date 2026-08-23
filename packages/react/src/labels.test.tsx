@@ -78,6 +78,28 @@ describe('i18n labels', () => {
       const current = container.querySelector('[aria-current="page"]');
       expect(current?.getAttribute('aria-label')).toBe('Karta 2');
     });
+
+    it('carries the visible heading into an overridden calendar label', () => {
+      configureUiCore({
+        labels: { calendar: { chooseMonth: (m) => `${m} — wybierz miesiąc` } },
+      });
+      const globalOnly = render(<Calendar startDate="2026-07-15" locale="en-US" />);
+      expect(
+        globalOnly.container.querySelector('.ui-calendar__zoom')!.getAttribute('aria-label'),
+      ).toBe('July 2026 — wybierz miesiąc');
+      cleanup();
+
+      const { container } = render(
+        <Calendar
+          startDate="2026-07-15"
+          locale="en-US"
+          chooseMonthLabel={(m) => `${m} (miesiąc)`}
+        />,
+      );
+      expect(container.querySelector('.ui-calendar__zoom')!.getAttribute('aria-label')).toBe(
+        'July 2026 (miesiąc)',
+      );
+    });
   });
 });
 

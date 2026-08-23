@@ -37,6 +37,11 @@ Opening seeds the pending range from the committed values.
 | `applyLabel` / `clearLabel`                                                     | `apply-label` / `clear-label`           | string                     | `'Apply'` / `'Clear'` |
 | `prevMonthLabel` / `nextMonthLabel`                                             | `prev-month-label` / `next-month-label` | string                     | English defaults      |
 
+The calendar heading opens a month grid and then a 24-year page (see the
+`ui-calendar` README). Those six extra labels have no picker-level attribute —
+override them globally through `configureUiCore({ labels: { calendar: … } })`,
+or per instance on a standalone `ui-calendar`.
+
 ## Slots
 
 - `trigger` — anchor element (DateField's input in the final composition).

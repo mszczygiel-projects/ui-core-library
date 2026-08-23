@@ -136,3 +136,49 @@ export function buildWeeks(year: number, month: number, firstDay: number): Calen
   } while (cur.getMonth() === month - 1);
   return weeks;
 }
+
+/* ---- Month / year picker helpers ---- */
+
+/** Years on one page of the year grid — 4 columns × 6 rows. */
+export const YEARS_PER_PAGE = 24;
+
+/**
+ * First year of the page holding `year`. Pages are aligned to fixed
+ * `YEARS_PER_PAGE` blocks rather than centred on the current year, so paging
+ * back and forth always lands on the same boundaries.
+ */
+export function yearPageStart(year: number): number {
+  return Math.floor(year / YEARS_PER_PAGE) * YEARS_PER_PAGE;
+}
+
+/** `YYYY-MM` key — comparable with the first seven characters of an ISO date. */
+export function monthKey(year: number, month: number): string {
+  return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}`;
+}
+
+/** Abbreviated month names for the month grid, index 0 = January. */
+export function monthShortLabels(locale: string): string[] {
+  const fmt = new Intl.DateTimeFormat(locale, { month: 'short' });
+  // 2024 is arbitrary — only the month field is formatted.
+  return Array.from({ length: 12 }, (_, i) => fmt.format(new Date(2024, i, 1)));
+}
+
+/** A single year, formatted for the locale (calendar systems shift the numeral). */
+export function yearLabel(locale: string, year: number): string {
+  return new Intl.DateTimeFormat(locale, { year: 'numeric' }).format(new Date(year, 0, 1));
+}
+
+/** Heading of a year page ("1980 – 2003"), joined by `Intl` rather than by hand. */
+export function yearRangeLabel(locale: string, from: number, to: number): string {
+  return new Intl.DateTimeFormat(locale, { year: 'numeric' }).formatRange(
+    new Date(from, 0, 1),
+    new Date(to, 0, 1),
+  );
+}
+
+/** The same day-of-month in another month, clamped to that month's length. */
+export function withYearMonth(iso: string, year: number, month: number): string {
+  const d = parseISODate(iso);
+  const day = Math.min(d ? d.getDate() : 1, daysInMonth(year, month));
+  return `${monthKey(year, month)}-${String(day).padStart(2, '0')}`;
+}

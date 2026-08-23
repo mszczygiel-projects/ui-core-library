@@ -87,6 +87,15 @@ export const MinMaxAndDisabled: Story = {
   },
 };
 
+/**
+ * Reaching a distant date: the heading zooms out to a month grid, then to a
+ * 24-year page — October 1987 is four clicks away instead of 470 chevrons.
+ */
+export const MonthAndYearPicker: Story = {
+  render: ({ locale }: CalendarArgs) =>
+    calendar({ startDate: '1987-10-12', locale, today: '2026-07-19' }),
+};
+
 export const Locales: Story = {
   render: () =>
     createElement(

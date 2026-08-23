@@ -92,10 +92,26 @@ export interface UiCoreLabels {
     close: string;
   };
   calendar: {
-    /** Accessible name of the previous-month button. */
+    /** Accessible name of the previous-month button (day grid). */
     previousMonth: string;
-    /** Accessible name of the next-month button. */
+    /** Accessible name of the next-month button (day grid). */
     nextMonth: string;
+    /** Accessible name of the previous-year button (month grid). */
+    previousYear: string;
+    /** Accessible name of the next-year button (month grid). */
+    nextYear: string;
+    /** Accessible name of the previous year-page button (year grid). */
+    previousYears: string;
+    /** Accessible name of the next year-page button (year grid). */
+    nextYears: string;
+    /**
+     * Accessible name of the header button that opens the month grid. Receives
+     * the visible heading ("October 1987") so the whole name stays translatable
+     * and still contains the visible text.
+     */
+    chooseMonth: (monthAndYear: string) => string;
+    /** Accessible name of the header button that opens the year grid. Receives the visible year. */
+    chooseYear: (year: string) => string;
   };
   datePicker: {
     /** Label of the Apply button (range mode). */
@@ -181,6 +197,12 @@ export const defaultLabels: UiCoreLabels = {
   calendar: {
     previousMonth: 'Previous month',
     nextMonth: 'Next month',
+    previousYear: 'Previous year',
+    nextYear: 'Next year',
+    previousYears: 'Previous years',
+    nextYears: 'Next years',
+    chooseMonth: (monthAndYear) => `${monthAndYear}, choose month and year`,
+    chooseYear: (year) => `${year}, choose year`,
   },
   datePicker: {
     apply: 'Apply',

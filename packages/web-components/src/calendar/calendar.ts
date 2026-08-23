@@ -14,17 +14,31 @@ import {
   dayLabel,
   daysInMonth,
   localeFirstDayOfWeek,
+  monthKey,
+  monthShortLabels,
   resolveLocale,
   monthLabel,
   parseISODate,
   todayISO,
   toISODate,
   weekdayLabels,
+  withYearMonth,
+  yearLabel,
+  yearPageStart,
+  yearRangeLabel,
+  YEARS_PER_PAGE,
 } from './date-utils.js';
 import type { CalendarDay } from './date-utils.js';
 import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations';
 
 export type CalendarSelectionMode = 'single' | 'range';
+
+/** Which grid the calendar body shows — the day grid or one of the pickers above it. */
+type CalendarViewMode = 'days' | 'months' | 'years';
+
+/** Columns per row in the month and year grids. */
+const MONTH_COLUMNS = 3;
+const YEAR_COLUMNS = 4;
 
 export interface CalendarDateSelectDetail {
   /** The clicked date. */
@@ -44,10 +58,15 @@ export interface CalendarMonthChangeDetail {
  * Pure date-grid component: renders one month with weekday header and
  * navigation, supports single-date and range selection.
  *
+ * The heading is a button that zooms out — day grid → month grid → year grid —
+ * so a distant date takes a few clicks instead of one arrow press per month.
+ * Picking a year returns to the months of that year, picking a month returns to
+ * its days; Escape steps back one level.
+ *
  * Fully controlled: clicking a day only dispatches `date-select` with the
  * proposed `{startDate, endDate}` — the consumer owns selection state and
  * passes it back via properties. The component itself tracks only the
- * displayed month and the roving keyboard focus.
+ * displayed month, the zoom level and the roving keyboard focus.
  *
  * Locale handling uses the native `Intl` API (`weekInfo` for first day of
  * week) — no i18n library; the host app decides the BCP 47 tag.
@@ -101,15 +120,45 @@ export class UiCalendar extends LitElement {
   /** Override of "today" (ISO) — deterministic rendering for tests/SSR. */
   @property({ type: String }) today?: string;
 
-  /** Accessible name of the previous-month button. */
+  /** Accessible name of the previous-month button (day grid). */
   @property({ type: String, attribute: 'prev-month-label' }) prevMonthLabel?: string;
 
-  /** Accessible name of the next-month button. */
+  /** Accessible name of the next-month button (day grid). */
   @property({ type: String, attribute: 'next-month-label' }) nextMonthLabel?: string;
+
+  /** Accessible name of the previous-year button (month grid). */
+  @property({ type: String, attribute: 'prev-year-label' }) prevYearLabel?: string;
+
+  /** Accessible name of the next-year button (month grid). */
+  @property({ type: String, attribute: 'next-year-label' }) nextYearLabel?: string;
+
+  /** Accessible name of the previous year-page button (year grid). */
+  @property({ type: String, attribute: 'prev-years-label' }) prevYearsLabel?: string;
+
+  /** Accessible name of the next year-page button (year grid). */
+  @property({ type: String, attribute: 'next-years-label' }) nextYearsLabel?: string;
+
+  /**
+   * Accessible name of the heading button that opens the month grid; receives
+   * the visible heading text.
+   * @default `getUiCoreConfig().labels.calendar.chooseMonth`
+   */
+  @property({ attribute: false }) chooseMonthLabel?: (monthAndYear: string) => string;
+
+  /**
+   * Accessible name of the heading button that opens the year grid; receives
+   * the visible year.
+   * @default `getUiCoreConfig().labels.calendar.chooseYear`
+   */
+  @property({ attribute: false }) chooseYearLabel?: (year: string) => string;
 
   @state() private viewYear = 0;
   @state() private viewMonth = 0; // 1-12
+  @state() private viewMode: CalendarViewMode = 'days';
+  @state() private yearPage = 0; // first year shown by the year grid
   @state() private focusedISO = '';
+  @state() private focusedMonth = 0; // 1-12, roving focus of the month grid
+  @state() private focusedYear = 0; // roving focus of the year grid
   @state() private hoverISO: string | null = null;
 
   private get resolvedLocale(): string {
@@ -160,6 +209,23 @@ export class UiCalendar extends LitElement {
     return false;
   }
 
+  /**
+   * A month is out of reach only when *every* one of its days is — `min-date`
+   * and `max-date` alone; a `disabledDates` predicate is left to the day grid.
+   */
+  private isMonthDisabled(year: number, month: number): boolean {
+    const key = monthKey(year, month);
+    if (this.minDate && key < this.minDate.slice(0, 7)) return true;
+    if (this.maxDate && key > this.maxDate.slice(0, 7)) return true;
+    return false;
+  }
+
+  private isYearDisabled(year: number): boolean {
+    if (this.minDate && year < Number(this.minDate.slice(0, 4))) return true;
+    if (this.maxDate && year > Number(this.maxDate.slice(0, 4))) return true;
+    return false;
+  }
+
   /** Normalized [start, end] including the hover preview while picking the end. */
   private effectiveRange(): { start: string; end: string } | null {
     if (this.selectionMode !== 'range' || !this.startDate) return null;
@@ -191,26 +257,23 @@ export class UiCalendar extends LitElement {
     this.dispatch<CalendarDateSelectDetail>('date-select', this.proposeSelection(day.iso));
   }
 
+  /** The single place the displayed month moves — every path reports it once. */
+  private setView(year: number, month: number): void {
+    if (year === this.viewYear && month === this.viewMonth) return;
+    this.viewYear = year;
+    this.viewMonth = month;
+    this.dispatch<CalendarMonthChangeDetail>('month-change', { year, month });
+  }
+
   private showMonthOf(iso: string): void {
     const d = parseISODate(iso);
     if (!d) return;
-    const year = d.getFullYear();
-    const month = d.getMonth() + 1;
-    if (year !== this.viewYear || month !== this.viewMonth) {
-      this.viewYear = year;
-      this.viewMonth = month;
-      this.dispatch<CalendarMonthChangeDetail>('month-change', { year, month });
-    }
+    this.setView(d.getFullYear(), d.getMonth() + 1);
   }
 
   private navigateMonth(delta: number): void {
     const next = addMonths(this.viewYear, this.viewMonth, delta);
-    this.viewYear = next.year;
-    this.viewMonth = next.month;
-    this.dispatch<CalendarMonthChangeDetail>('month-change', {
-      year: next.year,
-      month: next.month,
-    });
+    this.setView(next.year, next.month);
   }
 
   private async moveFocus(iso: string | null): Promise<void> {
@@ -221,6 +284,86 @@ export class UiCalendar extends LitElement {
     const btn = this.shadowRoot?.querySelector<HTMLButtonElement>(`button[data-iso="${iso}"]`);
     btn?.focus();
   }
+
+  /* ---- Zoom levels ---- */
+
+  private openMonthGrid(): void {
+    this.viewMode = 'months';
+    this.focusedMonth = this.viewMonth;
+    void this.focusPickerCell();
+  }
+
+  private openYearGrid(): void {
+    this.viewMode = 'years';
+    this.yearPage = yearPageStart(this.viewYear);
+    this.focusedYear = this.viewYear;
+    void this.focusPickerCell();
+  }
+
+  /** Back to the day grid, with the roving focus kept inside the shown month. */
+  private async showDayGrid(): Promise<void> {
+    this.viewMode = 'days';
+    this.focusedISO = withYearMonth(
+      this.focusedISO || this.todayIso,
+      this.viewYear,
+      this.viewMonth,
+    );
+    const iso = this.focusedISO;
+    await this.updateComplete;
+    this.shadowRoot?.querySelector<HTMLButtonElement>(`button[data-iso="${iso}"]`)?.focus();
+  }
+
+  private selectMonth(month: number): void {
+    if (this.isMonthDisabled(this.viewYear, month)) return;
+    this.setView(this.viewYear, month);
+    void this.showDayGrid();
+  }
+
+  private selectYear(year: number): void {
+    if (this.isYearDisabled(year)) return;
+    this.setView(year, this.viewMonth);
+    this.viewMode = 'months';
+    this.focusedMonth = this.viewMonth;
+    void this.focusPickerCell();
+  }
+
+  private async focusPickerCell(): Promise<void> {
+    await this.updateComplete;
+    this.shadowRoot?.querySelector<HTMLButtonElement>('.picker-item[tabindex="0"]')?.focus();
+  }
+
+  /**
+   * Escape steps one level back down. Inside `ui-date-picker` the popover has
+   * already seen the same key on its document capture listener and closes — the
+   * collapse then just makes sure the panel reopens on the day grid.
+   */
+  private handleRootKeydown(e: KeyboardEvent): void {
+    if (e.key !== 'Escape' || this.viewMode === 'days') return;
+    e.preventDefault();
+    if (this.viewMode === 'years') {
+      this.viewMode = 'months';
+      this.focusedMonth = this.viewMonth;
+      void this.focusPickerCell();
+      return;
+    }
+    void this.showDayGrid();
+  }
+
+  /**
+   * The month/year grids are a transient zoom, not a mode: once focus leaves the
+   * calendar for good (Tab away, or the picker popover closing), collapse back
+   * to the day grid. Deferred by a task because a level switch replaces the
+   * focused button before the new one is focused.
+   */
+  private handleRootFocusOut(): void {
+    if (this.viewMode === 'days') return;
+    setTimeout(() => {
+      if (this.viewMode === 'days' || this.shadowRoot?.activeElement) return;
+      this.viewMode = 'days';
+    });
+  }
+
+  /* ---- Keyboard ---- */
 
   private handleGridKeydown(e: KeyboardEvent): void {
     const from = this.focusedISO;
@@ -265,6 +408,86 @@ export class UiCalendar extends LitElement {
     e.preventDefault();
     void this.moveFocus(target);
   }
+
+  /** Roving focus inside the month grid; months never spill into another year. */
+  private handleMonthGridKeydown(e: KeyboardEvent): void {
+    const from = this.focusedMonth;
+    let target = from;
+    switch (e.key) {
+      case 'ArrowLeft':
+        target = from - 1;
+        break;
+      case 'ArrowRight':
+        target = from + 1;
+        break;
+      case 'ArrowUp':
+        target = from - MONTH_COLUMNS;
+        break;
+      case 'ArrowDown':
+        target = from + MONTH_COLUMNS;
+        break;
+      case 'Home':
+        target = 1;
+        break;
+      case 'End':
+        target = 12;
+        break;
+      case 'PageUp':
+      case 'PageDown':
+        e.preventDefault();
+        this.setView(this.viewYear + (e.key === 'PageUp' ? -1 : 1), this.viewMonth);
+        void this.focusPickerCell();
+        return;
+      default:
+        return;
+    }
+    e.preventDefault();
+    if (target < 1 || target > 12) return;
+    this.focusedMonth = target;
+    void this.focusPickerCell();
+  }
+
+  /** Roving focus inside the year grid; crossing an edge turns the page. */
+  private handleYearGridKeydown(e: KeyboardEvent): void {
+    const from = this.focusedYear;
+    let target = from;
+    switch (e.key) {
+      case 'ArrowLeft':
+        target = from - 1;
+        break;
+      case 'ArrowRight':
+        target = from + 1;
+        break;
+      case 'ArrowUp':
+        target = from - YEAR_COLUMNS;
+        break;
+      case 'ArrowDown':
+        target = from + YEAR_COLUMNS;
+        break;
+      case 'Home':
+        target = this.yearPage;
+        break;
+      case 'End':
+        target = this.yearPage + YEARS_PER_PAGE - 1;
+        break;
+      case 'PageUp':
+        target = from - YEARS_PER_PAGE;
+        break;
+      case 'PageDown':
+        target = from + YEARS_PER_PAGE;
+        break;
+      default:
+        return;
+    }
+    e.preventDefault();
+    this.focusedYear = target;
+    if (target < this.yearPage || target >= this.yearPage + YEARS_PER_PAGE) {
+      this.yearPage = yearPageStart(target);
+    }
+    void this.focusPickerCell();
+  }
+
+  /* ---- Rendering ---- */
 
   private renderDay(day: CalendarDay): TemplateResult {
     const range = this.effectiveRange();
@@ -318,52 +541,218 @@ export class UiCalendar extends LitElement {
     `;
   }
 
-  override render(): TemplateResult {
+  private renderDayGrid(): TemplateResult {
     const weeks = buildWeeks(this.viewYear, this.viewMonth, this.resolvedFirstDay);
     const labels = weekdayLabels(this.resolvedLocale, this.resolvedFirstDay);
     return html`
-      <div class="calendar">
-        <div class="header">
-          <button
-            type="button"
-            class="nav"
-            aria-label=${this.prevMonthLabel ?? getUiCoreConfig().labels.calendar.previousMonth}
-            @click=${() => this.navigateMonth(-1)}
-          >
-            ${unsafeSVG(svgMap['icon-chevron-left'])}
-          </button>
-          <span class="month-label" id="month-label"
-            >${monthLabel(this.resolvedLocale, this.viewYear, this.viewMonth)}</span
-          >
-          <button
-            type="button"
-            class="nav"
-            aria-label=${this.nextMonthLabel ?? getUiCoreConfig().labels.calendar.nextMonth}
-            @click=${() => this.navigateMonth(1)}
-          >
-            ${unsafeSVG(svgMap['icon-chevron-right'])}
-          </button>
+      <div
+        class="grid"
+        role="grid"
+        aria-labelledby="month-label"
+        @keydown=${this.handleGridKeydown}
+        @mouseleave=${() => {
+          this.hoverISO = null;
+        }}
+      >
+        <div class="week" role="row">
+          ${labels.map((l) => html`<span class="weekday" role="columnheader">${l}</span>`)}
         </div>
-        <div
-          class="grid"
-          role="grid"
-          aria-labelledby="month-label"
-          @keydown=${this.handleGridKeydown}
-          @mouseleave=${() => {
-            this.hoverISO = null;
-          }}
-        >
-          <div class="week" role="row">
-            ${labels.map((l) => html`<span class="weekday" role="columnheader">${l}</span>`)}
-          </div>
-          ${weeks.map(
-            (week) =>
-              html`<div class="week" role="row">${week.map((d) => this.renderDay(d))}</div>`,
-          )}
-        </div>
+        ${weeks.map(
+          (week) => html`<div class="week" role="row">${week.map((d) => this.renderDay(d))}</div>`,
+        )}
       </div>
     `;
   }
+
+  private renderPickerCell(
+    text: string,
+    ariaLabel: string,
+    { focused, selected, current, disabled, onSelect }: PickerCellState,
+  ): TemplateResult {
+    return html`
+      <div role="gridcell" class="picker-cell" aria-selected=${selected ? 'true' : 'false'}>
+        <button
+          type="button"
+          class=${classMap({
+            'picker-item': true,
+            'picker-item--selected': selected,
+            'picker-item--current': current && !selected,
+            'picker-item--disabled': disabled,
+          })}
+          tabindex=${focused ? '0' : '-1'}
+          aria-label=${ariaLabel}
+          aria-current=${current ? 'date' : nothing}
+          aria-disabled=${disabled ? 'true' : nothing}
+          @click=${onSelect}
+        >
+          ${text}
+        </button>
+      </div>
+    `;
+  }
+
+  private renderMonthGrid(): TemplateResult {
+    const locale = this.resolvedLocale;
+    const names = monthShortLabels(locale);
+    const todayDate = parseISODate(this.todayIso);
+    const selectedMonths = this.selectedMonthKeys();
+    const rows = Array.from({ length: 12 / MONTH_COLUMNS }, (_, r) => r * MONTH_COLUMNS);
+    return html`
+      <div
+        class="picker"
+        role="grid"
+        aria-labelledby="month-label"
+        @keydown=${this.handleMonthGridKeydown}
+      >
+        ${rows.map(
+          (offset) => html`
+            <div class="picker-row" role="row">
+              ${names.slice(offset, offset + MONTH_COLUMNS).map((name, i) => {
+                const month = offset + i + 1;
+                return this.renderPickerCell(name, monthLabel(locale, this.viewYear, month), {
+                  focused: month === this.focusedMonth,
+                  selected: selectedMonths.has(monthKey(this.viewYear, month)),
+                  current:
+                    !!todayDate &&
+                    todayDate.getFullYear() === this.viewYear &&
+                    todayDate.getMonth() + 1 === month,
+                  disabled: this.isMonthDisabled(this.viewYear, month),
+                  onSelect: () => this.selectMonth(month),
+                });
+              })}
+            </div>
+          `,
+        )}
+      </div>
+    `;
+  }
+
+  private renderYearGrid(): TemplateResult {
+    const locale = this.resolvedLocale;
+    const todayDate = parseISODate(this.todayIso);
+    const selectedYears = new Set(
+      [this.startDate, this.endDate].filter(Boolean).map((iso) => (iso as string).slice(0, 4)),
+    );
+    const rows = Array.from({ length: YEARS_PER_PAGE / YEAR_COLUMNS }, (_, r) => r * YEAR_COLUMNS);
+    return html`
+      <div
+        class="picker"
+        role="grid"
+        aria-labelledby="month-label"
+        @keydown=${this.handleYearGridKeydown}
+      >
+        ${rows.map(
+          (offset) => html`
+            <div class="picker-row" role="row">
+              ${Array.from({ length: YEAR_COLUMNS }, (_, i) => {
+                const year = this.yearPage + offset + i;
+                const text = yearLabel(locale, year);
+                return this.renderPickerCell(text, text, {
+                  focused: year === this.focusedYear,
+                  selected: selectedYears.has(String(year).padStart(4, '0')),
+                  current: !!todayDate && todayDate.getFullYear() === year,
+                  disabled: this.isYearDisabled(year),
+                  onSelect: () => this.selectYear(year),
+                });
+              })}
+            </div>
+          `,
+        )}
+      </div>
+    `;
+  }
+
+  /** `YYYY-MM` keys of the selected endpoints — both, in range mode. */
+  private selectedMonthKeys(): Set<string> {
+    return new Set(
+      [this.startDate, this.endDate].filter(Boolean).map((iso) => (iso as string).slice(0, 7)),
+    );
+  }
+
+  private renderHeader(): TemplateResult {
+    const labels = getUiCoreConfig().labels.calendar;
+    const locale = this.resolvedLocale;
+    const mode = this.viewMode;
+
+    const heading =
+      mode === 'days'
+        ? monthLabel(locale, this.viewYear, this.viewMonth)
+        : mode === 'months'
+          ? yearLabel(locale, this.viewYear)
+          : yearRangeLabel(locale, this.yearPage, this.yearPage + YEARS_PER_PAGE - 1);
+
+    // Each level keeps the same two chevrons and only changes their stride:
+    // a month, a year, then a whole year page.
+    const prevLabel =
+      mode === 'days'
+        ? (this.prevMonthLabel ?? labels.previousMonth)
+        : mode === 'months'
+          ? (this.prevYearLabel ?? labels.previousYear)
+          : (this.prevYearsLabel ?? labels.previousYears);
+    const nextLabel =
+      mode === 'days'
+        ? (this.nextMonthLabel ?? labels.nextMonth)
+        : mode === 'months'
+          ? (this.nextYearLabel ?? labels.nextYear)
+          : (this.nextYearsLabel ?? labels.nextYears);
+
+    const navigate = (direction: -1 | 1): void => {
+      if (mode === 'days') this.navigateMonth(direction);
+      else if (mode === 'months') this.setView(this.viewYear + direction, this.viewMonth);
+      else this.yearPage += direction * YEARS_PER_PAGE;
+    };
+
+    const zoomLabel =
+      mode === 'days'
+        ? (this.chooseMonthLabel ?? labels.chooseMonth)(heading)
+        : (this.chooseYearLabel ?? labels.chooseYear)(heading);
+
+    return html`
+      <div class="header">
+        <button type="button" class="nav" aria-label=${prevLabel} @click=${() => navigate(-1)}>
+          ${unsafeSVG(svgMap['icon-chevron-left'])}
+        </button>
+        ${mode === 'years'
+          ? // The year grid is the top level — nothing left to zoom out to.
+            html`<span class="month-label" id="month-label">${heading}</span>`
+          : html`
+              <button
+                type="button"
+                class="zoom"
+                aria-label=${zoomLabel}
+                @click=${mode === 'days' ? () => this.openMonthGrid() : () => this.openYearGrid()}
+              >
+                <span class="month-label" id="month-label">${heading}</span>
+                <span class="zoom-icon">${unsafeSVG(svgMap['icon-chevron-down'])}</span>
+              </button>
+            `}
+        <button type="button" class="nav" aria-label=${nextLabel} @click=${() => navigate(1)}>
+          ${unsafeSVG(svgMap['icon-chevron-right'])}
+        </button>
+      </div>
+    `;
+  }
+
+  override render(): TemplateResult {
+    return html`
+      <div class="calendar" @keydown=${this.handleRootKeydown} @focusout=${this.handleRootFocusOut}>
+        ${this.renderHeader()}
+        ${this.viewMode === 'days'
+          ? this.renderDayGrid()
+          : this.viewMode === 'months'
+            ? this.renderMonthGrid()
+            : this.renderYearGrid()}
+      </div>
+    `;
+  }
+}
+
+interface PickerCellState {
+  focused: boolean;
+  selected: boolean;
+  current: boolean;
+  disabled: boolean;
+  onSelect: () => void;
 }
 
 declare global {
