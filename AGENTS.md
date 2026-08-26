@@ -283,7 +283,17 @@ silent no-op, so it cannot be deleted by script. It aliases `hover`. Do not use 
 page for an outline variant. Those want opposite luminance, so the role carries different
 values per mirror — light contexts keep the saturated step, dark contexts take `hue/300`
 with `subtle` dropping to `hue/1000`. `border/strong` and `border/stronger` do the same,
-because the border ramp is the Switch track as well as the field outline.
+because the border ramp is the Switch track as well as the field outline, and so does
+`ring/default`.
+
+**The focus ring is the one where getting this wrong is a blocker, not a blemish.** It used
+to alias the base row in `on-subtle` and `on-inverse`, so it never flipped: the brand blue
+stayed on the dark inverse page at 2.23:1, and in the `Dark` theme — where the base row was
+white — the inverse page is white too, giving a white ring on white at 1.00:1. Its steps are
+picked against **both** `background/default` and `background/subtle`, because `ring/offset`
+draws a gap in whatever is underneath and the ring can end up adjacent to a card rather than
+the page. `brand/primary/800` light / `500` dark clears 3:1 in all eight cells (worst 3.88);
+`600` in the dark cells drops that to 3.22.
 
 **Which mirror is "dark" is not what its name suggests.** It comes from the resolved
 luminance of `background/default` in that cell: `on-inverse` is DARK under the Default theme

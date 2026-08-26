@@ -217,8 +217,8 @@
     "ring": {
       "default": {
         "$value": {
-          "Default": "{Themes.color.brand.primary.default}",
-          "Dark": "{Primitives Colors.white.1000}"
+          "Default": "{Primitives Colors.brand.primary.800}",
+          "Dark": "{Primitives Colors.brand.primary.500}"
         },
         "$type": "color"
       }
@@ -696,8 +696,8 @@
       "ring": {
         "default": {
           "$value": {
-            "Default": "{Themes.color.ring.default}",
-            "Dark": "{Themes.color.ring.default}"
+            "Default": "{Primitives Colors.brand.primary.800}",
+            "Dark": "{Primitives Colors.brand.primary.500}"
           },
           "$type": "color"
         }
@@ -1208,8 +1208,8 @@
       "ring": {
         "default": {
           "$value": {
-            "Default": "{Themes.color.ring.default}",
-            "Dark": "{Themes.color.ring.default}"
+            "Default": "{Primitives Colors.brand.primary.500}",
+            "Dark": "{Primitives Colors.brand.primary.800}"
           },
           "$type": "color"
         }
@@ -1720,8 +1720,8 @@
       "ring": {
         "default": {
           "$value": {
-            "Default": "{Themes.color.brand.secondary.default}",
-            "Dark": "{Themes.color.ring.default}"
+            "Default": "{Primitives Colors.brand.primary.500}",
+            "Dark": "{Primitives Colors.brand.primary.500}"
           },
           "$type": "color"
         }

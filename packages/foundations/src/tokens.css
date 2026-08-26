@@ -288,7 +288,7 @@
   --color-border-stronger: var(--color-gray-800);
   --color-border-strong: var(--color-gray-600);
   --color-border-default: var(--color-text-muted);
-  --color-ring-default: var(--color-brand-primary-default);
+  --color-ring-default: var(--color-brand-primary-800);
   --color-link-default: var(--color-action-primary-base-default);
   --color-link-hover: var(--color-action-primary-base-hover);
   --color-feedback-success-base: var(--color-green-950);
@@ -348,7 +348,7 @@
   --color-on-subtle-border-stronger: var(--color-gray-800);
   --color-on-subtle-border-strong: var(--color-gray-600);
   --color-on-subtle-border-default: var(--color-on-subtle-text-muted);
-  --color-on-subtle-ring-default: var(--color-ring-default);
+  --color-on-subtle-ring-default: var(--color-brand-primary-800);
   --color-on-subtle-link-default: var(--color-link-default);
   --color-on-subtle-link-hover: var(--color-link-hover);
   --color-on-subtle-feedback-success-base: var(--color-green-950);
@@ -412,7 +412,7 @@
   --color-on-inverse-border-stronger: var(--color-gray-300);
   --color-on-inverse-border-strong: var(--color-gray-500);
   --color-on-inverse-border-default: var(--color-on-inverse-text-muted);
-  --color-on-inverse-ring-default: var(--color-ring-default);
+  --color-on-inverse-ring-default: var(--color-brand-primary-500);
   --color-on-inverse-link-default: var(--color-brand-primary-100);
   --color-on-inverse-link-hover: var(--color-brand-primary-200);
   --color-on-inverse-feedback-success-base: var(--color-green-300);
@@ -476,7 +476,7 @@
   --color-on-brand-primary-border-stronger: var(--color-gray-300);
   --color-on-brand-primary-border-strong: var(--color-gray-500);
   --color-on-brand-primary-border-default: var(--color-on-brand-primary-text-secondary);
-  --color-on-brand-primary-ring-default: var(--color-brand-secondary-default);
+  --color-on-brand-primary-ring-default: var(--color-brand-primary-500);
   --color-on-brand-primary-link-default: var(--color-brand-primary-50);
   --color-on-brand-primary-link-hover: var(--color-white-1000);
   --color-on-brand-primary-feedback-success-base: var(--color-green-300);
@@ -559,7 +559,7 @@
   --color-border-stronger: var(--color-gray-300);
   --color-border-strong: var(--color-gray-500);
   --color-border-default: var(--color-text-muted);
-  --color-ring-default: var(--color-white-1000);
+  --color-ring-default: var(--color-brand-primary-500);
   --color-link-default: var(--color-action-primary-base-default);
   --color-link-hover: var(--color-action-primary-base-hover);
   --color-feedback-success-base: var(--color-green-300);
@@ -595,7 +595,7 @@
   --color-on-subtle-border-stronger: var(--color-gray-300);
   --color-on-subtle-border-strong: var(--color-gray-500);
   --color-on-subtle-border-default: var(--color-on-subtle-text-muted);
-  --color-on-subtle-ring-default: var(--color-ring-default);
+  --color-on-subtle-ring-default: var(--color-brand-primary-500);
   --color-on-subtle-link-default: var(--color-link-default);
   --color-on-subtle-link-hover: var(--color-link-hover);
   --color-on-subtle-feedback-success-base: var(--color-green-300);
@@ -637,7 +637,7 @@
   --color-on-inverse-border-stronger: var(--color-gray-800);
   --color-on-inverse-border-strong: var(--color-gray-600);
   --color-on-inverse-border-default: var(--color-on-inverse-text-muted);
-  --color-on-inverse-ring-default: var(--color-ring-default);
+  --color-on-inverse-ring-default: var(--color-brand-primary-800);
   --color-on-inverse-link-default: var(--color-brand-primary-800);
   --color-on-inverse-link-hover: var(--color-brand-primary-900);
   --color-on-inverse-feedback-success-base: var(--color-green-950);
@@ -669,7 +669,6 @@
   --color-on-brand-primary-background-inverse: var(--color-background-inverse);
   --color-on-brand-primary-text-muted: var(--color-text-muted);
   --color-on-brand-primary-text-placeholder: var(--color-text-placeholder);
-  --color-on-brand-primary-ring-default: var(--color-ring-default);
   --color-on-brand-primary-action-primary-on-base-default: var(--color-brand-primary-1000);
   --color-on-brand-primary-action-tertiary-base-default: var(--color-action-primary-base-default);
   --color-on-brand-primary-action-tertiary-base-hover: var(--color-action-primary-base-hover);
@@ -702,7 +701,7 @@
     --color-border-stronger: var(--color-gray-300);
     --color-border-strong: var(--color-gray-500);
     --color-border-default: var(--color-text-muted);
-    --color-ring-default: var(--color-white-1000);
+    --color-ring-default: var(--color-brand-primary-500);
     --color-link-default: var(--color-action-primary-base-default);
     --color-link-hover: var(--color-action-primary-base-hover);
     --color-feedback-success-base: var(--color-green-300);
@@ -738,7 +737,7 @@
     --color-on-subtle-border-stronger: var(--color-gray-300);
     --color-on-subtle-border-strong: var(--color-gray-500);
     --color-on-subtle-border-default: var(--color-on-subtle-text-muted);
-    --color-on-subtle-ring-default: var(--color-ring-default);
+    --color-on-subtle-ring-default: var(--color-brand-primary-500);
     --color-on-subtle-link-default: var(--color-link-default);
     --color-on-subtle-link-hover: var(--color-link-hover);
     --color-on-subtle-feedback-success-base: var(--color-green-300);
@@ -780,7 +779,7 @@
     --color-on-inverse-border-stronger: var(--color-gray-800);
     --color-on-inverse-border-strong: var(--color-gray-600);
     --color-on-inverse-border-default: var(--color-on-inverse-text-muted);
-    --color-on-inverse-ring-default: var(--color-ring-default);
+    --color-on-inverse-ring-default: var(--color-brand-primary-800);
     --color-on-inverse-link-default: var(--color-brand-primary-800);
     --color-on-inverse-link-hover: var(--color-brand-primary-900);
     --color-on-inverse-feedback-success-base: var(--color-green-950);
@@ -812,7 +811,6 @@
     --color-on-brand-primary-background-inverse: var(--color-background-inverse);
     --color-on-brand-primary-text-muted: var(--color-text-muted);
     --color-on-brand-primary-text-placeholder: var(--color-text-placeholder);
-    --color-on-brand-primary-ring-default: var(--color-ring-default);
     --color-on-brand-primary-action-primary-on-base-default: var(--color-brand-primary-1000);
     --color-on-brand-primary-action-tertiary-base-default: var(--color-action-primary-base-default);
     --color-on-brand-primary-action-tertiary-base-hover: var(--color-action-primary-base-hover);
