@@ -4,22 +4,22 @@
       "primary": {
         "default": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.500}",
-            "Dark": "{Primitives Colors.brand.primary.400}"
+            "Default": "{Primitives Colors.brand.primary.800}",
+            "Dark": "{Primitives Colors.brand.primary.800}"
           },
           "$type": "color"
         },
         "dark": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.600}",
-            "Dark": "{Primitives Colors.brand.primary.600}"
+            "Default": "{Primitives Colors.brand.primary.900}",
+            "Dark": "{Primitives Colors.brand.primary.900}"
           },
           "$type": "color"
         },
         "light": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.100}",
-            "Dark": "{Primitives Colors.brand.primary.100}"
+            "Default": "{Primitives Colors.brand.primary.400}",
+            "Dark": "{Primitives Colors.brand.primary.400}"
           },
           "$type": "color"
         }
@@ -27,22 +27,22 @@
       "secondary": {
         "default": {
           "$value": {
-            "Default": "{Primitives Colors.brand.secondary.400}",
-            "Dark": "{Primitives Colors.brand.secondary.400}"
+            "Default": "{Primitives Colors.brand.secondary.800}",
+            "Dark": "{Primitives Colors.brand.secondary.800}"
           },
           "$type": "color"
         },
         "light": {
           "$value": {
-            "Default": "{Primitives Colors.brand.secondary.200}",
-            "Dark": "{Primitives Colors.brand.secondary.200}"
+            "Default": "{Primitives Colors.brand.secondary.400}",
+            "Dark": "{Primitives Colors.brand.secondary.400}"
           },
           "$type": "color"
         },
         "dark": {
           "$value": {
-            "Default": "{Primitives Colors.brand.secondary.600}",
-            "Dark": "{Primitives Colors.brand.secondary.600}"
+            "Default": "{Primitives Colors.brand.secondary.900}",
+            "Dark": "{Primitives Colors.brand.secondary.900}"
           },
           "$type": "color"
         }
@@ -163,7 +163,7 @@
       "brand": {
         "$value": {
           "Default": "{Themes.color.brand.primary.default}",
-          "Dark": "{Primitives Colors.brand.primary.300}"
+          "Dark": "{Primitives Colors.brand.primary.200}"
         },
         "$type": "color"
       },
@@ -339,21 +339,21 @@
           "default": {
             "$value": {
               "Default": "{Themes.color.brand.primary.default}",
-              "Dark": "{Primitives Colors.brand.primary.300}"
+              "Dark": "{Primitives Colors.brand.primary.700}"
             },
             "$type": "color"
           },
           "hover": {
             "$value": {
-              "Default": "{Primitives Colors.brand.primary.600}",
-              "Dark": "{Primitives Colors.brand.primary.200}"
+              "Default": "{Primitives Colors.brand.primary.900}",
+              "Dark": "{Primitives Colors.brand.primary.600}"
             },
             "$type": "color"
           },
           "active": {
             "$value": {
-              "Default": "{Primitives Colors.brand.primary.600}",
-              "Dark": "{Primitives Colors.brand.primary.200}"
+              "Default": "{Primitives Colors.brand.primary.900}",
+              "Dark": "{Primitives Colors.brand.primary.600}"
             },
             "$type": "color"
           }
@@ -362,14 +362,14 @@
           "default": {
             "$value": {
               "Default": "{Themes.color.on-brand-primary.text.primary}",
-              "Dark": "{Primitives Colors.brand.primary.700}"
+              "Dark": "{Primitives Colors.brand.primary.1000}"
             },
             "$type": "color"
           },
           "hover": {
             "$value": {
               "Default": "{Themes.color.on-brand-primary.text.primary}",
-              "Dark": "{Primitives Colors.brand.primary.700}"
+              "Dark": "{Primitives Colors.brand.primary.1000}"
             },
             "$type": "color"
           }
@@ -386,8 +386,8 @@
           },
           "hover": {
             "$value": {
-              "Default": "{Primitives Colors.brand.secondary.600}",
-              "Dark": "{Primitives Colors.brand.secondary.600}"
+              "Default": "{Primitives Colors.brand.secondary.900}",
+              "Dark": "{Primitives Colors.brand.secondary.900}"
             },
             "$type": "color"
           }
@@ -490,8 +490,8 @@
           },
           "dark": {
             "$value": {
-              "Default": "{Primitives Colors.brand.primary.600}",
-              "Dark": "{Primitives Colors.brand.primary.600}"
+              "Default": "{Primitives Colors.brand.primary.900}",
+              "Dark": "{Primitives Colors.brand.primary.900}"
             },
             "$type": "color"
           },
@@ -520,8 +520,8 @@
           },
           "dark": {
             "$value": {
-              "Default": "{Primitives Colors.brand.secondary.600}",
-              "Dark": "{Primitives Colors.brand.secondary.600}"
+              "Default": "{Primitives Colors.brand.secondary.900}",
+              "Dark": "{Primitives Colors.brand.secondary.900}"
             },
             "$type": "color"
           }
@@ -642,7 +642,7 @@
         "brand": {
           "$value": {
             "Default": "{Themes.color.text.brand}",
-            "Dark": "{Primitives Colors.brand.primary.300}"
+            "Dark": "{Primitives Colors.brand.primary.200}"
           },
           "$type": "color"
         },
@@ -1002,8 +1002,8 @@
           },
           "dark": {
             "$value": {
-              "Default": "{Primitives Colors.brand.primary.600}",
-              "Dark": "{Primitives Colors.brand.primary.600}"
+              "Default": "{Primitives Colors.brand.primary.900}",
+              "Dark": "{Primitives Colors.brand.primary.900}"
             },
             "$type": "color"
           },
@@ -1032,8 +1032,8 @@
           },
           "dark": {
             "$value": {
-              "Default": "{Primitives Colors.brand.secondary.600}",
-              "Dark": "{Primitives Colors.brand.secondary.600}"
+              "Default": "{Primitives Colors.brand.secondary.900}",
+              "Dark": "{Primitives Colors.brand.secondary.900}"
             },
             "$type": "color"
           }
@@ -1153,8 +1153,8 @@
         },
         "brand": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.200}",
-            "Dark": "{Primitives Colors.brand.primary.500}"
+            "Default": "{Primitives Colors.brand.primary.100}",
+            "Dark": "{Primitives Colors.brand.primary.800}"
           },
           "$type": "color"
         },
@@ -1169,8 +1169,8 @@
       "icon": {
         "default": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.200}",
-            "Dark": "{Primitives Colors.brand.primary.500}"
+            "Default": "{Primitives Colors.brand.primary.100}",
+            "Dark": "{Primitives Colors.brand.primary.800}"
           },
           "$type": "color"
         }
@@ -1217,15 +1217,15 @@
       "link": {
         "default": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.200}",
-            "Dark": "{Primitives Colors.brand.primary.500}"
+            "Default": "{Primitives Colors.brand.primary.100}",
+            "Dark": "{Primitives Colors.brand.primary.800}"
           },
           "$type": "color"
         },
         "hover": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.300}",
-            "Dark": "{Primitives Colors.brand.primary.600}"
+            "Default": "{Primitives Colors.brand.primary.200}",
+            "Dark": "{Primitives Colors.brand.primary.900}"
           },
           "$type": "color"
         }
@@ -1330,21 +1330,21 @@
             "default": {
               "$value": {
                 "Default": "{Themes.color.on-brand-primary.text.primary}",
-                "Dark": "{Primitives Colors.brand.primary.500}"
+                "Dark": "{Primitives Colors.brand.primary.800}"
               },
               "$type": "color"
             },
             "hover": {
               "$value": {
                 "Default": "{Primitives Colors.gray.200}",
-                "Dark": "{Primitives Colors.brand.primary.600}"
+                "Dark": "{Primitives Colors.brand.primary.900}"
               },
               "$type": "color"
             },
             "active": {
               "$value": {
                 "Default": "{Primitives Colors.gray.200}",
-                "Dark": "{Primitives Colors.brand.primary.600}"
+                "Dark": "{Primitives Colors.brand.primary.900}"
               },
               "$type": "color"
             }
@@ -1352,14 +1352,14 @@
           "on-base": {
             "default": {
               "$value": {
-                "Default": "{Primitives Colors.brand.primary.500}",
+                "Default": "{Primitives Colors.brand.primary.800}",
                 "Dark": "{Themes.color.on-brand-primary.text.primary}"
               },
               "$type": "color"
             },
             "hover": {
               "$value": {
-                "Default": "{Primitives Colors.brand.primary.600}",
+                "Default": "{Primitives Colors.brand.primary.900}",
                 "Dark": "{Themes.color.on-brand-primary.text.primary}"
               },
               "$type": "color"
@@ -1514,8 +1514,8 @@
           },
           "dark": {
             "$value": {
-              "Default": "{Primitives Colors.brand.primary.600}",
-              "Dark": "{Primitives Colors.brand.primary.600}"
+              "Default": "{Primitives Colors.brand.primary.900}",
+              "Dark": "{Primitives Colors.brand.primary.900}"
             },
             "$type": "color"
           },
@@ -1544,8 +1544,8 @@
           },
           "dark": {
             "$value": {
-              "Default": "{Primitives Colors.brand.secondary.600}",
-              "Dark": "{Primitives Colors.brand.secondary.600}"
+              "Default": "{Primitives Colors.brand.secondary.900}",
+              "Dark": "{Primitives Colors.brand.secondary.900}"
             },
             "$type": "color"
           }
@@ -1578,13 +1578,13 @@
         "default": {
           "$value": {
             "Default": "{Themes.color.background.brand-primary}",
-            "Dark": "{Primitives Colors.brand.primary.600}"
+            "Dark": "{Primitives Colors.brand.primary.900}"
           },
           "$type": "color"
         },
         "sunken": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.600}",
+            "Default": "{Primitives Colors.brand.primary.900}",
             "Dark": "{Themes.color.background.sunken}"
           },
           "$type": "color",
@@ -1592,7 +1592,7 @@
         },
         "subtle": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.400}",
+            "Default": "{Primitives Colors.brand.primary.950}",
             "Dark": "{Themes.color.background.subtle}"
           },
           "$type": "color",
@@ -1729,8 +1729,8 @@
       "link": {
         "default": {
           "$value": {
-            "Default": "{Primitives Colors.brand.primary.100}",
-            "Dark": "{Primitives Colors.brand.primary.100}"
+            "Default": "{Primitives Colors.brand.primary.50}",
+            "Dark": "{Primitives Colors.brand.primary.50}"
           },
           "$type": "color"
         },
@@ -1864,15 +1864,15 @@
           "on-base": {
             "default": {
               "$value": {
-                "Default": "{Primitives Colors.brand.primary.500}",
-                "Dark": "{Primitives Colors.brand.primary.400}"
+                "Default": "{Primitives Colors.brand.primary.800}",
+                "Dark": "{Primitives Colors.brand.primary.1000}"
               },
               "$type": "color"
             },
             "hover": {
               "$value": {
-                "Default": "{Primitives Colors.brand.primary.600}",
-                "Dark": "{Primitives Colors.brand.primary.600}"
+                "Default": "{Primitives Colors.brand.primary.900}",
+                "Dark": "{Primitives Colors.brand.primary.900}"
               },
               "$type": "color"
             }
