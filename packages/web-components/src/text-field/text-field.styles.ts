@@ -61,7 +61,7 @@ export const textFieldStyles = css`
   :host {
     --_icon-action: var(--color-action-primary-base-default);
     --_icon-action-hover: var(--color-action-primary-base-hover);
-    --_icon-action-active: var(--color-action-primary-base-active);
+    --_icon-action-active: var(--color-action-primary-base-hover);
   }
 
   /* ---- Variant color aliases: outline + underlined (share same tokens) ---- */

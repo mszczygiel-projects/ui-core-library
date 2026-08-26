@@ -77,7 +77,7 @@ The component exposes no consumer hooks — styling is done through the status a
 ```css
 /* Example: muted info colour in a sidebar */
 .my-sidebar .ui-notification--info {
-  --_base: var(--color-brand-secondary);
+  --_base: var(--color-brand-secondary-default);
 }
 ```
 
