@@ -1311,7 +1311,7 @@ describe('tokens.css — generated output', () => {
   });
 
   it('semantic --color-* vars are present as Themes definitions', () => {
-    expect(css).toContain('--color-brand-primary:');
+    expect(css).toContain('--color-brand-primary-default:');
     expect(css).toContain('--color-background-default:');
     expect(css).toContain('--color-button-primary-background-default:');
   });
@@ -1350,8 +1350,8 @@ describe('tokens.ts — generated output', () => {
     expect(ts).not.toContain('var(--sizes-');
   });
 
-  it('surfaces section has brand.primary referencing --color-brand-primary', () => {
-    expect(ts).toContain("var(--color-brand-primary)'");
+  it('surfaces section has brand.primary.default referencing --color-brand-primary-default', () => {
+    expect(ts).toContain("var(--color-brand-primary-default)'");
   });
 
   it('themes section has onSubtle group (no Surfaces counterpart → exported from Themes)', () => {
@@ -1416,7 +1416,7 @@ describe('tailwind.css — generated output', () => {
   });
 
   it('includes semantic color tokens from Themes/Surfaces', () => {
-    expect(tw).toContain('--color-brand-primary:');
+    expect(tw).toContain('--color-brand-primary-default:');
   });
 
   it('does not include non-color semantic tokens (typography, ring)', () => {

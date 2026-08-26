@@ -5,27 +5,20 @@ export const tokens = {
     color: {
       onSubtle: {
         brand: {
-          primary: 'var(--color-on-subtle-brand-primary)',
-          secondary: 'var(--color-on-subtle-brand-secondary)',
-          tertiary: 'var(--color-on-subtle-brand-tertiary)',
-          subtle: {
-            text: {
-              default: 'var(--color-on-subtle-brand-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-subtle-brand-subtle-background-hover)',
-              active: 'var(--color-on-subtle-brand-subtle-background-active)',
-            },
+          primary: {
+            default: 'var(--color-on-subtle-brand-primary-default)',
+            dark: 'var(--color-on-subtle-brand-primary-dark)',
+            light: 'var(--color-on-subtle-brand-primary-light)',
           },
-          solid: {
-            background: {
-              hover: 'var(--color-on-subtle-brand-solid-background-hover)',
-            },
+          secondary: {
+            default: 'var(--color-on-subtle-brand-secondary-default)',
+            light: 'var(--color-on-subtle-brand-secondary-light)',
+            dark: 'var(--color-on-subtle-brand-secondary-dark)',
           },
-          outline: {
-            text: {
-              default: 'var(--color-on-subtle-brand-outline-text-default)',
-            },
+          tertiary: {
+            default: 'var(--color-on-subtle-brand-tertiary-default)',
+            light: 'var(--color-on-subtle-brand-tertiary-light)',
+            dark: 'var(--color-on-subtle-brand-tertiary-dark)',
           },
         },
         background: {
@@ -36,23 +29,24 @@ export const tokens = {
           overlay: 'var(--color-on-subtle-background-overlay)',
           brandPrimary: 'var(--color-on-subtle-background-brand-primary)',
           tint: 'var(--color-on-subtle-background-tint)',
+          transparent: 'var(--color-on-subtle-background-transparent)',
+          scrim: 'var(--color-on-subtle-background-scrim)',
         },
         text: {
           primary: 'var(--color-on-subtle-text-primary)',
           secondary: 'var(--color-on-subtle-text-secondary)',
           muted: 'var(--color-on-subtle-text-muted)',
           brand: 'var(--color-on-subtle-text-brand)',
+          placeholder: 'var(--color-on-subtle-text-placeholder)',
         },
         icon: {
           default: 'var(--color-on-subtle-icon-default)',
         },
         border: {
+          subtle: 'var(--color-on-subtle-border-subtle)',
+          stronger: 'var(--color-on-subtle-border-stronger)',
+          strong: 'var(--color-on-subtle-border-strong)',
           default: 'var(--color-on-subtle-border-default)',
-          strong: {
-            hover: 'var(--color-on-subtle-border-strong-hover)',
-            default: 'var(--color-on-subtle-border-strong-default)',
-            disabled: 'var(--color-on-subtle-border-strong-disabled)',
-          },
         },
         ring: {
           default: 'var(--color-on-subtle-ring-default)',
@@ -88,272 +82,69 @@ export const tokens = {
             base: {
               default: 'var(--color-on-subtle-action-primary-base-default)',
               hover: 'var(--color-on-subtle-action-primary-base-hover)',
-              focus: 'var(--color-on-subtle-action-primary-base-focus)',
               active: 'var(--color-on-subtle-action-primary-base-active)',
-              disabled: 'var(--color-on-subtle-action-primary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-subtle-action-primary-on-base-default)',
               hover: 'var(--color-on-subtle-action-primary-on-base-hover)',
-              focus: 'var(--color-on-subtle-action-primary-on-base-focus)',
-              active: 'var(--color-on-subtle-action-primary-on-base-active)',
-              disabled: 'var(--color-on-subtle-action-primary-on-base-disabled)',
             },
           },
           secondary: {
             base: {
               default: 'var(--color-on-subtle-action-secondary-base-default)',
               hover: 'var(--color-on-subtle-action-secondary-base-hover)',
-              focus: 'var(--color-on-subtle-action-secondary-base-focus)',
-              active: 'var(--color-on-subtle-action-secondary-base-active)',
-              disabled: 'var(--color-on-subtle-action-secondary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-subtle-action-secondary-on-base-default)',
               hover: 'var(--color-on-subtle-action-secondary-on-base-hover)',
-              focus: 'var(--color-on-subtle-action-secondary-on-base-focus)',
-              active: 'var(--color-on-subtle-action-secondary-on-base-active)',
-              disabled: 'var(--color-on-subtle-action-secondary-on-base-disabled)',
             },
           },
           tertiary: {
             base: {
               default: 'var(--color-on-subtle-action-tertiary-base-default)',
               hover: 'var(--color-on-subtle-action-tertiary-base-hover)',
-              focus: 'var(--color-on-subtle-action-tertiary-base-focus)',
-              active: 'var(--color-on-subtle-action-tertiary-base-active)',
-              disabled: 'var(--color-on-subtle-action-tertiary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-subtle-action-tertiary-on-base-default)',
               hover: 'var(--color-on-subtle-action-tertiary-on-base-hover)',
-              focus: 'var(--color-on-subtle-action-tertiary-on-base-focus)',
-              active: 'var(--color-on-subtle-action-tertiary-on-base-active)',
-              disabled: 'var(--color-on-subtle-action-tertiary-on-base-disabled)',
             },
           },
           danger: {
             base: {
               default: 'var(--color-on-subtle-action-danger-base-default)',
               hover: 'var(--color-on-subtle-action-danger-base-hover)',
-              focus: 'var(--color-on-subtle-action-danger-base-focus)',
-              active: 'var(--color-on-subtle-action-danger-base-active)',
-              disabled: 'var(--color-on-subtle-action-danger-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-subtle-action-danger-on-base-default)',
               hover: 'var(--color-on-subtle-action-danger-on-base-hover)',
-              focus: 'var(--color-on-subtle-action-danger-on-base-focus)',
-              active: 'var(--color-on-subtle-action-danger-on-base-active)',
-              disabled: 'var(--color-on-subtle-action-danger-on-base-disabled)',
-            },
-          },
-        },
-        transparent: 'var(--color-on-subtle-transparent)',
-        neutral: {
-          solid: {
-            background: {
-              selected: 'var(--color-on-subtle-neutral-solid-background-selected)',
-              hover: 'var(--color-on-subtle-neutral-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-subtle-neutral-subtle-text-default)',
-            },
-            base: {
-              hover: 'var(--color-on-subtle-neutral-subtle-base-hover)',
-            },
-          },
-          outline: {
-            border: {
-              default: 'var(--color-on-subtle-neutral-outline-border-default)',
             },
           },
         },
         disabled: {
-          surface: 'var(--color-on-subtle-disabled-surface)',
+          background: 'var(--color-on-subtle-disabled-background)',
+          text: 'var(--color-on-subtle-disabled-text)',
         },
-        outline: {
-          placeholder: {
-            default: 'var(--color-on-subtle-outline-placeholder-default)',
-            disabled: 'var(--color-on-subtle-outline-placeholder-disabled)',
-          },
-          background: {
-            active: 'var(--color-on-subtle-outline-background-active)',
-          },
-          label: {
-            hover: 'var(--color-on-subtle-outline-label-hover)',
-            default: 'var(--color-on-subtle-outline-label-default)',
-          },
-          text: {
-            default: 'var(--color-on-subtle-outline-text-default)',
-            hover: 'var(--color-on-subtle-outline-text-hover)',
-            error: 'var(--color-on-subtle-outline-text-error)',
-          },
-          border: {
-            hover: 'var(--color-on-subtle-outline-border-hover)',
-            default: 'var(--color-on-subtle-outline-border-default)',
-            disabled: 'var(--color-on-subtle-outline-border-disabled)',
-          },
-          icon: {
-            error: 'var(--color-on-subtle-outline-icon-error)',
-          },
-        },
-        filled: {
-          placeholder: {
-            default: 'var(--color-on-subtle-filled-placeholder-default)',
-          },
-          text: {
-            default: 'var(--color-on-subtle-filled-text-default)',
-            disabled: 'var(--color-on-subtle-filled-text-disabled)',
-            error: 'var(--color-on-subtle-filled-text-error)',
-          },
-          background: {
-            hover: 'var(--color-on-subtle-filled-background-hover)',
-            success: 'var(--color-on-subtle-filled-background-success)',
-            default: 'var(--color-on-subtle-filled-background-default)',
-            disabled: 'var(--color-on-subtle-filled-background-disabled)',
-          },
-          border: {
-            hover: 'var(--color-on-subtle-filled-border-hover)',
-            default: 'var(--color-on-subtle-filled-border-default)',
-            disabled: 'var(--color-on-subtle-filled-border-disabled)',
-          },
-        },
-        checked: {
-          base: {
-            hover: 'var(--color-on-subtle-checked-base-hover)',
-          },
-          mark: {
-            default: 'var(--color-on-subtle-checked-mark-default)',
-          },
-          background: {
-            default: 'var(--color-on-subtle-checked-background-default)',
-          },
-          border: {
-            default: 'var(--color-on-subtle-checked-border-default)',
-          },
-        },
-        success: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-subtle-success-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-subtle-success-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-subtle-success-subtle-background-hover)',
-              active: 'var(--color-on-subtle-success-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-subtle-success-outline-text-default)',
-            },
-          },
-        },
-        warning: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-subtle-warning-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-subtle-warning-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-subtle-warning-subtle-background-hover)',
-              active: 'var(--color-on-subtle-warning-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-subtle-warning-outline-text-default)',
-            },
-          },
-        },
-        error: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-subtle-error-solid-background-hover)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-subtle-error-outline-text-default)',
-            },
-          },
-          subtle: {
-            background: {
-              hover: 'var(--color-on-subtle-error-subtle-background-hover)',
-              active: 'var(--color-on-subtle-error-subtle-background-active)',
-            },
-          },
-        },
-        info: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-subtle-info-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-subtle-info-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-subtle-info-subtle-background-hover)',
-              active: 'var(--color-on-subtle-info-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-subtle-info-outline-text-default)',
-            },
-          },
-        },
-        transparentBlack: 'var(--color-on-subtle-transparent-black)',
-        track: {
-          default: 'var(--color-on-subtle-track-default)',
-          hover: 'var(--color-on-subtle-track-hover)',
-          disabled: 'var(--color-on-subtle-track-disabled)',
-        },
-        ghost: {
-          text: {
-            active: 'var(--color-on-subtle-ghost-text-active)',
-          },
-        },
-        separator: {
-          foreground: 'var(--color-on-subtle-separator-foreground)',
+        selection: {
+          background: 'var(--color-on-subtle-selection-background)',
+          text: 'var(--color-on-subtle-selection-text)',
         },
       },
       onInverse: {
         brand: {
-          primary: 'var(--color-on-inverse-brand-primary)',
-          secondary: 'var(--color-on-inverse-brand-secondary)',
-          tertiary: 'var(--color-on-inverse-brand-tertiary)',
-          subtle: {
-            text: {
-              default: 'var(--color-on-inverse-brand-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-inverse-brand-subtle-background-hover)',
-              active: 'var(--color-on-inverse-brand-subtle-background-active)',
-            },
+          primary: {
+            default: 'var(--color-on-inverse-brand-primary-default)',
+            dark: 'var(--color-on-inverse-brand-primary-dark)',
+            light: 'var(--color-on-inverse-brand-primary-light)',
           },
-          solid: {
-            background: {
-              hover: 'var(--color-on-inverse-brand-solid-background-hover)',
-            },
+          secondary: {
+            default: 'var(--color-on-inverse-brand-secondary-default)',
+            light: 'var(--color-on-inverse-brand-secondary-light)',
+            dark: 'var(--color-on-inverse-brand-secondary-dark)',
           },
-          outline: {
-            text: {
-              default: 'var(--color-on-inverse-brand-outline-text-default)',
-            },
+          tertiary: {
+            default: 'var(--color-on-inverse-brand-tertiary-default)',
+            light: 'var(--color-on-inverse-brand-tertiary-light)',
+            dark: 'var(--color-on-inverse-brand-tertiary-dark)',
           },
         },
         background: {
@@ -364,23 +155,24 @@ export const tokens = {
           overlay: 'var(--color-on-inverse-background-overlay)',
           brandPrimary: 'var(--color-on-inverse-background-brand-primary)',
           tint: 'var(--color-on-inverse-background-tint)',
+          transparent: 'var(--color-on-inverse-background-transparent)',
+          scrim: 'var(--color-on-inverse-background-scrim)',
         },
         text: {
           primary: 'var(--color-on-inverse-text-primary)',
           secondary: 'var(--color-on-inverse-text-secondary)',
           muted: 'var(--color-on-inverse-text-muted)',
           brand: 'var(--color-on-inverse-text-brand)',
+          placeholder: 'var(--color-on-inverse-text-placeholder)',
         },
         icon: {
           default: 'var(--color-on-inverse-icon-default)',
         },
         border: {
+          subtle: 'var(--color-on-inverse-border-subtle)',
+          stronger: 'var(--color-on-inverse-border-stronger)',
+          strong: 'var(--color-on-inverse-border-strong)',
           default: 'var(--color-on-inverse-border-default)',
-          strong: {
-            hover: 'var(--color-on-inverse-border-strong-hover)',
-            default: 'var(--color-on-inverse-border-strong-default)',
-            disabled: 'var(--color-on-inverse-border-strong-disabled)',
-          },
         },
         ring: {
           default: 'var(--color-on-inverse-ring-default)',
@@ -416,272 +208,69 @@ export const tokens = {
             base: {
               default: 'var(--color-on-inverse-action-primary-base-default)',
               hover: 'var(--color-on-inverse-action-primary-base-hover)',
-              focus: 'var(--color-on-inverse-action-primary-base-focus)',
               active: 'var(--color-on-inverse-action-primary-base-active)',
-              disabled: 'var(--color-on-inverse-action-primary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-inverse-action-primary-on-base-default)',
               hover: 'var(--color-on-inverse-action-primary-on-base-hover)',
-              focus: 'var(--color-on-inverse-action-primary-on-base-focus)',
-              active: 'var(--color-on-inverse-action-primary-on-base-active)',
-              disabled: 'var(--color-on-inverse-action-primary-on-base-disabled)',
             },
           },
           secondary: {
             base: {
               default: 'var(--color-on-inverse-action-secondary-base-default)',
               hover: 'var(--color-on-inverse-action-secondary-base-hover)',
-              focus: 'var(--color-on-inverse-action-secondary-base-focus)',
-              active: 'var(--color-on-inverse-action-secondary-base-active)',
-              disabled: 'var(--color-on-inverse-action-secondary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-inverse-action-secondary-on-base-default)',
               hover: 'var(--color-on-inverse-action-secondary-on-base-hover)',
-              focus: 'var(--color-on-inverse-action-secondary-on-base-focus)',
-              active: 'var(--color-on-inverse-action-secondary-on-base-active)',
-              disabled: 'var(--color-on-inverse-action-secondary-on-base-disabled)',
             },
           },
           tertiary: {
             base: {
               default: 'var(--color-on-inverse-action-tertiary-base-default)',
               hover: 'var(--color-on-inverse-action-tertiary-base-hover)',
-              focus: 'var(--color-on-inverse-action-tertiary-base-focus)',
-              active: 'var(--color-on-inverse-action-tertiary-base-active)',
-              disabled: 'var(--color-on-inverse-action-tertiary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-inverse-action-tertiary-on-base-default)',
               hover: 'var(--color-on-inverse-action-tertiary-on-base-hover)',
-              focus: 'var(--color-on-inverse-action-tertiary-on-base-focus)',
-              active: 'var(--color-on-inverse-action-tertiary-on-base-active)',
-              disabled: 'var(--color-on-inverse-action-tertiary-on-base-disabled)',
             },
           },
           danger: {
             base: {
               default: 'var(--color-on-inverse-action-danger-base-default)',
               hover: 'var(--color-on-inverse-action-danger-base-hover)',
-              focus: 'var(--color-on-inverse-action-danger-base-focus)',
-              active: 'var(--color-on-inverse-action-danger-base-active)',
-              disabled: 'var(--color-on-inverse-action-danger-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-inverse-action-danger-on-base-default)',
               hover: 'var(--color-on-inverse-action-danger-on-base-hover)',
-              focus: 'var(--color-on-inverse-action-danger-on-base-focus)',
-              active: 'var(--color-on-inverse-action-danger-on-base-active)',
-              disabled: 'var(--color-on-inverse-action-danger-on-base-disabled)',
-            },
-          },
-        },
-        transparent: 'var(--color-on-inverse-transparent)',
-        neutral: {
-          solid: {
-            background: {
-              selected: 'var(--color-on-inverse-neutral-solid-background-selected)',
-              hover: 'var(--color-on-inverse-neutral-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-inverse-neutral-subtle-text-default)',
-            },
-            base: {
-              hover: 'var(--color-on-inverse-neutral-subtle-base-hover)',
-            },
-          },
-          outline: {
-            border: {
-              default: 'var(--color-on-inverse-neutral-outline-border-default)',
             },
           },
         },
         disabled: {
-          surface: 'var(--color-on-inverse-disabled-surface)',
+          background: 'var(--color-on-inverse-disabled-background)',
+          text: 'var(--color-on-inverse-disabled-text)',
         },
-        outline: {
-          placeholder: {
-            default: 'var(--color-on-inverse-outline-placeholder-default)',
-            disabled: 'var(--color-on-inverse-outline-placeholder-disabled)',
-          },
-          background: {
-            active: 'var(--color-on-inverse-outline-background-active)',
-          },
-          label: {
-            hover: 'var(--color-on-inverse-outline-label-hover)',
-            default: 'var(--color-on-inverse-outline-label-default)',
-          },
-          text: {
-            default: 'var(--color-on-inverse-outline-text-default)',
-            hover: 'var(--color-on-inverse-outline-text-hover)',
-            error: 'var(--color-on-inverse-outline-text-error)',
-          },
-          border: {
-            hover: 'var(--color-on-inverse-outline-border-hover)',
-            default: 'var(--color-on-inverse-outline-border-default)',
-            disabled: 'var(--color-on-inverse-outline-border-disabled)',
-          },
-          icon: {
-            error: 'var(--color-on-inverse-outline-icon-error)',
-          },
-        },
-        filled: {
-          placeholder: {
-            default: 'var(--color-on-inverse-filled-placeholder-default)',
-          },
-          text: {
-            default: 'var(--color-on-inverse-filled-text-default)',
-            disabled: 'var(--color-on-inverse-filled-text-disabled)',
-            error: 'var(--color-on-inverse-filled-text-error)',
-          },
-          background: {
-            hover: 'var(--color-on-inverse-filled-background-hover)',
-            success: 'var(--color-on-inverse-filled-background-success)',
-            default: 'var(--color-on-inverse-filled-background-default)',
-            disabled: 'var(--color-on-inverse-filled-background-disabled)',
-          },
-          border: {
-            hover: 'var(--color-on-inverse-filled-border-hover)',
-            default: 'var(--color-on-inverse-filled-border-default)',
-            disabled: 'var(--color-on-inverse-filled-border-disabled)',
-          },
-        },
-        checked: {
-          base: {
-            hover: 'var(--color-on-inverse-checked-base-hover)',
-          },
-          mark: {
-            default: 'var(--color-on-inverse-checked-mark-default)',
-          },
-          background: {
-            default: 'var(--color-on-inverse-checked-background-default)',
-          },
-          border: {
-            default: 'var(--color-on-inverse-checked-border-default)',
-          },
-        },
-        success: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-inverse-success-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-inverse-success-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-inverse-success-subtle-background-hover)',
-              active: 'var(--color-on-inverse-success-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-inverse-success-outline-text-default)',
-            },
-          },
-        },
-        warning: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-inverse-warning-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-inverse-warning-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-inverse-warning-subtle-background-hover)',
-              active: 'var(--color-on-inverse-warning-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-inverse-warning-outline-text-default)',
-            },
-          },
-        },
-        error: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-inverse-error-solid-background-hover)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-inverse-error-outline-text-default)',
-            },
-          },
-          subtle: {
-            background: {
-              hover: 'var(--color-on-inverse-error-subtle-background-hover)',
-              active: 'var(--color-on-inverse-error-subtle-background-active)',
-            },
-          },
-        },
-        info: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-inverse-info-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-inverse-info-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-inverse-info-subtle-background-hover)',
-              active: 'var(--color-on-inverse-info-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-inverse-info-outline-text-default)',
-            },
-          },
-        },
-        transparentBlack: 'var(--color-on-inverse-transparent-black)',
-        track: {
-          default: 'var(--color-on-inverse-track-default)',
-          hover: 'var(--color-on-inverse-track-hover)',
-          disabled: 'var(--color-on-inverse-track-disabled)',
-        },
-        ghost: {
-          text: {
-            active: 'var(--color-on-inverse-ghost-text-active)',
-          },
-        },
-        separator: {
-          foreground: 'var(--color-on-inverse-separator-foreground)',
+        selection: {
+          background: 'var(--color-on-inverse-selection-background)',
+          text: 'var(--color-on-inverse-selection-text)',
         },
       },
       onBrandPrimary: {
         brand: {
-          primary: 'var(--color-on-brand-primary-brand-primary)',
-          secondary: 'var(--color-on-brand-primary-brand-secondary)',
-          tertiary: 'var(--color-on-brand-primary-brand-tertiary)',
-          subtle: {
-            text: {
-              default: 'var(--color-on-brand-primary-brand-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-brand-primary-brand-subtle-background-hover)',
-              active: 'var(--color-on-brand-primary-brand-subtle-background-active)',
-            },
+          primary: {
+            default: 'var(--color-on-brand-primary-brand-primary-default)',
+            dark: 'var(--color-on-brand-primary-brand-primary-dark)',
+            light: 'var(--color-on-brand-primary-brand-primary-light)',
           },
-          solid: {
-            background: {
-              hover: 'var(--color-on-brand-primary-brand-solid-background-hover)',
-            },
+          secondary: {
+            default: 'var(--color-on-brand-primary-brand-secondary-default)',
+            light: 'var(--color-on-brand-primary-brand-secondary-light)',
+            dark: 'var(--color-on-brand-primary-brand-secondary-dark)',
           },
-          outline: {
-            text: {
-              default: 'var(--color-on-brand-primary-brand-outline-text-default)',
-            },
+          tertiary: {
+            default: 'var(--color-on-brand-primary-brand-tertiary-default)',
+            light: 'var(--color-on-brand-primary-brand-tertiary-light)',
+            dark: 'var(--color-on-brand-primary-brand-tertiary-dark)',
           },
         },
         background: {
@@ -692,23 +281,24 @@ export const tokens = {
           overlay: 'var(--color-on-brand-primary-background-overlay)',
           brandPrimary: 'var(--color-on-brand-primary-background-brand-primary)',
           tint: 'var(--color-on-brand-primary-background-tint)',
+          transparent: 'var(--color-on-brand-primary-background-transparent)',
+          scrim: 'var(--color-on-brand-primary-background-scrim)',
         },
         text: {
           primary: 'var(--color-on-brand-primary-text-primary)',
           secondary: 'var(--color-on-brand-primary-text-secondary)',
           muted: 'var(--color-on-brand-primary-text-muted)',
           brand: 'var(--color-on-brand-primary-text-brand)',
+          placeholder: 'var(--color-on-brand-primary-text-placeholder)',
         },
         icon: {
           default: 'var(--color-on-brand-primary-icon-default)',
         },
         border: {
+          subtle: 'var(--color-on-brand-primary-border-subtle)',
+          stronger: 'var(--color-on-brand-primary-border-stronger)',
+          strong: 'var(--color-on-brand-primary-border-strong)',
           default: 'var(--color-on-brand-primary-border-default)',
-          strong: {
-            hover: 'var(--color-on-brand-primary-border-strong-hover)',
-            default: 'var(--color-on-brand-primary-border-strong-default)',
-            disabled: 'var(--color-on-brand-primary-border-strong-disabled)',
-          },
         },
         ring: {
           default: 'var(--color-on-brand-primary-ring-default)',
@@ -744,252 +334,52 @@ export const tokens = {
             base: {
               default: 'var(--color-on-brand-primary-action-primary-base-default)',
               hover: 'var(--color-on-brand-primary-action-primary-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-primary-base-focus)',
               active: 'var(--color-on-brand-primary-action-primary-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-primary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-brand-primary-action-primary-on-base-default)',
               hover: 'var(--color-on-brand-primary-action-primary-on-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-primary-on-base-focus)',
-              active: 'var(--color-on-brand-primary-action-primary-on-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-primary-on-base-disabled)',
             },
           },
           secondary: {
             base: {
               default: 'var(--color-on-brand-primary-action-secondary-base-default)',
               hover: 'var(--color-on-brand-primary-action-secondary-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-secondary-base-focus)',
-              active: 'var(--color-on-brand-primary-action-secondary-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-secondary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-brand-primary-action-secondary-on-base-default)',
               hover: 'var(--color-on-brand-primary-action-secondary-on-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-secondary-on-base-focus)',
-              active: 'var(--color-on-brand-primary-action-secondary-on-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-secondary-on-base-disabled)',
             },
           },
           tertiary: {
             base: {
               default: 'var(--color-on-brand-primary-action-tertiary-base-default)',
               hover: 'var(--color-on-brand-primary-action-tertiary-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-tertiary-base-focus)',
-              active: 'var(--color-on-brand-primary-action-tertiary-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-tertiary-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-brand-primary-action-tertiary-on-base-default)',
               hover: 'var(--color-on-brand-primary-action-tertiary-on-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-tertiary-on-base-focus)',
-              active: 'var(--color-on-brand-primary-action-tertiary-on-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-tertiary-on-base-disabled)',
             },
           },
           danger: {
             base: {
               default: 'var(--color-on-brand-primary-action-danger-base-default)',
               hover: 'var(--color-on-brand-primary-action-danger-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-danger-base-focus)',
-              active: 'var(--color-on-brand-primary-action-danger-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-danger-base-disabled)',
             },
             onBase: {
               default: 'var(--color-on-brand-primary-action-danger-on-base-default)',
               hover: 'var(--color-on-brand-primary-action-danger-on-base-hover)',
-              focus: 'var(--color-on-brand-primary-action-danger-on-base-focus)',
-              active: 'var(--color-on-brand-primary-action-danger-on-base-active)',
-              disabled: 'var(--color-on-brand-primary-action-danger-on-base-disabled)',
-            },
-          },
-        },
-        transparent: 'var(--color-on-brand-primary-transparent)',
-        neutral: {
-          solid: {
-            background: {
-              selected: 'var(--color-on-brand-primary-neutral-solid-background-selected)',
-              hover: 'var(--color-on-brand-primary-neutral-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-brand-primary-neutral-subtle-text-default)',
-            },
-            base: {
-              hover: 'var(--color-on-brand-primary-neutral-subtle-base-hover)',
-            },
-          },
-          outline: {
-            border: {
-              default: 'var(--color-on-brand-primary-neutral-outline-border-default)',
             },
           },
         },
         disabled: {
-          surface: 'var(--color-on-brand-primary-disabled-surface)',
+          background: 'var(--color-on-brand-primary-disabled-background)',
+          text: 'var(--color-on-brand-primary-disabled-text)',
         },
-        outline: {
-          placeholder: {
-            default: 'var(--color-on-brand-primary-outline-placeholder-default)',
-            disabled: 'var(--color-on-brand-primary-outline-placeholder-disabled)',
-          },
-          background: {
-            active: 'var(--color-on-brand-primary-outline-background-active)',
-          },
-          label: {
-            hover: 'var(--color-on-brand-primary-outline-label-hover)',
-            default: 'var(--color-on-brand-primary-outline-label-default)',
-          },
-          text: {
-            default: 'var(--color-on-brand-primary-outline-text-default)',
-            hover: 'var(--color-on-brand-primary-outline-text-hover)',
-            error: 'var(--color-on-brand-primary-outline-text-error)',
-          },
-          border: {
-            hover: 'var(--color-on-brand-primary-outline-border-hover)',
-            default: 'var(--color-on-brand-primary-outline-border-default)',
-            disabled: 'var(--color-on-brand-primary-outline-border-disabled)',
-          },
-          icon: {
-            error: 'var(--color-on-brand-primary-outline-icon-error)',
-          },
+        selection: {
+          background: 'var(--color-on-brand-primary-selection-background)',
+          text: 'var(--color-on-brand-primary-selection-text)',
         },
-        filled: {
-          placeholder: {
-            default: 'var(--color-on-brand-primary-filled-placeholder-default)',
-          },
-          text: {
-            default: 'var(--color-on-brand-primary-filled-text-default)',
-            disabled: 'var(--color-on-brand-primary-filled-text-disabled)',
-            error: 'var(--color-on-brand-primary-filled-text-error)',
-          },
-          background: {
-            hover: 'var(--color-on-brand-primary-filled-background-hover)',
-            success: 'var(--color-on-brand-primary-filled-background-success)',
-            default: 'var(--color-on-brand-primary-filled-background-default)',
-            disabled: 'var(--color-on-brand-primary-filled-background-disabled)',
-          },
-          border: {
-            hover: 'var(--color-on-brand-primary-filled-border-hover)',
-            default: 'var(--color-on-brand-primary-filled-border-default)',
-            disabled: 'var(--color-on-brand-primary-filled-border-disabled)',
-          },
-        },
-        checked: {
-          base: {
-            hover: 'var(--color-on-brand-primary-checked-base-hover)',
-          },
-          mark: {
-            default: 'var(--color-on-brand-primary-checked-mark-default)',
-          },
-          background: {
-            default: 'var(--color-on-brand-primary-checked-background-default)',
-          },
-          border: {
-            default: 'var(--color-on-brand-primary-checked-border-default)',
-          },
-        },
-        success: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-brand-primary-success-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-brand-primary-success-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-brand-primary-success-subtle-background-hover)',
-              active: 'var(--color-on-brand-primary-success-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-brand-primary-success-outline-text-default)',
-            },
-          },
-        },
-        warning: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-brand-primary-warning-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-brand-primary-warning-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-brand-primary-warning-subtle-background-hover)',
-              active: 'var(--color-on-brand-primary-warning-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-brand-primary-warning-outline-text-default)',
-            },
-          },
-        },
-        error: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-brand-primary-error-solid-background-hover)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-brand-primary-error-outline-text-default)',
-            },
-          },
-          subtle: {
-            background: {
-              hover: 'var(--color-on-brand-primary-error-subtle-background-hover)',
-              active: 'var(--color-on-brand-primary-error-subtle-background-active)',
-            },
-          },
-        },
-        info: {
-          solid: {
-            background: {
-              hover: 'var(--color-on-brand-primary-info-solid-background-hover)',
-            },
-          },
-          subtle: {
-            text: {
-              default: 'var(--color-on-brand-primary-info-subtle-text-default)',
-            },
-            background: {
-              hover: 'var(--color-on-brand-primary-info-subtle-background-hover)',
-              active: 'var(--color-on-brand-primary-info-subtle-background-active)',
-            },
-          },
-          outline: {
-            text: {
-              default: 'var(--color-on-brand-primary-info-outline-text-default)',
-            },
-          },
-        },
-        transparentBlack: 'var(--color-on-brand-primary-transparent-black)',
-        track: {
-          default: 'var(--color-on-brand-primary-track-default)',
-          hover: 'var(--color-on-brand-primary-track-hover)',
-          disabled: 'var(--color-on-brand-primary-track-disabled)',
-        },
-        ghost: {
-          text: {
-            active: 'var(--color-on-brand-primary-ghost-text-active)',
-          },
-        },
-        separator: {
-          foreground: 'var(--color-on-brand-primary-separator-foreground)',
-        },
-      },
-      selection: {
-        background: 'var(--color-selection-background)',
-        text: 'var(--color-selection-text)',
       },
     },
     typography: {
@@ -1055,27 +445,20 @@ export const tokens = {
   surfaces: {
     color: {
       brand: {
-        primary: 'var(--color-brand-primary)',
-        secondary: 'var(--color-brand-secondary)',
-        tertiary: 'var(--color-brand-tertiary)',
-        subtle: {
-          text: {
-            default: 'var(--color-brand-subtle-text-default)',
-          },
-          background: {
-            hover: 'var(--color-brand-subtle-background-hover)',
-            active: 'var(--color-brand-subtle-background-active)',
-          },
+        primary: {
+          default: 'var(--color-brand-primary-default)',
+          dark: 'var(--color-brand-primary-dark)',
+          light: 'var(--color-brand-primary-light)',
         },
-        solid: {
-          background: {
-            hover: 'var(--color-brand-solid-background-hover)',
-          },
+        secondary: {
+          default: 'var(--color-brand-secondary-default)',
+          light: 'var(--color-brand-secondary-light)',
+          dark: 'var(--color-brand-secondary-dark)',
         },
-        outline: {
-          text: {
-            default: 'var(--color-brand-outline-text-default)',
-          },
+        tertiary: {
+          default: 'var(--color-brand-tertiary-default)',
+          light: 'var(--color-brand-tertiary-light)',
+          dark: 'var(--color-brand-tertiary-dark)',
         },
       },
       background: {
@@ -1086,23 +469,24 @@ export const tokens = {
         overlay: 'var(--color-background-overlay)',
         brandPrimary: 'var(--color-background-brand-primary)',
         tint: 'var(--color-background-tint)',
+        transparent: 'var(--color-background-transparent)',
+        scrim: 'var(--color-background-scrim)',
       },
       text: {
         primary: 'var(--color-text-primary)',
         secondary: 'var(--color-text-secondary)',
         muted: 'var(--color-text-muted)',
         brand: 'var(--color-text-brand)',
+        placeholder: 'var(--color-text-placeholder)',
       },
       icon: {
         default: 'var(--color-icon-default)',
       },
       border: {
+        subtle: 'var(--color-border-subtle)',
+        stronger: 'var(--color-border-stronger)',
+        strong: 'var(--color-border-strong)',
         default: 'var(--color-border-default)',
-        strong: {
-          hover: 'var(--color-border-strong-hover)',
-          default: 'var(--color-border-strong-default)',
-          disabled: 'var(--color-border-strong-disabled)',
-        },
       },
       ring: {
         default: 'var(--color-ring-default)',
@@ -1138,247 +522,51 @@ export const tokens = {
           base: {
             default: 'var(--color-action-primary-base-default)',
             hover: 'var(--color-action-primary-base-hover)',
-            focus: 'var(--color-action-primary-base-focus)',
             active: 'var(--color-action-primary-base-active)',
-            disabled: 'var(--color-action-primary-base-disabled)',
           },
           onBase: {
             default: 'var(--color-action-primary-on-base-default)',
             hover: 'var(--color-action-primary-on-base-hover)',
-            focus: 'var(--color-action-primary-on-base-focus)',
-            active: 'var(--color-action-primary-on-base-active)',
-            disabled: 'var(--color-action-primary-on-base-disabled)',
           },
         },
         secondary: {
           base: {
             default: 'var(--color-action-secondary-base-default)',
             hover: 'var(--color-action-secondary-base-hover)',
-            focus: 'var(--color-action-secondary-base-focus)',
-            active: 'var(--color-action-secondary-base-active)',
-            disabled: 'var(--color-action-secondary-base-disabled)',
           },
           onBase: {
             default: 'var(--color-action-secondary-on-base-default)',
             hover: 'var(--color-action-secondary-on-base-hover)',
-            focus: 'var(--color-action-secondary-on-base-focus)',
-            active: 'var(--color-action-secondary-on-base-active)',
-            disabled: 'var(--color-action-secondary-on-base-disabled)',
           },
         },
         tertiary: {
           base: {
             default: 'var(--color-action-tertiary-base-default)',
             hover: 'var(--color-action-tertiary-base-hover)',
-            focus: 'var(--color-action-tertiary-base-focus)',
-            active: 'var(--color-action-tertiary-base-active)',
-            disabled: 'var(--color-action-tertiary-base-disabled)',
           },
           onBase: {
             default: 'var(--color-action-tertiary-on-base-default)',
             hover: 'var(--color-action-tertiary-on-base-hover)',
-            focus: 'var(--color-action-tertiary-on-base-focus)',
-            active: 'var(--color-action-tertiary-on-base-active)',
-            disabled: 'var(--color-action-tertiary-on-base-disabled)',
           },
         },
         danger: {
           base: {
             default: 'var(--color-action-danger-base-default)',
             hover: 'var(--color-action-danger-base-hover)',
-            focus: 'var(--color-action-danger-base-focus)',
-            active: 'var(--color-action-danger-base-active)',
-            disabled: 'var(--color-action-danger-base-disabled)',
           },
           onBase: {
             default: 'var(--color-action-danger-on-base-default)',
             hover: 'var(--color-action-danger-on-base-hover)',
-            focus: 'var(--color-action-danger-on-base-focus)',
-            active: 'var(--color-action-danger-on-base-active)',
-            disabled: 'var(--color-action-danger-on-base-disabled)',
-          },
-        },
-      },
-      transparent: 'var(--color-transparent)',
-      neutral: {
-        solid: {
-          background: {
-            selected: 'var(--color-neutral-solid-background-selected)',
-            hover: 'var(--color-neutral-solid-background-hover)',
-          },
-        },
-        subtle: {
-          text: {
-            default: 'var(--color-neutral-subtle-text-default)',
-          },
-          base: {
-            hover: 'var(--color-neutral-subtle-base-hover)',
-          },
-        },
-        outline: {
-          border: {
-            default: 'var(--color-neutral-outline-border-default)',
           },
         },
       },
       disabled: {
-        surface: 'var(--color-disabled-surface)',
+        background: 'var(--color-disabled-background)',
+        text: 'var(--color-disabled-text)',
       },
-      outline: {
-        placeholder: {
-          default: 'var(--color-outline-placeholder-default)',
-          disabled: 'var(--color-outline-placeholder-disabled)',
-        },
-        background: {
-          active: 'var(--color-outline-background-active)',
-        },
-        label: {
-          hover: 'var(--color-outline-label-hover)',
-          default: 'var(--color-outline-label-default)',
-        },
-        text: {
-          default: 'var(--color-outline-text-default)',
-          hover: 'var(--color-outline-text-hover)',
-          error: 'var(--color-outline-text-error)',
-        },
-        border: {
-          hover: 'var(--color-outline-border-hover)',
-          default: 'var(--color-outline-border-default)',
-          disabled: 'var(--color-outline-border-disabled)',
-        },
-        icon: {
-          error: 'var(--color-outline-icon-error)',
-        },
-      },
-      filled: {
-        placeholder: {
-          default: 'var(--color-filled-placeholder-default)',
-        },
-        text: {
-          default: 'var(--color-filled-text-default)',
-          disabled: 'var(--color-filled-text-disabled)',
-          error: 'var(--color-filled-text-error)',
-        },
-        background: {
-          hover: 'var(--color-filled-background-hover)',
-          success: 'var(--color-filled-background-success)',
-          default: 'var(--color-filled-background-default)',
-          disabled: 'var(--color-filled-background-disabled)',
-        },
-        border: {
-          hover: 'var(--color-filled-border-hover)',
-          default: 'var(--color-filled-border-default)',
-          disabled: 'var(--color-filled-border-disabled)',
-        },
-      },
-      checked: {
-        base: {
-          hover: 'var(--color-checked-base-hover)',
-        },
-        mark: {
-          default: 'var(--color-checked-mark-default)',
-        },
-        background: {
-          default: 'var(--color-checked-background-default)',
-        },
-        border: {
-          default: 'var(--color-checked-border-default)',
-        },
-      },
-      success: {
-        solid: {
-          background: {
-            hover: 'var(--color-success-solid-background-hover)',
-          },
-        },
-        subtle: {
-          text: {
-            default: 'var(--color-success-subtle-text-default)',
-          },
-          background: {
-            hover: 'var(--color-success-subtle-background-hover)',
-            active: 'var(--color-success-subtle-background-active)',
-          },
-        },
-        outline: {
-          text: {
-            default: 'var(--color-success-outline-text-default)',
-          },
-        },
-      },
-      warning: {
-        solid: {
-          background: {
-            hover: 'var(--color-warning-solid-background-hover)',
-          },
-        },
-        subtle: {
-          text: {
-            default: 'var(--color-warning-subtle-text-default)',
-          },
-          background: {
-            hover: 'var(--color-warning-subtle-background-hover)',
-            active: 'var(--color-warning-subtle-background-active)',
-          },
-        },
-        outline: {
-          text: {
-            default: 'var(--color-warning-outline-text-default)',
-          },
-        },
-      },
-      error: {
-        solid: {
-          background: {
-            hover: 'var(--color-error-solid-background-hover)',
-          },
-        },
-        outline: {
-          text: {
-            default: 'var(--color-error-outline-text-default)',
-          },
-        },
-        subtle: {
-          background: {
-            hover: 'var(--color-error-subtle-background-hover)',
-            active: 'var(--color-error-subtle-background-active)',
-          },
-        },
-      },
-      info: {
-        solid: {
-          background: {
-            hover: 'var(--color-info-solid-background-hover)',
-          },
-        },
-        subtle: {
-          text: {
-            default: 'var(--color-info-subtle-text-default)',
-          },
-          background: {
-            hover: 'var(--color-info-subtle-background-hover)',
-            active: 'var(--color-info-subtle-background-active)',
-          },
-        },
-        outline: {
-          text: {
-            default: 'var(--color-info-outline-text-default)',
-          },
-        },
-      },
-      transparentBlack: 'var(--color-transparent-black)',
-      track: {
-        default: 'var(--color-track-default)',
-        hover: 'var(--color-track-hover)',
-        disabled: 'var(--color-track-disabled)',
-      },
-      ghost: {
-        text: {
-          active: 'var(--color-ghost-text-active)',
-        },
-      },
-      separator: {
-        foreground: 'var(--color-separator-foreground)',
+      selection: {
+        background: 'var(--color-selection-background)',
+        text: 'var(--color-selection-text)',
       },
     },
   },
