@@ -12,27 +12,11 @@
 import { join } from 'node:path';
 import { SURFACE_MODES, THEME_MODES, loadTokens, resolve } from '../lib/tokens.mjs';
 import { ROLE_MAP, TOKEN_OVERRIDES } from './role-map.mjs';
-import { VALUE_OVERRIDES, MIRROR_VALUE_OVERRIDES } from './target.mjs';
+import { VALUE_OVERRIDES, MIRROR_VALUE_OVERRIDES, VALUE_SOURCE } from './target.mjs';
 
 const ROOT = join(import.meta.dirname, '..', '..', '..');
 const { all, byKey } = loadTokens(join(ROOT, 'packages', 'foundations', 'src', 'figma-exports'));
 
-const VALUE_SOURCE = {
-  'border/subtle': 'border/default',
-  'border/default': 'separator/foreground',
-  'border/strong': 'border/strong/default',
-  'border/stronger': 'border/strong/hover',
-  'brand/primary/default': 'brand/primary',
-  'brand/primary/light': 'action/primary/base/disabled',
-  'brand/primary/dark': 'brand/solid/background/hover',
-  'brand/secondary/default': 'brand/secondary',
-  'brand/tertiary/default': 'brand/tertiary',
-  'background/transparent': 'transparent',
-  'background/scrim': 'transparent-black',
-  'text/placeholder': 'outline/placeholder/default',
-  'disabled/background': 'disabled/surface',
-  'disabled/text': 'filled/text/disabled',
-};
 
 const combos = THEME_MODES.flatMap((t) => SURFACE_MODES.map((s) => [t, s]));
 

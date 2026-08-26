@@ -15,7 +15,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { SURFACE_MODES, THEME_MODES, componentFacingTokens, loadTokens, resolve } from '../lib/tokens.mjs';
-import { TARGET_ROLES, DEPRECATED_KEPT, VALUE_OVERRIDES, MIRROR_VALUE_OVERRIDES } from './target.mjs';
+import { TARGET_ROLES, DEPRECATED_KEPT, VALUE_OVERRIDES, MIRROR_VALUE_OVERRIDES, VALUE_SOURCE } from './target.mjs';
 import { ROLE_MAP, TOKEN_OVERRIDES, PROMOTE_TO_SURFACES } from './role-map.mjs';
 
 const ROOT = join(import.meta.dirname, '..', '..', '..');
@@ -88,22 +88,6 @@ if (problems.length) {
 
 // 3 — drift. Where a target role keeps a name that exists today it inherits that value;
 // where it is a rename, VALUE_SOURCE names the role it takes its value from.
-const VALUE_SOURCE = {
-  'border/subtle': 'border/default',
-  'border/default': 'separator/foreground',
-  'border/strong': 'border/strong/default',
-  'border/stronger': 'border/strong/hover',
-  'brand/primary/default': 'brand/primary',
-  'brand/primary/light': 'action/primary/base/disabled',
-  'brand/primary/dark': 'brand/solid/background/hover',
-  'brand/secondary/default': 'brand/secondary',
-  'brand/tertiary/default': 'brand/tertiary',
-  'background/transparent': 'transparent',
-  'background/scrim': 'transparent-black',
-  'text/placeholder': 'outline/placeholder/default',
-  'disabled/background': 'disabled/surface',
-  'disabled/text': 'filled/text/disabled',
-};
 
 // `byKey` is a Map keyed `Collection.path` — indexing it like an object returns undefined
 // for every lookup, which makes every comparison silently skip and the whole check report

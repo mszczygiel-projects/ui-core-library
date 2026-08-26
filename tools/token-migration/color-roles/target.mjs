@@ -90,3 +90,34 @@ export const MIRROR_VALUE_OVERRIDES = {
   // approximate it. Dark mode already resolves to white here; Default did not.
   'on-brand-primary/background/inverse': { Default: 'Primitives Colors.white.1000' },
 };
+
+// Which of today's variables becomes each renamed role. This is the hinge of the whole
+// migration: renaming in place keeps the Figma variable `id`, so every binding follows the
+// change on its own — including the ~1 800 on instance sub-nodes that `setBoundVariable`
+// cannot rewrite. A role missing here keeps its own name.
+export const VALUE_SOURCE = {
+  'border/subtle': 'border/default',
+  'border/default': 'separator/foreground',
+  'border/strong': 'border/strong/default',
+  'border/stronger': 'border/strong/hover',
+  'brand/primary/default': 'brand/primary',
+  'brand/primary/light': 'action/primary/base/disabled',
+  'brand/primary/dark': 'brand/solid/background/hover',
+  'brand/secondary/default': 'brand/secondary',
+  'brand/tertiary/default': 'brand/tertiary',
+  'background/transparent': 'transparent',
+  'background/scrim': 'transparent-black',
+  'text/placeholder': 'outline/placeholder/default',
+  'disabled/background': 'disabled/surface',
+  'disabled/text': 'filled/text/disabled',
+};
+
+// Roles with no source variable at all — created from scratch, valued from primitives.
+// The brand tiers are capacity for client forks; `selection/*` is promoted out of Themes,
+// where it has lived without a Surfaces counterpart (and so without surface awareness).
+export const NEW_ROLES = {
+  'brand/secondary/light': 'Primitives Colors.brand.secondary.200',
+  'brand/secondary/dark': 'Primitives Colors.brand.secondary.600',
+  'brand/tertiary/light': 'Primitives Colors.gray.100',
+  'brand/tertiary/dark': 'Primitives Colors.gray.600',
+};
