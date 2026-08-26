@@ -7,8 +7,8 @@ export const tokens = {
         brand: {
           primary: {
             default: 'var(--color-on-subtle-brand-primary-default)',
-            dark: 'var(--color-on-subtle-brand-primary-dark)',
             light: 'var(--color-on-subtle-brand-primary-light)',
+            dark: 'var(--color-on-subtle-brand-primary-dark)',
           },
           secondary: {
             default: 'var(--color-on-subtle-brand-secondary-default)',
@@ -38,6 +38,10 @@ export const tokens = {
           muted: 'var(--color-on-subtle-text-muted)',
           brand: 'var(--color-on-subtle-text-brand)',
           placeholder: 'var(--color-on-subtle-text-placeholder)',
+        },
+        disabled: {
+          background: 'var(--color-on-subtle-disabled-background)',
+          text: 'var(--color-on-subtle-disabled-text)',
         },
         icon: {
           default: 'var(--color-on-subtle-icon-default)',
@@ -120,10 +124,6 @@ export const tokens = {
             },
           },
         },
-        disabled: {
-          background: 'var(--color-on-subtle-disabled-background)',
-          text: 'var(--color-on-subtle-disabled-text)',
-        },
         selection: {
           background: 'var(--color-on-subtle-selection-background)',
           text: 'var(--color-on-subtle-selection-text)',
@@ -133,8 +133,8 @@ export const tokens = {
         brand: {
           primary: {
             default: 'var(--color-on-inverse-brand-primary-default)',
-            dark: 'var(--color-on-inverse-brand-primary-dark)',
             light: 'var(--color-on-inverse-brand-primary-light)',
+            dark: 'var(--color-on-inverse-brand-primary-dark)',
           },
           secondary: {
             default: 'var(--color-on-inverse-brand-secondary-default)',
@@ -164,6 +164,10 @@ export const tokens = {
           muted: 'var(--color-on-inverse-text-muted)',
           brand: 'var(--color-on-inverse-text-brand)',
           placeholder: 'var(--color-on-inverse-text-placeholder)',
+        },
+        disabled: {
+          background: 'var(--color-on-inverse-disabled-background)',
+          text: 'var(--color-on-inverse-disabled-text)',
         },
         icon: {
           default: 'var(--color-on-inverse-icon-default)',
@@ -246,10 +250,6 @@ export const tokens = {
             },
           },
         },
-        disabled: {
-          background: 'var(--color-on-inverse-disabled-background)',
-          text: 'var(--color-on-inverse-disabled-text)',
-        },
         selection: {
           background: 'var(--color-on-inverse-selection-background)',
           text: 'var(--color-on-inverse-selection-text)',
@@ -259,8 +259,8 @@ export const tokens = {
         brand: {
           primary: {
             default: 'var(--color-on-brand-primary-brand-primary-default)',
-            dark: 'var(--color-on-brand-primary-brand-primary-dark)',
             light: 'var(--color-on-brand-primary-brand-primary-light)',
+            dark: 'var(--color-on-brand-primary-brand-primary-dark)',
           },
           secondary: {
             default: 'var(--color-on-brand-primary-brand-secondary-default)',
@@ -290,6 +290,10 @@ export const tokens = {
           muted: 'var(--color-on-brand-primary-text-muted)',
           brand: 'var(--color-on-brand-primary-text-brand)',
           placeholder: 'var(--color-on-brand-primary-text-placeholder)',
+        },
+        disabled: {
+          background: 'var(--color-on-brand-primary-disabled-background)',
+          text: 'var(--color-on-brand-primary-disabled-text)',
         },
         icon: {
           default: 'var(--color-on-brand-primary-icon-default)',
@@ -372,10 +376,6 @@ export const tokens = {
             },
           },
         },
-        disabled: {
-          background: 'var(--color-on-brand-primary-disabled-background)',
-          text: 'var(--color-on-brand-primary-disabled-text)',
-        },
         selection: {
           background: 'var(--color-on-brand-primary-selection-background)',
           text: 'var(--color-on-brand-primary-selection-text)',
@@ -447,8 +447,8 @@ export const tokens = {
       brand: {
         primary: {
           default: 'var(--color-brand-primary-default)',
-          dark: 'var(--color-brand-primary-dark)',
           light: 'var(--color-brand-primary-light)',
+          dark: 'var(--color-brand-primary-dark)',
         },
         secondary: {
           default: 'var(--color-brand-secondary-default)',
@@ -478,6 +478,10 @@ export const tokens = {
         muted: 'var(--color-text-muted)',
         brand: 'var(--color-text-brand)',
         placeholder: 'var(--color-text-placeholder)',
+      },
+      disabled: {
+        background: 'var(--color-disabled-background)',
+        text: 'var(--color-disabled-text)',
       },
       icon: {
         default: 'var(--color-icon-default)',
@@ -559,10 +563,6 @@ export const tokens = {
             hover: 'var(--color-action-danger-on-base-hover)',
           },
         },
-      },
-      disabled: {
-        background: 'var(--color-disabled-background)',
-        text: 'var(--color-disabled-text)',
       },
       selection: {
         background: 'var(--color-selection-background)',
@@ -2243,8 +2243,8 @@ export const tokens = {
           lineHeight: 'var(--typography-heading-display-line-height)',
           large: {
             fontSize: 'var(--typography-heading-display-large-font-size)',
-            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
             lineHeight: 'var(--typography-heading-display-large-line-height)',
+            letterSpacing: 'var(--typography-heading-display-large-letter-spacing)',
           },
           letterSpacing: 'var(--typography-heading-display-letter-spacing)',
         },
@@ -2321,8 +2321,8 @@ export const tokens = {
         letterSpacing: 'var(--typography-body-letter-spacing)',
         large: {
           fontSize: 'var(--typography-body-large-font-size)',
-          lineHeight: 'var(--typography-body-large-line-height)',
           letterSpacing: 'var(--typography-body-large-letter-spacing)',
+          lineHeight: 'var(--typography-body-large-line-height)',
         },
       },
       caption: {

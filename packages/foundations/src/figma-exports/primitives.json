@@ -434,6 +434,56 @@
           "$value": "#671514",
           "$type": "color"
         }
+      },
+      "tertiary": {
+        "50": {
+          "$value": "#fdfcff",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#f9f8ff",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#f2efff",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#e9e4ff",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#e0d7ff",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#d3c8ff",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#c1b2ff",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#ac95fb",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#8b5cf6",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#7f4ee7",
+          "$type": "color"
+        },
+        "950": {
+          "$value": "#6f43cd",
+          "$type": "color"
+        },
+        "1000": {
+          "$value": "#371e6b",
+          "$type": "color"
+        }
       }
     }
   },
