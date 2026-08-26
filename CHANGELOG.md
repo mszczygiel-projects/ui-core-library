@@ -12,6 +12,86 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.17.0] — 2026-08-26
+
+The Themes colour set went from **138 semantic roles to 63**. Where 0.15.0 moved
+variables without changing a rendered value, this one **re-decides values on
+purpose**: the old names described component variants rather than roles —
+`outline/*` and `filled/*` were TextField chrome, the
+`{success,warning,info,error}/{subtle,solid,outline}/*` families were Chip
+states, and `action/*/{focus,active}` already carried hover's value.
+
+Component tokens are untouched in name and count: all 978 stay, and only what they
+point at changes. So the `--color-{component}-*` properties keep working, and just
+two role references needed editing in Lit and React combined.
+
+### Migration
+
+**Roles that were renamed.** Everything else in the old set folded into one of
+the 63 — the full mapping is in
+[`tools/token-migration/color-roles/`](tools/token-migration/color-roles/README.md).
+
+| before | after |
+| --- | --- |
+| `--color-brand-primary` | `--color-brand-primary-default` (same for `-secondary`, `-tertiary`) |
+| `--color-border-default` | `--color-border-subtle` |
+| `--color-separator-foreground` | `--color-border-default` |
+| `--color-border-strong-default` / `-hover` | `--color-border-strong` / `--color-border-stronger` |
+| `--color-outline-placeholder-default` | `--color-text-placeholder` |
+| `--color-disabled-surface` | `--color-disabled-background` |
+| `--color-filled-text-disabled` | `--color-disabled-text` |
+| `--color-transparent` / `--color-transparent-black` | `--color-background-transparent` / `--color-background-scrim` |
+
+`--color-border-default` therefore changes meaning as well as name: it is now the
+separator tone (`#9fa0a1`), not the container edge.
+
+**`--color-action-primary-base-active` is deprecated**, not removed — 32 bindings
+in `[Core] UI Library` sit on instance sub-nodes the Plugin API cannot rewrite.
+It aliases `-hover`. Use `--color-action-primary-base-hover`; components now drive
+hover, active and focus from that one token, and both disabled leaves fold into
+`--color-disabled-background` / `--color-disabled-text`.
+
+### Added
+
+- `brand/{primary,secondary,tertiary}/{light,dark}` — a light and dark step per
+  brand tier, for subtle fills and emphasis.
+- `text/placeholder`, `disabled/{background,text}`, `border/stronger`,
+  `background/{transparent,scrim}`.
+- `selection/{background,text}` gained a `Surfaces` counterpart, so `::selection`
+  finally responds to `data-surface`.
+
+### Changed
+
+- **`feedback/*`, `border/strong`, `border/stronger`, `ring/default` and
+  `text/brand` are now surface-aware** — they carry different values per mirror
+  instead of one value everywhere. `feedback/*/base` is the solid fill, the ink on
+  `subtle`, and the ink on the page for an outline variant, and those want
+  opposite luminance: light contexts keep the saturated step, dark contexts take
+  `hue/300` with `subtle` dropping to `hue/1000`. Subtle chips and alerts in dark
+  mode are now a dark tint of their hue rather than a near-white pill.
+- `feedback/success/base` darkens to `green/950`. It is the one step that clears
+  4.5:1 both as a fill under white ink and as ink on its own tint; the old value
+  failed the first at 3.58:1.
+
+### Fixed
+
+- **The focus ring was invisible on inverse surfaces.** `ring/default` aliased the
+  base row in `on-subtle` and `on-inverse`, so it never flipped — 2.23:1 on the
+  dark inverse page, and in the `Dark` theme a white ring on a white page (1.00:1).
+  All eight theme × surface combinations now clear 3:1, worst case 3.88.
+- Three mirror values that failed contrast before this release:
+  `on-inverse/background/{sunken,subtle}` carried one value across both themes, so
+  Dark flipped the ink without flipping the surface under it (1.69:1).
+
+### Known issues
+
+- **`feedback/warning` does not meet WCAG AA in light contexts.** Warning ink on
+  its own tint is 2.49:1 and white on the base fill is 2.65:1. The whole `orange`
+  ramp was checked: no value serves both the solid fill and the ink on the tint —
+  the first that clears 4.5:1 both ways is brown. Verify with
+  `node tools/token-migration/color-roles/audit.mjs`, which should report warning
+  and nothing else.
+
 ## [0.16.0] — 2026-08-23
 
 A month/year picker behind the Calendar heading, plus a round of Web
