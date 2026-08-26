@@ -45,14 +45,29 @@ what let the on-inverse control tokens ship broken once already.
 ## What the numbers mean today
 
 ```
-mapping     138 → 63,  100% covered,  72 token-level overrides
-drift       314 of 726 component tokens change value in at least one combination
-contrast    73 pairs get worse and land under 3:1
+mapping     138 → 63,  100% covered
+contrast    36 pairs get worse and land under 3:1 — all of them warning
 ```
 
-Of those 73, **70 are the `warning` debt** — one known, accepted trade — and 3 are the
-`filled` field's error ink on the Inverse surface. Everything else that the fold broke was
-either fixed in the map or was already broken before it.
+`contrast.mjs` first reported 73 and was wrong: it skipped any pair whose fill was
+transparent, which is exactly the outline variants. `audit.mjs` composites those over the
+page the way a browser does and found 125. Driving the built Storybook and reading computed
+styles off the live Chip grid is what exposed the gap in the first place.
+
+The 125 came down to 36 in three moves, each one a role that had to start flipping with the
+surface: the `feedback` family, the `border` ramp, and `text/brand`. What remains is the
+`warning` debt alone, and only in the three light cells.
+
+## The dependency that only appears once you flip something
+
+`feedback/success/on-base` was doing duty as a **generic white** for sixteen tokens with
+nothing to do with success — a brand chip's label, the danger button's text, an error
+checkbox's mark. While every `on-base` was a constant white this read as merely untidy. The
+moment the family becomes surface-aware, all sixteen break at once.
+
+`repair-inks.mjs` fixes them by deriving each ink from the fill it sits on. Deriving found
+the right answers **and several wrong ones** — the switch's checked icon sits on the thumb,
+not the track — so the fills follow the rule and the inks are an explicit reviewed list.
 
 ### The `warning` debt
 

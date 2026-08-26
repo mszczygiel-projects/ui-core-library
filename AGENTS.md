@@ -145,10 +145,18 @@ Each layer references only the layer above it — never below or across. `Surfac
 they carry, colour versus dimension, and they compose without interfering.
 
 > **This layering was restructured on 2026-08-10.** The set went from 4638 variables to
-> **2078** without changing a single rendered value: the `on-subtle` / `on-inverse` /
-> `on-brand-primary` mirrors now carry ~138 semantic roles instead of all 797
+> **2078** without changing a single rendered value: the mirrors stopped carrying all 797
 > component-facing tokens, and the per-component tokens moved into a `Components` collection
-> of single aliases. A client now configures **138 roles** instead of ~4000 rows.
+> of single aliases.
+>
+> **The colour half was folded again on 2026-08-26**: `Themes` 580 → 282 and `Surfaces`
+> 138 → 64, so a client now configures **63 roles**. Unlike the first pass this one moves
+> values on purpose — the old names described component variants (`outline/*` and `filled/*`
+> were TextField chrome, the `{success,warning,info,error}/{subtle,solid,outline}/*` families
+> were Chip states), so folding them is a re-decision, not a rename. `Components` keeps all
+> 978 tokens and every CSS custom property name, which is why the two component packages
+> needed two edits between them. Tooling and the contrast oracle:
+> [`tools/token-migration/color-roles/`](tools/token-migration/color-roles/README.md).
 > Measurements, rationale and the migration scripts:
 > [`packages/foundations/docs/token-audit.md`](packages/foundations/docs/token-audit.md)
 > and [`tools/token-migration/`](tools/token-migration/README.md).
@@ -241,9 +249,60 @@ explicitly — `data-theme="default"` forces light even on a dark OS. Pass `--no
 to the CLI (or `autoDarkMode: false` to `buildTokens()`) to drop that mirror in projects that
 always drive the theme from the attribute.
 
-Color categories: `brand`, `background`, `text`, `icon`, `border`, `ring`, `link`, `feedback`, `action`, `button`, `control-outline`, `control-filled`.
+**The colour set is exactly 63 roles**, and the list is closed — a name that is not on it
+does not belong in `Themes`:
 
-States: `default | hover | focus | active | disabled | success | error`
+```
+brand/       primary|secondary|tertiary × default|light|dark              →  9
+background/  default sunken subtle inverse overlay brand-primary
+             tint transparent scrim                                      →  9
+text/        primary secondary muted placeholder brand                    →  5
+disabled/    background text                                             →  2
+icon/        default                                                     →  1
+border/      subtle default strong stronger                              →  4
+ring/        default                                                     →  1
+feedback/    success|info|warning|error × base|subtle|on-base            → 12
+action/      primary|secondary|tertiary|danger × base|on-base
+             × default|hover                                             → 16
+link/        default hover                                               →  2
+selection/   background text                                             →  2
+```
+
+**Only `default` and `hover` survive as action states.** Components drive `hover`, `active`
+and `focus` from the one `hover` token, and both disabled leaves fold into `disabled/*`.
+Adding `action/*/base/active` back would put the state matrix in the token set again, which
+is the thing this list exists to prevent.
+
+`action/primary/base/active` is the one exception still present, and it is deprecated: 32
+bindings in `[Core] UI Library` sit on instance sub-nodes where `setBoundVariable` is a
+silent no-op, so it cannot be deleted by script. It aliases `hover`. Do not use it.
+
+#### A role that is read on a surface must flip with it
+
+`base` in the `feedback` family is the solid fill AND the ink on `subtle` AND the ink on the
+page for an outline variant. Those want opposite luminance, so the role carries different
+values per mirror — light contexts keep the saturated step, dark contexts take `hue/300`
+with `subtle` dropping to `hue/1000`. `border/strong` and `border/stronger` do the same,
+because the border ramp is the Switch track as well as the field outline.
+
+**Which mirror is "dark" is not what its name suggests.** It comes from the resolved
+luminance of `background/default` in that cell: `on-inverse` is DARK under the Default theme
+and LIGHT under `Dark`, because inverting a dark page yields a light one.
+
+| mirror | Default theme | Dark theme |
+| --- | --- | --- |
+| _(base)_ | light | dark |
+| `on-subtle` | light | dark |
+| `on-inverse` | **dark** | **light** |
+| `on-brand-primary` | dark | dark |
+
+**Known debt: `feedback/warning`.** Folding `warning/subtle/text` into `feedback/warning/base`
+costs contrast in the three light cells — warning ink on its own tint is 2.49:1 and white on
+the base fill is 2.65:1. The whole `orange` ramp was checked and **no value serves both the
+solid fill and the ink on the tint**; the first that clears 4.5:1 both ways is `orange/1000`,
+which is brown. `success` had the same problem and an escape at `green/950`, which is applied.
+Verify with `node tools/token-migration/color-roles/audit.mjs` — it should report warning and
+nothing else.
 
 Themes also contains non-color tokens: `--typography-*`, `--radius-*`, `--ring-*`. These have **no Surfaces equivalent** and may be used directly in components — Surfaces does not override them.
 

@@ -121,3 +121,52 @@ export const NEW_ROLES = {
   'brand/tertiary/light': 'Primitives Colors.gray.100',
   'brand/tertiary/dark': 'Primitives Colors.gray.600',
 };
+
+// ── Surface-aware roles ─────────────────────────────────────────────────────────────────
+//
+// Folding a surface-aware role into a constant one is what broke the outline chips, the
+// field labels and the switch track: the old set carried `*/outline/text/default` and the
+// `filled/*` family precisely so a coloured ink could flip with the page. With those gone,
+// the surviving role has to do the flipping itself.
+//
+// Which cell is light and which is dark comes from the resolved luminance of
+// `background/default`, not from the mode's name — `on-inverse` is DARK under the Default
+// theme and LIGHT under Dark, because inverting a dark page yields a light one.
+export const CONTEXT = {
+  '': { Default: 'light', Dark: 'dark' },
+  'on-subtle': { Default: 'light', Dark: 'dark' },
+  'on-inverse': { Default: 'dark', Dark: 'light' },
+  'on-brand-primary': { Default: 'dark', Dark: 'dark' },
+};
+
+// `base` does double duty — the solid fill AND the ink on `subtle` and on the page — so the
+// two contexts need opposite luminance. Ramp steps chosen against the frontier: h/300 keeps
+// the hue legible (h/50 scores higher but renders every state near-white), text on the pill
+// lands ~9:1 and ink straight on the page ~6.8:1. The pill itself only clears ~1.2:1 against
+// a near-black page; that is inherent to a tinted container in dark mode and is not a text
+// contrast, but it IS a visible change from today's near-white pill on inverse surfaces.
+export const FEEDBACK_RAMP = {
+  success: 'green', info: 'blue', warning: 'orange', error: 'red',
+};
+export const FEEDBACK_STEPS = {
+  light: { base: { success: '950', info: '900', warning: '800', error: '900' }, subtle: '100', onBase: null },
+  dark: { base: '300', subtle: '1000', onBase: '1000' },
+};
+
+// The border ramp had the same defect for a simpler reason: it is the Switch track as well
+// as the field outline, and a constant mid-grey disappears on a dark surface.
+export const BORDER_STEPS = {
+  light: { 'border/strong': 'gray.600', 'border/stronger': 'gray.800' },
+  dark: { 'border/strong': 'gray.500', 'border/stronger': 'gray.300' },
+};
+
+// Stragglers of the same kind: a role that is dark enough for the page it was designed
+// against, and too dark for a lighter one in the same theme. brand.primary/400 reads 3.6:1
+// on the Dark theme's own page and 2.63:1 once the Subtle surface lifts it to #2d2f31.
+// The on-inverse mirror moves the opposite way for the same reason: under the Dark theme it
+// describes a LIGHT page, so lifting the base value drags it along and lands #6b92f7 on white.
+export const EXTRA_VALUE_EDITS = [
+  ['color/text/brand', 'Dark', 'brand.primary.300'],
+  ['color/on-subtle/text/brand', 'Dark', 'brand.primary.300'],
+  ['color/on-inverse/text/brand', 'Dark', 'brand.primary.500'],
+];

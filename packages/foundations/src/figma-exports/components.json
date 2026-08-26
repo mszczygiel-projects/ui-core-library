@@ -460,7 +460,7 @@
             "$type": "color"
           },
           "error": {
-            "$value": "{Surfaces.color.feedback.success.on-base}",
+            "$value": "{Surfaces.color.feedback.error.on-base}",
             "$type": "color"
           },
           "default": {
@@ -594,7 +594,7 @@
             "$type": "color"
           },
           "error": {
-            "$value": "{Surfaces.color.feedback.success.on-base}",
+            "$value": "{Surfaces.color.feedback.error.on-base}",
             "$type": "color"
           },
           "default": {
@@ -694,7 +694,7 @@
             "$type": "color"
           },
           "text": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           }
         }
@@ -732,15 +732,15 @@
       "brand": {
         "solid": {
           "text": {
-            "$value": "{Surfaces.color.feedback.success.on-base}",
+            "$value": "{Surfaces.color.action.primary.on-base.default}",
             "$type": "color"
           },
           "background": {
-            "$value": "{Surfaces.color.brand.primary.default}",
+            "$value": "{Surfaces.color.action.primary.base.default}",
             "$type": "color"
           },
           "border": {
-            "$value": "{Surfaces.color.brand.primary.default}",
+            "$value": "{Surfaces.color.action.primary.base.default}",
             "$type": "color"
           }
         },
@@ -1203,7 +1203,7 @@
               "$type": "color"
             },
             "default": {
-              "$value": "{Surfaces.color.action.danger.base.default}",
+              "$value": "{Surfaces.color.feedback.error.base}",
               "$type": "color"
             },
             "hover": {
@@ -1211,7 +1211,7 @@
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.action.danger.base.default}",
+              "$value": "{Surfaces.color.feedback.error.base}",
               "$type": "color"
             },
             "active": {
@@ -1555,23 +1555,23 @@
               "$type": "color"
             },
             "default": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.default}",
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.hover}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.default}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.hover}",
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.hover}",
               "$type": "color"
             }
           },
@@ -1581,23 +1581,23 @@
               "$type": "color"
             },
             "default": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.action.primary.base.hover}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.action.primary.base.hover}",
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.action.primary.base.hover}",
               "$type": "color"
             }
           },
@@ -1607,23 +1607,23 @@
               "$type": "color"
             },
             "default": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.action.primary.base.hover}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.action.primary.base.hover}",
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.action.primary.base.hover}",
               "$type": "color"
             }
           }
@@ -1635,7 +1635,7 @@
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.default}",
               "$type": "color"
             },
             "default": {
@@ -1669,7 +1669,7 @@
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "hover": {
@@ -1695,7 +1695,7 @@
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "hover": {
@@ -1715,11 +1715,11 @@
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.feedback.success.on-base}",
+              "$value": "{Surfaces.color.action.primary.on-base.default}",
               "$type": "color"
             },
             "default": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.text.brand}",
               "$type": "color"
             },
             "hover": {
@@ -1727,7 +1727,7 @@
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.text.brand}",
               "$type": "color"
             },
             "active": {
@@ -1741,7 +1741,7 @@
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "default": {
@@ -1763,23 +1763,23 @@
           },
           "border": {
             "default": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "selected": {
-              "$value": "{Surfaces.color.brand.primary.default}",
+              "$value": "{Surfaces.color.action.primary.base.default}",
               "$type": "color"
             },
             "disabled": {
@@ -2410,7 +2410,7 @@
             "$type": "color"
           },
           "error": {
-            "$value": "{Surfaces.color.feedback.success.on-base}",
+            "$value": "{Surfaces.color.feedback.error.on-base}",
             "$type": "color"
           },
           "hover": {
@@ -2824,45 +2824,45 @@
         },
         "text": {
           "active": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "disabled": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "focus": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "hover": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "default": {
-            "$value": "{Surfaces.color.feedback.success.on-base}",
+            "$value": "{Surfaces.color.action.danger.on-base.default}",
             "$type": "color"
           }
         },
         "separator": {
           "hover": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "focus": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "active": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "disabled": {
-            "$value": "{Surfaces.color.action.danger.base.default}",
+            "$value": "{Surfaces.color.feedback.error.base}",
             "$type": "color"
           },
           "default": {
-            "$value": "{Surfaces.color.feedback.success.on-base}",
+            "$value": "{Surfaces.color.action.danger.on-base.default}",
             "$type": "color"
           }
         }
