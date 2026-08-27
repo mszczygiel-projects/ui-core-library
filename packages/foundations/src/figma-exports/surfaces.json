@@ -11,21 +11,21 @@
           },
           "$type": "color"
         },
-        "light": {
+        "subtle": {
           "$value": {
-            "Default": "{Themes.color.brand.primary.light}",
-            "Subtle": "{Themes.color.on-subtle.brand.primary.light}",
-            "Inverse": "{Themes.color.on-inverse.brand.primary.light}",
-            "Primary": "{Themes.color.on-brand-primary.brand.primary.light}"
+            "Default": "{Themes.color.brand.primary.subtle}",
+            "Subtle": "{Themes.color.on-subtle.brand.primary.subtle}",
+            "Inverse": "{Themes.color.on-inverse.brand.primary.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.brand.primary.subtle}"
           },
           "$type": "color"
         },
-        "dark": {
+        "strong": {
           "$value": {
-            "Default": "{Themes.color.brand.primary.dark}",
-            "Subtle": "{Themes.color.on-subtle.brand.primary.dark}",
-            "Inverse": "{Themes.color.on-inverse.brand.primary.dark}",
-            "Primary": "{Themes.color.on-brand-primary.brand.primary.dark}"
+            "Default": "{Themes.color.brand.primary.strong}",
+            "Subtle": "{Themes.color.on-subtle.brand.primary.strong}",
+            "Inverse": "{Themes.color.on-inverse.brand.primary.strong}",
+            "Primary": "{Themes.color.on-brand-primary.brand.primary.strong}"
           },
           "$type": "color"
         }
@@ -40,21 +40,21 @@
           },
           "$type": "color"
         },
-        "light": {
+        "subtle": {
           "$value": {
-            "Default": "{Themes.color.brand.secondary.light}",
-            "Subtle": "{Themes.color.on-subtle.brand.secondary.light}",
-            "Inverse": "{Themes.color.on-inverse.brand.secondary.light}",
-            "Primary": "{Themes.color.on-brand-primary.brand.secondary.light}"
+            "Default": "{Themes.color.brand.secondary.subtle}",
+            "Subtle": "{Themes.color.on-subtle.brand.secondary.subtle}",
+            "Inverse": "{Themes.color.on-inverse.brand.secondary.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.brand.secondary.subtle}"
           },
           "$type": "color"
         },
-        "dark": {
+        "strong": {
           "$value": {
-            "Default": "{Themes.color.brand.secondary.dark}",
-            "Subtle": "{Themes.color.on-subtle.brand.secondary.dark}",
-            "Inverse": "{Themes.color.on-inverse.brand.secondary.dark}",
-            "Primary": "{Themes.color.on-brand-primary.brand.secondary.dark}"
+            "Default": "{Themes.color.brand.secondary.strong}",
+            "Subtle": "{Themes.color.on-subtle.brand.secondary.strong}",
+            "Inverse": "{Themes.color.on-inverse.brand.secondary.strong}",
+            "Primary": "{Themes.color.on-brand-primary.brand.secondary.strong}"
           },
           "$type": "color"
         }
@@ -69,21 +69,21 @@
           },
           "$type": "color"
         },
-        "light": {
+        "subtle": {
           "$value": {
-            "Default": "{Themes.color.brand.tertiary.light}",
-            "Subtle": "{Themes.color.on-subtle.brand.tertiary.light}",
-            "Inverse": "{Themes.color.on-inverse.brand.tertiary.light}",
-            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.light}"
+            "Default": "{Themes.color.brand.tertiary.subtle}",
+            "Subtle": "{Themes.color.on-subtle.brand.tertiary.subtle}",
+            "Inverse": "{Themes.color.on-inverse.brand.tertiary.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.subtle}"
           },
           "$type": "color"
         },
-        "dark": {
+        "strong": {
           "$value": {
-            "Default": "{Themes.color.brand.tertiary.dark}",
-            "Subtle": "{Themes.color.on-subtle.brand.tertiary.dark}",
-            "Inverse": "{Themes.color.on-inverse.brand.tertiary.dark}",
-            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.dark}"
+            "Default": "{Themes.color.brand.tertiary.strong}",
+            "Subtle": "{Themes.color.on-subtle.brand.tertiary.strong}",
+            "Inverse": "{Themes.color.on-inverse.brand.tertiary.strong}",
+            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.strong}"
           },
           "$type": "color"
         }
@@ -97,7 +97,8 @@
           "Inverse": "{Themes.color.on-inverse.background.default}",
           "Primary": "{Themes.color.on-brand-primary.background.default}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The base surface a page and its cards are painted on, and the value a nested data-surface=\"default\" container resets back to."
       },
       "sunken": {
         "$value": {
@@ -107,7 +108,7 @@
           "Primary": "{Themes.color.on-brand-primary.background.sunken}"
         },
         "$type": "color",
-        "$description": "input background, itp."
+        "$description": "A recessed surface that reads as carved into the page — the fill of filled form fields and the file-input preview area."
       },
       "subtle": {
         "$value": {
@@ -117,7 +118,7 @@
           "Primary": "{Themes.color.on-brand-primary.background.subtle}"
         },
         "$type": "color",
-        "$description": "card, itp."
+        "$description": "A quiet raised container one step off the page, used for neutral chip hover, listbox option hover and similar low-emphasis grouping."
       },
       "inverse": {
         "$value": {
@@ -126,16 +127,8 @@
           "Inverse": "{Themes.color.on-inverse.background.inverse}",
           "Primary": "{Themes.color.on-brand-primary.background.inverse}"
         },
-        "$type": "color"
-      },
-      "overlay": {
-        "$value": {
-          "Default": "{Themes.color.background.overlay}",
-          "Subtle": "{Themes.color.on-subtle.background.overlay}",
-          "Inverse": "{Themes.color.on-inverse.background.overlay}",
-          "Primary": "{Themes.color.on-brand-primary.background.overlay}"
-        },
-        "$type": "color"
+        "$type": "color",
+        "$description": "A dark surface for inverted contexts — solid neutral chips and badges, and any region marked data-surface=\"inverse\"."
       },
       "brand-primary": {
         "$value": {
@@ -144,7 +137,18 @@
           "Inverse": "{Themes.color.on-inverse.background.brand-primary}",
           "Primary": "{Themes.color.on-brand-primary.background.brand-primary}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "A brand-filled surface for promotional or emphasis regions, and the region marked data-surface=\"primary\"."
+      },
+      "overlay": {
+        "$value": {
+          "Default": "{Themes.color.background.overlay}",
+          "Subtle": "{Themes.color.on-subtle.background.overlay}",
+          "Inverse": "{Themes.color.on-inverse.background.overlay}",
+          "Primary": "{Themes.color.on-brand-primary.background.overlay}"
+        },
+        "$type": "color",
+        "$description": "The dimming layer drawn behind modal dialogs and drawers so the content underneath recedes."
       },
       "tint": {
         "$value": {
@@ -153,7 +157,8 @@
           "Inverse": "{Themes.color.on-inverse.background.tint}",
           "Primary": "{Themes.color.on-brand-primary.background.tint}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "A low-alpha wash laid over whatever is beneath it to signal hover or selection without committing to a colour, flipping from a black to a white wash on dark and inverse surfaces."
       },
       "transparent": {
         "$value": {
@@ -162,16 +167,8 @@
           "Inverse": "{Themes.color.on-inverse.background.transparent}",
           "Primary": "{Themes.color.on-brand-primary.background.transparent}"
         },
-        "$type": "color"
-      },
-      "scrim": {
-        "$value": {
-          "Default": "{Themes.color.background.scrim}",
-          "Subtle": "{Themes.color.on-subtle.background.scrim}",
-          "Inverse": "{Themes.color.on-inverse.background.scrim}",
-          "Primary": "{Themes.color.on-brand-primary.background.scrim}"
-        },
-        "$type": "color"
+        "$type": "color",
+        "$description": "An explicit \"no fill\", used where a component must occupy the box but paint nothing — ghost and outline backgrounds, unchecked checkbox and radio fills."
       }
     },
     "text": {
@@ -182,7 +179,8 @@
           "Inverse": "{Themes.color.on-inverse.text.primary}",
           "Primary": "{Themes.color.on-brand-primary.text.primary}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The default ink for body copy and headings, carrying the highest contrast against its surface."
       },
       "secondary": {
         "$value": {
@@ -191,7 +189,8 @@
           "Inverse": "{Themes.color.on-inverse.text.secondary}",
           "Primary": "{Themes.color.on-brand-primary.text.secondary}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "Supporting ink for field labels and secondary copy — lower emphasis than primary, still held to the 4.5:1 text threshold."
       },
       "muted": {
         "$value": {
@@ -200,7 +199,8 @@
           "Inverse": "{Themes.color.on-inverse.text.muted}",
           "Primary": "{Themes.color.on-brand-primary.text.muted}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The quietest readable ink, for helper text and hints that should recede without becoming decoration."
       },
       "brand": {
         "$value": {
@@ -209,7 +209,8 @@
           "Inverse": "{Themes.color.on-inverse.text.brand}",
           "Primary": "{Themes.color.on-brand-primary.text.brand}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "Body ink rendered in the brand colour, for brand-tinted copy and emphasis that is not a link."
       },
       "placeholder": {
         "$value": {
@@ -218,38 +219,8 @@
           "Inverse": "{Themes.color.on-inverse.text.placeholder}",
           "Primary": "{Themes.color.on-brand-primary.text.placeholder}"
         },
-        "$type": "color"
-      }
-    },
-    "disabled": {
-      "background": {
-        "$value": {
-          "Default": "{Themes.color.disabled.background}",
-          "Subtle": "{Themes.color.on-subtle.disabled.background}",
-          "Inverse": "{Themes.color.on-inverse.disabled.background}",
-          "Primary": "{Themes.color.on-brand-primary.disabled.background}"
-        },
-        "$type": "color"
-      },
-      "text": {
-        "$value": {
-          "Default": "{Themes.color.disabled.text}",
-          "Subtle": "{Themes.color.on-subtle.disabled.text}",
-          "Inverse": "{Themes.color.on-inverse.disabled.text}",
-          "Primary": "{Themes.color.on-brand-primary.disabled.text}"
-        },
-        "$type": "color"
-      }
-    },
-    "icon": {
-      "default": {
-        "$value": {
-          "Default": "{Themes.color.icon.default}",
-          "Subtle": "{Themes.color.on-subtle.icon.default}",
-          "Inverse": "{Themes.color.on-inverse.icon.default}",
-          "Primary": "{Themes.color.on-brand-primary.icon.default}"
-        },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The prompt text shown inside an empty input, which disappears as soon as the user types."
       }
     },
     "border": {
@@ -286,37 +257,6 @@
           "Subtle": "{Themes.color.on-subtle.border.default}",
           "Inverse": "{Themes.color.on-inverse.border.default}",
           "Primary": "{Themes.color.on-brand-primary.border.default}"
-        },
-        "$type": "color"
-      }
-    },
-    "ring": {
-      "default": {
-        "$value": {
-          "Default": "{Themes.color.ring.default}",
-          "Subtle": "{Themes.color.on-subtle.ring.default}",
-          "Inverse": "{Themes.color.on-inverse.ring.default}",
-          "Primary": "{Themes.color.on-brand-primary.ring.default}"
-        },
-        "$type": "color"
-      }
-    },
-    "link": {
-      "default": {
-        "$value": {
-          "Default": "{Themes.color.link.default}",
-          "Subtle": "{Themes.color.on-subtle.link.default}",
-          "Inverse": "{Themes.color.on-inverse.link.default}",
-          "Primary": "{Themes.color.on-brand-primary.link.default}"
-        },
-        "$type": "color"
-      },
-      "hover": {
-        "$value": {
-          "Default": "{Themes.color.link.hover}",
-          "Subtle": "{Themes.color.on-subtle.link.hover}",
-          "Inverse": "{Themes.color.on-inverse.link.hover}",
-          "Primary": "{Themes.color.on-brand-primary.link.hover}"
         },
         "$type": "color"
       }
@@ -618,6 +558,59 @@
         }
       }
     },
+    "link": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.link.default}",
+          "Subtle": "{Themes.color.on-subtle.link.default}",
+          "Inverse": "{Themes.color.on-inverse.link.default}",
+          "Primary": "{Themes.color.on-brand-primary.link.default}"
+        },
+        "$type": "color"
+      },
+      "hover": {
+        "$value": {
+          "Default": "{Themes.color.link.hover}",
+          "Subtle": "{Themes.color.on-subtle.link.hover}",
+          "Inverse": "{Themes.color.on-inverse.link.hover}",
+          "Primary": "{Themes.color.on-brand-primary.link.hover}"
+        },
+        "$type": "color"
+      }
+    },
+    "icon": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.icon.default}",
+          "Subtle": "{Themes.color.on-subtle.icon.default}",
+          "Inverse": "{Themes.color.on-inverse.icon.default}",
+          "Primary": "{Themes.color.on-brand-primary.icon.default}"
+        },
+        "$type": "color"
+      }
+    },
+    "disabled": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.disabled.background}",
+          "Subtle": "{Themes.color.on-subtle.disabled.background}",
+          "Inverse": "{Themes.color.on-inverse.disabled.background}",
+          "Primary": "{Themes.color.on-brand-primary.disabled.background}"
+        },
+        "$type": "color",
+        "$description": "The fill and outline of an inactive control, flattening it into the page so it reads as unavailable."
+      },
+      "text": {
+        "$value": {
+          "Default": "{Themes.color.disabled.text}",
+          "Subtle": "{Themes.color.on-subtle.disabled.text}",
+          "Inverse": "{Themes.color.on-inverse.disabled.text}",
+          "Primary": "{Themes.color.on-brand-primary.disabled.text}"
+        },
+        "$type": "color",
+        "$description": "The ink on an inactive control — its label, value and icons."
+      }
+    },
     "selection": {
       "background": {
         "$value": {
@@ -634,6 +627,17 @@
           "Subtle": "{Themes.color.on-subtle.selection.text}",
           "Inverse": "{Themes.color.on-inverse.selection.text}",
           "Primary": "{Themes.color.on-brand-primary.selection.text}"
+        },
+        "$type": "color"
+      }
+    },
+    "ring": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.ring.default}",
+          "Subtle": "{Themes.color.on-subtle.ring.default}",
+          "Inverse": "{Themes.color.on-inverse.ring.default}",
+          "Primary": "{Themes.color.on-brand-primary.ring.default}"
         },
         "$type": "color"
       }

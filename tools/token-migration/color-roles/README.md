@@ -7,20 +7,20 @@ Nothing here ships. `packages/foundations` never imports it.
 ## Why a second set of tools next to `../`
 
 The 2026-08-10 restructure was value-preserving by construction — it moved variables without
-changing what anything resolved to, so `snapshot.mjs --check` reporting *zero* drift was the
+changing what anything resolved to, so `snapshot.mjs --check` reporting _zero_ drift was the
 whole proof.
 
 This refactor is not that. Folding 138 roles into 63 **moves values on purpose**, so a drift
 count proves nothing on its own. The question changes from "did anything move?" to "did
-anything move *onto its own background*?" — which needs a different oracle.
+anything move _onto its own background_?" — which needs a different oracle.
 
-| Command | What it answers |
-| --- | --- |
-| `node validate.mjs` | Is the mapping total, and does every target survive? Exits 1 on any gap. |
-| `node validate.mjs --drift` | Which tokens change value, per theme × surface combination. |
-| `node contrast.mjs` | Which foreground/background pairs get *worse* and land under 3:1. |
-| `node contrast.mjs --causes` | The same, collapsed to root causes — 73 rows become 18. |
-| `node contrast.mjs --all` | Every failing pair, whether or not the refactor moved it. |
+| Command                      | What it answers                                                          |
+| ---------------------------- | ------------------------------------------------------------------------ |
+| `node validate.mjs`          | Is the mapping total, and does every target survive? Exits 1 on any gap. |
+| `node validate.mjs --drift`  | Which tokens change value, per theme × surface combination.              |
+| `node contrast.mjs`          | Which foreground/background pairs get _worse_ and land under 3:1.        |
+| `node contrast.mjs --causes` | The same, collapsed to root causes — 73 rows become 18.                  |
+| `node contrast.mjs --all`    | Every failing pair, whether or not the refactor moved it.                |
 
 ## The files
 
@@ -37,7 +37,7 @@ every comparison skips and the run reports a clean zero. `validate.mjs` now prob
 value — the same self-check `../snapshot.mjs` carries, for the same reason.
 
 **A fold is only a bug when it lands on its own background.** `feedback/*/subtle` is a fixed
-pale tint with no surface awareness. As a *chip* fill that is fine. As a *field* fill it
+pale tint with no surface awareness. As a _chip_ fill that is fine. As a _field_ fill it
 resolves to #f4fbf6 on the Inverse surface while the field's ink flips to white — 1.02:1.
 Checking a foreground against the page instead of against its co-located fill is exactly
 what let the on-inverse control tokens ship broken once already.
@@ -94,3 +94,10 @@ Default/Primary background/default #174ba0 on background/inverse #151419 → 2.2
 Dark theme flips the ink the surface under it does not follow. The `filled/*` family masks
 this today by keeping its own surface-aware copies; folding those away exposes it, so the
 refactor repairs it instead of inheriting it.
+
+## What still needs hands
+
+Forty-eight bindings across 27 nodes cannot be re-pointed by script — icon `width`/`height`
+on instances nested inside instances, and six `letterSpacing` bindings whose successor is a
+`STRING`. The click-through list, with node ids and deep links, is in
+[`manual-figma-fixes.md`](manual-figma-fixes.md).

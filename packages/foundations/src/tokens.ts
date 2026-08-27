@@ -7,18 +7,18 @@ export const tokens = {
         brand: {
           primary: {
             default: 'var(--color-on-subtle-brand-primary-default)',
-            light: 'var(--color-on-subtle-brand-primary-light)',
-            dark: 'var(--color-on-subtle-brand-primary-dark)',
+            subtle: 'var(--color-on-subtle-brand-primary-subtle)',
+            strong: 'var(--color-on-subtle-brand-primary-strong)',
           },
           secondary: {
             default: 'var(--color-on-subtle-brand-secondary-default)',
-            light: 'var(--color-on-subtle-brand-secondary-light)',
-            dark: 'var(--color-on-subtle-brand-secondary-dark)',
+            subtle: 'var(--color-on-subtle-brand-secondary-subtle)',
+            strong: 'var(--color-on-subtle-brand-secondary-strong)',
           },
           tertiary: {
             default: 'var(--color-on-subtle-brand-tertiary-default)',
-            light: 'var(--color-on-subtle-brand-tertiary-light)',
-            dark: 'var(--color-on-subtle-brand-tertiary-dark)',
+            subtle: 'var(--color-on-subtle-brand-tertiary-subtle)',
+            strong: 'var(--color-on-subtle-brand-tertiary-strong)',
           },
         },
         background: {
@@ -30,7 +30,6 @@ export const tokens = {
           brandPrimary: 'var(--color-on-subtle-background-brand-primary)',
           tint: 'var(--color-on-subtle-background-tint)',
           transparent: 'var(--color-on-subtle-background-transparent)',
-          scrim: 'var(--color-on-subtle-background-scrim)',
         },
         text: {
           primary: 'var(--color-on-subtle-text-primary)',
@@ -133,18 +132,18 @@ export const tokens = {
         brand: {
           primary: {
             default: 'var(--color-on-inverse-brand-primary-default)',
-            light: 'var(--color-on-inverse-brand-primary-light)',
-            dark: 'var(--color-on-inverse-brand-primary-dark)',
+            subtle: 'var(--color-on-inverse-brand-primary-subtle)',
+            strong: 'var(--color-on-inverse-brand-primary-strong)',
           },
           secondary: {
             default: 'var(--color-on-inverse-brand-secondary-default)',
-            light: 'var(--color-on-inverse-brand-secondary-light)',
-            dark: 'var(--color-on-inverse-brand-secondary-dark)',
+            subtle: 'var(--color-on-inverse-brand-secondary-subtle)',
+            strong: 'var(--color-on-inverse-brand-secondary-strong)',
           },
           tertiary: {
             default: 'var(--color-on-inverse-brand-tertiary-default)',
-            light: 'var(--color-on-inverse-brand-tertiary-light)',
-            dark: 'var(--color-on-inverse-brand-tertiary-dark)',
+            subtle: 'var(--color-on-inverse-brand-tertiary-subtle)',
+            strong: 'var(--color-on-inverse-brand-tertiary-strong)',
           },
         },
         background: {
@@ -156,7 +155,6 @@ export const tokens = {
           brandPrimary: 'var(--color-on-inverse-background-brand-primary)',
           tint: 'var(--color-on-inverse-background-tint)',
           transparent: 'var(--color-on-inverse-background-transparent)',
-          scrim: 'var(--color-on-inverse-background-scrim)',
         },
         text: {
           primary: 'var(--color-on-inverse-text-primary)',
@@ -259,18 +257,18 @@ export const tokens = {
         brand: {
           primary: {
             default: 'var(--color-on-brand-primary-brand-primary-default)',
-            light: 'var(--color-on-brand-primary-brand-primary-light)',
-            dark: 'var(--color-on-brand-primary-brand-primary-dark)',
+            subtle: 'var(--color-on-brand-primary-brand-primary-subtle)',
+            strong: 'var(--color-on-brand-primary-brand-primary-strong)',
           },
           secondary: {
             default: 'var(--color-on-brand-primary-brand-secondary-default)',
-            light: 'var(--color-on-brand-primary-brand-secondary-light)',
-            dark: 'var(--color-on-brand-primary-brand-secondary-dark)',
+            subtle: 'var(--color-on-brand-primary-brand-secondary-subtle)',
+            strong: 'var(--color-on-brand-primary-brand-secondary-strong)',
           },
           tertiary: {
             default: 'var(--color-on-brand-primary-brand-tertiary-default)',
-            light: 'var(--color-on-brand-primary-brand-tertiary-light)',
-            dark: 'var(--color-on-brand-primary-brand-tertiary-dark)',
+            subtle: 'var(--color-on-brand-primary-brand-tertiary-subtle)',
+            strong: 'var(--color-on-brand-primary-brand-tertiary-strong)',
           },
         },
         background: {
@@ -282,7 +280,6 @@ export const tokens = {
           brandPrimary: 'var(--color-on-brand-primary-background-brand-primary)',
           tint: 'var(--color-on-brand-primary-background-tint)',
           transparent: 'var(--color-on-brand-primary-background-transparent)',
-          scrim: 'var(--color-on-brand-primary-background-scrim)',
         },
         text: {
           primary: 'var(--color-on-brand-primary-text-primary)',
@@ -447,18 +444,18 @@ export const tokens = {
       brand: {
         primary: {
           default: 'var(--color-brand-primary-default)',
-          light: 'var(--color-brand-primary-light)',
-          dark: 'var(--color-brand-primary-dark)',
+          subtle: 'var(--color-brand-primary-subtle)',
+          strong: 'var(--color-brand-primary-strong)',
         },
         secondary: {
           default: 'var(--color-brand-secondary-default)',
-          light: 'var(--color-brand-secondary-light)',
-          dark: 'var(--color-brand-secondary-dark)',
+          subtle: 'var(--color-brand-secondary-subtle)',
+          strong: 'var(--color-brand-secondary-strong)',
         },
         tertiary: {
           default: 'var(--color-brand-tertiary-default)',
-          light: 'var(--color-brand-tertiary-light)',
-          dark: 'var(--color-brand-tertiary-dark)',
+          subtle: 'var(--color-brand-tertiary-subtle)',
+          strong: 'var(--color-brand-tertiary-strong)',
         },
       },
       background: {
@@ -466,11 +463,10 @@ export const tokens = {
         sunken: 'var(--color-background-sunken)',
         subtle: 'var(--color-background-subtle)',
         inverse: 'var(--color-background-inverse)',
-        overlay: 'var(--color-background-overlay)',
         brandPrimary: 'var(--color-background-brand-primary)',
+        overlay: 'var(--color-background-overlay)',
         tint: 'var(--color-background-tint)',
         transparent: 'var(--color-background-transparent)',
-        scrim: 'var(--color-background-scrim)',
       },
       text: {
         primary: 'var(--color-text-primary)',
@@ -479,25 +475,11 @@ export const tokens = {
         brand: 'var(--color-text-brand)',
         placeholder: 'var(--color-text-placeholder)',
       },
-      disabled: {
-        background: 'var(--color-disabled-background)',
-        text: 'var(--color-disabled-text)',
-      },
-      icon: {
-        default: 'var(--color-icon-default)',
-      },
       border: {
         subtle: 'var(--color-border-subtle)',
         stronger: 'var(--color-border-stronger)',
         strong: 'var(--color-border-strong)',
         default: 'var(--color-border-default)',
-      },
-      ring: {
-        default: 'var(--color-ring-default)',
-      },
-      link: {
-        default: 'var(--color-link-default)',
-        hover: 'var(--color-link-hover)',
       },
       feedback: {
         success: {
@@ -564,9 +546,23 @@ export const tokens = {
           },
         },
       },
+      link: {
+        default: 'var(--color-link-default)',
+        hover: 'var(--color-link-hover)',
+      },
+      icon: {
+        default: 'var(--color-icon-default)',
+      },
+      disabled: {
+        background: 'var(--color-disabled-background)',
+        text: 'var(--color-disabled-text)',
+      },
       selection: {
         background: 'var(--color-selection-background)',
         text: 'var(--color-selection-text)',
+      },
+      ring: {
+        default: 'var(--color-ring-default)',
       },
     },
   },

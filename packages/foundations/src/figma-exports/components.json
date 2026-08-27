@@ -746,15 +746,15 @@
         },
         "subtle": {
           "background": {
-            "$value": "{Surfaces.color.brand.primary.light}",
+            "$value": "{Surfaces.color.brand.primary.subtle}",
             "$type": "color"
           },
           "border": {
-            "$value": "{Surfaces.color.brand.primary.light}",
+            "$value": "{Surfaces.color.brand.primary.subtle}",
             "$type": "color"
           },
           "text": {
-            "$value": "{Surfaces.color.brand.primary.dark}",
+            "$value": "{Surfaces.color.brand.primary.strong}",
             "$type": "color"
           }
         }
@@ -1639,29 +1639,29 @@
               "$type": "color"
             },
             "default": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.brand.primary.strong}",
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.brand.primary.strong}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.brand.primary.strong}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.brand.primary.strong}",
               "$type": "color"
             }
           },
           "background": {
             "default": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "disabled": {
@@ -1673,21 +1673,21 @@
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             }
           },
           "border": {
             "default": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "focus": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "disabled": {
@@ -1699,11 +1699,11 @@
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             }
           }
@@ -1723,7 +1723,7 @@
               "$type": "color"
             },
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.brand.primary.strong}",
               "$type": "color"
             },
             "focus": {
@@ -1731,13 +1731,13 @@
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.dark}",
+              "$value": "{Surfaces.color.brand.primary.strong}",
               "$type": "color"
             }
           },
           "background": {
             "hover": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             },
             "selected": {
@@ -1757,7 +1757,7 @@
               "$type": "color"
             },
             "active": {
-              "$value": "{Surfaces.color.brand.primary.light}",
+              "$value": "{Surfaces.color.brand.primary.subtle}",
               "$type": "color"
             }
           },
@@ -2936,23 +2936,23 @@
         },
         "separator": {
           "default": {
-            "$value": "{Surfaces.color.background.scrim}",
+            "$value": "{Surfaces.color.background.transparent}",
             "$type": "color"
           },
           "hover": {
-            "$value": "{Surfaces.color.background.scrim}",
+            "$value": "{Surfaces.color.background.transparent}",
             "$type": "color"
           },
           "focus": {
-            "$value": "{Surfaces.color.background.scrim}",
+            "$value": "{Surfaces.color.background.transparent}",
             "$type": "color"
           },
           "active": {
-            "$value": "{Surfaces.color.background.scrim}",
+            "$value": "{Surfaces.color.background.transparent}",
             "$type": "color"
           },
           "disabled": {
-            "$value": "{Surfaces.color.background.scrim}",
+            "$value": "{Surfaces.color.background.transparent}",
             "$type": "color"
           }
         }
@@ -3078,7 +3078,7 @@
             "$type": "color"
           },
           "in-range": {
-            "$value": "{Surfaces.color.brand.primary.dark}",
+            "$value": "{Surfaces.color.brand.primary.strong}",
             "$type": "color"
           }
         },
@@ -3088,7 +3088,7 @@
             "$type": "color"
           },
           "in-range": {
-            "$value": "{Surfaces.color.brand.primary.light}",
+            "$value": "{Surfaces.color.brand.primary.subtle}",
             "$type": "color"
           },
           "hover": {

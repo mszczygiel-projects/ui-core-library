@@ -9,14 +9,14 @@
           },
           "$type": "color"
         },
-        "light": {
+        "subtle": {
           "$value": {
             "Default": "{Primitives Colors.brand.primary.400}",
             "Dark": "{Primitives Colors.brand.primary.400}"
           },
           "$type": "color"
         },
-        "dark": {
+        "strong": {
           "$value": {
             "Default": "{Primitives Colors.brand.primary.900}",
             "Dark": "{Primitives Colors.brand.primary.900}"
@@ -32,14 +32,14 @@
           },
           "$type": "color"
         },
-        "light": {
+        "subtle": {
           "$value": {
             "Default": "{Primitives Colors.brand.secondary.400}",
             "Dark": "{Primitives Colors.brand.secondary.400}"
           },
           "$type": "color"
         },
-        "dark": {
+        "strong": {
           "$value": {
             "Default": "{Primitives Colors.brand.secondary.900}",
             "Dark": "{Primitives Colors.brand.secondary.900}"
@@ -55,14 +55,14 @@
           },
           "$type": "color"
         },
-        "light": {
+        "subtle": {
           "$value": {
             "Default": "{Primitives Colors.gray.100}",
             "Dark": "{Primitives Colors.gray.100}"
           },
           "$type": "color"
         },
-        "dark": {
+        "strong": {
           "$value": {
             "Default": "{Primitives Colors.gray.600}",
             "Dark": "{Primitives Colors.gray.600}"
@@ -77,7 +77,8 @@
           "Default": "{Primitives Colors.white.1000}",
           "Dark": "{Primitives Colors.gray.900}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The base surface a page and its cards are painted on, and the value a nested data-surface=\"default\" container resets back to."
       },
       "sunken": {
         "$value": {
@@ -85,7 +86,7 @@
           "Dark": "{Primitives Colors.gray.800}"
         },
         "$type": "color",
-        "$description": "input background, itp."
+        "$description": "A recessed surface that reads as carved into the page — the fill of filled form fields and the file-input preview area."
       },
       "subtle": {
         "$value": {
@@ -93,49 +94,47 @@
           "Dark": "{Primitives Colors.gray.700}"
         },
         "$type": "color",
-        "$description": "card, itp."
+        "$description": "A quiet raised container one step off the page, used for neutral chip hover, listbox option hover and similar low-emphasis grouping."
       },
       "inverse": {
         "$value": {
           "Default": "{Primitives Colors.gray.900}",
           "Dark": "{Primitives Colors.white.1000}"
         },
-        "$type": "color"
-      },
-      "overlay": {
-        "$value": {
-          "Default": "{Primitives Colors.black.400}",
-          "Dark": "{Primitives Colors.black.400}"
-        },
-        "$type": "color"
+        "$type": "color",
+        "$description": "A dark surface for inverted contexts — solid neutral chips and badges, and any region marked data-surface=\"inverse\"."
       },
       "brand-primary": {
         "$value": {
           "Default": "{Themes.color.brand.primary.default}",
           "Dark": "{Themes.color.brand.primary.default}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "A brand-filled surface for promotional or emphasis regions, and the region marked data-surface=\"primary\"."
+      },
+      "overlay": {
+        "$value": {
+          "Default": "{Primitives Colors.black.400}",
+          "Dark": "{Primitives Colors.black.400}"
+        },
+        "$type": "color",
+        "$description": "The dimming layer drawn behind modal dialogs and drawers so the content underneath recedes."
       },
       "tint": {
         "$value": {
           "Default": "{Primitives Colors.black.100}",
           "Dark": "{Primitives Colors.white.100}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "A low-alpha wash laid over whatever is beneath it to signal hover or selection without committing to a colour, flipping from a black to a white wash on dark and inverse surfaces."
       },
       "transparent": {
         "$value": {
           "Default": "{Primitives Colors.transparent}",
           "Dark": "{Primitives Colors.transparent}"
         },
-        "$type": "color"
-      },
-      "scrim": {
-        "$value": {
-          "Default": "rgba(0, 0, 0, 0)",
-          "Dark": "rgba(0, 0, 0, 0)"
-        },
-        "$type": "color"
+        "$type": "color",
+        "$description": "An explicit \"no fill\", used where a component must occupy the box but paint nothing — ghost and outline backgrounds, unchecked checkbox and radio fills."
       }
     },
     "text": {
@@ -144,60 +143,40 @@
           "Default": "{Primitives Colors.gray.1000}",
           "Dark": "{Primitives Colors.gray.50}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The default ink for body copy and headings, carrying the highest contrast against its surface."
       },
       "secondary": {
         "$value": {
           "Default": "{Primitives Colors.gray.700}",
           "Dark": "{Primitives Colors.gray.200}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "Supporting ink for field labels and secondary copy — lower emphasis than primary, still held to the 4.5:1 text threshold."
       },
       "muted": {
         "$value": {
           "Default": "{Primitives Colors.gray.500}",
           "Dark": "{Primitives Colors.gray.600}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The quietest readable ink, for helper text and hints that should recede without becoming decoration."
       },
       "brand": {
         "$value": {
           "Default": "{Themes.color.brand.primary.default}",
           "Dark": "{Primitives Colors.brand.primary.200}"
         },
-        "$type": "color"
+        "$type": "color",
+        "$description": "Body ink rendered in the brand colour, for brand-tinted copy and emphasis that is not a link."
       },
       "placeholder": {
         "$value": {
           "Default": "{Primitives Colors.gray.600}",
           "Dark": "{Primitives Colors.gray.300}"
         },
-        "$type": "color"
-      }
-    },
-    "disabled": {
-      "background": {
-        "$value": {
-          "Default": "{Themes.color.background.subtle}",
-          "Dark": "{Themes.color.background.subtle}"
-        },
-        "$type": "color"
-      },
-      "text": {
-        "$value": {
-          "Default": "{Themes.color.text.muted}",
-          "Dark": "{Themes.color.text.muted}"
-        },
-        "$type": "color"
-      }
-    },
-    "icon": {
-      "default": {
-        "$value": {
-          "Default": "{Themes.color.brand.primary.default}",
-          "Dark": "{Primitives Colors.gray.50}"
-        },
-        "$type": "color"
+        "$type": "color",
+        "$description": "The prompt text shown inside an empty input, which disappears as soon as the user types."
       }
     },
     "border": {
@@ -226,15 +205,6 @@
         "$value": {
           "Default": "{Primitives Colors.gray.600}",
           "Dark": "{Primitives Colors.gray.500}"
-        },
-        "$type": "color"
-      }
-    },
-    "ring": {
-      "default": {
-        "$value": {
-          "Default": "{Primitives Colors.brand.primary.800}",
-          "Dark": "{Primitives Colors.brand.primary.500}"
         },
         "$type": "color"
       }
@@ -494,6 +464,33 @@
         "$type": "color"
       }
     },
+    "icon": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.brand.primary.default}",
+          "Dark": "{Primitives Colors.gray.50}"
+        },
+        "$type": "color"
+      }
+    },
+    "disabled": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.background.subtle}",
+          "Dark": "{Themes.color.background.subtle}"
+        },
+        "$type": "color",
+        "$description": "The fill and outline of an inactive control, flattening it into the page so it reads as unavailable."
+      },
+      "text": {
+        "$value": {
+          "Default": "{Themes.color.text.muted}",
+          "Dark": "{Themes.color.text.muted}"
+        },
+        "$type": "color",
+        "$description": "The ink on an inactive control — its label, value and icons."
+      }
+    },
     "selection": {
       "background": {
         "$value": {
@@ -510,6 +507,15 @@
         "$type": "color"
       }
     },
+    "ring": {
+      "default": {
+        "$value": {
+          "Default": "{Primitives Colors.brand.primary.800}",
+          "Dark": "{Primitives Colors.brand.primary.500}"
+        },
+        "$type": "color"
+      }
+    },
     "on-subtle": {
       "brand": {
         "primary": {
@@ -520,14 +526,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
-              "Default": "{Themes.color.brand.primary.light}",
-              "Dark": "{Themes.color.brand.primary.light}"
+              "Default": "{Themes.color.brand.primary.subtle}",
+              "Dark": "{Themes.color.brand.primary.subtle}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.brand.primary.900}",
               "Dark": "{Primitives Colors.brand.primary.900}"
@@ -543,14 +549,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
               "Default": "{Primitives Colors.brand.secondary.200}",
               "Dark": "{Primitives Colors.brand.secondary.200}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.brand.secondary.900}",
               "Dark": "{Primitives Colors.brand.secondary.900}"
@@ -566,14 +572,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
               "Default": "{Primitives Colors.gray.100}",
               "Dark": "{Primitives Colors.gray.100}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.gray.600}",
               "Dark": "{Primitives Colors.gray.600}"
@@ -638,13 +644,6 @@
           "$value": {
             "Default": "{Themes.color.background.transparent}",
             "Dark": "{Themes.color.background.transparent}"
-          },
-          "$type": "color"
-        },
-        "scrim": {
-          "$value": {
-            "Default": "rgba(0, 0, 0, 0)",
-            "Dark": "rgba(0, 0, 0, 0)"
           },
           "$type": "color"
         }
@@ -1032,14 +1031,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
-              "Default": "{Themes.color.brand.primary.light}",
-              "Dark": "{Themes.color.brand.primary.light}"
+              "Default": "{Themes.color.brand.primary.subtle}",
+              "Dark": "{Themes.color.brand.primary.subtle}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.brand.primary.900}",
               "Dark": "{Primitives Colors.brand.primary.900}"
@@ -1055,14 +1054,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
               "Default": "{Primitives Colors.brand.secondary.200}",
               "Dark": "{Primitives Colors.brand.secondary.200}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.brand.secondary.900}",
               "Dark": "{Primitives Colors.brand.secondary.900}"
@@ -1078,14 +1077,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
               "Default": "{Primitives Colors.gray.100}",
               "Dark": "{Primitives Colors.gray.100}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.gray.600}",
               "Dark": "{Primitives Colors.gray.600}"
@@ -1150,13 +1149,6 @@
           "$value": {
             "Default": "{Themes.color.background.transparent}",
             "Dark": "{Themes.color.background.transparent}"
-          },
-          "$type": "color"
-        },
-        "scrim": {
-          "$value": {
-            "Default": "rgba(0, 0, 0, 0)",
-            "Dark": "rgba(0, 0, 0, 0)"
           },
           "$type": "color"
         }
@@ -1544,14 +1536,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
-              "Default": "{Themes.color.brand.primary.light}",
-              "Dark": "{Themes.color.brand.primary.light}"
+              "Default": "{Themes.color.brand.primary.subtle}",
+              "Dark": "{Themes.color.brand.primary.subtle}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.brand.primary.900}",
               "Dark": "{Primitives Colors.brand.primary.900}"
@@ -1567,14 +1559,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
               "Default": "{Primitives Colors.brand.secondary.200}",
               "Dark": "{Primitives Colors.brand.secondary.200}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.brand.secondary.900}",
               "Dark": "{Primitives Colors.brand.secondary.900}"
@@ -1590,14 +1582,14 @@
             },
             "$type": "color"
           },
-          "light": {
+          "subtle": {
             "$value": {
               "Default": "{Primitives Colors.gray.100}",
               "Dark": "{Primitives Colors.gray.100}"
             },
             "$type": "color"
           },
-          "dark": {
+          "strong": {
             "$value": {
               "Default": "{Primitives Colors.gray.600}",
               "Dark": "{Primitives Colors.gray.600}"
@@ -1662,13 +1654,6 @@
           "$value": {
             "Default": "{Themes.color.background.transparent}",
             "Dark": "{Themes.color.background.transparent}"
-          },
-          "$type": "color"
-        },
-        "scrim": {
-          "$value": {
-            "Default": "rgba(0, 0, 0, 0)",
-            "Dark": "rgba(0, 0, 0, 0)"
           },
           "$type": "color"
         }

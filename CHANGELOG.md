@@ -12,6 +12,43 @@ statement that the public API has settled, not merely the next breaking release.
 
 Releases before `0.10.0` are not documented here — see the git history.
 
+## [0.17.1] — 2026-08-27
+
+Two corrections to the role set 0.17.0 shipped. Both are renames or removals in the
+public token API, and both are cheap: neither role is referenced by any component in
+`ui-core-wc` or `ui-core-react`, so only consumer code written against 0.17.0 is affected.
+
+### Removed
+
+- **`--color-background-scrim`** — the colour set is now **62 roles**. It held a raw
+  `#00000000`, the only member of `background/*` that did not alias a primitive, and
+  duplicated `--color-background-transparent`: both are fully transparent, and the RGB
+  behind alpha 0 is invisible in a solid fill. Its five consumers were
+  `button/ghost/separator/*`, now pointing at `--color-background-transparent`. The name
+  misled as well — the modal dim is `--color-background-overlay` (`black/400`), which is
+  what a scrim actually is.
+
+  **If you followed the 0.17.0 migration table from `--color-transparent-black`, go to
+  `--color-background-transparent` instead.**
+
+### Changed
+
+- **`brand/{primary,secondary,tertiary}/{light,dark}` → `{subtle,strong}`**, so the brand
+  tiers read like the border ramp (`subtle` → `default` → `strong`). These roles were
+  introduced in 0.17.0, so nothing older is affected.
+
+| before                       | after                         |
+| ---------------------------- | ----------------------------- |
+| `--color-brand-{tier}-light` | `--color-brand-{tier}-subtle` |
+| `--color-brand-{tier}-dark`  | `--color-brand-{tier}-strong` |
+
+- **Colour Styles in `[Core] Foundations` now cover the role set** — 16 → 31. Brand 3 → 9,
+  Text 3 → 5, Background 6 → 8, Border 1 → 4, Disabled 0 → 2. Two of the existing sixteen
+  were bound to `Themes` rather than `Surfaces` and so ignored `data-surface` on their own:
+  `Brand/Primary` and `Text/Muted`. Both now bind `Surfaces`, like every other style.
+  `Border/Default` is renamed `Border/Subtle`, since 0.17.0 moved the variable it points at
+  under that name and the style label had been stale ever since.
+
 ## [0.17.0] — 2026-08-26
 
 The Themes colour set went from **138 semantic roles to 63**. Where 0.15.0 moved
@@ -31,16 +68,16 @@ two role references needed editing in Lit and React combined.
 the 63 — the full mapping is in
 [`tools/token-migration/color-roles/`](tools/token-migration/color-roles/README.md).
 
-| before | after |
-| --- | --- |
-| `--color-brand-primary` | `--color-brand-primary-default` (same for `-secondary`, `-tertiary`) |
-| `--color-border-default` | `--color-border-subtle` |
-| `--color-separator-foreground` | `--color-border-default` |
-| `--color-border-strong-default` / `-hover` | `--color-border-strong` / `--color-border-stronger` |
-| `--color-outline-placeholder-default` | `--color-text-placeholder` |
-| `--color-disabled-surface` | `--color-disabled-background` |
-| `--color-filled-text-disabled` | `--color-disabled-text` |
-| `--color-transparent` / `--color-transparent-black` | `--color-background-transparent` / `--color-background-scrim` |
+| before                                              | after                                                                |
+| --------------------------------------------------- | -------------------------------------------------------------------- |
+| `--color-brand-primary`                             | `--color-brand-primary-default` (same for `-secondary`, `-tertiary`) |
+| `--color-border-default`                            | `--color-border-subtle`                                              |
+| `--color-separator-foreground`                      | `--color-border-default`                                             |
+| `--color-border-strong-default` / `-hover`          | `--color-border-strong` / `--color-border-stronger`                  |
+| `--color-outline-placeholder-default`               | `--color-text-placeholder`                                           |
+| `--color-disabled-surface`                          | `--color-disabled-background`                                        |
+| `--color-filled-text-disabled`                      | `--color-disabled-text`                                              |
+| `--color-transparent` / `--color-transparent-black` | `--color-background-transparent` / `--color-background-scrim`        |
 
 `--color-border-default` therefore changes meaning as well as name: it is now the
 separator tone (`#9fa0a1`), not the container edge.

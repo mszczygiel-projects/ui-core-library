@@ -150,7 +150,7 @@ they carry, colour versus dimension, and they compose without interfering.
 > of single aliases.
 >
 > **The colour half was folded again on 2026-08-26**: `Themes` 580 → 282 and `Surfaces`
-> 138 → 64, so a client now configures **63 roles**. Unlike the first pass this one moves
+> 138 → 64, so a client now configures **62 roles**. Unlike the first pass this one moves
 > values on purpose — the old names described component variants (`outline/*` and `filled/*`
 > were TextField chrome, the `{success,warning,info,error}/{subtle,solid,outline}/*` families
 > were Chip states), so folding them is a re-decision, not a rename. `Components` keeps all
@@ -249,13 +249,13 @@ explicitly — `data-theme="default"` forces light even on a dark OS. Pass `--no
 to the CLI (or `autoDarkMode: false` to `buildTokens()`) to drop that mirror in projects that
 always drive the theme from the attribute.
 
-**The colour set is exactly 63 roles**, and the list is closed — a name that is not on it
+**The colour set is exactly 62 roles**, and the list is closed — a name that is not on it
 does not belong in `Themes`:
 
 ```
-brand/       primary|secondary|tertiary × default|light|dark              →  9
+brand/       primary|secondary|tertiary × default|subtle|strong            →  9
 background/  default sunken subtle inverse overlay brand-primary
-             tint transparent scrim                                      →  9
+             tint transparent                                            →  8
 text/        primary secondary muted placeholder brand                    →  5
 disabled/    background text                                             →  2
 icon/        default                                                     →  1
@@ -299,12 +299,12 @@ the page. `brand/primary/800` light / `500` dark clears 3:1 in all eight cells (
 luminance of `background/default` in that cell: `on-inverse` is DARK under the Default theme
 and LIGHT under `Dark`, because inverting a dark page yields a light one.
 
-| mirror | Default theme | Dark theme |
-| --- | --- | --- |
-| _(base)_ | light | dark |
-| `on-subtle` | light | dark |
-| `on-inverse` | **dark** | **light** |
-| `on-brand-primary` | dark | dark |
+| mirror             | Default theme | Dark theme |
+| ------------------ | ------------- | ---------- |
+| _(base)_           | light         | dark       |
+| `on-subtle`        | light         | dark       |
+| `on-inverse`       | **dark**      | **light**  |
+| `on-brand-primary` | dark          | dark       |
 
 **Known debt: `feedback/warning`.** Folding `warning/subtle/text` into `feedback/warning/base`
 costs contrast in the three light cells — warning ink on its own tint is 2.49:1 and white on
