@@ -65,8 +65,8 @@ two role references needed editing in Lit and React combined.
 ### Migration
 
 **Roles that were renamed.** Everything else in the old set folded into one of
-the 63 — the full mapping is in
-[`tools/token-migration/color-roles/`](tools/token-migration/color-roles/README.md).
+the 63. The full 138 → 63 mapping lived in `tools/token-migration/`, removed after the
+forks were folded; it is recoverable from the git history of this release.
 
 | before                                              | after                                                                |
 | --------------------------------------------------- | -------------------------------------------------------------------- |
@@ -125,9 +125,8 @@ hover, active and focus from that one token, and both disabled leaves fold into
 - **`feedback/warning` does not meet WCAG AA in light contexts.** Warning ink on
   its own tint is 2.49:1 and white on the base fill is 2.65:1. The whole `orange`
   ramp was checked: no value serves both the solid fill and the ink on the tint —
-  the first that clears 4.5:1 both ways is brown. Verify with
-  `node tools/token-migration/color-roles/audit.mjs`, which should report warning
-  and nothing else.
+  the first that clears 4.5:1 both ways is brown. `warning` is the only family that
+  knowingly fails; anything else below threshold is a bug, not this debt.
 
 ## [0.16.0] — 2026-08-23
 

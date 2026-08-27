@@ -4,7 +4,7 @@
 > and `[CMS] Panel`. **The restructure has been carried out** — `[Core] Foundations` and
 > `[Core] UI Library` are migrated; `[CMS] Foundations` is not. Numbers in "Measurements",
 > "Multiplier 1/2" and "The CMS fork" describe the state before it, and still describe the
-> CMS fork today. Reproduce the analysis with `node tools/token-migration/derive-roles.mjs`.
+> CMS fork today. The deriver that produced it was removed once the forks were folded.
 
 ## The problem this documents
 
@@ -221,9 +221,9 @@ things — `border/default` and `background/subtle` are the same grey right now.
 them would take away a client's ability to move one without the other, which is the
 flexibility this whole exercise is meant to protect.
 
-Role names are proposed by the deriver and settled by hand in
-`tools/token-migration/role-names.overrides.json`, which is also where the reasoning for each
-approved name lives. Eight are settled; the rest are the generated proposals.
+Role names were proposed by the deriver and settled by hand; the reasoning for each approved
+name lived alongside it in `tools/token-migration/`, removed after the forks were folded.
+Eight were settled; the rest are the generated proposals.
 
 ## The `Sizes` collection — a different problem
 
@@ -306,6 +306,6 @@ Three things surfaced that the plan had not predicted:
 
 ## Verification
 
-`tools/token-migration/snapshot.mjs` records every component-facing token's value in all
-eight combinations. Run before and after; the diff must be empty. See
-[`tools/token-migration/README.md`](../../../tools/token-migration/README.md).
+The oracle recorded every component-facing token's value in all eight combinations, before
+and after; the diff had to be empty. Rebuild it if another restructure comes: resolve each
+token through every theme × surface pair, hash the result, and compare the two digests.

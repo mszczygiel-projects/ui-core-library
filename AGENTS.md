@@ -155,19 +155,20 @@ they carry, colour versus dimension, and they compose without interfering.
 > were TextField chrome, the `{success,warning,info,error}/{subtle,solid,outline}/*` families
 > were Chip states), so folding them is a re-decision, not a rename. `Components` keeps all
 > 978 tokens and every CSS custom property name, which is why the two component packages
-> needed two edits between them. Tooling and the contrast oracle:
-> [`tools/token-migration/color-roles/`](tools/token-migration/color-roles/README.md).
-> Measurements, rationale and the migration scripts:
-> [`packages/foundations/docs/token-audit.md`](packages/foundations/docs/token-audit.md)
-> and [`tools/token-migration/`](tools/token-migration/README.md).
+> needed two edits between them. Measurements and rationale:
+> [`packages/foundations/docs/token-audit.md`](packages/foundations/docs/token-audit.md).
+> The migration scripts were deleted once all three files were folded — they were one-shot.
 >
-> **`[CMS] Foundations` was migrated separately on 2026-08-12** (4633 → 2027), with one
-> deliberate difference: its component tokens stayed in `Surfaces` instead of moving to a new
-> `Components` collection, because that would have reissued their ids and `[CMS] Panel` holds
-> 196 explicit `Surfaces` mode assignments on instance sub-nodes that the Plugin API cannot
-> rewrite. Same reduction, same 134 client-facing roles, zero rebinding —
-> [`tools/token-migration/out/cms-roles.md`](tools/token-migration/out/cms-roles.md).
-> Forks still do not inherit from Core; each migration is its own pass.
+> **The two forks were folded onto the same 62 roles on 2026-08-27.** `[CMS] Foundations`
+> went `Themes` 576 → 272 and `[WK] Foundations` 580 → 274; both now expose exactly the list
+> below, in every mirror. One deliberate difference survives in CMS: its component tokens stay
+> in `Surfaces` rather than moving to a `Components` collection, because that would reissue
+> their ids and `[CMS] Panel` binds ~5000 of them, 86% on instance sub-nodes the Plugin API
+> cannot rewrite. WK needed no such exception — it forked after the collection restructure, so
+> it already had `Components`.
+>
+> Forks still do not inherit from Core; each migration is its own pass. CMS carries four theme
+> modes and WK three, so their contrast surface is 16 and 12 combinations rather than eight.
 
 ### Layer 5 — Components
 
@@ -311,8 +312,8 @@ costs contrast in the three light cells — warning ink on its own tint is 2.49:
 the base fill is 2.65:1. The whole `orange` ramp was checked and **no value serves both the
 solid fill and the ink on the tint**; the first that clears 4.5:1 both ways is `orange/1000`,
 which is brown. `success` had the same problem and an escape at `green/950`, which is applied.
-Verify with `node tools/token-migration/color-roles/audit.mjs` — it should report warning and
-nothing else.
+`warning` is therefore the one family that knowingly fails, and the only one — anything else
+below threshold is a bug, not this debt.
 
 Themes also contains non-color tokens: `--typography-*`, `--radius-*`, `--ring-*`. These have **no Surfaces equivalent** and may be used directly in components — Surfaces does not override them.
 
