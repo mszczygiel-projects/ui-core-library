@@ -30,6 +30,15 @@
   "exclude": ["src/**/*.test.ts"],
   "references": [
     {
+      "path": "../../packages/web-components"
+    },
+    {
+      "path": "../../packages/shared/tsconfig.lib.json"
+    },
+    {
+      "path": "../../packages/react/tsconfig.lib.json"
+    },
+    {
       "path": "../../packages/icons/tsconfig.lib.json"
     },
     {

@@ -30,7 +30,7 @@ export const textField = defineComponent({
   ],
   slots: ['leading-icon', 'trailing-icon'],
   events: ['ui-value-change'],
-  stories: ['Playground', 'Variants', 'OnSurfaces', 'WithIcons'],
+  stories: ['Playground', 'Variants', 'WithIcons', 'OnSurfaces'],
   exceptions: [
     {
       items: ['form', 'validity', 'validationMessage', 'willValidate'],

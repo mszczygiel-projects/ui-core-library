@@ -1,0 +1,93 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { WebComponentApi, ReactApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Loader.wc.stories.tsx';
+import * as ReactStories from './Loader.react.stories.tsx';
+
+<Meta title="Components/Feedback/Loader/Docs" />
+
+# Loader
+
+<ComponentOverview name="Loader" />
+
+## Usage
+
+Use a loader when something takes a moment and nobody can tell how long: content loading into a region, or an action waiting for a server. Put it where the result will appear. A component with a loading state, such as a button, shows a loader of its own.
+
+Do not use a loader:
+
+- for a wait you can measure, which a progress bar shows better;
+- for a whole page that loads, where the structure of the page can show first and fill in;
+- for a wait shorter than about a second, where a loader only flickers.
+
+## Anatomy
+
+One part, the **indicator**: an arc that turns. The web component exposes it as `::part(indicator)`, the React component as `.ui-loader__indicator`, and the Figma component as the layer `indicator`.
+
+## Variants & tone
+
+Does not apply: every loader on a page has the same look. `loaderVariant` in `configureUiCore` chooses it for the Loader and for the loading states of other components at once, and this version of the library draws `spinner`. The colour follows the surface, or the text of the component that shows the loader.
+
+## Sizes & density
+
+`small`, `medium`, the default, and `large` take the sizes of icons: 20, 24 and 32 pixels, and 16, 20 and 24 in the compact density.
+
+## States
+
+Does not apply: a loader has no interaction and no state. It shows for as long as it is rendered.
+
+## Content & labels
+
+A loader renders no visible text. Its accessible name is `label`, or without it the label `labels.loader.label` of the configuration, "Loading" in English. Name what loads when the page does not say it, such as "Loading orders".
+
+<Source language="ts" code={`configureUiCore({ labels: { loader: { label: 'Ładowanie' } } });`} />
+
+## Behaviour
+
+- The loader takes no focus and answers no keys.
+- The arc turns once every 700 milliseconds, at a constant speed.
+- When the user prefers reduced motion, the arc stops and the loader fades in and out slowly instead.
+- Remove the loader when the wait ends. While it lasts, mark the region that loads with `aria-busy="true"`.
+
+## Accessibility
+
+- **Pattern.** No pattern of the WAI-ARIA Authoring Practices covers a loader. It is a `progressbar` without a value, which ARIA defines as an operation of unknown length.
+- **Name.** `label`, or the label of the configuration. An `aria-label` that the page sets wins: on the element of the web component, as a prop of the React component.
+- **Announcements.** A screen reader reads the loader when the user reaches it, and does not announce it as it appears. Mark the region that loads with `aria-busy`, and announce the end of a long wait with a live region of the application.
+- **Contrast.** The arc has a contrast of at least 3:1 with every surface in both themes, which the story On surfaces checks.
+- **Forced colours.** The arc takes the colour of text that the system forces, and its gap stays, so the turning still shows.
+- **Web component.** The role and the name live in `ElementInternals`, so the attributes that the page writes on the element stay its own.
+
+## Surfaces & themes
+
+The arc takes `--color-loader-indicator`, which points at the colour of icons on each surface.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Loader" />}
+  webComponents={<WebComponentApi tag="ui-loader" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Loader } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/loader';`}
+/>
+
+## Tokens
+
+<ComponentTokens component="loader" />
+
+`--loader-stroke-width`, `--loader-radius` and the colour change for every loader when they are set on `:root`. The sizes change with the density, so set them on a selector that matches the loaders, such as `ui-loader, .ui-loader`.
+
+## Implementation notes
+
+- The web component defines `<ui-loader>` when its module loads, unless the page has defined the tag already. It writes no attribute on its host; its size, its label and the configuration go into its shadow root and `ElementInternals`.
+- The React component reads the configuration with `useSyncExternalStore`, so it is a client component. It renders on a server and hydrates without a warning, and `ref` and the attributes of a `span` reach its root element.
+- A component that shows a loader sets `color: inherit` on it, so that the arc takes the colour of its text. It never sets `--color-loader-indicator`: a component never declares a token of the library.
+- The gap in the arc is a side without a border rather than a transparent one, which forced colours would fill.

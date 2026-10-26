@@ -20,7 +20,7 @@ export const button = defineComponent({
   parts: ['base', 'wrapper', 'content', 'leading-icon', 'label', 'trailing-icon', 'loader'],
   slots: ['leading-icon', 'trailing-icon'],
   events: [],
-  stories: ['Playground', 'Variants', 'OnSurfaces', 'WithIcons'],
+  stories: ['Playground', 'Variants', 'WithIcons', 'OnSurfaces'],
   exceptions: [
     {
       items: ['form', 'validity', 'validationMessage', 'willValidate'],

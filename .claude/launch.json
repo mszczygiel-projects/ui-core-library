@@ -1,0 +1,14 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "storybook",
+      "runtimeExecutable": "/bin/zsh",
+      "runtimeArgs": [
+        "-c",
+        "export PATH=\"$HOME/.nvm/versions/node/v24.15.0/bin:$PATH\" && pnpm nx run storybook:storybook --output-style=stream"
+      ],
+      "port": 6006
+    }
+  ]
+}

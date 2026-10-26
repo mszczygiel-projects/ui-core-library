@@ -312,8 +312,9 @@ export default defineConfig(
     },
   },
   {
-    // The MDX pages import addon-docs and the targets run the storybook CLI; the dependency check
-    // traces neither, and its autofix would remove them.
+    // The MDX pages import addon-docs, the targets run the storybook CLI and the configuration
+    // reads the React API with react-docgen-typescript and TypeScript; the dependency check traces
+    // none of them, and its autofix would remove them.
     files: ['apps/storybook/package.json'],
     rules: {
       '@nx/dependency-checks': [
@@ -325,7 +326,12 @@ export default defineConfig(
             '{projectRoot}/**/*.test.ts',
             '{projectRoot}/**/*.test.tsx',
           ],
-          ignoredDependencies: ['@storybook/addon-docs', 'storybook'],
+          ignoredDependencies: [
+            '@storybook/addon-docs',
+            'storybook',
+            'react-docgen-typescript',
+            'typescript',
+          ],
         },
       ],
     },

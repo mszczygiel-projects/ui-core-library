@@ -17,6 +17,9 @@
     },
     {
       "path": "./testing/contracts"
+    },
+    {
+      "path": "./packages/web-components"
     }
   ]
 }

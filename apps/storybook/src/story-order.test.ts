@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import { getStorySortParameter } from 'storybook/internal/csf-tools';
 import { describe, expect, it } from 'vitest';
 
+import { categories } from './components/catalog.ts';
 import { pagesMap } from './foundations/pages.ts';
 
 const root = join(import.meta.dirname, '..');
@@ -42,8 +43,23 @@ function orderedPages(): string[] | undefined {
 describe('the order of the pages', () => {
   it('is written where Storybook reads it', () => {
     expect(storySort()).toEqual({
-      order: ['Guides', expect.any(Array), 'Foundations', expect.any(Array)],
+      order: [
+        'Guides',
+        expect.any(Array),
+        'Foundations',
+        expect.any(Array),
+        'Components',
+        expect.any(Array),
+      ],
     });
+  });
+
+  it('lists the components by their categories, each page first', () => {
+    const page = ['*', ['Docs', 'React', 'Web Component']];
+    expect(orderUnder('Components')).toEqual([
+      'Status',
+      ...categories.flatMap((category) => [category, page]),
+    ]);
   });
 
   // pages.test.ts checks that the map names every MDX page, and nothing else.
