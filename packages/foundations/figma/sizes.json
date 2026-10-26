@@ -1,0 +1,2386 @@
+{
+  "typography": {
+    "heading": {
+      "display": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.3xl}",
+            "Desktop": "{Primitives Sizes.text.5xl}",
+            "Mobile Compact": "{Primitives Sizes.text.3xl}",
+            "Desktop Compact": "{Primitives Sizes.text.5xl}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of display text.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1112",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-display-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.3xl-line-height}",
+            "Desktop": "{Primitives Sizes.text.5xl-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.3xl-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.5xl-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of display text.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1113",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-display-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "large": {
+          "font-size": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl}",
+              "Desktop": "{Primitives Sizes.text.7xl}",
+              "Mobile Compact": "{Primitives Sizes.text.4xl}",
+              "Desktop Compact": "{Primitives Sizes.text.7xl}"
+            },
+            "$type": "fontSize",
+            "$description": "Font size of large display text.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1115",
+                "collectionId": "VariableCollectionId:1:1108",
+                "scopes": [
+                  "FONT_SIZE"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--typography-heading-display-large-font-size)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Mobile",
+                  "Desktop",
+                  "Mobile Compact",
+                  "Desktop Compact"
+                ]
+              }
+            }
+          },
+          "line-height": {
+            "$value": {
+              "Mobile": "{Primitives Sizes.text.4xl-line-height}",
+              "Desktop": "{Primitives Sizes.text.7xl-line-height}",
+              "Mobile Compact": "{Primitives Sizes.text.4xl-line-height}",
+              "Desktop Compact": "{Primitives Sizes.text.7xl-line-height}"
+            },
+            "$type": "lineHeight",
+            "$description": "Line height of large display text.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1116",
+                "collectionId": "VariableCollectionId:1:1108",
+                "scopes": [
+                  "LINE_HEIGHT"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--typography-heading-display-large-line-height)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Mobile",
+                  "Desktop",
+                  "Mobile Compact",
+                  "Desktop Compact"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "title": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.2xl}",
+            "Desktop": "{Primitives Sizes.text.3xl}",
+            "Mobile Compact": "{Primitives Sizes.text.2xl}",
+            "Desktop Compact": "{Primitives Sizes.text.3xl}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of titles.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1121",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-title-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.2xl-line-height}",
+            "Desktop": "{Primitives Sizes.text.3xl-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.2xl-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.3xl-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of titles.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1122",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-title-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "subtitle": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.2xl}",
+            "Desktop": "{Primitives Sizes.text.3xl}",
+            "Mobile Compact": "{Primitives Sizes.text.2xl}",
+            "Desktop Compact": "{Primitives Sizes.text.3xl}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of subtitles.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1127",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-subtitle-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.2xl-line-height}",
+            "Desktop": "{Primitives Sizes.text.3xl-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.2xl-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.3xl-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of subtitles.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1128",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-subtitle-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "h1": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.2xl}",
+            "Desktop": "{Primitives Sizes.text.3xl}",
+            "Mobile Compact": "{Primitives Sizes.text.2xl}",
+            "Desktop Compact": "{Primitives Sizes.text.3xl}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of h1 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1132",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h1-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.2xl-line-height}",
+            "Desktop": "{Primitives Sizes.text.3xl-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.2xl-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.3xl-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of h1 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1133",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h1-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "h2": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.xl}",
+            "Desktop": "{Primitives Sizes.text.2xl}",
+            "Mobile Compact": "{Primitives Sizes.text.xl}",
+            "Desktop Compact": "{Primitives Sizes.text.2xl}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of h2 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1137",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h2-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.xl-line-height}",
+            "Desktop": "{Primitives Sizes.text.2xl-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.xl-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.2xl-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of h2 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1138",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h2-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "h3": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.lg}",
+            "Desktop": "{Primitives Sizes.text.xl}",
+            "Mobile Compact": "{Primitives Sizes.text.lg}",
+            "Desktop Compact": "{Primitives Sizes.text.xl}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of h3 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1142",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h3-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.lg-line-height}",
+            "Desktop": "{Primitives Sizes.text.xl-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.lg-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.xl-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of h3 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1143",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h3-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "h4": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.base}",
+            "Desktop": "{Primitives Sizes.text.lg}",
+            "Mobile Compact": "{Primitives Sizes.text.base}",
+            "Desktop Compact": "{Primitives Sizes.text.lg}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of h4 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1147",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h4-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.base-line-height}",
+            "Desktop": "{Primitives Sizes.text.lg-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.base-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.lg-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of h4 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1148",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h4-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "h5": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.base}",
+            "Desktop": "{Primitives Sizes.text.base}",
+            "Mobile Compact": "{Primitives Sizes.text.base}",
+            "Desktop Compact": "{Primitives Sizes.text.base}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of h5 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1152",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h5-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.base-line-height}",
+            "Desktop": "{Primitives Sizes.text.base-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.base-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.base-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of h5 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1153",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h5-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "h6": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.sm}",
+            "Desktop": "{Primitives Sizes.text.sm}",
+            "Mobile Compact": "{Primitives Sizes.text.sm}",
+            "Desktop Compact": "{Primitives Sizes.text.sm}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of h6 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1157",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h6-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.sm-line-height}",
+            "Desktop": "{Primitives Sizes.text.sm-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.sm-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.sm-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of h6 headings.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1158",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-heading-h6-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "body": {
+      "font-size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.base}",
+          "Desktop": "{Primitives Sizes.text.base}",
+          "Mobile Compact": "{Primitives Sizes.text.base}",
+          "Desktop Compact": "{Primitives Sizes.text.base}"
+        },
+        "$type": "fontSize",
+        "$description": "Font size of body text.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:1163",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--typography-body-font-size)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "line-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.base-line-height}",
+          "Desktop": "{Primitives Sizes.text.base-line-height}",
+          "Mobile Compact": "{Primitives Sizes.text.base-line-height}",
+          "Desktop Compact": "{Primitives Sizes.text.base-line-height}"
+        },
+        "$type": "lineHeight",
+        "$description": "Line height of body text.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:1164",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "LINE_HEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--typography-body-line-height)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "small": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.sm}",
+            "Desktop": "{Primitives Sizes.text.sm}",
+            "Mobile Compact": "{Primitives Sizes.text.sm}",
+            "Desktop Compact": "{Primitives Sizes.text.sm}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of small body text.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1166",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-body-small-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.sm-line-height}",
+            "Desktop": "{Primitives Sizes.text.sm-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.sm-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.sm-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of small body text.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1167",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-body-small-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "large": {
+        "font-size": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.lg}",
+            "Desktop": "{Primitives Sizes.text.lg}",
+            "Mobile Compact": "{Primitives Sizes.text.lg}",
+            "Desktop Compact": "{Primitives Sizes.text.lg}"
+          },
+          "$type": "fontSize",
+          "$description": "Font size of large body text.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1169",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "FONT_SIZE"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-body-large-font-size)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "line-height": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.text.lg-line-height}",
+            "Desktop": "{Primitives Sizes.text.lg-line-height}",
+            "Mobile Compact": "{Primitives Sizes.text.lg-line-height}",
+            "Desktop Compact": "{Primitives Sizes.text.lg-line-height}"
+          },
+          "$type": "lineHeight",
+          "$description": "Line height of large body text.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1170",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "LINE_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--typography-body-large-line-height)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "caption": {
+      "font-size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.sm}",
+          "Desktop": "{Primitives Sizes.text.sm}",
+          "Mobile Compact": "{Primitives Sizes.text.sm}",
+          "Desktop Compact": "{Primitives Sizes.text.sm}"
+        },
+        "$type": "fontSize",
+        "$description": "Font size of captions.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:1174",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--typography-caption-font-size)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "line-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.sm-line-height}",
+          "Desktop": "{Primitives Sizes.text.sm-line-height}",
+          "Mobile Compact": "{Primitives Sizes.text.sm-line-height}",
+          "Desktop Compact": "{Primitives Sizes.text.sm-line-height}"
+        },
+        "$type": "lineHeight",
+        "$description": "Line height of captions.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:1175",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "LINE_HEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--typography-caption-line-height)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      }
+    },
+    "eyebrow": {
+      "font-size": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.xs}",
+          "Desktop": "{Primitives Sizes.text.xs}",
+          "Mobile Compact": "{Primitives Sizes.text.xs}",
+          "Desktop Compact": "{Primitives Sizes.text.xs}"
+        },
+        "$type": "fontSize",
+        "$description": "Font size of eyebrows.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:231:4433",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--typography-eyebrow-font-size)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "line-height": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.text.xs-line-height}",
+          "Desktop": "{Primitives Sizes.text.xs-line-height}",
+          "Mobile Compact": "{Primitives Sizes.text.xs-line-height}",
+          "Desktop Compact": "{Primitives Sizes.text.xs-line-height}"
+        },
+        "$type": "lineHeight",
+        "$description": "Line height of eyebrows.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:231:4434",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "LINE_HEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--typography-eyebrow-line-height)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "layout": {
+    "padding": {
+      "inline": {
+        "xs": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.1}",
+            "Desktop": "{Primitives Sizes.spacing.1}",
+            "Mobile Compact": "{Primitives Sizes.spacing.1}",
+            "Desktop Compact": "{Primitives Sizes.spacing.1}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step xs.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1184",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-xs)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "sm": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.2}",
+            "Desktop": "{Primitives Sizes.spacing.2}",
+            "Mobile Compact": "{Primitives Sizes.spacing.2}",
+            "Desktop Compact": "{Primitives Sizes.spacing.2}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step sm.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1185",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-sm)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "md": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.3}",
+            "Desktop": "{Primitives Sizes.spacing.3}",
+            "Mobile Compact": "{Primitives Sizes.spacing.3}",
+            "Desktop Compact": "{Primitives Sizes.spacing.3}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step md.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1186",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-md)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "lg": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.4}",
+            "Desktop": "{Primitives Sizes.spacing.4}",
+            "Mobile Compact": "{Primitives Sizes.spacing.4}",
+            "Desktop Compact": "{Primitives Sizes.spacing.4}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step lg.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1187",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-lg)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.4}",
+            "Desktop": "{Primitives Sizes.spacing.4}",
+            "Mobile Compact": "{Primitives Sizes.spacing.4}",
+            "Desktop Compact": "{Primitives Sizes.spacing.4}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1188",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "2xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.6}",
+            "Desktop": "{Primitives Sizes.spacing.6}",
+            "Mobile Compact": "{Primitives Sizes.spacing.6}",
+            "Desktop Compact": "{Primitives Sizes.spacing.6}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step 2xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:621:4",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-2xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "3xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.8}",
+            "Desktop": "{Primitives Sizes.spacing.8}",
+            "Mobile Compact": "{Primitives Sizes.spacing.8}",
+            "Desktop Compact": "{Primitives Sizes.spacing.8}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal padding of layout regions, step 3xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:621:6",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-inline-3xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "stack": {
+        "sm": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.1}",
+            "Desktop": "{Primitives Sizes.spacing.1}",
+            "Mobile Compact": "{Primitives Sizes.spacing.1}",
+            "Desktop Compact": "{Primitives Sizes.spacing.1}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical padding of layout regions, step sm.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1189",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-stack-sm)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "md": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.2}",
+            "Desktop": "{Primitives Sizes.spacing.2}",
+            "Mobile Compact": "{Primitives Sizes.spacing.2}",
+            "Desktop Compact": "{Primitives Sizes.spacing.2}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical padding of layout regions, step md.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1190",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-stack-md)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "lg": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.3}",
+            "Desktop": "{Primitives Sizes.spacing.3}",
+            "Mobile Compact": "{Primitives Sizes.spacing.3}",
+            "Desktop Compact": "{Primitives Sizes.spacing.3}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical padding of layout regions, step lg.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1191",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-stack-lg)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.5}",
+            "Desktop": "{Primitives Sizes.spacing.5}",
+            "Mobile Compact": "{Primitives Sizes.spacing.5}",
+            "Desktop Compact": "{Primitives Sizes.spacing.5}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical padding of layout regions, step xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1192",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-stack-xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "2xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.6}",
+            "Desktop": "{Primitives Sizes.spacing.6}",
+            "Mobile Compact": "{Primitives Sizes.spacing.6}",
+            "Desktop Compact": "{Primitives Sizes.spacing.6}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical padding of layout regions, step 2xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:621:5",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-stack-2xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "3xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.8}",
+            "Desktop": "{Primitives Sizes.spacing.8}",
+            "Mobile Compact": "{Primitives Sizes.spacing.8}",
+            "Desktop Compact": "{Primitives Sizes.spacing.8}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical padding of layout regions, step 3xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:621:7",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-padding-stack-3xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "gap": {
+      "inline": {
+        "sm": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.1}",
+            "Desktop": "{Primitives Sizes.spacing.1}",
+            "Mobile Compact": "{Primitives Sizes.spacing.1}",
+            "Desktop Compact": "{Primitives Sizes.spacing.1}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal gap between items in a row, step sm.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1193",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-inline-sm)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "md": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.2}",
+            "Desktop": "{Primitives Sizes.spacing.2}",
+            "Mobile Compact": "{Primitives Sizes.spacing.2}",
+            "Desktop Compact": "{Primitives Sizes.spacing.2}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal gap between items in a row, step md.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1194",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-inline-md)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "lg": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.3}",
+            "Desktop": "{Primitives Sizes.spacing.3}",
+            "Mobile Compact": "{Primitives Sizes.spacing.3}",
+            "Desktop Compact": "{Primitives Sizes.spacing.3}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal gap between items in a row, step lg.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1195",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-inline-lg)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      },
+      "stack": {
+        "sm": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.1}",
+            "Desktop": "{Primitives Sizes.spacing.1}",
+            "Mobile Compact": "{Primitives Sizes.spacing.1}",
+            "Desktop Compact": "{Primitives Sizes.spacing.1}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical gap between stacked items, step sm.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1197",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-stack-sm)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "md": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.2}",
+            "Desktop": "{Primitives Sizes.spacing.2}",
+            "Mobile Compact": "{Primitives Sizes.spacing.2}",
+            "Desktop Compact": "{Primitives Sizes.spacing.2}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical gap between stacked items, step md.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1198",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-stack-md)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "lg": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.3}",
+            "Desktop": "{Primitives Sizes.spacing.3}",
+            "Mobile Compact": "{Primitives Sizes.spacing.3}",
+            "Desktop Compact": "{Primitives Sizes.spacing.3}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical gap between stacked items, step lg.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1199",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-stack-lg)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.4}",
+            "Desktop": "{Primitives Sizes.spacing.4}",
+            "Mobile Compact": "{Primitives Sizes.spacing.4}",
+            "Desktop Compact": "{Primitives Sizes.spacing.4}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical gap between stacked items, step xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1200",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-stack-xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "container": {
+      "max-width": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.breakpoint.md}",
+          "Desktop": "{Primitives Sizes.size.360}",
+          "Mobile Compact": "{Primitives Sizes.breakpoint.md}",
+          "Desktop Compact": "{Primitives Sizes.size.360}"
+        },
+        "$type": "size",
+        "$description": "Maximum width of the page container.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:1201",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--layout-container-max-width)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "padding-inline": {
+        "$value": {
+          "Mobile": "{Sizes.layout.padding.inline.lg}",
+          "Desktop": "{Sizes.layout.padding.inline.xl}",
+          "Mobile Compact": "{Sizes.layout.padding.inline.lg}",
+          "Desktop Compact": "{Sizes.layout.padding.inline.xl}"
+        },
+        "$type": "spacing",
+        "$description": "Horizontal padding of the page container.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:1202",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--layout-container-padding-inline)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "icon": {
+    "sm": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.5}",
+        "Desktop": "{Primitives Sizes.size.5}",
+        "Mobile Compact": "{Primitives Sizes.size.4}",
+        "Desktop Compact": "{Primitives Sizes.size.4}"
+      },
+      "$type": "size",
+      "$description": "Density-aware size of icons, step sm.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:1:1203",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--icon-sm)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "2xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.3}",
+        "Desktop": "{Primitives Sizes.size.3}",
+        "Mobile Compact": "{Primitives Sizes.size.3}",
+        "Desktop Compact": "{Primitives Sizes.size.3}"
+      },
+      "$type": "size",
+      "$description": "Density-aware size of icons, step 2xs.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:112",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--icon-2xs)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.4}",
+        "Desktop": "{Primitives Sizes.size.4}",
+        "Mobile Compact": "{Primitives Sizes.size.3}",
+        "Desktop Compact": "{Primitives Sizes.size.3}"
+      },
+      "$type": "size",
+      "$description": "Density-aware size of icons, step xs.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:113",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--icon-xs)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "md": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.6}",
+        "Desktop": "{Primitives Sizes.size.6}",
+        "Mobile Compact": "{Primitives Sizes.size.5}",
+        "Desktop Compact": "{Primitives Sizes.size.5}"
+      },
+      "$type": "size",
+      "$description": "Density-aware size of icons, step md.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:114",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--icon-md)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "lg": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.8}",
+        "Desktop": "{Primitives Sizes.size.8}",
+        "Mobile Compact": "{Primitives Sizes.size.6}",
+        "Desktop Compact": "{Primitives Sizes.size.6}"
+      },
+      "$type": "size",
+      "$description": "Density-aware size of icons, step lg.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:115",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--icon-lg)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "hit-area": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.10}",
+        "Desktop": "{Primitives Sizes.size.10}",
+        "Mobile Compact": "{Primitives Sizes.size.8}",
+        "Desktop Compact": "{Primitives Sizes.size.8}"
+      },
+      "$type": "size",
+      "$description": "Density-aware size of the touch target of a small interactive item.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:116",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--icon-hit-area)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    }
+  },
+  "gap": {
+    "2xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.1}",
+        "Desktop": "{Primitives Sizes.spacing.1}",
+        "Mobile Compact": "{Primitives Sizes.spacing.1}",
+        "Desktop Compact": "{Primitives Sizes.spacing.1}"
+      },
+      "$type": "spacing",
+      "$description": "Density-aware gap between items, step 2xs.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:117",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--gap-2xs)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.2}",
+        "Desktop": "{Primitives Sizes.spacing.2}",
+        "Mobile Compact": "{Primitives Sizes.spacing.1}",
+        "Desktop Compact": "{Primitives Sizes.spacing.1}"
+      },
+      "$type": "spacing",
+      "$description": "Density-aware gap between items, step xs.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:118",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--gap-xs)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "sm": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.3}",
+        "Desktop": "{Primitives Sizes.spacing.3}",
+        "Mobile Compact": "{Primitives Sizes.spacing.2}",
+        "Desktop Compact": "{Primitives Sizes.spacing.2}"
+      },
+      "$type": "spacing",
+      "$description": "Density-aware gap between items, step sm.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:119",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--gap-sm)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "md": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.spacing.4}",
+        "Desktop": "{Primitives Sizes.spacing.4}",
+        "Mobile Compact": "{Primitives Sizes.spacing.3}",
+        "Desktop Compact": "{Primitives Sizes.spacing.3}"
+      },
+      "$type": "spacing",
+      "$description": "Density-aware gap between items, step md.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:120",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "GAP"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--gap-md)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    }
+  },
+  "padding": {
+    "inline": {
+      "xs": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}",
+          "Mobile Compact": "{Primitives Sizes.spacing.1}",
+          "Desktop Compact": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware horizontal padding, step xs.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:121",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-inline-xs)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "sm": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}",
+          "Mobile Compact": "{Primitives Sizes.spacing.1}",
+          "Desktop Compact": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware horizontal padding, step sm.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:122",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-inline-sm)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "md": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.3}",
+          "Desktop": "{Primitives Sizes.spacing.3}",
+          "Mobile Compact": "{Primitives Sizes.spacing.2}",
+          "Desktop Compact": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware horizontal padding, step md.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:123",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-inline-md)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "lg": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.4}",
+          "Desktop": "{Primitives Sizes.spacing.4}",
+          "Mobile Compact": "{Primitives Sizes.spacing.3}",
+          "Desktop Compact": "{Primitives Sizes.spacing.3}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware horizontal padding, step lg.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:124",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-inline-lg)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "xl": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.6}",
+          "Desktop": "{Primitives Sizes.spacing.6}",
+          "Mobile Compact": "{Primitives Sizes.spacing.4}",
+          "Desktop Compact": "{Primitives Sizes.spacing.4}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware horizontal padding, step xl.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:125",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-inline-xl)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "with-icon": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.11}",
+          "Desktop": "{Primitives Sizes.spacing.12}",
+          "Mobile Compact": "{Primitives Sizes.spacing.11}",
+          "Desktop Compact": "{Primitives Sizes.spacing.12}"
+        },
+        "$type": "spacing",
+        "$description": "Inline padding on the side of a field that holds an icon.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:126",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-inline-with-icon)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      }
+    },
+    "stack": {
+      "xs": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.1}",
+          "Desktop": "{Primitives Sizes.spacing.1}",
+          "Mobile Compact": "{Primitives Sizes.spacing.1}",
+          "Desktop Compact": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware vertical padding, step xs.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:127",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-stack-xs)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "sm": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.2}",
+          "Desktop": "{Primitives Sizes.spacing.2}",
+          "Mobile Compact": "{Primitives Sizes.spacing.1}",
+          "Desktop Compact": "{Primitives Sizes.spacing.1}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware vertical padding, step sm.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:128",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-stack-sm)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "md": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.3}",
+          "Desktop": "{Primitives Sizes.spacing.3}",
+          "Mobile Compact": "{Primitives Sizes.spacing.2}",
+          "Desktop Compact": "{Primitives Sizes.spacing.2}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware vertical padding, step md.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:129",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-stack-md)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "lg": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.4}",
+          "Desktop": "{Primitives Sizes.spacing.4}",
+          "Mobile Compact": "{Primitives Sizes.spacing.3}",
+          "Desktop Compact": "{Primitives Sizes.spacing.3}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware vertical padding, step lg.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:130",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-stack-lg)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      },
+      "xl": {
+        "$value": {
+          "Mobile": "{Primitives Sizes.spacing.6}",
+          "Desktop": "{Primitives Sizes.spacing.6}",
+          "Mobile Compact": "{Primitives Sizes.spacing.5}",
+          "Desktop Compact": "{Primitives Sizes.spacing.5}"
+        },
+        "$type": "spacing",
+        "$description": "Density-aware vertical padding, step xl.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:877:131",
+            "collectionId": "VariableCollectionId:1:1108",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--padding-stack-xl)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Mobile",
+              "Desktop",
+              "Mobile Compact",
+              "Desktop Compact"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "height": {
+    "2xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.5}",
+        "Desktop": "{Primitives Sizes.size.5}",
+        "Mobile Compact": "{Primitives Sizes.size.5}",
+        "Desktop Compact": "{Primitives Sizes.size.5}"
+      },
+      "$type": "size",
+      "$description": "Density-aware height of controls, step 2xs.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:132",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--height-2xs)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "xs": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.6}",
+        "Desktop": "{Primitives Sizes.size.6}",
+        "Mobile Compact": "{Primitives Sizes.size.5}",
+        "Desktop Compact": "{Primitives Sizes.size.5}"
+      },
+      "$type": "size",
+      "$description": "Density-aware height of controls, step xs.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:133",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--height-xs)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "sm": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.8}",
+        "Desktop": "{Primitives Sizes.size.8}",
+        "Mobile Compact": "{Primitives Sizes.size.6}",
+        "Desktop Compact": "{Primitives Sizes.size.6}"
+      },
+      "$type": "size",
+      "$description": "Density-aware height of controls, step sm.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:134",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--height-sm)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "md": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.12}",
+        "Desktop": "{Primitives Sizes.size.12}",
+        "Mobile Compact": "{Primitives Sizes.size.10}",
+        "Desktop Compact": "{Primitives Sizes.size.10}"
+      },
+      "$type": "size",
+      "$description": "Density-aware height of controls, step md.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:135",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--height-md)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    }
+  },
+  "min-height": {
+    "sm": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.20}",
+        "Desktop": "{Primitives Sizes.size.20}",
+        "Mobile Compact": "{Primitives Sizes.size.16}",
+        "Desktop Compact": "{Primitives Sizes.size.16}"
+      },
+      "$type": "size",
+      "$description": "Density-aware minimum height of areas such as multi-line fields, step sm.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:136",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--min-height-sm)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "md": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.24}",
+        "Desktop": "{Primitives Sizes.size.24}",
+        "Mobile Compact": "{Primitives Sizes.size.20}",
+        "Desktop Compact": "{Primitives Sizes.size.20}"
+      },
+      "$type": "size",
+      "$description": "Density-aware minimum height of areas such as multi-line fields, step md.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:137",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--min-height-md)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    },
+    "lg": {
+      "$value": {
+        "Mobile": "{Primitives Sizes.size.32}",
+        "Desktop": "{Primitives Sizes.size.32}",
+        "Mobile Compact": "{Primitives Sizes.size.24}",
+        "Desktop Compact": "{Primitives Sizes.size.24}"
+      },
+      "$type": "size",
+      "$description": "Density-aware minimum height of areas such as multi-line fields, step lg.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:877:138",
+          "collectionId": "VariableCollectionId:1:1108",
+          "scopes": [
+            "WIDTH_HEIGHT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--min-height-lg)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Mobile",
+            "Desktop",
+            "Mobile Compact",
+            "Desktop Compact"
+          ]
+        }
+      }
+    }
+  }
+}

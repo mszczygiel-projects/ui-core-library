@@ -5,10 +5,61 @@ import stylistic from '@stylistic/eslint-plugin';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier/flat';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import * as jsoncParser from 'jsonc-eslint-parser';
 import tseslint from 'typescript-eslint';
 
 const tsFiles = ['**/*.ts', '**/*.mts', '**/*.cts', '**/*.tsx'];
 const jsFiles = ['**/*.js', '**/*.mjs', '**/*.cjs'];
+
+/**
+ * The allowed dependencies between projects, by their `type:*` tag. A project whose tags match no
+ * constraint can neither depend on a project nor be depended on, so a missing tag fails lint.
+ */
+const depConstraints = [
+  { sourceTag: 'type:foundations', onlyDependOnLibsWithTags: ['type:foundations'] },
+  { sourceTag: 'type:icons', onlyDependOnLibsWithTags: ['type:icons'] },
+  { sourceTag: 'type:shared', onlyDependOnLibsWithTags: ['type:shared'] },
+  {
+    sourceTag: 'type:web-components',
+    onlyDependOnLibsWithTags: [
+      'type:foundations',
+      'type:icons',
+      'type:shared',
+      'type:web-components',
+    ],
+  },
+  {
+    sourceTag: 'type:react',
+    onlyDependOnLibsWithTags: ['type:foundations', 'type:icons', 'type:shared', 'type:react'],
+  },
+  {
+    sourceTag: 'type:testing',
+    onlyDependOnLibsWithTags: [
+      'type:foundations',
+      'type:icons',
+      'type:shared',
+      'type:web-components',
+      'type:react',
+      'type:testing',
+    ],
+  },
+  {
+    sourceTag: 'type:app',
+    onlyDependOnLibsWithTags: [
+      'type:foundations',
+      'type:icons',
+      'type:shared',
+      'type:web-components',
+      'type:react',
+      'type:tool',
+      'type:app',
+    ],
+  },
+  {
+    sourceTag: 'type:tool',
+    onlyDependOnLibsWithTags: ['type:foundations', 'type:icons', 'type:shared', 'type:tool'],
+  },
+];
 
 export default defineConfig(
   globalIgnores([
@@ -16,6 +67,8 @@ export default defineConfig(
     '**/coverage',
     '**/out-tsc',
     '**/.nx',
+    // Written by build steps, such as the typed token references.
+    '**/generated',
     // Agent skills belong to their makers, wherever their tools put them.
     '**/.agents/skills',
     '**/.claude/skills',
@@ -47,11 +100,34 @@ export default defineConfig(
     rules: {
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
+      '@nx/enforce-module-boundaries': [
+        'error',
+        { enforceBuildableLibDependency: true, allow: [], depConstraints },
+      ],
     },
   },
   {
     files: jsFiles,
     extends: [tseslint.configs.disableTypeChecked],
+  },
+  {
+    files: ['**/package.json'],
+    languageOptions: { parser: jsoncParser },
+    rules: {
+      '@nx/dependency-checks': [
+        'error',
+        {
+          // Tests and build scripts run in the repository and never ship, so what they import is
+          // a development dependency.
+          ignoredFiles: [
+            '{projectRoot}/vitest.config.ts',
+            '{projectRoot}/**/*.test.ts',
+            '{projectRoot}/**/*.test.tsx',
+            '{projectRoot}/scripts/**/*',
+          ],
+        },
+      ],
+    },
   },
   prettier,
   {

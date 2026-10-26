@@ -1,0 +1,1891 @@
+{
+  "color": {
+    "brand": {
+      "primary": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.brand.primary.default}",
+            "Subtle": "{Themes.color.on-subtle.brand.primary.default}",
+            "Inverse": "{Themes.color.on-inverse.brand.primary.default}",
+            "Primary": "{Themes.color.on-brand-primary.brand.primary.default}"
+          },
+          "$type": "color",
+          "$description": "The primary brand colour, for brand fills, marks and accents.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:954",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-primary-default)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.brand.primary.subtle}",
+            "Subtle": "{Themes.color.on-subtle.brand.primary.subtle}",
+            "Inverse": "{Themes.color.on-inverse.brand.primary.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.brand.primary.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light tint of the primary brand colour, for quiet brand fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1072",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-primary-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "strong": {
+          "$value": {
+            "Default": "{Themes.color.brand.primary.strong}",
+            "Subtle": "{Themes.color.on-subtle.brand.primary.strong}",
+            "Inverse": "{Themes.color.on-inverse.brand.primary.strong}",
+            "Primary": "{Themes.color.on-brand-primary.brand.primary.strong}"
+          },
+          "$type": "color",
+          "$description": "Deep shade of the primary brand colour, for text and marks on its light tint.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:599:280",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-primary-strong)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      },
+      "secondary": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.brand.secondary.default}",
+            "Subtle": "{Themes.color.on-subtle.brand.secondary.default}",
+            "Inverse": "{Themes.color.on-inverse.brand.secondary.default}",
+            "Primary": "{Themes.color.on-brand-primary.brand.secondary.default}"
+          },
+          "$type": "color",
+          "$description": "The secondary brand colour, for brand fills, marks and accents.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:955",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-secondary-default)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.brand.secondary.subtle}",
+            "Subtle": "{Themes.color.on-subtle.brand.secondary.subtle}",
+            "Inverse": "{Themes.color.on-inverse.brand.secondary.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.brand.secondary.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light tint of the secondary brand colour, for quiet brand fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:680:6",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-secondary-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "strong": {
+          "$value": {
+            "Default": "{Themes.color.brand.secondary.strong}",
+            "Subtle": "{Themes.color.on-subtle.brand.secondary.strong}",
+            "Inverse": "{Themes.color.on-inverse.brand.secondary.strong}",
+            "Primary": "{Themes.color.on-brand-primary.brand.secondary.strong}"
+          },
+          "$type": "color",
+          "$description": "Deep shade of the secondary brand colour, for text and marks on its light tint.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:680:11",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-secondary-strong)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      },
+      "tertiary": {
+        "default": {
+          "$value": {
+            "Default": "{Themes.color.brand.tertiary.default}",
+            "Subtle": "{Themes.color.on-subtle.brand.tertiary.default}",
+            "Inverse": "{Themes.color.on-inverse.brand.tertiary.default}",
+            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.default}"
+          },
+          "$type": "color",
+          "$description": "The tertiary brand colour, for brand fills, marks and accents.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:956",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-tertiary-default)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.brand.tertiary.subtle}",
+            "Subtle": "{Themes.color.on-subtle.brand.tertiary.subtle}",
+            "Inverse": "{Themes.color.on-inverse.brand.tertiary.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light tint of the tertiary brand colour, for quiet brand fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:680:16",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-tertiary-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "strong": {
+          "$value": {
+            "Default": "{Themes.color.brand.tertiary.strong}",
+            "Subtle": "{Themes.color.on-subtle.brand.tertiary.strong}",
+            "Inverse": "{Themes.color.on-inverse.brand.tertiary.strong}",
+            "Primary": "{Themes.color.on-brand-primary.brand.tertiary.strong}"
+          },
+          "$type": "color",
+          "$description": "Deep shade of the tertiary brand colour, for text and marks on its light tint.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:680:21",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-brand-tertiary-strong)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "background": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.background.default}",
+          "Subtle": "{Themes.color.on-subtle.background.default}",
+          "Inverse": "{Themes.color.on-inverse.background.default}",
+          "Primary": "{Themes.color.on-brand-primary.background.default}"
+        },
+        "$type": "color",
+        "$description": "Base surface of the page and of the cards on it.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:957",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-default)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "sunken": {
+        "$value": {
+          "Default": "{Themes.color.background.sunken}",
+          "Subtle": "{Themes.color.on-subtle.background.sunken}",
+          "Inverse": "{Themes.color.on-inverse.background.sunken}",
+          "Primary": "{Themes.color.on-brand-primary.background.sunken}"
+        },
+        "$type": "color",
+        "$description": "Recessed surface below the page, such as the fill of filled fields.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:958",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-sunken)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "subtle": {
+        "$value": {
+          "Default": "{Themes.color.background.subtle}",
+          "Subtle": "{Themes.color.on-subtle.background.subtle}",
+          "Inverse": "{Themes.color.on-inverse.background.subtle}",
+          "Primary": "{Themes.color.on-brand-primary.background.subtle}"
+        },
+        "$type": "color",
+        "$description": "Quiet surface one step off the page, for low-emphasis areas and hover fills.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:959",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-subtle)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "inverse": {
+        "$value": {
+          "Default": "{Themes.color.background.inverse}",
+          "Subtle": "{Themes.color.on-subtle.background.inverse}",
+          "Inverse": "{Themes.color.on-inverse.background.inverse}",
+          "Primary": "{Themes.color.on-brand-primary.background.inverse}"
+        },
+        "$type": "color",
+        "$description": "Surface in the opposite tone of the page, for inverted regions and solid neutral marks.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:960",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-inverse)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "brand-primary": {
+        "$value": {
+          "Default": "{Themes.color.background.brand-primary}",
+          "Subtle": "{Themes.color.on-subtle.background.brand-primary}",
+          "Inverse": "{Themes.color.on-inverse.background.brand-primary}",
+          "Primary": "{Themes.color.on-brand-primary.background.brand-primary}"
+        },
+        "$type": "color",
+        "$description": "Surface filled with the primary brand colour, for promotional or emphasized regions.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:962",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-brand-primary)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "overlay": {
+        "$value": {
+          "Default": "{Themes.color.background.overlay}",
+          "Subtle": "{Themes.color.on-subtle.background.overlay}",
+          "Inverse": "{Themes.color.on-inverse.background.overlay}",
+          "Primary": "{Themes.color.on-brand-primary.background.overlay}"
+        },
+        "$type": "color",
+        "$description": "Dimming layer that covers the page behind a modal layer.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:961",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-overlay)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "tint": {
+        "$value": {
+          "Default": "{Themes.color.background.tint}",
+          "Subtle": "{Themes.color.on-subtle.background.tint}",
+          "Inverse": "{Themes.color.on-inverse.background.tint}",
+          "Primary": "{Themes.color.on-brand-primary.background.tint}"
+        },
+        "$type": "color",
+        "$description": "Translucent wash over any surface that signals hover, drag or selection.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:453:9",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-tint)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "transparent": {
+        "$value": {
+          "Default": "{Themes.color.background.transparent}",
+          "Subtle": "{Themes.color.on-subtle.background.transparent}",
+          "Inverse": "{Themes.color.on-inverse.background.transparent}",
+          "Primary": "{Themes.color.on-brand-primary.background.transparent}"
+        },
+        "$type": "color",
+        "$description": "No fill, for parts that take up space but paint nothing.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:270",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-background-transparent)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "text": {
+      "primary": {
+        "$value": {
+          "Default": "{Themes.color.text.primary}",
+          "Subtle": "{Themes.color.on-subtle.text.primary}",
+          "Inverse": "{Themes.color.on-inverse.text.primary}",
+          "Primary": "{Themes.color.on-brand-primary.text.primary}"
+        },
+        "$type": "color",
+        "$description": "Main text, such as body copy and headings, with the highest contrast on its surface.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:963",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-text-primary)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "secondary": {
+        "$value": {
+          "Default": "{Themes.color.text.secondary}",
+          "Subtle": "{Themes.color.on-subtle.text.secondary}",
+          "Inverse": "{Themes.color.on-inverse.text.secondary}",
+          "Primary": "{Themes.color.on-brand-primary.text.secondary}"
+        },
+        "$type": "color",
+        "$description": "Supporting text, such as field labels and secondary copy.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:964",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-text-secondary)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "muted": {
+        "$value": {
+          "Default": "{Themes.color.text.muted}",
+          "Subtle": "{Themes.color.on-subtle.text.muted}",
+          "Inverse": "{Themes.color.on-inverse.text.muted}",
+          "Primary": "{Themes.color.on-brand-primary.text.muted}"
+        },
+        "$type": "color",
+        "$description": "Quietest readable text, for helper text and hints.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:965",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-text-muted)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "brand": {
+        "$value": {
+          "Default": "{Themes.color.text.brand}",
+          "Subtle": "{Themes.color.on-subtle.text.brand}",
+          "Inverse": "{Themes.color.on-inverse.text.brand}",
+          "Primary": "{Themes.color.on-brand-primary.text.brand}"
+        },
+        "$type": "color",
+        "$description": "Text in the primary brand colour, for brand-tinted copy that is not a link.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:966",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-text-brand)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "placeholder": {
+        "$value": {
+          "Default": "{Themes.color.text.placeholder}",
+          "Subtle": "{Themes.color.on-subtle.text.placeholder}",
+          "Inverse": "{Themes.color.on-inverse.text.placeholder}",
+          "Primary": "{Themes.color.on-brand-primary.text.placeholder}"
+        },
+        "$type": "color",
+        "$description": "Placeholder text in an empty field.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:273",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-text-placeholder)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "border": {
+      "subtle": {
+        "$value": {
+          "Default": "{Themes.color.border.subtle}",
+          "Subtle": "{Themes.color.on-subtle.border.subtle}",
+          "Inverse": "{Themes.color.on-inverse.border.subtle}",
+          "Primary": "{Themes.color.on-brand-primary.border.subtle}"
+        },
+        "$type": "color",
+        "$description": "Quiet border, for the outlines of containers and overlays and for dividers.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:968",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-border-subtle)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "stronger": {
+        "$value": {
+          "Default": "{Themes.color.border.stronger}",
+          "Subtle": "{Themes.color.on-subtle.border.stronger}",
+          "Inverse": "{Themes.color.on-inverse.border.stronger}",
+          "Primary": "{Themes.color.on-brand-primary.border.stronger}"
+        },
+        "$type": "color",
+        "$description": "Strongest border, for the outlines of controls under the pointer or pressed.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:293",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-border-stronger)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "strong": {
+        "$value": {
+          "Default": "{Themes.color.border.strong}",
+          "Subtle": "{Themes.color.on-subtle.border.strong}",
+          "Inverse": "{Themes.color.on-inverse.border.strong}",
+          "Primary": "{Themes.color.on-brand-primary.border.strong}"
+        },
+        "$type": "color",
+        "$description": "Strong border, for the outlines of controls at rest.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:316",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-border-strong)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.border.default}",
+          "Subtle": "{Themes.color.on-subtle.border.default}",
+          "Inverse": "{Themes.color.on-inverse.border.default}",
+          "Primary": "{Themes.color.on-brand-primary.border.default}"
+        },
+        "$type": "color",
+        "$description": "Default border, for neutral outlines and separators.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:336",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-border-default)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "feedback": {
+      "success": {
+        "base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.success.base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.success.base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.success.base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.success.base}"
+          },
+          "$type": "color",
+          "$description": "Strong success colour, for success fills, text, icons and outlines.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1056",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-success-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.success.subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.success.subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.success.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.success.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light success colour, for quiet success fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1057",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-success-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "on-base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.success.on-base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.success.on-base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.success.on-base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.success.on-base}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the strong success colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1058",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-success-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      },
+      "info": {
+        "base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.info.base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.info.base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.info.base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.info.base}"
+          },
+          "$type": "color",
+          "$description": "Strong information colour, for information fills, text, icons and outlines.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1059",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-info-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.info.subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.info.subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.info.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.info.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light information colour, for quiet information fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1060",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-info-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "on-base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.info.on-base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.info.on-base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.info.on-base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.info.on-base}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the strong information colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1061",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-info-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      },
+      "warning": {
+        "base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.warning.base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.warning.base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.warning.base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.warning.base}"
+          },
+          "$type": "color",
+          "$description": "Strong warning colour, for warning fills, text, icons and outlines.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1062",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-warning-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.warning.subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.warning.subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.warning.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.warning.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light warning colour, for quiet warning fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1063",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-warning-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "on-base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.warning.on-base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.warning.on-base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.warning.on-base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.warning.on-base}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the strong warning colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1064",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-warning-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      },
+      "error": {
+        "base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.error.base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.error.base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.error.base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.error.base}"
+          },
+          "$type": "color",
+          "$description": "Strong error colour, for error fills, text, icons and outlines.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1065",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-error-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.error.subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.error.subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.error.subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.error.subtle}"
+          },
+          "$type": "color",
+          "$description": "Light error colour, for quiet error fills.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1066",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-error-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "on-base": {
+          "$value": {
+            "Default": "{Themes.color.feedback.error.on-base}",
+            "Subtle": "{Themes.color.on-subtle.feedback.error.on-base}",
+            "Inverse": "{Themes.color.on-inverse.feedback.error.on-base}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.error.on-base}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the strong error colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1:1067",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-error-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "action": {
+      "primary": {
+        "base": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.base.default}",
+              "Subtle": "{Themes.color.on-subtle.action.primary.base.default}",
+              "Inverse": "{Themes.color.on-inverse.action.primary.base.default}",
+              "Primary": "{Themes.color.on-brand-primary.action.primary.base.default}"
+            },
+            "$type": "color",
+            "$description": "Fill of a primary action at rest.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1068",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-primary-base-default)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.base.hover}",
+              "Subtle": "{Themes.color.on-subtle.action.primary.base.hover}",
+              "Inverse": "{Themes.color.on-inverse.action.primary.base.hover}",
+              "Primary": "{Themes.color.on-brand-primary.action.primary.base.hover}"
+            },
+            "$type": "color",
+            "$description": "Fill of a primary action under the pointer.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1069",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-primary-base-hover)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "active": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.base.active}",
+              "Subtle": "{Themes.color.on-subtle.action.primary.base.active}",
+              "Inverse": "{Themes.color.on-inverse.action.primary.base.active}",
+              "Primary": "{Themes.color.on-brand-primary.action.primary.base.active}"
+            },
+            "$type": "color",
+            "$description": "Fill of a primary action while pressed.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1071",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-primary-base-active)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          }
+        },
+        "on-base": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.on-base.default}",
+              "Subtle": "{Themes.color.on-subtle.action.primary.on-base.default}",
+              "Inverse": "{Themes.color.on-inverse.action.primary.on-base.default}",
+              "Primary": "{Themes.color.on-brand-primary.action.primary.on-base.default}"
+            },
+            "$type": "color",
+            "$description": "Text and icons on a primary action at rest.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1073",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-primary-on-base-default)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.action.primary.on-base.hover}",
+              "Subtle": "{Themes.color.on-subtle.action.primary.on-base.hover}",
+              "Inverse": "{Themes.color.on-inverse.action.primary.on-base.hover}",
+              "Primary": "{Themes.color.on-brand-primary.action.primary.on-base.hover}"
+            },
+            "$type": "color",
+            "$description": "Text and icons on a primary action under the pointer.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1074",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-primary-on-base-hover)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "secondary": {
+        "base": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.action.secondary.base.default}",
+              "Subtle": "{Themes.color.on-subtle.action.secondary.base.default}",
+              "Inverse": "{Themes.color.on-inverse.action.secondary.base.default}",
+              "Primary": "{Themes.color.on-brand-primary.action.secondary.base.default}"
+            },
+            "$type": "color",
+            "$description": "Fill of a secondary action at rest.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1078",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-secondary-base-default)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.action.secondary.base.hover}",
+              "Subtle": "{Themes.color.on-subtle.action.secondary.base.hover}",
+              "Inverse": "{Themes.color.on-inverse.action.secondary.base.hover}",
+              "Primary": "{Themes.color.on-brand-primary.action.secondary.base.hover}"
+            },
+            "$type": "color",
+            "$description": "Fill of a secondary action under the pointer.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1079",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-secondary-base-hover)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          }
+        },
+        "on-base": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.action.secondary.on-base.default}",
+              "Subtle": "{Themes.color.on-subtle.action.secondary.on-base.default}",
+              "Inverse": "{Themes.color.on-inverse.action.secondary.on-base.default}",
+              "Primary": "{Themes.color.on-brand-primary.action.secondary.on-base.default}"
+            },
+            "$type": "color",
+            "$description": "Text and icons on a secondary action at rest.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1083",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-secondary-on-base-default)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.action.secondary.on-base.hover}",
+              "Subtle": "{Themes.color.on-subtle.action.secondary.on-base.hover}",
+              "Inverse": "{Themes.color.on-inverse.action.secondary.on-base.hover}",
+              "Primary": "{Themes.color.on-brand-primary.action.secondary.on-base.hover}"
+            },
+            "$type": "color",
+            "$description": "Text and icons on a secondary action under the pointer.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1084",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-secondary-on-base-hover)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "danger": {
+        "base": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.action.danger.base.default}",
+              "Subtle": "{Themes.color.on-subtle.action.danger.base.default}",
+              "Inverse": "{Themes.color.on-inverse.action.danger.base.default}",
+              "Primary": "{Themes.color.on-brand-primary.action.danger.base.default}"
+            },
+            "$type": "color",
+            "$description": "Fill of a destructive action at rest.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1098",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-danger-base-default)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.action.danger.base.hover}",
+              "Subtle": "{Themes.color.on-subtle.action.danger.base.hover}",
+              "Inverse": "{Themes.color.on-inverse.action.danger.base.hover}",
+              "Primary": "{Themes.color.on-brand-primary.action.danger.base.hover}"
+            },
+            "$type": "color",
+            "$description": "Fill of a destructive action under the pointer.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1099",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-danger-base-hover)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          }
+        },
+        "on-base": {
+          "default": {
+            "$value": {
+              "Default": "{Themes.color.action.danger.on-base.default}",
+              "Subtle": "{Themes.color.on-subtle.action.danger.on-base.default}",
+              "Inverse": "{Themes.color.on-inverse.action.danger.on-base.default}",
+              "Primary": "{Themes.color.on-brand-primary.action.danger.on-base.default}"
+            },
+            "$type": "color",
+            "$description": "Text and icons on a destructive action at rest.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1103",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-danger-on-base-default)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          },
+          "hover": {
+            "$value": {
+              "Default": "{Themes.color.action.danger.on-base.hover}",
+              "Subtle": "{Themes.color.on-subtle.action.danger.on-base.hover}",
+              "Inverse": "{Themes.color.on-inverse.action.danger.on-base.hover}",
+              "Primary": "{Themes.color.on-brand-primary.action.danger.on-base.hover}"
+            },
+            "$type": "color",
+            "$description": "Text and icons on a destructive action under the pointer.",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1:1104",
+                "collectionId": "VariableCollectionId:1:953",
+                "scopes": [
+                  "SHAPE_FILL",
+                  "TEXT_FILL",
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-action-danger-on-base-hover)"
+                },
+                "hiddenFromPublishing": false,
+                "modes": [
+                  "Default",
+                  "Subtle",
+                  "Inverse",
+                  "Primary"
+                ]
+              }
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.link.default}",
+          "Subtle": "{Themes.color.on-subtle.link.default}",
+          "Inverse": "{Themes.color.on-inverse.link.default}",
+          "Primary": "{Themes.color.on-brand-primary.link.default}"
+        },
+        "$type": "color",
+        "$description": "Link text at rest.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:970",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-link-default)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "hover": {
+        "$value": {
+          "Default": "{Themes.color.link.hover}",
+          "Subtle": "{Themes.color.on-subtle.link.hover}",
+          "Inverse": "{Themes.color.on-inverse.link.hover}",
+          "Primary": "{Themes.color.on-brand-primary.link.hover}"
+        },
+        "$type": "color",
+        "$description": "Link text under the pointer.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:971",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-link-hover)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "icon": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.icon.default}",
+          "Subtle": "{Themes.color.on-subtle.icon.default}",
+          "Inverse": "{Themes.color.on-inverse.icon.default}",
+          "Primary": "{Themes.color.on-brand-primary.icon.default}"
+        },
+        "$type": "color",
+        "$description": "Default colour of icons that stand on their own, without text.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:967",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-icon-default)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "disabled": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.disabled.background}",
+          "Subtle": "{Themes.color.on-subtle.disabled.background}",
+          "Inverse": "{Themes.color.on-inverse.disabled.background}",
+          "Primary": "{Themes.color.on-brand-primary.disabled.background}"
+        },
+        "$type": "color",
+        "$description": "Fill and outline of a disabled control.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:272",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-disabled-background)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "text": {
+        "$value": {
+          "Default": "{Themes.color.disabled.text}",
+          "Subtle": "{Themes.color.on-subtle.disabled.text}",
+          "Inverse": "{Themes.color.on-inverse.disabled.text}",
+          "Primary": "{Themes.color.on-brand-primary.disabled.text}"
+        },
+        "$type": "color",
+        "$description": "Text and icons of a disabled control. Exempt from contrast requirements.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:599:303",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-disabled-text)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "selection": {
+      "background": {
+        "$value": {
+          "Default": "{Themes.color.selection.background}",
+          "Subtle": "{Themes.color.on-subtle.selection.background}",
+          "Inverse": "{Themes.color.on-inverse.selection.background}",
+          "Primary": "{Themes.color.on-brand-primary.selection.background}"
+        },
+        "$type": "color",
+        "$description": "Highlight behind selected text.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:680:25",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "FRAME_FILL",
+              "SHAPE_FILL"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-selection-background)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      },
+      "text": {
+        "$value": {
+          "Default": "{Themes.color.selection.text}",
+          "Subtle": "{Themes.color.on-subtle.selection.text}",
+          "Inverse": "{Themes.color.on-inverse.selection.text}",
+          "Primary": "{Themes.color.on-brand-primary.selection.text}"
+        },
+        "$type": "color",
+        "$description": "Selected text.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:680:29",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "TEXT_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-selection-text)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    },
+    "ring": {
+      "default": {
+        "$value": {
+          "Default": "{Themes.color.ring.default}",
+          "Subtle": "{Themes.color.on-subtle.ring.default}",
+          "Inverse": "{Themes.color.on-inverse.ring.default}",
+          "Primary": "{Themes.color.on-brand-primary.ring.default}"
+        },
+        "$type": "color",
+        "$description": "Colour of the focus ring.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1:969",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "STROKE_COLOR",
+              "EFFECT_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-ring-default)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
+      }
+    }
+  }
+}
