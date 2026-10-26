@@ -21,10 +21,11 @@
     "secrets:check": "secretlint \"**/*\"",
     "deps:audit": "pnpm audit --prod",
     "skills:install": "DO_NOT_TRACK=1 pnpm dlx skills@1.7.2 experimental_install",
-    "verify": "nx sync:check && pnpm format:check && pnpm lint:root && nx run-many -t lint typecheck test build check-package && pnpm release:check && pnpm secrets:check && pnpm deps:audit",
+    "verify": "nx sync:check && pnpm format:check && pnpm lint:root && pnpm lint:css && nx run-many -t lint typecheck test build check-package && pnpm release:check && pnpm secrets:check && pnpm deps:audit",
     "tokens:snapshot": "nx run foundations:test -- -u",
     "release:check": "nx release version 1.0.0 --first-release --dry-run",
-    "icons:snapshot": "nx run icons:test -- -u"
+    "icons:snapshot": "nx run icons:test -- -u",
+    "lint:css": "stylelint \"packages/**/*.css\" \"apps/**/*.css\" --ignore-pattern \"**/dist/**\" --allow-empty-input"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
@@ -45,6 +46,10 @@
     "prettier": "catalog:",
     "publint": "catalog:",
     "secretlint": "catalog:",
+    "stylelint": "catalog:",
+    "stylelint-config-standard": "catalog:",
+    "stylelint-plugin-use-baseline": "catalog:",
+    "stylelint-use-logical": "catalog:",
     "typescript": "catalog:",
     "typescript-eslint": "catalog:",
     "vitest": "catalog:"

@@ -8,6 +8,8 @@ import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import * as jsoncParser from 'jsonc-eslint-parser';
 import tseslint from 'typescript-eslint';
 
+import noLiteralText from './tools/lint-rules/src/no-literal-text.ts';
+
 const tsFiles = ['**/*.ts', '**/*.mts', '**/*.cts', '**/*.tsx'];
 const jsFiles = ['**/*.js', '**/*.mjs', '**/*.cjs'];
 
@@ -93,6 +95,13 @@ export default defineConfig(
       // Prefers `value!`, which the strict rule no-non-null-assertion forbids.
       '@typescript-eslint/non-nullable-type-assertion-style': 'off',
     },
+  },
+  {
+    // Text that a component renders on its own comes from a prop or from the labels.
+    files: ['packages/web-components/src/**/*.tsx', 'packages/react/src/**/*.tsx'],
+    ignores: ['**/*.test.tsx', '**/*.figma.ts'],
+    plugins: { 'ui-core': { rules: { 'no-literal-text': noLiteralText } } },
+    rules: { 'ui-core/no-literal-text': 'error' },
   },
   {
     files: [...tsFiles, ...jsFiles],

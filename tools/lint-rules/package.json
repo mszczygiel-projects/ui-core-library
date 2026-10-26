@@ -1,0 +1,23 @@
+{
+  "name": "@mszczygiel-projects/ui-core-lint-rules",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Repository tooling: the local Stylelint and ESLint rules that keep the components on their tokens and their texts in the configuration.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "@mszczygiel-projects/ui-core-foundations": "workspace:^",
+    "postcss-value-parser": "catalog:"
+  },
+  "devDependencies": {
+    "eslint": "catalog:",
+    "stylelint": "catalog:",
+    "typescript-eslint": "catalog:"
+  },
+  "nx": {
+    "name": "lint-rules",
+    "tags": [
+      "type:tool"
+    ]
+  }
+}
