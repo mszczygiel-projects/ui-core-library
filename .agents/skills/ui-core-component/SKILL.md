@@ -24,9 +24,11 @@ The proposal names, each with a recommendation and its alternatives:
 - **Shared logic and labels**: what goes into `packages/shared`, and the labels it adds to `configureUiCore`.
 - **Tests**: the regressions its contract will cover, and whether the owner checks it with VoiceOver.
 
-## 3. The specification first
+## 3. The skeleton, then the specification
 
-Write `packages/shared/src/components/<name>.ts` with `defineComponent` and the shared props interface, with status `in-progress`. Run `pnpm shared:snapshot`. The web component then fails to compile until it declares every prop, and the React props follow by construction.
+Create the component with the generator, never by hand: `pnpm component:new <Name> --category <Category> [--figma <node>] [--form]` (`docs/guides/components.md`). It writes every file and registers the component, and `TODO(component)` marks what to fill.
+
+Fill in `packages/shared/src/components/<name>.ts` first: the specification and the shared props interface, keeping status `in-progress`. Run `pnpm shared:snapshot`. The web component then fails to compile until it declares every prop, and the React props follow by construction.
 
 ## 4. Figma and the tokens
 
@@ -49,6 +51,7 @@ Write `packages/shared/src/components/<name>.ts` with `defineComponent` and the 
 
 ## 7. Finish
 
+- Search for `TODO(component)`: none may be left, and the tests fail on one once the status is `done`.
 - Set the status in the specification to `done` once every item of the Definition of Done holds, owner checks included.
 - `pnpm verify` passes before every commit.
 - The pull request copies the Definition of Done from `CONTRIBUTING.md`, ticks each item and names what waits for the owner.

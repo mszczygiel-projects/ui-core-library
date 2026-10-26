@@ -15,6 +15,7 @@
 | `apps/storybook`          | private                                       | the documentation site                                               |
 | `tools/lint-rules`        | private                                       | the local Stylelint and ESLint rules ([07](07-styles.md))            |
 | `tools/guidelines`        | private                                       | the guidelines of the Figma libraries ([10](10-figma.md))            |
+| `tools/generators`        | private                                       | the generator of new components ([05](05-components.md))             |
 
 A project arrives with its first need. Nx project names are the folder names.
 
