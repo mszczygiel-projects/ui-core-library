@@ -2,6 +2,7 @@ import { type ComponentPropsWithRef, createRef } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
 
 import { LinkButton } from './LinkButton.tsx';
@@ -99,6 +100,32 @@ describe('LinkButton', () => {
     expect(renderLink).not.toHaveBeenCalled();
     expect(link?.hasAttribute('href')).toBe(false);
     expect(link?.getAttribute('aria-disabled')).toBe('true');
+  });
+
+  it('leaves the focus order while disabled, whatever tabIndex it was given', async () => {
+    const screen = await render(
+      <>
+        <button type="button">Before</button>
+        <LinkButton href="/pricing" tabIndex={0}>
+          Pricing
+        </LinkButton>
+      </>,
+    );
+    const link = screen.container.querySelector('a');
+    expect(link?.getAttribute('tabindex')).toBe('0');
+    await screen.rerender(
+      <>
+        <button type="button">Before</button>
+        <LinkButton href="/pricing" tabIndex={0} disabled>
+          Pricing
+        </LinkButton>
+      </>,
+    );
+    const disabled = screen.container.querySelector('a');
+    expect(disabled?.hasAttribute('tabindex')).toBe(false);
+    screen.container.querySelector('button')?.focus();
+    await userEvent.tab();
+    expect(document.activeElement).not.toBe(disabled);
   });
 
   it('gives its link to a callback ref and takes it back on unmount', async () => {

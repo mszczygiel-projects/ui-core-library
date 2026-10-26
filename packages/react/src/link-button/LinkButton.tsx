@@ -73,6 +73,7 @@ export function LinkButton({
   trailingIcon,
   render,
   className,
+  tabIndex,
   ref,
   ...rest
 }: LinkButtonProps) {
@@ -103,7 +104,8 @@ export function LinkButton({
     className,
   );
   if (disabled) {
-    // A link without an address has no role of its own, so a disabled one states it.
+    // A link without an address has no role of its own, so a disabled one states it. An
+    // author's tabIndex would bring the link back into the focus order, so it is left out.
     return (
       <a
         ref={attachLink}
@@ -124,6 +126,7 @@ export function LinkButton({
     download,
     'aria-label': label,
     className: classes,
+    tabIndex,
     ...rest,
   };
   return render === undefined ? (
