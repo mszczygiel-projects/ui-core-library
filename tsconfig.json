@@ -23,6 +23,9 @@
     },
     {
       "path": "./tools/guidelines"
+    },
+    {
+      "path": "./tools/generators"
     }
   ]
 }

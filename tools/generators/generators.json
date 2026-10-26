@@ -1,0 +1,9 @@
+{
+  "generators": {
+    "component": {
+      "factory": "./src/component/generator.ts",
+      "schema": "./src/component/schema.json",
+      "description": "Creates the skeleton of a component: its specification, both implementations, its contract, its stories and its page."
+    }
+  }
+}

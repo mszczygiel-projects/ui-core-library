@@ -30,13 +30,15 @@
     "figma:react": "DO_NOT_TRACK=1 figma connect --config figma.config.json --exit-on-unreadable-files --skip-update-check",
     "figma:wc": "DO_NOT_TRACK=1 figma connect --config figma.web-components.config.json --exit-on-unreadable-files --skip-update-check",
     "figma:check": "pnpm figma:react parse --dry-run && pnpm figma:wc parse --dry-run",
-    "guidelines:build": "nx run guidelines:guidelines"
+    "guidelines:build": "nx run guidelines:guidelines",
+    "component:new": "nx g @mszczygiel-projects/ui-core-generators:component"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
     "@eslint-react/eslint-plugin": "catalog:",
     "@eslint/js": "catalog:",
     "@figma/code-connect": "catalog:",
+    "@mszczygiel-projects/ui-core-generators": "workspace:*",
     "@nx/eslint": "catalog:",
     "@nx/eslint-plugin": "catalog:",
     "@nx/js": "catalog:",

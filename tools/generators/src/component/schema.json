@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "$id": "UiCoreComponent",
+  "title": "A component of UI Core Library",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The PascalCase name of the component, such as IconButton.",
+      "pattern": "^[A-Z][A-Za-z0-9]*$",
+      "$default": { "$source": "argv", "index": 0 }
+    },
+    "category": {
+      "type": "string",
+      "description": "The section of the library.",
+      "enum": ["Actions", "Inputs", "Selection", "Feedback", "Navigation", "Overlays"]
+    },
+    "figma": {
+      "type": "string",
+      "description": "The node of the component set in [Core] UI Library, such as 2037:98.",
+      "pattern": "^\\d+:\\d+$"
+    },
+    "form": {
+      "type": "boolean",
+      "description": "Creates a form-associated control, with a value, reset and validity.",
+      "default": false
+    }
+  },
+  "required": ["name", "category"]
+}
