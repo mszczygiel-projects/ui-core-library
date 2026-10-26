@@ -5,7 +5,7 @@ description: Use when writing or changing a web component of UI Core Library in 
 
 # Web components with Stencil
 
-`docs/decisions/05-components.md`, `06-component-api.md` and `07-styles.md` hold the rules. This is the checklist and the pitfalls the pilot found.
+`docs/decisions/05-components.md`, `06-component-api.md` and `07-styles.md` hold the rules. This is the checklist and the pitfalls the first components met.
 
 ## Writing a component
 
