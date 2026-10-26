@@ -1,0 +1,113 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { WebComponentApi, ReactApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Button.wc.stories.tsx';
+import * as ReactStories from './Button.react.stories.tsx';
+
+<Meta title="Components/Actions/Button/Docs" />
+
+# Button
+
+<ComponentOverview name="Button" />
+
+## Usage
+
+Use Button for one action: saving a form, confirming a choice or opening a dialog. Use a link for navigation. Give the action a short, specific name, such as “Save changes”.
+
+An icon and the label activate the same action. Put a separate action in a separate control. Button has no independent icon boxes or separators.
+
+## Anatomy
+
+The **base** is the native button. Its **wrapper** holds **content** and a centred **loader**. Content holds **leading-icon**, **label** and **trailing-icon**, in reading order. The web component exposes these as parts; React uses the matching `.ui-button__<part>` classes. The focus ring is an outline on base in code and the `focus-ring` layer in Figma.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+`primary`, the default, gives an action the most emphasis. `secondary` uses the second brand action colour. `outline` and `ghost` give alternatives less emphasis. `danger` identifies a destructive action. Button has no separate `tone` prop.
+
+## Sizes & density
+
+Choose `small`, `medium` (the default) or `large` for the surrounding interface. Each size takes its padding, type and icon dimensions from tokens. Density changes them without changing the prop.
+
+## States
+
+Hover and press use the same active colours. Focus adds the shared ring and keeps the default colours. Active primary, secondary, outline and danger buttons also gain the interactive shadow; ghost never has a shadow.
+
+`disabled` blocks interaction and removes the button from the tab order. A disabled fieldset has the same effect. `loading` blocks activation but keeps focus and keyboard navigation. When both are set, disabled wins.
+
+## Content & labels
+
+The default slot or `children` names the action. `label` supplies an alternative accessible name; an author's `aria-label` wins. Keep the visible action name in any alternative name.
+
+Supply trusted SVG nodes in the `leading-icon` and `trailing-icon` slots, or in `leadingIcon` and `trailingIcon`. Their containers size and colour the artwork and make it decorative. Use non-interactive content. The icons package provides SVG strings; insert them as markup, such as with `innerHTML` or React's `dangerouslySetInnerHTML`, using only those trusted strings. Button moves leading and trailing icons with the reading direction; choose mirrored artwork yourself when the symbol has a direction.
+
+While loading, `loadingLabel` describes the state. Without it, Button uses `labels.button.loading`, “Loading” in English. The action name stays the same.
+
+<Source
+  language="ts"
+  code={`configureUiCore({ labels: { button: { loading: 'Zapisywanie' } } });`}
+/>
+
+The uppercase token controls the appearance of text. It is not a component prop, and does not rewrite the supplied text.
+
+## Behaviour
+
+- Pointer, Enter and Space produce native `click` / `onClick`. There is no second `ui-click` event. `preventDefault()` cancels the form action.
+- A click on a disabled or loading button stops at the button: the page sees it only in the capture phase, and `onClick` does not run. A click that starts on an active button completes, even when its handler sets `loading`.
+- `type="button"` is the default. Choose `submit` or `reset` explicitly. An unknown `type`, `variant` or `size`, or a removed attribute, falls back to the default.
+- Loading keeps the same native button and the content's dimensions. Its transparent content remains the action's accessible name; the centred Loader follows the configured `loaderVariant` and inherits the text colour.
+- Button does not manage the asynchronous action. Set `loading` when it begins and clear it when it finishes, including on failure.
+
+`name` and `value` identify the activated submit action. They contribute no form entry at rest, on reset, or while disabled or loading. They are not an editable value, so there is no `defaultValue` or value-change event. Submit respects the form's native validation; Button has no constraint of its own.
+
+React uses the browser's native submitter. To serialize an action from a submit handler, use `new FormData(form, event.nativeEvent.submitter)`. The web component contributes its entry through ElementInternals during the submit handler, so use `new FormData(form)` there. It clears that entry when submission returns, including cancelled or invalid submissions.
+
+The submit event of the web component has `submitter === null`. A web component cannot be the browser's implicit default submit button and does not support per-button `formAction`, `formMethod`, `formEnctype`, `formTarget` or `formNoValidate`. The form's own settings apply. Enter in a field follows the form's own rule: a form with one field submits without the button, even while it is loading, and a form with more fields does not submit. Guard against a repeated submission in the submit handler. In a form with `method="dialog"`, both implementations give the dialog the button's `value` as its `returnValue`. React retains those native attributes. Both support association with an external form using the native `form` attribute; the web component exposes the owning form as a read-only property.
+
+## Accessibility
+
+- **Pattern.** The [WAI-ARIA button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) is implemented by a native button in both frameworks. The web component does not add a duplicate role to its host.
+- **Keys.** Tab and Shift+Tab move focus. Enter and Space activate. Disabled buttons are skipped; loading buttons remain reachable.
+- **Focus.** The shared ring appears for keyboard focus, including during loading. Loading preserves the focused element.
+- **Loading.** `aria-busy` and `aria-disabled` describe the state. A hidden description supplies the loading text. The Loader is decorative and adds no second progress announcement. The application owns completion announcements and any resulting focus move.
+- **Names across shadow roots.** The web component forwards the host's `aria-label` to its inner button. The attribute also names the host itself, so prefer `label`. IDs in external `aria-labelledby` or `aria-describedby` attributes cannot name nodes across that boundary; use visible content, `label` and `loadingLabel` instead. React passes native ARIA attributes through.
+- **Preferences.** The ring and border remain visible in forced colours. The embedded Loader follows reduced motion, using its slow fade instead of rotation.
+
+## Surfaces & themes
+
+Colours follow the surrounding theme and surface. Disabled buttons use the common disabled roles, including danger and ghost; ghost keeps its transparent background.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Button" />}
+  webComponents={<WebComponentApi tag="ui-button" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Button } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/button';`}
+/>
+
+The form and validity getters of the web component describe platform state, and its validity methods delegate to ElementInternals. The native React button exposes these through `ref`. Button adds no validity constraint.
+
+## Tokens
+
+<ComponentTokens component="button" />
+
+Button reads the shared focus-ring roles in addition to its own tokens. Set an invariant token on `:root`; set tokens that vary by theme, surface or density on the matching components. `--button-shadow-active` holds the shape, and `--color-button-shadow` its colour. Focus has no separate colour state.
+
+## Implementation notes
+
+- The web component uses an open shadow root with focus delegation and ElementInternals for the outer form. An internal form waits for native click cancellation before invoking the outer form's submit or reset action. Its role is none, so it adds no node to the accessibility tree, and it adds no proxy to the page's DOM.
+- The web component renders in the animation frame after a change of its props, as every Stencil component does.
+- React renders one native button, with the hidden loading description inside it. Its ref reaches the button, and a listener on it stops a blocked click before it bubbles. Server rendering and hydration use a stable description ID.
+- Both implementations read live configuration changes. Pass labels as props when concurrent server requests use different languages.
+- Both implementations use `shared/one-of` for enum fallbacks. Form handling and rendering remain local to each implementation.
+- Code Connect templates stay unpublished. The Figma set shows 75 representative variants; code also handles focus during loading and the combination of loading and disabled.

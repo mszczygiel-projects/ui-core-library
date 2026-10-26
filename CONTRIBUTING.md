@@ -72,6 +72,15 @@ The skill `ui-core-tokens` holds the details, such as how to read each error of 
 
 A component that imports an icon adds its name to `packages/icons/required-icons.txt`.
 
+## Changing a component
+
+1. Change its specification in `packages/shared/src/components/<name>.ts` first, and run `pnpm shared:snapshot`. The web component stops compiling until it declares every prop of the specification, and the React props follow it by construction.
+2. Change the web component in `packages/web-components/src/<name>/` and the React component in `packages/react/src/<name>/`, each with the tests of its package. The skills `ui-core-stencil` and `ui-core-react` hold the details.
+3. Change the contract in `testing/contracts/src/specs/<name>.contract.ts` for behaviour both share, and run `pnpm nx run contracts:test`.
+4. Update the page and both story files in `apps/storybook/src/components/<category>/`, and the Code Connect templates beside the implementations.
+
+The skill `ui-core-component` holds the order of a new component.
+
 ## Changing the documentation site
 
 - Consumer guides live in `apps/storybook/src/guides`, and the Foundations pages in `apps/storybook/src/foundations`.
@@ -140,6 +149,9 @@ Before 1.0.0, for all components at once:
 | `pnpm nx sync`                                  | Updates TypeScript references after adding a project or a dependency.  |
 | `pnpm nx run storybook:storybook`               | Serves the documentation site on port 6006.                            |
 | `pnpm nx run storybook:test`                    | Runs the site's unit tests and every story with axe in Light and Dark. |
+| `pnpm nx run contracts:test`                    | Builds both component packages and runs every behaviour contract.      |
+| `pnpm shared:snapshot`                          | Rewrites the API snapshot of `shared` after an intended change.        |
+| `pnpm figma:check`                              | Parses the Code Connect templates of both frameworks without a token.  |
 | `pnpm tokens:snapshot`                          | Rewrites `token-names.txt` after an intended change of names.          |
 | `pnpm icons:snapshot`                           | Rewrites `icon-names.txt` after an intended change of names.           |
 | `pnpm lint:css`                                 | Lints every stylesheet with the token rules.                           |
@@ -151,6 +163,7 @@ Before 1.0.0, for all components at once:
 
 - **`nx sync:check` fails.** Run `pnpm nx sync` and commit the updated references.
 - **A token or icon test fails on a snapshot.** The emitted names changed. If that was intended, run `pnpm tokens:snapshot` or `pnpm icons:snapshot`. Otherwise fix the change in Figma.
-- **Storybook shows old tokens.** It reads the built packages. Run `pnpm nx run foundations:build`.
+- **Storybook shows old tokens or components.** It reads the built packages. Run `pnpm nx run-many -t build -p foundations web-components react`.
+- **A fresh clone of the web components does not build.** Stencil reads `src/components.d.ts`, which is committed; restore it from Git if it went missing.
 - **A story test cannot start a browser.** Install Chromium again with the command from Setup.
 - **A dependency cannot be installed.** It may be younger than a day. Wait, or pin the previous version in the catalog.

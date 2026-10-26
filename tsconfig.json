@@ -11,6 +11,15 @@
     },
     {
       "path": "./tools/lint-rules"
+    },
+    {
+      "path": "./packages/shared"
+    },
+    {
+      "path": "./testing/contracts"
+    },
+    {
+      "path": "./packages/web-components"
     }
   ]
 }

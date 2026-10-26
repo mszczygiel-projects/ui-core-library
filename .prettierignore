@@ -13,3 +13,9 @@ packages/icons/figma/
 
 # The static build of the Storybook site
 storybook-static/
+
+# The snapshot of the public API of shared, written by its test
+packages/shared/api/
+
+# Written by the Stencil compiler and committed, since its first build reads it
+packages/web-components/src/components.d.ts

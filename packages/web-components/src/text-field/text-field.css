@@ -1,0 +1,379 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+/* The control family is shared by editable controls; every visual value follows its tokens. */
+.base {
+  --_background: var(--color-control-outline-background-default);
+  --_border: var(--color-control-outline-border-default);
+  --_label: var(--color-control-outline-label-default);
+  --_hint: var(--color-control-outline-hint-default);
+  --_text: var(--color-control-outline-text-default);
+  --_icon: var(--color-control-outline-icon-default);
+  --_placeholder: var(--color-control-outline-placeholder-default);
+  --_label-background: var(--color-control-outline-label-background);
+  --_font-size: var(--control-font-size);
+  --_line-height: var(--control-line-height);
+  --_icon-size: var(--control-icon-size);
+  --_padding-inline: var(--control-padding-inline);
+  --_padding-stack: var(--control-padding-stack);
+  --_radius: var(--control-radius);
+  --_leading-space: calc(var(--control-icon-size) * 0);
+  --_trailing-space: calc(var(--control-icon-size) * 0);
+  --_border-width: var(--control-border-width);
+
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--control-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--control-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--control-letter-spacing);
+}
+
+.base[hidden] {
+  display: none;
+}
+
+.base *,
+.base *::before {
+  box-sizing: border-box;
+}
+
+.small {
+  --_font-size: var(--control-small-font-size);
+  --_line-height: var(--control-small-line-height);
+  --_icon-size: var(--control-small-icon-size);
+  --_padding-inline: var(--control-small-padding-inline);
+  --_padding-stack: var(--control-small-padding-stack);
+  --_radius: var(--control-small-radius);
+}
+
+.large {
+  --_font-size: var(--control-large-font-size);
+  --_line-height: var(--control-large-line-height);
+  --_icon-size: var(--control-large-icon-size);
+  --_padding-inline: var(--control-large-padding-inline);
+  --_padding-stack: var(--control-large-padding-stack);
+  --_radius: var(--control-large-radius);
+}
+
+.base:where(:has(.input:enabled:not(:focus-visible))):where(:hover, :active) {
+  --_border: var(--color-control-outline-border-active);
+}
+
+.base.error {
+  --_border: var(--color-control-outline-border-error);
+  --_label: var(--color-control-outline-label-error);
+  --_hint: var(--color-control-outline-hint-error);
+  --_text: var(--color-control-outline-text-error);
+  --_icon: var(--color-control-outline-icon-error);
+}
+
+.base.success {
+  --_border: var(--color-control-outline-border-success);
+  --_label: var(--color-control-outline-label-success);
+  --_hint: var(--color-control-outline-hint-success);
+}
+
+.base:has(.input:disabled) {
+  --_background: var(--color-control-outline-background-disabled);
+  --_border: var(--color-control-outline-border-disabled);
+  --_label: var(--color-control-outline-label-disabled);
+  --_hint: var(--color-control-outline-hint-disabled);
+  --_text: var(--color-control-outline-text-disabled);
+  --_icon: var(--color-control-outline-icon-disabled);
+  --_placeholder: var(--color-control-outline-placeholder-disabled);
+}
+
+.filled {
+  --_background: var(--color-control-filled-background-default);
+  --_border: var(--color-control-filled-border-default);
+  --_label: var(--color-control-filled-label-default);
+  --_hint: var(--color-control-filled-hint-default);
+  --_text: var(--color-control-filled-text-default);
+  --_icon: var(--color-control-filled-icon-default);
+  --_placeholder: var(--color-control-filled-placeholder-default);
+  --_label-background: var(--color-control-filled-label-background);
+}
+
+.filled:where(:has(.input:enabled:not(:focus-visible))):where(:hover, :active) {
+  --_border: var(--color-control-filled-border-default);
+}
+
+.filled.error {
+  --_border: var(--color-control-filled-border-error);
+  --_label: var(--color-control-filled-label-error);
+  --_hint: var(--color-control-filled-hint-error);
+  --_text: var(--color-control-filled-text-error);
+  --_icon: var(--color-control-filled-icon-error);
+}
+
+.filled.success {
+  --_border: var(--color-control-filled-border-success);
+  --_label: var(--color-control-filled-label-success);
+  --_hint: var(--color-control-filled-hint-success);
+}
+
+.filled:has(.input:disabled) {
+  --_background: var(--color-control-filled-background-disabled);
+  --_border: var(--color-control-filled-border-disabled);
+  --_label: var(--color-control-filled-label-disabled);
+  --_hint: var(--color-control-filled-hint-disabled);
+  --_text: var(--color-control-filled-text-disabled);
+  --_icon: var(--color-control-filled-icon-disabled);
+  --_placeholder: var(--color-control-filled-placeholder-disabled);
+}
+
+.control {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--_padding-stack);
+  padding-inline: var(--_padding-inline);
+  border-radius: var(--_radius);
+  background: var(--_background);
+  color: var(--_text);
+}
+
+/* An inset stroke preserves the field's height when the underline changes thickness. */
+.control::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--_border-width) solid var(--_border);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.control:has(.input:focus-visible) {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  gap: var(--control-icon-gap);
+  min-inline-size: 0;
+}
+
+.input {
+  appearance: none;
+  display: block;
+  inline-size: 100%;
+  min-inline-size: 0;
+  min-block-size: calc(var(--_font-size) * var(--_line-height));
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  outline: none;
+  background: transparent;
+  color: var(--_text);
+  font: inherit;
+  letter-spacing: inherit;
+  text-align: start;
+}
+
+.input::placeholder {
+  color: var(--_placeholder);
+  opacity: revert;
+}
+
+.label {
+  display: block;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  color: var(--_label);
+  font-family: var(--control-label-font-family);
+  font-size: var(--control-label-font-size);
+  font-weight: var(--control-label-font-weight);
+  line-height: var(--control-label-line-height);
+  letter-spacing: var(--control-label-letter-spacing);
+  text-transform: var(--control-label-text-uppercase);
+  overflow-wrap: anywhere;
+}
+
+.top > .label {
+  margin-block-end: var(--control-label-gap);
+}
+
+.inner .label {
+  margin-block-end: var(--control-label-inner-gap);
+  font-family: var(--control-label-inner-font-family);
+  font-size: var(--control-label-inner-font-size);
+  font-weight: var(--control-label-inner-font-weight);
+  line-height: var(--control-label-inner-line-height);
+  letter-spacing: var(--control-label-inner-letter-spacing);
+  text-transform: var(--control-label-inner-text-uppercase);
+}
+
+.base:has(.leading-icon:not([hidden])) {
+  --_leading-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
+.base:has(.trailing-icon:not([hidden])) {
+  --_trailing-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
+.floating .label {
+  position: absolute;
+  z-index: 1;
+  inset-block-start: var(--_padding-stack);
+  inset-inline-start: calc(var(--_padding-inline) + var(--_leading-space));
+  max-inline-size: calc(
+    100% - var(--_padding-inline) * 2 - var(--_leading-space) - var(--_trailing-space)
+  );
+  padding-inline: var(--control-label-floating-padding-inline);
+  font-family: var(--control-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--control-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--control-letter-spacing);
+  text-transform: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  transform: translateY(0);
+  transition-property: inset-block-start, inset-inline-start, transform, font-size, line-height;
+  transition-duration: var(--duration-150);
+  transition-timing-function: var(--ease-out);
+}
+
+/* Native value selectors also cover browser autofill, reset and controlled value changes. */
+.floating:has(.input:is(:focus, :not(:placeholder-shown))) .label {
+  inset-block-start: calc(-1 * var(--control-label-floating-padding-inline));
+  inset-inline-start: calc(var(--_padding-inline) - var(--control-label-floating-padding-inline));
+
+  /* Raised above the input row, the label no longer shares its line with the trailing icon. */
+  max-inline-size: calc(100% - var(--_padding-inline) * 2 - var(--_leading-space));
+  transform: translateY(-50%);
+  background: var(--_label-background);
+  font-family: var(--control-label-floating-font-family);
+  font-size: var(--control-label-floating-font-size);
+  font-weight: var(--control-label-floating-font-weight);
+  line-height: var(--control-label-floating-line-height);
+  letter-spacing: var(--control-label-floating-letter-spacing);
+  text-transform: var(--control-label-floating-text-uppercase);
+}
+
+.floating:has(.label) .input:placeholder-shown:not(:focus)::placeholder {
+  color: transparent;
+}
+
+.hint {
+  display: block;
+  margin-block-start: var(--control-hint-gap);
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  font-weight: var(--control-hint-font-weight);
+  line-height: var(--control-hint-line-height);
+  overflow-wrap: anywhere;
+}
+
+.leading-icon,
+.trailing-icon {
+  /* An icon is 1em, so it takes the icon size however deeply the page wraps it. */
+  font-size: var(--_icon-size);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  color: var(--_icon);
+  pointer-events: none;
+}
+
+.leading-icon[hidden],
+.trailing-icon[hidden] {
+  display: none;
+}
+
+::slotted([slot='leading-icon']),
+::slotted([slot='trailing-icon']) {
+  display: inline-flex;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.underlined {
+  --_padding-inline: calc(var(--control-padding-inline) * 0);
+  --_radius: var(--control-underlined-radius);
+  --_border-width: var(--control-underlined-border-width-default);
+}
+
+.underlined:where(:has(.input:enabled:not(:focus-visible))):where(:hover, :active) {
+  --_border-width: var(--control-underlined-border-width-active);
+}
+
+.underlined.error {
+  --_border-width: var(--control-underlined-border-width-error);
+}
+
+.underlined.success {
+  --_border-width: var(--control-underlined-border-width-success);
+}
+
+.underlined:has(.input:disabled) {
+  --_border-width: var(--control-underlined-border-width-disabled);
+}
+
+.underlined .control::before {
+  border: 0;
+  border-block-end: var(--_border-width) solid var(--_border);
+}
+
+.underlined .control:has(.input:focus-visible) {
+  outline: none;
+}
+
+.underlined .control:has(.input:focus-visible)::before {
+  border-block-end: var(--ring-width) var(--ring-style) var(--color-ring-default);
+}
+
+.underlined.floating:has(.input:is(:focus, :not(:placeholder-shown))) .label {
+  inset-inline-start: 0;
+  padding-inline: 0;
+}
+
+@media (forced-colors: active) {
+  .control {
+    color: CanvasText;
+    background: Canvas;
+  }
+
+  .control::before {
+    border-color: CanvasText;
+  }
+
+  .control:has(.input:focus-visible) {
+    outline-color: Highlight;
+  }
+
+  .underlined .control:has(.input:focus-visible)::before {
+    border-block-end-color: Highlight;
+  }
+
+  .input,
+  .label,
+  .hint {
+    color: CanvasText;
+  }
+
+  .input:disabled,
+  .base:has(.input:disabled) .label {
+    color: GrayText;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floating .label {
+    transition-duration: var(--duration-0);
+  }
+}

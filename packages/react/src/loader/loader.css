@@ -1,0 +1,50 @@
+.ui-loader {
+  --_size: var(--loader-size);
+
+  display: inline-flex;
+  color: var(--color-loader-indicator);
+}
+
+.ui-loader[hidden] {
+  display: none;
+}
+
+.ui-loader--small {
+  --_size: var(--loader-small-size);
+}
+
+.ui-loader--large {
+  --_size: var(--loader-large-size);
+}
+
+.ui-loader__indicator {
+  box-sizing: border-box;
+  display: block;
+  inline-size: var(--_size);
+  block-size: var(--_size);
+  border: var(--loader-stroke-width) solid currentcolor;
+
+  /* A side without a border, not a transparent one: forced colours would paint it. */
+  border-inline-start-style: none;
+  border-radius: var(--loader-radius);
+  animation: ui-loader-spin var(--duration-700) var(--ease-linear) infinite;
+}
+
+@keyframes ui-loader-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Movement makes some people unwell, so the arc stops and the loader fades in and out instead. */
+@media (prefers-reduced-motion: reduce) {
+  .ui-loader__indicator {
+    animation: ui-loader-fade calc(var(--duration-1000) * 2) var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes ui-loader-fade {
+  50% {
+    opacity: 0;
+  }
+}

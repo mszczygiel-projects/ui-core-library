@@ -1,0 +1,31 @@
+{
+  "name": "@mszczygiel-projects/ui-core-contracts",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The behaviour contracts of UI Core Library, run against the web component and the React implementation of every component.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "@mszczygiel-projects/ui-core-foundations": "workspace:^",
+    "@mszczygiel-projects/ui-core-react": "workspace:^",
+    "@mszczygiel-projects/ui-core-shared": "workspace:^",
+    "@mszczygiel-projects/ui-core-web-components": "workspace:^",
+    "react": "catalog:",
+    "vitest": "catalog:",
+    "vitest-browser-react": "catalog:"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "@vitest/coverage-v8": "catalog:",
+    "playwright": "catalog:",
+    "typescript": "catalog:"
+  },
+  "nx": {
+    "name": "contracts",
+    "tags": [
+      "type:testing"
+    ]
+  }
+}

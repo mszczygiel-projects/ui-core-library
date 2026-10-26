@@ -1,0 +1,105 @@
+{
+  "name": "@mszczygiel-projects/ui-core-shared",
+  "version": "0.0.0",
+  "description": "What the web components and the React components of UI Core Library share: the specifications of the components and pure functions, safe for server rendering.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    "./button": {
+      "types": "./dist/components/button.d.ts",
+      "default": "./dist/components/button.js"
+    },
+    "./component": {
+      "types": "./dist/components/component.d.ts",
+      "default": "./dist/components/component.js"
+    },
+    "./date": {
+      "types": "./dist/utils/date.d.ts",
+      "default": "./dist/utils/date.js"
+    },
+    "./loader": {
+      "types": "./dist/components/loader.d.ts",
+      "default": "./dist/components/loader.js"
+    },
+    "./locale": {
+      "types": "./dist/utils/locale.d.ts",
+      "default": "./dist/utils/locale.js"
+    },
+    "./numeric": {
+      "types": "./dist/utils/numeric.d.ts",
+      "default": "./dist/utils/numeric.js"
+    },
+    "./one-of": {
+      "types": "./dist/utils/one-of.d.ts",
+      "default": "./dist/utils/one-of.js"
+    },
+    "./paginate": {
+      "types": "./dist/utils/paginate.d.ts",
+      "default": "./dist/utils/paginate.js"
+    },
+    "./text": {
+      "types": "./dist/utils/text.d.ts",
+      "default": "./dist/utils/text.js"
+    },
+    "./text-field": {
+      "types": "./dist/components/text-field.d.ts",
+      "default": "./dist/components/text-field.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mszczygiel-projects/ui-core-library.git",
+    "directory": "packages/shared"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "devDependencies": {
+    "typescript": "catalog:"
+  },
+  "nx": {
+    "name": "shared",
+    "tags": [
+      "type:shared"
+    ],
+    "targets": {
+      "test-other-machine": {
+        "command": "vitest run",
+        "options": {
+          "cwd": "{projectRoot}",
+          "env": {
+            "TZ": "Pacific/Kiritimati",
+            "LC_ALL": "pl_PL.UTF-8"
+          }
+        },
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "default",
+          "^production"
+        ],
+        "cache": true
+      },
+      "check-package": {
+        "command": "publint --strict . && attw --pack . --profile esm-only",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [
+          "production"
+        ],
+        "cache": true
+      }
+    }
+  }
+}

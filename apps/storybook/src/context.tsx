@@ -1,7 +1,13 @@
+import {
+  configureUiCore,
+  resetUiCoreConfig,
+} from '@mszczygiel-projects/ui-core-foundations/config';
 import type { Decorator, Preview } from '@storybook/react-vite';
 import { type ReactNode, useLayoutEffect } from 'react';
 
+import { frameworks } from './blocks/Framework.tsx';
 import { manifest } from './manifest.ts';
+import { pseudoLabels } from './pseudo.ts';
 import { toolbarItems } from './tokens.ts';
 
 const { modes } = manifest;
@@ -33,6 +39,25 @@ export function contextGlobals(): Pick<Preview, 'globalTypes' | 'initialGlobals'
           },
         ]),
       ),
+      // The framework of the code and the API on the pages of the components.
+      framework: {
+        description: 'The framework of the code and the API on component pages',
+        toolbar: { title: 'Framework', icon: 'markup', items: [...frameworks], dynamicTitle: true },
+      },
+      // The labels of the components: English, or a pseudo-language that shows any text written
+      // into a component, since such a text stays in English.
+      language: {
+        description: 'The language of the labels of the components',
+        toolbar: {
+          title: 'Language',
+          icon: 'globe',
+          items: [
+            { value: 'en', title: 'English' },
+            { value: 'pseudo', title: 'Pseudo-language' },
+          ],
+          dynamicTitle: true,
+        },
+      },
       direction: {
         description: 'The direction of the text',
         toolbar: {
@@ -48,9 +73,29 @@ export function contextGlobals(): Pick<Preview, 'globalTypes' | 'initialGlobals'
     },
     initialGlobals: {
       ...Object.fromEntries(shown.map(({ axis, modes: values }) => [axis, values[0]])),
+      framework: 'react',
+      language: 'en',
       direction: 'ltr',
     },
   };
+}
+
+/** The labels of the language the toolbar chooses, for every component on the page. */
+function Labels({
+  language,
+  children,
+}: {
+  readonly language: string | undefined;
+  readonly children: ReactNode;
+}) {
+  useLayoutEffect(() => {
+    if (language === 'pseudo') {
+      configureUiCore({ labels: pseudoLabels });
+    } else {
+      resetUiCoreConfig();
+    }
+  }, [language]);
+  return children;
 }
 
 /** Brand and theme belong on the root element, where the roles are declared. */
@@ -81,22 +126,24 @@ function RootAttributes({
 
 /**
  * Puts every story in the context the toolbars choose: the brand and the theme on the root
- * element, and the surface, the density and the direction on a frame around the story, painted
- * with its surface.
+ * element, the surface, the density and the direction on a frame around the story, painted with
+ * its surface, and the labels of the language in the configuration.
  */
 export const withContext: Decorator = (Story, { globals, viewMode }) => {
   // A single brand has no attribute, so the base brand is the page without one.
   const brand = modes.brand.length > 1 ? chosen(globals['brand'], undefined) : undefined;
   return (
     <RootAttributes brand={brand} theme={chosen(globals['theme'], modes.theme[0])}>
-      <div
-        className={viewMode === 'docs' ? 'sb-context sb-context--docs' : 'sb-context'}
-        data-surface={chosen(globals['surface'], modes.surface[0])}
-        data-density={chosen(globals['density'], modes.density[0])}
-        dir={chosen(globals['direction'], 'ltr')}
-      >
-        <Story />
-      </div>
+      <Labels language={chosen(globals['language'], undefined)}>
+        <div
+          className={viewMode === 'docs' ? 'sb-context sb-context--docs' : 'sb-context'}
+          data-surface={chosen(globals['surface'], modes.surface[0])}
+          data-density={chosen(globals['density'], modes.density[0])}
+          dir={chosen(globals['direction'], 'ltr')}
+        >
+          <Story />
+        </div>
+      </Labels>
     </RootAttributes>
   );
 };

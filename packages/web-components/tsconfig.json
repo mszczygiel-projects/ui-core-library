@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    // Projects that read the built package reference this one; it compiles nothing of its own.
+    "composite": true
+  },
+  "files": [],
+  "include": [],
+  "references": [
+    { "path": "./tsconfig.lib.json" },
+    { "path": "./tsconfig.tools.json" },
+    { "path": "./tsconfig.spec.json" },
+    { "path": "./tsconfig.dist.json" }
+  ]
+}

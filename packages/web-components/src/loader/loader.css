@@ -1,0 +1,50 @@
+:host {
+  display: inline-flex;
+  color: var(--color-loader-indicator);
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.indicator {
+  --_size: var(--loader-size);
+
+  box-sizing: border-box;
+  display: block;
+  inline-size: var(--_size);
+  block-size: var(--_size);
+  border: var(--loader-stroke-width) solid currentcolor;
+
+  /* A side without a border, not a transparent one: forced colours would paint it. */
+  border-inline-start-style: none;
+  border-radius: var(--loader-radius);
+  animation: spin var(--duration-700) var(--ease-linear) infinite;
+}
+
+.small {
+  --_size: var(--loader-small-size);
+}
+
+.large {
+  --_size: var(--loader-large-size);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+/* Movement makes some people unwell, so the arc stops and the loader fades in and out instead. */
+@media (prefers-reduced-motion: reduce) {
+  .indicator {
+    animation: fade calc(var(--duration-1000) * 2) var(--ease-in-out) infinite;
+  }
+}
+
+@keyframes fade {
+  50% {
+    opacity: 0;
+  }
+}

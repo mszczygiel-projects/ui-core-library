@@ -1,0 +1,106 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { WebComponentApi, ReactApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './TextField.wc.stories.tsx';
+import * as ReactStories from './TextField.react.stories.tsx';
+
+<Meta title="Components/Inputs/TextField/Docs" />
+
+# TextField
+
+<ComponentOverview name="TextField" />
+
+## Usage
+
+Use TextField for a single line of text, an email address, a URL or a telephone number. Keep a visible label even when a placeholder supplies an example. Use another control for passwords, search actions, numbers or multiple lines.
+
+## Anatomy
+
+The **base** holds the **label**, **control** and **hint**. Inside control, **input-row** holds the native **input** and the optional **leading-icon** and **trailing-icon**. **label-text** and **hint-text** hold their text. The web component exposes these parts; React uses `.ui-text-field__<part>` classes. The control draws the border and focus indicator. Figma's placeholder and value layers represent the single native input.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+`outline` is the default. `filled` adds a filled surface. `underlined` keeps only the bottom border and removes inline padding. There is no separate tone prop.
+
+## Sizes & density
+
+`small`, `medium` (the default) and `large` set the input type size, padding, radius and icon size. Each follows the surrounding density. A label inside the field adds its own line and gap; the field grows with its content.
+
+## States
+
+`state` is `default`, `error` or `success`. Error supplies `aria-invalid` and feedback colours. It does not create a native validation failure. Native invalidity does not choose a visual state for the application.
+
+Hover and press share active styling. Keyboard focus uses the shared focus roles. Outline and filled draw an outer ring; underlined uses its bottom edge, with the ring width and colour and no outer ring. Disabled fields leave the tab order and contribute no form entry. Read-only fields remain focusable and submit their value.
+
+## Content & labels
+
+Supply `label`, `placeholder` and `hint` in the language of the page. Include any required marker in the label text; `required` adds the native constraint, without inventing a marker or translated message. Browser validation messages come from the browser.
+
+`labelPlacement="top"` is the default. `inner` keeps the label inside, above the input. `floating` raises it while focused or nonempty, including after autofill, reset and programmatic changes. Its placeholder is hidden while the label rests inside. The raised underlined label aligns to the inline start without padding. Outline and filled use their respective label-background tokens to match the surrounding surface.
+
+An author's `aria-label` overrides the visible label as the accessible name. Preserve the visible words in that alternative name. Supply only decorative, non-interactive content in `leadingIcon` / `trailingIcon`, or the `leading-icon` / `trailing-icon` slots. Error and success insert no icon automatically. Icons follow the reading direction; the author chooses any mirrored artwork. Both icons align to the input row, and the trailing icon respects the control padding in every label placement.
+
+## Behaviour
+
+- The supported native types are `text` (the default), `email`, `tel` and `url`.
+- The `value` attribute of the web component supplies the initial and reset value. Its property holds the current string and never reflects edits to that attribute. Use the property for programmatic updates. As on a native input, once the user or a script changes the value, a new attribute value only changes what reset restores.
+- React supports `defaultValue` for uncontrolled use, or `value` with `onValueChange` for controlled use. Controlled reset remains the application's responsibility.
+- Each user edit emits one native `input` and one `ui-value-change` in the web component. The custom event contains `detail.value` and `detail.originalEvent`. Native `change` crosses the shadow boundary once on commit. React calls `onValueChange(value, details)` and preserves native `onInput` and `onChange` conventions; `details.originalEvent` is the native event.
+- Programmatic updates, reset and restoration emit no edit callback. `name` contributes the current string to FormData. Disabling the field or its fieldset excludes it.
+- `required`, `minLength`, `maxLength`, `pattern` and the type participate in native validation. Length constraints follow browser rules for user edits; programmatic assignments are not user input. Use `setCustomValidity('')` to clear a custom error.
+- Enter follows native implicit submission: it activates the form's first native submit button, respecting disabled state and cancelled clicks. Without a default button, one blocking field submits and multiple blocking fields do not. Cancelling the key cancels submission. Composition uses the browser's IME handling. A Button web component cannot be the browser's implicit default submitter.
+
+<Source
+  language="tsx"
+  code={`const [email, setEmail] = useState('');
+<TextField label="Work email" name="email" type="email" required
+  value={email} onValueChange={(value) => setEmail(value)} />;`}
+/>
+
+## Accessibility
+
+- **Pattern.** A native single-line textbox; no additional composite APG pattern applies. Both implementations expose one native input with its visible label and hint. See the [WAI guidance on form labels](https://www.w3.org/WAI/tutorials/forms/labels/).
+- **Keys.** Tab and Shift+Tab navigate. Native arrow keys, Home, End, selection and clipboard operations edit text. Enter follows the form rules above. Clicking the label focuses the input.
+- **Validation.** Explain an error in `hint` as well as with `state="error"`. The application chooses when to show and announce feedback. The web component exposes `checkValidity()`, `reportValidity()` and `setCustomValidity(message)` on the host; React exposes them through its input ref.
+- **Shadow boundary.** The web component forwards `aria-label`. External `aria-labelledby` and `aria-describedby` IDs cannot refer across the shadow boundary; use `label` and `hint`. React passes native ARIA attributes through and combines an external description with its hint.
+- **Preferences.** Forced colours retain the border and focus indicator. The floating label moves with the motion tokens; reduced motion removes that transition. Use logical positioning for either reading direction.
+
+## Surfaces & themes
+
+The control family follows Light and Dark and the default, subtle, inverse and primary surfaces. Filled text is measured against the filled control's background. A floating label has its own surface background. Disabled colours describe an unavailable control, not an error.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="TextField" />}
+  webComponents={<WebComponentApi tag="ui-text-field" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { TextField } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/text-field';`}
+/>
+
+React's className, style and data-\* attributes reach the component root. Its ref, id, ARIA and remaining native attributes reach the input; `hidden` there hides the whole field, as it does on the host of the web component. The form and validity getters of the web component describe its form-associated host. The web component uses the attributes `label-placement`, `min-length`, `max-length`, `auto-complete` and `readonly`, and passes the native `inputmode`, `enterkeyhint` and `spellcheck` attributes of its host to the input.
+
+The web component takes the keyboard hints as the native `inputmode`, `enterkeyhint` and `spellcheck` attributes of its host, since every HTML element already owns those properties; React takes `inputMode`, `enterKeyHint` and `spellCheck` as props of its input. Both pass them to the input. The specification of TextField records this difference.
+
+## Tokens
+
+<ComponentTokens component="control" />
+
+TextField uses the shared `control/*` and `color/control/*` Components families, plus the focus-ring roles. Underlined uses outline colours. It reads the default or active state names, never the redundant hover aliases. Set invariant tokens on `:root` and context-dependent overrides on the component's matching selector.
+
+## Implementation notes
+
+- The web component associates its host with the outer form through ElementInternals and synchronizes native validity with the input as its anchor. It renders in the animation frame after it joins the page, so until then a detached input with the same constraints answers its validity, and it submits a named entry rather than waiting for its `name` attribute. An internal form with role none receives native implicit submission after key cancellation and composition handling; it adds no accessible form or light-DOM proxy.
+- React renders a native input and uses `useId` for stable label and description IDs during server rendering and hydration. Both implementations use native value and focus selectors for the floating label.
+- Both implementations use `shared/one-of` for enum fallbacks. DOM form integration stays in the web component; no new configuration label is needed.
+- Code Connect templates remain unpublished. Figma's `interaction` previews rest, active and focus. Its `valueState` previews empty and filled label layouts; keep it consistent with the text property `value`. Code derives that layout from the actual value and has no `valueState` prop.

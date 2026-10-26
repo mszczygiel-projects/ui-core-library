@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.node.json",
+  "files": [],
+  "include": [],
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.scripts.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}
