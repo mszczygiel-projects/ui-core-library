@@ -17,6 +17,14 @@
       "types": "./dist/components/ui-button.d.ts",
       "default": "./dist/components/ui-button.js"
     },
+    "./icon-button": {
+      "types": "./dist/components/ui-icon-button.d.ts",
+      "default": "./dist/components/ui-icon-button.js"
+    },
+    "./link-button": {
+      "types": "./dist/components/ui-link-button.d.ts",
+      "default": "./dist/components/ui-link-button.js"
+    },
     "./loader": {
       "types": "./dist/components/ui-loader.d.ts",
       "default": "./dist/components/ui-loader.js"

@@ -1,0 +1,50 @@
+:host {
+  display: inline-flex;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+form {
+  display: contents;
+}
+
+/* A square: the stack padding on every side around a box as tall as the line of a button. */
+.base {
+  padding-inline: var(--_padding-stack);
+}
+
+.icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--_line-height) * var(--_font-size));
+  block-size: calc(var(--_line-height) * var(--_font-size));
+  font-size: var(--_icon-size);
+  pointer-events: none;
+}
+
+.icon ::slotted(*) {
+  display: inline-flex;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+}
+
+.loading .icon {
+  opacity: 0;
+}
+
+.loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.loader ui-loader {
+  color: inherit;
+}

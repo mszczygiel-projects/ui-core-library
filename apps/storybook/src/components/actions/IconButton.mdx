@@ -1,0 +1,98 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { WebComponentApi, ReactApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './IconButton.wc.stories.tsx';
+import * as ReactStories from './IconButton.react.stories.tsx';
+
+<Meta title="Components/Actions/IconButton/Docs" />
+
+# IconButton
+
+<ComponentOverview name="IconButton" />
+
+## Usage
+
+Use IconButton for a frequent action whose icon is widely understood, such as closing a panel, in places too tight for text: toolbars, headers of dialogs and drawers, and controls inside fields. Use Button when a word makes the action clearer. Use a link for navigation.
+
+Every IconButton needs `label`, the name a screen reader announces for the icon. Make it the action, such as “Close panel”, not the picture, such as “Cross”.
+
+## Anatomy
+
+The **base** is the native button, a square. It holds the **icon**, a box as tall as the line of a button that centres the artwork, and a centred **loader**. The web component exposes these as parts; React uses the matching `.ui-icon-button__<part>` classes. The focus ring is an outline on base in code and the `focus-ring` layer in Figma.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+IconButton has the variants of Button: `primary`, the default, gives the most emphasis; `secondary` uses the second brand action colour; `outline` and `ghost` give less emphasis; `danger` identifies a destructive action. `ghost` suits icons inside other components, such as the close action of a dialog.
+
+## Sizes & density
+
+`small`, `medium` (the default) and `large` match the height of a Button of the same size, so both line up in one row. IconButton is a square: the stack padding of Button on every side around a box as tall as its line. Density changes the padding and the icon without changing the prop.
+
+## States
+
+The states follow Button. Hover and press use the active colours, and every variant apart from ghost gains the interactive shadow. Focus adds the shared ring. `disabled` blocks interaction and removes the button from the tab order, as a disabled fieldset does. `loading` hides the icon behind the centred loader, blocks activation and keeps focus and the name.
+
+## Content & labels
+
+`label` names the action. An author's `aria-label` wins over it. In Figma, name the instance layer after the action: Code Connect writes that name as `label`. Supply one trusted SVG in the `icon` slot, or in the `icon` prop; IconButton sizes it, colours it with the text colour and hides it from assistive technology. The icons package provides SVG strings; insert them as markup, such as with `innerHTML` or React's `dangerouslySetInnerHTML`, using only those trusted strings. Choose mirrored artwork yourself when the symbol has a direction.
+
+While loading, `loadingLabel` describes the state. Without it, IconButton uses `labels.iconButton.loading`, “Loading” in English.
+
+<Source
+  language="ts"
+  code={`configureUiCore({ labels: { iconButton: { loading: 'Zamykanie' } } });`}
+/>
+
+## Behaviour
+
+- IconButton behaves as Button: pointer, Enter and Space produce the native `click`, and a click on a disabled or loading button stops at the button.
+- `type="button"` is the default. `submit` and `reset` act on the owning form, and `name` and `value` identify the submit action. Both implementations take part in a form as Button does, including an external `form` attribute, disabled fieldsets and dialog forms.
+- An unknown `type`, `variant` or `size`, or a removed attribute, falls back to the default.
+- IconButton does not manage the asynchronous action. Set `loading` when it begins and clear it when it finishes.
+
+## Accessibility
+
+- **Pattern.** The [WAI-ARIA button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) is implemented by a native button in both frameworks.
+- **Keys.** Tab and Shift+Tab move focus. Enter and Space activate. Disabled buttons are skipped; loading buttons remain reachable.
+- **Name.** `label` is required, because nothing visible names the action. The icon is decorative.
+- **Target size.** The smallest IconButton is larger than the 24 by 24 pixels of WCAG 2.2.
+- **Loading.** `aria-busy` and `aria-disabled` describe the state, and a hidden description supplies the loading text.
+- **Preferences.** The ring and border remain visible in forced colours. The loader follows reduced motion.
+
+## Surfaces & themes
+
+Colours follow the surrounding theme and surface, from the same tokens as Button.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="IconButton" />}
+  webComponents={<WebComponentApi tag="ui-icon-button" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { IconButton } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/icon-button';`}
+/>
+
+The form and validity getters of the web component describe platform state, as on Button. The native React button exposes them through `ref`.
+
+## Tokens
+
+IconButton has no tokens of its own: it reads the tokens of Button, so a change to Button restyles both. Its icon box takes the line height of Button times its font size.
+
+<ComponentTokens component="button" />
+
+## Implementation notes
+
+- Both implementations share the surface of every action, its variants, states and focus ring, with Button and LinkButton. The web component also shares the form behaviour of Button.
+- The web component uses an open shadow root with focus delegation and ElementInternals for the outer form, and renders in the animation frame after a change of its props.
+- React renders one native button with the hidden loading description inside it. Server rendering and hydration use a stable description ID.
+- The Figma set has 75 variants, as Button: five variants in three sizes, at rest, active, focused, loading and disabled.

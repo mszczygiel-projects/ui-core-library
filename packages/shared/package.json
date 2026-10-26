@@ -22,6 +22,14 @@
       "types": "./dist/utils/date.d.ts",
       "default": "./dist/utils/date.js"
     },
+    "./icon-button": {
+      "types": "./dist/components/icon-button.d.ts",
+      "default": "./dist/components/icon-button.js"
+    },
+    "./link-button": {
+      "types": "./dist/components/link-button.d.ts",
+      "default": "./dist/components/link-button.js"
+    },
     "./loader": {
       "types": "./dist/components/loader.d.ts",
       "default": "./dist/components/loader.js"

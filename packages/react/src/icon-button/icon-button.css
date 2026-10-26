@@ -1,0 +1,39 @@
+/* A square: the stack padding on every side around a box as tall as the line of a button. The
+   second class wins over the shared surface, which the joined stylesheet puts later. */
+.ui-icon-button.ui-action {
+  padding-inline: var(--_padding-stack);
+}
+
+.ui-icon-button__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--_line-height) * var(--_font-size));
+  block-size: calc(var(--_line-height) * var(--_font-size));
+  font-size: var(--_icon-size);
+  pointer-events: none;
+}
+
+.ui-icon-button__icon > * {
+  display: inline-flex;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+}
+
+.ui-action--loading .ui-icon-button__icon {
+  opacity: 0;
+}
+
+.ui-icon-button__loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.ui-icon-button__loader .ui-loader {
+  color: inherit;
+}
