@@ -1,0 +1,45 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as BrandingStories from './Branding.stories.tsx';
+
+<Meta title="Foundations/Theming & branding" />
+
+# Theming & branding
+
+A consumer brands the library on three tiers. The first one is enough to brand everything; the other two refine it.
+
+1. **Brand.** One to three colour ramps and about twenty brand values: the fonts, the radii, flags such as capitals on buttons or underlined links, and the geometry of the focus ring.
+2. **Roles.** Which step of a ramp a role takes, the typography scale and the density, in their own copy of the Foundations file.
+3. **Components.** Any change to one component, through its own tokens.
+
+## Brand values
+
+The brand values are roles of the Themes collection that hold no colour, such as `--font-heading`, `--shape-radius-md` or `--text-uppercase-button`. They are declared once on `:root`. Override them after the tokens, and every role and component follows:
+
+```css
+:root {
+  --font-heading: 'Barlow Condensed', sans-serif;
+  --shape-radius-md: 0;
+  --text-uppercase-button: none;
+}
+```
+
+[View brand values](?path=/story/foundations-theming-branding--brand-values)
+
+The brand colour ramps, `--color-brand-primary-50` to `--color-brand-tertiary-1000`, are overridden the same way; [Colors](?path=/docs/foundations-colors--docs) shows them. Roles are declared again for every theme and surface, so they change through a build of a consumer's own export instead.
+
+## Component tokens
+
+The tokens of a component are its styling API. A token that no mode changes, such as `--button-radius`, is declared once on `:root` and overridden there, like a brand value. Any other token is set on the components themselves, through a selector that matches them. A value that points at a role resolves on the component, so it keeps following the theme and the surface.
+
+## Several brands
+
+A copy of the Foundations file may hold several brands as modes of its Themes collection: `Club Light` and `Club Dark`, or `Club` alone. `data-brand` on `<html>` chooses the brand and `data-theme` its scheme. The roles are declared on the root element, so a brand set further down does not reach them.
+
+```html
+<html data-brand="club" data-theme="dark"></html>
+```
+
+## Your own Figma file
+
+Roles, the typography scale and the density change in a copy of the Foundations file. [Custom tokens and icons](?path=/docs/guides-custom-tokens-and-icons--docs) shows how to build it.

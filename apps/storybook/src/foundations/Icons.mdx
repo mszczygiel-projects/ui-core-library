@@ -1,0 +1,19 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as IconStories from './Icons.stories.tsx';
+
+<Meta title="Foundations/Icons" />
+
+# Icons
+
+The icons come from the [Core] Icons Figma library, one string of SVG per icon in `@mszczygiel-projects/ui-core-icons`. Import the ones you use; a bundler leaves the rest out.
+
+```ts
+import { iconClose } from '@mszczygiel-projects/ui-core-icons';
+```
+
+An icon is `1em` square and painted in `currentColor`, so it takes the size and the colour of the text around it until a style sets them. An icon beside a text is decoration and stays hidden from assistive technology; an icon that stands alone needs an accessible name on the element around it.
+
+Components size their icons with the Sizes roles `--icon-2xs` to `--icon-lg`, which tighten in the compact density.
+
+[View icon sizes](?path=/story/foundations-icons--sizes)

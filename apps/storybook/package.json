@@ -1,0 +1,69 @@
+{
+  "name": "@mszczygiel-projects/ui-core-storybook",
+  "version": "0.0.0",
+  "private": true,
+  "description": "The documentation site of UI Core Library.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "dependencies": {
+    "@fontsource/inter": "catalog:",
+    "@mszczygiel-projects/ui-core-foundations": "workspace:^",
+    "@mszczygiel-projects/ui-core-icons": "workspace:^",
+    "@storybook/addon-docs": "catalog:",
+    "@storybook/react-vite": "catalog:",
+    "react": "catalog:",
+    "storybook": "catalog:"
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "catalog:",
+    "@storybook/addon-mcp": "catalog:",
+    "@storybook/addon-vitest": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "playwright": "catalog:",
+    "react-dom": "catalog:",
+    "vite": "catalog:",
+    "vitest": "catalog:"
+  },
+  "nx": {
+    "name": "storybook",
+    "tags": [
+      "type:app"
+    ],
+    "targets": {
+      "storybook": {
+        "command": "storybook dev --port 6006 --exact-port --no-open",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^build"
+        ],
+        "continuous": true
+      },
+      "build": {
+        "command": "storybook build --output-dir storybook-static --quiet",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "default",
+          "^production"
+        ],
+        "outputs": [
+          "{projectRoot}/storybook-static"
+        ],
+        "cache": true
+      },
+      "test": {
+        "dependsOn": [
+          "^build"
+        ]
+      }
+    }
+  }
+}

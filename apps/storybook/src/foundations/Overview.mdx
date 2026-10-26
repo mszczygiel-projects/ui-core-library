@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ModesTable } from '../blocks/ModesTable.tsx';
+
+<Meta title="Foundations/Overview" />
+
+# Foundations
+
+The design tokens are the values every component of the library is built from: colours, typography, spacing, shapes, shadows and motion. Designers keep them as variables in the [Core] Foundations Figma file, and `@mszczygiel-projects/ui-core-foundations` turns them into CSS custom properties, a Tailwind theme and typed references.
+
+## Layers
+
+Tokens point at each other in three layers, from raw values to components:
+
+1. **Primitives** are the raw ramps and scales, such as `--color-gray-500` or `--spacing-4`. The brand ramps, `--color-brand-*`, are primitives a consumer replaces to brand the library.
+2. **Roles** say what a value is for, such as `--color-text-primary` or `--typography-body-font-size`, and follow the theme, the surface, the screen width and the density. The brand values, such as `--font-body` or `--shape-radius-md`, are roles too; see [Theming & branding](?path=/docs/foundations-theming-branding--docs).
+3. **Components** hold the tokens of one component, such as `--button-padding-inline`, and of the family of controls, such as `--control-font-size`.
+
+Choose roles when values should follow the brand, theme, surface or density. Choose primitives for deliberate fixed values; they are available in code and the appropriate Figma property pickers. For example, Tailwind’s `p-4` keeps its spacing when density changes. These pages focus on roles, with the brand ramps and motion primitives also shown.
+
+Library components keep their own token layer. An approved geometry constant can point at a specific primitive: `--loader-stroke-width` stays 2 px through `--border-width-2`, independently of the shared accent stroke. Colour, typography, radii and mode-dependent values still go through roles. Shared `control/*` tokens remain shared until a component needs independent customization.
+
+## Themes or Sizes
+
+The roles live in three collections, and the rule of where a role belongs has no exceptions:
+
+- **Sizes** holds everything that changes with the width of the screen or with the density: type sizes and line heights, gaps, padding, icon sizes, heights and the layout of the page. Its four modes are Mobile, Desktop, Mobile Compact and Desktop Compact.
+- **Themes** holds the rest: the colour roles, the fonts, weights, letter spacing and capitals, the radii, strokes and shadows, and the focus ring. Its modes are the themes, and in a consumer's copy the brands.
+- **Surfaces** holds the colour roles once more for each surface.
+
+Components take both through their own tokens. The layout roles, `--layout-*`, space the page and its regions, not the inside of a component.
+
+## Context
+
+Four attributes switch the tokens for an element and everything inside it. The toolbars of this site set them for every story.
+
+<ModesTable />
+
+The brand and the theme belong on `<html>`. From 1024px on, the desktop steps of the size scale apply, in both densities.
+
+## Using the tokens
+
+```css
+@import '@mszczygiel-projects/ui-core-foundations/tokens.css';
+@import '@mszczygiel-projects/ui-core-foundations/typography.css';
+```
+
+Every token is a custom property, such as `var(--color-text-primary)`, and every text style a class, such as `ui-text-body`. With Tailwind 4, import `tailwind.css` after Tailwind instead of `tokens.css`. `tokens.json` describes every token with its collection, description and values in every mode.

@@ -1,0 +1,51 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guides/Custom tokens and icons" />
+
+# Custom tokens and icons
+
+The components read only design tokens and render only the icons of the icons package. Replace either, and every component follows, with no change to the components.
+
+## Your own tokens
+
+Start here when a few brand values on `:root` are not enough: when roles should take other steps of a ramp, the typography scale should change, or the density should differ. [Theming & branding](?path=/docs/foundations-theming-branding--docs) covers the brand values.
+
+1. Duplicate the [Core] Foundations Figma file and change its variables. Keep the names of the collections, the modes and the variables; the components read them.
+2. Export the variables with the Luckino plugin, with their Figma metadata, into one folder: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json` and `components.json`.
+3. Build them:
+
+   ```sh
+   pnpm exec ui-core-foundations build --input ./figma-exports --output ./src/tokens
+   ```
+
+4. Import the built `tokens.css` and `typography.css`, or `tailwind.css`, instead of those of the package.
+
+The build writes the files of the package: `tokens.css`, `tailwind.css`, `typography.css`, `tokens.json` and `tokens.ts`. A broken alias or an unreadable export stops it and writes nothing. A token that skips a layer, such as a component token pointing at a primitive, is built with a warning, because it no longer follows the theme, the surface or the density. `--strict` turns those warnings into errors.
+
+Several brands live in one file as modes of Themes: `Club Light` and `Club Dark`, or `Club` alone. `data-brand="club"` on `<html>` chooses one.
+
+## Your own icons
+
+1. Put one SVG file per icon in a folder, named in kebab case: `chevron-down.svg` becomes `iconChevronDown`.
+2. Build a package from them:
+
+   ```sh
+   pnpm add -D svgo
+   pnpm exec ui-core-icons build --input ./icons --output ./vendor/icons
+   ```
+
+3. Point the name of the icons package at the built one, so the components import your icons:
+
+   ```json
+   {
+     "pnpm": {
+       "overrides": {
+         "@mszczygiel-projects/ui-core-icons": "file:./vendor/icons"
+       }
+     }
+   }
+   ```
+
+   npm uses `overrides` and Yarn `resolutions` with the same entry.
+
+The set must hold every icon the components render; the package lists them in `required-icons.txt`, and the build names any that are missing. An icon may hold only plain shapes: paths, lines, circles and the like, painted in colours. Scripts, links, images, styles and ids stop the build. An icon drawn off the 24 × 24 grid, in more than one colour or with strokes other than 1.5 wide is built with a warning, since the components size and colour it themselves. Every icon is minified, painted in `currentColor` and sized `1em`.

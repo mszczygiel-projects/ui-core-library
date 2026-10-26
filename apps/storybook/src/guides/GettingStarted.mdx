@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guides/Getting started" />
+
+# Getting started
+
+UI Core Library gives a web application design tokens, icons and components. Every component exists twice, with one behaviour and one look: as a web component for any framework, or none, and as a React component.
+
+| Package                                       | What it holds                                                                                                                            |
+| --------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| `@mszczygiel-projects/ui-core-foundations`    | the design tokens as CSS custom properties, a Tailwind theme, text style classes and typed references, and the `ui-core-foundations` CLI |
+| `@mszczygiel-projects/ui-core-icons`          | one SVG string per icon, and the `ui-core-icons` CLI                                                                                     |
+| `@mszczygiel-projects/ui-core-web-components` | the web components                                                                                                                       |
+| `@mszczygiel-projects/ui-core-react`          | the React components                                                                                                                     |
+
+## Install
+
+The packages are published to GitHub Packages. Point their scope at its registry in `.npmrc`:
+
+```ini
+@mszczygiel-projects:registry=https://npm.pkg.github.com
+```
+
+```sh
+pnpm add @mszczygiel-projects/ui-core-foundations @mszczygiel-projects/ui-core-icons
+```
+
+All packages share one version. Install the same version of each.
+
+## Load the tokens
+
+Import the tokens and the text styles once, before your own styles:
+
+```css
+@import '@mszczygiel-projects/ui-core-foundations/tokens.css';
+@import '@mszczygiel-projects/ui-core-foundations/typography.css';
+```
+
+With Tailwind 4, import `tailwind.css` after Tailwind instead of `tokens.css`. Its utilities then read the same tokens.
+
+```css
+@import 'tailwindcss';
+@import '@mszczygiel-projects/ui-core-foundations/tailwind.css';
+@import '@mszczygiel-projects/ui-core-foundations/typography.css';
+```
+
+Style your own elements with roles, such as `var(--color-text-primary)`, and text with the classes, such as `ui-text-body`. [Foundations](?path=/docs/foundations-overview--docs) lists them.
+
+## Set the context
+
+Attributes switch the tokens for an element and everything inside it:
+
+```html
+<html data-theme="dark">
+  <body>
+    <section data-surface="inverse" data-density="compact">…</section>
+  </body>
+</html>
+```
+
+The theme and the brand belong on `<html>`. Without `data-theme`, the page follows the system's light or dark preference.
+
+## Render an icon
+
+```ts
+import { iconClose } from '@mszczygiel-projects/ui-core-icons';
+
+element.innerHTML = `<span aria-hidden="true">${iconClose}</span>`;
+```
+
+An icon is `1em` square and painted in `currentColor`, so it follows the font size and colour of its parent. Import only the icons you render; a bundler leaves out the rest.
+
+## Your own brand and icons
+
+The three tiers of [Theming & branding](?path=/docs/foundations-theming-branding--docs) change the look, from a few brand values on `:root` to a whole Figma file of your own. [Custom tokens and icons](?path=/docs/guides-custom-tokens-and-icons--docs) builds your tokens and your icon set.

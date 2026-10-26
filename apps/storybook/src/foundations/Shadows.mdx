@@ -1,0 +1,25 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as ShadowStories from './Shadows.stories.tsx';
+
+<Meta title="Foundations/Shadows" />
+
+# Shadows
+
+## Composite shadows
+
+Ready-made shadows, a shape with a colour, as in Tailwind: `box-shadow: var(--shadow-md)`. Their colours are primitives, so they look the same in both themes.
+
+[View shadows](?path=/story/foundations-shadows--composites)
+
+## Roles
+
+The shadow roles name what a shadow is for: the elevation of a layer, the state of an interactive element, an inset. They hold the shape only. Add one of the shadow colours of [Colors](?path=/docs/foundations-colors--docs), which follow the theme:
+
+```css
+.popover {
+  box-shadow: var(--shadow-elevation-2) var(--color-shadow-default);
+}
+```
+
+[View shadow roles](?path=/story/foundations-shadows--roles)

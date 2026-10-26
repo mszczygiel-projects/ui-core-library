@@ -1,14 +1,23 @@
 // @ts-check
+import { join } from 'node:path';
+
 import js from '@eslint/js';
+import eslintReact from '@eslint-react/eslint-plugin';
 import nx from '@nx/eslint-plugin';
 import stylistic from '@stylistic/eslint-plugin';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier/flat';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import reactHooks from 'eslint-plugin-react-hooks';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
+import storybook from 'eslint-plugin-storybook';
 import * as jsoncParser from 'jsonc-eslint-parser';
 import tseslint from 'typescript-eslint';
 
 import noLiteralText from './tools/lint-rules/src/no-literal-text.ts';
+
+/** Files that render React: the React components, the site and the contracts. */
+const reactFiles = ['packages/react/src/**/*.tsx', 'apps/storybook/**/*.tsx', 'testing/**/*.tsx'];
 
 const tsFiles = ['**/*.ts', '**/*.mts', '**/*.cts', '**/*.tsx'];
 const jsFiles = ['**/*.js', '**/*.mjs', '**/*.cjs'];
@@ -71,6 +80,8 @@ export default defineConfig(
     '**/.nx',
     // Written by build steps, such as the typed token references.
     '**/generated',
+    // The static build of the Storybook site.
+    '**/storybook-static',
     // Agent skills belong to their makers, wherever their tools put them.
     '**/.agents/skills',
     '**/.claude/skills',
@@ -94,6 +105,29 @@ export default defineConfig(
       ],
       // Prefers `value!`, which the strict rule no-non-null-assertion forbids.
       '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+    },
+  },
+  {
+    files: reactFiles,
+    extends: [
+      reactHooks.configs.flat.recommended,
+      eslintReact.configs['recommended-type-checked'],
+      jsxA11y.flatConfigs.recommended,
+    ],
+    rules: {
+      // Safari drops the semantics of a list styled without markers, and role="list" restores them.
+      'jsx-a11y/no-redundant-roles': ['error', { ul: ['list'], ol: ['list'] }],
+    },
+  },
+  storybook.configs['flat/recommended'],
+  {
+    // The recommended config looks for main.ts at the root; the site keeps it in its folder.
+    files: ['apps/storybook/.storybook/main.ts'],
+    rules: {
+      'storybook/no-uninstalled-addons': [
+        'error',
+        { packageJsonLocation: join(import.meta.dirname, 'apps/storybook/package.json') },
+      ],
     },
   },
   {
@@ -130,10 +164,30 @@ export default defineConfig(
           // a development dependency.
           ignoredFiles: [
             '{projectRoot}/vitest.config.ts',
+            '{projectRoot}/.storybook/*.setup.ts',
             '{projectRoot}/**/*.test.ts',
             '{projectRoot}/**/*.test.tsx',
             '{projectRoot}/scripts/**/*',
           ],
+        },
+      ],
+    },
+  },
+  {
+    // The MDX pages import addon-docs and the targets run the storybook CLI; the dependency check
+    // traces neither, and its autofix would remove them.
+    files: ['apps/storybook/package.json'],
+    rules: {
+      '@nx/dependency-checks': [
+        'error',
+        {
+          ignoredFiles: [
+            '{projectRoot}/vitest.config.ts',
+            '{projectRoot}/.storybook/*.setup.ts',
+            '{projectRoot}/**/*.test.ts',
+            '{projectRoot}/**/*.test.tsx',
+          ],
+          ignoredDependencies: ['@storybook/addon-docs', 'storybook'],
         },
       ],
     },

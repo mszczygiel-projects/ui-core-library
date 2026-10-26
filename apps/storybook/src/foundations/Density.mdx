@@ -1,0 +1,17 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as DensityStories from './Density.stories.tsx';
+
+<Meta title="Foundations/Density" />
+
+# Density
+
+Density tightens the interface for screens full of data. The Sizes collection has a compact mode for each screen, Mobile Compact and Desktop Compact. `data-density="compact"` on an element makes the gaps, the padding, the icons and the controls inside it smaller, on any screen; `data-density="comfortable"` returns a region inside it to the default. Components take their gaps, padding, icon sizes and heights from these roles; [Overview](?path=/docs/foundations-overview--docs) explains what belongs to Sizes.
+
+```html
+<table data-density="compact">
+  …
+</table>
+```
+
+[View density roles](?path=/story/foundations-density--comparison)

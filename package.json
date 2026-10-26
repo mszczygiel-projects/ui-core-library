@@ -25,10 +25,11 @@
     "tokens:snapshot": "nx run foundations:test -- -u",
     "release:check": "nx release version 1.0.0 --first-release --dry-run",
     "icons:snapshot": "nx run icons:test -- -u",
-    "lint:css": "stylelint \"packages/**/*.css\" \"apps/**/*.css\" --ignore-pattern \"**/dist/**\" --allow-empty-input"
+    "lint:css": "stylelint \"packages/**/*.css\" \"apps/**/*.css\" --allow-empty-input"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
+    "@eslint-react/eslint-plugin": "catalog:",
     "@eslint/js": "catalog:",
     "@nx/eslint": "catalog:",
     "@nx/eslint-plugin": "catalog:",
@@ -39,7 +40,10 @@
     "@types/node": "catalog:",
     "eslint": "catalog:",
     "eslint-config-prettier": "catalog:",
+    "eslint-plugin-jsx-a11y": "catalog:",
+    "eslint-plugin-react-hooks": "catalog:",
     "eslint-plugin-simple-import-sort": "catalog:",
+    "eslint-plugin-storybook": "catalog:",
     "jsonc-eslint-parser": "catalog:",
     "lefthook": "catalog:",
     "nx": "catalog:",
