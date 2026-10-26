@@ -18,7 +18,7 @@ Options:
   -o, --output <dir>  Directory to write tokens.css, tailwind.css, tokens.ts,
                       typography.css and tokens.json to
       --strict        Fail on every violation of the token rules, as the library's own
-                      build does; without it they are warnings, as in a client's fork
+                      build does; without it they are warnings, as in a consumer's build
       --no-auto-dark  Do not mirror the Dark theme onto prefers-color-scheme: dark
   -h, --help          Show this help
 

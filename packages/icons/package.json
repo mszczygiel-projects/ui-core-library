@@ -1,0 +1,101 @@
+{
+  "name": "@mszczygiel-projects/ui-core-icons",
+  "version": "0.0.0",
+  "description": "Icons of UI Core Library, one SVG string per icon, and a CLI that builds the same package from your own SVG files.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./required-icons.txt": "./required-icons.txt"
+  },
+  "files": [
+    "dist",
+    "required-icons.txt"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mszczygiel-projects/ui-core-library.git",
+    "directory": "packages/icons"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "devDependencies": {
+    "svgo": "catalog:"
+  },
+  "nx": {
+    "name": "icons",
+    "tags": [
+      "type:icons"
+    ],
+    "targets": {
+      "generate": {
+        "command": "node scripts/generate.ts",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "inputs": [
+          "default"
+        ],
+        "outputs": [
+          "{projectRoot}/src/generated"
+        ],
+        "cache": true
+      },
+      "build": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ],
+        "inputs": [
+          "...",
+          {
+            "dependentTasksOutputFiles": "**/src/generated/**/*"
+          }
+        ]
+      },
+      "lint": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ]
+      },
+      "check-package": {
+        "command": "publint --strict . && attw --pack . --profile esm-only --exclude-entrypoints ./required-icons.txt",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [
+          "production"
+        ],
+        "cache": true
+      }
+    }
+  },
+  "bin": {
+    "ui-core-icons": "./dist/build/cli.js"
+  },
+  "peerDependencies": {
+    "svgo": "catalog:"
+  },
+  "peerDependenciesMeta": {
+    "svgo": {
+      "optional": true
+    }
+  }
+}

@@ -23,7 +23,8 @@
     "skills:install": "DO_NOT_TRACK=1 pnpm dlx skills@1.7.2 experimental_install",
     "verify": "nx sync:check && pnpm format:check && pnpm lint:root && nx run-many -t lint typecheck test build check-package && pnpm release:check && pnpm secrets:check && pnpm deps:audit",
     "tokens:snapshot": "nx run foundations:test -- -u",
-    "release:check": "nx release version 1.0.0 --first-release --dry-run"
+    "release:check": "nx release version 1.0.0 --first-release --dry-run",
+    "icons:snapshot": "nx run icons:test -- -u"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",

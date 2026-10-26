@@ -28,6 +28,7 @@ catalog:
   nx: 24.0.1
   prettier: 3.9.10
   publint: 0.3.25
+  svgo: 4.1.0
   secretlint: 13.0.7
   # TypeScript 7 waits for typescript-eslint and Stencil, which need TypeScript 6.
   typescript: 6.0.3

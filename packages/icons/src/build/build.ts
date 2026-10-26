@@ -1,0 +1,180 @@
+/**
+ * Builds the module of icons from the SVG files of [Core] Icons: every icon is checked,
+ * normalized and exported as one string constant, so a bundler keeps only the icons imported.
+ */
+import { readdirSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
+
+import { exportName, isIconName } from './names.ts';
+import { checkIcon, normalizeIcon } from './svg.ts';
+
+export interface IconSource {
+  /** The file name without `.svg`. */
+  readonly name: string;
+  readonly svg: string;
+}
+
+export interface Icon {
+  readonly name: string;
+  readonly exportName: string;
+  /** The normalized `<svg>` element. */
+  readonly svg: string;
+}
+
+export interface BuildResult {
+  /** The icons in the order of their names, or none when an error stopped the build. */
+  readonly icons: readonly Icon[];
+  readonly errors: readonly string[];
+  /** Broken design rules that did not stop a build outside strict mode. */
+  readonly warnings: readonly string[];
+}
+
+export interface BuildOptions {
+  /**
+   * The library's own build is strict: a broken design rule stops it. A consumer's set may draw
+   * on another grid or with other strokes, so there a broken rule is only a warning.
+   */
+  readonly strict: boolean;
+}
+
+function compare(a: string, b: string): number {
+  return a < b ? -1 : a > b ? 1 : 0;
+}
+
+/**
+ * Builds the icons of a directory. Every file in it must be an icon named `<name>.svg`, so that an
+ * icon cannot go missing without an error; hidden files, such as .DS_Store, belong to the system.
+ */
+export function buildDirectory(dir: string, options: BuildOptions): BuildResult {
+  const errors: string[] = [];
+  const sources: IconSource[] = [];
+  const entries = readdirSync(dir, { withFileTypes: true }).sort((a, b) => compare(a.name, b.name));
+  for (const entry of entries) {
+    if (entry.name.startsWith('.')) {
+      continue;
+    }
+    if (!entry.isFile() || !entry.name.endsWith('.svg')) {
+      errors.push(
+        `${entry.name} is not an icon file; icons are SVG files named in kebab case, like chevron-down.svg`,
+      );
+      continue;
+    }
+    sources.push({
+      name: entry.name.slice(0, -'.svg'.length),
+      svg: readFileSync(join(dir, entry.name), 'utf8'),
+    });
+  }
+  const built = buildIcons(sources, options);
+  return errors.length > 0
+    ? { icons: [], errors: [...errors, ...built.errors], warnings: built.warnings }
+    : built;
+}
+
+/**
+ * Checks and normalizes every icon. Any error, and in strict mode any rule violation, stops the
+ * build, so a broken icon never reaches a component; nothing is renamed or repaired behind the
+ * designer's back.
+ */
+export function buildIcons(sources: readonly IconSource[], options: BuildOptions): BuildResult {
+  const errors: string[] = [];
+  const warnings: string[] = [];
+  const icons: Icon[] = [];
+  const owners = new Map<string, string>();
+  for (const source of [...sources].sort((a, b) => compare(a.name, b.name))) {
+    if (!isIconName(source.name)) {
+      errors.push(
+        `${source.name}.svg is not named in kebab case, like chevron-down.svg; rename the component icon/${source.name} in Figma`,
+      );
+      continue;
+    }
+    const name = exportName(source.name);
+    const owner = owners.get(name);
+    if (owner !== undefined) {
+      errors.push(
+        `${owner}.svg and ${source.name}.svg would both export ${name}; rename one of them in Figma`,
+      );
+      continue;
+    }
+    owners.set(name, source.name);
+    const findings = checkIcon(source.name, source.svg);
+    const violations = findings.violations.map((violation) => violation.message);
+    if (findings.errors.length > 0 || (options.strict && violations.length > 0)) {
+      errors.push(...findings.errors, ...(options.strict ? violations : []));
+      continue;
+    }
+    warnings.push(...violations);
+    icons.push({ name: source.name, exportName: name, svg: normalizeIcon(source.svg) });
+  }
+  return errors.length > 0 ? { icons: [], errors, warnings } : { icons, errors, warnings };
+}
+
+/**
+ * The names of the icons that the component packages import, from `required-icons.txt`: one name
+ * per line, blank lines and lines starting with `#` ignored.
+ */
+export function parseRequired(text: string): string[] {
+  return text
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line !== '' && !line.startsWith('#'));
+}
+
+/** The errors for required icons that a set lacks, since a component would import nothing. */
+export function missingRequired(icons: readonly Icon[], required: readonly string[]): string[] {
+  const names = new Set(icons.map((icon) => icon.name));
+  return required
+    .filter((name) => !names.has(name))
+    .map(
+      (name) => `${name}.svg is missing; the components render icon/${name}, so every set needs it`,
+    );
+}
+
+/** The TypeScript module the package compiles: one exported string per icon. */
+export function emitModule(icons: readonly Icon[]): string {
+  const lines = [
+    '// Generated by scripts/generate.ts from the SVG files in figma/. Do not edit.',
+    '',
+  ];
+  for (const icon of icons) {
+    lines.push(
+      `/** The \`${icon.name}\` icon of [Core] Icons. */`,
+      `export const ${icon.exportName}: string = ${JSON.stringify(icon.svg)};`,
+      '',
+    );
+  }
+  return lines.join('\n');
+}
+
+/** The package name a consumer's set replaces, so that the component packages import it. */
+export const PACKAGE_NAME = '@mszczygiel-projects/ui-core-icons';
+
+/** The files of a consumer's icon package: the same name and exports as the library's own. */
+export function emitPackage(
+  icons: readonly Icon[],
+  version: string,
+): Readonly<Record<'package.json' | 'index.js' | 'index.d.ts', string>> {
+  const notice = '// Generated by ui-core-icons build from your SVG files. Do not edit.';
+  const manifest = {
+    name: PACKAGE_NAME,
+    version,
+    description: 'Icons built with ui-core-icons from a custom set of SVG files.',
+    type: 'module',
+    sideEffects: false,
+    exports: {
+      '.': { types: './index.d.ts', default: './index.js' },
+      './package.json': './package.json',
+    },
+  };
+  const js = [notice, ''];
+  const dts = [notice, ''];
+  for (const icon of icons) {
+    const doc = `/** The \`${icon.name}\` icon. */`;
+    js.push(doc, `export const ${icon.exportName} = ${JSON.stringify(icon.svg)};`, '');
+    dts.push(doc, `export declare const ${icon.exportName}: string;`, '');
+  }
+  return {
+    'package.json': `${JSON.stringify(manifest, null, 2)}\n`,
+    'index.js': js.join('\n'),
+    'index.d.ts': dts.join('\n'),
+  };
+}
