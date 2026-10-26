@@ -81,6 +81,30 @@ A component that imports an icon adds its name to `packages/icons/required-icons
 
 The skill `ui-core-component` holds the order of a new component.
 
+## Publishing Code Connect
+
+Code Connect shows the code of a component in Dev Mode. The owner publishes it; agents publish only in a step approved for publishing.
+
+1. Create a Figma personal access token with write access to Code Connect and read access to file content, and put it in `.env` as `FIGMA_ACCESS_TOKEN`, as `.env.example` shows. `.env` is never committed.
+2. Check what would be published, without publishing:
+
+   ```sh
+   pnpm figma:react publish --dry-run
+   pnpm figma:wc publish --dry-run
+   ```
+
+3. Preview how the snippets render in Dev Mode, then publish:
+
+   ```sh
+   pnpm figma:react preview
+   pnpm figma:react publish
+   pnpm figma:wc publish
+   ```
+
+4. In [Core] UI Library, select an instance in Dev Mode and check its snippet.
+
+Figma shows one framework at a time, React by default. A team admin switches it in Admin › Settings › Resources › Code Connect; the connections of the other framework stay stored. `pnpm figma:react unpublish` removes the published React templates.
+
 ## Updating the Figma guidelines
 
 The libraries of Figma carry guidelines that Figma's agent reads. They come from the specifications, the component pages, the tokens and the icons, so a change to any of them can change the guidelines.
