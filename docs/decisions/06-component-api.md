@@ -32,6 +32,7 @@
   - The web component follows native elements: its attribute is the default that a reset restores, and its property holds the current value.
 - **Attributes**: React passes `className`, `style` and `data-*` to the root, and `id`, `aria-*` and native attributes to the native control.
 - **The host belongs to the page**: a web component reflects only `name`, `disabled`, `readonly` and `open`. It never writes `role`, `aria-*`, `class`, `style` or `tabindex` on its host.
+- **Native attributes of the host**: a web component never declares a prop that `HTMLElement` already owns, such as `inputMode`, `enterKeyHint` or `spellcheck`. It passes the native attribute of its host to its inner control, and an author's `aria-label` too.
 - **Exceptions**: an exception to these rules is written in the component's specification with its reason.
 
 ### Forms

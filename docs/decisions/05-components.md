@@ -6,13 +6,14 @@
 
 - Every component is implemented twice: as a Stencil web component and as a React component. Neither wraps or imports the other.
 - `packages/shared` holds what both implementations share. Neither duplicates it.
-- **A specification per component**, in `src/<name>/<name>.spec.ts`, holds:
-  - the props types and the arrays of allowed values;
-  - the defaults and the label keys;
-  - the names of its parts, slots and events;
+- **A specification per component**, in `src/<name>.ts` and the subpath `./<name>`, holds:
+  - the props both implementations share, as an interface, and the arrays of allowed values with their defaults;
+  - the label keys and the summary sentence;
+  - the names of its parts, slots, events and stories;
   - its category and status (`planned`, `in-progress` or `done`);
-  - the node of its Figma component set.
-- Both implementations, the contracts and the stories import these types and values. A variant added in the specification is a type error until both implementations handle it.
+  - the node of its Figma component set;
+  - the exceptions to the conventions, with their reasons.
+- Both implementations, the contracts, the stories and the status page import these types and values. A variant added in the specification is a type error until both implementations handle it.
 - **Pure functions**, for example the fallback of an invalid enum value (`one-of`), dates, numbers, pagination and text matching. A module arrives with its first consumer.
 - Each implementation keeps its rendering, its CSS, its framework mechanics and its form integration: `ElementInternals` in Stencil, native controls in React.
 
@@ -23,13 +24,18 @@
 - Calendar dates are ISO strings, counted in whole days without `Date` objects.
 - State that must be unique on a page lives under `globalThis[Symbol.for('ui-core.<name>')]`.
 - Every module has a subpath export, and the package declares `"sideEffects": false`.
-- The public declarations are snapshotted in `packages/shared/api/`, and `pnpm shared:check` fails when they change.
+- The public declarations are a file snapshot in `packages/shared/api/`, which `pnpm shared:snapshot` rewrites after an intended change.
+- The package knows no browser types. A type that names a DOM event takes it as a parameter, such as `TextFieldValueChangeDetail<Event>`.
 
 ### Web components
 
 - Stencil 4, the current stable line. Stencil 5 replaces it once it is stable, before 1.0.0.
-- One subpath per component defines its tag, and the root defines them all.
-- Components are client-side only: no server rendering or hydration.
+- `dist-custom-elements` writes one module per component, which defines its tag. The root defines them all, and `custom-elements.json` describes them.
+- The other packages of the library stay imports. Stencil's runtime is built into the package, because the shared runtime of `@stencil/core` ignores the build options and would add a `hydrated` class to every host.
+- Stencil compiles the components with its own TypeScript, and `tsc` checks them with the repository's. Relative imports keep their `.ts` extension, which `rewriteRelativeImportExtensions` rewrites.
+- `src/components.d.ts`, which Stencil writes, is committed, since the first build reads it.
+- Stencil types an element from its props alone, so a component adds the rest of its public API, such as the form API, to the type of its element. A script finishes the build: it writes the root module, gives the declarations the extensions that Node.js resolves and links each component's declarations to its source.
+- Components render on the client only: no server rendering or hydration.
 
 ### React
 

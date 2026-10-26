@@ -30,7 +30,7 @@
 ### Tools and rules
 
 - Browser tests run in Vitest Browser Mode with Playwright and Chromium.
-- Type agreement between the implementations needs no test: both import the specification's types ([05](05-components.md)). One test checks that both frameworks have the stories that the specification names.
+- Type agreement between the implementations needs no test: both import the specification's types ([05](05-components.md)). One test checks that both frameworks export exactly the stories that the specification names.
 - A new check fails once on a deliberate defect before it is trusted.
 - Coverage is reported, not enforced.
 - `pnpm verify` runs everything except the visual tests and the manual review.
