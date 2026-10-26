@@ -274,6 +274,8 @@
 
 .ui-text-field__leading-icon,
 .ui-text-field__trailing-icon {
+  /* An icon is 1em, so it takes the icon size however deeply the page wraps it. */
+  font-size: var(--_icon-size);
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -291,6 +293,7 @@
 
 .ui-text-field__leading-icon > *,
 .ui-text-field__trailing-icon > * {
+  display: inline-flex;
   inline-size: 100%;
   block-size: 100%;
 }

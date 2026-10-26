@@ -6,6 +6,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 
 import { appearance } from '../appearance.ts';
+import { iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions } from '../harness/types.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 
@@ -452,6 +453,19 @@ export function textFieldContract(adapter: Mount<TextFieldContractProps>): void 
           pixels(tokenValue('--ring-width')),
         );
         expect(getComputedStyle(field.part('label')).backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+      }
+    }
+  });
+
+  it('sizes the artwork of its icons with the icon token of each size and density', async () => {
+    for (const density of ['comfortable', 'compact'] as const) {
+      for (const size of ['small', 'medium', 'large'] as const) {
+        const field = await mount({ size, leadingIcon: true, trailingIcon: true }, { density });
+        const prefix = size === 'medium' ? '--control-' : `--control-${size}-`;
+        const side = pixels(tokenValue(`${prefix}icon-size`, { density }));
+        // The page wraps the 1em artwork of the icons package; it still takes the icon size.
+        expect(iconSize(field.element)).toEqual({ width: side, height: side });
+        await field.unmount();
       }
     }
   });

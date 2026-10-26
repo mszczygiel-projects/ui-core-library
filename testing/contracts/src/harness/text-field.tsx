@@ -1,6 +1,7 @@
 import { TextField } from '@mszczygiel-projects/ui-core-react';
 
 import type { TextFieldContractProps } from '../specs/text-field.contract.ts';
+import { iconElement, IconNode } from './icon.tsx';
 import { reactMount } from './react.tsx';
 import { webComponentMount } from './web-component.ts';
 
@@ -27,18 +28,14 @@ export const mountWebComponentTextField = webComponentMount<TextFieldContractPro
       }
       element.querySelector(`[slot="${name}"]`)?.remove();
       if (enabled) {
-        const icon = document.createElement('span');
-        icon.slot = name;
-        icon.textContent = '★';
-        icon.setAttribute('aria-label', 'Decorative star');
-        element.append(icon);
+        element.append(iconElement(name));
       }
     }
   },
 );
 
 function ReactTextField({ leadingIcon, trailingIcon, ...props }: TextFieldContractProps) {
-  const icon = <span aria-label="Decorative star">★</span>;
+  const icon = <IconNode />;
   return (
     <TextField
       {...props}

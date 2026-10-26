@@ -1,6 +1,7 @@
 import { Button } from '@mszczygiel-projects/ui-core-react';
 
 import type { ButtonContractProps } from '../specs/button.contract.ts';
+import { iconElement, IconNode } from './icon.tsx';
 import { reactMount } from './react.tsx';
 import { webComponentMount } from './web-component.ts';
 
@@ -28,11 +29,7 @@ export const mountWebComponentButton = webComponentMount<ButtonContractProps>(
       }
       element.querySelector(`[slot="${name}"]`)?.remove();
       if (enabled) {
-        const icon = document.createElement('span');
-        icon.slot = name;
-        icon.textContent = '★';
-        icon.setAttribute('aria-label', 'Decorative star');
-        element.append(icon);
+        element.append(iconElement(name));
       }
     }
   },
@@ -40,7 +37,7 @@ export const mountWebComponentButton = webComponentMount<ButtonContractProps>(
 
 /** The same content recipe, expressed as React nodes instead of named slots. */
 function ReactButton({ leadingIcon, trailingIcon, ...props }: ButtonContractProps) {
-  const icon = <span aria-label="Decorative star">★</span>;
+  const icon = <IconNode />;
   return (
     <Button
       {...props}

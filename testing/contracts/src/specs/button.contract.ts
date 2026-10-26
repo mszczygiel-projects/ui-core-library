@@ -4,6 +4,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 
 import { appearance } from '../appearance.ts';
+import { iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions, required } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { pixels, tokenValue } from '../tokens.ts';
@@ -354,9 +355,12 @@ export function buttonContract(adapter: Mount<ButtonContractProps>): void {
         expect(Number.parseFloat(style.fontSize)).toBe(
           pixels(tokenValue(`${prefix}-font-size`, { density })),
         );
+        const iconSide = pixels(tokenValue(`${prefix}-icon-size`, { density }));
         await expect
           .poll(() => button.part('leading-icon').getBoundingClientRect().width)
-          .toBe(pixels(tokenValue(`${prefix}-icon-size`, { density })));
+          .toBe(iconSide);
+        // The page wraps the 1em artwork of the icons package; it still takes the icon size.
+        expect(iconSize(button.element)).toEqual({ width: iconSide, height: iconSide });
       }
     });
   }
