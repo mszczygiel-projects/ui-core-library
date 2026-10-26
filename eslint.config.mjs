@@ -273,6 +273,26 @@ export default defineConfig(
     },
   },
   {
+    // The sources import @stencil/core, but its compiler builds the runtime into the package, so
+    // the published modules do not import it.
+    files: ['packages/web-components/package.json'],
+    rules: {
+      '@nx/dependency-checks': [
+        'error',
+        {
+          ignoredFiles: [
+            '{projectRoot}/vitest.config.ts',
+            '{projectRoot}/stencil.config.ts',
+            '{projectRoot}/**/*.test.ts',
+            '{projectRoot}/src/internal/test-utils.ts',
+            '{projectRoot}/scripts/**/*',
+          ],
+          ignoredDependencies: ['@stencil/core'],
+        },
+      ],
+    },
+  },
+  {
     // React's renderer is a peer dependency of the React package, whether or not a module imports
     // it, so that an application installs one react-dom for both.
     files: ['packages/react/package.json'],

@@ -35,8 +35,7 @@
   },
   "dependencies": {
     "@mszczygiel-projects/ui-core-foundations": "workspace:^",
-    "@mszczygiel-projects/ui-core-shared": "workspace:^",
-    "@stencil/core": "catalog:"
+    "@mszczygiel-projects/ui-core-shared": "workspace:^"
   },
   "nx": {
     "name": "web-components",
@@ -62,7 +61,7 @@
         "cache": true
       },
       "typecheck": {
-        "command": "tsc -p tsconfig.lib.json --noEmit && tsc -p tsconfig.tools.json",
+        "command": "tsc -p tsconfig.lib.json --noEmit && tsc -p tsconfig.tools.json && tsc -p tsconfig.spec.json",
         "options": {
           "cwd": "{projectRoot}"
         },
@@ -87,7 +86,19 @@
           "production"
         ],
         "cache": true
+      },
+      "test": {
+        "dependsOn": [
+          "build",
+          "^build"
+        ]
       }
     }
+  },
+  "devDependencies": {
+    "@stencil/core": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "playwright": "catalog:",
+    "vitest": "catalog:"
   }
 }
