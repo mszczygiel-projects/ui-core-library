@@ -36,6 +36,7 @@
     "@mszczygiel-projects/ui-core-shared": "workspace:^"
   },
   "devDependencies": {
+    "@figma/code-connect": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",

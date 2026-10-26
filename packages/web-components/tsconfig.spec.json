@@ -7,7 +7,12 @@
     "moduleResolution": "nodenext",
     "allowImportingTsExtensions": true,
     "noEmit": true,
-    "types": []
+    "types": ["@figma/code-connect/figma-types-no-require"]
   },
-  "include": ["src/**/*.test.ts", "src/internal/test-utils.ts", "vitest.config.ts"]
+  "include": [
+    "src/**/*.test.ts",
+    "src/**/*.figma.ts",
+    "src/internal/test-utils.ts",
+    "vitest.config.ts"
+  ]
 }

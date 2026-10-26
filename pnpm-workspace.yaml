@@ -12,6 +12,8 @@ catalog:
   '@arethetypeswrong/cli': 0.18.5
   '@eslint-react/eslint-plugin': 5.28.2
   '@eslint/js': 10.0.1
+  # Publishes and checks the Code Connect templates of both frameworks.
+  '@figma/code-connect': 2.0.2
   '@fontsource/inter': 5.3.0
   '@nx/eslint': 24.0.1
   '@nx/eslint-plugin': 24.0.1

@@ -111,6 +111,7 @@
     }
   },
   "devDependencies": {
+    "@figma/code-connect": "catalog:",
     "@stencil/core": "catalog:",
     "@vitest/browser-playwright": "catalog:",
     "playwright": "catalog:",

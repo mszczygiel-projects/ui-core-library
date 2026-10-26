@@ -14,7 +14,12 @@
     "types": []
   },
   "include": ["src"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/internal/test-utils.ts"],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.tsx",
+    "src/**/*.figma.ts",
+    "src/internal/test-utils.ts"
+  ],
   "references": [
     {
       "path": "../shared/tsconfig.lib.json"
