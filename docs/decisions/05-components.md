@@ -40,7 +40,7 @@
 
 ### Configuration
 
-- `configureUiCore({ labels, loaderVariant, locale })`, from `@mszczygiel-projects/ui-core-foundations/config`, configures every component on the page.
+- `configureUiCore({ labels, loaderVariant })`, from `@mszczygiel-projects/ui-core-foundations/config`, configures every component on the page. `locale` joins it with the first component that formats a date or a number.
 - Its state lives under `globalThis[Symbol.for('ui-core.config')]` and holds only what the application set. Each copy of a package merges that over its own defaults.
 - Components subscribe to changes: Stencil through its state, React through `useSyncExternalStore`.
 
