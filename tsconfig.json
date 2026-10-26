@@ -11,6 +11,9 @@
     },
     {
       "path": "./tools/lint-rules"
+    },
+    {
+      "path": "./packages/shared"
     }
   ]
 }

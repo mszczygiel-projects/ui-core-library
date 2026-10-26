@@ -13,3 +13,6 @@ packages/icons/figma/
 
 # The static build of the Storybook site
 storybook-static/
+
+# The snapshot of the public API of shared, written by its test
+packages/shared/api/

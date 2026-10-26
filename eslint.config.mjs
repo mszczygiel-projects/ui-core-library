@@ -72,6 +72,12 @@ const depConstraints = [
   },
 ];
 
+/** Entries of no-restricted-syntax that share a message. */
+const restricted = (/** @type {string} */ message, /** @type {string[]} */ ...selectors) =>
+  selectors.map((selector) => ({ selector, message }));
+const LOCALE_METHODS = '/^toLocale(String|DateString|TimeString|LowerCase|UpperCase)$/';
+const TIME_ZONE_OPTION = "Property:matches([key.name='timeZone'], [key.value='timeZone'])";
+
 export default defineConfig(
   globalIgnores([
     '**/dist',
@@ -80,6 +86,8 @@ export default defineConfig(
     '**/.nx',
     // Written by build steps, such as the typed token references.
     '**/generated',
+    // The snapshot of the public API of shared, written by its test.
+    'packages/shared/api',
     // The static build of the Storybook site.
     '**/storybook-static',
     // Agent skills belong to their makers, wherever their tools put them.
@@ -105,6 +113,53 @@ export default defineConfig(
       ],
       // Prefers `value!`, which the strict rule no-non-null-assertion forbids.
       '@typescript-eslint/non-nullable-type-assertion-style': 'off',
+    },
+  },
+  {
+    // Shared logic runs on servers and in browsers alike, and the two read different clocks, time
+    // zones and languages and draw different random numbers, so all of them come in as arguments
+    //. The compiler keeps the browser out of these files; these are the usual forms in
+    // which the language itself reads the machine.
+    files: ['packages/shared/src/**/*.ts'],
+    ignores: ['packages/shared/src/**/*.test.ts'],
+    rules: {
+      'no-restricted-syntax': [
+        'error',
+        ...restricted(
+          'Take the time as an argument.',
+          "CallExpression[callee.object.name='Date'][callee.property.name='now']",
+          "NewExpression[callee.name='Date'][arguments.length=0]",
+          "CallExpression[callee.name='Date']",
+          // Intl formats the current time when no instant is given.
+          'CallExpression[callee.property.name=/^format(ToParts)?$/][arguments.length=0]',
+        ),
+        ...restricted(
+          'Pass the locale.',
+          "NewExpression[callee.object.name='Intl'][arguments.length=0]",
+          "CallExpression[callee.object.name='Intl'][arguments.length=0]",
+          "NewExpression[callee.object.name='Intl'] > Identifier.arguments:first-child[name='undefined']",
+          "CallExpression[callee.object.name='Intl'] > Identifier.arguments:first-child[name='undefined']",
+          "NewExpression[callee.object.name='Intl'] > ArrayExpression.arguments:first-child[elements.length=0]",
+          `CallExpression[callee.property.name=${LOCALE_METHODS}][arguments.length=0]`,
+          `CallExpression[callee.property.name=${LOCALE_METHODS}] > Identifier.arguments:first-child[name='undefined']`,
+          "CallExpression[callee.property.name='localeCompare'][arguments.length<2]",
+          "CallExpression[callee.property.name='localeCompare'] > Identifier.arguments:nth-child(2)[name='undefined']",
+        ),
+        ...restricted(
+          'Take the time zone as an argument, or work in UTC.',
+          'CallExpression[callee.property.name=/^(get|set)(FullYear|Year|Month|Date|Day|Hours|Minutes|Seconds|Milliseconds)$|^getTimezoneOffset$/]',
+          'CallExpression[callee.property.name=/^to(Date|Time)String$/]',
+          "NewExpression[callee.name='Date'][arguments.length>1]",
+          // A format without a time zone formats in the time zone of the machine.
+          `NewExpression[callee.object.name='Intl'][callee.property.name='DateTimeFormat']:not(:has(${TIME_ZONE_OPTION}))`,
+          `CallExpression[callee.object.name='Intl'][callee.property.name='DateTimeFormat']:not(:has(${TIME_ZONE_OPTION}))`,
+          `CallExpression[callee.property.name=/^toLocale(Date|Time)String$/]:not(:has(${TIME_ZONE_OPTION}))`,
+        ),
+        ...restricted(
+          'Take random values as an argument.',
+          "CallExpression[callee.object.name='Math'][callee.property.name='random']",
+        ),
+      ],
     },
   },
   {

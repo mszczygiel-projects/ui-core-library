@@ -25,7 +25,8 @@
     "tokens:snapshot": "nx run foundations:test -- -u",
     "release:check": "nx release version 1.0.0 --first-release --dry-run",
     "icons:snapshot": "nx run icons:test -- -u",
-    "lint:css": "stylelint \"packages/**/*.css\" \"apps/**/*.css\" --allow-empty-input"
+    "lint:css": "stylelint \"packages/**/*.css\" \"apps/**/*.css\" --allow-empty-input",
+    "shared:snapshot": "nx run shared:test -- -u"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
