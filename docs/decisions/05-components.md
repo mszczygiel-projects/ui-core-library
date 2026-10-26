@@ -5,7 +5,7 @@
 ### Two native implementations, one specification
 
 - Every component is implemented twice: as a Stencil web component and as a React component. Neither wraps or imports the other.
-- `packages/core` holds what both implementations share. Neither duplicates it.
+- `packages/shared` holds what both implementations share. Neither duplicates it.
 - **A specification per component**, in `src/<name>/<name>.spec.ts`, holds:
   - the props types and the arrays of allowed values;
   - the defaults and the label keys;
@@ -16,14 +16,14 @@
 - **Pure functions**, for example the fallback of an invalid enum value (`one-of`), dates, numbers, pagination and text matching. A module arrives with its first consumer.
 - Each implementation keeps its rendering, its CSS, its framework mechanics and its form integration: `ElementInternals` in Stencil, native controls in React.
 
-### Rules for `core`
+### Rules for `shared`
 
 - No rendering, DOM, CSS, Stencil or React. The module boundaries enforce the last two.
 - No module reads the clock, the time zone, the language or random numbers. They arrive as arguments, and a lint rule forbids the usual ways of reading them.
 - Calendar dates are ISO strings, counted in whole days without `Date` objects.
 - State that must be unique on a page lives under `globalThis[Symbol.for('ui-core.<name>')]`.
 - Every module has a subpath export, and the package declares `"sideEffects": false`.
-- The public declarations are snapshotted in `packages/core/api/`, and `pnpm core:check` fails when they change.
+- The public declarations are snapshotted in `packages/shared/api/`, and `pnpm shared:check` fails when they change.
 
 ### Web components
 

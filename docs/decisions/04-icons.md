@@ -23,9 +23,9 @@
 
 ### The consumer's icon set
 
-- `ui-core-icons build --input <dir> --output <dir>` builds a package with the same exports from the consumer's SVG files, after the same checks.
+- `ui-core-icons build --input <dir> --output <dir>` builds a package directory, with the same name and exports, from the consumer's SVG files, after the same checks.
 - Design rules are warnings for a consumer's set. Anything but plain shapes stays an error.
-- The build fails when the set lacks an icon that the component packages import. That list is derived from their imports and published with the package.
+- The build fails when the set lacks an icon that the component packages import. That list, `required-icons.txt`, is derived from their imports and published with the package.
 - The application points its package manager at the built package (`pnpm.overrides`, `overrides` or `resolutions`), so bundlers, server renders and tests all use it.
 - svgo is an optional peer dependency of the CLI, never a runtime dependency.
 

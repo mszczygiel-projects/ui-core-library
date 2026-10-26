@@ -23,7 +23,7 @@ The library grows in steps. A step is one infrastructure change or one component
 1. **Proposal.** The scope and every decision it needs, each with options and a recommendation. A component's proposal also covers:
    - the API of both implementations;
    - the changes in Figma and in the tokens;
-   - what goes into `core`;
+   - what goes into `shared`;
    - the labels;
    - the regressions its contract will cover.
 
@@ -56,7 +56,7 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 
 **Specification and API** ([05](docs/decisions/05-components.md), [06](docs/decisions/06-component-api.md))
 
-- [ ] The specification in `core` holds the types, values, defaults, labels, parts, events, category, status and Figma node.
+- [ ] The specification in `shared` holds the types, values, defaults, labels, parts, events, category, status and Figma node.
 - [ ] Both implementations use it, and every exception has its reason in the specification.
 - [ ] The whole public API has JSDoc, and the summary sentence matches the page and Figma.
 
