@@ -3,8 +3,10 @@
  *
  * - the root module defines every component. Stencil writes one module per component, each
  *   defining its own tag, and a root that only re-exports its helpers;
- * - relative imports in the declarations carry their file extension. Stencil writes them without
- *   one, which only a bundler resolves.
+ * - relative imports in the declarations name the `.js` file that Node.js resolves. Stencil writes
+ *   them without an extension, or with the `.ts` of the source;
+ * - the declaration of each component loads the declarations of its source, where the component
+ *   adds members that Stencil does not type, such as the form API, to the type of its element.
  *
  * Usage: node scripts/finish-build.ts
  */
@@ -20,12 +22,39 @@ const root = `${modules.map((file) => `export * from './components/${file}';`).j
 writeFileSync(join(dist, 'index.js'), root);
 writeFileSync(join(dist, 'index.d.ts'), root);
 
+interface Manifest {
+  readonly modules: readonly {
+    readonly path: string;
+    readonly declarations: readonly { readonly tagName?: string }[];
+  }[];
+}
+
+// dist/components/ui-button.d.ts loads dist/types/button/button.d.ts, from src/button/button.tsx.
+const manifest = JSON.parse(readFileSync(join(dist, 'custom-elements.json'), 'utf8')) as Manifest;
+for (const module of manifest.modules) {
+  const types = module.path.replace(/^src\//, '../types/').replace(/\.tsx?$/, '.js');
+  for (const { tagName } of module.declarations) {
+    if (tagName === undefined) {
+      continue;
+    }
+    const file = join(dist, 'components', `${tagName}.d.ts`);
+    const text = readFileSync(file, 'utf8');
+    const load = `import '${types}';\n`;
+    if (!text.startsWith(load)) {
+      writeFileSync(file, `${load}${text}`);
+    }
+  }
+}
+
 const RELATIVE = /(from\s+|import\s*\(\s*)(["'])(\.{1,2}\/[^"']+?)\2/g;
 
 /** The specifier with the extension of the declaration it names, or unchanged. */
 function withExtension(file: string, specifier: string): string {
   if (/\.(js|mjs|json)$/.test(specifier)) {
     return specifier;
+  }
+  if (specifier.endsWith('.ts')) {
+    return `${specifier.slice(0, -'.ts'.length)}.js`;
   }
   const target = resolve(dirname(file), specifier);
   if (existsSync(`${target}.d.ts`)) {
