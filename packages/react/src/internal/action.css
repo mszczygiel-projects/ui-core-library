@@ -1,0 +1,210 @@
+/*
+ * The surface of every action: Button, IconButton and LinkButton. The element with the class
+ * `ui-action` takes a variant and a size modifier, and `ui-action--loading` or
+ * `ui-action--disabled` where its element has no native disabled state.
+ */
+
+.ui-action {
+  --_font-size: var(--button-font-size);
+  --_line-height: var(--button-line-height);
+  --_gap: var(--button-gap);
+  --_icon-size: var(--button-icon-size);
+  --_padding-inline: var(--button-padding-inline);
+  --_padding-stack: var(--button-padding-stack);
+  --_radius: var(--button-radius);
+  --_text-transform: var(--button-text-uppercase);
+
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding-block: var(--_padding-stack);
+  padding-inline: var(--_padding-inline);
+  border: var(--button-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_background);
+  color: var(--_text);
+  font-family: var(--button-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: var(--_text-transform);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.ui-action:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-action:is(:disabled, .ui-action--disabled) {
+  cursor: not-allowed;
+}
+
+.ui-action.ui-action--loading:not(:disabled, .ui-action--disabled) {
+  cursor: progress;
+}
+
+.ui-action.ui-action--small {
+  --_font-size: var(--button-small-font-size);
+  --_line-height: var(--button-small-line-height);
+  --_gap: var(--button-small-gap);
+  --_icon-size: var(--button-small-icon-size);
+  --_padding-inline: var(--button-small-padding-inline);
+  --_padding-stack: var(--button-small-padding-stack);
+  --_radius: var(--button-small-radius);
+}
+
+.ui-action.ui-action--large {
+  --_font-size: var(--button-large-font-size);
+  --_line-height: var(--button-large-line-height);
+  --_gap: var(--button-large-gap);
+  --_icon-size: var(--button-large-icon-size);
+  --_padding-inline: var(--button-large-padding-inline);
+  --_padding-stack: var(--button-large-padding-stack);
+  --_radius: var(--button-large-radius);
+}
+
+.ui-action.ui-action--primary {
+  --_background: var(--color-button-primary-background-default);
+  --_border: var(--color-button-primary-border-default);
+  --_text: var(--color-button-primary-text-default);
+}
+
+.ui-action.ui-action--primary:is(:disabled, .ui-action--disabled) {
+  --_background: var(--color-button-primary-background-disabled);
+  --_border: var(--color-button-primary-border-disabled);
+  --_text: var(--color-button-primary-text-disabled);
+}
+
+.ui-action.ui-action--primary:is(:hover, :active):not(
+    :disabled,
+    .ui-action--disabled,
+    .ui-action--loading
+  ) {
+  --_background: var(--color-button-primary-background-active);
+  --_border: var(--color-button-primary-border-active);
+  --_text: var(--color-button-primary-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+.ui-action.ui-action--secondary {
+  --_background: var(--color-button-secondary-background-default);
+  --_border: var(--color-button-secondary-border-default);
+  --_text: var(--color-button-secondary-text-default);
+}
+
+.ui-action.ui-action--secondary:is(:disabled, .ui-action--disabled) {
+  --_background: var(--color-button-secondary-background-disabled);
+  --_border: var(--color-button-secondary-border-disabled);
+  --_text: var(--color-button-secondary-text-disabled);
+}
+
+.ui-action.ui-action--secondary:is(:hover, :active):not(
+    :disabled,
+    .ui-action--disabled,
+    .ui-action--loading
+  ) {
+  --_background: var(--color-button-secondary-background-active);
+  --_border: var(--color-button-secondary-border-active);
+  --_text: var(--color-button-secondary-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+.ui-action.ui-action--outline {
+  --_background: var(--color-button-outline-background-default);
+  --_border: var(--color-button-outline-border-default);
+  --_text: var(--color-button-outline-text-default);
+}
+
+.ui-action.ui-action--outline:is(:disabled, .ui-action--disabled) {
+  --_background: var(--color-button-outline-background-disabled);
+  --_border: var(--color-button-outline-border-disabled);
+  --_text: var(--color-button-outline-text-disabled);
+}
+
+.ui-action.ui-action--outline:is(:hover, :active):not(
+    :disabled,
+    .ui-action--disabled,
+    .ui-action--loading
+  ) {
+  --_background: var(--color-button-outline-background-active);
+  --_border: var(--color-button-outline-border-active);
+  --_text: var(--color-button-outline-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+.ui-action.ui-action--ghost {
+  --_background: var(--color-button-ghost-background-default);
+  --_border: var(--color-button-ghost-border-default);
+  --_text: var(--color-button-ghost-text-default);
+}
+
+.ui-action.ui-action--ghost:is(:disabled, .ui-action--disabled) {
+  --_background: var(--color-button-ghost-background-default);
+  --_border: var(--color-button-ghost-border-default);
+  --_text: var(--color-button-ghost-text-disabled);
+}
+
+.ui-action.ui-action--ghost:is(:hover, :active):not(
+    :disabled,
+    .ui-action--disabled,
+    .ui-action--loading
+  ) {
+  --_background: var(--color-button-ghost-background-default);
+  --_border: var(--color-button-ghost-border-default);
+  --_text: var(--color-button-ghost-text-active);
+}
+
+.ui-action.ui-action--danger {
+  --_background: var(--color-button-danger-background-default);
+  --_border: var(--color-button-danger-border-default);
+  --_text: var(--color-button-danger-text-default);
+}
+
+.ui-action.ui-action--danger:is(:disabled, .ui-action--disabled) {
+  --_background: var(--color-button-danger-background-disabled);
+  --_border: var(--color-button-danger-border-disabled);
+  --_text: var(--color-button-danger-text-disabled);
+}
+
+.ui-action.ui-action--danger:is(:hover, :active):not(
+    :disabled,
+    .ui-action--disabled,
+    .ui-action--loading
+  ) {
+  --_background: var(--color-button-danger-background-active);
+  --_border: var(--color-button-danger-border-default);
+  --_text: var(--color-button-danger-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+@media (forced-colors: active) {
+  .ui-action {
+    color: ButtonText;
+    border-color: ButtonText;
+  }
+
+  .ui-action:is(:disabled, .ui-action--disabled) {
+    color: GrayText;
+    border-color: GrayText;
+  }
+
+  .ui-action:focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+.ui-action[hidden] {
+  display: none;
+}

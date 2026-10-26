@@ -10,6 +10,7 @@ import {
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import { AttachInternals, Component, Element, h, Prop, State, type VNode } from '@stencil/core';
 
+import { cancelInactiveClick, runFormAction, setState } from '../internal/action.ts';
 import { followConfig } from '../internal/config.ts';
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
@@ -44,7 +45,7 @@ declare global {
  */
 @Component({
   tag: 'ui-button',
-  styleUrl: 'button.css',
+  styleUrls: ['../internal/action.css', 'button.css'],
   shadow: { delegatesFocus: true },
   formAssociated: true,
 })
@@ -175,8 +176,8 @@ export class UiButton implements ButtonProps, FormAssociated {
   }
 
   componentWillRender(): void {
-    this.setState('disabled', this.isDisabled());
-    this.setState('loading', this.loading);
+    setState(this.internals, 'disabled', this.isDisabled());
+    setState(this.internals, 'loading', this.loading);
   }
 
   render(): VNode {
@@ -194,7 +195,7 @@ export class UiButton implements ButtonProps, FormAssociated {
       <form role="none" onSubmit={this.onFormAction} onReset={this.onFormAction}>
         <button
           part="base"
-          class={`base ${variant} ${size}${this.loading ? ' loading' : ''}`}
+          class={`base action ${variant} ${size}${this.loading ? ' loading' : ''}`}
           type={type}
           disabled={this.isDisabled()}
           aria-label={named ? label : undefined}
@@ -247,14 +248,6 @@ export class UiButton implements ButtonProps, FormAssociated {
     return this.disabled || this.formDisabled;
   }
 
-  private setState(name: string, on: boolean): void {
-    if (on) {
-      this.internals.states.add(name);
-    } else {
-      this.internals.states.delete(name);
-    }
-  }
-
   private readonly onLeadingSlotChange = (event: Event): void => {
     this.hasLeadingIcon = hasAssignedContent(event);
   };
@@ -268,51 +261,16 @@ export class UiButton implements ButtonProps, FormAssociated {
    * active button completes, even when a click handler then starts loading, as in React.
    */
   private readonly onClick = (event: MouseEvent): void => {
-    if (this.isDisabled() || this.loading) {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    }
+    cancelInactiveClick(event, this.isDisabled() || this.loading);
   };
 
   private readonly onFormAction = (event: Event): void => {
-    event.preventDefault();
-    event.stopPropagation();
-    const form = this.internals.form;
-    // Disabling during the click still stops the action, as it stops a native button.
-    if (this.isDisabled() || form === null) {
-      return;
-    }
-    if (event.type === 'reset') {
-      form.reset();
-      return;
-    }
-    this.submit(form);
+    runFormAction(event, this.internals, {
+      disabled: this.isDisabled(),
+      name: this.name,
+      value: this.value,
+    });
   };
-
-  private submit(form: HTMLFormElement): void {
-    const dialog = form.method === 'dialog' ? form.closest('dialog') : null;
-    const open = dialog?.open === true;
-    let submission: Event | undefined;
-    const record = (event: Event) => {
-      submission = event;
-    };
-    form.addEventListener('submit', record, { capture: true });
-    // A page that removes the value attribute leaves null, which submits as an empty value.
-    const value: unknown = this.value;
-    const submitted = typeof value === 'string' ? value : '';
-    this.internals.setFormValue(this.name !== undefined && this.name !== '' ? submitted : null);
-    try {
-      form.requestSubmit();
-    } finally {
-      form.removeEventListener('submit', record, { capture: true });
-      this.internals.setFormValue(null);
-    }
-    // A native submit button gives the dialog that its form closes its value as the return value.
-    // A submission without a submitter cannot, so the button sets it.
-    if (dialog !== null && open && submission?.defaultPrevented === false) {
-      dialog.returnValue = submitted;
-    }
-  }
 }
 
 /**

@@ -70,7 +70,7 @@ describe('ui-button', () => {
       button.removeAttribute(name);
     }
     await nextRender();
-    expect(control(button)?.className).toBe('base primary medium');
+    expect(control(button)?.className).toBe('base action primary medium');
     control(button)?.click();
     expect(submitted).toHaveBeenCalledWith([['action', '']]);
     Reflect.set(button, 'type', undefined);

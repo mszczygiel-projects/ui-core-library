@@ -1,3 +1,7 @@
+import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+
 import stylelint from 'stylelint';
 import { describe, expect, it } from 'vitest';
 
@@ -6,8 +10,12 @@ import { customPropertiesRead, mediaLengths, rawValues, uiCorePlugins } from './
 
 const plugins = uiCorePlugins(stylelint);
 
-async function lint(code: string, rules: Record<string, unknown>) {
-  const { results } = await stylelint.lint({ code, config: { plugins: [...plugins], rules } });
+async function lint(code: string, rules: Record<string, unknown>, codeFilename?: string) {
+  const { results } = await stylelint.lint({
+    code,
+    codeFilename,
+    config: { plugins: [...plugins], rules },
+  });
   return results.flatMap((result) => result.warnings.map((warning) => warning.text));
 }
 
@@ -80,6 +88,29 @@ describe('ui-core/known-tokens', () => {
     const warnings = await lint('.a { inline-size: var(--_size); }', rules);
     expect(warnings).toHaveLength(1);
     expect(warnings[0]).toContain('--_size is read but never declared');
+  });
+
+  it('accepts the private aliases of the shared stylesheets of the same package only', async () => {
+    const root = mkdtempSync(join(tmpdir(), 'ui-core-lint-'));
+    try {
+      mkdirSync(join(root, 'package', 'src', 'internal'), { recursive: true });
+      writeFileSync(
+        join(root, 'package', 'src', 'internal', 'surface.css'),
+        '.surface { --_size: var(--button-icon-size); }',
+      );
+      const code = '.a { inline-size: var(--_size); }';
+      expect(await lint(code, rules, join(root, 'package', 'src', 'a', 'a.css'))).toEqual([]);
+      expect(await lint(code, rules, join(root, 'other', 'src', 'a', 'a.css'))).toHaveLength(1);
+      expect(
+        await lint(
+          '.b { inline-size: var(--_size); }',
+          rules,
+          join(root, 'package', 'src', 'internal', 'b.css'),
+        ),
+      ).toHaveLength(1);
+    } finally {
+      rmSync(root, { recursive: true, force: true });
+    }
   });
 });
 

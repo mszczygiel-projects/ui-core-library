@@ -21,6 +21,11 @@
   - Rules live in the layer `components.ui-core`, so they beat Tailwind's preflight and lose to its utilities.
   - The package ships one `styles.css`, and no module imports CSS.
 
+### Families of components
+
+- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts.
+- The shared rules take their states from classes as well as from native pseudo-classes, so that an element without a native disabled state, such as a link, uses them too.
+
 ### Layout and browsers
 
 - Values that change with the screen come from Sizes tokens. A layout that must change uses a media query at the breakpoint of `tokens.json` (`64rem`).
@@ -43,6 +48,8 @@ The standard rules check logical properties and Baseline. The CSS of the Storybo
 When the tokens are the only API, a consumer's change reaches every component, and the library never undoes it. The lint rules turn "no hardcoded values" from a review habit into a failing check.
 
 ## Rejected
+
+- A copy of the surface in each component of a family: the copies drift apart, and the contracts would compare each of them with the tokens separately.
 
 - One shared stylesheet for both implementations: different selectors and a build step to translate them, for little gain.
 - Visual tests as the only guard of parity: they compare a story with its own past, not one implementation with the other.
