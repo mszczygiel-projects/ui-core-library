@@ -6,7 +6,7 @@
 
 - Every component is implemented twice: as a Stencil web component and as a React component. Neither wraps or imports the other.
 - `packages/shared` holds what both implementations share. Neither duplicates it.
-- **A specification per component**, in `src/<name>.ts` and the subpath `./<name>`, holds:
+- **A specification per component**, in `src/components/<name>.ts` and the subpath `./<name>`, holds:
   - the props both implementations share, as an interface, and the arrays of allowed values with their defaults;
   - the label keys and the summary sentence;
   - the names of its parts, slots, events and stories;
@@ -14,7 +14,7 @@
   - the node of its Figma component set;
   - the exceptions to the conventions, with their reasons.
 - Both implementations, the contracts, the stories and the status page import these types and values. The props of React extend the shared interface, and each web component checks that it declares every prop of it, so a prop that the specification adds, renames or retypes is a type error until the web component follows. A new allowed value reaches both APIs and the controls of the stories at once, and the contract checks how each implementation renders it.
-- **Pure functions**, for example the fallback of an invalid enum value (`one-of`), dates, numbers, pagination and text matching. A module arrives with its first consumer.
+- **Pure functions**, in `src/utils/`, for example the fallback of an invalid enum value (`one-of`), dates, numbers, pagination and text matching. A module arrives with its first consumer.
 - Each implementation keeps its rendering, its CSS, its framework mechanics and its form integration: `ElementInternals` in Stencil, native controls in React.
 
 ### Rules for `shared`

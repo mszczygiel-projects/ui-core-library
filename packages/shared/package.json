@@ -7,44 +7,44 @@
   "sideEffects": false,
   "exports": {
     "./button": {
-      "types": "./dist/button.d.ts",
-      "default": "./dist/button.js"
+      "types": "./dist/components/button.d.ts",
+      "default": "./dist/components/button.js"
     },
     "./component": {
-      "types": "./dist/component.d.ts",
-      "default": "./dist/component.js"
+      "types": "./dist/components/component.d.ts",
+      "default": "./dist/components/component.js"
     },
     "./date": {
-      "types": "./dist/date.d.ts",
-      "default": "./dist/date.js"
+      "types": "./dist/utils/date.d.ts",
+      "default": "./dist/utils/date.js"
     },
     "./loader": {
-      "types": "./dist/loader.d.ts",
-      "default": "./dist/loader.js"
+      "types": "./dist/components/loader.d.ts",
+      "default": "./dist/components/loader.js"
     },
     "./locale": {
-      "types": "./dist/locale.d.ts",
-      "default": "./dist/locale.js"
+      "types": "./dist/utils/locale.d.ts",
+      "default": "./dist/utils/locale.js"
     },
     "./numeric": {
-      "types": "./dist/numeric.d.ts",
-      "default": "./dist/numeric.js"
+      "types": "./dist/utils/numeric.d.ts",
+      "default": "./dist/utils/numeric.js"
     },
     "./one-of": {
-      "types": "./dist/one-of.d.ts",
-      "default": "./dist/one-of.js"
+      "types": "./dist/utils/one-of.d.ts",
+      "default": "./dist/utils/one-of.js"
     },
     "./paginate": {
-      "types": "./dist/paginate.d.ts",
-      "default": "./dist/paginate.js"
+      "types": "./dist/utils/paginate.d.ts",
+      "default": "./dist/utils/paginate.js"
     },
     "./text": {
-      "types": "./dist/text.d.ts",
-      "default": "./dist/text.js"
+      "types": "./dist/utils/text.d.ts",
+      "default": "./dist/utils/text.js"
     },
     "./text-field": {
-      "types": "./dist/text-field.d.ts",
-      "default": "./dist/text-field.js"
+      "types": "./dist/components/text-field.d.ts",
+      "default": "./dist/components/text-field.js"
     },
     "./package.json": "./package.json"
   },

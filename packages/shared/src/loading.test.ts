@@ -114,17 +114,25 @@ function changesSince(snapshots: ReadonlyMap<string, Snapshot>): string[] {
 snapshot();
 
 interface Manifest {
-  readonly exports: Readonly<Record<string, unknown>>;
+  readonly exports: Readonly<Record<string, { readonly default: string } | string>>;
 }
 
 const manifest = JSON.parse(
   readFileSync(join(import.meta.dirname, '../package.json'), 'utf8'),
 ) as Manifest;
-const modules = Object.keys(manifest.exports)
-  .filter((subpath) => subpath !== './package.json')
-  .map((subpath) => subpath.slice('./'.length));
+// Each subpath with the source of its module: ./dist/utils/date.js comes from ./utils/date.ts.
+const modules = Object.entries(manifest.exports).flatMap(([subpath, target]) =>
+  typeof target === 'string'
+    ? []
+    : [
+        [
+          subpath.slice('./'.length),
+          target.default.replace(/^\.\/dist\//, './').replace(/\.js$/, '.ts'),
+        ],
+      ],
+);
 
-describe.each(modules)('the module %s', (name) => {
+describe.each(modules)('the module %s', (name, source) => {
   it('loads without a browser, and leaves the globals and the built-ins as they were', async () => {
     vi.resetModules();
     const originals = new Map(
@@ -145,7 +153,7 @@ describe.each(modules)('the module %s', (name) => {
     const random = vi.spyOn(Math, 'random');
     const before = snapshot();
     try {
-      await import(new URL(`./${name}.ts`, import.meta.url).href);
+      await import(new URL(source, import.meta.url).href);
       expect(changesSince(before)).toEqual([]);
       expect(now).not.toHaveBeenCalled();
       expect(random).not.toHaveBeenCalled();

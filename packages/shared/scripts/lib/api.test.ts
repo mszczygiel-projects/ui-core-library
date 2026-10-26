@@ -10,13 +10,13 @@ const root = join(import.meta.dirname, '../..');
 describe('publicDeclarations', () => {
   it('declares every subpath the package exports, without comments', () => {
     const manifest = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')) as {
-      exports: Record<string, unknown>;
+      exports: Record<string, { types: string } | string>;
     };
-    const subpaths = Object.keys(manifest.exports).filter((key) => key !== './package.json');
-    const declarations = publicDeclarations(root);
-    expect([...declarations.keys()]).toEqual(
-      expect.arrayContaining(subpaths.map((subpath) => `${subpath.slice('./'.length)}.d.ts`)),
+    const files = Object.values(manifest.exports).flatMap((target) =>
+      typeof target === 'string' ? [] : [target.types.replace(/^\.\/dist\//, '')],
     );
+    const declarations = publicDeclarations(root);
+    expect([...declarations.keys()]).toEqual(expect.arrayContaining(files));
     for (const text of declarations.values()) {
       expect(text).toMatch(/^export /m);
       expect(text).not.toMatch(/\/\*|\/\//);
