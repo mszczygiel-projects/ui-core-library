@@ -79,6 +79,7 @@ export function TextField({
   id,
   className,
   style,
+  dir,
   'aria-describedby': describedBy,
   ...rest
 }: TextFieldProps) {
@@ -103,6 +104,9 @@ export function TextField({
   return (
     <div
       {...rootAttributes}
+      // The direction belongs to the whole field, as on the host of the web component: the label,
+      // the hint and the icons follow it, and the input inherits it.
+      dir={dir}
       style={style}
       className={classNames(
         'ui-text-field',

@@ -470,6 +470,18 @@ export function textFieldContract(adapter: Mount<TextFieldContractProps>): void 
     }
   });
 
+  it('lays out the whole field in the direction set on the component itself', async () => {
+    const field = await mount(
+      { label: 'Name', leadingIcon: true, trailingIcon: true },
+      { attributes: { dir: 'rtl' } },
+    );
+    const input = inputOf(field).getBoundingClientRect();
+    expect(field.part('leading-icon').getBoundingClientRect().left).toBeGreaterThan(input.left);
+    expect(field.part('trailing-icon').getBoundingClientRect().right).toBeLessThan(input.right);
+    expect(getComputedStyle(field.part('label')).direction).toBe('rtl');
+    expect(getComputedStyle(inputOf(field)).direction).toBe('rtl');
+  });
+
   it('follows sizes, density and RTL using the control tokens', async () => {
     for (const density of ['comfortable', 'compact'] as const) {
       for (const size of ['small', 'medium', 'large'] as const) {
