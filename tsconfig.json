@@ -20,6 +20,9 @@
     },
     {
       "path": "./packages/web-components"
+    },
+    {
+      "path": "./tools/guidelines"
     }
   ]
 }

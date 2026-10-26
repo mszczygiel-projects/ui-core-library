@@ -81,6 +81,13 @@ A component that imports an icon adds its name to `packages/icons/required-icons
 
 The skill `ui-core-component` holds the order of a new component.
 
+## Updating the Figma guidelines
+
+The libraries of Figma carry guidelines that Figma's agent reads. They come from the specifications, the component pages, the tokens and the icons, so a change to any of them can change the guidelines.
+
+1. Run `pnpm guidelines:build`. It writes `tools/guidelines/dist/ui-library`, `dist/foundations` and `dist/icons`.
+2. In each Figma file, open Library › Manage guidelines, replace the files with those of its folder and apply the changes.
+
 ## Changing the documentation site
 
 - Consumer guides live in `apps/storybook/src/guides`, and the Foundations pages in `apps/storybook/src/foundations`.
@@ -127,6 +134,9 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 
 **Figma** ([10](docs/decisions/10-figma.md))
 
+- [ ] The `design` field of the specification matches the component set: its boolean variants, the props only code has and the design-only properties.
+- [ ] The guidelines are rebuilt, and the owner has uploaded them.
+
 - [ ] The component set has the names, properties and part layers of the code, and binds only Components variables, Foundations styles and the focus-ring roles.
 - [ ] The Code Connect templates of both frameworks pass `pnpm figma:check`.
 
@@ -151,6 +161,7 @@ Before 1.0.0, for all components at once:
 | `pnpm nx run storybook:test`                    | Runs the site's unit tests and every story with axe in Light and Dark. |
 | `pnpm nx run contracts:test`                    | Builds both component packages and runs every behaviour contract.      |
 | `pnpm shared:snapshot`                          | Rewrites the API snapshot of `shared` after an intended change.        |
+| `pnpm guidelines:build`                         | Writes the guidelines of the three Figma libraries for upload.         |
 | `pnpm figma:check`                              | Parses the Code Connect templates of both frameworks without a token.  |
 | `pnpm tokens:snapshot`                          | Rewrites `token-names.txt` after an intended change of names.          |
 | `pnpm icons:snapshot`                           | Rewrites `icon-names.txt` after an intended change of names.           |

@@ -29,7 +29,8 @@
     "shared:snapshot": "nx run shared:test -- -u",
     "figma:react": "DO_NOT_TRACK=1 figma connect --config figma.config.json --exit-on-unreadable-files --skip-update-check",
     "figma:wc": "DO_NOT_TRACK=1 figma connect --config figma.web-components.config.json --exit-on-unreadable-files --skip-update-check",
-    "figma:check": "pnpm figma:react parse --dry-run && pnpm figma:wc parse --dry-run"
+    "figma:check": "pnpm figma:react parse --dry-run && pnpm figma:wc parse --dry-run",
+    "guidelines:build": "nx run guidelines:guidelines"
   },
   "devDependencies": {
     "@arethetypeswrong/cli": "catalog:",
