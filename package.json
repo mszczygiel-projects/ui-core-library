@@ -1,0 +1,43 @@
+{
+  "name": "ui-core-library",
+  "version": "0.0.0",
+  "private": true,
+  "description": "UI Core Library: design tokens, icons, web components and React components.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": ">=24.11.0"
+  },
+  "scripts": {
+    "prepare": "lefthook install",
+    "build": "nx run-many -t build",
+    "typecheck": "nx run-many -t typecheck",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint:root": "eslint \"*.{js,mjs,ts}\"",
+    "secrets:check": "secretlint \"**/*\"",
+    "deps:audit": "pnpm audit --prod",
+    "skills:install": "DO_NOT_TRACK=1 pnpm dlx skills@1.7.2 experimental_install",
+    "verify": "nx sync:check && pnpm format:check && pnpm lint:root && nx run-many -t lint typecheck test build && pnpm secrets:check && pnpm deps:audit"
+  },
+  "devDependencies": {
+    "@eslint/js": "catalog:",
+    "@nx/eslint": "catalog:",
+    "@nx/eslint-plugin": "catalog:",
+    "@secretlint/secretlint-rule-preset-recommend": "catalog:",
+    "@stylistic/eslint-plugin": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-simple-import-sort": "catalog:",
+    "lefthook": "catalog:",
+    "nx": "catalog:",
+    "prettier": "catalog:",
+    "secretlint": "catalog:",
+    "typescript": "catalog:",
+    "typescript-eslint": "catalog:"
+  }
+}

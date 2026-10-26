@@ -1,0 +1,34 @@
+# Git hooks, installed by `pnpm install` through the root `prepare` script.
+# The full quality gate is `pnpm verify`; these hooks only catch what must
+# never reach a commit, and keep pushes away from main.
+pre-commit:
+  parallel: true
+  jobs:
+    - name: secrets
+      run: pnpm exec secretlint {staged_files}
+    - name: format
+      glob: '*.{js,mjs,cjs,ts,mts,cts,tsx,json,md,mdx,yml,yaml,css,html}'
+      run: pnpm exec prettier --check --ignore-unknown {staged_files}
+
+# Release notes come from the commits on main, which are squashed pull requests
+# whose titles CI checks. Local commits follow the same format, Conventional
+# Commits: `type(scope): summary`. Git's fixup and squash prefixes are allowed.
+# The message file is quoted because the path to a checkout may contain spaces.
+commit-msg:
+  jobs:
+    - name: conventional-commits
+      run: >-
+        head -n 1 "{1}" | grep -Eq
+        '^((fixup|squash|amend)! )*(build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test)(\([a-z0-9.-]+\))?!?: [^ ]'
+      fail_text: 'The first line must follow Conventional Commits: type(scope): summary'
+
+# main changes only through pull requests, and GitHub cannot enforce that for
+# this private repository. Git lists the pushed refs on stdin as
+# `<local ref> <local sha> <remote ref> <remote sha>`, so a remote ref of main
+# is a push straight to main.
+pre-push:
+  jobs:
+    - name: protect-main
+      use_stdin: true
+      run: '! grep " refs/heads/main " > /dev/null'
+      fail_text: main changes only through pull requests
