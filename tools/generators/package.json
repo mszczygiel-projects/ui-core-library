@@ -1,0 +1,21 @@
+{
+  "name": "@mszczygiel-projects/ui-core-generators",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Repository tooling: the Nx generators that create the skeleton of a component in every project it spans.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "generators": "./generators.json",
+  "dependencies": {
+    "@mszczygiel-projects/ui-core-shared": "workspace:^"
+  },
+  "devDependencies": {
+    "@nx/devkit": "catalog:"
+  },
+  "nx": {
+    "name": "generators",
+    "tags": [
+      "type:tool"
+    ]
+  }
+}

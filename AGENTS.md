@@ -39,7 +39,7 @@ When they disagree, report the conflict and propose a resolution instead of choo
 1. Every visual value in a component comes from a design token. Never hardcode one, and never invent a token, class or icon name: take it from `token-names.txt` or `icon-names.txt`.
 2. Component CSS reads only the Components layer, the focus-ring roles and the motion primitives. It declares only `--_*` properties and uses logical properties ([07](docs/decisions/07-styles.md)).
 3. Tokens change in Figma, never in the exports or the generated files. `knownViolations` only shrinks ([02](docs/decisions/02-design-tokens.md)).
-4. Types, allowed values, defaults and label keys of a component live once, in its specification in `shared`. Both implementations import them ([05](docs/decisions/05-components.md)).
+4. Types, allowed values, defaults and label keys of a component live once, in its specification in `shared`. Both implementations import them ([05](docs/decisions/05-components.md)). A new component starts from `pnpm component:new`, never from files written by hand or copied.
 5. Neither component package imports the other. `shared` holds no rendering, DOM, CSS or framework code. Time, time zone, language and randomness arrive as arguments.
 6. Component APIs follow the vocabulary and pairing rules of [06](docs/decisions/06-component-api.md). Text a component renders comes from props or `configureUiCore` labels, never from a template.
 7. Respect the module boundaries, and never disable `@nx/enforce-module-boundaries`.

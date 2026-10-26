@@ -22,6 +22,7 @@ import {
 
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
+import { copyValidity, submitNamed } from '../internal/form-value.ts';
 import { hasAssignedContent } from '../internal/slots.ts';
 import type { TextFieldValueChange } from './events.ts';
 
@@ -372,18 +373,8 @@ export class UiTextField implements TextFieldProps, FormAssociated {
     );
   }
 
-  /**
-   * Gives the form the entry of the field. A string value takes its name from the `name`
-   * attribute, which Stencil writes only when it renders, so the entry carries the name itself.
-   */
   private submitValue(value: string): void {
-    if (this.name === undefined || this.name === '') {
-      this.internals.setFormValue(null);
-      return;
-    }
-    const entry = new FormData();
-    entry.append(this.name, value);
-    this.internals.setFormValue(entry, value);
+    submitNamed(this.internals, this.name, value);
   }
 
   private input(): HTMLInputElement | null {
@@ -415,25 +406,7 @@ export class UiTextField implements TextFieldProps, FormAssociated {
     const rendered = this.input();
     const input = rendered ?? this.detachedInput();
     input.setCustomValidity(this.customValidity);
-    const validity = input.validity;
-    this.internals.setValidity(
-      input.willValidate
-        ? {
-            badInput: validity.badInput,
-            customError: validity.customError,
-            patternMismatch: validity.patternMismatch,
-            rangeOverflow: validity.rangeOverflow,
-            rangeUnderflow: validity.rangeUnderflow,
-            stepMismatch: validity.stepMismatch,
-            tooLong: validity.tooLong,
-            tooShort: validity.tooShort,
-            typeMismatch: validity.typeMismatch,
-            valueMissing: validity.valueMissing,
-          }
-        : {},
-      input.validationMessage,
-      rendered ?? undefined,
-    );
+    copyValidity(this.internals, input, rendered ?? undefined);
   }
 
   /** An input with the constraints of the field, for checks before the first render. */
