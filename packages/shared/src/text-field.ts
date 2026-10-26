@@ -43,9 +43,9 @@ export const textField = defineComponent({
         'React uses defaultValue for an uncontrolled initial and reset value. The web component uses its value attribute for that, and its property for the current value.',
     },
     {
-      items: ['inputMode', 'enterKeyHint'],
+      items: ['inputMode', 'enterKeyHint', 'spellCheck'],
       reason:
-        'The web component keeps the string types of the properties HTMLElement already has. React keeps the narrower unions of its input attributes. Both pass them to the native input.',
+        'The web component passes the native inputmode, enterkeyhint and spellcheck attributes of its host to the input, since HTMLElement already owns these properties. React takes them as props of the input.',
     },
   ],
 });

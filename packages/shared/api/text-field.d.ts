@@ -40,8 +40,8 @@ export declare const textField: {
         readonly items: readonly ["defaultValue"];
         readonly reason: "React uses defaultValue for an uncontrolled initial and reset value. The web component uses its value attribute for that, and its property for the current value.";
     }, {
-        readonly items: readonly ["inputMode", "enterKeyHint"];
-        readonly reason: "The web component keeps the string types of the properties HTMLElement already has. React keeps the narrower unions of its input attributes. Both pass them to the native input.";
+        readonly items: readonly ["inputMode", "enterKeyHint", "spellCheck"];
+        readonly reason: "The web component passes the native inputmode, enterkeyhint and spellcheck attributes of its host to the input, since HTMLElement already owns these properties. React takes them as props of the input.";
     }];
 };
 export type TextFieldVariant = OptionOf<typeof textField, 'variant'>;
