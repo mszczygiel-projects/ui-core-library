@@ -74,7 +74,7 @@ A component that imports an icon adds its name to `packages/icons/required-icons
 
 ## Changing a component
 
-1. Change its specification in `packages/shared/src/<name>.ts` first, and run `pnpm shared:snapshot`. Both implementations and the contract stop compiling until they follow it.
+1. Change its specification in `packages/shared/src/<name>.ts` first, and run `pnpm shared:snapshot`. The web component stops compiling until it declares every prop of the specification, and the React props follow it by construction.
 2. Change the web component in `packages/web-components/src/<name>/` and the React component in `packages/react/src/<name>/`, each with the tests of its package. The skills `ui-core-stencil` and `ui-core-react` hold the details.
 3. Change the contract in `testing/contracts/src/specs/<name>.contract.ts` for behaviour both share, and run `pnpm nx run contracts:test`.
 4. Update the page and both story files in `apps/storybook/src/components/<category>/`, and the Code Connect templates beside the implementations.

@@ -138,6 +138,4 @@ export interface TextFieldProps {
   pattern?: string;
   /** The purpose of the browser's autofill. */
   autoComplete?: string;
-  /** Turns the browser's spelling suggestions on or off. */
-  spellCheck?: boolean;
 }

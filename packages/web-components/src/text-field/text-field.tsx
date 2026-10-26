@@ -562,3 +562,9 @@ export class UiTextField implements TextFieldProps, FormAssociated {
     return Array.from(form.elements).filter((node) => this.blocksImplicitSubmission(node));
   }
 }
+
+/**
+ * Every prop of the specification is a prop of the component. `implements` alone accepts a class
+ * that leaves out an optional prop, so a prop added to the specification would go unnoticed.
+ */
+type _DeclaresEveryProp = Pick<UiTextField, keyof TextFieldProps>;

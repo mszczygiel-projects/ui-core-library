@@ -63,3 +63,9 @@ export class UiLoader implements LoaderProps {
     return looks[this.config.loaderVariant](size);
   }
 }
+
+/**
+ * Every prop of the specification is a prop of the component. `implements` alone accepts a class
+ * that leaves out an optional prop, so a prop added to the specification would go unnoticed.
+ */
+type _DeclaresEveryProp = Pick<UiLoader, keyof LoaderProps>;

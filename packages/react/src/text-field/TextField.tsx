@@ -45,6 +45,8 @@ export interface TextFieldProps
   inputMode?: ComponentPropsWithRef<'input'>['inputMode'];
   /** A hint for the virtual keyboard's Enter key. */
   enterKeyHint?: ComponentPropsWithRef<'input'>['enterKeyHint'];
+  /** Turns the browser's spelling suggestions on or off. */
+  spellCheck?: boolean;
   /** A decorative icon before the input, in reading order. */
   leadingIcon?: ReactNode;
   /** A decorative icon after the input, in reading order. */

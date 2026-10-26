@@ -26,7 +26,7 @@ The proposal names, each with a recommendation and its alternatives:
 
 ## 3. The specification first
 
-Write `packages/shared/src/<name>.ts` with `defineComponent` and the shared props interface, with status `in-progress`. Run `pnpm shared:snapshot`. Both implementations and the contract then fail to compile until they follow it.
+Write `packages/shared/src/<name>.ts` with `defineComponent` and the shared props interface, with status `in-progress`. Run `pnpm shared:snapshot`. The web component then fails to compile until it declares every prop, and the React props follow by construction.
 
 ## 4. Figma and the tokens
 

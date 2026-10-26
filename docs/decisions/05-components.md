@@ -13,7 +13,7 @@
   - its category and status (`planned`, `in-progress` or `done`);
   - the node of its Figma component set;
   - the exceptions to the conventions, with their reasons.
-- Both implementations, the contracts, the stories and the status page import these types and values. A variant added in the specification is a type error until both implementations handle it.
+- Both implementations, the contracts, the stories and the status page import these types and values. The props of React extend the shared interface, and each web component checks that it declares every prop of it, so a prop that the specification adds, renames or retypes is a type error until the web component follows. A new allowed value reaches both APIs and the controls of the stories at once, and the contract checks how each implementation renders it.
 - **Pure functions**, for example the fallback of an invalid enum value (`one-of`), dates, numbers, pagination and text matching. A module arrives with its first consumer.
 - Each implementation keeps its rendering, its CSS, its framework mechanics and its form integration: `ElementInternals` in Stencil, native controls in React.
 

@@ -73,5 +73,4 @@ export interface TextFieldProps {
     maxLength?: number;
     pattern?: string;
     autoComplete?: string;
-    spellCheck?: boolean;
 }

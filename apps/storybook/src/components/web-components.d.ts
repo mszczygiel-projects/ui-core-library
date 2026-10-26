@@ -15,7 +15,7 @@ declare module 'react' {
       'ui-button': CustomElement<ButtonProps>;
       'ui-loader': CustomElement<LoaderProps>;
       'ui-text-field': CustomElement<
-        Omit<TextFieldProps, 'spellCheck'> & {
+        TextFieldProps & {
           readonly inputmode?: string;
           readonly enterkeyhint?: string;
         }

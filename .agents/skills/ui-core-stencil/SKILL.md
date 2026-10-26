@@ -10,6 +10,7 @@ description: Use when writing or changing a web component of UI Core Library in 
 ## Writing a component
 
 - `src/<name>/<name>.tsx` holds one `@Component({ tag: 'ui-<name>', styleUrl: '<name>.css', shadow: true })` class, `Ui<Name>`, which `implements <Name>Props` from `@mszczygiel-projects/ui-core-shared/<name>`. A control adds `shadow: { delegatesFocus: true }`, and a form control `formAssociated: true`.
+- End the file with `type _DeclaresEveryProp = Pick<Ui<Name>, keyof <Name>Props>;`: `implements` alone accepts a class that leaves out an optional prop.
 - Props are `@Prop()` fields typed with the types of the specification and initialized with literal defaults, such as `= 'medium'`. The manifest shows the initializer as written, and the contract checks it against the specification. Render through `oneOf(value, options.<prop>.options, options.<prop>.default)`, since a removed attribute leaves `null`.
 - Reflect only `name`, `disabled`, `readonly` and `open`, with `@Prop({ reflect: true })`. `readOnly` uses `attribute: 'readonly'`.
 - `HTMLElement` already owns `inputMode`, `enterKeyHint`, `spellcheck` and `ariaLabel`, so no prop may use those names. Follow the attribute that the page writes on the host with `followAttribute` from `src/internal`, and pass it to the inner control.
