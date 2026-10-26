@@ -170,8 +170,10 @@ export class UiTextField implements TextFieldProps, FormAssociated {
   }
 
   set value(value: string) {
+    // A form reads the new value and validity at once, as it does for a native input, so they
+    // change now rather than at the next render.
+    this.restore(typeof value === 'string' ? value : '');
     // As on a native input, a value that a script sets outlives later defaults.
-    this.current = typeof value === 'string' ? value : '';
     this.dirty = true;
   }
 
@@ -223,7 +225,7 @@ export class UiTextField implements TextFieldProps, FormAssociated {
       followAttribute(this.host, 'value', (value) => {
         // Once the value is dirty, the attribute only supplies what a reset restores.
         if (!this.dirty) {
-          this.current = value ?? '';
+          this.restore(value ?? '');
         }
       }),
       ...['aria-label', 'inputmode', 'enterkeyhint', 'spellcheck'].map((name) =>

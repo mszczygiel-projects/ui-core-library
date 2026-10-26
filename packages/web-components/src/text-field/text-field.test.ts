@@ -120,6 +120,24 @@ describe('ui-text-field', () => {
     ]);
   });
 
+  it('gives its form a value assigned by a script at once, before the next render', async () => {
+    const form = document.createElement('form');
+    form.dataset['textFieldTest'] = '';
+    document.body.append(form);
+    const field = Object.assign(create(), { name: 'email', type: 'email', required: true });
+    form.append(field);
+    await nextRender();
+    expect(form.checkValidity()).toBe(false);
+    field.value = '  ada@example.com ';
+    expect([field.value, new FormData(form).get('email')]).toEqual([
+      'ada@example.com',
+      'ada@example.com',
+    ]);
+    expect([field.checkValidity(), form.checkValidity()]).toEqual([true, true]);
+    field.setAttribute('value', 'grace@example.com');
+    expect(new FormData(form).get('email')).toBe('ada@example.com');
+  });
+
   it('joins its form with its value and validity before its first render', () => {
     const form = document.createElement('form');
     form.dataset['textFieldTest'] = '';
