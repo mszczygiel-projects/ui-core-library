@@ -1,0 +1,35 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "neverConnectToCloud": true,
+  "analytics": false,
+  "defaultBase": "main",
+  "namedInputs": {
+    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "production": [
+      "default",
+      "!{projectRoot}/**/*.test.ts",
+      "!{projectRoot}/**/*.test.tsx",
+      "!{projectRoot}/tsconfig.spec.json",
+      "!{projectRoot}/vitest.config.ts"
+    ],
+    "sharedGlobals": ["{workspaceRoot}/tsconfig.base.json", "{workspaceRoot}/tsconfig.node.json"]
+  },
+  "plugins": [
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ],
+  "targetDefaults": {
+    "lint": {
+      "dependsOn": ["^build"],
+      "inputs": ["default", "{workspaceRoot}/eslint.config.mjs"],
+      "cache": true
+    }
+  },
+  "sync": {
+    "applyChanges": true
+  }
+}

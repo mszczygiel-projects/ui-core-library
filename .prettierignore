@@ -1,0 +1,8 @@
+pnpm-lock.yaml
+dist/
+coverage/
+out-tsc/
+.nx/
+
+# Written by the skills CLI
+skills-lock.json

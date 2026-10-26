@@ -1,0 +1,30 @@
+# The quality gate for every pull request and for main.
+# Actions are pinned to full commit SHAs, with the release named in a comment.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # Git hooks guard local commits; CI runs the whole gate itself.
+  LEFTHOOK: '0'
+  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+
+jobs:
+  verify:
+    name: Verify
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: ./.github/actions/setup-workspace
+      - run: pnpm verify
