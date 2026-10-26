@@ -6,7 +6,7 @@
 
 | Layer         | Where                        | What it covers                                                                                     |
 | ------------- | ---------------------------- | -------------------------------------------------------------------------------------------------- |
-| Unit tests    | next to the code, in Node.js | tokens, icons, CLIs, `core`, lint rules                                                            |
+| Unit tests    | next to the code, in Node.js | tokens, icons, CLIs, `shared`, lint rules                                                          |
 | Package tests | each component package       | what only one framework does: React refs, server rendering and hydration, web component attributes |
 | Contracts     | `testing/contracts`          | one behaviour contract per component, run unchanged against both implementations                   |
 | Story tests   | `apps/storybook`             | every story in Light and Dark, with axe violations as errors                                       |

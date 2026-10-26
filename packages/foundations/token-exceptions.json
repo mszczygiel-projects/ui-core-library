@@ -1,0 +1,88 @@
+{
+  "layoutConstants": [
+    {
+      "token": "Components/calendar/day/gap",
+      "reason": "Days of the calendar grid touch each other."
+    },
+    {
+      "token": "Components/dialog/large/max-width",
+      "reason": "The width of a large dialog; no brand or mode changes it."
+    },
+    {
+      "token": "Components/dialog/medium/max-width",
+      "reason": "The width of a medium dialog; no brand or mode changes it."
+    },
+    {
+      "token": "Components/dialog/small/max-width",
+      "reason": "The width of a small dialog; no brand or mode changes it."
+    },
+    {
+      "token": "Components/drawer/grabber/height",
+      "reason": "The height of the drag handle of a bottom drawer."
+    },
+    {
+      "token": "Components/drawer/grabber/width",
+      "reason": "The width of the drag handle of a bottom drawer."
+    },
+    {
+      "token": "Components/drawer/width",
+      "reason": "The width of a side drawer; no brand or mode changes it."
+    },
+    {
+      "token": "Components/file-input/preview/max-height",
+      "reason": "The height of an image preview."
+    },
+    {
+      "token": "Components/notification/description/letter-spacing",
+      "reason": "A number, because Figma binds letter spacing only to numbers while the tracking roles are text."
+    },
+    {
+      "token": "Components/notification/letter-spacing",
+      "reason": "A number, because Figma binds letter spacing only to numbers while the tracking roles are text."
+    },
+    {
+      "token": "Components/notification/subtle/border/bottom",
+      "reason": "The subtle notification has only a left border."
+    },
+    {
+      "token": "Components/notification/subtle/border/right",
+      "reason": "The subtle notification has only a left border."
+    },
+    {
+      "token": "Components/notification/subtle/border/top",
+      "reason": "The subtle notification has only a left border."
+    },
+    {
+      "token": "Components/notification/subtle/show-icon",
+      "reason": "The subtle notification always shows its icon."
+    },
+    {
+      "token": "Components/pagination/jump/input/width",
+      "reason": "The width of the go-to-page field, sized for a page number."
+    },
+    {
+      "token": "Components/popover/arrow/size",
+      "reason": "The size of the popover arrow."
+    },
+    {
+      "token": "Components/radio/border/inner-width",
+      "reason": "The size of the dot of a selected radio button."
+    },
+    {
+      "token": "Components/select/dropdown/max-height",
+      "reason": "The height after which the list of options scrolls."
+    },
+    {
+      "token": "Components/switch/track/width",
+      "reason": "The geometry of the switch track."
+    }
+  ],
+  "primitiveAliases": [
+    {
+      "token": "Components/loader/stroke/width",
+      "target": "Primitives Sizes/border-width/2",
+      "reason": "The spinner keeps a 2 px stroke independently of the accent strokes of controls and notifications."
+    }
+  ],
+  "knownViolations": []
+}

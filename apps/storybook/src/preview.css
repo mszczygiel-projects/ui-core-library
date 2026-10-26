@@ -1,0 +1,19 @@
+/*
+ * The frame of every story: the surface and the density the toolbars choose, painted with the
+ * roles of that surface. Every value is a token, as in the components.
+ */
+.sb-context {
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: var(--spacing-6);
+  background-color: var(--color-background-default);
+  color: var(--color-text-primary);
+  font-family: var(--typography-body-font-family);
+  font-size: var(--typography-body-font-size);
+  line-height: var(--typography-body-line-height);
+}
+
+.sb-context--docs {
+  min-height: auto;
+  padding: var(--spacing-4);
+}

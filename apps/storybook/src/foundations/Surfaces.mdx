@@ -1,0 +1,19 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as SurfaceStories from './Surfaces.stories.tsx';
+
+<Meta title="Foundations/Surfaces & themes" />
+
+# Surfaces & themes
+
+Two attributes decide the colours of an element and of everything inside it. `data-theme` chooses the theme, light or dark, and goes on `<html>`; without it, the page follows the system setting. `data-surface` marks a region painted in another tone: `subtle` for a quiet panel, `inverse` for the opposite tone of the page and `primary` for the brand colour. On a surface, every colour role switches to the variant that reads well there, so a text, a border or a button inside it needs no colours of its own.
+
+```html
+<html data-theme="dark">
+  <section data-surface="inverse">…</section>
+</html>
+```
+
+Set `data-surface` on an element inside the one that sets `data-theme`, never on the same element, and never on `<html>`: on one element, the colours of the surface point back at themselves and the browser drops them. `data-surface="default"` returns a region inside another surface to the page's own colours.
+
+[View every combination, painted with the same markup](?path=/story/foundations-surfaces-themes--matrix)

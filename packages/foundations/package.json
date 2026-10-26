@@ -1,0 +1,109 @@
+{
+  "name": "@mszczygiel-projects/ui-core-foundations",
+  "version": "0.0.0",
+  "description": "Design tokens of UI Core Library, built from the variables of its Figma Foundations file.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./tokens.css": "./dist/tokens.css",
+    "./tailwind.css": "./dist/tailwind.css",
+    "./typography.css": "./dist/typography.css",
+    "./tokens.json": {
+      "types": "./dist/tokens.json.d.ts",
+      "default": "./dist/tokens.json"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "ui-core-foundations": "./dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mszczygiel-projects/ui-core-library.git",
+    "directory": "packages/foundations"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "nx": {
+    "name": "foundations",
+    "tags": [
+      "type:foundations"
+    ],
+    "targets": {
+      "generate": {
+        "command": "node scripts/generate.ts",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "inputs": [
+          "default"
+        ],
+        "outputs": [
+          "{projectRoot}/src/generated",
+          "{projectRoot}/dist/tokens.css",
+          "{projectRoot}/dist/tailwind.css",
+          "{projectRoot}/dist/typography.css",
+          "{projectRoot}/dist/tokens.json",
+          "{projectRoot}/dist/tokens.json.d.ts"
+        ],
+        "cache": true
+      },
+      "build": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ]
+      },
+      "typecheck": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ],
+        "inputs": [
+          "...",
+          {
+            "dependentTasksOutputFiles": "**/src/generated/**/*"
+          }
+        ]
+      },
+      "lint": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ]
+      },
+      "figma-metadata": {
+        "command": "node scripts/figma-metadata.ts",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "cache": false
+      },
+      "check-package": {
+        "command": "publint --strict . && attw --pack . --profile esm-only --exclude-entrypoints ./tokens.css ./tailwind.css ./typography.css ./tokens.json",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [
+          "production"
+        ],
+        "cache": true
+      }
+    }
+  }
+}

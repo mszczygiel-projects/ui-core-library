@@ -1,0 +1,37 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as TypographyStories from './Typography.stories.tsx';
+
+<Meta title="Foundations/Typography" />
+
+# Typography
+
+The library has fifteen text styles, from display text to eyebrows. Each one is a group of typography roles, such as `typography/heading/h1`, and a class of `typography.css`, such as `ui-text-heading-h1`. Its sizes and line heights are roles of the Sizes collection, and its fonts, weights and letter spacing roles of Themes:
+
+```css
+@import '@mszczygiel-projects/ui-core-foundations/tokens.css';
+@import '@mszczygiel-projects/ui-core-foundations/typography.css';
+```
+
+```html
+<h1 class="ui-text-heading-h1">Orders</h1>
+<p class="ui-text-body">Your order has <strong>shipped</strong>.</p>
+```
+
+A class sets the font, the size, the weight, the line height and the letter spacing of its style, and captions and eyebrows also set capitals. The sizes switch to the desktop values from the breakpoint. `strong` and `b` inside display, title, subtitle and body text take the strong weight of the style. A Tailwind utility on the same element still wins, whichever file comes first.
+
+## Styles
+
+[View](?path=/story/foundations-typography--styles)
+
+## Fonts
+
+The fonts are brand values, which a consumer sets when branding the library; the typography roles read them.
+
+[View](?path=/story/foundations-typography--fonts)
+
+## Links
+
+A link takes the text style around it and changes three things: its weight, `--typography-link-font-weight`, its colour, from the link roles of [Colors](?path=/docs/foundations-colors--docs), and its underline, which the brand turns on or off with `--typography-link-text-underline`.
+
+[View](?path=/story/foundations-typography--links)

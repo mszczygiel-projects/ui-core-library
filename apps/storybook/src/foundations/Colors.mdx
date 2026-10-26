@@ -1,0 +1,19 @@
+import { Meta, Story } from '@storybook/addon-docs/blocks';
+
+import * as ColorStories from './Colors.stories.tsx';
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Colours reach the interface through **roles**: tokens named after what they paint, such as `--color-text-primary` or `--color-border-default`. A role takes its value from the theme and from the surface it sits on, so the same markup reads well in the light and the dark theme and on every surface. Write roles in your styles.
+
+## Roles
+
+Each role in the light and the dark theme, on the default surface. [Surfaces & themes](?path=/docs/foundations-surfaces-themes--docs) shows how the other surfaces change them.
+[View roles](?path=/story/foundations-colors--roles)
+
+## Brand ramps
+
+The brand ramps are the primitives a consumer replaces when branding the library; the roles of brand colours pick steps from them. The neutral and status ramps are primitives that only the roles use, so this page leaves them out.
+[View brand ramps](?path=/story/foundations-colors--brand-ramps)

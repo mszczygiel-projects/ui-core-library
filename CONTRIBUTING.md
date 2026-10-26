@@ -12,9 +12,15 @@ nvm use
 corepack enable
 pnpm install
 pnpm skills:install
+pnpm --filter @mszczygiel-projects/ui-core-storybook exec playwright install chromium
+pnpm nx run storybook:storybook
 ```
 
-`pnpm install` also installs the Git hooks. `pnpm skills:install` restores the agent skills pinned in `skills-lock.json`. Run it again when the lock changes. In a new shell, select Node 24 again before running anything.
+- `pnpm install` also installs the Git hooks.
+- `pnpm skills:install` restores the agent skills pinned in `skills-lock.json`. Run it again when the lock changes.
+- Chromium runs the story tests. Install it again when Playwright changes.
+- Storybook builds the packages it reads, then serves the site at `http://localhost:6006`, with its MCP server for agents at `/mcp`. Leave it running and work in another terminal.
+- In a new shell, select Node 24 again before running anything.
 
 ## The way of working
 
@@ -23,7 +29,7 @@ The library grows in steps. A step is one infrastructure change or one component
 1. **Proposal.** The scope and every decision it needs, each with options and a recommendation. A component's proposal also covers:
    - the API of both implementations;
    - the changes in Figma and in the tokens;
-   - what goes into `core`;
+   - what goes into `shared`;
    - the labels;
    - the regressions its contract will cover.
 
@@ -46,6 +52,33 @@ The library grows in steps. A step is one infrastructure change or one component
 
 Figma is written only within an approved step, by the protocol in [decision 10](docs/decisions/10-figma.md).
 
+## Changing tokens
+
+1. Read the live variables and compare them with `packages/foundations/figma/`. If they differ, ask the owner for a fresh export before planning.
+2. Change the variables and their metadata in Figma, within the approved step. `pnpm nx run foundations:figma-metadata --output <file outside the repository>` lists the metadata every variable should carry.
+3. The owner publishes the library, exports the changed collections with Luckino, with Figma metadata, and the exports replace the files in `packages/foundations/figma/` unchanged.
+4. Run `pnpm nx run foundations:build` and fix every error in Figma, never in the exports or the pipeline.
+5. Run `pnpm nx run foundations:test`. When names changed on purpose, run `pnpm tokens:snapshot` and commit `token-names.txt` with the exports.
+6. Give a new role a place in `apps/storybook/src/foundations/pages.json`, and check the Foundations pages in Storybook.
+
+The skill `ui-core-tokens` holds the details, such as how to read each error of the build.
+
+## Changing icons
+
+1. Change the icon components in [Core] Icons, within the approved step.
+2. Export them with `exportAsync` and replace the files in `packages/icons/figma/` unchanged.
+3. Run `pnpm nx run icons:build` and fix every error in Figma.
+4. When names changed on purpose, run `pnpm icons:snapshot` and commit `icon-names.txt`.
+
+A component that imports an icon adds its name to `packages/icons/required-icons.txt`.
+
+## Changing the documentation site
+
+- Consumer guides live in `apps/storybook/src/guides`, and the Foundations pages in `apps/storybook/src/foundations`.
+- The order of the sidebar is written in `apps/storybook/.storybook/preview.tsx`. The map `pages.json` lists the Foundations pages and what they show, and tests keep both in step.
+- The site reads the built packages. Rebuild a changed package, for example with `pnpm nx run foundations:build`, before you look at it.
+- The CSS of the site may use raw values, but only token names that exist.
+
 ## Changing a decision
 
 Edit the decision file of the area so that it describes the new state, with its reasons and the rejected options. A new area gets a new file and a line in [the index](docs/decisions/README.md). Keep each decision about one page long.
@@ -56,7 +89,7 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 
 **Specification and API** ([05](docs/decisions/05-components.md), [06](docs/decisions/06-component-api.md))
 
-- [ ] The specification in `core` holds the types, values, defaults, labels, parts, events, category, status and Figma node.
+- [ ] The specification in `shared` holds the types, values, defaults, labels, parts, events, category, status and Figma node.
 - [ ] Both implementations use it, and every exception has its reason in the specification.
 - [ ] The whole public API has JSDoc, and the summary sentence matches the page and Figma.
 
@@ -99,17 +132,25 @@ Before 1.0.0, for all components at once:
 
 ## Commands
 
-| Command                                         | What it does                                                          |
-| ----------------------------------------------- | --------------------------------------------------------------------- |
-| `pnpm verify`                                   | The quality gate. It must pass before every commit.                   |
-| `pnpm nx run-many -t lint typecheck test build` | The project targets.                                                  |
-| `pnpm nx run <project>:<target>`                | One target of one project.                                            |
-| `pnpm nx sync`                                  | Updates TypeScript references after adding a project or a dependency. |
-| `pnpm format`                                   | Formats every file with Prettier.                                     |
-| `pnpm secrets:check`                            | Scans the repository for secrets.                                     |
-| `pnpm skills:install`                           | Restores the pinned agent skills.                                     |
+| Command                                         | What it does                                                           |
+| ----------------------------------------------- | ---------------------------------------------------------------------- |
+| `pnpm verify`                                   | The quality gate. It must pass before every commit.                    |
+| `pnpm nx run-many -t lint typecheck test build` | The project targets.                                                   |
+| `pnpm nx run <project>:<target>`                | One target of one project.                                             |
+| `pnpm nx sync`                                  | Updates TypeScript references after adding a project or a dependency.  |
+| `pnpm nx run storybook:storybook`               | Serves the documentation site on port 6006.                            |
+| `pnpm nx run storybook:test`                    | Runs the site's unit tests and every story with axe in Light and Dark. |
+| `pnpm tokens:snapshot`                          | Rewrites `token-names.txt` after an intended change of names.          |
+| `pnpm icons:snapshot`                           | Rewrites `icon-names.txt` after an intended change of names.           |
+| `pnpm lint:css`                                 | Lints every stylesheet with the token rules.                           |
+| `pnpm format`                                   | Formats every file with Prettier.                                      |
+| `pnpm secrets:check`                            | Scans the repository for secrets.                                      |
+| `pnpm skills:install`                           | Restores the pinned agent skills.                                      |
 
 ## Troubleshooting
 
 - **`nx sync:check` fails.** Run `pnpm nx sync` and commit the updated references.
+- **A token or icon test fails on a snapshot.** The emitted names changed. If that was intended, run `pnpm tokens:snapshot` or `pnpm icons:snapshot`. Otherwise fix the change in Figma.
+- **Storybook shows old tokens.** It reads the built packages. Run `pnpm nx run foundations:build`.
+- **A story test cannot start a browser.** Install Chromium again with the command from Setup.
 - **A dependency cannot be installed.** It may be younger than a day. Wait, or pin the previous version in the catalog.

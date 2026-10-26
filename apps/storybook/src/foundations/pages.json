@@ -1,0 +1,514 @@
+{
+  "$comment": "The map of the Foundations pages, for Storybook and for the [Core] Foundations Figma file: every page, the specimens it shows and the tokens of each specimen, with the texts that only the Figma pages show. The Figma pages listed under handMade, such as the cover, are designed by hand: the order keeps their place, and the builder leaves them alone. Storybook renders a specimen as a story of its page; the Figma pages are built from the same map (docs/guides/figma.md). Tests in pages.test.ts check the map against the manifest and the stories.",
+  "figmaOrder": [
+    "Cover",
+    "Start: branding",
+    "Overview",
+    "Colors",
+    "Surfaces & themes",
+    "Typography",
+    "Spacing",
+    "Density",
+    "Radius & strokes",
+    "Shadows",
+    "Motion",
+    "Icons"
+  ],
+  "handMade": ["Cover"],
+  "pages": [
+    {
+      "title": "Overview",
+      "file": "Overview",
+      "specimens": [
+        {
+          "title": "Layers and collections",
+          "shows": "collections",
+          "note": "Roles carry brand and mode changes. Component geometry may use an approved exact primitive alias.",
+          "only": "figma",
+          "reason": "Storybook explains the layers in the prose of its page.",
+          "groups": [],
+          "rows": [
+            [
+              "Primitives Colors",
+              "Primitives",
+              "Fixed colours, the brand ramps included. Use roles when colours should follow the theme or surface."
+            ],
+            [
+              "Primitives Sizes",
+              "Primitives",
+              "Fixed sizes, spacing, radii and type scale, offered in their appropriate fields."
+            ],
+            [
+              "Primitives Motions",
+              "Primitives",
+              "Durations and easings, which components use directly."
+            ],
+            ["Primitives Shadows", "Primitives", "The shapes and colours of shadows."],
+            [
+              "Themes",
+              "Roles",
+              "The brand values and every role that changes with the theme or the brand: start here."
+            ],
+            [
+              "Surfaces",
+              "Roles",
+              "Colour roles that follow the surface. Choose these for context-dependent colours."
+            ],
+            [
+              "Sizes",
+              "Roles",
+              "Everything that changes with the screen or the density: type sizes, spacing, icon sizes, heights and the layout of the page."
+            ],
+            [
+              "Components",
+              "Components",
+              "The tokens of one component each, and the control family. Components bind only this layer."
+            ]
+          ]
+        },
+        {
+          "title": "Modes",
+          "shows": "modes",
+          "note": "Set the mode of a frame to see its content in a theme, on a surface, at a screen size or in a density. In code, an attribute or the breakpoint does the same.",
+          "only": "figma",
+          "reason": "Storybook shows the attributes of the context in the prose of its page.",
+          "groups": [],
+          "rows": [
+            [
+              "Themes",
+              "data-theme on the html element, and data-brand in a fork with several brands"
+            ],
+            ["Surfaces", "data-surface on an element inside it"],
+            [
+              "Sizes",
+              "the breakpoint, 1024 pixels, for the screen, and data-density on any element for the density"
+            ]
+          ]
+        },
+        {
+          "title": "Themes or Sizes",
+          "shows": "prose",
+          "note": "Sizes holds everything that changes with the screen or the density: type sizes and line heights, spacing, icon sizes, heights and the layout of the page. Themes holds the rest: colours, fonts, weights, letter spacing, capitals, radii, strokes and shadows. Components take both through their own tokens.",
+          "only": "figma",
+          "reason": "Storybook explains the rules in the prose of its page.",
+          "groups": []
+        },
+        {
+          "title": "Styles",
+          "shows": "prose",
+          "note": "The 15 text styles are the typography classes of code, one to one: Heading/H1 is ui-text-heading-h1. The Control text styles set the text of controls. The effect styles are the shadows of code: the composite shadows and the shadow roles.",
+          "only": "figma",
+          "reason": "Storybook documents the classes on its Typography page.",
+          "groups": []
+        }
+      ],
+      "lead": "Choose roles for values that follow the brand and modes, and primitives for deliberate fixed values. Library components keep their Components bindings."
+    },
+    {
+      "title": "Colors",
+      "file": "Colors",
+      "specimens": [
+        {
+          "story": "Roles",
+          "title": "Roles",
+          "axis": "theme",
+          "preview": "swatch",
+          "groups": [
+            {
+              "caption": "Backgrounds",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-background-"
+            },
+            {
+              "caption": "Text",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-text-"
+            },
+            {
+              "caption": "Borders",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-border-"
+            },
+            {
+              "caption": "Icons",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-icon-"
+            },
+            {
+              "caption": "Brand colours",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-brand-"
+            },
+            {
+              "caption": "Actions",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-action-"
+            },
+            {
+              "caption": "Links",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-link-"
+            },
+            {
+              "caption": "Feedback",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-feedback-"
+            },
+            {
+              "caption": "Disabled controls",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-disabled-"
+            },
+            {
+              "caption": "Selected text",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-selection-"
+            },
+            {
+              "caption": "Focus ring",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-ring-"
+            },
+            {
+              "caption": "Shadow colours",
+              "collections": ["Themes", "Surfaces"],
+              "prefix": "--color-shadow-"
+            }
+          ],
+          "note": "Each role in the light and the dark theme, on the default surface. Surfaces & themes shows the other surfaces."
+        },
+        {
+          "story": "BrandRamps",
+          "title": "Brand ramps",
+          "preview": "ramp",
+          "groups": [
+            {
+              "caption": "Brand primary",
+              "collections": ["Primitives Colors"],
+              "prefix": "--color-brand-primary-"
+            },
+            {
+              "caption": "Brand secondary",
+              "collections": ["Primitives Colors"],
+              "prefix": "--color-brand-secondary-"
+            },
+            {
+              "caption": "Brand tertiary",
+              "collections": ["Primitives Colors"],
+              "prefix": "--color-brand-tertiary-"
+            }
+          ],
+          "note": "The brand ramps are the primitives a client replaces when branding; the brand colour roles of Themes pick steps from them."
+        }
+      ],
+      "lead": "Colours reach the interface through roles named after what they paint. A role takes its value from the theme and from the surface it sits on."
+    },
+    {
+      "title": "Surfaces & themes",
+      "file": "Surfaces",
+      "specimens": [
+        {
+          "story": "Matrix",
+          "title": "Every combination",
+          "shows": "surface-matrix",
+          "groups": [],
+          "note": "The same content in every theme and on every surface. In code, data-theme sits on the html element and data-surface on an element inside it."
+        }
+      ],
+      "lead": "The theme and the surface decide the colours of a region and of everything inside it. Set the Themes mode of a frame for the theme and its Surfaces mode for the surface."
+    },
+    {
+      "title": "Typography",
+      "file": "Typography",
+      "specimens": [
+        {
+          "story": "Styles",
+          "title": "Styles",
+          "shows": "text-styles",
+          "axis": "size",
+          "groups": [],
+          "note": "Every style at the Mobile and the Desktop size, with its class."
+        },
+        {
+          "title": "Bold words",
+          "shows": "bold-words",
+          "note": "Bold words keep the style of their text and take its strong weight: select them and bind their weight to the font-weight-strong role of the style, as in this sentence.",
+          "only": "figma",
+          "reason": "In code, strong and b inside a class take the strong weight by themselves.",
+          "groups": []
+        },
+        {
+          "story": "Fonts",
+          "title": "Fonts",
+          "preview": "font",
+          "groups": [
+            {
+              "collections": ["Themes"],
+              "prefix": "--font-"
+            }
+          ],
+          "note": "The fonts are brand values in Themes; the typography roles read them."
+        },
+        {
+          "story": "Links",
+          "title": "Links",
+          "preview": "link",
+          "groups": [
+            {
+              "collections": ["Themes"],
+              "prefix": "--typography-link-"
+            }
+          ],
+          "note": "A link keeps the style of its text and changes its weight, its colour, from the link roles, and its underline, which the brand turns on or off."
+        }
+      ],
+      "lead": "Fifteen text styles, from display text to eyebrows. Each one binds the sizes of Sizes and the fonts, weights and letter spacing of Themes, and is a class of typography.css in code."
+    },
+    {
+      "title": "Spacing",
+      "file": "Spacing",
+      "specimens": [
+        {
+          "story": "Layout",
+          "title": "Layout",
+          "axis": "size",
+          "preview": "length",
+          "groups": [
+            {
+              "collections": ["Sizes"],
+              "prefix": "--layout-"
+            }
+          ],
+          "note": "The layout roles at the Mobile and the Desktop size."
+        }
+      ],
+      "lead": "The layout roles space the page: its padding, the gaps between its regions and the width of its container. The spacing inside components follows the density."
+    },
+    {
+      "title": "Density",
+      "file": "Density",
+      "specimens": [
+        {
+          "story": "Comparison",
+          "title": "Density roles",
+          "axis": "density",
+          "preview": "length",
+          "groups": [
+            {
+              "collections": ["Sizes"],
+              "prefix": "--gap-"
+            },
+            {
+              "collections": ["Sizes"],
+              "prefix": "--padding-"
+            },
+            {
+              "collections": ["Sizes"],
+              "prefix": "--height-"
+            },
+            {
+              "collections": ["Sizes"],
+              "prefix": "--min-height-"
+            }
+          ],
+          "note": "The gaps, paddings and heights of Sizes in both densities."
+        }
+      ],
+      "lead": "Density tightens the interface for screens full of data. Sizes has a compact mode for each screen, Mobile Compact and Desktop Compact; components take their gaps, paddings, icon sizes and heights from it. Set the Sizes mode of a frame to a compact one; in code, data-density does the same."
+    },
+    {
+      "title": "Radius & strokes",
+      "file": "Radius",
+      "specimens": [
+        {
+          "story": "Shape",
+          "title": "Shape",
+          "preview": "radius",
+          "groups": [
+            {
+              "collections": ["Themes"],
+              "prefix": "--shape-radius-"
+            }
+          ],
+          "note": "The shape roles."
+        },
+        {
+          "story": "Strokes",
+          "title": "Strokes",
+          "preview": "stroke",
+          "groups": [
+            {
+              "collections": ["Themes"],
+              "prefix": "--stroke-"
+            }
+          ],
+          "note": "The widths of borders, of accents and of the focus ring."
+        }
+      ],
+      "lead": "The shape roles round the corners of the interface. They are brand values in Themes, so square corners take a change of the roles, not of every component. The stroke roles set the widths of lines."
+    },
+    {
+      "title": "Shadows",
+      "file": "Shadows",
+      "specimens": [
+        {
+          "story": "Composites",
+          "title": "Composite shadows",
+          "shows": "composite-shadows",
+          "groups": [],
+          "note": "Ready-made shadows, a shape with a colour. Their colours are primitives, so they look the same in both themes."
+        },
+        {
+          "story": "Roles",
+          "title": "Roles",
+          "axis": "theme",
+          "preview": "shadow",
+          "groups": [
+            {
+              "collections": ["Themes"],
+              "prefix": "--shadow-"
+            }
+          ],
+          "note": "The shadow roles name what a shadow is for. Their styles take the shadow colours of Themes, which follow the theme."
+        }
+      ],
+      "lead": "Shadows are effect styles. Figma cannot bind a shadow to a variable, so each style holds the values of the shadow variables."
+    },
+    {
+      "title": "Motion",
+      "file": "Motion",
+      "specimens": [
+        {
+          "story": "Durations",
+          "title": "Durations",
+          "groups": [
+            {
+              "collections": ["Primitives Motions"],
+              "prefix": "--duration-"
+            }
+          ],
+          "note": "Durations, in milliseconds; the name of each one carries its value.",
+          "preview": "none"
+        },
+        {
+          "story": "Easings",
+          "title": "Easings",
+          "groups": [
+            {
+              "collections": ["Primitives Motions"],
+              "prefix": "--ease"
+            }
+          ],
+          "note": "Easing curves, as CSS writes them.",
+          "preview": "value"
+        }
+      ],
+      "lead": "Motion does not change with the theme or the brand, so its values are primitives, which components use directly. Every animation respects reduced motion."
+    },
+    {
+      "title": "Icons",
+      "file": "Icons",
+      "specimens": [
+        {
+          "story": "Gallery",
+          "title": "Gallery",
+          "shows": "icon-gallery",
+          "only": "storybook",
+          "reason": "The icons themselves are the components of the [Core] Icons file.",
+          "groups": []
+        },
+        {
+          "story": "Sizes",
+          "title": "Sizes",
+          "axis": "density",
+          "preview": "icon",
+          "groups": [
+            {
+              "collections": ["Sizes"],
+              "prefix": "--icon-"
+            }
+          ],
+          "note": "The icon sizes in both densities. Components take them from Sizes."
+        },
+        {
+          "title": "The icons",
+          "shows": "prose",
+          "note": "The icons themselves are the components of the [Core] Icons file; add that library to a file to use them.",
+          "only": "figma",
+          "reason": "Storybook shows the icons in its gallery.",
+          "groups": []
+        }
+      ],
+      "lead": "Icons are components of the [Core] Icons file, painted with the icon role. These are the sizes they take."
+    },
+    {
+      "title": "Theming & branding",
+      "figma": "Start: branding",
+      "file": "Branding",
+      "specimens": [
+        {
+          "title": "Three tiers",
+          "shows": "prose",
+          "note": "Brand: the brand ramps of Primitives Colors and the brand values of Themes, such as the fonts, the radii, capitals on buttons, underlined links and the focus ring.\nRoles: which step of a ramp a role takes, the typography scale and the density, in Themes and Sizes.\nComponents: any change to one component, through its own tokens.",
+          "only": "figma",
+          "reason": "Storybook lists the tiers in the prose of its page.",
+          "groups": []
+        },
+        {
+          "story": "BrandValues",
+          "title": "Brand values",
+          "groups": [
+            {
+              "collections": ["Themes"],
+              "prefix": "--font-"
+            },
+            {
+              "collections": ["Themes"],
+              "prefix": "--text-uppercase-"
+            },
+            {
+              "collections": ["Themes"],
+              "prefix": "--typography-link-text-underline"
+            },
+            {
+              "collections": ["Themes"],
+              "prefix": "--shape-radius-"
+            },
+            {
+              "collections": ["Themes"],
+              "prefix": "--ring-"
+            }
+          ],
+          "note": "Change these in a fork of this file, and every role and component follows. The brand colour ramps are on the Colors page.",
+          "preview": "brand"
+        },
+        {
+          "title": "Brand preview",
+          "shows": "brand-preview",
+          "note": "Drawn with roles only, so it shows the brand of the file it sits in, a fork included.",
+          "only": "figma",
+          "reason": "A live preview of the brand of the Figma file.",
+          "groups": []
+        },
+        {
+          "title": "Several brands",
+          "shows": "prose",
+          "note": "A fork may hold several brands as modes of Themes: Red Light and Red Dark, or Red alone. In code, data-brand on the html element chooses the brand and data-theme the scheme.",
+          "only": "figma",
+          "reason": "Storybook explains it in the prose of its page.",
+          "groups": []
+        },
+        {
+          "title": "Building a fork",
+          "shows": "prose",
+          "note": "Duplicate this file, change the brand ramps and the brand values of Themes, export the variables with the Luckino plugin, and build them with the CLI of the foundations package: pnpm exec ui-core-foundations build --input ./figma-exports --output ./src/tokens.",
+          "only": "figma",
+          "reason": "Storybook explains it in the prose of its page.",
+          "groups": []
+        }
+      ],
+      "lead": "Brand the library in three tiers. The first one, the brand ramps and the brand values, is enough to brand everything; the other two refine it."
+    }
+  ],
+  "exempt": []
+}

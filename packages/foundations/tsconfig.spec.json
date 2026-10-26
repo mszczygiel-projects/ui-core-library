@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "out-tsc/vitest",
+    "tsBuildInfoFile": "out-tsc/vitest/tsconfig.spec.tsbuildinfo",
+    "emitDeclarationOnly": true,
+    "rewriteRelativeImportExtensions": false,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
+  },
+  "include": [
+    "src/**/*.test.ts",
+    "src/**/*.fixture.ts",
+    "scripts/**/*.test.ts",
+    "vitest.config.ts"
+  ],
+  "references": [{ "path": "./tsconfig.lib.json" }]
+}

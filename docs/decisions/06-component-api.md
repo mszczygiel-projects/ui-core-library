@@ -18,7 +18,7 @@
   | Accessible name | `label`, required where nothing visible names the component                                                                                                              |
 
 - Booleans are false by default and named after the case they turn on, such as `hideLabel`.
-- An invalid runtime value falls back to the default with `one-of` from `core`.
+- An invalid runtime value falls back to the default with `one-of` from `shared`.
 
 ### Pairing the two APIs
 

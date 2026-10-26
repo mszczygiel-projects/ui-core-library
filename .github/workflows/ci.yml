@@ -27,4 +27,7 @@ jobs:
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: ./.github/actions/setup-workspace
+      # The story tests run every story in Chromium.
+      - name: Install Chromium
+        run: pnpm --filter @mszczygiel-projects/ui-core-storybook exec playwright install --with-deps chromium
       - run: pnpm verify

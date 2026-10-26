@@ -8,7 +8,7 @@
 | ------------------------- | --------------------------------------------- | -------------------------------------------------------------------- |
 | `packages/foundations`    | `@mszczygiel-projects/ui-core-foundations`    | design tokens, the token CLI, the configuration of labels            |
 | `packages/icons`          | `@mszczygiel-projects/ui-core-icons`          | icons and the icon CLI                                               |
-| `packages/core`           | `@mszczygiel-projects/ui-core-core`           | component specifications and pure functions ([05](05-components.md)) |
+| `packages/shared`         | `@mszczygiel-projects/ui-core-shared`         | component specifications and pure functions ([05](05-components.md)) |
 | `packages/web-components` | `@mszczygiel-projects/ui-core-web-components` | Stencil web components                                               |
 | `packages/react`          | `@mszczygiel-projects/ui-core-react`          | React components                                                     |
 | `testing/contracts`       | private                                       | behaviour contracts that run against both implementations            |
@@ -22,13 +22,13 @@ A project arrives with its first need. Nx project names are the folder names.
 - Every project has exactly one `type:*` tag in `package.json` under `nx.tags`, named after its folder: `type:<package>`, `type:testing`, `type:app` or `type:tool`.
 - `@nx/enforce-module-boundaries` enforces the table below. Its own rule rejects a project without a matching tag, so no extra script checks the tags.
 
-  | Type                           | May depend on                  |
-  | ------------------------------ | ------------------------------ |
-  | `foundations`, `icons`, `core` | nothing else in the repository |
-  | `web-components`, `react`      | `foundations`, `icons`, `core` |
-  | `testing`                      | the packages                   |
-  | `app`                          | the packages, `tool`           |
-  | `tool`                         | `foundations`, `icons`, `core` |
+  | Type                             | May depend on                    |
+  | -------------------------------- | -------------------------------- |
+  | `foundations`, `icons`, `shared` | nothing else in the repository   |
+  | `web-components`, `react`        | `foundations`, `icons`, `shared` |
+  | `testing`                        | the packages                     |
+  | `app`                            | the packages, `tool`             |
+  | `tool`                           | `foundations`, `icons`, `shared` |
 
 - Neither component package imports the other, and no published package depends on a private project.
 - Packages are consumed only through their `exports`, which point to `dist`. There are no path aliases. `publint` and `@arethetypeswrong/cli` check every published package.
@@ -41,6 +41,7 @@ A project arrives with its first need. Nx project names are the folder names.
 - Nx 24, with Nx Cloud and analytics off. Nx is upgraded with `nx migrate`.
 - TypeScript 6, strict everywhere, tests and scripts included. ES modules only, and relative imports carry `.ts`.
 - ESLint 10 with typescript-eslint strict type-checked rules, Prettier 3 and Vitest.
+- Snapshots of public names and APIs, such as `token-names.txt`, are Vitest file snapshots: a test fails when they differ, and `vitest -u` rewrites them.
 - Use an existing, free and maintained tool before writing one. The repository writes its own tool only when none exists.
 
 ### Workflow

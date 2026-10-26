@@ -6,3 +6,10 @@ out-tsc/
 
 # Written by the skills CLI
 skills-lock.json
+
+# Exported from Figma and kept byte for byte as exported
+packages/foundations/figma/
+packages/icons/figma/
+
+# The static build of the Storybook site
+storybook-static/
