@@ -7,6 +7,22 @@ export const textField = defineComponent({
   category: 'Inputs',
   status: 'done',
   figma: '144:293',
+  design: {
+    flags: ['disabled'],
+    codeOnly: ['type'],
+    previews: {
+      interaction: {
+        options: ['rest', 'active', 'focus'],
+        default: 'rest',
+        note: 'Previews hover and press (active) and keyboard focus. Leave it at rest in a design.',
+      },
+      valueState: {
+        options: ['empty', 'filled'],
+        default: 'empty',
+        note: 'Chooses the layout of an empty or a filled field. Keep it consistent with the text of value.',
+      },
+    },
+  },
   summary: 'A single-line text input with a label, hint and validation feedback.',
   options: {
     variant: { options: ['outline', 'filled', 'underlined'], default: 'outline' },

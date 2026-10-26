@@ -4,6 +4,14 @@ export interface OptionsSpec<Option extends string = string> {
     readonly options: readonly Option[];
     readonly default: Option;
 }
+export interface PreviewSpec extends OptionsSpec {
+    readonly note: string;
+}
+export interface DesignSpec {
+    readonly flags: readonly string[];
+    readonly codeOnly: readonly string[];
+    readonly previews: Readonly<Record<string, PreviewSpec>>;
+}
 export interface ExceptionSpec {
     readonly items: readonly string[];
     readonly reason: string;
@@ -14,6 +22,7 @@ export interface ComponentSpec {
     readonly category: ComponentCategory;
     readonly status: ComponentStatus;
     readonly figma: string | null;
+    readonly design: DesignSpec;
     readonly summary: string;
     readonly options: Readonly<Record<string, OptionsSpec>>;
     readonly labels: readonly string[];

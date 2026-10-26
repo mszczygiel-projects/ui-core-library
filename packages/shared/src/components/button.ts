@@ -7,6 +7,17 @@ export const button = defineComponent({
   category: 'Actions',
   status: 'done',
   figma: '179:100',
+  design: {
+    flags: ['disabled', 'loading'],
+    codeOnly: ['type'],
+    previews: {
+      interaction: {
+        options: ['rest', 'active', 'focus'],
+        default: 'rest',
+        note: 'Previews hover and press (active) and keyboard focus. Leave it at rest in a design.',
+      },
+    },
+  },
   summary: 'Triggers an action, with optional icons and a loading state.',
   options: {
     variant: {
