@@ -7,8 +7,10 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
+import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
+export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export namespace Components {
     /**
      * Triggers an action, with optional icons and a loading state.
@@ -77,6 +79,91 @@ export namespace Components {
          */
         "size": LoaderSize;
     }
+    /**
+     * A single-line text input with a label, hint and validation feedback.
+     * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+     * The `value` attribute supplies the reset value, and the property holds the current value. The
+     * native `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label`
+     * reach the input.
+     */
+    interface UiTextField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A native regular expression for the whole value.
+         */
+        "pattern"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The native input type.
+          * @default 'text'
+         */
+        "type": TextFieldType;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+}
+export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiTextFieldElement;
 }
 declare global {
     /**
@@ -103,9 +190,34 @@ declare global {
         prototype: HTMLUiLoaderElement;
         new (): HTMLUiLoaderElement;
     };
+    interface HTMLUiTextFieldElementEventMap {
+        "ui-value-change": ValueChangeDetail;
+    }
+    /**
+     * A single-line text input with a label, hint and validation feedback.
+     * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+     * The `value` attribute supplies the reset value, and the property holds the current value. The
+     * native `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label`
+     * reach the input.
+     */
+    interface HTMLUiTextFieldElement extends Components.UiTextField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiTextFieldElementEventMap>(type: K, listener: (this: HTMLUiTextFieldElement, ev: UiTextFieldCustomEvent<HTMLUiTextFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiTextFieldElementEventMap>(type: K, listener: (this: HTMLUiTextFieldElement, ev: UiTextFieldCustomEvent<HTMLUiTextFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiTextFieldElement: {
+        prototype: HTMLUiTextFieldElement;
+        new (): HTMLUiTextFieldElement;
+    };
     interface HTMLElementTagNameMap {
         "ui-button": HTMLUiButtonElement;
         "ui-loader": HTMLUiLoaderElement;
+        "ui-text-field": HTMLUiTextFieldElement;
     }
 }
 declare namespace LocalJSX {
@@ -180,6 +292,95 @@ declare namespace LocalJSX {
          */
         "size"?: LoaderSize;
     }
+    /**
+     * A single-line text input with a label, hint and validation feedback.
+     * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+     * The `value` attribute supplies the reset value, and the property holds the current value. The
+     * native `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label`
+     * reach the input.
+     */
+    interface UiTextField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * One user edit, with the new value and the original input event.
+         */
+        "onUi-value-change"?: (event: UiTextFieldCustomEvent<ValueChangeDetail>) => void;
+        /**
+          * A native regular expression for the whole value.
+         */
+        "pattern"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The native input type.
+          * @default 'text'
+         */
+        "type"?: TextFieldType;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
 
     interface UiButtonAttributes {
         "variant": ButtonVariant;
@@ -196,10 +397,29 @@ declare namespace LocalJSX {
         "size": LoaderSize;
         "label": string;
     }
+    interface UiTextFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "type": TextFieldType;
+        "minLength": number;
+        "maxLength": number;
+        "pattern": string;
+        "autoComplete": string;
+    }
 
     interface IntrinsicElements {
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
+        "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -220,6 +440,14 @@ declare module "@stencil/core" {
              * look that `loaderVariant` of `configureUiCore` chooses.
              */
             "ui-loader": LocalJSX.IntrinsicElements["ui-loader"] & JSXBase.HTMLAttributes<HTMLUiLoaderElement>;
+            /**
+             * A single-line text input with a label, hint and validation feedback.
+             * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+             * The `value` attribute supplies the reset value, and the property holds the current value. The
+             * native `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label`
+             * reach the input.
+             */
+            "ui-text-field": LocalJSX.IntrinsicElements["ui-text-field"] & JSXBase.HTMLAttributes<HTMLUiTextFieldElement>;
         }
     }
 }

@@ -21,6 +21,10 @@
       "types": "./dist/components/ui-loader.d.ts",
       "default": "./dist/components/ui-loader.js"
     },
+    "./text-field": {
+      "types": "./dist/components/ui-text-field.d.ts",
+      "default": "./dist/components/ui-text-field.js"
+    },
     "./custom-elements.json": "./dist/custom-elements.json",
     "./package.json": "./package.json"
   },
