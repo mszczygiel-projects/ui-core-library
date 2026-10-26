@@ -1,0 +1,93 @@
+{
+  "name": "@mszczygiel-projects/ui-core-web-components",
+  "version": "0.0.0",
+  "description": "The web components of UI Core Library, written with Stencil, for any framework or none.",
+  "license": "UNLICENSED",
+  "type": "module",
+  "sideEffects": [
+    "./dist/index.js",
+    "./dist/components/*.js"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./loader": {
+      "types": "./dist/components/ui-loader.d.ts",
+      "default": "./dist/components/ui-loader.js"
+    },
+    "./custom-elements.json": "./dist/custom-elements.json",
+    "./package.json": "./package.json"
+  },
+  "customElements": "dist/custom-elements.json",
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mszczygiel-projects/ui-core-library.git",
+    "directory": "packages/web-components"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com",
+    "access": "restricted"
+  },
+  "dependencies": {
+    "@mszczygiel-projects/ui-core-foundations": "workspace:^",
+    "@mszczygiel-projects/ui-core-shared": "workspace:^",
+    "@stencil/core": "catalog:"
+  },
+  "nx": {
+    "name": "web-components",
+    "tags": [
+      "type:web-components"
+    ],
+    "targets": {
+      "build": {
+        "command": "stencil build && node scripts/finish-build.ts",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^build"
+        ],
+        "inputs": [
+          "production",
+          "^production"
+        ],
+        "outputs": [
+          "{projectRoot}/dist"
+        ],
+        "cache": true
+      },
+      "typecheck": {
+        "command": "tsc -p tsconfig.lib.json --noEmit && tsc -p tsconfig.tools.json",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "^build"
+        ],
+        "cache": true,
+        "inputs": [
+          "default",
+          "^production"
+        ]
+      },
+      "check-package": {
+        "command": "publint --strict . && attw --pack . --profile esm-only --exclude-entrypoints ./custom-elements.json",
+        "options": {
+          "cwd": "{projectRoot}"
+        },
+        "dependsOn": [
+          "build"
+        ],
+        "inputs": [
+          "production"
+        ],
+        "cache": true
+      }
+    }
+  }
+}

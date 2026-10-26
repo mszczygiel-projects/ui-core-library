@@ -1,0 +1,12 @@
+{
+  "extends": "../../tsconfig.node.json",
+  "compilerOptions": {
+    "outDir": "out-tsc/scripts",
+    "tsBuildInfoFile": "out-tsc/scripts/tsconfig.scripts.tsbuildinfo",
+    "emitDeclarationOnly": true,
+    "rewriteRelativeImportExtensions": false,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
+  },
+  "include": ["scripts/**/*.ts"]
+}

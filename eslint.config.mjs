@@ -4,6 +4,7 @@ import { join } from 'node:path';
 import js from '@eslint/js';
 import eslintReact from '@eslint-react/eslint-plugin';
 import nx from '@nx/eslint-plugin';
+import stencil from '@stencil/eslint-plugin';
 import stylistic from '@stylistic/eslint-plugin';
 import { defineConfig, globalIgnores } from 'eslint/config';
 import prettier from 'eslint-config-prettier/flat';
@@ -88,6 +89,9 @@ export default defineConfig(
     '**/generated',
     // The snapshot of the public API of shared, written by its test.
     'packages/shared/api',
+    // Written by the Stencil compiler.
+    '**/.stencil',
+    '**/components.d.ts',
     // The static build of the Storybook site.
     '**/storybook-static',
     // Agent skills belong to their makers, wherever their tools put them.
@@ -163,6 +167,46 @@ export default defineConfig(
     },
   },
   {
+    // The rules of Stencil's recommended set. Its own flat configs also load eslint-plugin-react
+    // for one rule about JSX callbacks, which the components do not need.
+    files: ['packages/web-components/src/**/*.tsx'],
+    plugins: { stencil },
+    rules: {
+      'stencil/async-methods': 'error',
+      'stencil/ban-prefix': ['error', ['stencil', 'stnl', 'st']],
+      'stencil/decorators-context': 'error',
+      'stencil/element-type': 'error',
+      'stencil/host-data-deprecated': 'error',
+      'stencil/methods-must-be-public': 'error',
+      'stencil/no-unused-watch': 'error',
+      'stencil/prefer-vdom-listener': 'error',
+      'stencil/props-must-be-public': 'error',
+      'stencil/reserved-member-names': 'error',
+      'stencil/single-export': 'error',
+      'stencil/strict-boolean-conditions': 'warn',
+      'stencil/ban-default-true': 'error',
+      'stencil/ban-exported-const-enums': 'error',
+      'stencil/ban-side-effects': 'error',
+      'stencil/strict-mutable': 'error',
+      'stencil/decorators-style': [
+        'error',
+        {
+          prop: 'inline',
+          state: 'inline',
+          element: 'inline',
+          event: 'inline',
+          method: 'multiline',
+          watch: 'multiline',
+          listen: 'multiline',
+        },
+      ],
+      'stencil/own-methods-must-be-private': 'error',
+      'stencil/own-props-must-be-private': 'error',
+      'stencil/required-jsdoc': 'error',
+      'stencil/enforce-slot-jsdoc': 'error',
+    },
+  },
+  {
     files: reactFiles,
     extends: [
       reactHooks.configs.flat.recommended,
@@ -224,6 +268,25 @@ export default defineConfig(
             '{projectRoot}/**/*.test.tsx',
             '{projectRoot}/scripts/**/*',
           ],
+        },
+      ],
+    },
+  },
+  {
+    // React's renderer is a peer dependency of the React package, whether or not a module imports
+    // it, so that an application installs one react-dom for both.
+    files: ['packages/react/package.json'],
+    rules: {
+      '@nx/dependency-checks': [
+        'error',
+        {
+          ignoredFiles: [
+            '{projectRoot}/vitest.config.ts',
+            '{projectRoot}/**/*.test.ts',
+            '{projectRoot}/**/*.test.tsx',
+            '{projectRoot}/scripts/**/*',
+          ],
+          ignoredDependencies: ['react-dom'],
         },
       ],
     },

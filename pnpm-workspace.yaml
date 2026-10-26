@@ -24,6 +24,8 @@ catalog:
   '@storybook/addon-vitest': 10.6.2
   '@storybook/react-vite': 10.6.2
   # Readability rules that Prettier leaves alone, such as blank lines between class members.
+  '@stencil/core': 4.45.2
+  '@stencil/eslint-plugin': 1.4.0
   '@stylistic/eslint-plugin': 5.10.0
   # The Node.js line of .nvmrc.
   '@types/node': 24.19.2
@@ -57,6 +59,7 @@ catalog:
   typescript-eslint: 8.71.2
   vite: 8.3.4
   vitest: 5.0.5
+  vitest-browser-react: 2.3.0
 
 # eslint-plugin-jsx-a11y has published no release since ESLint 10, and its rules run on it.
 peerDependencyRules:

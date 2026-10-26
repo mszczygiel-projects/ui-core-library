@@ -37,6 +37,7 @@
     "@nx/js": "catalog:",
     "@nx/vitest": "catalog:",
     "@secretlint/secretlint-rule-preset-recommend": "catalog:",
+    "@stencil/eslint-plugin": "catalog:",
     "@stylistic/eslint-plugin": "catalog:",
     "@types/node": "catalog:",
     "eslint": "catalog:",

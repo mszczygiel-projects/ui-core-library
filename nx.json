@@ -27,7 +27,8 @@
           "buildDepsName": "build-deps",
           "watchDepsName": "watch-deps"
         }
-      }
+      },
+      "exclude": ["packages/web-components/*"]
     },
     {
       "plugin": "@nx/vitest",
