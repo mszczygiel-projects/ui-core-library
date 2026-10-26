@@ -5,6 +5,22 @@ export declare const textField: {
     readonly category: "Inputs";
     readonly status: "done";
     readonly figma: "144:293";
+    readonly design: {
+        readonly flags: readonly ["disabled"];
+        readonly codeOnly: readonly ["type"];
+        readonly previews: {
+            readonly interaction: {
+                readonly options: readonly ["rest", "active", "focus"];
+                readonly default: "rest";
+                readonly note: "Previews hover and press (active) and keyboard focus. Leave it at rest in a design.";
+            };
+            readonly valueState: {
+                readonly options: readonly ["empty", "filled"];
+                readonly default: "empty";
+                readonly note: "Chooses the layout of an empty or a filled field. Keep it consistent with the text of value.";
+            };
+        };
+    };
     readonly summary: "A single-line text input with a label, hint and validation feedback.";
     readonly options: {
         readonly variant: {

@@ -5,7 +5,7 @@ description: Use when planning, implementing or finishing a step of UI Core Libr
 
 # A UI Core Library step
 
-[CONTRIBUTING.md](../../../CONTRIBUTING.md) holds the way of working and the Definition of Done. This is the checklist.
+[CONTRIBUTING.md](../../../CONTRIBUTING.md) holds the way of working and the Definition of Done, and [the guides](../../../docs/guides/README.md) how to do each task. This is the checklist.
 
 ## 1. Proposal, before any change
 
@@ -48,7 +48,7 @@ Never delete before rebinding. The owner publishes libraries and exports variabl
 
 ## 5. Documentation
 
-- Update what the step touches: decisions, Storybook pages, package READMEs, `CONTRIBUTING.md`, `AGENTS.md` and the project skills.
+- Update what the step touches: decisions, Storybook pages, package READMEs, the guides, `AGENTS.md` and the project skills. A new instruction goes into the guide of its area, never into `CONTRIBUTING.md`.
 - Keep the repository self-contained. Before pushing, read the whole diff and the commit messages for references to other repositories, earlier implementations or migration work.
 
 ## 6. Pull request

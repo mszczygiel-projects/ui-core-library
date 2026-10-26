@@ -17,6 +17,22 @@ export interface OptionsSpec<Option extends string = string> {
   readonly default: Option;
 }
 
+/** A property of the Figma component set that only previews a design and has no prop. */
+export interface PreviewSpec extends OptionsSpec {
+  /** What it previews, for designers and agents. */
+  readonly note: string;
+}
+
+/** How the Figma component set exposes the props of the component. */
+export interface DesignSpec {
+  /** Boolean props that the component set has as variants with `false` and `true`. */
+  readonly flags: readonly string[];
+  /** Props of `options` that only code has, such as the native `type` of a button. */
+  readonly codeOnly: readonly string[];
+  /** Properties that only the component set has. */
+  readonly previews: Readonly<Record<string, PreviewSpec>>;
+}
+
 /** A documented difference from the shared conventions, with its reason. */
 export interface ExceptionSpec {
   readonly items: readonly string[];
@@ -32,6 +48,8 @@ export interface ComponentSpec {
   readonly status: ComponentStatus;
   /** The node of the component set in [Core] UI Library, or null before it exists. */
   readonly figma: string | null;
+  /** How the component set exposes the props. */
+  readonly design: DesignSpec;
   /** One sentence, the same in JSDoc, on the documentation page and in Figma. */
   readonly summary: string;
   /** The props that take one of a set of values. */

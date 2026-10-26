@@ -15,7 +15,7 @@ Storybook documents it for consumers. Three Figma files design it: [Core] Founda
 Sources of truth, in this order:
 
 1. [docs/decisions](docs/decisions/README.md)
-2. [CONTRIBUTING.md](CONTRIBUTING.md)
+2. [CONTRIBUTING.md](CONTRIBUTING.md) for the way of working, and [the guides](docs/guides/README.md) for tasks
 3. the Storybook pages
 4. the code
 
@@ -60,7 +60,7 @@ When they disagree, report the conflict and propose a resolution instead of choo
 - In an approved step, follow the write protocol of [10](docs/decisions/10-figma.md): dry run, write, control read.
 - Never delete a variable, style or component before its bindings point elsewhere.
 - Experiments run on trial files, never on the [Core] files.
-- The owner publishes libraries and exports variables. Code Connect is published only in a step approved for it.
+- The owner publishes libraries, exports variables and uploads the guidelines that `pnpm guidelines:build` writes. Code Connect is published only in a step approved for it.
 
 ## Agent tooling
 

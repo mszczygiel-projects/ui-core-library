@@ -2,15 +2,20 @@
 
 ## Decision
 
-### Three audiences, three places
+### One place per question
 
-| Reader                               | Where                                                                                      |
-| ------------------------------------ | ------------------------------------------------------------------------------------------ |
-| A consumer of the library            | Storybook: getting started, theming and branding, tokens, icons, the CLIs, every component |
-| A developer of the library           | `CONTRIBUTING.md`: setup, the way of working, the Definition of Done and the commands      |
-| Anyone asking "why is it like this?" | `docs/decisions/`                                                                          |
+| Question                                    | Place                                                                                      |
+| ------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| What is this, and how do I start?           | `README.md`: what the library holds, a quick start and where to read on                    |
+| How do I use the library?                   | Storybook: getting started, theming and branding, tokens, icons, the CLIs, every component |
+| How is the library developed?               | `CONTRIBUTING.md`: the way of working and the Definition of Done, nothing else             |
+| How do I do a task in the repository?       | `docs/guides/`: one guide per area, with its steps, commands and troubleshooting           |
+| Why is it like this?                        | `docs/decisions/`                                                                          |
+| What does an agent need beyond all of this? | `AGENTS.md` and the project skills, which link to the rest                                 |
 
-- Consumer documentation never sends readers to the decisions. Package READMEs are short and link to Storybook.
+- A new instruction goes into the guide of its area, or a new guide, never into `CONTRIBUTING.md`. The process changes rarely and the instructions often, so they stay apart.
+- A guide says how, and links to the decision that says why. It never repeats a reason.
+- Consumer documentation never sends readers to the decisions or the guides. Package READMEs are short and link to Storybook.
 - **Decisions are living documents**, one per area, each about a page long, describing the current state. A change edits the decision in the same pull request, and git keeps the history.
 
 ### Storybook
@@ -52,3 +57,4 @@ Mixing the reasons for decisions into the guides made both hard to read. A consu
 
 - Immutable decision records amended by later records: the current rule has to be pieced together from several files.
 - Consumer guides as Markdown in the repository: they would duplicate Storybook.
+- Every instruction in `CONTRIBUTING.md`: the file mixed the process with how-to steps, commands and troubleshooting, and grew with every step.

@@ -5,7 +5,7 @@ description: Use when reading or changing the Figma files of UI Core Library thr
 
 # Working in Figma
 
-`docs/decisions/10-figma.md` decides when and how Figma may change, and `CONTRIBUTING.md` holds the workflow. This is the Plugin API checklist.
+`docs/decisions/10-figma.md` decides when and how Figma may change, and `docs/guides/figma.md` holds the owner's tasks: publishing, exports, Code Connect and guidelines. This is the Plugin API checklist.
 
 ## Before a call
 

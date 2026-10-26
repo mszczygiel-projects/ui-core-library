@@ -453,6 +453,15 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
+  tools/guidelines:
+    dependencies:
+      '@mszczygiel-projects/ui-core-foundations':
+        specifier: workspace:^
+        version: link:../../packages/foundations
+      '@mszczygiel-projects/ui-core-shared':
+        specifier: workspace:^
+        version: link:../../packages/shared
+
   tools/lint-rules:
     dependencies:
       '@mszczygiel-projects/ui-core-foundations':

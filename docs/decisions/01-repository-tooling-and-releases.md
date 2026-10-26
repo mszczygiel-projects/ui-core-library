@@ -14,6 +14,7 @@
 | `testing/contracts`       | private                                       | behaviour contracts that run against both implementations            |
 | `apps/storybook`          | private                                       | the documentation site                                               |
 | `tools/lint-rules`        | private                                       | the local Stylelint and ESLint rules ([07](07-styles.md))            |
+| `tools/guidelines`        | private                                       | the guidelines of the Figma libraries ([10](10-figma.md))            |
 
 A project arrives with its first need. Nx project names are the folder names.
 

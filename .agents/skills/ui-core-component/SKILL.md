@@ -45,6 +45,7 @@ Write `packages/shared/src/components/<name>.ts` with `defineComponent` and the 
 
 - The page and the two story files (skill `ui-core-docs`), and JSDoc on the whole public API.
 - The README of each package lists the component.
+- Fill in the `design` field of the specification from the component set, run `pnpm guidelines:build`, and ask the owner to upload the guidelines of [Core] UI Library.
 
 ## 7. Finish
 

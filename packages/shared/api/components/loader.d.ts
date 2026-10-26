@@ -5,6 +5,11 @@ export declare const loader: {
     readonly category: "Feedback";
     readonly status: "done";
     readonly figma: "103:773";
+    readonly design: {
+        readonly flags: readonly [];
+        readonly codeOnly: readonly [];
+        readonly previews: {};
+    };
     readonly summary: "Shows that content is loading or that an action is in progress.";
     readonly options: {
         readonly size: {

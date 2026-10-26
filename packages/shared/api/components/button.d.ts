@@ -5,6 +5,17 @@ export declare const button: {
     readonly category: "Actions";
     readonly status: "done";
     readonly figma: "179:100";
+    readonly design: {
+        readonly flags: readonly ["disabled", "loading"];
+        readonly codeOnly: readonly ["type"];
+        readonly previews: {
+            readonly interaction: {
+                readonly options: readonly ["rest", "active", "focus"];
+                readonly default: "rest";
+                readonly note: "Previews hover and press (active) and keyboard focus. Leave it at rest in a design.";
+            };
+        };
+    };
     readonly summary: "Triggers an action, with optional icons and a loading state.";
     readonly options: {
         readonly variant: {
