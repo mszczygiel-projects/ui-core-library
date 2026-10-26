@@ -15,34 +15,38 @@ import { dirname, join, resolve } from 'node:path';
 
 const dist = join(import.meta.dirname, '..', 'dist');
 
-const modules = readdirSync(join(dist, 'components'))
-  .filter((file) => /^ui-.+\.js$/.test(file))
-  .sort();
-const root = `${modules.map((file) => `export * from './components/${file}';`).join('\n')}\n`;
-writeFileSync(join(dist, 'index.js'), root);
-writeFileSync(join(dist, 'index.d.ts'), root);
-
 interface Manifest {
   readonly modules: readonly {
     readonly path: string;
-    readonly declarations: readonly { readonly tagName?: string }[];
+    readonly declarations: readonly { readonly name: string; readonly tagName?: string }[];
   }[];
 }
 
-// dist/components/ui-button.d.ts loads dist/types/button/button.d.ts, from src/button/button.tsx.
 const manifest = JSON.parse(readFileSync(join(dist, 'custom-elements.json'), 'utf8')) as Manifest;
-for (const module of manifest.modules) {
-  const types = module.path.replace(/^src\//, '../types/').replace(/\.tsx?$/, '.js');
-  for (const { tagName } of module.declarations) {
-    if (tagName === undefined) {
-      continue;
-    }
-    const file = join(dist, 'components', `${tagName}.d.ts`);
-    const text = readFileSync(file, 'utf8');
-    const load = `import '${types}';\n`;
-    if (!text.startsWith(load)) {
-      writeFileSync(file, `${load}${text}`);
-    }
+const components = manifest.modules
+  .flatMap((module) =>
+    module.declarations.flatMap(({ name, tagName }) =>
+      tagName === undefined ? [] : [{ name, tagName, source: module.path }],
+    ),
+  )
+  .sort((a, b) => (a.tagName < b.tagName ? -1 : 1));
+
+// The root names each class: every module of a component also exports its own
+// defineCustomElement, which a star export would make ambiguous.
+const root = `${components
+  .map(({ name, tagName }) => `export { ${name} } from './components/${tagName}.js';`)
+  .join('\n')}\n`;
+writeFileSync(join(dist, 'index.js'), root);
+writeFileSync(join(dist, 'index.d.ts'), root);
+
+// dist/components/ui-button.d.ts loads dist/types/button/button.d.ts, from src/button/button.tsx.
+for (const { tagName, source } of components) {
+  const types = source.replace(/^src\//, '../types/').replace(/\.tsx?$/, '.js');
+  const file = join(dist, 'components', `${tagName}.d.ts`);
+  const text = readFileSync(file, 'utf8');
+  const load = `import '${types}';\n`;
+  if (!text.startsWith(load)) {
+    writeFileSync(file, `${load}${text}`);
   }
 }
 
@@ -84,5 +88,5 @@ for (const entry of readdirSync(dist, { recursive: true, encoding: 'utf8' })) {
   }
 }
 console.log(
-  `✓ Wrote dist/index.js with ${String(modules.length)} components and completed ${String(rewritten)} declaration files`,
+  `✓ Wrote dist/index.js with ${String(components.length)} components and completed ${String(rewritten)} declaration files`,
 );

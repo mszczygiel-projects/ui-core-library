@@ -84,7 +84,7 @@
         ]
       },
       "check-package": {
-        "command": "publint --strict . && attw --pack . --profile esm-only --exclude-entrypoints ./custom-elements.json",
+        "command": "publint --strict . && attw --pack . --profile esm-only --exclude-entrypoints ./custom-elements.json && tsc -p tsconfig.dist.json",
         "options": {
           "cwd": "{projectRoot}"
         },

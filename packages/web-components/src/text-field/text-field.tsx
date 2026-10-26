@@ -6,7 +6,6 @@ import {
   type TextFieldSize,
   type TextFieldState,
   type TextFieldType,
-  type TextFieldValueChangeDetail,
   type TextFieldVariant,
 } from '@mszczygiel-projects/ui-core-shared/text-field';
 import {
@@ -24,11 +23,9 @@ import {
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
 import { hasAssignedContent } from '../internal/slots.ts';
+import type { TextFieldValueChange } from './events.ts';
 
 const { options } = textField;
-
-/** The detail of `ui-value-change`, with the native input event. */
-type ValueChangeDetail = TextFieldValueChangeDetail<globalThis.Event>;
 
 /** The input types that a native form counts when it decides on implicit submission. */
 const IMPLICIT_SUBMISSION_TYPES = [
@@ -55,7 +52,7 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'ui-value-change': CustomEvent<ValueChangeDetail>;
+    'ui-value-change': CustomEvent<TextFieldValueChange>;
   }
 }
 
@@ -140,7 +137,7 @@ export class UiTextField implements TextFieldProps, FormAssociated {
   @Prop() autoComplete?: string;
 
   /** One user edit, with the new value and the original input event. */
-  @Event({ eventName: 'ui-value-change' }) valueChange!: EventEmitter<ValueChangeDetail>;
+  @Event({ eventName: 'ui-value-change' }) valueChange!: EventEmitter<TextFieldValueChange>;
 
   /** The current string of the field. */
   @State() private current = '';

@@ -8,9 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
+import { TextFieldValueChange } from "./text-field/events";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
+export { TextFieldValueChange } from "./text-field/events";
 export namespace Components {
     /**
      * Triggers an action, with optional icons and a loading state.
@@ -191,7 +193,7 @@ declare global {
         new (): HTMLUiLoaderElement;
     };
     interface HTMLUiTextFieldElementEventMap {
-        "ui-value-change": ValueChangeDetail;
+        "ui-value-change": TextFieldValueChange;
     }
     /**
      * A single-line text input with a label, hint and validation feedback.
@@ -341,7 +343,7 @@ declare namespace LocalJSX {
         /**
           * One user edit, with the new value and the original input event.
          */
-        "onUi-value-change"?: (event: UiTextFieldCustomEvent<ValueChangeDetail>) => void;
+        "onUi-value-change"?: (event: UiTextFieldCustomEvent<TextFieldValueChange>) => void;
         /**
           * A native regular expression for the whole value.
          */
