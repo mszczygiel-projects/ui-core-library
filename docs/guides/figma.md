@@ -1,0 +1,57 @@
+# Figma
+
+The library is designed in three files: [Core] Foundations holds the variables and styles, [Core] Icons the icons and [Core] UI Library the components. [Decision 10](../decisions/10-figma.md) holds the rules, and the skill `ui-core-figma` the Plugin API protocol that agents follow.
+
+Agents write to these files only within an approved step: they read the state, list the changes, write them and compare a control read with the plan. The tasks below are the owner's.
+
+## Publishing the libraries
+
+After a change, publish the libraries in the order their dependencies run, and accept the updates in the files that use them:
+
+1. [Core] Foundations.
+2. [Core] Icons, which binds the variables of Foundations.
+3. [Core] UI Library, which binds both.
+
+Publish only the libraries that changed.
+
+## Exporting variables
+
+1. In [Core] Foundations, export the changed collections with the Luckino plugin, with their Figma metadata.
+2. Replace the files in `packages/foundations/figma/` with the exports, unchanged. Never edit them by hand.
+3. Continue with [the tokens guide](tokens.md#changing-tokens).
+
+## Exporting icons
+
+An agent exports every icon component of [Core] Icons with `exportAsync` and replaces the files in `packages/icons/figma/`, within an approved step. Continue with [the icons guide](icons.md#changing-icons).
+
+## Publishing Code Connect
+
+Code Connect shows the code of a component in Dev Mode. The owner publishes it; agents publish only in a step approved for publishing.
+
+1. Create a Figma personal access token with write access to Code Connect and read access to file content, and put it in `.env` as `FIGMA_ACCESS_TOKEN`, as `.env.example` shows. `.env` is never committed.
+2. Check what would be published, without publishing:
+
+   ```sh
+   pnpm figma:react publish --dry-run
+   pnpm figma:wc publish --dry-run
+   ```
+
+3. Preview how the snippets render in Dev Mode, then publish:
+
+   ```sh
+   pnpm figma:react preview
+   pnpm figma:react publish
+   pnpm figma:wc publish
+   ```
+
+4. In [Core] UI Library, select an instance in Dev Mode and check its snippet.
+
+Figma shows one framework at a time, React by default. A team admin switches it in Admin › Settings › Resources › Code Connect; the connections of the other framework stay stored. `pnpm figma:react unpublish` removes the published React templates.
+
+## Updating the guidelines
+
+The libraries carry guidelines that Figma's agent reads whenever a prompt runs with the library enabled. They come from the specifications, the component pages, the tokens and the icons, so a change to any of them can change the guidelines.
+
+1. Run `pnpm guidelines:build`. It writes `tools/guidelines/dist/ui-library`, `dist/foundations` and `dist/icons`.
+2. In each Figma file, open Library › Manage guidelines, replace the files with those of its folder and apply the changes.
+3. Ask Figma's agent for a small screen from the library, such as a login form, and check that it uses the components with listed values and no raw colours.

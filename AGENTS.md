@@ -15,7 +15,7 @@ Storybook documents it for consumers. Three Figma files design it: [Core] Founda
 Sources of truth, in this order:
 
 1. [docs/decisions](docs/decisions/README.md)
-2. [CONTRIBUTING.md](CONTRIBUTING.md)
+2. [CONTRIBUTING.md](CONTRIBUTING.md) for the way of working, and [the guides](docs/guides/README.md) for tasks
 3. the Storybook pages
 4. the code
 

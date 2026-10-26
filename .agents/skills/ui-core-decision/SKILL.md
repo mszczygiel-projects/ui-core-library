@@ -16,5 +16,5 @@ Decisions are living documents in `docs/decisions/`, one file per area. Each des
 - **Keep it short.** About a page per file. Link to other decisions by number, such as `[05](05-components.md)`, and to code instead of repeating it.
 - **Never describe where the rule came from.** No references to other repositories, earlier implementations or migration work.
 - **Never decide silently.** A decision the owner has not approved is not recorded. Name the owner's choice when they chose between options.
-- **Follow the rule everywhere.** Update `AGENTS.md`, `CONTRIBUTING.md` and the project skills when the decision changes one of their rules.
+- **Follow the rule everywhere.** Update `AGENTS.md`, `CONTRIBUTING.md`, the guides in `docs/guides/` and the project skills when the decision changes one of their rules.
 - Run `pnpm exec prettier --write` on the changed files, which realigns tables.

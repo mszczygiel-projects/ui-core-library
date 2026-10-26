@@ -5,7 +5,7 @@ description: Use when working with the design tokens or icons of UI Core Library
 
 # Tokens and icons
 
-`docs/decisions/02-design-tokens.md`, `03-branding-and-consumer-tokens.md` and `04-icons.md` hold the rules. `CONTRIBUTING.md` holds the order of the commands. This is the checklist.
+`docs/decisions/02-design-tokens.md`, `03-branding-and-consumer-tokens.md` and `04-icons.md` hold the rules. `docs/guides/tokens.md` and `docs/guides/icons.md` hold the order of the commands. This is the checklist.
 
 ## Writing styles
 
