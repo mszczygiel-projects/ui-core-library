@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output and caches
+dist/
+out-tsc/
+coverage/
+storybook-static/
+*.tsbuildinfo
+.nx/
+.vitest/
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
+
+# Environment files: only examples are committed
+.env
+.env.*
+!.env.example
+
+# Logs and OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# Claude Code: personal settings and the worktrees of agent sessions
+.claude/settings.local.json
+.claude/worktrees/
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# Agent skills: makers' tools install vendor skills into .agents/skills;
+# only the project's own ui-core-* skills are committed.
+.agents/skills/*
+!.agents/skills/ui-core-*/
