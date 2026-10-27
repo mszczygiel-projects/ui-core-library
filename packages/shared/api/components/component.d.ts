@@ -12,6 +12,7 @@ export interface DesignSpec {
     readonly booleans: readonly string[];
     readonly codeOnly: readonly string[];
     readonly previews: Readonly<Record<string, PreviewSpec>>;
+    readonly nested?: string;
 }
 export interface ExceptionSpec {
     readonly items: readonly string[];
