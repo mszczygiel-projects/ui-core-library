@@ -12,6 +12,8 @@ import { ChipDismiss, ChipSelectedChange } from "./chip/events";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
+import { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
+import { NotificationDismiss } from "./notification/events";
 import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 import { TextFieldValueChange } from "./text-field/events";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
@@ -21,6 +23,8 @@ export { ChipDismiss, ChipSelectedChange } from "./chip/events";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
+export { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
+export { NotificationDismiss } from "./notification/events";
 export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export { TextFieldValueChange } from "./text-field/events";
 export namespace Components {
@@ -113,7 +117,8 @@ export namespace Components {
      * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
      * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
      * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
-     * `disabled`.
+     * `disabled`. The host is form-associated only to follow a disabled fieldset; it submits nothing.
+     * An `aria-label` that the page writes on the host names the chip instead of its text.
      */
     interface UiChip {
         /**
@@ -263,6 +268,53 @@ export namespace Components {
         "size": LoaderSize;
     }
     /**
+     * Tells the user about the state of the page or the result of an action, in one of the feedback
+     * tones.
+     * The heading gives the message in one line, and the content describes it further; links in it
+     * stay links. A notification with `announce` is a live region, an alert for an error and a status
+     * for any other tone. It shows its content one frame after it is connected, so that a screen
+     * reader reads a notification that the page inserts. A dismissible notification adds a button
+     * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
+     * notification. The host belongs to the page: the component reflects no prop and writes no role
+     * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+     * disables the dismiss button as it does a native one; it submits nothing.
+     */
+    interface UiNotification {
+        /**
+          * Makes the notification a live region, so that a screen reader reads it when it appears or changes.
+          * @default false
+         */
+        "announce": boolean;
+        /**
+          * The word that names the dismiss button before the heading, falling back to `labels.notification.dismiss`.
+         */
+        "dismissLabel"?: string;
+        /**
+          * Shows a button that asks to remove the notification.
+          * @default false
+         */
+        "dismissible": boolean;
+        /**
+          * Shows the icon of the tone before the heading.
+          * @default false
+         */
+        "hasLeadingIcon": boolean;
+        /**
+          * The message in one short line. The content of the notification describes it further.
+         */
+        "heading"?: string;
+        /**
+          * The feedback the notification gives.
+          * @default 'info'
+         */
+        "tone": NotificationTone;
+        /**
+          * The emphasis of the notification.
+          * @default 'solid'
+         */
+        "variant": NotificationVariant;
+    }
+    /**
      * A single-line text input with a label, hint and validation feedback.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -348,6 +400,10 @@ export interface UiChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiChipElement;
 }
+export interface UiNotificationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiNotificationElement;
+}
 export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiTextFieldElement;
@@ -388,7 +444,8 @@ declare global {
      * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
      * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
      * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
-     * `disabled`.
+     * `disabled`. The host is form-associated only to follow a disabled fieldset; it submits nothing.
+     * An `aria-label` that the page writes on the host names the chip instead of its text.
      */
     interface HTMLUiChipElement extends Components.UiChip, HTMLStencilElement {
         addEventListener<K extends keyof HTMLUiChipElementEventMap>(type: K, listener: (this: HTMLUiChipElement, ev: UiChipCustomEvent<HTMLUiChipElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -439,6 +496,35 @@ declare global {
         prototype: HTMLUiLoaderElement;
         new (): HTMLUiLoaderElement;
     };
+    interface HTMLUiNotificationElementEventMap {
+        "ui-dismiss": NotificationDismiss;
+    }
+    /**
+     * Tells the user about the state of the page or the result of an action, in one of the feedback
+     * tones.
+     * The heading gives the message in one line, and the content describes it further; links in it
+     * stay links. A notification with `announce` is a live region, an alert for an error and a status
+     * for any other tone. It shows its content one frame after it is connected, so that a screen
+     * reader reads a notification that the page inserts. A dismissible notification adds a button
+     * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
+     * notification. The host belongs to the page: the component reflects no prop and writes no role
+     * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+     * disables the dismiss button as it does a native one; it submits nothing.
+     */
+    interface HTMLUiNotificationElement extends Components.UiNotification, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiNotificationElementEventMap>(type: K, listener: (this: HTMLUiNotificationElement, ev: UiNotificationCustomEvent<HTMLUiNotificationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiNotificationElementEventMap>(type: K, listener: (this: HTMLUiNotificationElement, ev: UiNotificationCustomEvent<HTMLUiNotificationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiNotificationElement: {
+        prototype: HTMLUiNotificationElement;
+        new (): HTMLUiNotificationElement;
+    };
     interface HTMLUiTextFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
     }
@@ -470,6 +556,7 @@ declare global {
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-loader": HTMLUiLoaderElement;
+        "ui-notification": HTMLUiNotificationElement;
         "ui-text-field": HTMLUiTextFieldElement;
     }
 }
@@ -567,7 +654,8 @@ declare namespace LocalJSX {
      * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
      * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
      * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
-     * `disabled`.
+     * `disabled`. The host is form-associated only to follow a disabled fieldset; it submits nothing.
+     * An `aria-label` that the page writes on the host names the chip instead of its text.
      */
     interface UiChip {
         /**
@@ -584,6 +672,14 @@ declare namespace LocalJSX {
           * @default false
          */
         "dismissible"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * The name of the element, used when submitting an HTML form.
+         */
+        "name"?: string;
         /**
           * The user asked to remove the chip, with its dismiss button, Delete or Backspace.
          */
@@ -729,6 +825,69 @@ declare namespace LocalJSX {
         "size"?: LoaderSize;
     }
     /**
+     * Tells the user about the state of the page or the result of an action, in one of the feedback
+     * tones.
+     * The heading gives the message in one line, and the content describes it further; links in it
+     * stay links. A notification with `announce` is a live region, an alert for an error and a status
+     * for any other tone. It shows its content one frame after it is connected, so that a screen
+     * reader reads a notification that the page inserts. A dismissible notification adds a button
+     * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
+     * notification. The host belongs to the page: the component reflects no prop and writes no role
+     * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+     * disables the dismiss button as it does a native one; it submits nothing.
+     */
+    interface UiNotification {
+        /**
+          * Makes the notification a live region, so that a screen reader reads it when it appears or changes.
+          * @default false
+         */
+        "announce"?: boolean;
+        /**
+          * If `true`, the user cannot interact with the element.
+         */
+        "disabled"?: boolean;
+        /**
+          * The word that names the dismiss button before the heading, falling back to `labels.notification.dismiss`.
+         */
+        "dismissLabel"?: string;
+        /**
+          * Shows a button that asks to remove the notification.
+          * @default false
+         */
+        "dismissible"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Shows the icon of the tone before the heading.
+          * @default false
+         */
+        "hasLeadingIcon"?: boolean;
+        /**
+          * The message in one short line. The content of the notification describes it further.
+         */
+        "heading"?: string;
+        /**
+          * The name of the element, used when submitting an HTML form.
+         */
+        "name"?: string;
+        /**
+          * The user asked to remove the notification with its dismiss button.
+         */
+        "onUi-dismiss"?: (event: UiNotificationCustomEvent<NotificationDismiss>) => void;
+        /**
+          * The feedback the notification gives.
+          * @default 'info'
+         */
+        "tone"?: NotificationTone;
+        /**
+          * The emphasis of the notification.
+          * @default 'solid'
+         */
+        "variant"?: NotificationVariant;
+    }
+    /**
      * A single-line text input with a label, hint and validation feedback.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -870,6 +1029,15 @@ declare namespace LocalJSX {
         "size": LoaderSize;
         "label": string;
     }
+    interface UiNotificationAttributes {
+        "tone": NotificationTone;
+        "variant": NotificationVariant;
+        "heading": string;
+        "hasLeadingIcon": boolean;
+        "dismissible": boolean;
+        "dismissLabel": string;
+        "announce": boolean;
+    }
     interface UiTextFieldAttributes {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
@@ -896,6 +1064,7 @@ declare namespace LocalJSX {
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
+        "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
     }
 }
@@ -924,7 +1093,8 @@ declare module "@stencil/core" {
              * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
              * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
              * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
-             * `disabled`.
+             * `disabled`. The host is form-associated only to follow a disabled fieldset; it submits nothing.
+             * An `aria-label` that the page writes on the host names the chip instead of its text.
              */
             "ui-chip": LocalJSX.IntrinsicElements["ui-chip"] & JSXBase.HTMLAttributes<HTMLUiChipElement>;
             /**
@@ -947,6 +1117,19 @@ declare module "@stencil/core" {
              * look that `loaderVariant` of `configureUiCore` chooses.
              */
             "ui-loader": LocalJSX.IntrinsicElements["ui-loader"] & JSXBase.HTMLAttributes<HTMLUiLoaderElement>;
+            /**
+             * Tells the user about the state of the page or the result of an action, in one of the feedback
+             * tones.
+             * The heading gives the message in one line, and the content describes it further; links in it
+             * stay links. A notification with `announce` is a live region, an alert for an error and a status
+             * for any other tone. It shows its content one frame after it is connected, so that a screen
+             * reader reads a notification that the page inserts. A dismissible notification adds a button
+             * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
+             * notification. The host belongs to the page: the component reflects no prop and writes no role
+             * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+             * disables the dismiss button as it does a native one; it submits nothing.
+             */
+            "ui-notification": LocalJSX.IntrinsicElements["ui-notification"] & JSXBase.HTMLAttributes<HTMLUiNotificationElement>;
             /**
              * A single-line text input with a label, hint and validation feedback.
              * Its inner input owns accessibility; ElementInternals associates the host with the outer form.

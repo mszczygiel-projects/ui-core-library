@@ -46,6 +46,10 @@
       "types": "./dist/utils/locale.d.ts",
       "default": "./dist/utils/locale.js"
     },
+    "./notification": {
+      "types": "./dist/components/notification.d.ts",
+      "default": "./dist/components/notification.js"
+    },
     "./numeric": {
       "types": "./dist/utils/numeric.d.ts",
       "default": "./dist/utils/numeric.js"

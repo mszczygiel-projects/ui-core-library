@@ -1,0 +1,100 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Notification.wc.stories.tsx';
+import * as ReactStories from './Notification.react.stories.tsx';
+
+<Meta title="Components/Feedback/Notification/Docs" />
+
+# Notification
+
+<ComponentOverview name="Notification" />
+
+## Usage
+
+Use Notification for a message about the page or about the result of an action, placed in the flow of the page: a saved form, a failed payment, a planned outage, a reminder. The heading gives the message in one short line; the content adds the details and may hold a link.
+
+Use Badge for a short status on an item, a field's own error text for a problem with one field, and Dialog for a message that must stop the user. Notification is not a toast: it does not disappear on its own.
+
+## Anatomy
+
+The **base** is the surface of the notification, its fill, border and corners. It holds the **content** and the optional **dismiss** button. The content holds the **header**, which is the optional **icon** of the tone and the **heading**, and the **description** below it. The web component exposes these as parts; React uses the matching `.ui-notification__<part>` classes, and Figma names the layers the same way.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+The `tone` says what kind of feedback it is: `info`, the default, for neutral information; `success` for a completed action; `warning` for something that needs attention soon; `error` for something that failed. The `variant` sets the emphasis: `solid`, the default, fills the notification with the tone; `subtle` gives a light tint with an accent border on the side where reading starts. Use `subtle` where several notifications or a long description would be heavy.
+
+`hasLeadingIcon` shows the icon of the tone before the heading. Warning and error share the danger icon, so let the heading say which it is.
+
+## Sizes & density
+
+Notification has one size. It fills the width of its container, and its heading and description wrap. Density changes the padding, the gaps and the icons. The dismiss button keeps a pointer target of at least 24 by 24 pixels in every density.
+
+## States
+
+A notification itself is not interactive. Its dismiss button takes a tint on hover and press, and the shared focus ring for keyboard focus.
+
+## Content & labels
+
+<FrameworkCanvas react={ReactStories.Dismissible} webComponents={WebComponentStories.Dismissible} />
+
+Write the heading in `heading`, and the details in the default slot, or as `children`. An empty description takes no room.
+
+`dismissible` adds a button that asks to remove the notification. It is named by a word and the heading, such as “Dismiss Changes saved”, so that several buttons on a page have their own names. The word is `dismissLabel`, then `labels.notification.dismiss`, “Dismiss” in English.
+
+<Source
+  language="ts"
+  code={`configureUiCore({ labels: { notification: { dismiss: 'Zamknij' } } });`}
+/>
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.Announced} webComponents={WebComponentStories.Announced} />
+
+- The dismiss button asks to remove the notification: `ui-dismiss` in the web component, `onDismiss(details)` in React. The notification only reports the request; the page removes it and moves focus to a sensible place, such as the control that the message is about.
+- `announce` makes the notification a live region. It mounts empty and shows its content one frame later, so that a screen reader reads a notification that the page inserts, and it reads later changes of the heading or the content too.
+- A disabled fieldset disables the dismiss button, and the `hidden` attribute hides the whole notification.
+- An unknown `tone` or `variant` falls back to the default.
+
+## Accessibility
+
+- **Pattern.** An announced notification follows the [WAI-ARIA alert pattern](https://www.w3.org/WAI/ARIA/apg/patterns/alert/) for an error, which interrupts, and is a polite `status` for any other tone. A notification without `announce` is ordinary content, read in the order of the page. Leave `announce` off for a message that is on the page from the start: a live region there would be read twice or not at all.
+- **Keys.** Tab reaches the dismiss button, and Enter or Space activate it.
+- **Names.** The dismiss word and the heading name the dismiss button. The icon is decorative; the tone shows in the heading, the icon and the colour together.
+- **Target size.** The dismiss button takes a target of at least 24 by 24 pixels in every density.
+- **Contrast.** The heading and the description have a contrast of at least 4.5 to 1 for every tone and variant, in Light and Dark, on every surface.
+- **Preferences.** The border and the focus ring remain visible in forced colours.
+
+## Surfaces & themes
+
+Colours follow the surrounding theme and surface through the feedback roles: the base colour and its text for `solid`, the tint and the text for the tint for `subtle`.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Notification" />}
+  webComponents={<WebComponentApi tag="ui-notification" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Notification } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/notification';`}
+/>
+
+## Tokens
+
+<ComponentTokens component="notification" />
+
+## Implementation notes
+
+- The web component uses an open shadow root and reflects no prop. It writes no role on its host; the live region is its `content` part. It is form-associated only to follow a disabled fieldset, and submits nothing.
+- React passes `className`, `style`, the other attributes of a `div` and its ref to the root. An announced notification renders the same empty region on the server and on the first render on the client, and shows its content after hydration.
+- The icons come from the icons package, so a consumer's icon set must hold `check`, `close`, `danger` and `info`.
+- The Figma set has the boolean properties `hasLeadingIcon` and `dismissible`, and the design-only boolean property `description`, which previews a notification with and without details.

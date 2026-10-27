@@ -61,7 +61,7 @@ describe('buildTokens', () => {
         t.collection === 'Components' && JSON.stringify(t.value).includes('{Themes.stroke.accent}'),
     );
     expect(loader).toBeDefined();
-    expect(consumers).toHaveLength(8);
+    expect(consumers).toHaveLength(4);
     const changed = tokens.map((t) =>
       t.collection === 'Themes' && t.path.join('/') === 'stroke/accent'
         ? { ...t, value: { Light: 5, Dark: 7 } }
@@ -155,7 +155,7 @@ describe('buildTokens', () => {
     expect(result.warnings).toEqual([]);
     expect(result.knownViolations).toBe(exceptions.knownViolations.length);
     expect(result.summary).toEqual([
-      '1328 tokens, 616 of them component tokens',
+      '1345 tokens, 633 of them component tokens',
       'theme modes: Light (:root), Dark ([data-theme="dark"])',
     ]);
   });

@@ -37,28 +37,8 @@
       "reason": "The height of an image preview."
     },
     {
-      "token": "Components/notification/description/letter-spacing",
-      "reason": "A number, because Figma binds letter spacing only to numbers while the tracking roles are text."
-    },
-    {
-      "token": "Components/notification/letter-spacing",
-      "reason": "A number, because Figma binds letter spacing only to numbers while the tracking roles are text."
-    },
-    {
-      "token": "Components/notification/subtle/border/bottom",
-      "reason": "The subtle notification has only a left border."
-    },
-    {
-      "token": "Components/notification/subtle/border/right",
-      "reason": "The subtle notification has only a left border."
-    },
-    {
-      "token": "Components/notification/subtle/border/top",
-      "reason": "The subtle notification has only a left border."
-    },
-    {
-      "token": "Components/notification/subtle/show-icon",
-      "reason": "The subtle notification always shows its icon."
+      "token": "Components/notification/dismiss/target/min-size",
+      "reason": "The smallest pointer target of the dismiss button of a notification, 24 px; no brand or mode changes it."
     },
     {
       "token": "Components/pagination/jump/input/width",

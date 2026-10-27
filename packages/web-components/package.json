@@ -37,6 +37,10 @@
       "types": "./dist/components/ui-loader.d.ts",
       "default": "./dist/components/ui-loader.js"
     },
+    "./notification": {
+      "types": "./dist/components/ui-notification.d.ts",
+      "default": "./dist/components/ui-notification.js"
+    },
     "./text-field": {
       "types": "./dist/components/ui-text-field.d.ts",
       "default": "./dist/components/ui-text-field.js"

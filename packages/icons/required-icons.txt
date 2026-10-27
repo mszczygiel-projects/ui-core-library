@@ -1,4 +1,7 @@
 # The icons that the component packages import, one name per line. Every icon set, the library's
 # own and a consumer's, must hold them. The component packages keep this list in step with their
 # imports.
+check
 close
+danger
+info

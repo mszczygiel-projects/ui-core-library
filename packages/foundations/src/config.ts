@@ -33,6 +33,10 @@ export interface UiCoreLabels {
     /** The accessible name of a loader that has no `label` of its own. */
     readonly label: string;
   };
+  readonly notification: {
+    /** The word that names the dismiss button of a notification, read before its heading. */
+    readonly dismiss: string;
+  };
 }
 
 /** The configuration as components read it: always complete. */
@@ -55,6 +59,7 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   chip: { dismiss: 'Remove' },
   iconButton: { loading: 'Loading' },
   loader: { label: 'Loading' },
+  notification: { dismiss: 'Dismiss' },
 });
 
 const DEFAULT_CONFIG: UiCoreConfig = Object.freeze({

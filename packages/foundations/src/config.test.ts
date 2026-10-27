@@ -100,6 +100,7 @@ describe('the configuration', () => {
         chip: { dismiss: 'Remove' },
         iconButton: { loading: 'Loading' },
         loader: { label: 'Wait' },
+        notification: { dismiss: 'Dismiss' },
       },
       loaderVariant: 'spinner' satisfies LoaderVariant,
     });

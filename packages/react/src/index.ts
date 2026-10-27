@@ -23,6 +23,7 @@ export {
   type LinkButtonVariant,
 } from './link-button/LinkButton.tsx';
 export { Loader, type LoaderProps, type LoaderSize } from './loader/Loader.tsx';
+export { Notification, type NotificationProps } from './notification/Notification.tsx';
 export {
   TextField,
   type TextFieldLabelPlacement,

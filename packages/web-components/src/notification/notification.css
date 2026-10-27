@@ -1,0 +1,183 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  box-sizing: border-box;
+  display: flex;
+  gap: var(--notification-header-gap);
+  align-items: flex-start;
+  padding-block: var(--notification-padding-stack);
+  padding-inline: var(--notification-padding-inline);
+  border: var(--notification-border-width) solid var(--_border);
+  border-radius: var(--notification-radius);
+  background-color: var(--_background);
+  color: var(--_text);
+}
+
+/* A solid notification draws its border in its fill, so that both variants share one geometry. */
+.solid {
+  --_border: var(--_background);
+}
+
+/* A subtle notification marks its tone with an accent on the side where reading starts. */
+.subtle {
+  border-block-width: 0;
+  border-inline-end-width: 0;
+}
+
+.info.solid {
+  --_background: var(--color-notification-info-solid-background);
+  --_text: var(--color-notification-info-solid-text);
+}
+
+.info.subtle {
+  --_background: var(--color-notification-info-subtle-background);
+  --_text: var(--color-notification-info-subtle-text);
+  --_border: var(--color-notification-info-subtle-border);
+}
+
+.success.solid {
+  --_background: var(--color-notification-success-solid-background);
+  --_text: var(--color-notification-success-solid-text);
+}
+
+.success.subtle {
+  --_background: var(--color-notification-success-subtle-background);
+  --_text: var(--color-notification-success-subtle-text);
+  --_border: var(--color-notification-success-subtle-border);
+}
+
+.warning.solid {
+  --_background: var(--color-notification-warning-solid-background);
+  --_text: var(--color-notification-warning-solid-text);
+}
+
+.warning.subtle {
+  --_background: var(--color-notification-warning-subtle-background);
+  --_text: var(--color-notification-warning-subtle-text);
+  --_border: var(--color-notification-warning-subtle-border);
+}
+
+.error.solid {
+  --_background: var(--color-notification-error-solid-background);
+  --_text: var(--color-notification-error-solid-text);
+}
+
+.error.subtle {
+  --_background: var(--color-notification-error-subtle-background);
+  --_text: var(--color-notification-error-subtle-text);
+  --_border: var(--color-notification-error-subtle-border);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--notification-gap);
+  min-inline-size: 0;
+}
+
+.header {
+  display: flex;
+  gap: var(--notification-header-gap);
+  align-items: flex-start;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--notification-icon-size);
+  block-size: var(--notification-icon-size);
+  font-size: var(--notification-icon-size);
+}
+
+.heading {
+  flex: 1;
+  min-inline-size: 0;
+  font-family: var(--notification-font-family);
+  font-size: var(--notification-font-size);
+  font-weight: var(--notification-font-weight);
+  line-height: var(--notification-line-height);
+  letter-spacing: var(--notification-letter-spacing);
+  overflow-wrap: break-word;
+}
+
+.description {
+  font-family: var(--notification-description-font-family);
+  font-size: var(--notification-description-font-size);
+  font-weight: var(--notification-description-font-weight);
+  line-height: var(--notification-description-line-height);
+  letter-spacing: var(--notification-description-letter-spacing);
+  overflow-wrap: break-word;
+}
+
+.description ::slotted(a) {
+  color: inherit;
+}
+
+.header[hidden],
+.heading[hidden],
+.description[hidden] {
+  display: none;
+}
+
+.dismiss {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--notification-icon-size);
+  block-size: var(--notification-icon-size);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--notification-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* A square pointer target of at least the minimum size around the smaller button. */
+.dismiss::after {
+  content: '';
+  position: absolute;
+  inset: min(0%, (100% - var(--notification-dismiss-target-min-size)) / 2);
+}
+
+.dismiss:disabled {
+  cursor: not-allowed;
+}
+
+.dismiss:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.dismiss:is(:hover, :active):not(:disabled) {
+  background-color: var(--color-notification-dismiss-background-active);
+}
+
+.dismiss-icon {
+  display: inline-flex;
+  font-size: var(--notification-icon-size);
+}
+
+@media (forced-colors: active) {
+  .base {
+    border-color: CanvasText;
+  }
+
+  .dismiss:focus-visible {
+    outline-color: Highlight;
+  }
+}
