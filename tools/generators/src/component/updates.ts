@@ -103,7 +103,9 @@ export function registerComponent(tree: Tree, n: ComponentNames): void {
   update(tree, 'packages/shared/src/components/index.ts', (text) =>
     addStatement(text, `import { ${n.camel} } from './${n.kebab}.ts';`).replace(
       /(export const specs: readonly ComponentSpec\[\] = \[)([^\]]*)\]/,
-      (_match, start: string, list: string) => `${start}${list.trim()}, ${n.camel}]`,
+      // A list that the formatter wrapped ends with a comma, which a plain append would double.
+      (_match, start: string, list: string) =>
+        `${start}${list.trim().replace(/,$/, '')}, ${n.camel}]`,
     ),
   );
   updateJson(

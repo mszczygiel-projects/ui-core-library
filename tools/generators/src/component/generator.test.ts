@@ -56,6 +56,15 @@ describe('component generator', () => {
     );
   });
 
+  it('appends to a list of specifications that the formatter wrapped', async () => {
+    const path = 'packages/shared/src/components/index.ts';
+    tree.write(path, read(tree, path).replace(/= \[[^\]]*\]/, '= [\n  button,\n  textField,\n]'));
+    await componentGenerator(tree, { name: 'IconButton', category: 'Actions' });
+
+    expect(read(tree, path)).not.toMatch(/,\s*,/);
+    expect(read(tree, path)).toMatch(/, iconButton\]/);
+  });
+
   it('registers the component in every list', async () => {
     await componentGenerator(tree, { name: 'IconButton', category: 'Actions' });
 
