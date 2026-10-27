@@ -155,7 +155,7 @@ describe('buildTokens', () => {
     expect(result.warnings).toEqual([]);
     expect(result.knownViolations).toBe(exceptions.knownViolations.length);
     expect(result.summary).toEqual([
-      '1667 tokens, 955 of them component tokens',
+      '1328 tokens, 616 of them component tokens',
       'theme modes: Light (:root), Dark ([data-theme="dark"])',
     ]);
   });
