@@ -95,8 +95,11 @@ export interface TextFieldValueChangeDetail<
   readonly value: string;
 }
 
-/** The props both implementations of TextField share. */
-export interface TextFieldProps {
+/**
+ * The props every text control of the field family shares: TextField, PasswordField, SearchField
+ * and TextareaField.
+ */
+export interface TextControlProps {
   /**
    * The surface and border treatment.
    * @default 'outline'
@@ -116,7 +119,7 @@ export interface TextFieldProps {
   label?: string;
   /** An example or short prompt, never a replacement for the label. */
   placeholder?: string;
-  /** Help or validation feedback, connected to the description of the input. */
+  /** Help or validation feedback, connected to the description of the control. */
   hint?: string;
   /**
    * Visual feedback; `error` also sets `aria-invalid`, without changing native validity.
@@ -142,17 +145,21 @@ export interface TextFieldProps {
   name?: string;
   /** The current value. */
   value?: string;
+  /** The minimum length a user enters, in UTF-16 code units. */
+  minLength?: number;
+  /** The maximum length a user enters, in UTF-16 code units. */
+  maxLength?: number;
+  /** The purpose of the browser's autofill. */
+  autoComplete?: string;
+}
+
+/** The props both implementations of TextField share. */
+export interface TextFieldProps extends TextControlProps {
   /**
    * The native input type.
    * @default 'text'
    */
   type?: TextFieldType;
-  /** The minimum length a user enters, in UTF-16 code units. */
-  minLength?: number;
-  /** The maximum length a user enters, in UTF-16 code units. */
-  maxLength?: number;
   /** A native regular expression for the whole value. */
   pattern?: string;
-  /** The purpose of the browser's autofill. */
-  autoComplete?: string;
 }

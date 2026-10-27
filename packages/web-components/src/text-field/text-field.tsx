@@ -20,29 +20,21 @@ import {
   type VNode,
 } from '@stencil/core';
 
+import {
+  Field,
+  fieldAppearance,
+  fieldDescription,
+  fieldPlaceholder,
+  FORWARDED_ATTRIBUTES,
+  forwardedAttributes,
+} from '../internal/field.tsx';
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
-import { copyValidity, submitNamed } from '../internal/form-value.ts';
 import { hasAssignedContent } from '../internal/slots.ts';
+import { TextControl } from '../internal/text-control.ts';
 import type { TextFieldValueChange } from './events.ts';
 
 const { options } = textField;
-
-/** The input types that a native form counts when it decides on implicit submission. */
-const IMPLICIT_SUBMISSION_TYPES = [
-  'text',
-  'search',
-  'url',
-  'tel',
-  'email',
-  'password',
-  'date',
-  'month',
-  'week',
-  'time',
-  'datetime-local',
-  'number',
-];
 
 declare global {
   interface HTMLUiTextFieldElement extends FormAssociated {
@@ -80,7 +72,7 @@ declare global {
  */
 @Component({
   tag: 'ui-text-field',
-  styleUrl: 'text-field.css',
+  styleUrls: ['../internal/field.css', 'text-field.css'],
   shadow: { delegatesFocus: true },
   formAssociated: true,
 })
@@ -153,26 +145,29 @@ export class UiTextField implements TextFieldProps, FormAssociated {
 
   @State() private hasTrailingIcon = false;
 
-  /** Whether a user or a script set the value, after which the attribute only supplies a reset. */
-  private dirty = false;
-
-  private customValidity = '';
-
   private stopFollowing: (() => void)[] = [];
 
-  private formKeyEvents?: AbortController;
+  private readonly control = new TextControl({
+    host: () => this.host,
+    internals: () => this.internals,
+    control: () => this.input(),
+    detached: () => this.detachedInput(),
+    name: () => this.name,
+    disabled: () => this.isDisabled(),
+    onValue: (value) => {
+      this.current = value;
+    },
+    restorable: true,
+    implicitSubmission: true,
+  });
 
   /** The current string. The `value` attribute supplies the initial and reset value. */
   get value(): string {
-    return this.current;
+    return this.control.value;
   }
 
   set value(value: string) {
-    // A form reads the new value and validity at once, as it does for a native input, so they
-    // change now rather than at the next render.
-    this.restore(typeof value === 'string' ? value : '');
-    // As on a native input, a value that a script sets outlives later defaults.
-    this.dirty = true;
+    this.control.set(value);
   }
 
   /** The associated form, including an explicit `form` attribute. */
@@ -182,13 +177,13 @@ export class UiTextField implements TextFieldProps, FormAssociated {
 
   /** Native validity, synchronized from the inner input. */
   get validity(): ValidityState {
-    this.syncValidity();
+    this.control.syncValidity();
     return this.internals.validity;
   }
 
   /** The native or custom validation message. */
   get validationMessage(): string {
-    this.syncValidity();
+    this.control.syncValidity();
     return this.internals.validationMessage;
   }
 
@@ -200,42 +195,30 @@ export class UiTextField implements TextFieldProps, FormAssociated {
   /** Checks the form-associated host and dispatches `invalid` when needed. */
   // eslint-disable-next-line stencil/own-methods-must-be-private -- the synchronous API of a native control
   checkValidity(): boolean {
-    this.syncValidity();
+    this.control.syncValidity();
     return this.internals.checkValidity();
   }
 
   /** Reports invalidity, with the native input as the anchor of the message. */
   // eslint-disable-next-line stencil/own-methods-must-be-private -- the synchronous API of a native control
   reportValidity(): boolean {
-    this.syncValidity();
+    this.control.syncValidity();
     return this.internals.reportValidity();
   }
 
   /** Sets a custom constraint; an empty string clears it. */
   // eslint-disable-next-line stencil/own-methods-must-be-private -- the synchronous API of a native control
   setCustomValidity(message: string): void {
-    this.customValidity = message;
-    this.syncValidity();
+    this.control.setCustomValidity(message);
   }
 
   connectedCallback(): void {
-    this.stopFollowing = [
-      followAttribute(this.host, 'value', (value) => {
-        // Once the value is dirty, the attribute only supplies what a reset restores.
-        if (!this.dirty) {
-          this.restore(value ?? '');
-        }
+    this.stopFollowing = FORWARDED_ATTRIBUTES.map((name) =>
+      followAttribute(this.host, name, (value) => {
+        this.hostAttributes = { ...this.hostAttributes, [name]: value };
       }),
-      ...['aria-label', 'inputmode', 'enterkeyhint', 'spellcheck'].map((name) =>
-        followAttribute(this.host, name, (value) => {
-          this.hostAttributes = { ...this.hostAttributes, [name]: value };
-        }),
-      ),
-    ];
-    // A form reads the value and validity as soon as the field joins it, before the first render.
-    this.submitValue(this.current);
-    this.syncValidity();
-    this.observeFormKeys(this.internals.form);
+    );
+    this.control.connect();
   }
 
   disconnectedCallback(): void {
@@ -243,12 +226,12 @@ export class UiTextField implements TextFieldProps, FormAssociated {
       stop();
     }
     this.stopFollowing = [];
-    this.formKeyEvents?.abort();
+    this.control.disconnect();
   }
 
   /** Tracks keyboard submission when the owning form changes. */
   formAssociatedCallback(form: HTMLFormElement | null): void {
-    this.observeFormKeys(form);
+    this.control.formAssociated(form);
   }
 
   /**
@@ -261,16 +244,12 @@ export class UiTextField implements TextFieldProps, FormAssociated {
 
   /** Restores the value of the attribute without emitting an edit event. */
   formResetCallback(): void {
-    this.restore(this.host.getAttribute('value') ?? '');
-    // After a reset, the attribute leads the value again, as on a native input.
-    this.dirty = false;
+    this.control.reset();
   }
 
   /** Restores a string the browser saved, without emitting an edit event. */
   formStateRestoreCallback(state: string | File | FormData | null): void {
-    if (typeof state === 'string') {
-      this.restore(state);
-    }
+    this.control.restoreState(state);
   }
 
   componentWillRender(): void {
@@ -282,99 +261,59 @@ export class UiTextField implements TextFieldProps, FormAssociated {
   }
 
   componentDidRender(): void {
-    const input = this.input();
-    if (input !== null && input.value !== this.current) {
-      // The input sanitizes some types, such as email; the property reports what it holds.
-      this.current = input.value;
-    }
-    this.submitValue(input?.value ?? this.current);
-    this.syncValidity();
+    this.control.rendered();
   }
 
   render(): VNode {
-    const placement = oneOf(
-      this.labelPlacement,
-      options.labelPlacement.options,
-      options.labelPlacement.default,
-    );
-    const variant = oneOf(this.variant, options.variant.options, options.variant.default);
-    const size = oneOf(this.size, options.size.options, options.size.default);
-    const state = oneOf(this.state, options.state.options, options.state.default);
-    const spellcheck = this.hostAttributes['spellcheck'];
-    const label =
-      this.label !== undefined && this.label !== '' ? (
-        <label part="label" class="label" htmlFor="input">
-          <span part="label-text">{this.label}</span>
-        </label>
-      ) : null;
+    const appearance = fieldAppearance(this);
     return (
-      <form
-        role="none"
-        noValidate
-        onSubmit={this.onFormSubmit}
-        part="base"
-        class={`base ${variant} ${size} ${placement} ${state}`}
+      <Field
+        classes={appearance.classes}
+        placement={appearance.placement}
+        label={this.label}
+        hint={this.hint}
+        onSubmit={this.control.onInnerSubmit}
       >
-        {placement === 'top' ? label : null}
-        <div part="control" class="control">
-          {placement === 'top' ? null : label}
-          <div part="input-row" class="input-row">
-            <span
-              part="leading-icon"
-              class="leading-icon"
-              aria-hidden="true"
-              hidden={!this.hasLeadingIcon}
-            >
-              <slot name="leading-icon" onSlotchange={this.onLeadingSlotChange} />
-            </span>
-            <input
-              id="input"
-              part="input"
-              class="input"
-              type={oneOf(this.type, options.type.options, options.type.default)}
-              value={this.current}
-              placeholder={
-                this.placeholder === undefined || this.placeholder === '' ? ' ' : this.placeholder
-              }
-              disabled={this.isDisabled()}
-              readOnly={this.readOnly}
-              required={this.required}
-              minLength={this.minLength}
-              maxLength={this.maxLength}
-              pattern={this.pattern}
-              autoComplete={this.autoComplete}
-              inputMode={this.hostAttributes['inputmode'] ?? undefined}
-              enterKeyHint={this.hostAttributes['enterkeyhint'] ?? undefined}
-              spellcheck={
-                spellcheck === null || spellcheck === undefined ? undefined : spellcheck !== 'false'
-              }
-              aria-label={this.hostAttributes['aria-label'] ?? undefined}
-              aria-invalid={state === 'error' ? 'true' : undefined}
-              aria-describedby={this.hint !== undefined && this.hint !== '' ? 'hint' : undefined}
-              onInput={this.onInput}
-              onChange={this.onChange}
-            />
-            <span
-              part="trailing-icon"
-              class="trailing-icon"
-              aria-hidden="true"
-              hidden={!this.hasTrailingIcon}
-            >
-              <slot name="trailing-icon" onSlotchange={this.onTrailingSlotChange} />
-            </span>
-          </div>
-        </div>
-        {this.hint !== undefined && this.hint !== '' && (
-          <span id="hint" part="hint" class="hint">
-            <span part="hint-text">{this.hint}</span>
+        <div part="input-row" class="input-row">
+          <span
+            part="leading-icon"
+            class="leading-icon"
+            aria-hidden="true"
+            hidden={!this.hasLeadingIcon}
+          >
+            <slot name="leading-icon" onSlotchange={this.onLeadingSlotChange} />
           </span>
-        )}
-      </form>
+          <input
+            id="input"
+            part="input"
+            class="input"
+            type={oneOf(this.type, options.type.options, options.type.default)}
+            value={this.current}
+            placeholder={fieldPlaceholder(this.placeholder)}
+            disabled={this.isDisabled()}
+            readOnly={this.readOnly}
+            required={this.required}
+            minLength={this.minLength}
+            maxLength={this.maxLength}
+            pattern={this.pattern}
+            autoComplete={this.autoComplete}
+            {...forwardedAttributes(this.hostAttributes)}
+            aria-invalid={appearance.error ? 'true' : undefined}
+            aria-describedby={fieldDescription(this.hint)}
+            onInput={this.onInput}
+            onChange={this.onChange}
+          />
+          <span
+            part="trailing-icon"
+            class="trailing-icon"
+            aria-hidden="true"
+            hidden={!this.hasTrailingIcon}
+          >
+            <slot name="trailing-icon" onSlotchange={this.onTrailingSlotChange} />
+          </span>
+        </div>
+      </Field>
     );
-  }
-
-  private submitValue(value: string): void {
-    submitNamed(this.internals, this.name, value);
   }
 
   private input(): HTMLInputElement | null {
@@ -384,29 +323,6 @@ export class UiTextField implements TextFieldProps, FormAssociated {
   /** Disabled directly or by the owning fieldset. */
   private isDisabled(): boolean {
     return this.disabled || this.formDisabled;
-  }
-
-  private restore(value: string): void {
-    const input = this.input();
-    if (input !== null) {
-      input.value = value;
-    }
-    // The input sanitizes some types, such as email, as soon as it receives the string.
-    this.current = input?.value ?? value;
-    this.submitValue(this.current);
-    this.syncValidity();
-  }
-
-  /**
-   * Copies the validity of the input to the host. Before the first render, which Stencil runs
-   * later, a detached input with the same constraints answers, so that a form checks the field
-   * as soon as it joins; the browser writes its message in the user's language either way.
-   */
-  private syncValidity(): void {
-    const rendered = this.input();
-    const input = rendered ?? this.detachedInput();
-    input.setCustomValidity(this.customValidity);
-    copyValidity(this.internals, input, rendered ?? undefined);
   }
 
   /** An input with the constraints of the field, for checks before the first render. */
@@ -419,85 +335,22 @@ export class UiTextField implements TextFieldProps, FormAssociated {
     if (this.pattern !== undefined) {
       input.pattern = this.pattern;
     }
-    input.value = this.current;
+    input.value = this.control.value;
     return input;
   }
-
-  private observeFormKeys(form: HTMLFormElement | null): void {
-    this.formKeyEvents?.abort();
-    if (form === null || !this.host.isConnected) {
-      return;
-    }
-    this.formKeyEvents = new AbortController();
-    // External inputs with a form attribute do not bubble through the form itself.
-    form.getRootNode().addEventListener('keydown', this.onAssociatedKeyDown, {
-      signal: this.formKeyEvents.signal,
-    });
-  }
-
-  private readonly onAssociatedKeyDown = (event: globalThis.Event): void => {
-    if (
-      !(event instanceof KeyboardEvent) ||
-      event.key !== 'Enter' ||
-      event.isComposing ||
-      event.defaultPrevented
-    ) {
-      return;
-    }
-    const input = event.composedPath()[0];
-    const form = this.internals.form;
-    if (
-      !(input instanceof HTMLInputElement) ||
-      form === null ||
-      input.form !== form ||
-      !this.blocksImplicitSubmission(input)
-    ) {
-      return;
-    }
-    // Native implicit submission does not count form-associated custom elements.
-    if (this.defaultSubmitter(form) === undefined && this.blockingFields(form).length > 1) {
-      event.preventDefault();
-    }
-  };
 
   private readonly onInput = (event: globalThis.Event): void => {
     const input = event.currentTarget;
     if (!(input instanceof HTMLInputElement)) {
       return;
     }
-    this.current = input.value;
-    this.dirty = true;
-    this.submitValue(this.current);
-    this.syncValidity();
-    this.valueChange.emit({ value: this.current, originalEvent: event });
+    this.control.edit(input.value);
+    this.valueChange.emit({ value: input.value, originalEvent: event });
   };
 
   /** The native change event stays in the shadow root, so the host dispatches its own. */
   private readonly onChange = (): void => {
     this.host.dispatchEvent(new globalThis.Event('change', { bubbles: true, composed: true }));
-  };
-
-  /**
-   * The inner form receives Enter as a native default action, after keyboard cancellation and
-   * input methods. Its submit event bridges to the associated outer form.
-   */
-  private readonly onFormSubmit = (event: globalThis.Event): void => {
-    event.preventDefault();
-    event.stopPropagation();
-    const form = this.internals.form;
-    if (form === null || !this.host.isConnected || this.isDisabled()) {
-      return;
-    }
-    const submitter = this.defaultSubmitter(form);
-    if (submitter !== undefined) {
-      if (!submitter.matches(':disabled')) {
-        submitter.click();
-      }
-      return;
-    }
-    if (this.blockingFields(form).length === 1) {
-      form.requestSubmit();
-    }
   };
 
   private readonly onLeadingSlotChange = (event: globalThis.Event): void => {
@@ -507,32 +360,6 @@ export class UiTextField implements TextFieldProps, FormAssociated {
   private readonly onTrailingSlotChange = (event: globalThis.Event): void => {
     this.hasTrailingIcon = hasAssignedContent(event);
   };
-
-  private defaultSubmitter(
-    form: HTMLFormElement,
-  ): HTMLButtonElement | HTMLInputElement | undefined {
-    const root = form.getRootNode();
-    if (!(root instanceof Document || root instanceof ShadowRoot)) {
-      return undefined;
-    }
-    return Array.from(root.querySelectorAll('button, input')).find(
-      (node): node is HTMLButtonElement | HTMLInputElement =>
-        (node instanceof HTMLButtonElement || node instanceof HTMLInputElement) &&
-        node.form === form &&
-        (node.type === 'submit' || node.type === 'image'),
-    );
-  }
-
-  private blocksImplicitSubmission(node: globalThis.Element): boolean {
-    return (
-      node.localName === 'ui-text-field' ||
-      (node instanceof HTMLInputElement && IMPLICIT_SUBMISSION_TYPES.includes(node.type))
-    );
-  }
-
-  private blockingFields(form: HTMLFormElement): globalThis.Element[] {
-    return Array.from(form.elements).filter((node) => this.blocksImplicitSubmission(node));
-  }
 }
 
 /**
