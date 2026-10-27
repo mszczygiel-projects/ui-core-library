@@ -58,7 +58,8 @@ export function Badge({
         iconOnly && 'ui-badge--icon-only',
         className,
       )}
-      role={named ? 'img' : rest.role}
+      // An explicit role of the author, such as status, stays; the image role is the fallback.
+      role={rest.role ?? (named ? 'img' : undefined)}
       aria-label={named ? name : iconOnly ? undefined : ariaLabel}
     >
       {hasIcon && (

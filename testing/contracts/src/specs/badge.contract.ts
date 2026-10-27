@@ -87,10 +87,16 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
       { tone: 'success' },
       { attributes: { role: 'status', 'aria-label': 'Build state' } },
     );
+    const kept = () => [
+      component.element.getAttribute('role'),
+      component.element.getAttribute('aria-label'),
+    ];
+    // With only an icon, the role of the page still wins over the image role.
     await component.update({ label: 'Passing', icon: true, children: '' });
+    expect(kept()).toEqual(['status', 'Build state']);
+    expect((await component.accessibleTree()).some((node) => node.role === 'status')).toBe(true);
     await component.update({ children: 'Passing' });
-    expect(component.element.getAttribute('role')).toBe('status');
-    expect(component.element.getAttribute('aria-label')).toBe('Build state');
+    expect(kept()).toEqual(['status', 'Build state']);
   });
 
   for (const density of ['comfortable', 'compact'] as const) {

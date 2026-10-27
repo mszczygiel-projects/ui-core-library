@@ -56,7 +56,7 @@ A badge with an icon and no text is a square of its height. Give it a `label`, w
 
 - **Pattern.** No WAI-ARIA pattern applies: a badge is static text, read in the flow of the page.
 - **Name.** The text names a badge. A badge with only an icon has the role `img` and the name of `label`; an author's `aria-label` wins over it. The icon is decorative.
-- **Host.** The web component writes no role or ARIA attribute on its host, so a role such as `status` that the page sets there stays.
+- **Role of the page.** A role such as `status` that the page gives a badge stays, also when it shows only an icon, so that its changes are still announced. The web component writes no role or ARIA attribute on its host.
 - **Contrast.** Text has a contrast of at least 4.5 to 1 with its fill for every tone and variant, in Light and Dark, on every surface.
 - **Preferences.** In forced colours, an outline keeps the shape of a badge whose fill disappears.
 

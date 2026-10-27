@@ -10,7 +10,7 @@ import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import { Component, Element, h, Prop, State, type VNode } from '@stencil/core';
 
 import { followAttribute } from '../internal/follow-attribute.ts';
-import { hasAssignedContent, hasAssignedText } from '../internal/slots.ts';
+import { hasAssignedContent, hasAssignedText, slotHasText } from '../internal/slots.ts';
 
 const { options } = badge;
 
@@ -58,15 +58,25 @@ export class UiBadge implements BadgeProps {
 
   private stopFollowing: (() => void) | undefined;
 
+  /** Follows edits of the text nodes in the light DOM, which fire no `slotchange`. */
+  private readonly textObserver = new MutationObserver(() => {
+    const slot = this.host.shadowRoot?.querySelector('slot:not([name])');
+    if (slot instanceof HTMLSlotElement) {
+      this.hasText = slotHasText(slot);
+    }
+  });
+
   connectedCallback(): void {
     this.stopFollowing = followAttribute(this.host, 'aria-label', (value) => {
       this.authorLabel = value;
     });
+    this.textObserver.observe(this.host, { characterData: true, subtree: true });
   }
 
   disconnectedCallback(): void {
     this.stopFollowing?.();
     this.stopFollowing = undefined;
+    this.textObserver.disconnect();
   }
 
   render(): VNode {

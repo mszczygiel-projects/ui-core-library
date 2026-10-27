@@ -51,6 +51,20 @@ describe('ui-badge', () => {
     expect(element.getAttribute('aria-label')).toBe('Build state');
   });
 
+  it('shows text written into a text node it already holds', async () => {
+    const element = Object.assign(document.createElement('ui-badge'), { label: 'Verified' });
+    const text = document.createTextNode(' ');
+    element.append(Object.assign(document.createElement('span'), { slot: 'icon' }), text);
+    document.body.append(element);
+    await nextRender();
+    const label = element.shadowRoot?.querySelector('[part="label"]');
+    expect(label?.hasAttribute('hidden')).toBe(true);
+    text.data = 'Verified seller';
+    await nextRender();
+    expect(label?.hasAttribute('hidden')).toBe(false);
+    expect(element.shadowRoot?.querySelector('[part="base"]')?.hasAttribute('role')).toBe(false);
+  });
+
   it('becomes an image named by its label once only an icon is left', async () => {
     const element = Object.assign(document.createElement('ui-badge'), { label: 'Verified' });
     element.append(Object.assign(document.createElement('span'), { slot: 'icon' }), '  ');
