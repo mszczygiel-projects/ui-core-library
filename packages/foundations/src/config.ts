@@ -21,6 +21,10 @@ export interface UiCoreLabels {
     /** The description of a button while its action is in progress. */
     readonly loading: string;
   };
+  readonly iconButton: {
+    /** The description of an icon button while its action is in progress. */
+    readonly loading: string;
+  };
   readonly loader: {
     /** The accessible name of a loader that has no `label` of its own. */
     readonly label: string;
@@ -44,6 +48,7 @@ export interface UiCoreConfigInput {
 /** The English labels that the packages ship. */
 export const defaultLabels: UiCoreLabels = freezeLabels({
   button: { loading: 'Loading' },
+  iconButton: { loading: 'Loading' },
   loader: { label: 'Loading' },
 });
 

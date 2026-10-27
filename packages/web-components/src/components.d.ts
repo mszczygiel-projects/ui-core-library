@@ -6,10 +6,14 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
+import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 import { TextFieldValueChange } from "./text-field/events";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
+export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export { TextFieldValueChange } from "./text-field/events";
@@ -63,6 +67,100 @@ export namespace Components {
           * @default 'primary'
          */
         "variant": ButtonVariant;
+    }
+    /**
+     * Triggers an action named only by an icon, as a square of the height of a button.
+     * The native button inside the shadow root owns the accessible semantics, named by `label`. The
+     * host takes part in its outer form through ElementInternals, as Button does.
+     */
+    interface UiIconButton {
+        /**
+          * Disables interaction and removes the native control from keyboard navigation.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The accessible name of the action, which nothing visible gives. An author's `aria-label` wins.
+          * @default ''
+         */
+        "label": string;
+        /**
+          * Blocks activation while keeping focus and the accessible name.
+          * @default false
+         */
+        "loading": boolean;
+        /**
+          * The description of the loading state, falling back to `labels.iconButton.loading`.
+         */
+        "loadingLabel"?: string;
+        /**
+          * The name of the form entry, submitted only when this button submits.
+         */
+        "name"?: string;
+        /**
+          * The size, which follows the density and matches the height of a button.
+          * @default 'medium'
+         */
+        "size": IconButtonSize;
+        /**
+          * The native form action; an ordinary action does not submit.
+          * @default 'button'
+         */
+        "type": IconButtonType;
+        /**
+          * The value submitted with the name; it identifies the action and is not edited.
+          * @default ''
+         */
+        "value": string;
+        /**
+          * The visual emphasis of the action.
+          * @default 'primary'
+         */
+        "variant": IconButtonVariant;
+    }
+    /**
+     * Navigates to another page or resource while looking like a button.
+     * The native link inside the shadow root owns the accessible semantics and the navigation, so
+     * opening it in a new tab or copying its address works as on any link. A disabled link has no
+     * address, so no pointer, key or menu can follow it.
+     */
+    interface UiLinkButton {
+        /**
+          * Turns the link into text that cannot be focused or followed, by any pointer or key.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Downloads the resource instead of navigating, under the given file name when not empty.
+         */
+        "download"?: string;
+        /**
+          * The address to navigate to. A disabled link has none.
+          * @default ''
+         */
+        "href": string;
+        /**
+          * An accessible name replacing the visible content. An author's `aria-label` wins.
+         */
+        "label"?: string;
+        /**
+          * The relationship to the linked resource, written as given.
+         */
+        "rel"?: string;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": LinkButtonSize;
+        /**
+          * The browsing context to open the address in, such as `_blank`.
+         */
+        "target"?: string;
+        /**
+          * The visual emphasis of the link.
+          * @default 'primary'
+         */
+        "variant": LinkButtonVariant;
     }
     /**
      * Shows that content is loading or that an action is in progress.
@@ -181,6 +279,29 @@ declare global {
         new (): HTMLUiButtonElement;
     };
     /**
+     * Triggers an action named only by an icon, as a square of the height of a button.
+     * The native button inside the shadow root owns the accessible semantics, named by `label`. The
+     * host takes part in its outer form through ElementInternals, as Button does.
+     */
+    interface HTMLUiIconButtonElement extends Components.UiIconButton, HTMLStencilElement {
+    }
+    var HTMLUiIconButtonElement: {
+        prototype: HTMLUiIconButtonElement;
+        new (): HTMLUiIconButtonElement;
+    };
+    /**
+     * Navigates to another page or resource while looking like a button.
+     * The native link inside the shadow root owns the accessible semantics and the navigation, so
+     * opening it in a new tab or copying its address works as on any link. A disabled link has no
+     * address, so no pointer, key or menu can follow it.
+     */
+    interface HTMLUiLinkButtonElement extends Components.UiLinkButton, HTMLStencilElement {
+    }
+    var HTMLUiLinkButtonElement: {
+        prototype: HTMLUiLinkButtonElement;
+        new (): HTMLUiLinkButtonElement;
+    };
+    /**
      * Shows that content is loading or that an action is in progress.
      * The loader is a progress indicator without a value. Its role and its accessible name go through
      * `ElementInternals`, so an `aria-label` that the page sets on the element wins. It draws the
@@ -218,6 +339,8 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "ui-button": HTMLUiButtonElement;
+        "ui-icon-button": HTMLUiIconButtonElement;
+        "ui-link-button": HTMLUiLinkButtonElement;
         "ui-loader": HTMLUiLoaderElement;
         "ui-text-field": HTMLUiTextFieldElement;
     }
@@ -276,6 +399,104 @@ declare namespace LocalJSX {
           * @default 'primary'
          */
         "variant"?: ButtonVariant;
+    }
+    /**
+     * Triggers an action named only by an icon, as a square of the height of a button.
+     * The native button inside the shadow root owns the accessible semantics, named by `label`. The
+     * host takes part in its outer form through ElementInternals, as Button does.
+     */
+    interface UiIconButton {
+        /**
+          * Disables interaction and removes the native control from keyboard navigation.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * The accessible name of the action, which nothing visible gives. An author's `aria-label` wins.
+          * @default ''
+         */
+        "label"?: string;
+        /**
+          * Blocks activation while keeping focus and the accessible name.
+          * @default false
+         */
+        "loading"?: boolean;
+        /**
+          * The description of the loading state, falling back to `labels.iconButton.loading`.
+         */
+        "loadingLabel"?: string;
+        /**
+          * The name of the form entry, submitted only when this button submits.
+         */
+        "name"?: string;
+        /**
+          * The size, which follows the density and matches the height of a button.
+          * @default 'medium'
+         */
+        "size"?: IconButtonSize;
+        /**
+          * The native form action; an ordinary action does not submit.
+          * @default 'button'
+         */
+        "type"?: IconButtonType;
+        /**
+          * The value submitted with the name; it identifies the action and is not edited.
+          * @default ''
+         */
+        "value"?: string;
+        /**
+          * The visual emphasis of the action.
+          * @default 'primary'
+         */
+        "variant"?: IconButtonVariant;
+    }
+    /**
+     * Navigates to another page or resource while looking like a button.
+     * The native link inside the shadow root owns the accessible semantics and the navigation, so
+     * opening it in a new tab or copying its address works as on any link. A disabled link has no
+     * address, so no pointer, key or menu can follow it.
+     */
+    interface UiLinkButton {
+        /**
+          * Turns the link into text that cannot be focused or followed, by any pointer or key.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Downloads the resource instead of navigating, under the given file name when not empty.
+         */
+        "download"?: string;
+        /**
+          * The address to navigate to. A disabled link has none.
+          * @default ''
+         */
+        "href"?: string;
+        /**
+          * An accessible name replacing the visible content. An author's `aria-label` wins.
+         */
+        "label"?: string;
+        /**
+          * The relationship to the linked resource, written as given.
+         */
+        "rel"?: string;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: LinkButtonSize;
+        /**
+          * The browsing context to open the address in, such as `_blank`.
+         */
+        "target"?: string;
+        /**
+          * The visual emphasis of the link.
+          * @default 'primary'
+         */
+        "variant"?: LinkButtonVariant;
     }
     /**
      * Shows that content is loading or that an action is in progress.
@@ -395,6 +616,27 @@ declare namespace LocalJSX {
         "label": string;
         "loadingLabel": string;
     }
+    interface UiIconButtonAttributes {
+        "label": string;
+        "variant": IconButtonVariant;
+        "size": IconButtonSize;
+        "disabled": boolean;
+        "loading": boolean;
+        "type": IconButtonType;
+        "name": string;
+        "value": string;
+        "loadingLabel": string;
+    }
+    interface UiLinkButtonAttributes {
+        "href": string;
+        "target": string;
+        "rel": string;
+        "download": string;
+        "variant": LinkButtonVariant;
+        "size": LinkButtonSize;
+        "disabled": boolean;
+        "label": string;
+    }
     interface UiLoaderAttributes {
         "size": LoaderSize;
         "label": string;
@@ -420,6 +662,8 @@ declare namespace LocalJSX {
 
     interface IntrinsicElements {
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
+        "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
+        "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
     }
@@ -435,6 +679,19 @@ declare module "@stencil/core" {
              * that activation, and the outer submit event has no submitter.
              */
             "ui-button": LocalJSX.IntrinsicElements["ui-button"] & JSXBase.HTMLAttributes<HTMLUiButtonElement>;
+            /**
+             * Triggers an action named only by an icon, as a square of the height of a button.
+             * The native button inside the shadow root owns the accessible semantics, named by `label`. The
+             * host takes part in its outer form through ElementInternals, as Button does.
+             */
+            "ui-icon-button": LocalJSX.IntrinsicElements["ui-icon-button"] & JSXBase.HTMLAttributes<HTMLUiIconButtonElement>;
+            /**
+             * Navigates to another page or resource while looking like a button.
+             * The native link inside the shadow root owns the accessible semantics and the navigation, so
+             * opening it in a new tab or copying its address works as on any link. A disabled link has no
+             * address, so no pointer, key or menu can follow it.
+             */
+            "ui-link-button": LocalJSX.IntrinsicElements["ui-link-button"] & JSXBase.HTMLAttributes<HTMLUiLinkButtonElement>;
             /**
              * Shows that content is loading or that an action is in progress.
              * The loader is a progress indicator without a value. Its role and its accessible name go through

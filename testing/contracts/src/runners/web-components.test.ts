@@ -1,13 +1,19 @@
-import '@mszczygiel-projects/ui-core-web-components/loader';
 import '@mszczygiel-projects/ui-core-web-components/button';
+import '@mszczygiel-projects/ui-core-web-components/icon-button';
+import '@mszczygiel-projects/ui-core-web-components/link-button';
+import '@mszczygiel-projects/ui-core-web-components/loader';
 import '@mszczygiel-projects/ui-core-web-components/text-field';
 
 import { describe } from 'vitest';
 
 import { mountWebComponentButton } from '../harness/button.tsx';
+import { mountWebComponentIconButton } from '../harness/icon-button.tsx';
+import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
 import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { webComponentMount } from '../harness/web-component.ts';
 import { buttonContract } from '../specs/button.contract.ts';
+import { iconButtonContract } from '../specs/icon-button.contract.ts';
+import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 
@@ -21,4 +27,12 @@ describe('Button, web component', () => {
 
 describe('TextField, web component', () => {
   textFieldContract(mountWebComponentTextField);
+});
+
+describe('IconButton, web component', () => {
+  iconButtonContract(mountWebComponentIconButton);
+});
+
+describe('LinkButton, web component', () => {
+  linkButtonContract(mountWebComponentLinkButton);
 });

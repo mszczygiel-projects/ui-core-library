@@ -1,0 +1,186 @@
+/*
+ * The surface of every action: Button, IconButton and LinkButton. The element with the class
+ * `action` takes a variant and a size class, and `loading` or `disabled` where its element has no
+ * native disabled state.
+ */
+
+.action {
+  --_font-size: var(--button-font-size);
+  --_line-height: var(--button-line-height);
+  --_gap: var(--button-gap);
+  --_icon-size: var(--button-icon-size);
+  --_padding-inline: var(--button-padding-inline);
+  --_padding-stack: var(--button-padding-stack);
+  --_radius: var(--button-radius);
+  --_text-transform: var(--button-text-uppercase);
+
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding-block: var(--_padding-stack);
+  padding-inline: var(--_padding-inline);
+  border: var(--button-border-width) solid var(--_border);
+  border-radius: var(--_radius);
+  background: var(--_background);
+  color: var(--_text);
+  font-family: var(--button-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--button-letter-spacing);
+  text-transform: var(--_text-transform);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.action:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.action:is(:disabled, .disabled) {
+  cursor: not-allowed;
+}
+
+.action.loading:not(:disabled, .disabled) {
+  cursor: progress;
+}
+
+.action.small {
+  --_font-size: var(--button-small-font-size);
+  --_line-height: var(--button-small-line-height);
+  --_gap: var(--button-small-gap);
+  --_icon-size: var(--button-small-icon-size);
+  --_padding-inline: var(--button-small-padding-inline);
+  --_padding-stack: var(--button-small-padding-stack);
+  --_radius: var(--button-small-radius);
+}
+
+.action.large {
+  --_font-size: var(--button-large-font-size);
+  --_line-height: var(--button-large-line-height);
+  --_gap: var(--button-large-gap);
+  --_icon-size: var(--button-large-icon-size);
+  --_padding-inline: var(--button-large-padding-inline);
+  --_padding-stack: var(--button-large-padding-stack);
+  --_radius: var(--button-large-radius);
+}
+
+.action.primary {
+  --_background: var(--color-button-primary-background-default);
+  --_border: var(--color-button-primary-border-default);
+  --_text: var(--color-button-primary-text-default);
+}
+
+.action.primary:is(:disabled, .disabled) {
+  --_background: var(--color-button-primary-background-disabled);
+  --_border: var(--color-button-primary-border-disabled);
+  --_text: var(--color-button-primary-text-disabled);
+}
+
+.action.primary:is(:hover, :active):not(:disabled, .disabled, .loading) {
+  --_background: var(--color-button-primary-background-active);
+  --_border: var(--color-button-primary-border-active);
+  --_text: var(--color-button-primary-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+.action.secondary {
+  --_background: var(--color-button-secondary-background-default);
+  --_border: var(--color-button-secondary-border-default);
+  --_text: var(--color-button-secondary-text-default);
+}
+
+.action.secondary:is(:disabled, .disabled) {
+  --_background: var(--color-button-secondary-background-disabled);
+  --_border: var(--color-button-secondary-border-disabled);
+  --_text: var(--color-button-secondary-text-disabled);
+}
+
+.action.secondary:is(:hover, :active):not(:disabled, .disabled, .loading) {
+  --_background: var(--color-button-secondary-background-active);
+  --_border: var(--color-button-secondary-border-active);
+  --_text: var(--color-button-secondary-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+.action.outline {
+  --_background: var(--color-button-outline-background-default);
+  --_border: var(--color-button-outline-border-default);
+  --_text: var(--color-button-outline-text-default);
+}
+
+.action.outline:is(:disabled, .disabled) {
+  --_background: var(--color-button-outline-background-disabled);
+  --_border: var(--color-button-outline-border-disabled);
+  --_text: var(--color-button-outline-text-disabled);
+}
+
+.action.outline:is(:hover, :active):not(:disabled, .disabled, .loading) {
+  --_background: var(--color-button-outline-background-active);
+  --_border: var(--color-button-outline-border-active);
+  --_text: var(--color-button-outline-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+.action.ghost {
+  --_background: var(--color-button-ghost-background-default);
+  --_border: var(--color-button-ghost-border-default);
+  --_text: var(--color-button-ghost-text-default);
+}
+
+.action.ghost:is(:disabled, .disabled) {
+  --_background: var(--color-button-ghost-background-default);
+  --_border: var(--color-button-ghost-border-default);
+  --_text: var(--color-button-ghost-text-disabled);
+}
+
+.action.ghost:is(:hover, :active):not(:disabled, .disabled, .loading) {
+  --_background: var(--color-button-ghost-background-default);
+  --_border: var(--color-button-ghost-border-default);
+  --_text: var(--color-button-ghost-text-active);
+}
+
+.action.danger {
+  --_background: var(--color-button-danger-background-default);
+  --_border: var(--color-button-danger-border-default);
+  --_text: var(--color-button-danger-text-default);
+}
+
+.action.danger:is(:disabled, .disabled) {
+  --_background: var(--color-button-danger-background-disabled);
+  --_border: var(--color-button-danger-border-disabled);
+  --_text: var(--color-button-danger-text-disabled);
+}
+
+.action.danger:is(:hover, :active):not(:disabled, .disabled, .loading) {
+  --_background: var(--color-button-danger-background-active);
+  --_border: var(--color-button-danger-border-default);
+  --_text: var(--color-button-danger-text-active);
+
+  box-shadow: var(--button-shadow-active) var(--color-button-shadow);
+}
+
+@media (forced-colors: active) {
+  .action {
+    color: ButtonText;
+    border-color: ButtonText;
+  }
+
+  .action:is(:disabled, .disabled) {
+    color: GrayText;
+    border-color: GrayText;
+  }
+
+  .action:focus-visible {
+    outline-color: Highlight;
+  }
+}

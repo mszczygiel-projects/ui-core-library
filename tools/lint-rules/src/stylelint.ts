@@ -6,6 +6,9 @@
  * The configuration passes Stylelint in, so this tool needs it only for its tests and never adds
  * it to what the repository depends on at run time.
  */
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { basename, dirname, join } from 'node:path';
+
 import valueParser from 'postcss-value-parser';
 import type stylelint from 'stylelint';
 
@@ -29,6 +32,30 @@ export function customPropertiesRead(value: string): string[] {
     }
   });
   return names;
+}
+
+/**
+ * The private aliases that the shared stylesheets of a package declare, in `src/internal`, for a
+ * component stylesheet in a folder beside it. A family of components, such as the actions, reads
+ * them from its shared surface; any other stylesheet reads only its own.
+ */
+export function sharedAliases(file: string | undefined): Set<string> {
+  const aliases = new Set<string>();
+  if (file === undefined || basename(dirname(file)) === 'internal') {
+    return aliases;
+  }
+  const internal = join(dirname(dirname(file)), 'internal');
+  if (!existsSync(internal)) {
+    return aliases;
+  }
+  for (const name of readdirSync(internal).filter((entry) => entry.endsWith('.css'))) {
+    for (const [, alias = ''] of readFileSync(join(internal, name), 'utf8').matchAll(
+      /(--_[\w-]+)\s*:/g,
+    )) {
+      aliases.add(alias);
+    }
+  }
+  return aliases;
 }
 
 /**
@@ -109,10 +136,10 @@ export function uiCorePlugins(stylelintApi: typeof stylelint): stylelint.Plugin[
     'ui-core/known-tokens',
     (name = '') =>
       name.startsWith('--_')
-        ? `${name} is read but never declared in this stylesheet: a component reads only its own private aliases`
+        ? `${name} is read but never declared in this stylesheet: a component reads only its own private aliases and those of the shared stylesheets of its package`
         : `Unknown token ${name}: take token names from packages/foundations/token-names.txt`,
     (root, report) => {
-      const declared = new Set<string>();
+      const declared = sharedAliases(root.source?.input.file);
       root.walkDecls((declaration) => {
         if (declaration.prop.startsWith('--_')) {
           declared.add(declaration.prop);

@@ -1,0 +1,101 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { WebComponentApi, ReactApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './LinkButton.wc.stories.tsx';
+import * as ReactStories from './LinkButton.react.stories.tsx';
+
+<Meta title="Components/Actions/LinkButton/Docs" />
+
+# LinkButton
+
+<ComponentOverview name="LinkButton" />
+
+## Usage
+
+Use LinkButton when a prominent control takes the user to another page or resource: starting a sign-up, comparing plans, downloading a file. Use Button when the control acts on the current page. Users expect a link to open in a new tab and to show its address; LinkButton keeps both.
+
+In Figma, design with Button. LinkButton looks the same, and the code chooses the element.
+
+## Anatomy
+
+The **base** is the native link. Its **content** holds **leading-icon**, **label** and **trailing-icon**, in reading order. The web component exposes these as parts; React uses the matching `.ui-link-button__<part>` classes. The focus ring is an outline on base.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+LinkButton has the variants of Button: `primary`, the default, `secondary`, `outline`, `ghost` and `danger`.
+
+## Sizes & density
+
+`small`, `medium` (the default) and `large` take the geometry of Button of the same size, so a link and a button line up.
+
+## States
+
+Hover and press use the active colours of Button, with its shadow apart from ghost. Focus adds the shared ring. `disabled` removes the address: nothing can focus or follow the link, by pointer, keyboard or menu, and it takes the disabled colours. LinkButton has no loading state, since following a link has no progress of its own.
+
+## Content & labels
+
+The default slot or `children` names the link. `label` supplies an alternative accessible name; an author's `aria-label` wins. Keep the visible name in any alternative name.
+
+Supply trusted SVG nodes in the `leading-icon` and `trailing-icon` slots, or in `leadingIcon` and `trailingIcon`. They are decorative and follow the reading direction. LinkButton renders no text of its own, so it has no labels in the configuration.
+
+## Behaviour
+
+- `href`, `target`, `rel` and `download` reach the native link as given. LinkButton adds no relationship: browsers already open `target="_blank"` without access to the opener, and whether to send the referrer is the page's choice.
+- Clicking follows the link natively, so a modified click, a middle click and the context menu work as on any link. A click on a disabled link stops at the link, as on a disabled button.
+- An unknown `variant` or `size` falls back to the default.
+- In React, `render` renders the link with the link component of a router, which receives the props of the native link and must render an `<a>` with them. A disabled link ignores it.
+
+<Source
+  language="tsx"
+  code={`import Link from 'next/link';
+
+<LinkButton href="/pricing" render={(props) => <Link {...props} />}>
+  See pricing
+</LinkButton>`}
+/>
+
+A web component cannot render a component of another framework. An application with client-side routing intercepts the native link instead, as its router does for every link.
+
+## Accessibility
+
+- **Pattern.** The [WAI-ARIA link pattern](https://www.w3.org/WAI/ARIA/apg/patterns/link/) is implemented by a native link in both frameworks. The web component does not add a duplicate role to its host.
+- **Keys.** Tab and Shift+Tab move focus. Enter follows the link; Space does not, as on any link.
+- **Disabled.** A link without an address has no role, so a disabled LinkButton states the role `link` with `aria-disabled`. It stays readable but is skipped by Tab.
+- **Names across shadow roots.** The web component forwards the host's `aria-label` to its inner link; prefer `label`.
+- **Preferences.** The ring and border remain visible in forced colours.
+
+## Surfaces & themes
+
+Colours follow the surrounding theme and surface, from the same tokens as Button.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="LinkButton" />}
+  webComponents={<WebComponentApi tag="ui-link-button" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { LinkButton } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/link-button';`}
+/>
+
+## Tokens
+
+LinkButton has no tokens of its own: it reads the tokens of Button, so a change to Button restyles both.
+
+<ComponentTokens component="button" />
+
+## Implementation notes
+
+- Both implementations share the surface of every action, its variants, states and focus ring, with Button and IconButton.
+- The web component uses an open shadow root with focus delegation. It is not form-associated: a link takes no part in a form.
+- React renders one native link, or the component that `render` returns. Its ref reaches the link, and a listener on it stops a click on a disabled link before it bubbles.
+- LinkButton has no Figma component set and no Code Connect template; designs use Button.

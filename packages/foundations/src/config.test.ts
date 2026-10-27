@@ -95,7 +95,11 @@ describe('the configuration', () => {
     Reflect.set(state, 'loaderVariant', 'dots');
     Reflect.set(state, 'version', Number(Reflect.get(state, 'version')) + 1);
     expect(getUiCoreConfig()).toEqual({
-      labels: { button: { loading: 'Loading' }, loader: { label: 'Wait' } },
+      labels: {
+        button: { loading: 'Loading' },
+        iconButton: { loading: 'Loading' },
+        loader: { label: 'Wait' },
+      },
       loaderVariant: 'spinner' satisfies LoaderVariant,
     });
   });

@@ -1,0 +1,25 @@
+.ui-link-button.ui-action {
+  text-decoration: none;
+}
+
+.ui-link-button__content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap);
+}
+
+:is(.ui-link-button__leading-icon, .ui-link-button__trailing-icon) {
+  font-size: var(--_icon-size);
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  pointer-events: none;
+}
+
+:is(.ui-link-button__leading-icon, .ui-link-button__trailing-icon) > * {
+  display: inline-flex;
+  inline-size: 100%;
+  block-size: 100%;
+}

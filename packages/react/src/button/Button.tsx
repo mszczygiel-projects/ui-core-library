@@ -8,33 +8,17 @@ import {
   type ButtonVariant,
 } from '@mszczygiel-projects/ui-core-shared/button';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
-import { type ComponentPropsWithRef, type ReactNode, useCallback, useId } from 'react';
+import { type ComponentPropsWithRef, type ReactNode, useId } from 'react';
 
+import { useActionRef } from '../internal/action.ts';
 import { classNames } from '../internal/class-names.ts';
 import { rendersContent } from '../internal/renders-content.ts';
-import { setRef } from '../internal/set-ref.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
 import { Loader } from '../loader/Loader.tsx';
 
 export type { ButtonSize, ButtonType, ButtonVariant };
 
 const { options } = button;
-
-/**
- * Cancels a click on a disabled or loading button where it starts, before it bubbles to the page
- * or reaches `onClick`, as the web component does. React's own handlers listen at its root, where
- * stopping the click would also hide it from the page's listeners between the root and the button.
- */
-function cancelInactiveClick(event: MouseEvent): void {
-  const button = event.currentTarget;
-  if (
-    button instanceof HTMLButtonElement &&
-    (button.matches(':disabled') || button.classList.contains('ui-button--loading'))
-  ) {
-    event.preventDefault();
-    event.stopImmediatePropagation();
-  }
-}
 
 /** The props of Button. Remaining attributes and ref reach its native button. */
 export interface ButtonProps
@@ -73,17 +57,7 @@ export function Button({
 }: ButtonProps) {
   const { labels } = useUiCoreConfig();
   const descriptionId = useId();
-  const buttonRef = useCallback(
-    (button: HTMLButtonElement) => {
-      button.addEventListener('click', cancelInactiveClick, { capture: true });
-      const release = setRef(ref, button);
-      return () => {
-        button.removeEventListener('click', cancelInactiveClick, { capture: true });
-        release();
-      };
-    },
-    [ref],
-  );
+  const buttonRef = useActionRef(ref);
   const buttonSize = oneOf(size, options.size.options, options.size.default);
   return (
     <button
@@ -98,9 +72,10 @@ export function Button({
       className={classNames(
         'ui-button',
         'ui-button__base',
-        `ui-button--${oneOf(variant, options.variant.options, options.variant.default)}`,
-        `ui-button--${buttonSize}`,
-        loading && 'ui-button--loading',
+        'ui-action',
+        `ui-action--${oneOf(variant, options.variant.options, options.variant.default)}`,
+        `ui-action--${buttonSize}`,
+        loading && 'ui-action--loading',
         className,
       )}
       {...rest}

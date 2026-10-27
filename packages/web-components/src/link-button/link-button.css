@@ -1,0 +1,37 @@
+:host {
+  display: inline-flex;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  text-decoration: none;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap);
+}
+
+.icon {
+  font-size: var(--_icon-size);
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  pointer-events: none;
+}
+
+.icon[hidden] {
+  display: none;
+}
+
+.icon ::slotted(*) {
+  display: inline-flex;
+  inline-size: 100%;
+  block-size: 100%;
+}
