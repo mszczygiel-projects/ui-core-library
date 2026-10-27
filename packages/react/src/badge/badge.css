@@ -115,6 +115,11 @@
   --_text: var(--color-badge-error-subtle-text);
 }
 
+/* The inline-flex display above would otherwise show a badge that the page hides. */
+.ui-badge[hidden] {
+  display: none;
+}
+
 @media (forced-colors: active) {
   /* The fill disappears, so an outline keeps the shape of the badge. */
   .ui-badge {

@@ -99,6 +99,12 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
     expect(kept()).toEqual(['status', 'Build state']);
   });
 
+  it('disappears when the page hides it', async () => {
+    const component = await mount({}, { attributes: { hidden: 'hidden' } });
+    expect(getComputedStyle(component.element).display).toBe('none');
+    expect((await component.accessibleTree()).some((node) => node.name === 'Active')).toBe(false);
+  });
+
   for (const density of ['comfortable', 'compact'] as const) {
     it(`takes the height of its size, and with only an icon is a square, in ${density} density`, async () => {
       for (const size of options.size.options) {
