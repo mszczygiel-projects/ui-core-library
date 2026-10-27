@@ -30,7 +30,13 @@ export const notification = defineComponent({
   slots: [],
   events: ['ui-dismiss'],
   stories: ['Playground', 'Variants', 'Dismissible', 'Announced', 'OnSurfaces'],
-  exceptions: [],
+  exceptions: [
+    {
+      items: ['form', 'validity', 'validationMessage', 'willValidate'],
+      reason:
+        'The web component is form-associated only to follow a disabled fieldset, as the native dismiss button of React does. It submits nothing and exposes no form API.',
+    },
+  ],
 });
 
 /** The feedback a notification gives: information, a success, a warning or an error. */

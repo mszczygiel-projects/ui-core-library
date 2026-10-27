@@ -154,13 +154,17 @@
   inset: min(0%, (100% - var(--notification-dismiss-target-min-size)) / 2);
 }
 
-.dismiss:is(:hover, :active) {
-  background-color: var(--color-notification-dismiss-background-active);
+.dismiss:disabled {
+  cursor: not-allowed;
 }
 
 .dismiss:focus-visible {
   outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
   outline-offset: var(--ring-offset);
+}
+
+.dismiss:is(:hover, :active):not(:disabled) {
+  background-color: var(--color-notification-dismiss-background-active);
 }
 
 .dismiss-icon {

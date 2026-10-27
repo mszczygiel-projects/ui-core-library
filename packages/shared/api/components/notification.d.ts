@@ -33,7 +33,10 @@ export declare const notification: {
     readonly slots: readonly [];
     readonly events: readonly ["ui-dismiss"];
     readonly stories: readonly ["Playground", "Variants", "Dismissible", "Announced", "OnSurfaces"];
-    readonly exceptions: readonly [];
+    readonly exceptions: readonly [{
+        readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
+        readonly reason: "The web component is form-associated only to follow a disabled fieldset, as the native dismiss button of React does. It submits nothing and exposes no form API.";
+    }];
 };
 export type NotificationTone = OptionOf<typeof notification, 'tone'>;
 export type NotificationVariant = OptionOf<typeof notification, 'variant'>;

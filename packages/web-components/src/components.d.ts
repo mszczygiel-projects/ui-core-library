@@ -276,7 +276,8 @@ export namespace Components {
      * reader reads a notification that the page inserts. A dismissible notification adds a button
      * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
      * notification. The host belongs to the page: the component reflects no prop and writes no role
-     * or ARIA attribute on it.
+     * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+     * disables the dismiss button as it does a native one; it submits nothing.
      */
     interface UiNotification {
         /**
@@ -507,7 +508,8 @@ declare global {
      * reader reads a notification that the page inserts. A dismissible notification adds a button
      * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
      * notification. The host belongs to the page: the component reflects no prop and writes no role
-     * or ARIA attribute on it.
+     * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+     * disables the dismiss button as it does a native one; it submits nothing.
      */
     interface HTMLUiNotificationElement extends Components.UiNotification, HTMLStencilElement {
         addEventListener<K extends keyof HTMLUiNotificationElementEventMap>(type: K, listener: (this: HTMLUiNotificationElement, ev: UiNotificationCustomEvent<HTMLUiNotificationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -831,7 +833,8 @@ declare namespace LocalJSX {
      * reader reads a notification that the page inserts. A dismissible notification adds a button
      * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
      * notification. The host belongs to the page: the component reflects no prop and writes no role
-     * or ARIA attribute on it.
+     * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+     * disables the dismiss button as it does a native one; it submits nothing.
      */
     interface UiNotification {
         /**
@@ -839,6 +842,10 @@ declare namespace LocalJSX {
           * @default false
          */
         "announce"?: boolean;
+        /**
+          * If `true`, the user cannot interact with the element.
+         */
+        "disabled"?: boolean;
         /**
           * The word that names the dismiss button before the heading, falling back to `labels.notification.dismiss`.
          */
@@ -849,6 +856,10 @@ declare namespace LocalJSX {
          */
         "dismissible"?: boolean;
         /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
           * Shows the icon of the tone before the heading.
           * @default false
          */
@@ -857,6 +868,10 @@ declare namespace LocalJSX {
           * The message in one short line. The content of the notification describes it further.
          */
         "heading"?: string;
+        /**
+          * The name of the element, used when submitting an HTML form.
+         */
+        "name"?: string;
         /**
           * The user asked to remove the notification with its dismiss button.
          */
@@ -1111,7 +1126,8 @@ declare module "@stencil/core" {
              * reader reads a notification that the page inserts. A dismissible notification adds a button
              * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
              * notification. The host belongs to the page: the component reflects no prop and writes no role
-             * or ARIA attribute on it.
+             * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+             * disables the dismiss button as it does a native one; it submits nothing.
              */
             "ui-notification": LocalJSX.IntrinsicElements["ui-notification"] & JSXBase.HTMLAttributes<HTMLUiNotificationElement>;
             /**

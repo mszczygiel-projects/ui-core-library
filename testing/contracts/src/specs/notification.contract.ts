@@ -179,6 +179,35 @@ export function notificationContract(adapter: Mount<NotificationContractProps>):
     expect(component.element.isConnected).toBe(true);
   });
 
+  it('disappears with its dismiss button when the page hides it', async () => {
+    const component = await mount({ dismissible: true }, { attributes: { hidden: 'hidden' } });
+    expect(getComputedStyle(component.element).display).toBe('none');
+    expect(component.part('dismiss').getClientRects()).toHaveLength(0);
+    expect((await component.accessibleTree()).some((node) => node.role === 'button')).toBe(false);
+  });
+
+  it('disables its dismiss button inside a disabled fieldset', async () => {
+    const fieldset = document.createElement('fieldset');
+    fieldset.disabled = true;
+    document.body.append(fieldset);
+    const dismissed = vi.fn();
+    const component = await mount(
+      { dismissible: true, onDismiss: dismissed },
+      { parent: fieldset },
+    );
+    const dismiss = component.part('dismiss');
+    await expect.poll(() => dismiss.matches(':disabled')).toBe(true);
+    dismiss.click();
+    expect(dismissed).not.toHaveBeenCalled();
+    fieldset.disabled = false;
+    await expect.poll(() => component.part('dismiss').matches(':disabled')).toBe(false);
+    await userEvent.click(component.part('dismiss'));
+    expect(dismissed).toHaveBeenCalledTimes(1);
+    await component.unmount();
+    mounted.splice(mounted.indexOf(component), 1);
+    fieldset.remove();
+  });
+
   it('shows the focus ring on its dismiss button only for keyboard focus', async () => {
     const component = await mount({ dismissible: true });
     const dismiss = component.part('dismiss');

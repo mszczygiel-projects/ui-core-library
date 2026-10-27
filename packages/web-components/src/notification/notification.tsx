@@ -10,6 +10,7 @@ import {
 } from '@mszczygiel-projects/ui-core-shared/notification';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import {
+  AttachInternals,
   Component,
   Element,
   Event,
@@ -51,7 +52,8 @@ declare global {
  * reader reads a notification that the page inserts. A dismissible notification adds a button
  * named by the dismiss label and the heading, which dispatches `ui-dismiss`; the page removes the
  * notification. The host belongs to the page: the component reflects no prop and writes no role
- * or ARIA attribute on it.
+ * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
+ * disables the dismiss button as it does a native one; it submits nothing.
  *
  * @slot - The description below the heading.
  * @part base - The surface of the notification, its fill, border and corners.
@@ -62,9 +64,16 @@ declare global {
  * @part description - The box of the description.
  * @part dismiss - The button that asks to remove the notification.
  */
-@Component({ tag: 'ui-notification', styleUrl: 'notification.css', shadow: true })
+@Component({
+  tag: 'ui-notification',
+  styleUrl: 'notification.css',
+  shadow: true,
+  formAssociated: true,
+})
 export class UiNotification implements NotificationProps {
   @Element() host!: HTMLUiNotificationElement;
+
+  @AttachInternals() internals!: ElementInternals;
 
   /** The feedback the notification gives. */
   @Prop() tone: NotificationTone = 'info';
@@ -103,6 +112,9 @@ export class UiNotification implements NotificationProps {
   /** Whether the content shows: at once, or for a live region from the frame after connection. */
   @State() private revealed = true;
 
+  /** Whether a disabled fieldset around the host disables its dismiss button. */
+  @State() private formDisabled = false;
+
   private stopFollowing: (() => void) | undefined;
 
   private revealFrame: number | undefined;
@@ -131,6 +143,14 @@ export class UiNotification implements NotificationProps {
       cancelAnimationFrame(this.revealFrame);
       this.revealFrame = undefined;
     }
+  }
+
+  /**
+   * Takes the disabled state of a fieldset around the host. The browser calls it only when that
+   * state changes, so it is kept as given.
+   */
+  formDisabledCallback(disabled: boolean): void {
+    this.formDisabled = disabled;
   }
 
   @Watch('announce')
@@ -166,6 +186,7 @@ export class UiNotification implements NotificationProps {
             part="dismiss"
             class="dismiss"
             type="button"
+            disabled={this.formDisabled}
             aria-labelledby={hasHeading ? 'dismiss-label heading' : 'dismiss-label'}
             onClick={this.onDismiss}
           >

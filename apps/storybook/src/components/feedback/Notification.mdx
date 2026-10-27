@@ -58,6 +58,7 @@ Write the heading in `heading`, and the details in the default slot, or as `chil
 
 - The dismiss button asks to remove the notification: `ui-dismiss` in the web component, `onDismiss(details)` in React. The notification only reports the request; the page removes it and moves focus to a sensible place, such as the control that the message is about.
 - `announce` makes the notification a live region. It mounts empty and shows its content one frame later, so that a screen reader reads a notification that the page inserts, and it reads later changes of the heading or the content too.
+- A disabled fieldset disables the dismiss button, and the `hidden` attribute hides the whole notification.
 - An unknown `tone` or `variant` falls back to the default.
 
 ## Accessibility
@@ -93,7 +94,7 @@ import '@mszczygiel-projects/ui-core-web-components/notification';`}
 
 ## Implementation notes
 
-- The web component uses an open shadow root and reflects no prop. It writes no role on its host; the live region is its `content` part.
+- The web component uses an open shadow root and reflects no prop. It writes no role on its host; the live region is its `content` part. It is form-associated only to follow a disabled fieldset, and submits nothing.
 - React passes `className`, `style`, the other attributes of a `div` and its ref to the root. An announced notification renders the same empty region on the server and on the first render on the client, and shows its content after hydration.
 - The icons come from the icons package, so a consumer's icon set must hold `check`, `close`, `danger` and `info`.
 - The Figma set has the boolean properties `hasLeadingIcon` and `dismissible`, and the design-only boolean property `description`, which previews a notification with and without details.
