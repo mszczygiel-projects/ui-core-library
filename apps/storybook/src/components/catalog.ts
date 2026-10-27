@@ -1,13 +1,11 @@
-import { button } from '@mszczygiel-projects/ui-core-shared/button';
 import type {
   ComponentCategory,
   ComponentSpec,
 } from '@mszczygiel-projects/ui-core-shared/component';
-import { loader } from '@mszczygiel-projects/ui-core-shared/loader';
-import { textField } from '@mszczygiel-projects/ui-core-shared/text-field';
+import { specs } from '@mszczygiel-projects/ui-core-shared/components';
 
-/** The specifications of the components the library has. */
-export const specs: readonly ComponentSpec[] = [button, textField, loader];
+/** The specifications of the components the library has, as the shared package lists them. */
+export { specs };
 
 /** A component the library plans, before its specification exists. */
 interface Planned {
