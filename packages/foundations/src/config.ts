@@ -21,6 +21,10 @@ export interface UiCoreLabels {
     /** The description of a button while its action is in progress. */
     readonly loading: string;
   };
+  readonly chip: {
+    /** The word that names the dismiss button of a chip, read before the text of the chip. */
+    readonly dismiss: string;
+  };
   readonly iconButton: {
     /** The description of an icon button while its action is in progress. */
     readonly loading: string;
@@ -48,6 +52,7 @@ export interface UiCoreConfigInput {
 /** The English labels that the packages ship. */
 export const defaultLabels: UiCoreLabels = freezeLabels({
   button: { loading: 'Loading' },
+  chip: { dismiss: 'Remove' },
   iconButton: { loading: 'Loading' },
   loader: { label: 'Loading' },
 });

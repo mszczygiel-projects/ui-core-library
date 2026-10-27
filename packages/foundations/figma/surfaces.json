@@ -909,6 +909,37 @@
               ]
             }
           }
+        },
+        "on-subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.success.on-subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.success.on-subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.success.on-subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.success.on-subtle}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light success colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:19",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-success-on-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
         }
       },
       "info": {
@@ -996,6 +1027,37 @@
               ],
               "codeSyntax": {
                 "WEB": "var(--color-feedback-info-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "on-subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.info.on-subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.info.on-subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.info.on-subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.info.on-subtle}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light information colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:18",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-info-on-subtle)"
               },
               "hiddenFromPublishing": false,
               "modes": [
@@ -1103,6 +1165,37 @@
               ]
             }
           }
+        },
+        "on-subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.warning.on-subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.warning.on-subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.warning.on-subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.warning.on-subtle}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light warning colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:20",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-warning-on-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
         }
       },
       "error": {
@@ -1190,6 +1283,37 @@
               ],
               "codeSyntax": {
                 "WEB": "var(--color-feedback-error-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Default",
+                "Subtle",
+                "Inverse",
+                "Primary"
+              ]
+            }
+          }
+        },
+        "on-subtle": {
+          "$value": {
+            "Default": "{Themes.color.feedback.error.on-subtle}",
+            "Subtle": "{Themes.color.on-subtle.feedback.error.on-subtle}",
+            "Inverse": "{Themes.color.on-inverse.feedback.error.on-subtle}",
+            "Primary": "{Themes.color.on-brand-primary.feedback.error.on-subtle}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light error colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:21",
+              "collectionId": "VariableCollectionId:1:953",
+              "scopes": [
+                "SHAPE_FILL",
+                "TEXT_FILL",
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-error-on-subtle)"
               },
               "hiddenFromPublishing": false,
               "modes": [
