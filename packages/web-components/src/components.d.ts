@@ -16,6 +16,9 @@ import { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-c
 import { NotificationDismiss } from "./notification/events";
 import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 import { TextFieldValueChange } from "./text-field/events";
+import { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
+import { SearchFieldClear } from "./search-field/events";
+import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 export { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
@@ -27,6 +30,9 @@ export { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-c
 export { NotificationDismiss } from "./notification/events";
 export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export { TextFieldValueChange } from "./text-field/events";
+export { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
+export { SearchFieldClear } from "./search-field/events";
+export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export namespace Components {
     /**
      * Marks a status, a category or a count with a short label, an icon or both.
@@ -315,6 +321,177 @@ export namespace Components {
         "variant": NotificationVariant;
     }
     /**
+     * A password input with a button that shows or hides the password.
+     * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+     * The reveal button is a toggle button with one name, whose pressed state says whether the
+     * password shows. The `value` and `revealed` attributes supply the initial and reset state, and
+     * the properties hold the current state. Submitting the owning form hides the password again, and
+     * the browser never saves it to restore it. The native `inputmode`, `enterkeyhint` and
+     * `spellcheck` attributes and an author's `aria-label` reach the input.
+     */
+    interface UiPasswordField {
+        /**
+          * The purpose of the browser's autofill, such as `current-password` or `new-password`.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A native regular expression for the whole value.
+         */
+        "pattern"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission; the password can still be shown.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The name of the reveal button, falling back to `labels.passwordField.reveal`.
+         */
+        "revealLabel"?: string;
+        /**
+          * Shows the password as plain text. The attribute sets the initial state, which a reset restores; the property holds the current one, which the reveal button changes.
+          * @default false
+         */
+        "revealed": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+    /**
+     * A search input with a button that clears the query.
+     * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
+     * the outer form. The clear button shows only while the field holds a query that the user may
+     * change; it and Escape empty the field, keep the focus in the input and dispatch
+     * `ui-value-change` and `ui-clear`. Escape in an empty field reaches the page, for example to
+     * close a dialog. The field is no landmark: a page wraps the search form in `<search>`. The
+     * `value` attribute supplies the reset value, and the property holds the current value. The native
+     * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+     * input.
+     */
+    interface UiSearchField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * The name of the clear button, falling back to `labels.searchField.clear`.
+         */
+        "clearLabel"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A native regular expression for the whole value.
+         */
+        "pattern"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission, and removes the clear button.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+    /**
      * A single-line text input with a label, hint and validation feedback.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -395,6 +572,89 @@ export namespace Components {
          */
         "variant": TextFieldVariant;
     }
+    /**
+     * A multi-line text input with a label, hint and validation feedback.
+     * Its inner textarea owns accessibility; ElementInternals associates the host with the outer form.
+     * Enter starts a new line and never submits. With `resize="auto"`, the textarea grows with its
+     * content and the width of the page, up to `maxRows` lines, and then scrolls. The `value`
+     * attribute supplies the reset value, and the property holds the current value. The native
+     * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+     * textarea.
+     */
+    interface UiTextareaField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * With `resize="auto"`, the number of lines after which the textarea scrolls instead of growing.
+         */
+        "maxRows"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * `vertical` lets the user drag the height, `none` keeps the designed height, and `auto` grows with the content.
+          * @default 'vertical'
+         */
+        "resize": TextareaFieldResize;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
 }
 export interface UiChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -404,9 +664,21 @@ export interface UiNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiNotificationElement;
 }
+export interface UiPasswordFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiPasswordFieldElement;
+}
+export interface UiSearchFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiSearchFieldElement;
+}
 export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiTextFieldElement;
+}
+export interface UiTextareaFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiTextareaFieldElement;
 }
 declare global {
     /**
@@ -525,6 +797,62 @@ declare global {
         prototype: HTMLUiNotificationElement;
         new (): HTMLUiNotificationElement;
     };
+    interface HTMLUiPasswordFieldElementEventMap {
+        "ui-value-change": TextFieldValueChange;
+        "ui-revealed-change": RevealedChange;
+    }
+    /**
+     * A password input with a button that shows or hides the password.
+     * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+     * The reveal button is a toggle button with one name, whose pressed state says whether the
+     * password shows. The `value` and `revealed` attributes supply the initial and reset state, and
+     * the properties hold the current state. Submitting the owning form hides the password again, and
+     * the browser never saves it to restore it. The native `inputmode`, `enterkeyhint` and
+     * `spellcheck` attributes and an author's `aria-label` reach the input.
+     */
+    interface HTMLUiPasswordFieldElement extends Components.UiPasswordField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiPasswordFieldElementEventMap>(type: K, listener: (this: HTMLUiPasswordFieldElement, ev: UiPasswordFieldCustomEvent<HTMLUiPasswordFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiPasswordFieldElementEventMap>(type: K, listener: (this: HTMLUiPasswordFieldElement, ev: UiPasswordFieldCustomEvent<HTMLUiPasswordFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiPasswordFieldElement: {
+        prototype: HTMLUiPasswordFieldElement;
+        new (): HTMLUiPasswordFieldElement;
+    };
+    interface HTMLUiSearchFieldElementEventMap {
+        "ui-value-change": TextFieldValueChange;
+        "ui-clear": SearchFieldClear;
+    }
+    /**
+     * A search input with a button that clears the query.
+     * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
+     * the outer form. The clear button shows only while the field holds a query that the user may
+     * change; it and Escape empty the field, keep the focus in the input and dispatch
+     * `ui-value-change` and `ui-clear`. Escape in an empty field reaches the page, for example to
+     * close a dialog. The field is no landmark: a page wraps the search form in `<search>`. The
+     * `value` attribute supplies the reset value, and the property holds the current value. The native
+     * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+     * input.
+     */
+    interface HTMLUiSearchFieldElement extends Components.UiSearchField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiSearchFieldElementEventMap>(type: K, listener: (this: HTMLUiSearchFieldElement, ev: UiSearchFieldCustomEvent<HTMLUiSearchFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiSearchFieldElementEventMap>(type: K, listener: (this: HTMLUiSearchFieldElement, ev: UiSearchFieldCustomEvent<HTMLUiSearchFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiSearchFieldElement: {
+        prototype: HTMLUiSearchFieldElement;
+        new (): HTMLUiSearchFieldElement;
+    };
     interface HTMLUiTextFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
     }
@@ -549,6 +877,32 @@ declare global {
         prototype: HTMLUiTextFieldElement;
         new (): HTMLUiTextFieldElement;
     };
+    interface HTMLUiTextareaFieldElementEventMap {
+        "ui-value-change": TextFieldValueChange;
+    }
+    /**
+     * A multi-line text input with a label, hint and validation feedback.
+     * Its inner textarea owns accessibility; ElementInternals associates the host with the outer form.
+     * Enter starts a new line and never submits. With `resize="auto"`, the textarea grows with its
+     * content and the width of the page, up to `maxRows` lines, and then scrolls. The `value`
+     * attribute supplies the reset value, and the property holds the current value. The native
+     * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+     * textarea.
+     */
+    interface HTMLUiTextareaFieldElement extends Components.UiTextareaField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiTextareaFieldElementEventMap>(type: K, listener: (this: HTMLUiTextareaFieldElement, ev: UiTextareaFieldCustomEvent<HTMLUiTextareaFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiTextareaFieldElementEventMap>(type: K, listener: (this: HTMLUiTextareaFieldElement, ev: UiTextareaFieldCustomEvent<HTMLUiTextareaFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiTextareaFieldElement: {
+        prototype: HTMLUiTextareaFieldElement;
+        new (): HTMLUiTextareaFieldElement;
+    };
     interface HTMLElementTagNameMap {
         "ui-badge": HTMLUiBadgeElement;
         "ui-button": HTMLUiButtonElement;
@@ -557,7 +911,10 @@ declare global {
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-loader": HTMLUiLoaderElement;
         "ui-notification": HTMLUiNotificationElement;
+        "ui-password-field": HTMLUiPasswordFieldElement;
+        "ui-search-field": HTMLUiSearchFieldElement;
         "ui-text-field": HTMLUiTextFieldElement;
+        "ui-textarea-field": HTMLUiTextareaFieldElement;
     }
 }
 declare namespace LocalJSX {
@@ -888,6 +1245,201 @@ declare namespace LocalJSX {
         "variant"?: NotificationVariant;
     }
     /**
+     * A password input with a button that shows or hides the password.
+     * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+     * The reveal button is a toggle button with one name, whose pressed state says whether the
+     * password shows. The `value` and `revealed` attributes supply the initial and reset state, and
+     * the properties hold the current state. Submitting the owning form hides the password again, and
+     * the browser never saves it to restore it. The native `inputmode`, `enterkeyhint` and
+     * `spellcheck` attributes and an author's `aria-label` reach the input.
+     */
+    interface UiPasswordField {
+        /**
+          * The purpose of the browser's autofill, such as `current-password` or `new-password`.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * The password was shown or hidden, by the reveal button or a submission of the form.
+         */
+        "onUi-revealed-change"?: (event: UiPasswordFieldCustomEvent<RevealedChange>) => void;
+        /**
+          * One user edit, with the new value and the original input event.
+         */
+        "onUi-value-change"?: (event: UiPasswordFieldCustomEvent<TextFieldValueChange>) => void;
+        /**
+          * A native regular expression for the whole value.
+         */
+        "pattern"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission; the password can still be shown.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The name of the reveal button, falling back to `labels.passwordField.reveal`.
+         */
+        "revealLabel"?: string;
+        /**
+          * Shows the password as plain text. The attribute sets the initial state, which a reset restores; the property holds the current one, which the reveal button changes.
+          * @default false
+         */
+        "revealed"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
+    /**
+     * A search input with a button that clears the query.
+     * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
+     * the outer form. The clear button shows only while the field holds a query that the user may
+     * change; it and Escape empty the field, keep the focus in the input and dispatch
+     * `ui-value-change` and `ui-clear`. Escape in an empty field reaches the page, for example to
+     * close a dialog. The field is no landmark: a page wraps the search form in `<search>`. The
+     * `value` attribute supplies the reset value, and the property holds the current value. The native
+     * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+     * input.
+     */
+    interface UiSearchField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * The name of the clear button, falling back to `labels.searchField.clear`.
+         */
+        "clearLabel"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * The user cleared the query, with the clear button or Escape.
+         */
+        "onUi-clear"?: (event: UiSearchFieldCustomEvent<SearchFieldClear>) => void;
+        /**
+          * One user edit, with the new value and the original input event.
+         */
+        "onUi-value-change"?: (event: UiSearchFieldCustomEvent<TextFieldValueChange>) => void;
+        /**
+          * A native regular expression for the whole value.
+         */
+        "pattern"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission, and removes the clear button.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
+    /**
      * A single-line text input with a label, hint and validation feedback.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -976,6 +1528,97 @@ declare namespace LocalJSX {
          */
         "variant"?: TextFieldVariant;
     }
+    /**
+     * A multi-line text input with a label, hint and validation feedback.
+     * Its inner textarea owns accessibility; ElementInternals associates the host with the outer form.
+     * Enter starts a new line and never submits. With `resize="auto"`, the textarea grows with its
+     * content and the width of the page, up to `maxRows` lines, and then scrolls. The `value`
+     * attribute supplies the reset value, and the property holds the current value. The native
+     * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+     * textarea.
+     */
+    interface UiTextareaField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * The maximum length a user enters, in UTF-16 code units.
+         */
+        "maxLength"?: number;
+        /**
+          * With `resize="auto"`, the number of lines after which the textarea scrolls instead of growing.
+         */
+        "maxRows"?: number;
+        /**
+          * The minimum length a user enters, in UTF-16 code units.
+         */
+        "minLength"?: number;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * One user edit, with the new value and the original input event.
+         */
+        "onUi-value-change"?: (event: UiTextareaFieldCustomEvent<TextFieldValueChange>) => void;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a nonempty value for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * `vertical` lets the user drag the height, `none` keeps the designed height, and `auto` grows with the content.
+          * @default 'vertical'
+         */
+        "resize"?: TextareaFieldResize;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
 
     interface UiBadgeAttributes {
         "tone": BadgeTone;
@@ -1038,6 +1681,43 @@ declare namespace LocalJSX {
         "dismissLabel": string;
         "announce": boolean;
     }
+    interface UiPasswordFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "minLength": number;
+        "maxLength": number;
+        "pattern": string;
+        "autoComplete": string;
+        "revealed": boolean;
+        "revealLabel": string;
+    }
+    interface UiSearchFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "minLength": number;
+        "maxLength": number;
+        "pattern": string;
+        "autoComplete": string;
+        "clearLabel": string;
+    }
     interface UiTextFieldAttributes {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
@@ -1056,6 +1736,24 @@ declare namespace LocalJSX {
         "pattern": string;
         "autoComplete": string;
     }
+    interface UiTextareaFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "minLength": number;
+        "maxLength": number;
+        "autoComplete": string;
+        "resize": TextareaFieldResize;
+        "maxRows": number;
+    }
 
     interface IntrinsicElements {
         "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
@@ -1065,7 +1763,10 @@ declare namespace LocalJSX {
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
         "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
+        "ui-password-field": Omit<UiPasswordField, keyof UiPasswordFieldAttributes> & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes]?: UiPasswordField[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `attr:${K}`]?: UiPasswordFieldAttributes[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `prop:${K}`]?: UiPasswordField[K] };
+        "ui-search-field": Omit<UiSearchField, keyof UiSearchFieldAttributes> & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes]?: UiSearchField[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `attr:${K}`]?: UiSearchFieldAttributes[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `prop:${K}`]?: UiSearchField[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
+        "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -1131,6 +1832,28 @@ declare module "@stencil/core" {
              */
             "ui-notification": LocalJSX.IntrinsicElements["ui-notification"] & JSXBase.HTMLAttributes<HTMLUiNotificationElement>;
             /**
+             * A password input with a button that shows or hides the password.
+             * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
+             * The reveal button is a toggle button with one name, whose pressed state says whether the
+             * password shows. The `value` and `revealed` attributes supply the initial and reset state, and
+             * the properties hold the current state. Submitting the owning form hides the password again, and
+             * the browser never saves it to restore it. The native `inputmode`, `enterkeyhint` and
+             * `spellcheck` attributes and an author's `aria-label` reach the input.
+             */
+            "ui-password-field": LocalJSX.IntrinsicElements["ui-password-field"] & JSXBase.HTMLAttributes<HTMLUiPasswordFieldElement>;
+            /**
+             * A search input with a button that clears the query.
+             * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
+             * the outer form. The clear button shows only while the field holds a query that the user may
+             * change; it and Escape empty the field, keep the focus in the input and dispatch
+             * `ui-value-change` and `ui-clear`. Escape in an empty field reaches the page, for example to
+             * close a dialog. The field is no landmark: a page wraps the search form in `<search>`. The
+             * `value` attribute supplies the reset value, and the property holds the current value. The native
+             * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+             * input.
+             */
+            "ui-search-field": LocalJSX.IntrinsicElements["ui-search-field"] & JSXBase.HTMLAttributes<HTMLUiSearchFieldElement>;
+            /**
              * A single-line text input with a label, hint and validation feedback.
              * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
              * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -1138,6 +1861,16 @@ declare module "@stencil/core" {
              * reach the input.
              */
             "ui-text-field": LocalJSX.IntrinsicElements["ui-text-field"] & JSXBase.HTMLAttributes<HTMLUiTextFieldElement>;
+            /**
+             * A multi-line text input with a label, hint and validation feedback.
+             * Its inner textarea owns accessibility; ElementInternals associates the host with the outer form.
+             * Enter starts a new line and never submits. With `resize="auto"`, the textarea grows with its
+             * content and the width of the page, up to `maxRows` lines, and then scrolls. The `value`
+             * attribute supplies the reset value, and the property holds the current value. The native
+             * `inputmode`, `enterkeyhint` and `spellcheck` attributes and an author's `aria-label` reach the
+             * textarea.
+             */
+            "ui-textarea-field": LocalJSX.IntrinsicElements["ui-textarea-field"] & JSXBase.HTMLAttributes<HTMLUiTextareaFieldElement>;
         }
     }
 }

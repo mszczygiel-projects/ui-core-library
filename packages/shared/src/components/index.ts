@@ -6,7 +6,10 @@ import { iconButton } from './icon-button.ts';
 import { linkButton } from './link-button.ts';
 import { loader } from './loader.ts';
 import { notification } from './notification.ts';
+import { passwordField } from './password-field.ts';
+import { searchField } from './search-field.ts';
 import { textField } from './text-field.ts';
+import { textareaField } from './textarea-field.ts';
 
 /** The specifications of every component the library has, for documentation and tooling. */
 export const specs: readonly ComponentSpec[] = [
@@ -18,4 +21,7 @@ export const specs: readonly ComponentSpec[] = [
   badge,
   chip,
   notification,
+  passwordField,
+  searchField,
+  textareaField,
 ];

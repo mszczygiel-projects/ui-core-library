@@ -25,6 +25,16 @@ export {
 export { Loader, type LoaderProps, type LoaderSize } from './loader/Loader.tsx';
 export { Notification, type NotificationProps } from './notification/Notification.tsx';
 export {
+  PasswordField,
+  type PasswordFieldProps,
+  type PasswordFieldRevealedChangeDetails,
+} from './password-field/PasswordField.tsx';
+export {
+  SearchField,
+  type SearchFieldClearDetails,
+  type SearchFieldProps,
+} from './search-field/SearchField.tsx';
+export {
   TextField,
   type TextFieldLabelPlacement,
   type TextFieldProps,
@@ -34,3 +44,8 @@ export {
   type TextFieldValueChangeDetails,
   type TextFieldVariant,
 } from './text-field/TextField.tsx';
+export {
+  TextareaField,
+  type TextareaFieldProps,
+  type TextareaFieldResize,
+} from './textarea-field/TextareaField.tsx';

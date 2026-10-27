@@ -1,0 +1,5 @@
+/* The clear button of the field replaces the one some browsers draw in a search input. */
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  appearance: none;
+}

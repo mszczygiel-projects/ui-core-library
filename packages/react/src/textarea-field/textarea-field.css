@@ -1,0 +1,41 @@
+/* The control of a textarea keeps the designed height and lets the textarea fill it. */
+.ui-textarea-field {
+  --_min-block-size: var(--textarea-min-height);
+}
+
+.ui-textarea-field--small {
+  --_min-block-size: var(--textarea-small-min-height);
+}
+
+.ui-textarea-field--large {
+  --_min-block-size: var(--textarea-large-min-height);
+}
+
+.ui-textarea-field__control {
+  min-block-size: var(--_min-block-size);
+}
+
+.ui-textarea-field__input {
+  flex: 1 1 auto;
+  /* stylelint-disable-next-line plugin/use-baseline -- an enhancement: without it the textarea keeps the height of its tokens, and resize auto still grows */
+  resize: none;
+  overflow-wrap: anywhere;
+}
+
+.ui-textarea-field--resize-vertical .ui-textarea-field__input {
+  /* stylelint-disable-next-line plugin/use-baseline -- an enhancement: without it the textarea keeps the height of its tokens, and resize auto still grows */
+  resize: vertical;
+}
+
+/*
+ * The height of the content, which the component measures, up to the number of rows it allows.
+ * Without a number of rows, the maximum is invalid and nothing limits the height.
+ */
+.ui-textarea-field--resize-auto .ui-textarea-field__input {
+  --_auto-block-size: auto;
+  --_max-rows: none;
+
+  block-size: var(--_auto-block-size);
+  max-block-size: calc(var(--_font-size) * var(--_line-height) * var(--_max-rows));
+  overflow-y: auto;
+}

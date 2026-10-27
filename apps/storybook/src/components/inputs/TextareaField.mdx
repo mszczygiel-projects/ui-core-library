@@ -1,0 +1,87 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './TextareaField.wc.stories.tsx';
+import * as ReactStories from './TextareaField.react.stories.tsx';
+
+<Meta title="Components/Inputs/TextareaField/Docs" />
+
+# TextareaField
+
+<ComponentOverview name="TextareaField" />
+
+## Usage
+
+Use TextareaField for text of more than one line, such as a message or a description. Use TextField for a single line.
+
+## Anatomy
+
+The **base** holds the **label**, **control** and **hint**, as in TextField. The control holds the native textarea, the **input** part. The web component exposes these parts; React uses `.ui-textarea-field__<part>` classes. The Figma component set has the properties and layers of TextField without its icons.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+`outline` is the default, `filled` adds a filled surface and `underlined` keeps only the bottom border, as in TextField. There is no tone.
+
+## Sizes & density
+
+`small`, `medium` (the default) and `large` follow the sizes of TextField. The control keeps the designed minimum height of its size, `textarea/min-height`, in each density.
+
+## States
+
+`state` is `default`, `error` or `success`, as in TextField. Error sets `aria-invalid` and the feedback colours; it does not create a native validation failure. Hover and press share the active styling, keyboard focus uses the focus roles, and disabled fields leave the tab order and submit nothing. Read-only fields stay focusable and submit their value.
+
+## Content & labels
+
+Supply `label`, `placeholder` and `hint` in the language of the page. Say a limit in the hint and set `maxLength`; the field shows no counter.
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.Resize} webComponents={WebComponentStories.Resize} />
+
+- Enter starts a new line and never submits the form.
+- `resize="vertical"` (the default) lets the user drag the height. `none` keeps the designed height. `auto` grows with the content and with a narrower page, up to `maxRows` lines, and then scrolls.
+- The value, reset, restore and validity (`required`, `minLength`, `maxLength`) follow TextField.
+
+## Accessibility
+
+- **Pattern.** A native multi-line textbox with its label and hint; no composite pattern applies.
+- **Keys.** The native keys of a textarea; Tab leaves it.
+- **Preferences.** Forced colours keep the border and the focus indicator; the label motion follows reduced motion.
+
+## Surfaces & themes
+
+The field follows Light and Dark and the default, subtle, inverse and primary surfaces with the `control` family, as TextField does.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="TextareaField" />}
+  webComponents={<WebComponentApi tag="ui-textarea-field" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { TextareaField } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/textarea-field';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the textarea. The web component uses the attributes `resize`, `max-rows`, `label-placement`, `min-length`, `max-length`, `auto-complete` and `readonly`, and passes the native `inputmode`, `enterkeyhint` and `spellcheck` of its host to the textarea.
+
+## Tokens
+
+<ComponentTokens component="control" />
+
+<ComponentTokens component="textarea" />
+
+TextareaField uses the `control` family of TextField and the minimum heights of `textarea`.
+
+## Implementation notes
+
+- Both implementations share the anatomy and the stylesheet of the text fields with TextField; the web component also shares the controller of the value and the form, without implicit submission.
+- With `resize="auto"`, each implementation measures the height of the content after each edit and after each change of width, and gives it to the stylesheet as a private property. CSS sizing by content is not yet available in every supported browser.

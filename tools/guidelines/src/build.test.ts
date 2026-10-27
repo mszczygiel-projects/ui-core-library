@@ -45,6 +45,18 @@ describe('the guidelines of the Figma libraries', () => {
     expect(guidelines.icons['overview.md']).toContain('`icon/chevron-down`');
   });
 
+  it('send the shared properties of a component with a nested field to that field', () => {
+    const spec = specs.find((candidate) => candidate.design.nested !== undefined);
+    if (spec === undefined) {
+      throw new Error('No specification with a nested component set');
+    }
+    const text = componentGuideline({ spec, page: pageOf(spec) });
+    expect(text).toContain(
+      '| `variant` | `outline`, `filled`, `underlined` | `outline` | On the nested `TextField`. |',
+    );
+    expect(text).toContain('the layer `field`');
+  });
+
   it('stop when a component page lacks a section they carry', () => {
     const spec = specs[0];
     if (spec === undefined) {

@@ -69,3 +69,12 @@ export function textContrast(element: Element): number {
   const [light, dark] = [luminance(text), luminance(background)].sort((a, b) => b - a);
   return ((light ?? 0) + 0.05) / ((dark ?? 0) + 0.05);
 }
+
+/** The WCAG contrast ratio of two computed colours, the first composited over the second. */
+export function contrastRatio(foreground: string, background: string): number {
+  const below = over(parse(background), { r: 255, g: 255, b: 255, a: 1 });
+  const [light, dark] = [luminance(over(parse(foreground), below)), luminance(below)].sort(
+    (a, b) => b - a,
+  );
+  return ((light ?? 0) + 0.05) / ((dark ?? 0) + 0.05);
+}

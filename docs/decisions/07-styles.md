@@ -23,7 +23,7 @@
 
 ### Families of components
 
-- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts.
+- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton, and `field.css` for TextField, PasswordField, SearchField and TextareaField: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts. A family also shares its anatomy and, in the web components, the controller of its form value.
 - The shared rules take their states from classes as well as from native pseudo-classes, so that an element without a native disabled state, such as a link, uses them too.
 
 ### Layout and browsers
@@ -31,6 +31,13 @@
 - Values that change with the screen come from Sizes tokens. A layout that must change uses a media query at the breakpoint of `tokens.json` (`64rem`).
 - Logical properties only, so components follow right-to-left text.
 - Supported browsers are Baseline Widely available. A newer feature needs a fallback and a decision.
+- Decided newer features:
+
+  | Feature  | Where                         | Fallback                                                                                         |
+  | -------- | ----------------------------- | ------------------------------------------------------------------------------------------------ |
+  | `resize` | the textarea of TextareaField | the textarea keeps the height of its tokens, and `resize="auto"` still grows, measured by script |
+
+  Each use carries a `stylelint-disable-next-line plugin/use-baseline` comment that names its fallback.
 
 ### Enforcement
 
