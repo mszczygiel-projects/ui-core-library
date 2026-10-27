@@ -213,6 +213,15 @@ export function chipContract(adapter: Mount<ChipContractProps>): void {
     expect(dismissButton(component)).toBeDefined();
   });
 
+  it('disappears with its toggle and its dismiss button when the page hides it', async () => {
+    const component = await mount(
+      { selectable: true, dismissible: true },
+      { attributes: { hidden: 'hidden' } },
+    );
+    expect(getComputedStyle(component.element).display).toBe('none');
+    expect((await component.accessibleTree()).some((node) => node.role === 'button')).toBe(false);
+  });
+
   it('shows the focus ring around the chip only for keyboard focus', async () => {
     const component = await mount({ selectable: true });
     const base = component.part('base');

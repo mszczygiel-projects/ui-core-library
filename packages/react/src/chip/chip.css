@@ -24,6 +24,11 @@
   white-space: nowrap;
 }
 
+/* hidden reaches the control with the other native attributes, and hides the whole chip. */
+.ui-chip:has(> .ui-chip__control[hidden]) {
+  display: none;
+}
+
 .ui-chip.ui-chip--small {
   --_block-size: var(--chip-small-height);
   --_padding-inline: var(--chip-small-padding-inline);
