@@ -11,6 +11,11 @@
   color: var(--_text);
 }
 
+/* The flex display above would otherwise show a notification that the page hides. */
+.ui-notification[hidden] {
+  display: none;
+}
+
 /* A solid notification draws its border in its fill, so that both variants share one geometry. */
 .ui-notification.ui-notification--solid {
   --_border: var(--_background);
@@ -145,13 +150,17 @@
   inset: min(0%, (100% - var(--notification-dismiss-target-min-size)) / 2);
 }
 
-.ui-notification__dismiss:is(:hover, :active) {
-  background-color: var(--color-notification-dismiss-background-active);
+.ui-notification__dismiss:disabled {
+  cursor: not-allowed;
 }
 
 .ui-notification__dismiss:focus-visible {
   outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
   outline-offset: var(--ring-offset);
+}
+
+.ui-notification__dismiss:is(:hover, :active):not(:disabled) {
+  background-color: var(--color-notification-dismiss-background-active);
 }
 
 .ui-notification__dismiss-icon {
