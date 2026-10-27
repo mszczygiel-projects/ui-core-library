@@ -1,0 +1,98 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Chip.wc.stories.tsx';
+import * as ReactStories from './Chip.react.stories.tsx';
+
+<Meta title="Components/Selection/Chip/Docs" />
+
+# Chip
+
+<ComponentOverview name="Chip" />
+
+## Usage
+
+Use Chip in two ways. A **selectable** chip is a filter or an option that a user turns on and off, such as “Open now” above a list. A **dismissible** chip is a value a user has chosen, such as a filter in effect or a person added to a list, that a user removes. A chip can be both.
+
+Use Badge for a static status or category, Button for an action, and a checkbox or a radio group in a form. The colour of a chip shows its state, not a meaning: Chip has no tones.
+
+## Anatomy
+
+The **base** is the surface of the chip, its fill, border and corners. It holds the **control**, which is the toggle button of a selectable chip and static content otherwise, with an optional **icon** and the **label**; and the **dismiss** button of a dismissible chip. The web component exposes these as parts; React uses the matching `.ui-chip__<part>` classes, and Figma names the layers the same way, with `focus-ring` for the keyboard outline.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+`outline`, the default, draws a border on the page and suits rows of filters. `subtle` gives a quiet fill and suits chosen values inside fields and panels. A selected chip takes the primary action colour in both.
+
+## Sizes & density
+
+`medium`, the default, sits next to fields and buttons; `small` suits dense rows. Density changes the height, the padding and the icons without changing the prop. In every size and density, the toggle and the dismiss button take pointer targets of at least 24 by 24 pixels, even where the chip is drawn shorter.
+
+## States
+
+Hover and press share the active state: a tint over the chip, and a stronger border on `outline`. A selected chip fills with the primary action colour. Focus adds the shared ring around the chip, or around the dismiss button. `disabled` dims the chip, removes its dismiss button and stops every action; a disabled chip shows its disabled state over its selection.
+
+## Content & labels
+
+<FrameworkCanvas react={ReactStories.Dismissible} webComponents={WebComponentStories.Dismissible} />
+
+Write the text in the default slot, or as `children`; it names the chip. Supply one trusted SVG in the `icon` slot, or in the `icon` prop; Chip sizes it, colours it with the text and hides it from assistive technology.
+
+The dismiss button is named by a word and the text of the chip, such as “Remove Open now”, so that every button in a row has its own name. The word is `dismissLabel`, then `labels.chip.dismiss`, “Remove” in English.
+
+<Source language="ts" code={`configureUiCore({ labels: { chip: { dismiss: 'Usuń' } } });`} />
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.Selectable} webComponents={WebComponentStories.Selectable} />
+
+- A selectable chip toggles on a click, Enter or Space, and reports the new state: `ui-selected-change` with `detail.value` in the web component, `onSelectedChange(selected, details)` in React.
+- In the web component, the `selected` attribute is the initial state and the property the current one, as `checked` is for a checkbox. React takes a controlled `selected` or an uncontrolled `defaultSelected`.
+- The dismiss button, and Delete or Backspace on a focused chip, ask to remove the chip: `ui-dismiss` in the web component, `onDismiss(details)` in React. The chip only reports the request; the page removes it and moves focus to a sensible place, such as the next chip.
+- A click on the dismiss button never toggles the chip, and a click listener on the web component does not see it.
+- A disabled fieldset disables the chip as `disabled` does: the toggle stops, and the dismiss button goes.
+- An unknown `variant` or `size` falls back to the default.
+
+## Accessibility
+
+- **Pattern.** A selectable chip follows the [WAI-ARIA button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) as a toggle button, with `aria-pressed`. The dismiss button is a native button. A chip that is not selectable is static text and takes no focus.
+- **Keys.** Tab and Shift+Tab move between the toggles and the dismiss buttons. Enter and Space toggle. Delete and Backspace ask to remove a dismissible chip.
+- **Names.** The text names the toggle. The dismiss word and the text name the dismiss button. An author's `aria-label`, such as “Filter: open now” for a chip that shows “Open”, names the toggle instead, and the dismiss button after the dismiss word.
+- **Groups.** Put related chips in a container with `role="group"` and an `aria-label`, such as “Filters”.
+- **Target size.** The toggle and the dismiss button take targets of at least 24 by 24 pixels in every size and density.
+- **Contrast.** Text has a contrast of at least 4.5 to 1 at rest and selected, in Light and Dark, on every surface.
+- **Preferences.** The border and the ring remain visible in forced colours, and a selected chip takes the highlight colour for its border.
+
+## Surfaces & themes
+
+Colours follow the surrounding theme and surface: the text and border roles at rest, the tint role for the active state and the primary action roles when selected.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Chip" />}
+  webComponents={<WebComponentApi tag="ui-chip" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Chip } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/chip';`}
+/>
+
+## Tokens
+
+<ComponentTokens component="chip" />
+
+## Implementation notes
+
+- The web component uses an open shadow root with focus delegation, reflects only `disabled`, and keeps its current state in its `selected` property. It is form-associated only to follow a disabled fieldset, and submits nothing. It passes an `aria-label` of its host to its control.
+- React passes `className`, `style`, `data-*` attributes and its ref to the root, and other attributes and handlers, such as `id`, `aria-*` and `onClick`, to the control.
+- The close icon comes from the icons package, so a consumer's icon set must hold `close`.
+- The Figma set has the design-only property `interaction` for the active and focused states, and the boolean property `dismissible`.

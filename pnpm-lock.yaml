@@ -347,6 +347,9 @@ importers:
       '@mszczygiel-projects/ui-core-foundations':
         specifier: workspace:^
         version: link:../foundations
+      '@mszczygiel-projects/ui-core-icons':
+        specifier: workspace:^
+        version: link:../icons
       '@mszczygiel-projects/ui-core-shared':
         specifier: workspace:^
         version: link:../shared
@@ -396,6 +399,9 @@ importers:
       '@mszczygiel-projects/ui-core-foundations':
         specifier: workspace:^
         version: link:../foundations
+      '@mszczygiel-projects/ui-core-icons':
+        specifier: workspace:^
+        version: link:../icons
       '@mszczygiel-projects/ui-core-shared':
         specifier: workspace:^
         version: link:../shared

@@ -18,7 +18,7 @@ export const ${n.camel} = defineComponent({
   status: 'in-progress',
   figma: ${n.figma === undefined ? 'null' : `'${n.figma}'`},
   // ${TODO}: the variants, the boolean props and the design-only properties of the component set.
-  design: { flags: [${n.form ? "'disabled'" : ''}], codeOnly: [], previews: {} },
+  design: { flags: [${n.form ? "'disabled'" : ''}], booleans: [], codeOnly: [], previews: {} },
   summary: '${TODO}: one sentence that says what ${n.name} is for.',
   options: {},
   labels: [],

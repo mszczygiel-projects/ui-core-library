@@ -682,6 +682,29 @@
               ]
             }
           }
+        },
+        "on-subtle": {
+          "$value": {
+            "Light": "{Primitives Colors.green.950}",
+            "Dark": "{Primitives Colors.green.300}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light success colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:3",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-success-on-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
         }
       },
       "info": {
@@ -753,6 +776,29 @@
               ]
             }
           }
+        },
+        "on-subtle": {
+          "$value": {
+            "Light": "{Primitives Colors.blue.900}",
+            "Dark": "{Primitives Colors.blue.300}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light information colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:2",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-info-on-subtle)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
         }
       },
       "warning": {
@@ -804,7 +850,7 @@
         },
         "on-base": {
           "$value": {
-            "Light": "{Primitives Colors.white.1000}",
+            "Light": "{Primitives Colors.gray.1000}",
             "Dark": "{Primitives Colors.orange.1000}"
           },
           "$type": "color",
@@ -816,6 +862,29 @@
               "scopes": [],
               "codeSyntax": {
                 "WEB": "var(--color-feedback-warning-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
+        },
+        "on-subtle": {
+          "$value": {
+            "Light": "{Primitives Colors.orange.1000}",
+            "Dark": "{Primitives Colors.orange.300}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light warning colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:4",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-warning-on-subtle)"
               },
               "hiddenFromPublishing": false,
               "modes": [
@@ -887,6 +956,29 @@
               "scopes": [],
               "codeSyntax": {
                 "WEB": "var(--color-feedback-error-on-base)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
+        },
+        "on-subtle": {
+          "$value": {
+            "Light": "{Primitives Colors.red.900}",
+            "Dark": "{Primitives Colors.red.300}"
+          },
+          "$type": "color",
+          "$description": "Text and icons on the light error colour.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:969:5",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-feedback-error-on-subtle)"
               },
               "hiddenFromPublishing": false,
               "modes": [
@@ -2282,6 +2374,28 @@
                 ]
               }
             }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.green.950}",
+              "Dark": "{Primitives Colors.green.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:7",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-subtle-feedback-success-on-subtle)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
           }
         },
         "info": {
@@ -2350,6 +2464,28 @@
                 ]
               }
             }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.blue.900}",
+              "Dark": "{Primitives Colors.blue.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:6",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-subtle-feedback-info-on-subtle)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
           }
         },
         "warning": {
@@ -2399,7 +2535,7 @@
           },
           "on-base": {
             "$value": {
-              "Light": "{Primitives Colors.white.1000}",
+              "Light": "{Primitives Colors.gray.1000}",
               "Dark": "{Primitives Colors.orange.1000}"
             },
             "$type": "color",
@@ -2410,6 +2546,28 @@
                 "scopes": [],
                 "codeSyntax": {
                   "WEB": "var(--color-on-subtle-feedback-warning-on-base)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.orange.1000}",
+              "Dark": "{Primitives Colors.orange.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:8",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-subtle-feedback-warning-on-subtle)"
                 },
                 "hiddenFromPublishing": true,
                 "modes": [
@@ -2478,6 +2636,28 @@
                 "scopes": [],
                 "codeSyntax": {
                   "WEB": "var(--color-on-subtle-feedback-error-on-base)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.red.900}",
+              "Dark": "{Primitives Colors.red.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:9",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-subtle-feedback-error-on-subtle)"
                 },
                 "hiddenFromPublishing": true,
                 "modes": [
@@ -3636,6 +3816,28 @@
                 ]
               }
             }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.green.300}",
+              "Dark": "{Primitives Colors.green.950}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:11",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-inverse-feedback-success-on-subtle)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
           }
         },
         "info": {
@@ -3704,6 +3906,28 @@
                 ]
               }
             }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.blue.300}",
+              "Dark": "{Primitives Colors.blue.900}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:10",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-inverse-feedback-info-on-subtle)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
           }
         },
         "warning": {
@@ -3754,7 +3978,7 @@
           "on-base": {
             "$value": {
               "Light": "{Primitives Colors.orange.1000}",
-              "Dark": "{Primitives Colors.white.1000}"
+              "Dark": "{Primitives Colors.gray.1000}"
             },
             "$type": "color",
             "$extensions": {
@@ -3764,6 +3988,28 @@
                 "scopes": [],
                 "codeSyntax": {
                   "WEB": "var(--color-on-inverse-feedback-warning-on-base)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.orange.300}",
+              "Dark": "{Primitives Colors.orange.1000}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:12",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-inverse-feedback-warning-on-subtle)"
                 },
                 "hiddenFromPublishing": true,
                 "modes": [
@@ -3832,6 +4078,28 @@
                 "scopes": [],
                 "codeSyntax": {
                   "WEB": "var(--color-on-inverse-feedback-error-on-base)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.red.300}",
+              "Dark": "{Primitives Colors.red.900}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:13",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-inverse-feedback-error-on-subtle)"
                 },
                 "hiddenFromPublishing": true,
                 "modes": [
@@ -4990,6 +5258,28 @@
                 ]
               }
             }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.green.300}",
+              "Dark": "{Primitives Colors.green.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:15",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-brand-primary-feedback-success-on-subtle)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
           }
         },
         "info": {
@@ -5050,6 +5340,28 @@
                 "scopes": [],
                 "codeSyntax": {
                   "WEB": "var(--color-on-brand-primary-feedback-info-on-base)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.blue.300}",
+              "Dark": "{Primitives Colors.blue.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:14",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-brand-primary-feedback-info-on-subtle)"
                 },
                 "hiddenFromPublishing": true,
                 "modes": [
@@ -5126,6 +5438,28 @@
                 ]
               }
             }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.orange.300}",
+              "Dark": "{Primitives Colors.orange.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:16",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-brand-primary-feedback-warning-on-subtle)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
           }
         },
         "error": {
@@ -5186,6 +5520,28 @@
                 "scopes": [],
                 "codeSyntax": {
                   "WEB": "var(--color-on-brand-primary-feedback-error-on-base)"
+                },
+                "hiddenFromPublishing": true,
+                "modes": [
+                  "Light",
+                  "Dark"
+                ]
+              }
+            }
+          },
+          "on-subtle": {
+            "$value": {
+              "Light": "{Primitives Colors.red.300}",
+              "Dark": "{Primitives Colors.red.300}"
+            },
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:969:17",
+                "collectionId": "VariableCollectionId:1:238",
+                "scopes": [],
+                "codeSyntax": {
+                  "WEB": "var(--color-on-brand-primary-feedback-error-on-subtle)"
                 },
                 "hiddenFromPublishing": true,
                 "modes": [

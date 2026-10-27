@@ -13,9 +13,17 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./badge": {
+      "types": "./dist/components/ui-badge.d.ts",
+      "default": "./dist/components/ui-badge.js"
+    },
     "./button": {
       "types": "./dist/components/ui-button.d.ts",
       "default": "./dist/components/ui-button.js"
+    },
+    "./chip": {
+      "types": "./dist/components/ui-chip.d.ts",
+      "default": "./dist/components/ui-chip.js"
     },
     "./icon-button": {
       "types": "./dist/components/ui-icon-button.d.ts",
@@ -51,6 +59,7 @@
   },
   "dependencies": {
     "@mszczygiel-projects/ui-core-foundations": "workspace:^",
+    "@mszczygiel-projects/ui-core-icons": "workspace:^",
     "@mszczygiel-projects/ui-core-shared": "workspace:^"
   },
   "nx": {

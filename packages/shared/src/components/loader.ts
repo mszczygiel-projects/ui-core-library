@@ -7,7 +7,7 @@ export const loader = defineComponent({
   category: 'Feedback',
   status: 'done',
   figma: '103:773',
-  design: { flags: [], codeOnly: [], previews: {} },
+  design: { flags: [], booleans: [], codeOnly: [], previews: {} },
   summary: 'Shows that content is loading or that an action is in progress.',
   options: {
     size: { options: ['small', 'medium', 'large'], default: 'medium' },

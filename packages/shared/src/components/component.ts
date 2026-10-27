@@ -27,7 +27,9 @@ export interface PreviewSpec extends OptionsSpec {
 export interface DesignSpec {
   /** Boolean props that the component set has as variants with `false` and `true`. */
   readonly flags: readonly string[];
-  /** Props of `options` that only code has, such as the native `type` of a button. */
+  /** Boolean props that the component set has as boolean properties, which show or hide a part. */
+  readonly booleans: readonly string[];
+  /** Props that only code has, such as the native `type` of a button. */
   readonly codeOnly: readonly string[];
   /** Properties that only the component set has. */
   readonly previews: Readonly<Record<string, PreviewSpec>>;

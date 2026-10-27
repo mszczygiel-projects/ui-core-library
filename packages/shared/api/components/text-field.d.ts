@@ -7,6 +7,7 @@ export declare const textField: {
     readonly figma: "144:293";
     readonly design: {
         readonly flags: readonly ["disabled"];
+        readonly booleans: readonly [];
         readonly codeOnly: readonly ["type"];
         readonly previews: {
             readonly interaction: {

@@ -5,6 +5,10 @@
       "reason": "Days of the calendar grid touch each other."
     },
     {
+      "token": "Components/chip/target/min-size",
+      "reason": "The smallest pointer target of a chip and its dismiss button, 24 px; no brand or mode changes it."
+    },
+    {
       "token": "Components/dialog/large/max-width",
       "reason": "The width of a large dialog; no brand or mode changes it."
     },

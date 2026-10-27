@@ -83,14 +83,15 @@ const CONTENT: readonly FigmaScope[] = ['TEXT_FILL', 'SHAPE_FILL', 'STROKE_COLOR
 const ANY_PAINT: readonly FigmaScope[] = ['FRAME_FILL', 'SHAPE_FILL', 'STROKE_COLOR', 'TEXT_FILL'];
 
 /**
- * What a colour paints, read from the last segment of its name that names a part. A text colour
+ * What a colour paints, read from the last segment of its name that names a part. A tint is a
+ * fill laid over another fill. A text colour
  * also paints the icons beside the text, drawn as strokes or filled shapes; a separator is a
  * stroke or a thin filled shape, and so is the indicator of a loader; a focus ring is a stroke or
  * a spread shadow.
  */
 const COLOR_PARTS: readonly (readonly [parts: readonly string[], scopes: readonly FigmaScope[]])[] =
   [
-    [['background', 'label-background', 'fill', 'track', 'thumb', 'grabber'], FILL],
+    [['background', 'label-background', 'fill', 'tint', 'track', 'thumb', 'grabber'], FILL],
     [['text', 'label', 'placeholder', 'foreground', 'hint', 'meta', 'name', 'link'], CONTENT],
     [['border'], STROKE],
     [['separator', 'divider', 'icon', 'mark', 'dot', 'check', 'indicator'], SHAPE],
@@ -133,7 +134,10 @@ const NUMBER_RULES: readonly (readonly [
   [(s) => s === 'border' || s === 'stroke', ['STROKE_FLOAT']],
   [(s) => ['gap', 'inset', 'margin', 'offset'].includes(s) || s.startsWith('padding'), ['GAP']],
   [
-    (s) => ['size', 'icon', 'hit-area'].includes(s) || s.endsWith('width') || s.endsWith('height'),
+    (s) =>
+      ['size', 'min-size', 'icon', 'hit-area'].includes(s) ||
+      s.endsWith('width') ||
+      s.endsWith('height'),
     ['WIDTH_HEIGHT'],
   ],
 ];

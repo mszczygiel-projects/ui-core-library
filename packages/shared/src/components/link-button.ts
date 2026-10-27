@@ -9,7 +9,7 @@ export const linkButton = defineComponent({
   status: 'done',
   // Designs use Button: a link and a button look alike, and the code chooses the element.
   figma: null,
-  design: { flags: [], codeOnly: [], previews: {} },
+  design: { flags: [], booleans: [], codeOnly: [], previews: {} },
   summary: 'Navigates to another page or resource while looking like a button.',
   options: {
     variant: button.options.variant,

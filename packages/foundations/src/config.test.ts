@@ -97,6 +97,7 @@ describe('the configuration', () => {
     expect(getUiCoreConfig()).toEqual({
       labels: {
         button: { loading: 'Loading' },
+        chip: { dismiss: 'Remove' },
         iconButton: { loading: 'Loading' },
         loader: { label: 'Wait' },
       },

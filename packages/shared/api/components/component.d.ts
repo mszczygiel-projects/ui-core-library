@@ -9,6 +9,7 @@ export interface PreviewSpec extends OptionsSpec {
 }
 export interface DesignSpec {
     readonly flags: readonly string[];
+    readonly booleans: readonly string[];
     readonly codeOnly: readonly string[];
     readonly previews: Readonly<Record<string, PreviewSpec>>;
 }

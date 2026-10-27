@@ -7,6 +7,7 @@ export declare const linkButton: {
     readonly figma: null;
     readonly design: {
         readonly flags: readonly [];
+        readonly booleans: readonly [];
         readonly codeOnly: readonly [];
         readonly previews: {};
     };

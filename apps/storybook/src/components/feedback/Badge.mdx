@@ -1,0 +1,89 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Badge.wc.stories.tsx';
+import * as ReactStories from './Badge.react.stories.tsx';
+
+<Meta title="Components/Feedback/Badge/Docs" />
+
+# Badge
+
+<ComponentOverview name="Badge" />
+
+## Usage
+
+Use Badge for a short, static mark next to the thing it describes: a status such as “Active” or “Failed”, a category, a count, or a highlight such as “New”. Keep its text to a word or two. Badge is not interactive: use Chip for a choice a user turns on and off or removes, and Notification for a message.
+
+Do not let colour carry the meaning alone. The text, or the `label` of a badge with only an icon, says what the colour means.
+
+## Anatomy
+
+The **base** is the surface of the badge, its fill and corners. It holds an optional **icon** and the **label**, the text. The web component exposes these as parts; React uses the matching `.ui-badge__<part>` classes, and Figma names the layers the same way.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+`tone` says what a badge means: `neutral`, the default, for categories and counts; `brand` for a highlight; and `info`, `success`, `warning` and `error` for a status. `variant` sets the emphasis: `solid`, the default, is a strong fill for marks that must stand out, and `subtle` a light tint for statuses in lists and tables.
+
+## Sizes & density
+
+`medium`, the default, sits next to body text; `small` sits next to small text and inside dense rows. Density changes the height, the padding and the icon without changing the prop. `shape` gives a pill, `rounded` by default, or small corners with `square`.
+
+<FrameworkCanvas react={ReactStories.Shapes} webComponents={WebComponentStories.Shapes} />
+
+## States
+
+Badge has no interactive states. It does not take focus, and its colours change only with the theme and the surface.
+
+## Content & labels
+
+<FrameworkCanvas react={ReactStories.WithIcon} webComponents={WebComponentStories.WithIcon} />
+
+Write the text in the default slot, or as `children`. Supply one trusted SVG in the `icon` slot, or in the `icon` prop; Badge sizes it, colours it with the text and hides it from assistive technology. The icons package provides SVG strings; insert them as markup, such as with `innerHTML` or React's `dangerouslySetInnerHTML`.
+
+A badge with an icon and no text is a square of its height. Give it a `label`, which names it as an image. Badge renders no text of its own, so it has no labels in the configuration.
+
+## Behaviour
+
+- Badge chooses its layout from its content: text, an icon and text, or only an icon. No prop switches it.
+- An unknown `tone`, `variant`, `size` or `shape` falls back to the default.
+
+## Accessibility
+
+- **Pattern.** No WAI-ARIA pattern applies: a badge is static text, read in the flow of the page.
+- **Name.** The text names a badge. A badge with only an icon has the role `img` and the name of `label`; an author's `aria-label` wins over it. The icon is decorative.
+- **Role of the page.** A role such as `status` that the page gives a badge stays, also when it shows only an icon, so that its changes are still announced. The web component writes no role or ARIA attribute on its host.
+- **Contrast.** Text has a contrast of at least 4.5 to 1 with its fill for every tone and variant, in Light and Dark, on every surface.
+- **Preferences.** In forced colours, an outline keeps the shape of a badge whose fill disappears.
+
+## Surfaces & themes
+
+Colours follow the surrounding theme and surface. The feedback tones take the feedback roles: `solid` the strong colour with the text role on it, `subtle` the light colour with the text role on the light colour. `brand` and `neutral` take the brand and background roles.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Badge" />}
+  webComponents={<WebComponentApi tag="ui-badge" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Badge } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/badge';`}
+/>
+
+## Tokens
+
+<ComponentTokens component="badge" />
+
+## Implementation notes
+
+- The web component watches its slots to choose its layout, and follows an `aria-label` on its host without writing one.
+- React chooses the layout from its `icon` and `children`, and passes other attributes of a `span` to its root.
+- The Figma set has the design-only property `content` for the three layouts, which code derives from the content.

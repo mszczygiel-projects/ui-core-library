@@ -7,6 +7,7 @@ export declare const loader: {
     readonly figma: "103:773";
     readonly design: {
         readonly flags: readonly [];
+        readonly booleans: readonly [];
         readonly codeOnly: readonly [];
         readonly previews: {};
     };

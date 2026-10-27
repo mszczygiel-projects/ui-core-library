@@ -10,6 +10,7 @@ export const iconButton = defineComponent({
   figma: '182:1049',
   design: {
     flags: ['disabled', 'loading'],
+    booleans: [],
     codeOnly: ['type'],
     previews: button.design.previews,
   },

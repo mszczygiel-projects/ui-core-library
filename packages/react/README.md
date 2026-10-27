@@ -9,7 +9,9 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 
 | Component  | Export       |
 | ---------- | ------------ |
+| Badge      | `Badge`      |
 | Button     | `Button`     |
+| Chip       | `Chip`       |
 | IconButton | `IconButton` |
 | LinkButton | `LinkButton` |
 | Loader     | `Loader`     |
