@@ -4,6 +4,7 @@ import type { ChipProps } from '@mszczygiel-projects/ui-core-shared/chip';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
+import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 
@@ -17,6 +18,9 @@ declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
       // React 19 adds a listener for each `on<event>` prop of a custom element.
+      'ui-notification': CustomElement<
+        NotificationProps & { readonly 'onui-dismiss'?: (event: Event) => void }
+      >;
       'ui-chip': CustomElement<ChipProps & { readonly 'onui-dismiss'?: (event: Event) => void }>;
       'ui-badge': CustomElement<BadgeProps>;
       'ui-link-button': CustomElement<LinkButtonProps>;

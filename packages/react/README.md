@@ -7,14 +7,15 @@ import { Button } from '@mszczygiel-projects/ui-core-react';
 import '@mszczygiel-projects/ui-core-react/styles.css';
 ```
 
-| Component  | Export       |
-| ---------- | ------------ |
-| Badge      | `Badge`      |
-| Button     | `Button`     |
-| Chip       | `Chip`       |
-| IconButton | `IconButton` |
-| LinkButton | `LinkButton` |
-| Loader     | `Loader`     |
-| TextField  | `TextField`  |
+| Component    | Export         |
+| ------------ | -------------- |
+| Badge        | `Badge`        |
+| Button       | `Button`       |
+| Chip         | `Chip`         |
+| IconButton   | `IconButton`   |
+| LinkButton   | `LinkButton`   |
+| Loader       | `Loader`       |
+| Notification | `Notification` |
+| TextField    | `TextField`    |
 
 The components read the tokens of `@mszczygiel-projects/ui-core-foundations`, which a page loads once. `react` and `react-dom` 19 are peer dependencies. The Storybook site documents each component.
