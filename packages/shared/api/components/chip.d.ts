@@ -3,7 +3,7 @@ export declare const chip: {
     readonly name: "Chip";
     readonly tag: "ui-chip";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2068:2859";
     readonly design: {
         readonly flags: readonly ["selected", "disabled"];

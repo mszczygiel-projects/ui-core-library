@@ -5,7 +5,7 @@ export const badge = defineComponent({
   name: 'Badge',
   tag: 'ui-badge',
   category: 'Feedback',
-  status: 'in-progress',
+  status: 'done',
   figma: '2037:98',
   design: {
     flags: [],

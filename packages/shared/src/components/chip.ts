@@ -5,7 +5,7 @@ export const chip = defineComponent({
   name: 'Chip',
   tag: 'ui-chip',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '2068:2859',
   design: {
     flags: ['selected', 'disabled'],

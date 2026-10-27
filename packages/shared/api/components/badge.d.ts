@@ -3,7 +3,7 @@ export declare const badge: {
     readonly name: "Badge";
     readonly tag: "ui-badge";
     readonly category: "Feedback";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2037:98";
     readonly design: {
         readonly flags: readonly [];
