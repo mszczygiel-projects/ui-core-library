@@ -1,0 +1,187 @@
+.ui-chip {
+  --_block-size: var(--chip-medium-height);
+  --_padding-inline: var(--chip-medium-padding-inline);
+  --_font-size: var(--chip-medium-font-size);
+  --_line-height: var(--chip-medium-line-height);
+  --_icon-size: var(--chip-medium-icon-size);
+  --_dismiss-size: var(--chip-medium-dismiss-size);
+  --_text: var(--color-chip-text-default);
+
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  block-size: var(--_block-size);
+  border: var(--chip-border-width) solid var(--_border);
+  border-radius: var(--chip-radius);
+  background-color: var(--_background);
+  color: var(--_text);
+  font-family: var(--chip-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--chip-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--chip-letter-spacing);
+  white-space: nowrap;
+}
+
+.ui-chip.ui-chip--small {
+  --_block-size: var(--chip-small-height);
+  --_padding-inline: var(--chip-small-padding-inline);
+  --_font-size: var(--chip-small-font-size);
+  --_line-height: var(--chip-small-line-height);
+  --_icon-size: var(--chip-small-icon-size);
+  --_dismiss-size: var(--chip-small-dismiss-size);
+}
+
+.ui-chip--outline {
+  --_background: transparent;
+  --_border: var(--color-chip-outline-border-default);
+}
+
+.ui-chip--subtle {
+  --_background: var(--color-chip-subtle-background-default);
+  --_border: transparent;
+}
+
+.ui-chip:has(.ui-chip__control:focus-visible) {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* Hover and press share the active state: a tint over the surface of the chip. */
+.ui-chip:has(.ui-chip__control:is(:hover, :active):not(:disabled)) {
+  background-image: linear-gradient(var(--color-chip-tint-active), var(--color-chip-tint-active));
+}
+
+.ui-chip--outline:not(.ui-chip--selected):has(
+    .ui-chip__control:is(:hover, :active):not(:disabled)
+  ) {
+  --_border: var(--color-chip-outline-border-active);
+}
+
+.ui-chip.ui-chip--selected {
+  --_background: var(--color-chip-selected-background);
+  --_border: var(--color-chip-selected-border);
+  --_text: var(--color-chip-selected-text);
+}
+
+.ui-chip.ui-chip--disabled {
+  --_text: var(--color-chip-text-disabled);
+}
+
+.ui-chip--outline.ui-chip--disabled {
+  --_border: var(--color-chip-outline-border-disabled);
+}
+
+.ui-chip__control {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  gap: var(--chip-gap);
+  align-items: center;
+  align-self: stretch;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--_padding-inline);
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+button.ui-chip__control {
+  cursor: pointer;
+  outline: none;
+}
+
+button.ui-chip__control:disabled {
+  cursor: not-allowed;
+}
+
+/* A pointer target of at least the minimum height, even where the chip is shorter. */
+button.ui-chip__control::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: min(0%, (100% - var(--chip-target-min-size)) / 2);
+}
+
+.ui-chip--dismissible .ui-chip__control {
+  padding-inline-end: 0;
+}
+
+.ui-chip__icon {
+  display: inline-flex;
+  flex: none;
+  font-size: var(--_icon-size);
+}
+
+.ui-chip__icon > * {
+  display: inline-flex;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+}
+
+.ui-chip__dismiss {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_dismiss-size);
+  block-size: var(--_dismiss-size);
+  margin-block: 0;
+  margin-inline: var(--chip-gap) var(--_padding-inline);
+  padding: 0;
+  border: 0;
+  border-radius: var(--chip-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* A square pointer target of at least the minimum size around the smaller button. */
+.ui-chip__dismiss::after {
+  content: '';
+  position: absolute;
+  inset: min(0%, (100% - var(--chip-target-min-size)) / 2);
+}
+
+.ui-chip__dismiss:is(:hover, :active) {
+  background-color: var(--color-chip-dismiss-background-active);
+}
+
+.ui-chip__dismiss:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-chip__dismiss-icon {
+  display: inline-flex;
+  font-size: var(--_icon-size);
+}
+
+@media (forced-colors: active) {
+  .ui-chip {
+    border-color: CanvasText;
+  }
+
+  .ui-chip.ui-chip--selected {
+    border-color: Highlight;
+  }
+
+  .ui-chip.ui-chip--disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+
+  .ui-chip:has(.ui-chip__control:focus-visible),
+  .ui-chip__dismiss:focus-visible {
+    outline-color: Highlight;
+  }
+}

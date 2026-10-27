@@ -1,4 +1,5 @@
 /** Every React component of the library. Their styles are in `styles.css`, imported once. */
+export { Badge, type BadgeProps } from './badge/Badge.tsx';
 export {
   Button,
   type ButtonProps,
@@ -6,6 +7,7 @@ export {
   type ButtonType,
   type ButtonVariant,
 } from './button/Button.tsx';
+export { Chip, type ChipProps } from './chip/Chip.tsx';
 export {
   IconButton,
   type IconButtonProps,

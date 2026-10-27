@@ -5,19 +5,57 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+import { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
+import { ChipDismiss, ChipSelectedChange } from "./chip/events";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 import { TextFieldValueChange } from "./text-field/events";
+export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+export { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
+export { ChipDismiss, ChipSelectedChange } from "./chip/events";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export { TextFieldValueChange } from "./text-field/events";
 export namespace Components {
+    /**
+     * Marks a status, a category or a count with a short label, an icon or both.
+     * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
+     * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
+     * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+     */
+    interface UiBadge {
+        /**
+          * The accessible name of a badge that shows only an icon. A badge with text is named by its text, and an author's `aria-label` wins.
+         */
+        "label"?: string;
+        /**
+          * The corners of the badge.
+          * @default 'rounded'
+         */
+        "shape": BadgeShape;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": BadgeSize;
+        /**
+          * The meaning the badge carries.
+          * @default 'neutral'
+         */
+        "tone": BadgeTone;
+        /**
+          * The emphasis of the badge.
+          * @default 'solid'
+         */
+        "variant": BadgeVariant;
+    }
     /**
      * Triggers an action, with optional icons and a loading state.
      * The native button inside the shadow root owns the accessible semantics. The host takes part in
@@ -67,6 +105,51 @@ export namespace Components {
           * @default 'primary'
          */
         "variant": ButtonVariant;
+    }
+    /**
+     * A compact choice that a user turns on and off, or a chosen value that a user removes.
+     * A selectable chip is a toggle button. Its `selected` attribute is the initial state and its
+     * property the current one, as `checked` is for a checkbox; a click or Space toggles it and
+     * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
+     * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
+     * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
+     * `disabled`.
+     */
+    interface UiChip {
+        /**
+          * Disables the toggle and removes the dismiss button.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The word that names the dismiss button before the text of the chip, falling back to `labels.chip.dismiss`.
+         */
+        "dismissLabel"?: string;
+        /**
+          * Shows a button that asks to remove the chip.
+          * @default false
+         */
+        "dismissible": boolean;
+        /**
+          * Makes the chip a toggle button that a user turns on and off.
+          * @default false
+         */
+        "selectable": boolean;
+        /**
+          * Whether a selectable chip is on. The attribute sets the initial state; the property holds the current one, which a user changes.
+          * @default false
+         */
+        "selected": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": ChipSize;
+        /**
+          * The surface of the chip.
+          * @default 'outline'
+         */
+        "variant": ChipVariant;
     }
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -261,11 +344,27 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
 }
+export interface UiChipCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiChipElement;
+}
 export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiTextFieldElement;
 }
 declare global {
+    /**
+     * Marks a status, a category or a count with a short label, an icon or both.
+     * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
+     * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
+     * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+     */
+    interface HTMLUiBadgeElement extends Components.UiBadge, HTMLStencilElement {
+    }
+    var HTMLUiBadgeElement: {
+        prototype: HTMLUiBadgeElement;
+        new (): HTMLUiBadgeElement;
+    };
     /**
      * Triggers an action, with optional icons and a loading state.
      * The native button inside the shadow root owns the accessible semantics. The host takes part in
@@ -277,6 +376,33 @@ declare global {
     var HTMLUiButtonElement: {
         prototype: HTMLUiButtonElement;
         new (): HTMLUiButtonElement;
+    };
+    interface HTMLUiChipElementEventMap {
+        "ui-selected-change": ChipSelectedChange;
+        "ui-dismiss": ChipDismiss;
+    }
+    /**
+     * A compact choice that a user turns on and off, or a chosen value that a user removes.
+     * A selectable chip is a toggle button. Its `selected` attribute is the initial state and its
+     * property the current one, as `checked` is for a checkbox; a click or Space toggles it and
+     * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
+     * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
+     * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
+     * `disabled`.
+     */
+    interface HTMLUiChipElement extends Components.UiChip, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiChipElementEventMap>(type: K, listener: (this: HTMLUiChipElement, ev: UiChipCustomEvent<HTMLUiChipElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiChipElementEventMap>(type: K, listener: (this: HTMLUiChipElement, ev: UiChipCustomEvent<HTMLUiChipElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiChipElement: {
+        prototype: HTMLUiChipElement;
+        new (): HTMLUiChipElement;
     };
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -338,7 +464,9 @@ declare global {
         new (): HTMLUiTextFieldElement;
     };
     interface HTMLElementTagNameMap {
+        "ui-badge": HTMLUiBadgeElement;
         "ui-button": HTMLUiButtonElement;
+        "ui-chip": HTMLUiChipElement;
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-loader": HTMLUiLoaderElement;
@@ -346,6 +474,38 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * Marks a status, a category or a count with a short label, an icon or both.
+     * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
+     * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
+     * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+     */
+    interface UiBadge {
+        /**
+          * The accessible name of a badge that shows only an icon. A badge with text is named by its text, and an author's `aria-label` wins.
+         */
+        "label"?: string;
+        /**
+          * The corners of the badge.
+          * @default 'rounded'
+         */
+        "shape"?: BadgeShape;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: BadgeSize;
+        /**
+          * The meaning the badge carries.
+          * @default 'neutral'
+         */
+        "tone"?: BadgeTone;
+        /**
+          * The emphasis of the badge.
+          * @default 'solid'
+         */
+        "variant"?: BadgeVariant;
+    }
     /**
      * Triggers an action, with optional icons and a loading state.
      * The native button inside the shadow root owns the accessible semantics. The host takes part in
@@ -399,6 +559,59 @@ declare namespace LocalJSX {
           * @default 'primary'
          */
         "variant"?: ButtonVariant;
+    }
+    /**
+     * A compact choice that a user turns on and off, or a chosen value that a user removes.
+     * A selectable chip is a toggle button. Its `selected` attribute is the initial state and its
+     * property the current one, as `checked` is for a checkbox; a click or Space toggles it and
+     * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
+     * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
+     * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
+     * `disabled`.
+     */
+    interface UiChip {
+        /**
+          * Disables the toggle and removes the dismiss button.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The word that names the dismiss button before the text of the chip, falling back to `labels.chip.dismiss`.
+         */
+        "dismissLabel"?: string;
+        /**
+          * Shows a button that asks to remove the chip.
+          * @default false
+         */
+        "dismissible"?: boolean;
+        /**
+          * The user asked to remove the chip, with its dismiss button, Delete or Backspace.
+         */
+        "onUi-dismiss"?: (event: UiChipCustomEvent<ChipDismiss>) => void;
+        /**
+          * The user turned a selectable chip on or off.
+         */
+        "onUi-selected-change"?: (event: UiChipCustomEvent<ChipSelectedChange>) => void;
+        /**
+          * Makes the chip a toggle button that a user turns on and off.
+          * @default false
+         */
+        "selectable"?: boolean;
+        /**
+          * Whether a selectable chip is on. The attribute sets the initial state; the property holds the current one, which a user changes.
+          * @default false
+         */
+        "selected"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: ChipSize;
+        /**
+          * The surface of the chip.
+          * @default 'outline'
+         */
+        "variant"?: ChipVariant;
     }
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -605,6 +818,13 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
 
+    interface UiBadgeAttributes {
+        "tone": BadgeTone;
+        "variant": BadgeVariant;
+        "size": BadgeSize;
+        "shape": BadgeShape;
+        "label": string;
+    }
     interface UiButtonAttributes {
         "variant": ButtonVariant;
         "size": ButtonSize;
@@ -615,6 +835,15 @@ declare namespace LocalJSX {
         "value": string;
         "label": string;
         "loadingLabel": string;
+    }
+    interface UiChipAttributes {
+        "variant": ChipVariant;
+        "size": ChipSize;
+        "selectable": boolean;
+        "selected": boolean;
+        "disabled": boolean;
+        "dismissible": boolean;
+        "dismissLabel": string;
     }
     interface UiIconButtonAttributes {
         "label": string;
@@ -661,7 +890,9 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
+        "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
+        "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
@@ -673,12 +904,29 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             /**
+             * Marks a status, a category or a count with a short label, an icon or both.
+             * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
+             * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
+             * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+             */
+            "ui-badge": LocalJSX.IntrinsicElements["ui-badge"] & JSXBase.HTMLAttributes<HTMLUiBadgeElement>;
+            /**
              * Triggers an action, with optional icons and a loading state.
              * The native button inside the shadow root owns the accessible semantics. The host takes part in
              * its outer form through ElementInternals. A submit contributes the name and value only during
              * that activation, and the outer submit event has no submitter.
              */
             "ui-button": LocalJSX.IntrinsicElements["ui-button"] & JSXBase.HTMLAttributes<HTMLUiButtonElement>;
+            /**
+             * A compact choice that a user turns on and off, or a chosen value that a user removes.
+             * A selectable chip is a toggle button. Its `selected` attribute is the initial state and its
+             * property the current one, as `checked` is for a checkbox; a click or Space toggles it and
+             * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
+             * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
+             * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
+             * `disabled`.
+             */
+            "ui-chip": LocalJSX.IntrinsicElements["ui-chip"] & JSXBase.HTMLAttributes<HTMLUiChipElement>;
             /**
              * Triggers an action named only by an icon, as a square of the height of a button.
              * The native button inside the shadow root owns the accessible semantics, named by `label`. The

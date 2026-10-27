@@ -25,6 +25,9 @@
       "path": "../shared/tsconfig.lib.json"
     },
     {
+      "path": "../icons/tsconfig.lib.json"
+    },
+    {
       "path": "../foundations/tsconfig.lib.json"
     }
   ]

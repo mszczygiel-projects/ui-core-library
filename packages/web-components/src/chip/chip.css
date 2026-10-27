@@ -1,0 +1,198 @@
+:host {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  --_block-size: var(--chip-medium-height);
+  --_padding-inline: var(--chip-medium-padding-inline);
+  --_font-size: var(--chip-medium-font-size);
+  --_line-height: var(--chip-medium-line-height);
+  --_icon-size: var(--chip-medium-icon-size);
+  --_dismiss-size: var(--chip-medium-dismiss-size);
+  --_text: var(--color-chip-text-default);
+
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  block-size: var(--_block-size);
+  border: var(--chip-border-width) solid var(--_border);
+  border-radius: var(--chip-radius);
+  background-color: var(--_background);
+  color: var(--_text);
+  font-family: var(--chip-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--chip-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--chip-letter-spacing);
+  white-space: nowrap;
+}
+
+.small {
+  --_block-size: var(--chip-small-height);
+  --_padding-inline: var(--chip-small-padding-inline);
+  --_font-size: var(--chip-small-font-size);
+  --_line-height: var(--chip-small-line-height);
+  --_icon-size: var(--chip-small-icon-size);
+  --_dismiss-size: var(--chip-small-dismiss-size);
+}
+
+.outline {
+  --_background: transparent;
+  --_border: var(--color-chip-outline-border-default);
+}
+
+.subtle {
+  --_background: var(--color-chip-subtle-background-default);
+  --_border: transparent;
+}
+
+.base:has(.control:focus-visible) {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* Hover and press share the active state: a tint over the surface of the chip. */
+.base:has(.control:is(:hover, :active):not(:disabled)) {
+  background-image: linear-gradient(var(--color-chip-tint-active), var(--color-chip-tint-active));
+}
+
+.outline:not(.selected):has(.control:is(:hover, :active):not(:disabled)) {
+  --_border: var(--color-chip-outline-border-active);
+}
+
+.selected {
+  --_background: var(--color-chip-selected-background);
+  --_border: var(--color-chip-selected-border);
+  --_text: var(--color-chip-selected-text);
+}
+
+.disabled {
+  --_text: var(--color-chip-text-disabled);
+}
+
+.outline.disabled {
+  --_border: var(--color-chip-outline-border-disabled);
+}
+
+.control {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  gap: var(--chip-gap);
+  align-items: center;
+  align-self: stretch;
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--_padding-inline);
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+}
+
+button.control {
+  cursor: pointer;
+  outline: none;
+}
+
+button.control:disabled {
+  cursor: not-allowed;
+}
+
+/* A pointer target of at least the minimum height, even where the chip is shorter. */
+button.control::after {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block: min(0%, (100% - var(--chip-target-min-size)) / 2);
+}
+
+.dismissible .control {
+  padding-inline-end: 0;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  font-size: var(--_icon-size);
+}
+
+.icon ::slotted(*) {
+  display: inline-flex;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+}
+
+.icon[hidden] {
+  display: none;
+}
+
+.dismiss {
+  appearance: none;
+  box-sizing: border-box;
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_dismiss-size);
+  block-size: var(--_dismiss-size);
+  margin-block: 0;
+  margin-inline: var(--chip-gap) var(--_padding-inline);
+  padding: 0;
+  border: 0;
+  border-radius: var(--chip-radius);
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+/* A square pointer target of at least the minimum size around the smaller button. */
+.dismiss::after {
+  content: '';
+  position: absolute;
+  inset: min(0%, (100% - var(--chip-target-min-size)) / 2);
+}
+
+.dismiss:is(:hover, :active) {
+  background-color: var(--color-chip-dismiss-background-active);
+}
+
+.dismiss:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.dismiss-icon {
+  display: inline-flex;
+  font-size: var(--_icon-size);
+}
+
+@media (forced-colors: active) {
+  .base {
+    border-color: CanvasText;
+  }
+
+  .selected {
+    border-color: Highlight;
+  }
+
+  .disabled {
+    color: GrayText;
+    border-color: GrayText;
+  }
+
+  .base:has(.control:focus-visible),
+  .dismiss:focus-visible {
+    outline-color: Highlight;
+  }
+}

@@ -6,9 +6,17 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
+    "./badge": {
+      "types": "./dist/components/badge.d.ts",
+      "default": "./dist/components/badge.js"
+    },
     "./button": {
       "types": "./dist/components/button.d.ts",
       "default": "./dist/components/button.js"
+    },
+    "./chip": {
+      "types": "./dist/components/chip.d.ts",
+      "default": "./dist/components/chip.js"
     },
     "./component": {
       "types": "./dist/components/component.d.ts",

@@ -168,6 +168,12 @@
   align-items: center;
 }
 
+.sb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
 .sb-surfaces {
   display: flex;
   flex-direction: column;

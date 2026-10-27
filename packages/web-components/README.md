@@ -8,7 +8,9 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 
 | Component  | Tag              | Subpath         |
 | ---------- | ---------------- | --------------- |
+| Badge      | `ui-badge`       | `./badge`       |
 | Button     | `ui-button`      | `./button`      |
+| Chip       | `ui-chip`        | `./chip`        |
 | IconButton | `ui-icon-button` | `./icon-button` |
 | LinkButton | `ui-link-button` | `./link-button` |
 | Loader     | `ui-loader`      | `./loader`      |
