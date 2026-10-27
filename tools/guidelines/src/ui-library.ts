@@ -40,6 +40,12 @@ export function componentGuideline({ spec, page }: DocumentedComponent): string 
         '',
       ]),
     ...design.flags.map((name) => [code(name), '`false`, `true`', '`false`', '']),
+    ...design.booleans.map((name) => [
+      code(name),
+      '`false`, `true`',
+      '`false`',
+      'A boolean property, not a variant.',
+    ]),
     ...Object.entries(design.previews).map(([name, { options, default: fallback, note }]) => [
       code(name),
       options.map(code).join(', '),

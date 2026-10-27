@@ -9,6 +9,7 @@ export const button = defineComponent({
   figma: '179:100',
   design: {
     flags: ['disabled', 'loading'],
+    booleans: [],
     codeOnly: ['type'],
     previews: {
       interaction: {

@@ -25,6 +25,7 @@ describe('the guidelines of the Figma libraries', () => {
           .filter(([name]) => !spec.design.codeOnly.includes(name))
           .map(([name, { options, default: fallback }]) => [name, listed(options), fallback]),
         ...spec.design.flags.map((name) => [name, '`false`, `true`', 'false']),
+        ...spec.design.booleans.map((name) => [name, '`false`, `true`', 'false']),
         ...Object.entries(spec.design.previews).map(([name, { options, default: fallback }]) => [
           name,
           listed(options),

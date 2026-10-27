@@ -7,6 +7,7 @@ export declare const button: {
     readonly figma: "179:100";
     readonly design: {
         readonly flags: readonly ["disabled", "loading"];
+        readonly booleans: readonly [];
         readonly codeOnly: readonly ["type"];
         readonly previews: {
             readonly interaction: {

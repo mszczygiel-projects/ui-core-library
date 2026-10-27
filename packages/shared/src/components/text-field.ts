@@ -9,6 +9,7 @@ export const textField = defineComponent({
   figma: '144:293',
   design: {
     flags: ['disabled'],
+    booleans: [],
     codeOnly: ['type'],
     previews: {
       interaction: {

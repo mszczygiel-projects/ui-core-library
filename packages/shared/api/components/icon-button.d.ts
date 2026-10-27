@@ -7,6 +7,7 @@ export declare const iconButton: {
     readonly figma: "182:1049";
     readonly design: {
         readonly flags: readonly ["disabled", "loading"];
+        readonly booleans: readonly [];
         readonly codeOnly: readonly ["type"];
         readonly previews: {
             readonly interaction: {
