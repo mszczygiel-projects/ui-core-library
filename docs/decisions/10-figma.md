@@ -20,7 +20,7 @@
 
 - **Names**: as in code. Properties have the names and values of the props.
 - **Layers**: part layers carry the names of the parts.
-- **Design-only properties**: `interaction` (`rest`, `active`, `focus`), for TextField `valueState` (`empty`, `filled`), and for Badge `content` (`label`, `icon-label`, `icon`). Each previews a layout or a state that code derives from the browser or the content. Any other needs a decision.
+- **Design-only properties**: `interaction` (`rest`, `active`, `focus`), for TextField `valueState` (`empty`, `filled`), for Badge `content` (`label`, `icon-label`, `icon`), and for Notification the boolean property `description`. Each previews a layout or a state that code derives from the browser or the content. Any other needs a decision.
 - **Boolean properties**: a boolean prop that shows or hides a part, such as `dismissible` of Chip, may be a boolean property instead of a variant, with the name of the prop.
 - **Bindings**: only the Components layer and the Foundations styles. The one exception is the focus-ring roles for the keyboard outline.
 - **Page**: each component page holds a generated legend and the component set.
