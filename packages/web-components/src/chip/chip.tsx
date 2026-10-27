@@ -9,6 +9,7 @@ import {
 } from '@mszczygiel-projects/ui-core-shared/chip';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import {
+  AttachInternals,
   Component,
   Element,
   Event,
@@ -20,6 +21,7 @@ import {
 } from '@stencil/core';
 
 import { followConfig } from '../internal/config.ts';
+import { followAttribute } from '../internal/follow-attribute.ts';
 import { hasAssignedContent } from '../internal/slots.ts';
 import type { ChipDismiss, ChipSelectedChange } from './events.ts';
 
@@ -40,7 +42,8 @@ declare global {
  * dispatches `ui-selected-change`. A chip that is not selectable shows static text. A dismissible
  * chip adds a button named by the dismiss label and the text of the chip; it, Delete and
  * Backspace dispatch `ui-dismiss`, and the page removes the chip. The host reflects only
- * `disabled`.
+ * `disabled`. The host is form-associated only to follow a disabled fieldset; it submits nothing.
+ * An `aria-label` that the page writes on the host names the chip instead of its text.
  *
  * @slot - The text of the chip.
  * @slot icon - A decorative icon before the text.
@@ -50,9 +53,16 @@ declare global {
  * @part label - The text of the chip.
  * @part dismiss - The button that asks to remove the chip.
  */
-@Component({ tag: 'ui-chip', styleUrl: 'chip.css', shadow: { delegatesFocus: true } })
+@Component({
+  tag: 'ui-chip',
+  styleUrl: 'chip.css',
+  shadow: { delegatesFocus: true },
+  formAssociated: true,
+})
 export class UiChip implements ChipProps {
   @Element() host!: HTMLUiChipElement;
+
+  @AttachInternals() internals!: ElementInternals;
 
   /** The surface of the chip. */
   @Prop() variant: ChipVariant = 'outline';
@@ -91,31 +101,54 @@ export class UiChip implements ChipProps {
 
   @State() private hasIcon = false;
 
-  private stopFollowing: (() => void) | undefined;
+  /** Whether the browser disables the form-associated host, by its attribute or its fieldset. */
+  @State() private formDisabled = false;
+
+  /** The `aria-label` that the page wrote on the host. */
+  @State() private authorLabel: string | null = null;
+
+  private stopFollowing: (() => void)[] = [];
 
   connectedCallback(): void {
-    this.stopFollowing = followConfig((config) => {
-      this.config = config;
-    });
+    this.stopFollowing = [
+      followConfig((config) => {
+        this.config = config;
+      }),
+      followAttribute(this.host, 'aria-label', (value) => {
+        this.authorLabel = value;
+      }),
+    ];
   }
 
   disconnectedCallback(): void {
-    this.stopFollowing?.();
-    this.stopFollowing = undefined;
+    for (const stop of this.stopFollowing) {
+      stop();
+    }
+    this.stopFollowing = [];
+  }
+
+  /**
+   * Takes the disabled state the browser computes: the host's own `disabled` attribute or a
+   * disabled fieldset. The browser calls it only when that state changes, so it is kept as given.
+   */
+  formDisabledCallback(disabled: boolean): void {
+    this.formDisabled = disabled;
   }
 
   render(): VNode {
     const variant = oneOf(this.variant, options.variant.options, options.variant.default);
     const size = oneOf(this.size, options.size.options, options.size.default);
+    const disabled = this.isDisabled();
     const selected = this.selectable && this.selected;
-    const dismissible = this.dismissible && !this.disabled;
+    const dismissible = this.dismissible && !disabled;
+    const named = this.authorLabel !== null && this.authorLabel !== '';
     const classes = [
       'base',
       variant,
       size,
       // A disabled chip shows its disabled state over its selection.
-      selected && !this.disabled && 'selected',
-      this.disabled && 'disabled',
+      selected && !disabled && 'selected',
+      disabled && 'disabled',
       dismissible && 'dismissible',
     ].filter(Boolean);
     const content = [
@@ -130,19 +163,26 @@ export class UiChip implements ChipProps {
       <span part="base" class={classes.join(' ')}>
         {this.selectable ? (
           <button
+            id="control"
             part="control"
             class="control"
             type="button"
-            disabled={this.disabled}
+            disabled={disabled}
             aria-pressed={selected ? 'true' : 'false'}
-            aria-labelledby="label"
+            aria-label={named ? (this.authorLabel ?? undefined) : undefined}
+            aria-labelledby={named ? undefined : 'label'}
             onClick={this.onToggle}
             onKeyDown={this.onKeyDown}
           >
             {content}
           </button>
         ) : (
-          <span part="control" class="control">
+          <span
+            id="control"
+            part="control"
+            class="control"
+            aria-label={named ? (this.authorLabel ?? undefined) : undefined}
+          >
             {content}
           </span>
         )}
@@ -151,7 +191,7 @@ export class UiChip implements ChipProps {
             part="dismiss"
             class="dismiss"
             type="button"
-            aria-labelledby="dismiss-label label"
+            aria-labelledby={`dismiss-label ${named ? 'control' : 'label'}`}
             onClick={this.onDismiss}
             onKeyDown={this.onKeyDown}
           >
@@ -184,12 +224,16 @@ export class UiChip implements ChipProps {
     if (
       (event.key === 'Delete' || event.key === 'Backspace') &&
       this.dismissible &&
-      !this.disabled
+      !this.isDisabled()
     ) {
       event.preventDefault();
       this.dismiss.emit({ originalEvent: event });
     }
   };
+
+  private isDisabled(): boolean {
+    return this.disabled || this.formDisabled;
+  }
 }
 
 /**

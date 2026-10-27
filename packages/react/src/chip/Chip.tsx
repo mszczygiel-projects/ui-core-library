@@ -58,8 +58,8 @@ export interface ChipProps
  *
  * A selectable chip is a native toggle button, controlled with `selected` or uncontrolled with
  * `defaultSelected`. A chip that is not selectable shows static text. A dismissible chip adds a
- * button named by the dismiss label and the text of the chip; it, Delete and Backspace call
- * `onDismiss`, and the page removes the chip.
+ * button named by the dismiss label and the text of the chip, or the `aria-label` of the author;
+ * it, Delete and Backspace call `onDismiss`, and the page removes the chip.
  */
 export function Chip({
   variant = 'outline',
@@ -79,13 +79,30 @@ export function Chip({
   ref,
   onClick,
   onKeyDown,
+  id,
+  'aria-label': ariaLabel,
+  'aria-labelledby': ariaLabelledBy,
   ...rest
 }: ChipProps) {
   const { labels } = useUiCoreConfig();
   const [uncontrolled, setUncontrolled] = useState(defaultSelected);
-  const id = useId();
-  const labelId = `${id}-label`;
-  const dismissLabelId = `${id}-dismiss`;
+  const generatedId = useId();
+  const controlId = id ?? `${generatedId}-control`;
+  const labelId = `${generatedId}-label`;
+  const dismissLabelId = `${generatedId}-dismiss`;
+  // A name the author gives the chip wins over its text, and names its dismiss button too.
+  const named = ariaLabel !== undefined && ariaLabel !== '';
+  const nameIds =
+    ariaLabelledBy !== undefined && ariaLabelledBy !== ''
+      ? ariaLabelledBy
+      : named
+        ? controlId
+        : labelId;
+  const nameAttributes = {
+    id: controlId,
+    'aria-label': named ? ariaLabel : undefined,
+    'aria-labelledby': named ? ariaLabelledBy : nameIds,
+  };
   const rootAttributes: Record<string, unknown> = {};
   const controlAttributes: Record<string, unknown> = {};
   for (const [name, value] of Object.entries(rest)) {
@@ -94,7 +111,9 @@ export function Chip({
   const isSelected = selectable && (selected ?? uncontrolled);
   const canDismiss = dismissible && !disabled;
   const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    if ((event.key === 'Delete' || event.key === 'Backspace') && canDismiss) {
+    // A disabled fieldset disables the control without the disabled prop.
+    const inactive = event.currentTarget.matches(':disabled');
+    if ((event.key === 'Delete' || event.key === 'Backspace') && canDismiss && !inactive) {
       event.preventDefault();
       onDismiss?.({ originalEvent: event.nativeEvent });
     }
@@ -131,8 +150,8 @@ export function Chip({
       {selectable ? (
         <button
           type="button"
-          aria-labelledby={labelId}
           {...controlAttributes}
+          {...nameAttributes}
           className="ui-chip__control"
           disabled={disabled}
           aria-pressed={isSelected}
@@ -152,7 +171,7 @@ export function Chip({
           {content}
         </button>
       ) : (
-        <span {...controlAttributes} className="ui-chip__control">
+        <span {...controlAttributes} {...nameAttributes} className="ui-chip__control">
           {content}
         </span>
       )}
@@ -160,7 +179,7 @@ export function Chip({
         <button
           type="button"
           className="ui-chip__dismiss"
-          aria-labelledby={`${dismissLabelId} ${labelId}`}
+          aria-labelledby={`${dismissLabelId} ${nameIds}`}
           onClick={(event) => {
             // The dismiss button acts on its own, so a listener of clicks on the chip never sees it.
             event.stopPropagation();

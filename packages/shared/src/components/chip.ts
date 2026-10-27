@@ -31,6 +31,11 @@ export const chip = defineComponent({
   stories: ['Playground', 'Variants', 'Selectable', 'Dismissible', 'OnSurfaces'],
   exceptions: [
     {
+      items: ['form', 'validity', 'validationMessage', 'willValidate'],
+      reason:
+        'The web component is form-associated only to follow a disabled fieldset, as the native buttons of React do. It submits nothing and exposes no form API.',
+    },
+    {
       items: ['defaultSelected'],
       reason:
         'React uses defaultSelected for an uncontrolled initial state. The web component uses its selected attribute for that, and its property for the current state, as a native checkbox does with checked.',

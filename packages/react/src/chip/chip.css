@@ -73,6 +73,22 @@
   --_border: var(--color-chip-outline-border-disabled);
 }
 
+/*
+ * A disabled fieldset disables the native buttons without a prop: the chip then looks disabled,
+ * shows its disabled state over its selection, and hides its dismiss button, as with the prop.
+ */
+.ui-chip.ui-chip--outline:has(:disabled) {
+  --_background: transparent;
+  --_border: var(--color-chip-outline-border-disabled);
+  --_text: var(--color-chip-text-disabled);
+}
+
+.ui-chip.ui-chip--subtle:has(:disabled) {
+  --_background: var(--color-chip-subtle-background-default);
+  --_border: transparent;
+  --_text: var(--color-chip-text-disabled);
+}
+
 .ui-chip__control {
   appearance: none;
   box-sizing: border-box;
@@ -113,6 +129,10 @@ button.ui-chip__control::after {
   padding-inline-end: 0;
 }
 
+.ui-chip--dismissible:has(.ui-chip__dismiss:disabled) .ui-chip__control {
+  padding-inline-end: var(--_padding-inline);
+}
+
 .ui-chip__icon {
   display: inline-flex;
   flex: none;
@@ -145,6 +165,10 @@ button.ui-chip__control::after {
   cursor: pointer;
 }
 
+.ui-chip__dismiss:disabled {
+  display: none;
+}
+
 /* A square pointer target of at least the minimum size around the smaller button. */
 .ui-chip__dismiss::after {
   content: '';
@@ -175,7 +199,8 @@ button.ui-chip__control::after {
     border-color: Highlight;
   }
 
-  .ui-chip.ui-chip--disabled {
+  .ui-chip.ui-chip--disabled,
+  .ui-chip:has(:disabled) {
     color: GrayText;
     border-color: GrayText;
   }

@@ -143,6 +143,52 @@ export function chipContract(adapter: Mount<ChipContractProps>): void {
     expect(await named()).toBe('Clear Open now');
   });
 
+  it('names itself, and its dismiss button, by an aria-label of the author', async () => {
+    for (const selectable of [true, false]) {
+      const component = await mount(
+        { selectable, dismissible: true, children: 'Open' },
+        { attributes: { 'aria-label': 'Filter: open now' } },
+      );
+      const buttons = (await component.accessibleTree()).filter((node) => node.role === 'button');
+      expect(buttons.map((node) => node.name)).toEqual([
+        ...(selectable ? ['Filter: open now'] : []),
+        'Remove Filter: open now',
+      ]);
+    }
+  });
+
+  it('stops every action inside a disabled fieldset', async () => {
+    const fieldset = document.createElement('fieldset');
+    fieldset.disabled = true;
+    document.body.append(fieldset);
+    const changed = vi.fn();
+    const dismissed = vi.fn();
+    const component = await mount(
+      { selectable: true, dismissible: true, onSelectedChange: changed, onDismiss: dismissed },
+      { parent: fieldset },
+    );
+    const control = component.part('control');
+    expect(control.matches(':disabled')).toBe(true);
+    control.click();
+    control.dispatchEvent(new KeyboardEvent('keydown', { key: 'Delete', bubbles: true }));
+    // The dismiss button is gone, or disabled where the fieldset alone disables it.
+    const dismiss =
+      component.element.shadowRoot?.querySelector('[part~="dismiss"]') ??
+      component.element.querySelector('.ui-chip__dismiss');
+    if (dismiss instanceof HTMLElement) {
+      expect(dismiss.matches(':disabled')).toBe(true);
+      expect(getComputedStyle(dismiss).display).toBe('none');
+      dismiss.click();
+    }
+    expect(changed).not.toHaveBeenCalled();
+    expect(dismissed).not.toHaveBeenCalled();
+    fieldset.disabled = false;
+    await expect.poll(() => control.matches(':disabled')).toBe(false);
+    await userEvent.click(component.part('control'));
+    expect(changed).toHaveBeenCalledTimes(1);
+    fieldset.remove();
+  });
+
   it('removes its dismiss button and stops every action while disabled', async () => {
     const changed = vi.fn();
     const dismissed = vi.fn();

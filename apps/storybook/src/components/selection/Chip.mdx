@@ -55,13 +55,14 @@ The dismiss button is named by a word and the text of the chip, such as “Remov
 - In the web component, the `selected` attribute is the initial state and the property the current one, as `checked` is for a checkbox. React takes a controlled `selected` or an uncontrolled `defaultSelected`.
 - The dismiss button, and Delete or Backspace on a focused chip, ask to remove the chip: `ui-dismiss` in the web component, `onDismiss(details)` in React. The chip only reports the request; the page removes it and moves focus to a sensible place, such as the next chip.
 - A click on the dismiss button never toggles the chip, and a click listener on the web component does not see it.
+- A disabled fieldset disables the chip as `disabled` does: the toggle stops, and the dismiss button goes.
 - An unknown `variant` or `size` falls back to the default.
 
 ## Accessibility
 
 - **Pattern.** A selectable chip follows the [WAI-ARIA button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) as a toggle button, with `aria-pressed`. The dismiss button is a native button. A chip that is not selectable is static text and takes no focus.
 - **Keys.** Tab and Shift+Tab move between the toggles and the dismiss buttons. Enter and Space toggle. Delete and Backspace ask to remove a dismissible chip.
-- **Names.** The text names the toggle. The dismiss word and the text name the dismiss button.
+- **Names.** The text names the toggle. The dismiss word and the text name the dismiss button. An author's `aria-label`, such as “Filter: open now” for a chip that shows “Open”, names the toggle instead, and the dismiss button after the dismiss word.
 - **Groups.** Put related chips in a container with `role="group"` and an `aria-label`, such as “Filters”.
 - **Target size.** The toggle and the dismiss button take targets of at least 24 by 24 pixels in every size and density.
 - **Contrast.** Text has a contrast of at least 4.5 to 1 at rest and selected, in Light and Dark, on every surface.
@@ -91,7 +92,7 @@ import '@mszczygiel-projects/ui-core-web-components/chip';`}
 
 ## Implementation notes
 
-- The web component uses an open shadow root with focus delegation, reflects only `disabled`, and keeps its current state in its `selected` property.
+- The web component uses an open shadow root with focus delegation, reflects only `disabled`, and keeps its current state in its `selected` property. It is form-associated only to follow a disabled fieldset, and submits nothing. It passes an `aria-label` of its host to its control.
 - React passes `className`, `style`, `data-*` attributes and its ref to the root, and other attributes and handlers, such as `id`, `aria-*` and `onClick`, to the control.
 - The close icon comes from the icons package, so a consumer's icon set must hold `close`.
 - The Figma set has the design-only property `interaction` for the active and focused states, and the boolean property `dismissible`.

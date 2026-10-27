@@ -34,6 +34,9 @@ export declare const chip: {
     readonly events: readonly ["ui-selected-change", "ui-dismiss"];
     readonly stories: readonly ["Playground", "Variants", "Selectable", "Dismissible", "OnSurfaces"];
     readonly exceptions: readonly [{
+        readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
+        readonly reason: "The web component is form-associated only to follow a disabled fieldset, as the native buttons of React do. It submits nothing and exposes no form API.";
+    }, {
         readonly items: readonly ["defaultSelected"];
         readonly reason: "React uses defaultSelected for an uncontrolled initial state. The web component uses its selected attribute for that, and its property for the current state, as a native checkbox does with checked.";
     }];
