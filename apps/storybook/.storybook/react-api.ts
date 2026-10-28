@@ -22,7 +22,7 @@ export interface ReactComponentApi {
 }
 
 /** The declaration file of the React package, as its `exports` name it for TypeScript. */
-function typesEntry(): string {
+export function typesEntry(): string {
   const manifestPath = fileURLToPath(
     import.meta.resolve('@mszczygiel-projects/ui-core-react/package.json'),
   );
