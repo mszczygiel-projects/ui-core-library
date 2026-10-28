@@ -13,6 +13,10 @@
       "reason": "The smallest pointer target of a chip and its dismiss button, 24 px; no brand or mode changes it."
     },
     {
+      "token": "Components/choice/target/min-size",
+      "reason": "The smallest pointer target of a checkbox, radio button or switch, 24 px; no brand or mode changes it."
+    },
+    {
       "token": "Components/dialog/large/max-width",
       "reason": "The width of a large dialog; no brand or mode changes it."
     },
