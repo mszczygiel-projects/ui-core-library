@@ -128,6 +128,30 @@ export function TextareaField({
     };
   }, [auto]);
 
+  // A native reset restores the text without a change event, so the height follows it afterwards.
+  useEffect(() => {
+    const textarea = textareaRef.current;
+    const form = textarea?.form;
+    if (textarea === null || form === null || form === undefined || !auto) {
+      return;
+    }
+    const events = new AbortController();
+    form.addEventListener(
+      'reset',
+      (event) => {
+        queueMicrotask(() => {
+          if (!event.defaultPrevented) {
+            fitContent(textarea, true);
+          }
+        });
+      },
+      { signal: events.signal },
+    );
+    return () => {
+      events.abort();
+    };
+  });
+
   const rows: CSSProperties | undefined =
     auto && maxRows !== undefined && maxRows > 0
       ? ({ '--_max-rows': String(maxRows) } as CSSProperties)

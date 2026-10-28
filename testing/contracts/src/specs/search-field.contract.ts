@@ -107,6 +107,25 @@ export function searchFieldContract(adapter: Mount<SearchFieldContractProps>): v
     }
   });
 
+  it('keeps the query when the page cancels Escape before the field', async () => {
+    const cleared = vi.fn<NonNullable<SearchFieldContractProps['onClear']>>();
+    const cancel = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+      }
+    };
+    document.addEventListener('keydown', cancel, { capture: true });
+    try {
+      const field = await mount({ defaultValue: 'shoes', onClear: cleared });
+      await page.elementLocator(controlOf(field)).click();
+      await userEvent.keyboard('{Escape}');
+      expect(controlOf(field).value).toBe('shoes');
+      expect(cleared).not.toHaveBeenCalled();
+    } finally {
+      document.removeEventListener('keydown', cancel, { capture: true });
+    }
+  });
+
   it('does not clear a read-only query with Escape', async () => {
     const cleared = vi.fn<NonNullable<SearchFieldContractProps['onClear']>>();
     const field = await mount({ defaultValue: 'kept', readOnly: true, onClear: cleared });

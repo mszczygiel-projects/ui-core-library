@@ -118,8 +118,13 @@ export function PasswordField({
     );
     form.addEventListener(
       'reset',
-      () => {
-        setUncontrolled(latest.current.defaultRevealed);
+      (event) => {
+        // A listener after this one may cancel the reset, so the visibility waits for the outcome.
+        queueMicrotask(() => {
+          if (!event.defaultPrevented) {
+            setUncontrolled(latest.current.defaultRevealed);
+          }
+        });
       },
       { signal: events.signal },
     );

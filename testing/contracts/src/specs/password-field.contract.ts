@@ -115,6 +115,23 @@ export function passwordFieldContract(adapter: Mount<PasswordFieldContractProps>
     await expect.poll(() => controlOf(field).type).toBe('password');
   });
 
+  it('keeps the visibility when the page cancels a reset', async () => {
+    const { form, fieldset } = formFixture(fixtures);
+    form.addEventListener('reset', (event) => {
+      event.preventDefault();
+    });
+    const field = await mount(
+      { defaultValue: 'secret', defaultRevealed: true },
+      { parent: fieldset },
+    );
+    await page.elementLocator(field.part('reveal')).click();
+    expect(controlOf(field).type).toBe('password');
+    form.reset();
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    expect(controlOf(field).type).toBe('password');
+  });
+
   it('disables the button with the field and its fieldset, but not when read-only', async () => {
     const { fieldset } = formFixture(fixtures);
     const field = await mount({}, { parent: fieldset });

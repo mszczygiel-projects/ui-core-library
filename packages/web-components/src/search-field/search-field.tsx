@@ -370,6 +370,7 @@ export class UiSearchField implements SearchFieldProps, FormAssociated {
     const input = event.currentTarget;
     if (
       event.key !== 'Escape' ||
+      event.defaultPrevented ||
       event.isComposing ||
       !(input instanceof HTMLInputElement) ||
       input.value === '' ||

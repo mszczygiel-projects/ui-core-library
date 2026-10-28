@@ -92,6 +92,18 @@ export function textareaFieldContract(adapter: Mount<TextareaFieldContractProps>
     expect(controlOf(field).scrollHeight).toBeGreaterThan(height());
   });
 
+  it('measures its height again after a form reset with resize auto', async () => {
+    const { form, fieldset } = formFixture(fixtures);
+    const field = await mount({ resize: 'auto' }, { parent: fieldset });
+    const height = () => controlOf(field).getBoundingClientRect().height;
+    const empty = height();
+    await page.elementLocator(controlOf(field)).click();
+    await userEvent.keyboard('1{Enter}2{Enter}3{Enter}4{Enter}5{Enter}6');
+    expect(height()).toBeGreaterThan(empty);
+    form.reset();
+    await expect.poll(height).toBeCloseTo(empty, 0);
+  });
+
   it('follows sizes and density with the control tokens', async () => {
     for (const density of ['comfortable', 'compact'] as const) {
       for (const size of ['small', 'medium', 'large'] as const) {

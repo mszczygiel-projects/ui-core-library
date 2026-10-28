@@ -45,7 +45,7 @@ Supply a label, visible or as the `aria-label` of the author, in the language of
 
 - The clear button shows only while the field holds a query that the user may change: never when it is empty, disabled or read-only.
 - The clear button and Escape empty the field, keep the focus in the input and report two changes: the new empty value (`ui-value-change`, `onValueChange`) and the clearing (`ui-clear`, `onClear`). They dispatch no native `input`.
-- Escape in an empty or read-only field does nothing and reaches the page, so a dialog around the field can close.
+- Escape in an empty or read-only field does nothing and reaches the page, so a dialog around the field can close. An Escape that the page cancels first, for example to close a list of suggestions, keeps the query.
 - Enter submits the owning form as in TextField. The value, reset, restore and validity follow TextField.
 
 ## Accessibility
