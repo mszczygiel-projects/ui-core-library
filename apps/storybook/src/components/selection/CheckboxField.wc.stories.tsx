@@ -2,9 +2,11 @@ import '@mszczygiel-projects/ui-core-web-components/checkbox-field';
 
 import {
   checkboxField,
+  type CheckedChangeDetail,
   type ChoiceState,
 } from '@mszczygiel-projects/ui-core-shared/checkbox-field';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { onSurfaces } from '../decorators.tsx';
 import { htmlOf } from '../html.ts';
@@ -23,7 +25,14 @@ interface CheckboxFieldArgs {
 
 const { options } = checkboxField;
 
-function UiCheckboxField(args: CheckboxFieldArgs) {
+const TOPICS = ['News', 'Events', 'Offers'] as const;
+
+function UiCheckboxField({
+  onCheckedChange,
+  ...args
+}: CheckboxFieldArgs & {
+  readonly onCheckedChange?: (event: CustomEvent<CheckedChangeDetail<Event>>) => void;
+}) {
   return (
     <ui-checkbox-field
       label={args.label}
@@ -35,6 +44,7 @@ function UiCheckboxField(args: CheckboxFieldArgs) {
       required={args.required}
       name={args.name === '' ? undefined : args.name}
       value={args.value === '' || args.value === undefined ? 'on' : args.value}
+      onui-checked-change={onCheckedChange}
     />
   );
 }
@@ -105,14 +115,37 @@ export const States: Story = {
 };
 
 export const Indeterminate: Story = {
-  render: (args) => (
-    <div className="sb-stack" role="group" aria-label="Topics">
-      <UiCheckboxField {...args} label="All topics" indeterminate />
-      <UiCheckboxField {...args} label="News" checked indeterminate={false} />
-      <UiCheckboxField {...args} label="Events" indeterminate={false} />
-      <UiCheckboxField {...args} label="Offers" indeterminate={false} />
-    </div>
-  ),
+  render: function Render(args) {
+    const [chosen, setChosen] = useState<readonly string[]>(['News']);
+    const all = chosen.length === TOPICS.length;
+    return (
+      <div className="sb-stack" role="group" aria-label="Topics">
+        <UiCheckboxField
+          {...args}
+          label="All topics"
+          checked={all}
+          indeterminate={chosen.length > 0 && !all}
+          onCheckedChange={({ detail }) => {
+            setChosen(detail.value ? TOPICS : []);
+          }}
+        />
+        {TOPICS.map((topic) => (
+          <UiCheckboxField
+            key={topic}
+            {...args}
+            label={topic}
+            indeterminate={false}
+            checked={chosen.includes(topic)}
+            onCheckedChange={({ detail }) => {
+              setChosen((current) =>
+                detail.value ? [...current, topic] : current.filter((item) => item !== topic),
+              );
+            }}
+          />
+        ))}
+      </div>
+    );
+  },
 };
 
 export const OnSurfaces: Story = { decorators: [onSurfaces], ...States };

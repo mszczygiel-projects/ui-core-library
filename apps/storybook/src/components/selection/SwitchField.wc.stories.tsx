@@ -29,7 +29,14 @@ const { options } = switchField;
 /** The icon of a slot, its SVG string inserted unescaped: only the icons package supplies it. */
 function Icon({ name, slot }: { readonly name: IconName | undefined; readonly slot: string }) {
   return name === undefined ? null : (
-    <span slot={slot} dangerouslySetInnerHTML={{ __html: svgMap[name] }} />
+    <svg
+      slot={slot}
+      key={name}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: svgMap[name].replace(/^<svg[^>]*>|<\/svg>$/g, '') }}
+    />
   );
 }
 

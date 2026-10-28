@@ -1,6 +1,9 @@
 import type { BadgeProps } from '@mszczygiel-projects/ui-core-shared/badge';
 import type { ButtonProps } from '@mszczygiel-projects/ui-core-shared/button';
-import type { CheckboxFieldProps } from '@mszczygiel-projects/ui-core-shared/checkbox-field';
+import type {
+  CheckboxFieldProps,
+  CheckedChangeDetail,
+} from '@mszczygiel-projects/ui-core-shared/checkbox-field';
 import type { ChipProps } from '@mszczygiel-projects/ui-core-shared/chip';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
@@ -27,7 +30,11 @@ declare module 'react' {
       'ui-radio-field': CustomElement<RadioFieldProps>;
       'ui-radio-group': CustomElement<RadioGroupProps>;
       'ui-switch-field': CustomElement<SwitchFieldProps>;
-      'ui-checkbox-field': CustomElement<CheckboxFieldProps>;
+      'ui-checkbox-field': CustomElement<
+        CheckboxFieldProps & {
+          readonly 'onui-checked-change'?: (event: CustomEvent<CheckedChangeDetail<Event>>) => void;
+        }
+      >;
       'ui-textarea-field': CustomElement<TextareaFieldProps>;
       'ui-search-field': CustomElement<SearchFieldProps>;
       'ui-password-field': CustomElement<PasswordFieldProps>;

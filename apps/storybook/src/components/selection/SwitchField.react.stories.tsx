@@ -11,7 +11,13 @@ const { options } = switchField;
 const iconNodes = Object.fromEntries(
   iconOptions.map((name) => [
     name,
-    <span key={name} dangerouslySetInnerHTML={{ __html: svgMap[name] }} />,
+    <svg
+      key={name}
+      viewBox="0 0 24 24"
+      fill="none"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: svgMap[name].replace(/^<svg[^>]*>|<\/svg>$/g, '') }}
+    />,
   ]),
 );
 
