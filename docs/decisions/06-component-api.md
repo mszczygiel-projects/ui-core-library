@@ -11,10 +11,12 @@
   | Size            | `size`: `small`, `medium` (default) or `large`, or a subset                                                                                                              |
   | Visual style    | `variant` only. Buttons: `primary`, `secondary`, `outline`, `ghost`, `danger`. Fields: `outline`, `filled`, `underlined`. Badges and notes: `solid`, `subtle`, `outline` |
   | Tone            | `tone`: `neutral`, `brand`, `info`, `success`, `warning`, `error`                                                                                                        |
-  | Validation      | `state`: `default`, `error` or `success`. `error` sets `aria-invalid`                                                                                                    |
+  | Validation      | `state`: `default`, `error` or `success`; choice controls `default` or `error`. `error` sets `aria-invalid`                                                              |
   | Disabled        | `disabled`, never a value of another prop                                                                                                                                |
+  | Checked         | `checked`, as on a native checkbox. A group of options holds the chosen one as `value`                                                                                   |
   | Helper text     | `hint` on controls, `description` on containers                                                                                                                          |
   | Label placement | `labelPlacement`: `top`, `floating`, `inner`, `inline`. Choice controls use `labelPosition`: `start`, `end`                                                              |
+  | Orientation     | `orientation`: `vertical` (default) or `horizontal`, the direction of the items of a group                                                                               |
   | Accessible name | `label`, required where nothing visible names the component                                                                                                              |
 
 - Booleans are false by default and named after the case they turn on, such as `hideLabel`.

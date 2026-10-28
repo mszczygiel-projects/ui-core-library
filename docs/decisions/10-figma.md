@@ -20,8 +20,9 @@
 
 - **Names**: as in code. Properties have the names and values of the props.
 - **Layers**: part layers carry the names of the parts.
-- **Design-only properties**: `interaction` (`rest`, `active`, `focus`), for TextField `valueState` (`empty`, `filled`), for Badge `content` (`label`, `icon-label`, `icon`), and for Notification the boolean property `description`. Each previews a layout or a state that code derives from the browser or the content. Any other needs a decision.
+- **Design-only properties**: `interaction` (`rest`, `active`, `focus`), for TextField `valueState` (`empty`, `filled`), for Badge `content` (`label`, `icon-label`, `icon`), for Notification the boolean property `description`, and for RadioField `checked` (`false`, `true`) and `state`, which its RadioGroup sets in code. Each previews a layout or a state that code derives from the browser or the content. Any other needs a decision.
 - **Nested sets**: a component that adds a part to another, such as PasswordField to TextField, holds an exposed instance of it named `field`, whose properties carry the shared props. The specification names it in `design.nested`, and the added part is a private component such as `.FieldAction`.
+- **Private parts**: a control that a field draws, such as the box of CheckboxField, is a private set such as `.Checkbox`, whose variants follow the axes of the field. The field holds an instance of it, and its own properties drive the layers it adds, since a property cannot reach a layer inside a nested instance.
 - **Boolean properties**: a boolean prop that shows or hides a part, such as `dismissible` of Chip, may be a boolean property instead of a variant, with the name of the prop.
 - **Bindings**: only the Components layer and the Foundations styles. The one exception is the focus-ring roles for the keyboard outline.
 - **Page**: each component page holds a generated legend and the component set.

@@ -45,6 +45,10 @@ A write that throws nothing has not necessarily happened. Read every write back,
 - To change a hidden layer, first set `figma.skipInvisibleInstanceChildren = false`. If it is still inaccessible, reveal it and return its ID, change it in the next call, then restore the visibility of exactly those IDs.
 - In a component set with grid layout, a cloned variant lands on its source, and writes to `x` and `y` are ignored. Place it with `child.setGridChildPosition(row, column)`.
 - On a vertical frame, `primaryAxisSizingMode` is the height and `counterAxisSizingMode` the width. A child that fills a hugging parent freezes its width; check hugging by changing the content, not by reading the width.
+- `componentPropertyReferences` cannot be set on a layer inside an instance, so a property of a set never drives a layer of a nested instance. Put the layer it drives into the variant itself, such as the icon over the thumb of SwitchField.
+- A frame that `figma.createAutoLayout()` makes clips its content, which cuts a focus ring drawn outside a control. Set `clipsContent = false` on the frames around it.
+- `control/letter-spacing` and the other tracking variables are strings, which a text range cannot bind. Leave the letter spacing of a text unbound rather than bind a number in its place.
+- The file can hold an old copy of a variable under the name of a Components variable, in another collection. Compare bindings by the id of the variable, never by its name.
 - Reading a property that does not exist throws. Look for it with `Object.getOwnPropertyNames` along the prototype chain.
 
 ## Tokens
