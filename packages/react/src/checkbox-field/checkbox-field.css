@@ -1,0 +1,96 @@
+/*
+ * The box of CheckboxField: the native checkbox, drawn from its own checked and mixed states. The
+ * state rules share one specificity, so the later state wins: active, error, checked, disabled.
+ * In forced colours the box keeps its border and the mark its current colour, so a checked box
+ * still shows its mark.
+ */
+
+.ui-checkbox-field {
+  --_control-inline-size: var(--checkbox-size);
+  --_control-block-size: var(--checkbox-size);
+}
+
+.ui-checkbox-field__input {
+  --_background: var(--color-checkbox-background-default);
+  --_border: var(--color-checkbox-border-default);
+
+  border: var(--checkbox-border-width) solid var(--_border);
+  border-radius: var(--checkbox-radius);
+  background: var(--_background);
+}
+
+:where(.ui-checkbox-field__label:hover, .ui-checkbox-field__label:active)
+  .ui-checkbox-field__input:where(:enabled) {
+  --_border: var(--color-checkbox-border-active);
+}
+
+:where(.ui-checkbox-field--error) .ui-checkbox-field__input {
+  --_border: var(--color-checkbox-border-error);
+}
+
+/* A checked box has no border of its own colour. */
+.ui-checkbox-field__input:where(:checked, :indeterminate) {
+  --_background: var(--color-checkbox-checked-background-default);
+  --_border: var(--_background);
+}
+
+:where(.ui-checkbox-field__label:hover, .ui-checkbox-field__label:active)
+  .ui-checkbox-field__input:where(:enabled:is(:checked, :indeterminate)) {
+  --_background: var(--color-checkbox-checked-background-active);
+}
+
+:where(.ui-checkbox-field--error) .ui-checkbox-field__input:where(:checked, :indeterminate) {
+  --_background: var(--color-checkbox-checked-background-error);
+}
+
+.ui-checkbox-field__input:where(:disabled) {
+  --_background: var(--color-checkbox-background-disabled);
+  --_border: var(--color-checkbox-border-disabled);
+}
+
+.ui-checkbox-field__input:where(:disabled:is(:checked, :indeterminate)) {
+  --_background: var(--color-checkbox-checked-background-disabled);
+  --_border: var(--_background);
+}
+
+.ui-checkbox-field__mark {
+  --_mark: var(--color-checkbox-checked-mark-default);
+
+  position: relative;
+
+  /* An icon is 1em, so the mark takes its size from the font size. */
+  font-size: var(--checkbox-mark-size);
+  display: inline-flex;
+  grid-area: 1 / 1;
+  place-self: center;
+  color: var(--_mark);
+  pointer-events: none;
+}
+
+:where(.ui-checkbox-field--error) .ui-checkbox-field__mark {
+  --_mark: var(--color-checkbox-checked-mark-error);
+}
+
+.ui-checkbox-field__input:where(:disabled) + .ui-checkbox-field__mark {
+  --_mark: var(--color-checkbox-checked-mark-disabled);
+}
+
+.ui-checkbox-field__mark-check,
+.ui-checkbox-field__mark-mixed {
+  display: none;
+}
+
+.ui-checkbox-field__input:checked:not(:indeterminate)
+  + .ui-checkbox-field__mark
+  .ui-checkbox-field__mark-check,
+.ui-checkbox-field__input:indeterminate + .ui-checkbox-field__mark .ui-checkbox-field__mark-mixed {
+  display: inline-flex;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ui-checkbox-field__input {
+    transition-property: background-color, border-color;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}

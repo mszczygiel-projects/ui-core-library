@@ -7,6 +7,12 @@ export {
   type ButtonType,
   type ButtonVariant,
 } from './button/Button.tsx';
+export {
+  CheckboxField,
+  type CheckboxFieldProps,
+  type CheckedChangeDetails,
+  type ChoiceState,
+} from './checkbox-field/CheckboxField.tsx';
 export { Chip, type ChipProps } from './chip/Chip.tsx';
 export {
   IconButton,
@@ -29,11 +35,23 @@ export {
   type PasswordFieldProps,
   type PasswordFieldRevealedChangeDetails,
 } from './password-field/PasswordField.tsx';
+export { RadioField, type RadioFieldProps } from './radio-field/RadioField.tsx';
+export {
+  RadioGroup,
+  type RadioGroupOrientation,
+  type RadioGroupProps,
+  type RadioGroupValueChangeDetails,
+} from './radio-group/RadioGroup.tsx';
 export {
   SearchField,
   type SearchFieldClearDetails,
   type SearchFieldProps,
 } from './search-field/SearchField.tsx';
+export {
+  SwitchField,
+  type SwitchFieldLabelPosition,
+  type SwitchFieldProps,
+} from './switch-field/SwitchField.tsx';
 export {
   TextField,
   type TextFieldLabelPlacement,

@@ -1,0 +1,96 @@
+/*
+ * The radio button of RadioField: the native radio button, drawn as a ring, and a dot inside it
+ * while the option is chosen. The state rules share one specificity, so the later state wins:
+ * active, error, checked, disabled. The dot has a border of its own colour, which forced colours
+ * keep, so a chosen option still shows its dot.
+ */
+
+.base {
+  --_control-inline-size: var(--radio-size);
+  --_control-block-size: var(--radio-size);
+}
+
+.input {
+  --_background: var(--color-radio-background-default);
+  --_border: var(--color-radio-border-default);
+
+  border: var(--radio-border-width) solid var(--_border);
+  border-radius: var(--radio-radius);
+  background: var(--_background);
+}
+
+:where(.label:hover, .label:active) .input:where(:enabled) {
+  --_border: var(--color-radio-border-active);
+}
+
+:where(.error) .input {
+  --_border: var(--color-radio-border-error);
+}
+
+.input:where(:checked) {
+  --_background: var(--color-radio-checked-background-default);
+  --_border: var(--color-radio-checked-border-default);
+}
+
+:where(.label:hover, .label:active) .input:where(:enabled:checked) {
+  --_border: var(--color-radio-checked-border-active);
+}
+
+:where(.error) .input:where(:checked) {
+  --_background: var(--color-radio-checked-background-error);
+  --_border: var(--color-radio-checked-border-error);
+}
+
+.input:where(:disabled) {
+  --_background: var(--color-radio-background-disabled);
+  --_border: var(--color-radio-border-disabled);
+}
+
+.input:where(:disabled:checked) {
+  --_background: var(--color-radio-checked-background-disabled);
+  --_border: var(--color-radio-checked-border-disabled);
+}
+
+/* The dot sits inside the border and a ring of the background colour. */
+.dot {
+  --_dot: var(--color-radio-checked-dot-default);
+
+  position: relative;
+  display: block;
+  grid-area: 1 / 1;
+  place-self: center;
+  inline-size: calc(
+    var(--radio-size) - 2 * (var(--radio-border-width) + var(--radio-border-inner-width))
+  );
+  block-size: calc(
+    var(--radio-size) - 2 * (var(--radio-border-width) + var(--radio-border-inner-width))
+  );
+  border: var(--radio-border-width) solid var(--_dot);
+  border-radius: var(--radio-radius);
+  background: var(--_dot);
+  pointer-events: none;
+}
+
+:where(.label:hover, .label:active) .input:where(:enabled) + .dot {
+  --_dot: var(--color-radio-checked-dot-active);
+}
+
+:where(.error) .input + .dot {
+  --_dot: var(--color-radio-checked-dot-error);
+}
+
+.input:where(:disabled) + .dot {
+  --_dot: var(--color-radio-checked-dot-disabled);
+}
+
+.input:where(:not(:checked)) + .dot {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .input {
+    transition-property: background-color, border-color;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}

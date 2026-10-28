@@ -1,0 +1,145 @@
+/*
+ * The choice controls: CheckboxField, RadioField and SwitchField. The element with the class
+ * `ui-choice` takes a label position (`end` or `start`) and a state (`default` or `error`)
+ * modifier; its label holds the control, whose native input has the class `ui-choice__input`,
+ * and the text. Each component sets the size of its control in `--_control-inline-size` and
+ * `--_control-block-size` and draws the control itself.
+ */
+
+.ui-choice {
+  --_label: var(--color-choice-label-default);
+  --_hint: var(--color-choice-hint-default);
+  --_line-block-size: calc(var(--control-font-size) * var(--control-line-height));
+
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--control-font-family);
+  font-size: var(--control-font-size);
+  font-weight: var(--control-font-weight);
+  line-height: var(--control-line-height);
+  letter-spacing: var(--control-letter-spacing);
+}
+
+/* hidden reaches the input with the other native attributes, and hides the whole control. */
+.ui-choice:has(.ui-choice__input[hidden]) {
+  display: none;
+}
+
+/* Without specificity, so that the stylesheet of each component sets the size of its control. */
+:where(.ui-choice) {
+  --_control-inline-size: var(--choice-target-min-size);
+  --_control-block-size: var(--choice-target-min-size);
+}
+
+.ui-choice *,
+.ui-choice *::before,
+.ui-choice *::after {
+  box-sizing: border-box;
+}
+
+.ui-choice--error {
+  --_label: var(--color-choice-label-error);
+  --_hint: var(--color-choice-hint-error);
+}
+
+.ui-choice:has(.ui-choice__input:disabled) {
+  --_label: var(--color-choice-label-disabled);
+  --_hint: var(--color-choice-hint-disabled);
+}
+
+.ui-choice__label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--choice-gap);
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  color: var(--_label);
+  cursor: pointer;
+}
+
+/* The settings row: the text first, the control at the end of the row. */
+.ui-choice--start .ui-choice__label {
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  inline-size: auto;
+}
+
+.ui-choice:has(.ui-choice__input:disabled) .ui-choice__label {
+  cursor: default;
+}
+
+.ui-choice__control {
+  position: relative;
+  display: inline-grid;
+  flex: none;
+  inline-size: var(--_control-inline-size);
+  block-size: var(--_control-block-size);
+
+  /* The control sits in the middle of the first line of the text. */
+  margin-block-start: max(0px, (var(--_line-block-size) - var(--_control-block-size)) / 2);
+}
+
+/*
+ * A square pointer target of at least the minimum size around a smaller control. It comes first
+ * and the input and what draws on it are positioned, so they paint over it and take the clicks
+ * they cover; a click on the rest of the target reaches the label.
+ */
+.ui-choice__control::before {
+  content: '';
+  position: absolute;
+  inset: min(0%, (100% - var(--choice-target-min-size)) / 2);
+}
+
+.ui-choice__input {
+  position: relative;
+  appearance: none;
+  grid-area: 1 / 1;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  cursor: inherit;
+}
+
+.ui-choice__input:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-choice__label-text {
+  min-inline-size: 0;
+  margin-block-start: max(0px, (var(--_control-block-size) - var(--_line-block-size)) / 2);
+  overflow-wrap: anywhere;
+}
+
+.ui-choice__hint {
+  display: block;
+  margin-block-start: var(--choice-hint-gap);
+  margin-inline-start: calc(var(--_control-inline-size) + var(--choice-gap));
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  font-weight: var(--control-hint-font-weight);
+  line-height: var(--control-hint-line-height);
+  overflow-wrap: anywhere;
+}
+
+.ui-choice--start .ui-choice__hint {
+  margin-inline: 0 calc(var(--_control-inline-size) + var(--choice-gap));
+}
+
+@media (forced-colors: active) {
+  .ui-choice__label,
+  .ui-choice__hint {
+    color: CanvasText;
+  }
+
+  .ui-choice:has(.ui-choice__input:disabled) .ui-choice__label,
+  .ui-choice:has(.ui-choice__input:disabled) .ui-choice__hint {
+    color: GrayText;
+  }
+
+  .ui-choice__input:focus-visible {
+    outline-color: Highlight;
+  }
+}

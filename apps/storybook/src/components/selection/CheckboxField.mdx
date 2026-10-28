@@ -1,0 +1,102 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './CheckboxField.wc.stories.tsx';
+import * as ReactStories from './CheckboxField.react.stories.tsx';
+
+<Meta title="Components/Selection/CheckboxField/Docs" />
+
+# CheckboxField
+
+<ComponentOverview name="CheckboxField" />
+
+## Usage
+
+Use CheckboxField for a choice a user turns on or off and confirms later with a form, such as accepting terms, or for each of several independent choices. Use SwitchField for a setting that applies at once, RadioGroup for one choice among several, and Chip for a compact filter.
+
+## Anatomy
+
+The **base** holds the **label** and the **hint**. The label holds the **control**, with the native **input** drawn as the box and the **mark** inside it, and the **label-text**. The hint holds the **hint-text**. The web component exposes these parts; React uses `.ui-checkbox-field__<part>` classes. Figma names the layers the same.
+
+## Variants & tone
+
+CheckboxField has one appearance. A checked box takes the colour of the primary action.
+
+## Sizes & density
+
+The box has one size, which follows the surrounding density.
+
+## States
+
+<FrameworkCanvas react={ReactStories.States} webComponents={WebComponentStories.States} />
+
+- **Clear, checked and mixed.** The box draws the state of its native input: a check while checked and a dash in the mixed state of `indeterminate`.
+- **`state`** is `default` or `error`. Error sets `aria-invalid` and the error colours of the box, label and hint; it does not create a native validation failure. A choice has no success state.
+- Hover and press share the active styling, keyboard focus uses the focus roles, and a disabled box leaves the tab order and submits nothing.
+
+## Content & labels
+
+Supply `label` and `hint` in the language of the page. A box without a visible label takes its name from `aria-label`. CheckboxField renders no text of its own.
+
+## Behaviour
+
+<FrameworkCanvas
+  react={ReactStories.Indeterminate}
+  webComponents={WebComponentStories.Indeterminate}
+/>
+
+- A click on the box or its label, or Space, toggles the box and reports the new state once: `ui-checked-change` with `detail.value` in the web component, `onCheckedChange(checked, details)` in React, and a native `change` in both.
+- The web component takes its initial state from the `checked` attribute; its property holds the current state. React offers `defaultChecked`, or `checked` with `onCheckedChange`.
+- A click ends the mixed state, as on a native checkbox. A box that summarises others sets `indeterminate` again from their states.
+- While checked and enabled, the box submits `value` (`on` by default) under `name`. `required` blocks the submission until the box is checked. A reset restores the initial state without an event and keeps the mixed state.
+
+<Source
+  language="tsx"
+  code={`<form>
+  <CheckboxField label="I accept the terms" name="terms" required />
+</form>;`}
+/>
+
+## Accessibility
+
+- **Pattern.** A native [checkbox](https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/), with the mixed state of the tri-state pattern.
+- **Keys.** Tab reaches the box, and Space toggles it.
+- **Name and description.** The label names the box; the hint describes it and stays out of its name.
+- **Target.** A box without a label keeps a pointer target of at least 24 by 24 pixels.
+- **Preferences.** Forced colours keep the border of the box and its mark; the colours change without animation under reduced motion.
+
+## Surfaces & themes
+
+The box, label and hint follow Light and Dark and the default, subtle, inverse and primary surfaces. A checked box takes the primary action of its surface and draws its mark in the colour on it.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="CheckboxField" />}
+  webComponents={<WebComponentApi tag="ui-checkbox-field" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { CheckboxField } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/checkbox-field';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the input. The web component is form-associated: it exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity()`, follows a disabled fieldset, and passes an `aria-label` of its host to the input.
+
+## Tokens
+
+<ComponentTokens component="checkbox" />
+
+The label, the hint and the spacing come from the `choice` family, which CheckboxField shares with RadioField and SwitchField.
+
+<ComponentTokens component="choice" />
+
+## Implementation notes
+
+- Both implementations draw the native checkbox itself, with `appearance: none`, so the drawing follows the state of the input in every mode.
+- The web component shares the controller of its checked state, entry and validity with SwitchField. React renders the native input, so the browser submits and validates it.

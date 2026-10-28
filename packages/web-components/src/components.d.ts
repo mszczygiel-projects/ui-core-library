@@ -7,6 +7,8 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+import { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
+import { CheckedChange } from "./checkbox-field/events";
 import { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
 import { ChipDismiss, ChipSelectedChange } from "./chip/events";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
@@ -17,10 +19,15 @@ import { NotificationDismiss } from "./notification/events";
 import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 import { TextFieldValueChange } from "./text-field/events";
 import { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
+import { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
+import { RadioGroupValueChange } from "./radio-group/events";
 import { SearchFieldClear } from "./search-field/events";
+import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+export { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
+export { CheckedChange } from "./checkbox-field/events";
 export { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
 export { ChipDismiss, ChipSelectedChange } from "./chip/events";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
@@ -31,7 +38,10 @@ export { NotificationDismiss } from "./notification/events";
 export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
 export { TextFieldValueChange } from "./text-field/events";
 export { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
+export { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
+export { RadioGroupValueChange } from "./radio-group/events";
 export { SearchFieldClear } from "./search-field/events";
+export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export namespace Components {
     /**
@@ -115,6 +125,58 @@ export namespace Components {
           * @default 'primary'
          */
         "variant": ButtonVariant;
+    }
+    /**
+     * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
+     * selection.
+     * Its inner checkbox owns accessibility; ElementInternals associates the host with the outer form.
+     * The `checked` attribute supplies the initial and reset state, and the property holds the current
+     * one, as on a native checkbox. A click of the user ends the mixed state; a reset keeps it. An
+     * author's `aria-label` names the checkbox when it has no visible label.
+     */
+    interface UiCheckboxField {
+        /**
+          * Whether the box is checked. The attribute sets the initial state, which a reset restores; the property holds the current one, which a click changes.
+          * @default false
+         */
+        "checked": boolean;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the checkbox.
+         */
+        "hint"?: string;
+        /**
+          * Shows the mixed state of a partial selection, which a click of the user ends.
+          * @default false
+         */
+        "indeterminate": boolean;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * Requires the box to be checked for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": ChoiceState;
+        /**
+          * The string the form submits while the box is checked.
+          * @default 'on'
+         */
+        "value": string;
     }
     /**
      * A compact choice that a user turns on and off, or a chosen value that a user removes.
@@ -408,6 +470,80 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
     /**
+     * One option of a RadioGroup, with a label and hint.
+     * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
+     * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
+     * Outside a group, the option has no state and submits nothing. An author's `aria-label` names
+     * the radio button when it has no visible label.
+     */
+    interface UiRadioField {
+        /**
+          * Prevents choosing the option.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help, connected to the description of the radio button.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name.
+         */
+        "label"?: string;
+        /**
+          * The value that the group takes when a user chooses this option.
+          * @default ''
+         */
+        "value": string;
+    }
+    /**
+     * A set of radio options from which a user chooses exactly one value.
+     * The group holds the value, submits it and validates it; its options are `ui-radio-field`
+     * elements among its descendants. It gives the group one stop in the order of the Tab key, on the
+     * chosen option or else the first enabled one, and the arrow keys move the choice as in a native
+     * group, in reading order and around the ends. The `value` attribute supplies the initial and
+     * reset value, and the property holds the current one. An author's `aria-label` names the group
+     * when it has no visible label.
+     */
+    interface UiRadioGroup {
+        /**
+          * Prevents choosing any option, and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the group.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name of the group. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * The direction in which the options follow each other.
+          * @default 'vertical'
+         */
+        "orientation": RadioGroupOrientation;
+        /**
+          * Requires a chosen option for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` on the group.
+          * @default 'default'
+         */
+        "state": ChoiceState;
+        /**
+          * The value of the chosen option. The attribute sets the initial value, which a reset restores; the property holds the current one, which a user changes.
+         */
+        "value"?: string;
+    }
+    /**
      * A search input with a button that clears the query.
      * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
      * the outer form. The clear button shows only while the field holds a query that the user may
@@ -490,6 +626,52 @@ export namespace Components {
           * @default 'outline'
          */
         "variant": TextFieldVariant;
+    }
+    /**
+     * A switch with a label and hint that turns a setting on or off at once.
+     * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
+     * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
+     * property holds the current one. An author's `aria-label` names the switch when it has no visible
+     * label.
+     */
+    interface UiSwitchField {
+        /**
+          * Whether the switch is on. The attribute sets the initial state, which a reset restores; the property holds the current one, which a click changes.
+          * @default false
+         */
+        "checked": boolean;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Help or validation feedback, connected to the description of the switch.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name.
+         */
+        "label"?: string;
+        /**
+          * The side of the switch on which the label and hint sit.
+          * @default 'end'
+         */
+        "labelPosition": SwitchFieldLabelPosition;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": ChoiceState;
+        /**
+          * The string the form submits while the switch is on.
+          * @default 'on'
+         */
+        "value": string;
     }
     /**
      * A single-line text input with a label, hint and validation feedback.
@@ -656,6 +838,10 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
 }
+export interface UiCheckboxFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiCheckboxFieldElement;
+}
 export interface UiChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiChipElement;
@@ -668,9 +854,17 @@ export interface UiPasswordFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiPasswordFieldElement;
 }
+export interface UiRadioGroupCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiRadioGroupElement;
+}
 export interface UiSearchFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiSearchFieldElement;
+}
+export interface UiSwitchFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiSwitchFieldElement;
 }
 export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -704,6 +898,31 @@ declare global {
     var HTMLUiButtonElement: {
         prototype: HTMLUiButtonElement;
         new (): HTMLUiButtonElement;
+    };
+    interface HTMLUiCheckboxFieldElementEventMap {
+        "ui-checked-change": CheckedChange;
+    }
+    /**
+     * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
+     * selection.
+     * Its inner checkbox owns accessibility; ElementInternals associates the host with the outer form.
+     * The `checked` attribute supplies the initial and reset state, and the property holds the current
+     * one, as on a native checkbox. A click of the user ends the mixed state; a reset keeps it. An
+     * author's `aria-label` names the checkbox when it has no visible label.
+     */
+    interface HTMLUiCheckboxFieldElement extends Components.UiCheckboxField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiCheckboxFieldElementEventMap>(type: K, listener: (this: HTMLUiCheckboxFieldElement, ev: UiCheckboxFieldCustomEvent<HTMLUiCheckboxFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiCheckboxFieldElementEventMap>(type: K, listener: (this: HTMLUiCheckboxFieldElement, ev: UiCheckboxFieldCustomEvent<HTMLUiCheckboxFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiCheckboxFieldElement: {
+        prototype: HTMLUiCheckboxFieldElement;
+        new (): HTMLUiCheckboxFieldElement;
     };
     interface HTMLUiChipElementEventMap {
         "ui-selected-change": ChipSelectedChange;
@@ -824,6 +1043,45 @@ declare global {
         prototype: HTMLUiPasswordFieldElement;
         new (): HTMLUiPasswordFieldElement;
     };
+    /**
+     * One option of a RadioGroup, with a label and hint.
+     * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
+     * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
+     * Outside a group, the option has no state and submits nothing. An author's `aria-label` names
+     * the radio button when it has no visible label.
+     */
+    interface HTMLUiRadioFieldElement extends Components.UiRadioField, HTMLStencilElement {
+    }
+    var HTMLUiRadioFieldElement: {
+        prototype: HTMLUiRadioFieldElement;
+        new (): HTMLUiRadioFieldElement;
+    };
+    interface HTMLUiRadioGroupElementEventMap {
+        "ui-value-change": RadioGroupValueChange;
+    }
+    /**
+     * A set of radio options from which a user chooses exactly one value.
+     * The group holds the value, submits it and validates it; its options are `ui-radio-field`
+     * elements among its descendants. It gives the group one stop in the order of the Tab key, on the
+     * chosen option or else the first enabled one, and the arrow keys move the choice as in a native
+     * group, in reading order and around the ends. The `value` attribute supplies the initial and
+     * reset value, and the property holds the current one. An author's `aria-label` names the group
+     * when it has no visible label.
+     */
+    interface HTMLUiRadioGroupElement extends Components.UiRadioGroup, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiRadioGroupElementEventMap>(type: K, listener: (this: HTMLUiRadioGroupElement, ev: UiRadioGroupCustomEvent<HTMLUiRadioGroupElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiRadioGroupElementEventMap>(type: K, listener: (this: HTMLUiRadioGroupElement, ev: UiRadioGroupCustomEvent<HTMLUiRadioGroupElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiRadioGroupElement: {
+        prototype: HTMLUiRadioGroupElement;
+        new (): HTMLUiRadioGroupElement;
+    };
     interface HTMLUiSearchFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
         "ui-clear": SearchFieldClear;
@@ -852,6 +1110,30 @@ declare global {
     var HTMLUiSearchFieldElement: {
         prototype: HTMLUiSearchFieldElement;
         new (): HTMLUiSearchFieldElement;
+    };
+    interface HTMLUiSwitchFieldElementEventMap {
+        "ui-checked-change": CheckedChange;
+    }
+    /**
+     * A switch with a label and hint that turns a setting on or off at once.
+     * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
+     * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
+     * property holds the current one. An author's `aria-label` names the switch when it has no visible
+     * label.
+     */
+    interface HTMLUiSwitchFieldElement extends Components.UiSwitchField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiSwitchFieldElementEventMap>(type: K, listener: (this: HTMLUiSwitchFieldElement, ev: UiSwitchFieldCustomEvent<HTMLUiSwitchFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiSwitchFieldElementEventMap>(type: K, listener: (this: HTMLUiSwitchFieldElement, ev: UiSwitchFieldCustomEvent<HTMLUiSwitchFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiSwitchFieldElement: {
+        prototype: HTMLUiSwitchFieldElement;
+        new (): HTMLUiSwitchFieldElement;
     };
     interface HTMLUiTextFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
@@ -906,13 +1188,17 @@ declare global {
     interface HTMLElementTagNameMap {
         "ui-badge": HTMLUiBadgeElement;
         "ui-button": HTMLUiButtonElement;
+        "ui-checkbox-field": HTMLUiCheckboxFieldElement;
         "ui-chip": HTMLUiChipElement;
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-loader": HTMLUiLoaderElement;
         "ui-notification": HTMLUiNotificationElement;
         "ui-password-field": HTMLUiPasswordFieldElement;
+        "ui-radio-field": HTMLUiRadioFieldElement;
+        "ui-radio-group": HTMLUiRadioGroupElement;
         "ui-search-field": HTMLUiSearchFieldElement;
+        "ui-switch-field": HTMLUiSwitchFieldElement;
         "ui-text-field": HTMLUiTextFieldElement;
         "ui-textarea-field": HTMLUiTextareaFieldElement;
     }
@@ -1003,6 +1289,66 @@ declare namespace LocalJSX {
           * @default 'primary'
          */
         "variant"?: ButtonVariant;
+    }
+    /**
+     * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
+     * selection.
+     * Its inner checkbox owns accessibility; ElementInternals associates the host with the outer form.
+     * The `checked` attribute supplies the initial and reset state, and the property holds the current
+     * one, as on a native checkbox. A click of the user ends the mixed state; a reset keeps it. An
+     * author's `aria-label` names the checkbox when it has no visible label.
+     */
+    interface UiCheckboxField {
+        /**
+          * Whether the box is checked. The attribute sets the initial state, which a reset restores; the property holds the current one, which a click changes.
+          * @default false
+         */
+        "checked"?: boolean;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the checkbox.
+         */
+        "hint"?: string;
+        /**
+          * Shows the mixed state of a partial selection, which a click of the user ends.
+          * @default false
+         */
+        "indeterminate"?: boolean;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A user checked or cleared the box, with the new state and the native change event.
+         */
+        "onUi-checked-change"?: (event: UiCheckboxFieldCustomEvent<CheckedChange>) => void;
+        /**
+          * Requires the box to be checked for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: ChoiceState;
+        /**
+          * The string the form submits while the box is checked.
+          * @default 'on'
+         */
+        "value"?: string;
     }
     /**
      * A compact choice that a user turns on and off, or a chosen value that a user removes.
@@ -1344,6 +1690,88 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
     /**
+     * One option of a RadioGroup, with a label and hint.
+     * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
+     * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
+     * Outside a group, the option has no state and submits nothing. An author's `aria-label` names
+     * the radio button when it has no visible label.
+     */
+    interface UiRadioField {
+        /**
+          * Prevents choosing the option.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Help, connected to the description of the radio button.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name.
+         */
+        "label"?: string;
+        /**
+          * The value that the group takes when a user chooses this option.
+          * @default ''
+         */
+        "value"?: string;
+    }
+    /**
+     * A set of radio options from which a user chooses exactly one value.
+     * The group holds the value, submits it and validates it; its options are `ui-radio-field`
+     * elements among its descendants. It gives the group one stop in the order of the Tab key, on the
+     * chosen option or else the first enabled one, and the arrow keys move the choice as in a native
+     * group, in reading order and around the ends. The `value` attribute supplies the initial and
+     * reset value, and the property holds the current one. An author's `aria-label` names the group
+     * when it has no visible label.
+     */
+    interface UiRadioGroup {
+        /**
+          * Prevents choosing any option, and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the group.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name of the group. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A user chose an option, with its value and the native change event.
+         */
+        "onUi-value-change"?: (event: UiRadioGroupCustomEvent<RadioGroupValueChange>) => void;
+        /**
+          * The direction in which the options follow each other.
+          * @default 'vertical'
+         */
+        "orientation"?: RadioGroupOrientation;
+        /**
+          * Requires a chosen option for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` on the group.
+          * @default 'default'
+         */
+        "state"?: ChoiceState;
+        /**
+          * The value of the chosen option. The attribute sets the initial value, which a reset restores; the property holds the current one, which a user changes.
+         */
+        "value"?: string;
+    }
+    /**
      * A search input with a button that clears the query.
      * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
      * the outer form. The clear button shows only while the field holds a query that the user may
@@ -1438,6 +1866,60 @@ declare namespace LocalJSX {
           * @default 'outline'
          */
         "variant"?: TextFieldVariant;
+    }
+    /**
+     * A switch with a label and hint that turns a setting on or off at once.
+     * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
+     * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
+     * property holds the current one. An author's `aria-label` names the switch when it has no visible
+     * label.
+     */
+    interface UiSwitchField {
+        /**
+          * Whether the switch is on. The attribute sets the initial state, which a reset restores; the property holds the current one, which a click changes.
+          * @default false
+         */
+        "checked"?: boolean;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the switch.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name.
+         */
+        "label"?: string;
+        /**
+          * The side of the switch on which the label and hint sit.
+          * @default 'end'
+         */
+        "labelPosition"?: SwitchFieldLabelPosition;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A user turned the switch on or off, with the new state and the native change event.
+         */
+        "onUi-checked-change"?: (event: UiSwitchFieldCustomEvent<CheckedChange>) => void;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: ChoiceState;
+        /**
+          * The string the form submits while the switch is on.
+          * @default 'on'
+         */
+        "value"?: string;
     }
     /**
      * A single-line text input with a label, hint and validation feedback.
@@ -1638,6 +2120,17 @@ declare namespace LocalJSX {
         "label": string;
         "loadingLabel": string;
     }
+    interface UiCheckboxFieldAttributes {
+        "label": string;
+        "hint": string;
+        "checked": boolean;
+        "indeterminate": boolean;
+        "state": ChoiceState;
+        "disabled": boolean;
+        "required": boolean;
+        "name": string;
+        "value": string;
+    }
     interface UiChipAttributes {
         "variant": ChipVariant;
         "size": ChipSize;
@@ -1700,6 +2193,22 @@ declare namespace LocalJSX {
         "revealed": boolean;
         "revealLabel": string;
     }
+    interface UiRadioFieldAttributes {
+        "value": string;
+        "label": string;
+        "hint": string;
+        "disabled": boolean;
+    }
+    interface UiRadioGroupAttributes {
+        "label": string;
+        "hint": string;
+        "orientation": RadioGroupOrientation;
+        "value": string;
+        "name": string;
+        "required": boolean;
+        "disabled": boolean;
+        "state": ChoiceState;
+    }
     interface UiSearchFieldAttributes {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
@@ -1717,6 +2226,16 @@ declare namespace LocalJSX {
         "pattern": string;
         "autoComplete": string;
         "clearLabel": string;
+    }
+    interface UiSwitchFieldAttributes {
+        "label": string;
+        "hint": string;
+        "labelPosition": SwitchFieldLabelPosition;
+        "checked": boolean;
+        "state": ChoiceState;
+        "disabled": boolean;
+        "name": string;
+        "value": string;
     }
     interface UiTextFieldAttributes {
         "variant": TextFieldVariant;
@@ -1758,13 +2277,17 @@ declare namespace LocalJSX {
     interface IntrinsicElements {
         "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
+        "ui-checkbox-field": Omit<UiCheckboxField, keyof UiCheckboxFieldAttributes> & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes]?: UiCheckboxField[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `attr:${K}`]?: UiCheckboxFieldAttributes[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `prop:${K}`]?: UiCheckboxField[K] };
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
         "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
         "ui-password-field": Omit<UiPasswordField, keyof UiPasswordFieldAttributes> & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes]?: UiPasswordField[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `attr:${K}`]?: UiPasswordFieldAttributes[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `prop:${K}`]?: UiPasswordField[K] };
+        "ui-radio-field": Omit<UiRadioField, keyof UiRadioFieldAttributes> & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes]?: UiRadioField[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `attr:${K}`]?: UiRadioFieldAttributes[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `prop:${K}`]?: UiRadioField[K] };
+        "ui-radio-group": Omit<UiRadioGroup, keyof UiRadioGroupAttributes> & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes]?: UiRadioGroup[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `attr:${K}`]?: UiRadioGroupAttributes[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `prop:${K}`]?: UiRadioGroup[K] };
         "ui-search-field": Omit<UiSearchField, keyof UiSearchFieldAttributes> & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes]?: UiSearchField[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `attr:${K}`]?: UiSearchFieldAttributes[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `prop:${K}`]?: UiSearchField[K] };
+        "ui-switch-field": Omit<UiSwitchField, keyof UiSwitchFieldAttributes> & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes]?: UiSwitchField[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `attr:${K}`]?: UiSwitchFieldAttributes[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `prop:${K}`]?: UiSwitchField[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
         "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
     }
@@ -1787,6 +2310,15 @@ declare module "@stencil/core" {
              * that activation, and the outer submit event has no submitter.
              */
             "ui-button": LocalJSX.IntrinsicElements["ui-button"] & JSXBase.HTMLAttributes<HTMLUiButtonElement>;
+            /**
+             * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
+             * selection.
+             * Its inner checkbox owns accessibility; ElementInternals associates the host with the outer form.
+             * The `checked` attribute supplies the initial and reset state, and the property holds the current
+             * one, as on a native checkbox. A click of the user ends the mixed state; a reset keeps it. An
+             * author's `aria-label` names the checkbox when it has no visible label.
+             */
+            "ui-checkbox-field": LocalJSX.IntrinsicElements["ui-checkbox-field"] & JSXBase.HTMLAttributes<HTMLUiCheckboxFieldElement>;
             /**
              * A compact choice that a user turns on and off, or a chosen value that a user removes.
              * A selectable chip is a toggle button. Its `selected` attribute is the initial state and its
@@ -1842,6 +2374,24 @@ declare module "@stencil/core" {
              */
             "ui-password-field": LocalJSX.IntrinsicElements["ui-password-field"] & JSXBase.HTMLAttributes<HTMLUiPasswordFieldElement>;
             /**
+             * One option of a RadioGroup, with a label and hint.
+             * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
+             * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
+             * Outside a group, the option has no state and submits nothing. An author's `aria-label` names
+             * the radio button when it has no visible label.
+             */
+            "ui-radio-field": LocalJSX.IntrinsicElements["ui-radio-field"] & JSXBase.HTMLAttributes<HTMLUiRadioFieldElement>;
+            /**
+             * A set of radio options from which a user chooses exactly one value.
+             * The group holds the value, submits it and validates it; its options are `ui-radio-field`
+             * elements among its descendants. It gives the group one stop in the order of the Tab key, on the
+             * chosen option or else the first enabled one, and the arrow keys move the choice as in a native
+             * group, in reading order and around the ends. The `value` attribute supplies the initial and
+             * reset value, and the property holds the current one. An author's `aria-label` names the group
+             * when it has no visible label.
+             */
+            "ui-radio-group": LocalJSX.IntrinsicElements["ui-radio-group"] & JSXBase.HTMLAttributes<HTMLUiRadioGroupElement>;
+            /**
              * A search input with a button that clears the query.
              * Its inner input, of type search, owns accessibility; ElementInternals associates the host with
              * the outer form. The clear button shows only while the field holds a query that the user may
@@ -1853,6 +2403,14 @@ declare module "@stencil/core" {
              * input.
              */
             "ui-search-field": LocalJSX.IntrinsicElements["ui-search-field"] & JSXBase.HTMLAttributes<HTMLUiSearchFieldElement>;
+            /**
+             * A switch with a label and hint that turns a setting on or off at once.
+             * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
+             * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
+             * property holds the current one. An author's `aria-label` names the switch when it has no visible
+             * label.
+             */
+            "ui-switch-field": LocalJSX.IntrinsicElements["ui-switch-field"] & JSXBase.HTMLAttributes<HTMLUiSwitchFieldElement>;
             /**
              * A single-line text input with a label, hint and validation feedback.
              * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
