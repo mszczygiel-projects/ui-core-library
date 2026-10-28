@@ -41,9 +41,21 @@
       "types": "./dist/components/ui-notification.d.ts",
       "default": "./dist/components/ui-notification.js"
     },
+    "./password-field": {
+      "types": "./dist/components/ui-password-field.d.ts",
+      "default": "./dist/components/ui-password-field.js"
+    },
+    "./search-field": {
+      "types": "./dist/components/ui-search-field.d.ts",
+      "default": "./dist/components/ui-search-field.js"
+    },
     "./text-field": {
       "types": "./dist/components/ui-text-field.d.ts",
       "default": "./dist/components/ui-text-field.js"
+    },
+    "./textarea-field": {
+      "types": "./dist/components/ui-textarea-field.d.ts",
+      "default": "./dist/components/ui-textarea-field.js"
     },
     "./custom-elements.json": "./dist/custom-elements.json",
     "./package.json": "./package.json"

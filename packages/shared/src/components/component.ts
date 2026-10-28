@@ -33,6 +33,11 @@ export interface DesignSpec {
   readonly codeOnly: readonly string[];
   /** Properties that only the component set has. */
   readonly previews: Readonly<Record<string, PreviewSpec>>;
+  /**
+   * The component set of which each variant holds one exposed instance. A designer sets the props
+   * that both components share on that instance, under the names of its own properties.
+   */
+  readonly nested?: string;
 }
 
 /** A documented difference from the shared conventions, with its reason. */

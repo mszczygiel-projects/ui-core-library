@@ -1,12 +1,14 @@
 /**
  * Gives the owning form the entry of a control. A string value takes its name from the `name`
  * attribute, which Stencil writes only when it renders, so the entry carries the name itself. A
- * control without a name submits nothing, as a native control does.
+ * control without a name submits nothing, as a native control does. A value that is not
+ * `restorable`, such as a password, gives the browser no state to save and restore.
  */
 export function submitNamed(
   internals: ElementInternals,
   name: string | undefined,
   value: string,
+  restorable = true,
 ): void {
   if (name === undefined || name === '') {
     internals.setFormValue(null);
@@ -14,7 +16,7 @@ export function submitNamed(
   }
   const entry = new FormData();
   entry.append(name, value);
-  internals.setFormValue(entry, value);
+  internals.setFormValue(entry, restorable ? value : null);
 }
 
 /**

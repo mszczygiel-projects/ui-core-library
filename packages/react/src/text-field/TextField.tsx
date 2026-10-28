@@ -13,7 +13,13 @@ import {
 } from '@mszczygiel-projects/ui-core-shared/text-field';
 import { type ComponentPropsWithRef, type ReactNode, useId } from 'react';
 
-import { classNames } from '../internal/class-names.ts';
+import {
+  Field,
+  fieldDescription,
+  fieldPart,
+  fieldPlaceholder,
+  splitFieldAttributes,
+} from '../internal/field.tsx';
 import { rendersContent } from '../internal/renders-content.ts';
 
 export type {
@@ -83,78 +89,52 @@ export function TextField({
   'aria-describedby': describedBy,
   ...rest
 }: TextFieldProps) {
-  const rootAttributes: Record<string, unknown> = {};
-  const inputAttributes: Record<string, unknown> = {};
-  for (const [name, value] of Object.entries(rest)) {
-    (name.startsWith('data-') ? rootAttributes : inputAttributes)[name] = value;
-  }
+  const attributes = splitFieldAttributes(rest);
   const generatedId = useId();
   const inputId = id ?? generatedId;
   const hintId = `${generatedId}-hint`;
-  const placement = oneOf(
-    labelPlacement,
-    options.labelPlacement.options,
-    options.labelPlacement.default,
-  );
-  const labelNode = label ? (
-    <label className="ui-text-field__label" htmlFor={inputId}>
-      <span className="ui-text-field__label-text">{label}</span>
-    </label>
-  ) : null;
   return (
-    <div
-      {...rootAttributes}
-      // The direction belongs to the whole field, as on the host of the web component: the label,
-      // the hint and the icons follow it, and the input inherits it.
-      dir={dir}
+    <Field
+      block="text-field"
+      controlId={inputId}
+      hintId={hintId}
+      className={className}
       style={style}
-      className={classNames(
-        'ui-text-field',
-        'ui-text-field__base',
-        className,
-        `ui-text-field--${oneOf(variant, options.variant.options, options.variant.default)}`,
-        `ui-text-field--${oneOf(size, options.size.options, options.size.default)}`,
-        `ui-text-field--${placement}`,
-        `ui-text-field--${oneOf(state, options.state.options, options.state.default)}`,
-      )}
+      dir={dir}
+      rootAttributes={attributes.root}
+      variant={variant}
+      size={size}
+      labelPlacement={labelPlacement}
+      state={state}
+      label={label}
+      hint={hint}
     >
-      {placement === 'top' && labelNode}
-      <div className="ui-text-field__control">
-        {placement !== 'top' && labelNode}
-        <div className="ui-text-field__input-row">
-          {rendersContent(leadingIcon) && (
-            <span className="ui-text-field__leading-icon" aria-hidden="true">
-              {leadingIcon}
-            </span>
-          )}
-          <input
-            type={oneOf(type, options.type.options, options.type.default)}
-            id={inputId}
-            className="ui-text-field__input"
-            placeholder={placeholder === undefined || placeholder === '' ? ' ' : placeholder}
-            aria-invalid={state === 'error' || undefined}
-            {...inputAttributes}
-            aria-describedby={
-              [describedBy, hint ? hintId : undefined].filter(Boolean).join(' ') || undefined
-            }
-            onChange={(event) => {
-              const value = event.currentTarget.value;
-              onChange?.(event);
-              onValueChange?.(value, { originalEvent: event.nativeEvent });
-            }}
-          />
-          {rendersContent(trailingIcon) && (
-            <span className="ui-text-field__trailing-icon" aria-hidden="true">
-              {trailingIcon}
-            </span>
-          )}
-        </div>
+      <div className={fieldPart('text-field', 'input-row')}>
+        {rendersContent(leadingIcon) && (
+          <span className={fieldPart('text-field', 'leading-icon')} aria-hidden="true">
+            {leadingIcon}
+          </span>
+        )}
+        <input
+          type={oneOf(type, options.type.options, options.type.default)}
+          id={inputId}
+          className={fieldPart('text-field', 'input')}
+          placeholder={fieldPlaceholder(placeholder)}
+          aria-invalid={state === 'error' || undefined}
+          {...attributes.control}
+          aria-describedby={fieldDescription(describedBy, hint, hintId)}
+          onChange={(event) => {
+            const value = event.currentTarget.value;
+            onChange?.(event);
+            onValueChange?.(value, { originalEvent: event.nativeEvent });
+          }}
+        />
+        {rendersContent(trailingIcon) && (
+          <span className={fieldPart('text-field', 'trailing-icon')} aria-hidden="true">
+            {trailingIcon}
+          </span>
+        )}
       </div>
-      {hint && (
-        <span id={hintId} className="ui-text-field__hint">
-          <span className="ui-text-field__hint-text">{hint}</span>
-        </span>
-      )}
-    </div>
+    </Field>
   );
 }

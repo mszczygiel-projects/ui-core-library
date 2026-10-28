@@ -37,6 +37,14 @@ export interface UiCoreLabels {
     /** The word that names the dismiss button of a notification, read before its heading. */
     readonly dismiss: string;
   };
+  readonly passwordField: {
+    /** The name of the button that shows the password as plain text, whatever its state. */
+    readonly reveal: string;
+  };
+  readonly searchField: {
+    /** The name of the button that clears the query. */
+    readonly clear: string;
+  };
 }
 
 /** The configuration as components read it: always complete. */
@@ -60,6 +68,8 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   iconButton: { loading: 'Loading' },
   loader: { label: 'Loading' },
   notification: { dismiss: 'Dismiss' },
+  passwordField: { reveal: 'Show password' },
+  searchField: { clear: 'Clear search' },
 });
 
 const DEFAULT_CONFIG: UiCoreConfig = Object.freeze({

@@ -895,6 +895,28 @@
             }
           }
         }
+      },
+      "action": {
+        "background": {
+          "active": {
+            "$value": "{Surfaces.color.background.tint}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:985:2",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "FRAME_FILL",
+                  "SHAPE_FILL"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-control-action-background-active)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          }
+        }
       }
     },
     "checkbox": {
@@ -7191,6 +7213,27 @@
               "WEB": "var(--control-icon-gap)"
             },
             "hiddenFromPublishing": false
+          }
+        }
+      }
+    },
+    "action": {
+      "target": {
+        "min-size": {
+          "$value": 24,
+          "$type": "size",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:985:3",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "WIDTH_HEIGHT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--control-action-target-min-size)"
+              },
+              "hiddenFromPublishing": false
+            }
           }
         }
       }

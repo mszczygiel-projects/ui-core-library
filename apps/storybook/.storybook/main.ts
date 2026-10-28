@@ -1,6 +1,8 @@
+import { dirname } from 'node:path';
+
 import type { StorybookConfig } from '@storybook/react-vite';
 
-import { readReactApi } from './react-api.ts';
+import { readReactApi, typesEntry } from './react-api.ts';
 
 const REACT_API = 'virtual:ui-core/react-api';
 
@@ -46,6 +48,19 @@ const config: StorybookConfig = {
         resolveId: (id: string) => (id === REACT_API ? `\0${REACT_API}` : undefined),
         load: (id: string) =>
           id === `\0${REACT_API}` ? `export default ${JSON.stringify(readReactApi())};` : undefined,
+        // A rebuild of the package while Storybook runs adds or changes components, so the
+        // tables are read again and the pages reload.
+        configureServer: (server) => {
+          const types = dirname(typesEntry());
+          server.watcher.add(types);
+          server.watcher.on('change', (file) => {
+            const module = server.moduleGraph.getModuleById(`\0${REACT_API}`);
+            if (file.startsWith(types) && file.endsWith('.d.ts') && module !== undefined) {
+              server.moduleGraph.invalidateModule(module);
+              server.ws.send({ type: 'full-reload' });
+            }
+          });
+        },
       },
     ],
   }),

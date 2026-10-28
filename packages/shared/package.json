@@ -62,6 +62,14 @@
       "types": "./dist/utils/paginate.d.ts",
       "default": "./dist/utils/paginate.js"
     },
+    "./password-field": {
+      "types": "./dist/components/password-field.d.ts",
+      "default": "./dist/components/password-field.js"
+    },
+    "./search-field": {
+      "types": "./dist/components/search-field.d.ts",
+      "default": "./dist/components/search-field.js"
+    },
     "./text": {
       "types": "./dist/utils/text.d.ts",
       "default": "./dist/utils/text.js"
@@ -69,6 +77,10 @@
     "./text-field": {
       "types": "./dist/components/text-field.d.ts",
       "default": "./dist/components/text-field.js"
+    },
+    "./textarea-field": {
+      "types": "./dist/components/textarea-field.d.ts",
+      "default": "./dist/components/textarea-field.js"
     },
     "./package.json": "./package.json"
   },

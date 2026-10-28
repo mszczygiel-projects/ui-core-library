@@ -5,7 +5,10 @@ import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-b
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
+import type { PasswordFieldProps } from '@mszczygiel-projects/ui-core-shared/password-field';
+import type { SearchFieldProps } from '@mszczygiel-projects/ui-core-shared/search-field';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
+import type { TextareaFieldProps } from '@mszczygiel-projects/ui-core-shared/textarea-field';
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 /**
@@ -17,6 +20,9 @@ type CustomElement<Props> = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLE
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-textarea-field': CustomElement<TextareaFieldProps>;
+      'ui-search-field': CustomElement<SearchFieldProps>;
+      'ui-password-field': CustomElement<PasswordFieldProps>;
       // React 19 adds a listener for each `on<event>` prop of a custom element.
       'ui-notification': CustomElement<
         NotificationProps & { readonly 'onui-dismiss'?: (event: Event) => void }

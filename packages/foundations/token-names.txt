@@ -344,6 +344,7 @@ css --color-chip-subtle-background-default
 css --color-chip-text-default
 css --color-chip-text-disabled
 css --color-chip-tint-active
+css --color-control-action-background-active
 css --color-control-filled-background-default
 css --color-control-filled-background-disabled
 css --color-control-filled-border-default
@@ -824,6 +825,7 @@ css --color-white-800
 css --color-white-900
 css --combobox-chips-gap
 css --combobox-chips-padding-stack
+css --control-action-target-min-size
 css --control-border-width
 css --control-font-family
 css --control-font-size
@@ -1529,6 +1531,7 @@ tailwind --color-chip-subtle-background-default
 tailwind --color-chip-text-default
 tailwind --color-chip-text-disabled
 tailwind --color-chip-tint-active
+tailwind --color-control-action-background-active
 tailwind --color-control-filled-background-default
 tailwind --color-control-filled-background-disabled
 tailwind --color-control-filled-border-default
@@ -2343,6 +2346,7 @@ ts tokens.components.color.chip.subtle.background.default
 ts tokens.components.color.chip.text.default
 ts tokens.components.color.chip.text.disabled
 ts tokens.components.color.chip.tint.active
+ts tokens.components.color.control.action.background.active
 ts tokens.components.color.control.filled.background.default
 ts tokens.components.color.control.filled.background.disabled
 ts tokens.components.color.control.filled.border.default
@@ -2544,6 +2548,7 @@ ts tokens.components.color.switch.track.hover
 ts tokens.components.color.switch.track.success
 ts tokens.components.combobox.chips.gap
 ts tokens.components.combobox.chips.padding.stack
+ts tokens.components.control.action.target.minSize
 ts tokens.components.control.border.width
 ts tokens.components.control.fontFamily
 ts tokens.components.control.fontSize

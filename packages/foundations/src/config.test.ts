@@ -101,6 +101,8 @@ describe('the configuration', () => {
         iconButton: { loading: 'Loading' },
         loader: { label: 'Wait' },
         notification: { dismiss: 'Dismiss' },
+        passwordField: { reveal: 'Show password' },
+        searchField: { clear: 'Clear search' },
       },
       loaderVariant: 'spinner' satisfies LoaderVariant,
     });

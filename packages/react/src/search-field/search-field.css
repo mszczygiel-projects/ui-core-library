@@ -1,0 +1,10 @@
+/* The clear button of the field replaces the one some browsers draw in a search input. */
+.ui-search-field__input::-webkit-search-cancel-button,
+.ui-search-field__input::-webkit-search-decoration {
+  appearance: none;
+}
+
+/* A disabled fieldset disables the button without a render, so the stylesheet hides it. */
+.ui-search-field__clear:disabled {
+  display: none;
+}
