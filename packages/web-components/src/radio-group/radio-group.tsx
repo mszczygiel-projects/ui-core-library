@@ -184,6 +184,7 @@ export class UiRadioGroup implements RadioGroupProps, FormAssociated {
   /** Restores the value of the attribute without emitting an event. */
   formResetCallback(): void {
     this.value = this.host.getAttribute('value') ?? undefined;
+    this.sync();
   }
 
   /** Restores the value the browser saved, without emitting an event. */

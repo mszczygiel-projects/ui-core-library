@@ -27,5 +27,7 @@ Then follow the order of the skill `ui-core-component` and the Definition of Don
 
 ## Troubleshooting
 
+- **A form reads stale data immediately after reset.** A web component's reset callback must restore its native input, `ElementInternals` form value and validity synchronously. Test `new FormData(form)` and form validation directly after `form.reset()`, without waiting for a render.
+- **Radio options do not respond when modules load separately.** Test existing markup with RadioField loaded before RadioGroup. The group's first state update must connect already upgraded options to its channel; upgrading a parent does not reconnect its children.
 - **Storybook shows old components.** It reads the built packages. Run `pnpm nx run-many -t build -p web-components react`.
 - **A fresh clone of the web components does not build.** Stencil reads `src/components.d.ts`, which is committed; restore it from Git if it went missing.

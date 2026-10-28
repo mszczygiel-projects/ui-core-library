@@ -29,7 +29,14 @@ export class CheckedControl {
 
   /** Restores the state of the attribute without emitting an event. */
   reset(): void {
-    this.options.onChecked(this.options.host().hasAttribute('checked'));
+    const checked = this.options.host().hasAttribute('checked');
+    this.options.onChecked(checked);
+    const input = this.options.control();
+    if (input !== null) {
+      input.checked = checked;
+    }
+    // The browser may submit or validate the form before Stencil renders again.
+    this.sync(checked);
   }
 
   /** Restores the state the browser saved. */

@@ -71,7 +71,14 @@ export class UiRadioField implements RadioFieldProps {
     disabled: () => this.disabled,
     input: () => this.input(),
     update: (state) => {
+      // A group can upgrade after its options, without reconnecting their hosts.
+      this.channel = radioGroupOf(this.host);
       this.group = state;
+      const input = this.input();
+      if (input !== null) {
+        // A form reset must restore the native state before the next Stencil render.
+        input.checked = state.checked;
+      }
     },
   };
 
