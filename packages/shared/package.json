@@ -14,6 +14,10 @@
       "types": "./dist/components/button.d.ts",
       "default": "./dist/components/button.js"
     },
+    "./checkbox-field": {
+      "types": "./dist/components/checkbox-field.d.ts",
+      "default": "./dist/components/checkbox-field.js"
+    },
     "./chip": {
       "types": "./dist/components/chip.d.ts",
       "default": "./dist/components/chip.js"
@@ -66,9 +70,25 @@
       "types": "./dist/components/password-field.d.ts",
       "default": "./dist/components/password-field.js"
     },
+    "./radio-field": {
+      "types": "./dist/components/radio-field.d.ts",
+      "default": "./dist/components/radio-field.js"
+    },
+    "./radio-group": {
+      "types": "./dist/components/radio-group.d.ts",
+      "default": "./dist/components/radio-group.js"
+    },
+    "./radio-navigation": {
+      "types": "./dist/utils/radio-navigation.d.ts",
+      "default": "./dist/utils/radio-navigation.js"
+    },
     "./search-field": {
       "types": "./dist/components/search-field.d.ts",
       "default": "./dist/components/search-field.js"
+    },
+    "./switch-field": {
+      "types": "./dist/components/switch-field.d.ts",
+      "default": "./dist/components/switch-field.js"
     },
     "./text": {
       "types": "./dist/utils/text.d.ts",

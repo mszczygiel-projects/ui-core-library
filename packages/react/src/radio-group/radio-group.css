@@ -1,0 +1,76 @@
+/*
+ * RadioGroup: a label and a hint like those of a text field, around the options, which follow
+ * each other in a column or a row.
+ */
+
+.ui-radio-group {
+  --_label: var(--color-control-outline-label-default);
+  --_hint: var(--color-control-outline-hint-default);
+
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--control-font-family);
+}
+
+.ui-radio-group--error {
+  --_label: var(--color-control-outline-label-error);
+  --_hint: var(--color-control-outline-hint-error);
+}
+
+.ui-radio-group--disabled,
+fieldset:disabled .ui-radio-group {
+  --_label: var(--color-control-outline-label-disabled);
+  --_hint: var(--color-control-outline-hint-disabled);
+}
+
+/* hidden reaches the options with the other native attributes, and hides the whole group. */
+.ui-radio-group:has(> .ui-radio-group__options[hidden]) {
+  display: none;
+}
+
+.ui-radio-group__label {
+  display: block;
+  margin-block-end: var(--control-label-gap);
+  color: var(--_label);
+  font-family: var(--control-label-font-family);
+  font-size: var(--control-label-font-size);
+  font-weight: var(--control-label-font-weight);
+  line-height: var(--control-label-line-height);
+  letter-spacing: var(--control-label-letter-spacing);
+  text-transform: var(--control-label-text-uppercase);
+  overflow-wrap: anywhere;
+}
+
+.ui-radio-group__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--choice-group-gap);
+}
+
+.ui-radio-group--horizontal .ui-radio-group__options {
+  flex-flow: row wrap;
+}
+
+.ui-radio-group__hint {
+  display: block;
+  margin-block-start: var(--control-hint-gap);
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  font-weight: var(--control-hint-font-weight);
+  line-height: var(--control-hint-line-height);
+  overflow-wrap: anywhere;
+}
+
+@media (forced-colors: active) {
+  .ui-radio-group__label,
+  .ui-radio-group__hint {
+    color: CanvasText;
+  }
+
+  .ui-radio-group--disabled .ui-radio-group__label,
+  .ui-radio-group--disabled .ui-radio-group__hint,
+  fieldset:disabled .ui-radio-group__label,
+  fieldset:disabled .ui-radio-group__hint {
+    color: GrayText;
+  }
+}

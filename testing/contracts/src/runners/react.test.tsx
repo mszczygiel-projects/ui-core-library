@@ -3,24 +3,32 @@ import { describe } from 'vitest';
 
 import { mountReactBadge } from '../harness/badge.tsx';
 import { mountReactButton } from '../harness/button.tsx';
+import { mountReactCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountReactChip } from '../harness/chip.tsx';
 import { mountReactIconButton } from '../harness/icon-button.tsx';
 import { mountReactLinkButton } from '../harness/link-button.tsx';
 import { mountReactNotification } from '../harness/notification.tsx';
 import { mountReactPasswordField } from '../harness/password-field.tsx';
+import { mountReactRadioField } from '../harness/radio-field.tsx';
+import { mountReactRadioGroup } from '../harness/radio-group.tsx';
 import { reactMount } from '../harness/react.tsx';
 import { mountReactSearchField } from '../harness/search-field.tsx';
+import { mountReactSwitchField } from '../harness/switch-field.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
+import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
+import { radioFieldContract } from '../specs/radio-field.contract.ts';
+import { radioGroupContract } from '../specs/radio-group.contract.ts';
 import { searchFieldContract } from '../specs/search-field.contract.ts';
+import { switchFieldContract } from '../specs/switch-field.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
 
@@ -66,4 +74,20 @@ describe('SearchField, React', () => {
 
 describe('TextareaField, React', () => {
   textareaFieldContract(mountReactTextareaField);
+});
+
+describe('CheckboxField, React', () => {
+  checkboxFieldContract(mountReactCheckboxField);
+});
+
+describe('SwitchField, React', () => {
+  switchFieldContract(mountReactSwitchField);
+});
+
+describe('RadioGroup, React', () => {
+  radioGroupContract(mountReactRadioGroup);
+});
+
+describe('RadioField, React', () => {
+  radioFieldContract(mountReactRadioField);
 });

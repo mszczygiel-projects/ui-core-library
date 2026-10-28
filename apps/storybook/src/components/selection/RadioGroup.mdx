@@ -1,0 +1,92 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './RadioGroup.wc.stories.tsx';
+import * as ReactStories from './RadioGroup.react.stories.tsx';
+
+<Meta title="Components/Selection/RadioGroup/Docs" />
+
+# RadioGroup
+
+<ComponentOverview name="RadioGroup" />
+
+## Usage
+
+Use RadioGroup for one choice among a few options that a user sees at once, each a RadioField. Use CheckboxField for independent choices, and a select for a long list.
+
+## Anatomy
+
+The **base** holds the **label** with its **label-text**, the **options**, which hold the RadioField elements, and the **hint** with its **hint-text**. The web component exposes these parts; React uses `.ui-radio-group__<part>` classes.
+
+## Variants & tone
+
+RadioGroup has one appearance. Its label and hint look like those of a text field.
+
+## Sizes & density
+
+The options have one size, which follows the surrounding density. `orientation` puts them in a `vertical` column (the default) or a `horizontal` row that wraps.
+
+<FrameworkCanvas react={ReactStories.Horizontal} webComponents={WebComponentStories.Horizontal} />
+
+## States
+
+`state` is `default` or `error`. Error sets `aria-invalid` on the group and the error colours of its label, hint and options. `disabled` disables every option, and so does a disabled fieldset.
+
+## Content & labels
+
+Supply `label` and `hint` in the language of the page. A group without a visible label takes its name from `aria-label`. RadioGroup renders no text of its own.
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.InForm} webComponents={WebComponentStories.InForm} />
+
+- A click on an option or its label chooses it, clears the others and reports the value once: `ui-value-change` with `detail.value` in the web component, `onValueChange(value, details)` in React, and a native `change` in both.
+- The web component takes its initial value from the `value` attribute; its property holds the current value. React offers `defaultValue`, or `value` with `onValueChange`. A value that no option has chooses none.
+- The group submits the value of its chosen option under `name`, and nothing without a choice or a name. `required` blocks the submission until an option is chosen. A reset restores the initial value without an event.
+
+<Source
+  language="tsx"
+  code={`<RadioGroup label="Delivery" name="delivery" required>
+  <RadioField value="standard" label="Standard" />
+  <RadioField value="express" label="Express" />
+</RadioGroup>;`}
+/>
+
+## Accessibility
+
+- **Pattern.** The [radio group](https://www.w3.org/WAI/ARIA/apg/patterns/radio/) of native radio buttons, in an element with the role `radiogroup` that the label names and the hint describes.
+- **Keys.** The group is one stop for Tab, on the chosen option or else the first enabled one. Down and the arrow in reading order move to the next enabled option and choose it, up and the other arrow to the previous one, around the ends. Space chooses the focused option.
+- **Required and invalid.** `required` reaches each radio button, and `aria-invalid` the group.
+- **Preferences.** Forced colours keep the ring and the dot of each option.
+
+## Surfaces & themes
+
+The group and its options follow Light and Dark and the default, subtle, inverse and primary surfaces.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="RadioGroup" />}
+  webComponents={<WebComponentApi tag="ui-radio-group" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { RadioField, RadioGroup } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/radio-group';
+import '@mszczygiel-projects/ui-core-web-components/radio-field';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the element with the role `radiogroup`, and `form` reaches the radio buttons. The web component is form-associated: it exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity()`, follows a disabled fieldset, and passes an `aria-label` of its host to the group.
+
+## Tokens
+
+RadioGroup uses the label and hint tokens of the `control` family, and `choice/group/gap` between its options. Each option uses the tokens of RadioField.
+
+## Implementation notes
+
+- In React, the options render native radio buttons that share the name of the group, so the browser keeps one chosen, moves the choice with the arrow keys and submits it. A group without a name takes a generated one and leaves its radio buttons out of every form.
+- In the web component, each option keeps its radio button in its own shadow root, so the group holds the value, gives the group its one Tab stop, moves the choice with the arrow keys as a native group does, and tells each radio button its place in the group.

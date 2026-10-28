@@ -2,6 +2,7 @@ iconAlert
 iconCalendar
 iconCart
 iconCheck
+iconCheckmark
 iconChevronDown
 iconChevronLeft
 iconChevronRight

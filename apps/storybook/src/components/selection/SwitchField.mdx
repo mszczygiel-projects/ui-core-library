@@ -1,0 +1,95 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './SwitchField.wc.stories.tsx';
+import * as ReactStories from './SwitchField.react.stories.tsx';
+
+<Meta title="Components/Selection/SwitchField/Docs" />
+
+# SwitchField
+
+<ComponentOverview name="SwitchField" />
+
+## Usage
+
+Use SwitchField for a setting that applies as soon as the user turns it on or off, such as notifications. Use CheckboxField for a choice the user confirms later with a form, or one a form requires.
+
+## Anatomy
+
+The **base** holds the **label** and the **hint**. The label holds the **control**, with the native **input** drawn as the track and the **thumb** after it, which may hold an **icon** for each state, and the **label-text**. The web component exposes these parts; React uses `.ui-switch-field__<part>` classes. Figma names the layers the same.
+
+## Variants & tone
+
+SwitchField has one appearance. A switch that is on takes the colour of the primary action.
+
+## Sizes & density
+
+The switch has one size, which follows the surrounding density.
+
+## States
+
+- **Off and on.** The thumb sits at the start of the track while off and moves to its end while on, in reading order.
+- **`state`** is `default` or `error`. Error sets `aria-invalid` and the error colours. A choice has no success state.
+- Hover and press share the active styling, keyboard focus uses the focus roles, and a disabled switch leaves the tab order and submits nothing.
+
+## Content & labels
+
+<FrameworkCanvas
+  react={ReactStories.LabelPosition}
+  webComponents={WebComponentStories.LabelPosition}
+/>
+
+Supply `label` and `hint` in the language of the page. `labelPosition` puts them at the `end` of the switch (the default) or at its `start`, where the switch moves to the end of the row, as in a list of settings. Icons in the thumb, through the slots `icon-on` and `icon-off` or the props `iconOn` and `iconOff`, are decorative.
+
+## Behaviour
+
+- A click on the switch or its label, or Space, toggles it and reports the new state once: `ui-checked-change` with `detail.value` in the web component, `onCheckedChange(checked, details)` in React, and a native `change` in both.
+- The web component takes its initial state from the `checked` attribute; its property holds the current state. React offers `defaultChecked`, or `checked` with `onCheckedChange`.
+- While on and enabled, the switch submits `value` (`on` by default) under `name`. A reset restores the initial state without an event. A switch has no `required`: a choice that a form requires is a CheckboxField.
+
+<Source
+  language="tsx"
+  code={`<SwitchField label="Notifications" labelPosition="start" defaultChecked />;`}
+/>
+
+## Accessibility
+
+- **Pattern.** A native checkbox with the role [switch](https://www.w3.org/WAI/ARIA/apg/patterns/switch/), which a screen reader announces as on or off.
+- **Keys.** Tab reaches the switch, and Space toggles it.
+- **Name and description.** The label names the switch; the hint describes it and stays out of its name.
+- **Target.** A switch keeps a pointer target of at least 24 by 24 pixels.
+- **Preferences.** Forced colours keep the border of the track and of the thumb, whose position shows the state; the thumb moves without animation under reduced motion.
+
+## Surfaces & themes
+
+The switch follows Light and Dark and the default, subtle, inverse and primary surfaces. The thumb takes the background of the surface while off and the colour on the primary action while on, so it stays visible on every surface.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="SwitchField" />}
+  webComponents={<WebComponentApi tag="ui-switch-field" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { SwitchField } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/switch-field';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the input. The web component uses the attribute `label-position`, is form-associated with the form API of CheckboxField, and passes an `aria-label` of its host to the input.
+
+## Tokens
+
+<ComponentTokens component="switch" />
+
+The label, the hint and the spacing come from the `choice` family.
+
+## Implementation notes
+
+- Both implementations draw the native checkbox as the track, with `appearance: none`, and place the thumb after it.
+- The web component shares the controller of its checked state and entry with CheckboxField.

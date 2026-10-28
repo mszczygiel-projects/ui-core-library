@@ -1,0 +1,129 @@
+/*
+ * The switch of SwitchField: the native checkbox, drawn as the track, and the thumb after it. The
+ * state rules share one specificity, so the later state wins: active, error, checked, disabled.
+ * The thumb has a border of its own colour, which forced colours keep, so its position still shows
+ * the state.
+ */
+
+.ui-switch-field {
+  --_control-inline-size: var(--switch-track-width);
+  --_control-block-size: var(--switch-track-height);
+}
+
+.ui-switch-field__input {
+  --_track: var(--color-switch-track-default);
+  --_border: var(--color-switch-border-default);
+
+  border: var(--switch-border-width) solid var(--_border);
+  border-radius: var(--switch-radius);
+  background: var(--_track);
+}
+
+:where(.ui-switch-field__label:hover, .ui-switch-field__label:active)
+  .ui-switch-field__input:where(:enabled) {
+  --_track: var(--color-switch-track-active);
+  --_border: var(--color-switch-border-active);
+}
+
+:where(.ui-switch-field--error) .ui-switch-field__input {
+  --_border: var(--color-switch-border-error);
+}
+
+/* A switch that is on has no border of its own colour. */
+.ui-switch-field__input:where(:checked) {
+  --_track: var(--color-switch-checked-track-default);
+  --_border: var(--_track);
+}
+
+:where(.ui-switch-field__label:hover, .ui-switch-field__label:active)
+  .ui-switch-field__input:where(:enabled:checked) {
+  --_track: var(--color-switch-checked-track-active);
+}
+
+:where(.ui-switch-field--error) .ui-switch-field__input:where(:checked) {
+  --_track: var(--color-switch-checked-track-error);
+}
+
+.ui-switch-field__input:where(:disabled) {
+  --_track: var(--color-switch-track-disabled);
+  --_border: var(--color-switch-border-disabled);
+}
+
+.ui-switch-field__input:where(:disabled:checked) {
+  --_track: var(--color-switch-checked-track-disabled);
+  --_border: var(--_track);
+}
+
+.ui-switch-field__thumb {
+  --_thumb: var(--color-switch-thumb-default);
+  --_icon: var(--color-switch-icon-default);
+  --_inset: calc((var(--switch-track-height) - var(--switch-thumb-size)) / 2);
+
+  position: relative;
+  display: inline-grid;
+  grid-area: 1 / 1;
+  place-self: center start;
+  place-items: center;
+  inline-size: var(--switch-thumb-size);
+  block-size: var(--switch-thumb-size);
+  margin-inline-start: var(--_inset);
+  border: var(--switch-border-width) solid var(--_thumb);
+  border-radius: var(--switch-radius);
+  background: var(--_thumb);
+  color: var(--_icon);
+  pointer-events: none;
+}
+
+.ui-switch-field__input:where(:disabled) + .ui-switch-field__thumb {
+  --_icon: var(--color-switch-icon-disabled);
+}
+
+.ui-switch-field__input:where(:checked) + .ui-switch-field__thumb {
+  --_thumb: var(--color-switch-checked-thumb-default);
+  --_icon: var(--color-switch-checked-icon-default);
+
+  margin-inline-start: calc(var(--switch-track-width) - var(--switch-thumb-size) - var(--_inset));
+}
+
+:where(.ui-switch-field__label:hover, .ui-switch-field__label:active)
+  .ui-switch-field__input:where(:enabled:checked)
+  + .ui-switch-field__thumb {
+  --_thumb: var(--color-switch-checked-thumb-active);
+  --_icon: var(--color-switch-checked-icon-active);
+}
+
+:where(.ui-switch-field--error) .ui-switch-field__input:where(:checked) + .ui-switch-field__thumb {
+  --_thumb: var(--color-switch-checked-thumb-error);
+  --_icon: var(--color-switch-checked-icon-error);
+}
+
+.ui-switch-field__input:where(:disabled:checked) + .ui-switch-field__thumb {
+  --_thumb: var(--color-switch-checked-thumb-disabled);
+  --_icon: var(--color-switch-checked-icon-disabled);
+}
+
+.ui-switch-field__icon {
+  /* An icon is 1em, so it takes the icon size however deeply the page wraps it. */
+  font-size: var(--switch-icon-size);
+  display: inline-flex;
+  grid-area: 1 / 1;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--switch-icon-size);
+  block-size: var(--switch-icon-size);
+}
+
+.ui-switch-field__icon[hidden],
+.ui-switch-field__input:checked + .ui-switch-field__thumb .ui-switch-field__icon-off,
+.ui-switch-field__input:not(:checked) + .ui-switch-field__thumb .ui-switch-field__icon-on {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ui-switch-field__input,
+  .ui-switch-field__thumb {
+    transition-property: background-color, border-color, margin-inline-start;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}

@@ -1,5 +1,6 @@
 import { badge } from './badge.ts';
 import { button } from './button.ts';
+import { checkboxField } from './checkbox-field.ts';
 import { chip } from './chip.ts';
 import type { ComponentSpec } from './component.ts';
 import { iconButton } from './icon-button.ts';
@@ -7,7 +8,10 @@ import { linkButton } from './link-button.ts';
 import { loader } from './loader.ts';
 import { notification } from './notification.ts';
 import { passwordField } from './password-field.ts';
+import { radioField } from './radio-field.ts';
+import { radioGroup } from './radio-group.ts';
 import { searchField } from './search-field.ts';
+import { switchField } from './switch-field.ts';
 import { textField } from './text-field.ts';
 import { textareaField } from './textarea-field.ts';
 
@@ -24,4 +28,8 @@ export const specs: readonly ComponentSpec[] = [
   passwordField,
   searchField,
   textareaField,
+  checkboxField,
+  switchField,
+  radioGroup,
+  radioField,
 ];

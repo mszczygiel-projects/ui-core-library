@@ -11,13 +11,17 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | ------------- | --------------- |
 | Badge         | `Badge`         |
 | Button        | `Button`        |
+| CheckboxField | `CheckboxField` |
 | Chip          | `Chip`          |
 | IconButton    | `IconButton`    |
 | LinkButton    | `LinkButton`    |
 | Loader        | `Loader`        |
 | Notification  | `Notification`  |
 | PasswordField | `PasswordField` |
+| RadioField    | `RadioField`    |
+| RadioGroup    | `RadioGroup`    |
 | SearchField   | `SearchField`   |
+| SwitchField   | `SwitchField`   |
 | TextField     | `TextField`     |
 | TextareaField | `TextareaField` |
 

@@ -1,0 +1,92 @@
+/*
+ * The box of CheckboxField: the native checkbox, drawn from its own checked and mixed states. The
+ * state rules share one specificity, so the later state wins: active, error, checked, disabled.
+ * In forced colours the box keeps its border and the mark its current colour, so a checked box
+ * still shows its mark.
+ */
+
+.base {
+  --_control-inline-size: var(--checkbox-size);
+  --_control-block-size: var(--checkbox-size);
+}
+
+.input {
+  --_background: var(--color-checkbox-background-default);
+  --_border: var(--color-checkbox-border-default);
+
+  border: var(--checkbox-border-width) solid var(--_border);
+  border-radius: var(--checkbox-radius);
+  background: var(--_background);
+}
+
+:where(.label:hover, .label:active) .input:where(:enabled) {
+  --_border: var(--color-checkbox-border-active);
+}
+
+:where(.error) .input {
+  --_border: var(--color-checkbox-border-error);
+}
+
+/* A checked box has no border of its own colour. */
+.input:where(:checked, :indeterminate) {
+  --_background: var(--color-checkbox-checked-background-default);
+  --_border: var(--_background);
+}
+
+:where(.label:hover, .label:active) .input:where(:enabled:is(:checked, :indeterminate)) {
+  --_background: var(--color-checkbox-checked-background-active);
+}
+
+:where(.error) .input:where(:checked, :indeterminate) {
+  --_background: var(--color-checkbox-checked-background-error);
+}
+
+.input:where(:disabled) {
+  --_background: var(--color-checkbox-background-disabled);
+  --_border: var(--color-checkbox-border-disabled);
+}
+
+.input:where(:disabled:is(:checked, :indeterminate)) {
+  --_background: var(--color-checkbox-checked-background-disabled);
+  --_border: var(--_background);
+}
+
+.mark {
+  --_mark: var(--color-checkbox-checked-mark-default);
+
+  position: relative;
+
+  /* An icon is 1em, so the mark takes its size from the font size. */
+  font-size: var(--checkbox-mark-size);
+  display: inline-flex;
+  grid-area: 1 / 1;
+  place-self: center;
+  color: var(--_mark);
+  pointer-events: none;
+}
+
+:where(.error) .mark {
+  --_mark: var(--color-checkbox-checked-mark-error);
+}
+
+.input:where(:disabled) + .mark {
+  --_mark: var(--color-checkbox-checked-mark-disabled);
+}
+
+.mark-check,
+.mark-mixed {
+  display: none;
+}
+
+.input:checked:not(:indeterminate) + .mark .mark-check,
+.input:indeterminate + .mark .mark-mixed {
+  display: inline-flex;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .input {
+    transition-property: background-color, border-color;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}
