@@ -42,6 +42,7 @@ catalog:
   eslint-plugin-react-hooks: 7.1.1
   eslint-plugin-simple-import-sort: 14.0.0
   eslint-plugin-storybook: 10.6.2
+  imask: 7.6.1
   jsonc-eslint-parser: 3.3.0
   lefthook: 2.2.2
   nx: 24.0.1
@@ -81,3 +82,7 @@ onlyBuiltDependencies:
 ignoredBuiltDependencies:
   - esbuild
   - lefthook
+
+# Preserve typed relative imports under NodeNext without changing IMask runtime code.
+patchedDependencies:
+  imask@7.6.1: patches/imask@7.6.1.patch

@@ -92,7 +92,8 @@
   "dependencies": {
     "@mszczygiel-projects/ui-core-foundations": "workspace:^",
     "@mszczygiel-projects/ui-core-icons": "workspace:^",
-    "@mszczygiel-projects/ui-core-shared": "workspace:^"
+    "@mszczygiel-projects/ui-core-shared": "workspace:^",
+    "imask": "catalog:"
   },
   "nx": {
     "name": "web-components",
