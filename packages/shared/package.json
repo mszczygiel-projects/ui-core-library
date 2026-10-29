@@ -70,6 +70,10 @@
       "types": "./dist/components/password-field.d.ts",
       "default": "./dist/components/password-field.js"
     },
+    "./parsed-input": {
+      "types": "./dist/utils/parsed-input.d.ts",
+      "default": "./dist/utils/parsed-input.js"
+    },
     "./radio-field": {
       "types": "./dist/components/radio-field.d.ts",
       "default": "./dist/components/radio-field.js"

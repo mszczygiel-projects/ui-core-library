@@ -23,6 +23,7 @@
 - No rendering, DOM, CSS, Stencil or React. The module boundaries enforce the last two.
 - No module reads the clock, the time zone, the language or random numbers. They arrive as arguments, and a lint rule forbids the usual ways of reading them.
 - Calendar dates are ISO strings, counted in whole days without `Date` objects.
+- Parsed inputs share their text parser, canonical serialization, validation reasons and locale grammar. A fixed UTC probe discovers Gregorian part order through Intl; calendar validation still uses numeric parts. IMask owns only the DOM editing mechanics of DateField, separately in each component package.
 - State that must be unique on a page lives under `globalThis[Symbol.for('ui-core.<name>')]`.
 - Every module has a subpath export, and the package declares `"sideEffects": false`.
 - The public declarations are a file snapshot in `packages/shared/api/`, which `pnpm shared:snapshot` rewrites after an intended change.
@@ -47,7 +48,8 @@
 
 ### Configuration
 
-- `configureUiCore({ labels, loaderVariant })`, from `@mszczygiel-projects/ui-core-foundations/config`, configures every component on the page. `locale` joins it with the first component that formats a date or a number.
+- `configureUiCore({ labels, loaderVariant, locale })`, from `@mszczygiel-projects/ui-core-foundations/config`, configures every component on the page. Reset clears the configured locale.
+- Validation labels are whole-sentence functions. Foundations accepts a generic validation context without depending on shared; the field specification gives its override the precise reason and constraint types.
 - Its state lives under `globalThis[Symbol.for('ui-core.config')]` and holds only what the application set. Each copy of a package merges that over its own defaults.
 - Components subscribe to changes: Stencil through its state, React through `useSyncExternalStore`.
 

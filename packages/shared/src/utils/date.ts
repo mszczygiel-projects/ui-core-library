@@ -1,3 +1,5 @@
+import { asciiDigits, localeDigits, type ParsedInput, withoutBidiMarks } from './parsed-input.ts';
+
 /**
  * Calendar dates as ISO 8601 strings, `YYYY-MM-DD`, for the years 0001 to 9999, which ISO 8601
  * writes with four digits. Dates are counted in whole days on the proleptic Gregorian calendar,
@@ -178,4 +180,182 @@ export function isoDateAt(instant: Date, timeZone: string): string {
     month: Number(part('month')),
     day: Number(part('day')),
   });
+}
+
+/** The constraints of a single calendar date. */
+export interface DateConstraints {
+  /** Earliest allowed ISO date. */
+  readonly min?: string;
+  /** Latest allowed ISO date. */
+  readonly max?: string;
+  /** ISO dates that may not be submitted, or a predicate for them. */
+  readonly disabledDates?: readonly string[] | ((iso: string) => boolean);
+}
+
+/** Why the date field cannot be submitted. */
+export type DateValidationError =
+  'incomplete' | 'invalid' | 'min' | 'max' | 'disabled' | 'constraints';
+
+/** The arguments of a translatable date validation message. */
+export interface DateValidationContext {
+  /** The failed constraint. */
+  readonly reason: DateValidationError;
+  /** The locale of the editable date. */
+  readonly locale: string;
+  /** Earliest allowed ISO date, when supplied. */
+  readonly min?: string;
+  /** Latest allowed ISO date, when supplied. */
+  readonly max?: string;
+}
+
+/** A numeric part or literal separator in the locale's Gregorian date format. */
+export interface DateFormatPart {
+  /** The calendar part, or a literal separator. */
+  readonly type: 'year' | 'month' | 'day' | 'literal';
+  /** The separator, or digit placeholders of the required width. */
+  readonly value: string;
+}
+
+/** The locale's numeric Gregorian date shape; no calendar arithmetic uses an instant. */
+export function dateFormatParts(locale: string): readonly DateFormatPart[] {
+  // A fixed UTC probe discovers Intl's ordering and punctuation, never the user's current date.
+  return new Intl.DateTimeFormat(locale, {
+    calendar: 'gregory',
+    timeZone: 'UTC',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  })
+    .formatToParts(946684800000)
+    .flatMap((part): DateFormatPart[] => {
+      if (part.type === 'year' || part.type === 'month' || part.type === 'day') {
+        return [{ type: part.type, value: part.type === 'year' ? '0000' : '00' }];
+      }
+      return part.type === 'literal'
+        ? [{ type: 'literal', value: withoutBidiMarks(part.value) }]
+        : [];
+    });
+}
+
+/** An IMask-compatible digit pattern, without a dependency on IMask or browser types. */
+export function dateMaskPattern(locale: string): string {
+  return dateFormatParts(locale)
+    .map((part) =>
+      part.type === 'literal'
+        ? part.value.replace(/./gu, (character) => `\`${character}`)
+        : part.value,
+    )
+    .join('');
+}
+
+/** Formats a calendar date by parts, with no time-zone conversion or missing-year inference. */
+export function formatDateText(iso: string, locale: string): string {
+  const date = parseIsoDate(iso);
+  if (date === null) {
+    return '';
+  }
+  const digits = localeDigits(locale);
+  return dateFormatParts(locale)
+    .map((part) =>
+      part.type === 'literal'
+        ? part.value
+        : String(date[part.type])
+            .padStart(part.value.length, '0')
+            .replace(/\d/g, (digit) => digits[Number(digit)] ?? digit),
+    )
+    .join('');
+}
+
+/** Reorders a complete ISO paste without correcting impossible calendar parts. */
+export function prepareDateText(text: string, locale: string): string {
+  const normalized = asciiDigits(text, locale).trim();
+  if (!ISO_DATE.test(normalized)) {
+    return text;
+  }
+  const parts = {
+    year: normalized.slice(0, 4),
+    month: normalized.slice(5, 7),
+    day: normalized.slice(8, 10),
+  };
+  const digits = localeDigits(locale);
+  return dateFormatParts(locale)
+    .map((part) =>
+      part.type === 'literal'
+        ? part.value
+        : parts[part.type].replace(/\d/g, (digit) => digits[Number(digit)] ?? digit),
+    )
+    .join('');
+}
+
+/** Parses ISO or the complete numeric locale format; partial input never becomes a date. */
+export function parseDateText(text: string, locale: string): ParsedInput<string> {
+  const normalized = asciiDigits(text, locale).trim();
+  if (normalized === '') {
+    return { value: '', inputState: 'empty' };
+  }
+  if (ISO_DATE.test(normalized)) {
+    return parseIsoDate(normalized) === null
+      ? { value: '', inputState: 'invalid' }
+      : { value: normalized, inputState: 'valid' };
+  }
+  const parts = dateFormatParts(locale);
+  const compact = /^\d{8}$/.test(normalized);
+  let offset = 0;
+  const values = { year: 0, month: 0, day: 0 };
+  for (const part of parts) {
+    if (part.type === 'literal' && compact) {
+      continue;
+    }
+    const piece = normalized.slice(offset, offset + part.value.length);
+    if (part.type === 'literal' ? !part.value.startsWith(piece) : !/^\d*$/.test(piece)) {
+      return { value: '', inputState: 'invalid' };
+    }
+    if (piece.length < part.value.length) {
+      return { value: '', inputState: 'incomplete' };
+    }
+    if (part.type !== 'literal') {
+      values[part.type] = Number(piece);
+    }
+    offset += part.value.length;
+  }
+  if (offset !== normalized.length || !isDate(values)) {
+    return { value: '', inputState: 'invalid' };
+  }
+  return { value: formatIsoDate(values), inputState: 'valid' };
+}
+
+/** Checks date bounds and excluded dates without changing the supplied date. */
+export function validateDate(
+  parsed: ParsedInput<string>,
+  constraints: DateConstraints,
+): DateValidationError | null {
+  if (parsed.inputState === 'incomplete' || parsed.inputState === 'invalid') {
+    return parsed.inputState;
+  }
+  if (parsed.value === '') {
+    return null;
+  }
+  const min =
+    constraints.min !== undefined && parseIsoDate(constraints.min) !== null
+      ? constraints.min
+      : undefined;
+  const max =
+    constraints.max !== undefined && parseIsoDate(constraints.max) !== null
+      ? constraints.max
+      : undefined;
+  if (min !== undefined && max !== undefined && min > max) {
+    return 'constraints';
+  }
+  if (min !== undefined && parsed.value < min) {
+    return 'min';
+  }
+  if (max !== undefined && parsed.value > max) {
+    return 'max';
+  }
+  const excluded = constraints.disabledDates;
+  return (
+    typeof excluded === 'function' ? excluded(parsed.value) : excluded?.includes(parsed.value)
+  )
+    ? 'disabled'
+    : null;
 }
