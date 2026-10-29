@@ -72,7 +72,7 @@ export interface TextFieldValueChangeDetails<OriginalEvent> {
 export interface TextFieldValueChangeDetail<OriginalEvent> extends TextFieldValueChangeDetails<OriginalEvent> {
     readonly value: string;
 }
-export interface TextControlProps {
+export interface FieldControlProps {
     variant?: TextFieldVariant;
     size?: TextFieldSize;
     labelPlacement?: TextFieldLabelPlacement;
@@ -81,9 +81,12 @@ export interface TextControlProps {
     hint?: string;
     state?: TextFieldState;
     disabled?: boolean;
-    readOnly?: boolean;
     required?: boolean;
     name?: string;
+}
+export interface TextControlProps extends FieldControlProps {
+    readOnly?: boolean;
+    required?: boolean;
     value?: string;
     minLength?: number;
     maxLength?: number;

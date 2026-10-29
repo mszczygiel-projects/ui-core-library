@@ -5,12 +5,14 @@ import { chip } from './chip.ts';
 import type { ComponentSpec } from './component.ts';
 import { iconButton } from './icon-button.ts';
 import { linkButton } from './link-button.ts';
+import { listbox } from './listbox.ts';
 import { loader } from './loader.ts';
 import { notification } from './notification.ts';
 import { passwordField } from './password-field.ts';
 import { radioField } from './radio-field.ts';
 import { radioGroup } from './radio-group.ts';
 import { searchField } from './search-field.ts';
+import { selectField } from './select-field.ts';
 import { switchField } from './switch-field.ts';
 import { textField } from './text-field.ts';
 import { textareaField } from './textarea-field.ts';
@@ -32,4 +34,6 @@ export const specs: readonly ComponentSpec[] = [
   switchField,
   radioGroup,
   radioField,
+  listbox,
+  selectField,
 ];

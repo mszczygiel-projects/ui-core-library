@@ -96,10 +96,9 @@ export interface TextFieldValueChangeDetail<
 }
 
 /**
- * The props every text control of the field family shares: TextField, PasswordField, SearchField
- * and TextareaField.
+ * The props every control of the field family shares: the text fields and SelectField.
  */
-export interface TextControlProps {
+export interface FieldControlProps {
   /**
    * The surface and border treatment.
    * @default 'outline'
@@ -132,6 +131,20 @@ export interface TextControlProps {
    */
   disabled?: boolean;
   /**
+   * Requires a value for native validation.
+   * @default false
+   */
+  required?: boolean;
+  /** The name of the form entry. */
+  name?: string;
+}
+
+/**
+ * The props every text control of the field family shares: TextField, PasswordField, SearchField
+ * and TextareaField.
+ */
+export interface TextControlProps extends FieldControlProps {
+  /**
    * Prevents editing but keeps submission.
    * @default false
    */
@@ -141,8 +154,6 @@ export interface TextControlProps {
    * @default false
    */
   required?: boolean;
-  /** The name of the form entry. */
-  name?: string;
   /** The current value. */
   value?: string;
   /** The minimum length a user enters, in UTF-16 code units. */
