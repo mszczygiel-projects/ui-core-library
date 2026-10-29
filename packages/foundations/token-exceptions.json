@@ -61,7 +61,7 @@
       "reason": "The size of the dot of a selected radio button."
     },
     {
-      "token": "Components/select/dropdown/max-height",
+      "token": "Components/listbox/max-height",
       "reason": "The height after which the list of options scrolls."
     },
     {
