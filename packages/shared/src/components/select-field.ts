@@ -12,21 +12,11 @@ export const selectField = defineComponent({
   status: 'in-progress',
   figma: '1370:179',
   design: {
-    flags: ['disabled', 'open'],
+    flags: ['open'],
     booleans: ['clearable'],
     codeOnly: ['options', 'name', 'required'],
-    previews: {
-      interaction: {
-        options: ['rest', 'active', 'focus'],
-        default: 'rest',
-        note: 'Previews hover and press (active) and keyboard focus. Leave it at rest in a design.',
-      },
-      valueState: {
-        options: ['empty', 'filled'],
-        default: 'empty',
-        note: 'Chooses the layout of a field without and with a chosen option. Keep it consistent with the text of value.',
-      },
-    },
+    previews: {},
+    nested: 'TextField',
   },
   summary: 'A field that opens a list of options from which a user chooses one value.',
   options: {

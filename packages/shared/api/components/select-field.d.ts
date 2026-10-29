@@ -7,21 +7,11 @@ export declare const selectField: {
     readonly status: "in-progress";
     readonly figma: "1370:179";
     readonly design: {
-        readonly flags: readonly ["disabled", "open"];
+        readonly flags: readonly ["open"];
         readonly booleans: readonly ["clearable"];
         readonly codeOnly: readonly ["options", "name", "required"];
-        readonly previews: {
-            readonly interaction: {
-                readonly options: readonly ["rest", "active", "focus"];
-                readonly default: "rest";
-                readonly note: "Previews hover and press (active) and keyboard focus. Leave it at rest in a design.";
-            };
-            readonly valueState: {
-                readonly options: readonly ["empty", "filled"];
-                readonly default: "empty";
-                readonly note: "Chooses the layout of a field without and with a chosen option. Keep it consistent with the text of value.";
-            };
-        };
+        readonly previews: {};
+        readonly nested: "TextField";
     };
     readonly summary: "A field that opens a list of options from which a user chooses one value.";
     readonly options: {
