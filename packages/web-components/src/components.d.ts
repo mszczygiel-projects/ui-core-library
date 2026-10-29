@@ -11,12 +11,17 @@ import { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field"
 import { CheckedChange } from "./checkbox-field/events";
 import { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
 import { ChipDismiss, ChipSelectedChange } from "./chip/events";
+import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
+import { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
+import { DateFieldValueChange } from "./date-field/events";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 import { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
 import { NotificationDismiss } from "./notification/events";
-import { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
+import { NumberFieldControls } from "@mszczygiel-projects/ui-core-shared/number-field";
+import { NumberValidationContext } from "@mszczygiel-projects/ui-core-shared/numeric";
+import { NumberFieldValueChange } from "./number-field/events";
 import { TextFieldValueChange } from "./text-field/events";
 import { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
 import { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
@@ -30,12 +35,17 @@ export { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field"
 export { CheckedChange } from "./checkbox-field/events";
 export { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
 export { ChipDismiss, ChipSelectedChange } from "./chip/events";
+export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
+export { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
+export { DateFieldValueChange } from "./date-field/events";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 export { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
 export { NotificationDismiss } from "./notification/events";
-export { TextFieldLabelPlacement, TextFieldSize, TextFieldState, TextFieldType, TextFieldVariant } from "@mszczygiel-projects/ui-core-shared/text-field";
+export { NumberFieldControls } from "@mszczygiel-projects/ui-core-shared/number-field";
+export { NumberValidationContext } from "@mszczygiel-projects/ui-core-shared/numeric";
+export { NumberFieldValueChange } from "./number-field/events";
 export { TextFieldValueChange } from "./text-field/events";
 export { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
 export { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
@@ -225,6 +235,92 @@ export namespace Components {
         "variant": ChipVariant;
     }
     /**
+     * A masked date input with a locale-aware display and an ISO calendar-date value.
+     * The native input owns accessibility and editable text. ElementInternals submits the canonical
+     * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     */
+    interface UiDateField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * ISO dates that cannot be submitted, or a predicate; property only.
+         */
+        "disabledDates"?: DateConstraints['disabledDates'];
+        /**
+          * A complete sentence describing the format, used when hint is absent.
+         */
+        "getFormatHintLabel"?: (example: string) => string;
+        /**
+          * A complete translated validation message; property only.
+         */
+        "getValidationMessageLabel"?: (context: DateValidationContext) => string;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * BCP 47 locale, before configuration and browser language.
+         */
+        "locale"?: string;
+        /**
+          * Inclusive upper ISO date bound.
+         */
+        "max"?: string;
+        /**
+          * Inclusive lower ISO date bound.
+         */
+        "min"?: string;
+        /**
+          * The name of the canonical form entry.
+         */
+        "name"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a nonempty value.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback, independent of form validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+    /**
      * Triggers an action named only by an icon, as a square of the height of a button.
      * The native button inside the shadow root owns the accessible semantics, named by `label`. The
      * host takes part in its outer form through ElementInternals, as Button does.
@@ -381,6 +477,108 @@ export namespace Components {
           * @default 'solid'
          */
         "variant": NotificationVariant;
+    }
+    /**
+     * A locale-aware number input with validation and optional decrement and increment buttons.
+     * The native input owns accessibility and editable text. ElementInternals submits the canonical
+     * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     */
+    interface UiNumberField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Whether decrement and increment buttons accompany the input.
+          * @default 'none'
+         */
+        "controls": NumberFieldControls;
+        /**
+          * The name of the decrement button.
+         */
+        "decrementLabel"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * A complete translated validation message; property only.
+         */
+        "getValidationMessageLabel"?: (
+    context: NumberValidationContext,
+  ) => string;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * The name of the increment button.
+         */
+        "incrementLabel"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * BCP 47 locale, before configuration and browser language.
+         */
+        "locale"?: string;
+        /**
+          * Inclusive upper numeric bound.
+         */
+        "max"?: number;
+        /**
+          * Inclusive lower numeric bound.
+         */
+        "min"?: number;
+        /**
+          * The name of the canonical form entry.
+         */
+        "name"?: string;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Maximum decimal places, from 0 through 20; never rounds.
+         */
+        "precision"?: number;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a nonempty value.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback, independent of form validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * Positive finite step, counted from min or zero.
+          * @default 1
+         */
+        "step": number;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
     }
     /**
      * A password input with a button that shows or hides the password.
@@ -846,9 +1044,17 @@ export interface UiChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiChipElement;
 }
+export interface UiDateFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiDateFieldElement;
+}
 export interface UiNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiNotificationElement;
+}
+export interface UiNumberFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiNumberFieldElement;
 }
 export interface UiPasswordFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -952,6 +1158,28 @@ declare global {
         prototype: HTMLUiChipElement;
         new (): HTMLUiChipElement;
     };
+    interface HTMLUiDateFieldElementEventMap {
+        "ui-value-change": DateFieldValueChange;
+    }
+    /**
+     * A masked date input with a locale-aware display and an ISO calendar-date value.
+     * The native input owns accessibility and editable text. ElementInternals submits the canonical
+     * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     */
+    interface HTMLUiDateFieldElement extends Components.UiDateField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiDateFieldElementEventMap>(type: K, listener: (this: HTMLUiDateFieldElement, ev: UiDateFieldCustomEvent<HTMLUiDateFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiDateFieldElementEventMap>(type: K, listener: (this: HTMLUiDateFieldElement, ev: UiDateFieldCustomEvent<HTMLUiDateFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiDateFieldElement: {
+        prototype: HTMLUiDateFieldElement;
+        new (): HTMLUiDateFieldElement;
+    };
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
      * The native button inside the shadow root owns the accessible semantics, named by `label`. The
@@ -1015,6 +1243,28 @@ declare global {
     var HTMLUiNotificationElement: {
         prototype: HTMLUiNotificationElement;
         new (): HTMLUiNotificationElement;
+    };
+    interface HTMLUiNumberFieldElementEventMap {
+        "ui-value-change": NumberFieldValueChange;
+    }
+    /**
+     * A locale-aware number input with validation and optional decrement and increment buttons.
+     * The native input owns accessibility and editable text. ElementInternals submits the canonical
+     * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     */
+    interface HTMLUiNumberFieldElement extends Components.UiNumberField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiNumberFieldElementEventMap>(type: K, listener: (this: HTMLUiNumberFieldElement, ev: UiNumberFieldCustomEvent<HTMLUiNumberFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiNumberFieldElementEventMap>(type: K, listener: (this: HTMLUiNumberFieldElement, ev: UiNumberFieldCustomEvent<HTMLUiNumberFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiNumberFieldElement: {
+        prototype: HTMLUiNumberFieldElement;
+        new (): HTMLUiNumberFieldElement;
     };
     interface HTMLUiPasswordFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
@@ -1190,10 +1440,12 @@ declare global {
         "ui-button": HTMLUiButtonElement;
         "ui-checkbox-field": HTMLUiCheckboxFieldElement;
         "ui-chip": HTMLUiChipElement;
+        "ui-date-field": HTMLUiDateFieldElement;
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-loader": HTMLUiLoaderElement;
         "ui-notification": HTMLUiNotificationElement;
+        "ui-number-field": HTMLUiNumberFieldElement;
         "ui-password-field": HTMLUiPasswordFieldElement;
         "ui-radio-field": HTMLUiRadioFieldElement;
         "ui-radio-group": HTMLUiRadioGroupElement;
@@ -1413,6 +1665,100 @@ declare namespace LocalJSX {
         "variant"?: ChipVariant;
     }
     /**
+     * A masked date input with a locale-aware display and an ISO calendar-date value.
+     * The native input owns accessibility and editable text. ElementInternals submits the canonical
+     * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     */
+    interface UiDateField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * ISO dates that cannot be submitted, or a predicate; property only.
+         */
+        "disabledDates"?: DateConstraints['disabledDates'];
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * A complete sentence describing the format, used when hint is absent.
+         */
+        "getFormatHintLabel"?: (example: string) => string;
+        /**
+          * A complete translated validation message; property only.
+         */
+        "getValidationMessageLabel"?: (context: DateValidationContext) => string;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * BCP 47 locale, before configuration and browser language.
+         */
+        "locale"?: string;
+        /**
+          * Inclusive upper ISO date bound.
+         */
+        "max"?: string;
+        /**
+          * Inclusive lower ISO date bound.
+         */
+        "min"?: string;
+        /**
+          * The name of the canonical form entry.
+         */
+        "name"?: string;
+        /**
+          * One user edit, including partial text, with its canonical value and validation result.
+         */
+        "onUi-value-change"?: (event: UiDateFieldCustomEvent<DateFieldValueChange>) => void;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a nonempty value.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback, independent of form validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
+    /**
      * Triggers an action named only by an icon, as a square of the height of a button.
      * The native button inside the shadow root owns the accessible semantics, named by `label`. The
      * host takes part in its outer form through ElementInternals, as Button does.
@@ -1589,6 +1935,116 @@ declare namespace LocalJSX {
           * @default 'solid'
          */
         "variant"?: NotificationVariant;
+    }
+    /**
+     * A locale-aware number input with validation and optional decrement and increment buttons.
+     * The native input owns accessibility and editable text. ElementInternals submits the canonical
+     * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     */
+    interface UiNumberField {
+        /**
+          * The purpose of the browser's autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Whether decrement and increment buttons accompany the input.
+          * @default 'none'
+         */
+        "controls"?: NumberFieldControls;
+        /**
+          * The name of the decrement button.
+         */
+        "decrementLabel"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * A complete translated validation message; property only.
+         */
+        "getValidationMessageLabel"?: (
+    context: NumberValidationContext,
+  ) => string;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * The name of the increment button.
+         */
+        "incrementLabel"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * BCP 47 locale, before configuration and browser language.
+         */
+        "locale"?: string;
+        /**
+          * Inclusive upper numeric bound.
+         */
+        "max"?: number;
+        /**
+          * Inclusive lower numeric bound.
+         */
+        "min"?: number;
+        /**
+          * The name of the canonical form entry.
+         */
+        "name"?: string;
+        /**
+          * One user edit, including partial text, with its canonical value and validation result.
+         */
+        "onUi-value-change"?: (event: UiNumberFieldCustomEvent<NumberFieldValueChange>) => void;
+        /**
+          * An example or short prompt, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Maximum decimal places, from 0 through 20; never rounds.
+         */
+        "precision"?: number;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a nonempty value.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback, independent of form validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * Positive finite step, counted from min or zero.
+          * @default 1
+         */
+        "step"?: number;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
     }
     /**
      * A password input with a button that shows or hides the password.
@@ -2140,6 +2596,23 @@ declare namespace LocalJSX {
         "dismissible": boolean;
         "dismissLabel": string;
     }
+    interface UiDateFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "autoComplete": string;
+        "locale": string;
+        "min": string;
+        "max": string;
+    }
     interface UiIconButtonAttributes {
         "label": string;
         "variant": IconButtonVariant;
@@ -2173,6 +2646,28 @@ declare namespace LocalJSX {
         "dismissible": boolean;
         "dismissLabel": string;
         "announce": boolean;
+    }
+    interface UiNumberFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "autoComplete": string;
+        "locale": string;
+        "min": number;
+        "max": number;
+        "step": number;
+        "precision": number;
+        "controls": NumberFieldControls;
+        "decrementLabel": string;
+        "incrementLabel": string;
     }
     interface UiPasswordFieldAttributes {
         "variant": TextFieldVariant;
@@ -2279,10 +2774,12 @@ declare namespace LocalJSX {
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
         "ui-checkbox-field": Omit<UiCheckboxField, keyof UiCheckboxFieldAttributes> & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes]?: UiCheckboxField[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `attr:${K}`]?: UiCheckboxFieldAttributes[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `prop:${K}`]?: UiCheckboxField[K] };
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
+        "ui-date-field": Omit<UiDateField, keyof UiDateFieldAttributes> & { [K in keyof UiDateField & keyof UiDateFieldAttributes]?: UiDateField[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `attr:${K}`]?: UiDateFieldAttributes[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `prop:${K}`]?: UiDateField[K] };
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
         "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
+        "ui-number-field": Omit<UiNumberField, keyof UiNumberFieldAttributes> & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes]?: UiNumberField[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `attr:${K}`]?: UiNumberFieldAttributes[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `prop:${K}`]?: UiNumberField[K] };
         "ui-password-field": Omit<UiPasswordField, keyof UiPasswordFieldAttributes> & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes]?: UiPasswordField[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `attr:${K}`]?: UiPasswordFieldAttributes[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `prop:${K}`]?: UiPasswordField[K] };
         "ui-radio-field": Omit<UiRadioField, keyof UiRadioFieldAttributes> & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes]?: UiRadioField[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `attr:${K}`]?: UiRadioFieldAttributes[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `prop:${K}`]?: UiRadioField[K] };
         "ui-radio-group": Omit<UiRadioGroup, keyof UiRadioGroupAttributes> & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes]?: UiRadioGroup[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `attr:${K}`]?: UiRadioGroupAttributes[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `prop:${K}`]?: UiRadioGroup[K] };
@@ -2331,6 +2828,12 @@ declare module "@stencil/core" {
              */
             "ui-chip": LocalJSX.IntrinsicElements["ui-chip"] & JSXBase.HTMLAttributes<HTMLUiChipElement>;
             /**
+             * A masked date input with a locale-aware display and an ISO calendar-date value.
+             * The native input owns accessibility and editable text. ElementInternals submits the canonical
+             * value and saves the draft with its locale. Parsing and constraint errors use customError.
+             */
+            "ui-date-field": LocalJSX.IntrinsicElements["ui-date-field"] & JSXBase.HTMLAttributes<HTMLUiDateFieldElement>;
+            /**
              * Triggers an action named only by an icon, as a square of the height of a button.
              * The native button inside the shadow root owns the accessible semantics, named by `label`. The
              * host takes part in its outer form through ElementInternals, as Button does.
@@ -2363,6 +2866,12 @@ declare module "@stencil/core" {
              * disables the dismiss button as it does a native one; it submits nothing.
              */
             "ui-notification": LocalJSX.IntrinsicElements["ui-notification"] & JSXBase.HTMLAttributes<HTMLUiNotificationElement>;
+            /**
+             * A locale-aware number input with validation and optional decrement and increment buttons.
+             * The native input owns accessibility and editable text. ElementInternals submits the canonical
+             * value and saves the draft with its locale. Parsing and constraint errors use customError.
+             */
+            "ui-number-field": LocalJSX.IntrinsicElements["ui-number-field"] & JSXBase.HTMLAttributes<HTMLUiNumberFieldElement>;
             /**
              * A password input with a button that shows or hides the password.
              * Its inner input owns accessibility; ElementInternals associates the host with the outer form.

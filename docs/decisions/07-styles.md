@@ -23,7 +23,7 @@
 
 ### Families of components
 
-- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton, `field.css` for TextField, PasswordField, SearchField and TextareaField, and `choice.css` for CheckboxField, RadioField and SwitchField: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts. A family also shares its anatomy and, in the web components, the controller of its form value.
+- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton, `field.css` for TextField, PasswordField, SearchField, NumberField, DateField and TextareaField, and `choice.css` for CheckboxField, RadioField and SwitchField: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts. A family also shares its anatomy and, in the web components, the controller of its form value. Field actions may occupy either logical side and reuse `control/*`; no number/date token family duplicates that surface.
 - The shared rules take their states from classes as well as from native pseudo-classes, so that an element without a native disabled state, such as a link, uses them too.
 
 ### Layout and browsers

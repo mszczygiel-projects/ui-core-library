@@ -45,6 +45,9 @@
   - expose `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()` and `reportValidity()`.
 - React renders native controls, so the browser validates and submits them.
 - Submitted values are canonical: a date is `YYYY-MM-DD`, a number uses a dot and no grouping, several values are several entries, and a range is `start/end`.
+- NumberField and DateField keep editable text separate from the canonical value. React uses a visible text input for focus and validity and one hidden named input for submission, both associated with the same form. The ref exposes display text. ElementInternals submits one canonical entry and saves draft text with its locale.
+- Parsed fields preserve incomplete and invalid text. Their value event adds `text`, `inputState` and `validationError` to `originalEvent`; one event accompanies every user edit, even if its parsed value remains empty. Parsing and constraint failures use `customError`, empty required fields use `valueMissing`. Visual error appears after blur or failed validation; explicit `state="error"` does not create a constraint failure.
+- NumberField uses `number | null`, a positive step grid from min or zero, and optional maximum decimal precision without rounding or clamping. Each step activation changes once. DateField uses one Gregorian ISO calendar date or an empty string, a numeric locale mask and optional excluded dates, without a calendar or range.
 
 ### Accessibility
 
@@ -61,6 +64,7 @@
 - The packages ship English labels.
 - A lint rule rejects literal text in JSX.
 - Formats follow the `locale` prop, then the configured locale, then the browser's language after hydration, then English.
+- A parsed field freezes its grammar during editing and never reinterprets an incomplete draft after a locale change. Server rendering and the first hydration render use identical locale inputs.
 - Components follow `dir`: logical properties, arrow keys in reading order, and mirrored directional icons.
 
 ## Why

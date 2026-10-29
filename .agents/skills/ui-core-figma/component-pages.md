@@ -9,13 +9,16 @@ The legend is a page, not a component, and its look is the owner's. Its card, ga
 
 ## How to run it
 
-Set `PAGE_ID` and `SET_ID` at the top and send the script with `use_figma`. The keys name published variables of [Core] Foundations; if one is renamed, take its new key from the Foundations file. The fonts must be available in Figma. The script returns the id of the legend, its size and the number of examples, and a screenshot of the page is the control read.
+Set `PAGE_ID` and `SET_ID` at the top; optionally supply `EXAMPLES` for named states of a standalone component or an existing example to preserve. Then send the script with `use_figma`. The keys name published variables of [Core] Foundations; if one is renamed, take its new key from the Foundations file. The fonts must be available in Figma. The script returns the id of the legend, its size and the number of examples, and a screenshot of the page is the control read.
 
 ## The builder
 
 ```js
 const PAGE_ID = '<page id>';
-const SET_ID = '<component set id>';
+const SET_ID = '<component set or standalone component id>';
+// Optional named examples: { label, properties?, fieldProperties?, instanceId? }.
+// An instanceId moves an existing example into the legend instead of discarding it.
+const EXAMPLES = null;
 // Builds the legend of one component page in [Core] UI Library to the left of the card
 // that holds the component set. A re-run replaces the legend and never touches the set.
 const KEYS = {
@@ -102,6 +105,13 @@ function stack(parent, name, gap) {
   parent.appendChild(f);
   return f;
 }
+for (const sample of EXAMPLES ?? []) {
+  if (sample.instanceId) {
+    const instance = await figma.getNodeByIdAsync(sample.instanceId);
+    if (!instance) throw new Error('Missing preserved instance');
+    page.appendChild(instance);
+  }
+}
 // The legend of an earlier build, or of the older hand-made template, goes; the set stays.
 for (const node of [...page.children]) {
   if (node.name === 'Legend · generated' || (node.type === 'FRAME' && node.name === 'Legend'))
@@ -135,27 +145,49 @@ const variantProp = Object.entries(set.componentPropertyDefinitions).find(
 const examples = stack(legend, 'Examples', V.gapSection);
 examples.layoutSizingHorizontal = 'FILL';
 const made = [];
-if (variantProp) {
-  const [propName, def] = variantProp;
-  for (const value of def.variantOptions) {
-    const variant = set.children.find(
-      (c) => c.variantProperties && c.variantProperties[propName] === value,
-    );
-    if (!variant) continue;
-    const item = stack(examples, value, V.gapGroup);
-    const label = figma.createAutoLayout('HORIZONTAL');
-    label.name = 'Variant';
-    label.fills = [{ type: 'SOLID', color: LABEL_BACKGROUND }];
-    label.primaryAxisAlignItems = 'CENTER';
-    label.counterAxisAlignItems = 'CENTER';
-    label.itemSpacing = 8;
-    label.clipsContent = false;
-    item.appendChild(label);
-    text(label, value.charAt(0).toUpperCase() + value.slice(1), TEXT.label).name = 'Label';
-    const instance = variant.createInstance();
-    item.appendChild(instance);
-    made.push(instance.id);
+const samples =
+  EXAMPLES ??
+  (variantProp
+    ? variantProp[1].variantOptions.map((value) => ({
+        label: value,
+        properties: { [variantProp[0]]: value },
+      }))
+    : [{ label: 'Default' }]);
+for (const sample of samples) {
+  const variant =
+    set.type === 'COMPONENT'
+      ? set
+      : set.children.find(
+          (candidate) =>
+            candidate.type === 'COMPONENT' &&
+            Object.entries(sample.properties ?? {}).every(
+              ([name, value]) => candidate.variantProperties[name] === value,
+            ),
+        );
+  if (!variant) throw new Error('Missing example variant: ' + sample.label);
+  const item = stack(examples, sample.label, V.gapGroup);
+  const label = figma.createAutoLayout('HORIZONTAL');
+  label.name = 'Variant';
+  label.fills = [{ type: 'SOLID', color: LABEL_BACKGROUND }];
+  label.primaryAxisAlignItems = 'CENTER';
+  label.counterAxisAlignItems = 'CENTER';
+  label.itemSpacing = 8;
+  label.clipsContent = false;
+  item.appendChild(label);
+  text(label, sample.label.charAt(0).toUpperCase() + sample.label.slice(1), TEXT.label).name =
+    'Label';
+  const instance = sample.instanceId
+    ? await figma.getNodeByIdAsync(sample.instanceId)
+    : variant.createInstance();
+  if (!instance || instance.type !== 'INSTANCE') throw new Error('Missing example instance');
+  item.appendChild(instance);
+  if (sample.properties) instance.setProperties(sample.properties);
+  if (sample.fieldProperties) {
+    const field = instance.findOne((node) => node.type === 'INSTANCE' && node.name === 'field');
+    if (!field) throw new Error('Missing nested field');
+    field.setProperties(sample.fieldProperties);
   }
+  made.push(instance.id);
 }
 // The set card stays where it is; the legend goes to its left, top-aligned.
 const card = set.parent && set.parent.type === 'FRAME' ? set.parent : set;
@@ -163,6 +195,7 @@ legend.x = card.x - legend.width - 80;
 legend.y = card.y;
 legend.locked = true;
 return {
+  createdNodeIds: [legend.id, ...legend.findAll().map((node) => node.id)],
   legend: legend.id,
   size: [legend.width, legend.height],
   examples: made.length,

@@ -57,6 +57,23 @@ describe('the guidelines of the Figma libraries', () => {
     expect(text).toContain('the layer `field`');
   });
 
+  it.each(['NumberField', 'PasswordField', 'SearchField'])(
+    'distinguishes the own and nested properties of %s',
+    (name) => {
+      const spec = specs.find((candidate) => candidate.name === name);
+      if (spec === undefined) {
+        throw new Error(`Missing ${name}`);
+      }
+      const text = componentGuideline({ spec, page: pageOf(spec) });
+      expect(text).toContain(
+        '| `variant` | `outline`, `filled`, `underlined` | `outline` | On the nested `TextField`. |',
+      );
+      if (name === 'NumberField') {
+        expect(text).toContain('| `controls` | `none`, `inline` | `none` |  |');
+      }
+    },
+  );
+
   it('stop when a component page lacks a section they carry', () => {
     const spec = specs[0];
     if (spec === undefined) {

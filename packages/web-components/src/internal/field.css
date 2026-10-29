@@ -350,6 +350,10 @@
   --_trailing-space: calc(var(--_icon-size) + var(--control-icon-gap));
 }
 
+.base:has(.action-leading:not([hidden])) {
+  --_leading-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
 .action {
   appearance: none;
   box-sizing: border-box;

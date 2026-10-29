@@ -9,14 +9,15 @@ export function submitNamed(
   name: string | undefined,
   value: string,
   restorable = true,
+  state = value,
 ): void {
   if (name === undefined || name === '') {
-    internals.setFormValue(null);
+    internals.setFormValue(null, restorable ? state : null);
     return;
   }
   const entry = new FormData();
   entry.append(name, value);
-  internals.setFormValue(entry, restorable ? value : null);
+  internals.setFormValue(entry, restorable ? state : null);
 }
 
 /**

@@ -1,4 +1,5 @@
 import type { ComponentSpec } from '@mszczygiel-projects/ui-core-shared/component';
+import { specs } from '@mszczygiel-projects/ui-core-shared/components';
 
 import { code, file, table } from './markdown.ts';
 import { sectionsOf } from './mdx.ts';
@@ -30,6 +31,7 @@ export function componentGuideline({ spec, page }: DocumentedComponent): string 
     throw new Error(`The page of ${spec.name} lacks the sections ${missing.join(', ')}`);
   }
   const { design } = spec;
+  const nested = specs.find((candidate) => candidate.name === design.nested);
   const properties = [
     ...Object.entries(spec.options)
       .filter(([name]) => !design.codeOnly.includes(name))
@@ -37,7 +39,9 @@ export function componentGuideline({ spec, page }: DocumentedComponent): string 
         code(name),
         options.map(code).join(', '),
         code(fallback),
-        design.nested === undefined ? '' : `On the nested ${code(design.nested)}.`,
+        nested === undefined || !(name in nested.options)
+          ? ''
+          : `On the nested ${code(nested.name)}.`,
       ]),
     ...design.flags.map((name) => [code(name), '`false`, `true`', '`false`', '']),
     ...design.booleans.map((name) => [
@@ -62,7 +66,7 @@ export function componentGuideline({ spec, page }: DocumentedComponent): string 
       : `## Properties\n\n${table(['Property', 'Values', 'Default', 'Notes'], properties)}`,
     design.nested === undefined
       ? 'Its text properties hold the text the component shows, its `show…` booleans show or hide an optional part, and its icon properties swap in an instance of [Core] Icons.'
-      : `Each variant holds an exposed instance of ${code(design.nested)}, the layer \`field\`. Set the shared properties, the texts and the hint on that instance. Leave its icon properties as they are: they hold the button of ${code(spec.name)}.`,
+      : `The component holds an exposed instance of ${code(design.nested)}, the layer \`field\`. Set the shared properties, the texts and the hint on that instance. Leave its icon properties as supplied by the component.`,
     ...GUIDELINE_SECTIONS.map((section) => `## ${section}\n\n${sections.get(section) ?? ''}`),
   );
 }

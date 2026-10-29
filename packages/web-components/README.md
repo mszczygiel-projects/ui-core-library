@@ -12,10 +12,12 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Button        | `ui-button`         | `./button`         |
 | CheckboxField | `ui-checkbox-field` | `./checkbox-field` |
 | Chip          | `ui-chip`           | `./chip`           |
+| DateField     | `ui-date-field`     | `./date-field`     |
 | IconButton    | `ui-icon-button`    | `./icon-button`    |
 | LinkButton    | `ui-link-button`    | `./link-button`    |
 | Loader        | `ui-loader`         | `./loader`         |
 | Notification  | `ui-notification`   | `./notification`   |
+| NumberField   | `ui-number-field`   | `./number-field`   |
 | PasswordField | `ui-password-field` | `./password-field` |
 | RadioField    | `ui-radio-field`    | `./radio-field`    |
 | RadioGroup    | `ui-radio-group`    | `./radio-group`    |

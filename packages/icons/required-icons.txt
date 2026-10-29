@@ -7,3 +7,4 @@ close
 danger
 info
 minus
+plus
