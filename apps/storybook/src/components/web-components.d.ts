@@ -7,12 +7,14 @@ import type {
 import type { ChipProps } from '@mszczygiel-projects/ui-core-shared/chip';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
+import type { ListboxProps } from '@mszczygiel-projects/ui-core-shared/listbox';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
 import type { PasswordFieldProps } from '@mszczygiel-projects/ui-core-shared/password-field';
 import type { RadioFieldProps } from '@mszczygiel-projects/ui-core-shared/radio-field';
 import type { RadioGroupProps } from '@mszczygiel-projects/ui-core-shared/radio-group';
 import type { SearchFieldProps } from '@mszczygiel-projects/ui-core-shared/search-field';
+import type { SelectFieldProps } from '@mszczygiel-projects/ui-core-shared/select-field';
 import type { SwitchFieldProps } from '@mszczygiel-projects/ui-core-shared/switch-field';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import type { TextareaFieldProps } from '@mszczygiel-projects/ui-core-shared/textarea-field';
@@ -27,6 +29,8 @@ type CustomElement<Props> = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLE
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-select-field': CustomElement<SelectFieldProps>;
+      'ui-listbox': CustomElement<ListboxProps>;
       'ui-radio-field': CustomElement<RadioFieldProps>;
       'ui-radio-group': CustomElement<RadioGroupProps>;
       'ui-switch-field': CustomElement<SwitchFieldProps>;

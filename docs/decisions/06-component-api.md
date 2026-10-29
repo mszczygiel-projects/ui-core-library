@@ -17,6 +17,9 @@
   | Helper text     | `hint` on controls, `description` on containers                                                                                                                          |
   | Label placement | `labelPlacement`: `top`, `floating`, `inner`, `inline`. Choice controls use `labelPosition`: `start`, `end`                                                              |
   | Orientation     | `orientation`: `vertical` (default) or `horizontal`, the direction of the items of a group                                                                               |
+  | Several values  | `multiple`, which makes `value` a list of strings                                                                                                                        |
+  | Open popup      | `open`, which the web component reflects; React pairs it with `defaultOpen` and `onOpenChange`                                                                           |
+  | Options as data | `options`: options `{ value, label, disabled?, icon? }`, alone or in groups `{ label?, options }`. The empty string is no value                                          |
   | Accessible name | `label`, required where nothing visible names the component                                                                                                              |
 
 - Booleans are false by default and named after the case they turn on, such as `hideLabel`.

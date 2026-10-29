@@ -1,0 +1,103 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './SelectField.wc.stories.tsx';
+import * as ReactStories from './SelectField.react.stories.tsx';
+
+<Meta title="Components/Selection/SelectField/Docs" />
+
+# SelectField
+
+<ComponentOverview name="SelectField" />
+
+## Usage
+
+Use SelectField for one choice among options that need not stay in view, such as a country or a category, in a form beside text fields. Use RadioGroup for a few options that a user should compare, Listbox to keep the options in view or to choose several, and a text field when the answer is open.
+
+## Anatomy
+
+The **base** holds the **label** with its **label-text**, the **control** and the **hint** with its **hint-text**. The control holds an optional **leading-icon**, the **trigger** with the **value**, the **clear** button and the **indicator** arrow. The open list is a **popup** that holds the **listbox** and its **option**, **group**, **group-label** and **message** parts, as in Listbox. The web component exposes these parts; React uses `.ui-select-field__<part>` classes.
+
+## Variants & tone
+
+`variant` is `outline` (the default), `filled` or `underlined`, as in every field.
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+## Sizes & density
+
+`size` is `small`, `medium` (the default) or `large`, for the field and the rows of its list, each following the surrounding density. `labelPlacement` puts the label on `top` (the default), lets it `float` in the field until an option is chosen, or puts it `inner`, above the value.
+
+## States
+
+`state` is `default`, `error` or `success`. Error sets `aria-invalid` on the trigger. `disabled` disables the field and closes its list, and so does a disabled fieldset. The arrow turns while the list is open.
+
+## Content & labels
+
+Supply `label`, `placeholder`, `hint` and the labels of the options in the language of the page. The placeholder shows until an option is chosen and never names the field; a field without a visible label takes its name from `aria-label`. The clear button of `clearable` is named by `clearLabel`, or `labels.selectField.clear` (Clear selection), and an empty list shows `emptyLabel`, or `labels.listbox.empty` (No options), from `configureUiCore`.
+
+<FrameworkCanvas react={ReactStories.Groups} webComponents={WebComponentStories.Groups} />
+
+## Behaviour
+
+- A press on the field opens and closes the list; a click of the label only moves the focus to the trigger. A choice closes the list and keeps the focus on the trigger.
+- The list opens in the top layer, above other content and a modal dialog, below the field or above it when the window has no room below. It is at least as wide as the field, and no taller than the room in the window. A press outside the field or the focus leaving it closes the list.
+- Each choice reports the value once: `ui-value-change` with `detail.value` in the web component and `onValueChange(value, details)` in React, with a native `change` from the host of the web component. Opening and closing report `ui-open-change` and `onOpenChange(open, details)`; `open` sets the list from outside, as an attribute that the web component reflects or a controlled prop in React with `defaultOpen`.
+- The field submits the chosen value under `name`, and an empty string without a choice. `required` blocks the submission until an option is chosen. A reset restores the initial value without an event and closes the list.
+
+<Source
+  language="tsx"
+  code={`<SelectField
+  label="Country"
+  name="country"
+  required
+  options={[
+    { value: 'cz', label: 'Czechia' },
+    { value: 'pl', label: 'Poland' },
+  ]}
+/>;`}
+/>
+
+## Accessibility
+
+- **Pattern.** The [select-only combobox](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-select-only/): a button with the role `combobox` keeps the focus, and names the highlighted option of its list with `aria-activedescendant`. The label names the trigger, the hint describes it.
+- **Keys.** On a closed list, Down, Enter and Space open it on the chosen option, Up on the chosen or last one, Home and End on the first and last, and typed letters on the option they start. On an open list, Down and Up move past disabled options and stop at the ends, Home, End, Page Down and Page Up move further, typed letters move to the option they start, Enter, Space and Alt+Up choose and close, and Escape and Tab close without a change. With `clearable`, Delete and Backspace clear a closed field.
+- **Clear button.** It sits beside the trigger, never inside it, and is out of the order of the Tab key: Delete and Backspace do the same from the keyboard.
+- **Required and invalid.** `aria-required` and `aria-invalid` reach the trigger.
+- **Preferences.** Forced colours keep the frame, the arrow and the highlight. Reduced motion stops the arrow from turning.
+
+## Surfaces & themes
+
+The field follows Light and Dark and the default, subtle, inverse and primary surfaces. Its list keeps the background of the surface it opens from.
+
+<FrameworkCanvas react={ReactStories.OnSurfaces} webComponents={WebComponentStories.OnSurfaces} />
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="SelectField" />}
+  webComponents={<WebComponentApi tag="ui-select-field" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { SelectField } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/select-field';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the trigger, and `form` reaches the hidden select. The slot `leading-icon` of the web component pairs with `leadingIcon` in React. An option's `icon` is a React node in React, and the SVG string of an icon of the icon package in the web component, which renders it as markup: never put text from a user there. The web component is form-associated: it exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity()`, follows a disabled fieldset, and passes an `aria-label` of its host to the trigger and the list.
+
+## Tokens
+
+<ComponentTokens component="listbox" />
+
+SelectField uses the tokens of the `control` family for the field, as the text fields do, and the `listbox` tokens for its list and popup, whose shadow is `listbox/popup/shadow` and whose distance from the field is `listbox/popup/offset`.
+
+## Implementation notes
+
+- Both place the popup with Floating UI in fixed position, in the top layer through the Popover API. A browser without the Popover API shows it in fixed position without the top layer, where a modal dialog or an ancestor with a transform can cover it.
+- React renders the list only while it is open, and a hidden native select submits the value and validates `required`. The web component submits through ElementInternals, and a native select with the same constraints, not on the page, answers its validity.

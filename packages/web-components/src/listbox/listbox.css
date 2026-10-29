@@ -1,0 +1,85 @@
+/*
+ * Listbox: a label and a hint like those of a text field, around a list in the frame of an
+ * outline field, with the focus ring on the list.
+ */
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  --_label: var(--color-control-outline-label-default);
+  --_hint: var(--color-control-outline-hint-default);
+  --_border: var(--color-control-outline-border-default);
+  --_background: var(--color-control-outline-background-default);
+
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--control-font-family);
+}
+
+.error {
+  --_label: var(--color-control-outline-label-error);
+  --_hint: var(--color-control-outline-hint-error);
+  --_border: var(--color-control-outline-border-error);
+}
+
+.disabled {
+  --_label: var(--color-control-outline-label-disabled);
+  --_hint: var(--color-control-outline-hint-disabled);
+  --_border: var(--color-control-outline-border-disabled);
+  --_background: var(--color-control-outline-background-disabled);
+}
+
+.label {
+  display: block;
+  margin-block-end: var(--control-label-gap);
+  color: var(--_label);
+  font-family: var(--control-label-font-family);
+  font-size: var(--control-label-font-size);
+  font-weight: var(--control-label-font-weight);
+  line-height: var(--control-label-line-height);
+  letter-spacing: var(--control-label-letter-spacing);
+  text-transform: var(--control-label-text-uppercase);
+  overflow-wrap: anywhere;
+}
+
+.listbox {
+  border: var(--control-border-width) solid var(--_border);
+  border-radius: var(--listbox-radius);
+  background: var(--_background);
+}
+
+.listbox:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.disabled .listbox,
+.disabled .option {
+  cursor: default;
+}
+
+.hint {
+  display: block;
+  margin-block-start: var(--control-hint-gap);
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  font-weight: var(--control-hint-font-weight);
+  line-height: var(--control-hint-line-height);
+  overflow-wrap: anywhere;
+}
+
+@media (forced-colors: active) {
+  .listbox {
+    border-color: CanvasText;
+  }
+
+  .listbox:focus-visible {
+    outline-color: Highlight;
+  }
+}

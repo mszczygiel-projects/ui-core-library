@@ -1,6 +1,6 @@
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
-import { type TextControlProps, textField } from '@mszczygiel-projects/ui-core-shared/text-field';
-import type { CSSProperties, ReactNode } from 'react';
+import { type FieldControlProps, textField } from '@mszczygiel-projects/ui-core-shared/text-field';
+import type { CSSProperties, ReactNode, Ref } from 'react';
 
 import { classNames } from './class-names.ts';
 
@@ -45,7 +45,7 @@ export function fieldDescription(
 }
 
 export interface FieldProps extends Pick<
-  TextControlProps,
+  FieldControlProps,
   'variant' | 'size' | 'labelPlacement' | 'state' | 'label' | 'hint'
 > {
   /** The block of the component, such as `text-field`. */
@@ -62,6 +62,12 @@ export interface FieldProps extends Pick<
   readonly modifiers?: readonly (string | false | undefined)[];
   /** The content of the control, after the label: the input row or the textarea. */
   readonly children: ReactNode;
+  /** The id of the label, for a control that names something else with it, such as a list. */
+  readonly labelId?: string;
+  /** Receives the root of the field. */
+  readonly rootRef?: Ref<HTMLDivElement>;
+  /** Receives the control, the surface with the border. */
+  readonly controlRef?: Ref<HTMLDivElement>;
 }
 
 /** The anatomy of every text field: the label, the control with its border, and the hint. */
@@ -81,6 +87,9 @@ export function Field({
   label,
   hint,
   children,
+  labelId,
+  rootRef,
+  controlRef,
 }: FieldProps) {
   const placement = oneOf(
     labelPlacement,
@@ -94,13 +103,14 @@ export function Field({
     oneOf(state, options.state.options, options.state.default),
   ];
   const labelNode = label ? (
-    <label className={fieldPart(block, 'label')} htmlFor={controlId}>
+    <label id={labelId} className={fieldPart(block, 'label')} htmlFor={controlId}>
       <span className={fieldPart(block, 'label-text')}>{label}</span>
     </label>
   ) : null;
   return (
     <div
       {...rootAttributes}
+      ref={rootRef}
       // The direction belongs to the whole field, as on the host of the web component: the label,
       // the hint and the icons follow it, and the control inherits it.
       dir={dir}
@@ -115,7 +125,7 @@ export function Field({
       )}
     >
       {placement === 'top' && labelNode}
-      <div className={fieldPart(block, 'control')}>
+      <div ref={controlRef} className={fieldPart(block, 'control')}>
         {placement !== 'top' && labelNode}
         {children}
       </div>

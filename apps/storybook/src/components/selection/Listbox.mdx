@@ -1,0 +1,103 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Listbox.wc.stories.tsx';
+import * as ReactStories from './Listbox.react.stories.tsx';
+
+<Meta title="Components/Selection/Listbox/Docs" />
+
+# Listbox
+
+<ComponentOverview name="Listbox" />
+
+## Usage
+
+Use Listbox when a user should see the options while choosing, such as a list of a few dozen items beside other content, or a choice of several values at once. Use RadioGroup for a few options with hints, CheckboxField for independent choices, and SelectField when the options may stay hidden until needed.
+
+## Anatomy
+
+The **base** holds the **label** with its **label-text**, the **listbox** and the **hint** with its **hint-text**. The listbox holds **option** elements, each with an optional **option-icon**, its **option-label** and an **option-mark**, a **group** with its **group-label** for each group, or the **message** of an empty list. The web component exposes these parts; React uses `.ui-listbox__<part>` classes.
+
+## Variants & tone
+
+Listbox has one appearance, the frame of an outline field. A single choice marks the chosen option with a check; a multiple choice shows a checkbox on each option.
+
+<FrameworkCanvas react={ReactStories.Multiple} webComponents={WebComponentStories.Multiple} />
+
+## Sizes & density
+
+`size` is `small`, `medium` (the default) or `large`: the height and the text of the rows, each following the surrounding density. The list scrolls past the height of `listbox/max-height`.
+
+## States
+
+`state` is `default` or `error`. Error sets `aria-invalid` and the error colours of the label, frame and hint. The highlighted option, which the keyboard and the pointer move alike, takes the highlight background. `disabled` disables the list, and so does a disabled fieldset; a disabled option stays visible and cannot be chosen.
+
+## Content & labels
+
+Supply `label`, `hint` and the labels of the options in the language of the page. A list without a visible label takes its name from `aria-label`. An empty list shows `emptyLabel`, or `labels.listbox.empty` (No options) from `configureUiCore`. Options go in `options`, alone or in groups; a group without a label is separated from the one before by a rule.
+
+<FrameworkCanvas react={ReactStories.Groups} webComponents={WebComponentStories.Groups} />
+
+## Behaviour
+
+- The list is one stop for Tab. Entering it highlights the chosen option, or else the first enabled one.
+- In a single choice, the choice follows the highlight, as in a native select that shows its options, and a click chooses. In a multiple choice, the keys only move the highlight, and Space or a click turns an option on and off.
+- Each choice reports the new value once: `ui-value-change` with `detail.value` in the web component, `onValueChange(value, details)` in React. The value is a string, or a list of strings with `multiple`.
+- The list submits one entry for each chosen value under `name`; a single choice without an option submits an empty string. `required` blocks the submission until an option is chosen. A reset restores the initial value without an event.
+- The web component takes its initial single value from the `value` attribute, and its initial multiple value from the `defaultValue` property; its `value` property holds the current one. React offers `defaultValue`, or `value` with `onValueChange`. A value that no option has chooses none.
+
+<Source
+  language="tsx"
+  code={`<Listbox
+  label="Toppings"
+  name="toppings"
+  multiple
+  options={[
+    { value: 'cheese', label: 'Extra cheese' },
+    { value: 'peppers', label: 'Peppers' },
+  ]}
+/>;`}
+/>
+
+## Accessibility
+
+- **Pattern.** The [listbox](https://www.w3.org/WAI/ARIA/apg/patterns/listbox/) with `aria-activedescendant`: the list keeps the focus and names its highlighted option. The label names the list, the hint describes it, and `aria-multiselectable` marks a multiple choice.
+- **Keys.** Down and Up move to the next and previous enabled option and stop at the ends; Home and End go to the first and last; Page Down and Page Up move by ten. Typed letters move to the option they start, ignoring case and diacritics; letters typed within half a second add up. Space and Enter choose, or turn over in a multiple choice.
+- **Required and invalid.** `aria-required` and `aria-invalid` reach the list.
+- **Preferences.** Forced colours draw the highlight in the system colours, and the frame and marks in the text colour.
+
+## Surfaces & themes
+
+The list and its options follow Light and Dark and the default, subtle, inverse and primary surfaces.
+
+<FrameworkCanvas react={ReactStories.OnSurfaces} webComponents={WebComponentStories.OnSurfaces} />
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Listbox" />}
+  webComponents={<WebComponentApi tag="ui-listbox" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Listbox } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/listbox';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the element with the role `listbox`, and `form` reaches the hidden select. An option's `icon` is a React node in React, and the SVG string of an icon of the icon package in the web component, which renders it as markup: never put text from a user there. The web component is form-associated: it exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity()`, follows a disabled fieldset, and passes an `aria-label` of its host to the list.
+
+## Tokens
+
+<ComponentTokens component="listbox" />
+
+Listbox uses the `listbox` tokens for its rows, groups and marks, the `checkbox` tokens for the boxes of a multiple choice, and the outline tokens of the `control` family for its frame, label and hint.
+
+## Implementation notes
+
+- In React, a hidden native select with the chosen options submits the value and validates `required`; a reset of the form restores `defaultValue`.
+- In the web component, the host submits through ElementInternals, and a native select with the same constraints, not on the page, answers its validity.

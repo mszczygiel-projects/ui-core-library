@@ -6,8 +6,9 @@ export const config: Config = {
   tsconfig: 'tsconfig.lib.json',
   // Stencil marks a rendered host with a class; the host belongs to the page, which owns its classes.
   hydratedFlag: null,
-  // The other packages of the library stay imports, so an application installs one copy of each.
-  rollupConfig: { inputOptions: { external: [/^@mszczygiel-projects\//] } },
+  // The other packages of the library and its dependencies stay imports, so an application
+  // installs one copy of each.
+  rollupConfig: { inputOptions: { external: [/^@mszczygiel-projects\//, /^@floating-ui\//] } },
   outputTargets: [
     {
       // One module per component, which defines its tag when it loads.

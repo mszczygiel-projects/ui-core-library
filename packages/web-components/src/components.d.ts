@@ -13,6 +13,9 @@ import { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip"
 import { ChipDismiss, ChipSelectedChange } from "./chip/events";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
+import { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
+import { WebListboxItems } from "./internal/listbox";
+import { ListboxValueChange } from "./listbox/events";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 import { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
 import { NotificationDismiss } from "./notification/events";
@@ -22,6 +25,7 @@ import { PasswordFieldRevealedChange as RevealedChange } from "./password-field/
 import { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
 import { RadioGroupValueChange } from "./radio-group/events";
 import { SearchFieldClear } from "./search-field/events";
+import { SelectFieldOpenChange } from "./select-field/events";
 import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
@@ -32,6 +36,9 @@ export { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip"
 export { ChipDismiss, ChipSelectedChange } from "./chip/events";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
+export { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
+export { WebListboxItems } from "./internal/listbox";
+export { ListboxValueChange } from "./listbox/events";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 export { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
 export { NotificationDismiss } from "./notification/events";
@@ -41,6 +48,7 @@ export { PasswordFieldRevealedChange as RevealedChange } from "./password-field/
 export { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
 export { RadioGroupValueChange } from "./radio-group/events";
 export { SearchFieldClear } from "./search-field/events";
+export { SelectFieldOpenChange } from "./select-field/events";
 export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export namespace Components {
@@ -317,6 +325,65 @@ export namespace Components {
           * @default 'primary'
          */
         "variant": LinkButtonVariant;
+    }
+    /**
+     * A visible list of options from which a user chooses one value or several.
+     * The list takes one stop in the order of the Tab key and names its highlighted option with
+     * `aria-activedescendant`. The arrow keys, Home, End, Page Up and Page Down move the highlight,
+     * and typed letters move it to the option they start; in a single choice the choice follows the
+     * highlight, as in a native select that shows its options, and in a multiple choice Space and a
+     * click turn an option on and off. The host is form-associated: it submits one entry for each
+     * chosen value. The `value` attribute supplies the initial and reset value of a single choice,
+     * the `defaultValue` property that of a multiple choice, and the `value` property holds the
+     * current one. An author's `aria-label` names the list when it has no visible label.
+     */
+    interface UiListbox {
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The text shown when there are no options, falling back to `labels.listbox.empty`.
+         */
+        "emptyLabel"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the list.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * Lets a user choose several options. The value is then a list of strings.
+          * @default false
+         */
+        "multiple": boolean;
+        /**
+          * The name of the form entry, one entry for each chosen value.
+         */
+        "name"?: string;
+        /**
+          * The options, alone or in groups. An icon is the SVG string of an icon of the icon package; it renders as markup, so it must never hold text from a user.
+          * @default []
+         */
+        "options": WebListboxItems;
+        /**
+          * Requires a chosen option for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size of the rows, which follows the density.
+          * @default 'medium'
+         */
+        "size": ListboxSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid`, without changing native validity.
+          * @default 'default'
+         */
+        "state": ChoiceState;
     }
     /**
      * Shows that content is loading or that an action is in progress.
@@ -628,6 +695,89 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
     /**
+     * A field that opens a list of options from which a user chooses one value.
+     * The trigger is a button with the role combobox, which keeps the focus while its list is open
+     * and names the highlighted option with `aria-activedescendant`. The arrow keys, Enter, Space, Home
+     * and End open the list; in an open list they move the highlight, Enter and Space choose, Escape
+     * and Tab close without a change, and typed letters move to the option they start, also while it
+     * is closed. The list opens in the top layer, below the field or above it when the window has no
+     * room below. The host is form-associated and submits the chosen value, or an empty string. The
+     * `value` attribute supplies the initial and reset value, and the property holds the current one;
+     * the reflected `open` attribute shows whether the list is open. An author's `aria-label` names the
+     * field when it has no visible label.
+     */
+    interface UiSelectField {
+        /**
+          * The name of the clear button, falling back to `labels.selectField.clear`.
+         */
+        "clearLabel"?: string;
+        /**
+          * Shows a button that clears the chosen option.
+          * @default false
+         */
+        "clearable": boolean;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The text shown when there are no options, falling back to `labels.listbox.empty`.
+         */
+        "emptyLabel"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the trigger.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * Whether the list of options is open. The attribute follows the list.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The options, alone or in groups. An icon is the SVG string of an icon of the icon package; it renders as markup, so it must never hold text from a user.
+          * @default []
+         */
+        "options": WebListboxItems;
+        /**
+          * The text shown while no option is chosen, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Requires a chosen option for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+    /**
      * A switch with a label and hint that turns a setting on or off at once.
      * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
      * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
@@ -846,6 +996,10 @@ export interface UiChipCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiChipElement;
 }
+export interface UiListboxCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiListboxElement;
+}
 export interface UiNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiNotificationElement;
@@ -861,6 +1015,10 @@ export interface UiRadioGroupCustomEvent<T> extends CustomEvent<T> {
 export interface UiSearchFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiSearchFieldElement;
+}
+export interface UiSelectFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiSelectFieldElement;
 }
 export interface UiSwitchFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -974,6 +1132,34 @@ declare global {
     var HTMLUiLinkButtonElement: {
         prototype: HTMLUiLinkButtonElement;
         new (): HTMLUiLinkButtonElement;
+    };
+    interface HTMLUiListboxElementEventMap {
+        "ui-value-change": ListboxValueChange;
+    }
+    /**
+     * A visible list of options from which a user chooses one value or several.
+     * The list takes one stop in the order of the Tab key and names its highlighted option with
+     * `aria-activedescendant`. The arrow keys, Home, End, Page Up and Page Down move the highlight,
+     * and typed letters move it to the option they start; in a single choice the choice follows the
+     * highlight, as in a native select that shows its options, and in a multiple choice Space and a
+     * click turn an option on and off. The host is form-associated: it submits one entry for each
+     * chosen value. The `value` attribute supplies the initial and reset value of a single choice,
+     * the `defaultValue` property that of a multiple choice, and the `value` property holds the
+     * current one. An author's `aria-label` names the list when it has no visible label.
+     */
+    interface HTMLUiListboxElement extends Components.UiListbox, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiListboxElementEventMap>(type: K, listener: (this: HTMLUiListboxElement, ev: UiListboxCustomEvent<HTMLUiListboxElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiListboxElementEventMap>(type: K, listener: (this: HTMLUiListboxElement, ev: UiListboxCustomEvent<HTMLUiListboxElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiListboxElement: {
+        prototype: HTMLUiListboxElement;
+        new (): HTMLUiListboxElement;
     };
     /**
      * Shows that content is loading or that an action is in progress.
@@ -1111,6 +1297,36 @@ declare global {
         prototype: HTMLUiSearchFieldElement;
         new (): HTMLUiSearchFieldElement;
     };
+    interface HTMLUiSelectFieldElementEventMap {
+        "ui-value-change": ListboxValueChange;
+        "ui-open-change": SelectFieldOpenChange;
+    }
+    /**
+     * A field that opens a list of options from which a user chooses one value.
+     * The trigger is a button with the role combobox, which keeps the focus while its list is open
+     * and names the highlighted option with `aria-activedescendant`. The arrow keys, Enter, Space, Home
+     * and End open the list; in an open list they move the highlight, Enter and Space choose, Escape
+     * and Tab close without a change, and typed letters move to the option they start, also while it
+     * is closed. The list opens in the top layer, below the field or above it when the window has no
+     * room below. The host is form-associated and submits the chosen value, or an empty string. The
+     * `value` attribute supplies the initial and reset value, and the property holds the current one;
+     * the reflected `open` attribute shows whether the list is open. An author's `aria-label` names the
+     * field when it has no visible label.
+     */
+    interface HTMLUiSelectFieldElement extends Components.UiSelectField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiSelectFieldElementEventMap>(type: K, listener: (this: HTMLUiSelectFieldElement, ev: UiSelectFieldCustomEvent<HTMLUiSelectFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiSelectFieldElementEventMap>(type: K, listener: (this: HTMLUiSelectFieldElement, ev: UiSelectFieldCustomEvent<HTMLUiSelectFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiSelectFieldElement: {
+        prototype: HTMLUiSelectFieldElement;
+        new (): HTMLUiSelectFieldElement;
+    };
     interface HTMLUiSwitchFieldElementEventMap {
         "ui-checked-change": CheckedChange;
     }
@@ -1192,12 +1408,14 @@ declare global {
         "ui-chip": HTMLUiChipElement;
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
+        "ui-listbox": HTMLUiListboxElement;
         "ui-loader": HTMLUiLoaderElement;
         "ui-notification": HTMLUiNotificationElement;
         "ui-password-field": HTMLUiPasswordFieldElement;
         "ui-radio-field": HTMLUiRadioFieldElement;
         "ui-radio-group": HTMLUiRadioGroupElement;
         "ui-search-field": HTMLUiSearchFieldElement;
+        "ui-select-field": HTMLUiSelectFieldElement;
         "ui-switch-field": HTMLUiSwitchFieldElement;
         "ui-text-field": HTMLUiTextFieldElement;
         "ui-textarea-field": HTMLUiTextareaFieldElement;
@@ -1509,6 +1727,73 @@ declare namespace LocalJSX {
           * @default 'primary'
          */
         "variant"?: LinkButtonVariant;
+    }
+    /**
+     * A visible list of options from which a user chooses one value or several.
+     * The list takes one stop in the order of the Tab key and names its highlighted option with
+     * `aria-activedescendant`. The arrow keys, Home, End, Page Up and Page Down move the highlight,
+     * and typed letters move it to the option they start; in a single choice the choice follows the
+     * highlight, as in a native select that shows its options, and in a multiple choice Space and a
+     * click turn an option on and off. The host is form-associated: it submits one entry for each
+     * chosen value. The `value` attribute supplies the initial and reset value of a single choice,
+     * the `defaultValue` property that of a multiple choice, and the `value` property holds the
+     * current one. An author's `aria-label` names the list when it has no visible label.
+     */
+    interface UiListbox {
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The text shown when there are no options, falling back to `labels.listbox.empty`.
+         */
+        "emptyLabel"?: string;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the list.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * Lets a user choose several options. The value is then a list of strings.
+          * @default false
+         */
+        "multiple"?: boolean;
+        /**
+          * The name of the form entry, one entry for each chosen value.
+         */
+        "name"?: string;
+        /**
+          * A choice of the user, with the new value and the original event.
+         */
+        "onUi-value-change"?: (event: UiListboxCustomEvent<ListboxValueChange>) => void;
+        /**
+          * The options, alone or in groups. An icon is the SVG string of an icon of the icon package; it renders as markup, so it must never hold text from a user.
+          * @default []
+         */
+        "options"?: WebListboxItems;
+        /**
+          * Requires a chosen option for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size of the rows, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: ListboxSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid`, without changing native validity.
+          * @default 'default'
+         */
+        "state"?: ChoiceState;
     }
     /**
      * Shows that content is loading or that an action is in progress.
@@ -1868,6 +2153,101 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
     /**
+     * A field that opens a list of options from which a user chooses one value.
+     * The trigger is a button with the role combobox, which keeps the focus while its list is open
+     * and names the highlighted option with `aria-activedescendant`. The arrow keys, Enter, Space, Home
+     * and End open the list; in an open list they move the highlight, Enter and Space choose, Escape
+     * and Tab close without a change, and typed letters move to the option they start, also while it
+     * is closed. The list opens in the top layer, below the field or above it when the window has no
+     * room below. The host is form-associated and submits the chosen value, or an empty string. The
+     * `value` attribute supplies the initial and reset value, and the property holds the current one;
+     * the reflected `open` attribute shows whether the list is open. An author's `aria-label` names the
+     * field when it has no visible label.
+     */
+    interface UiSelectField {
+        /**
+          * The name of the clear button, falling back to `labels.selectField.clear`.
+         */
+        "clearLabel"?: string;
+        /**
+          * Shows a button that clears the chosen option.
+          * @default false
+         */
+        "clearable"?: boolean;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The text shown when there are no options, falling back to `labels.listbox.empty`.
+         */
+        "emptyLabel"?: string;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Help or validation feedback, connected to the description of the trigger.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * The position of the visible label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * The user opened or closed the list, with the original event.
+         */
+        "onUi-open-change"?: (event: UiSelectFieldCustomEvent<SelectFieldOpenChange>) => void;
+        /**
+          * A choice of the user, with the new value and the original event.
+         */
+        "onUi-value-change"?: (event: UiSelectFieldCustomEvent<ListboxValueChange>) => void;
+        /**
+          * Whether the list of options is open. The attribute follows the list.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The options, alone or in groups. An icon is the SVG string of an icon of the icon package; it renders as markup, so it must never hold text from a user.
+          * @default []
+         */
+        "options"?: WebListboxItems;
+        /**
+          * The text shown while no option is chosen, never a replacement for the label.
+         */
+        "placeholder"?: string;
+        /**
+          * Requires a chosen option for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
+    /**
      * A switch with a label and hint that turns a setting on or off at once.
      * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
      * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
@@ -2161,6 +2541,17 @@ declare namespace LocalJSX {
         "disabled": boolean;
         "label": string;
     }
+    interface UiListboxAttributes {
+        "label": string;
+        "hint": string;
+        "size": ListboxSize;
+        "state": ChoiceState;
+        "multiple": boolean;
+        "disabled": boolean;
+        "required": boolean;
+        "name": string;
+        "emptyLabel": string;
+    }
     interface UiLoaderAttributes {
         "size": LoaderSize;
         "label": string;
@@ -2227,6 +2618,22 @@ declare namespace LocalJSX {
         "autoComplete": string;
         "clearLabel": string;
     }
+    interface UiSelectFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "state": TextFieldState;
+        "label": string;
+        "placeholder": string;
+        "hint": string;
+        "disabled": boolean;
+        "required": boolean;
+        "name": string;
+        "open": boolean;
+        "clearable": boolean;
+        "clearLabel": string;
+        "emptyLabel": string;
+    }
     interface UiSwitchFieldAttributes {
         "label": string;
         "hint": string;
@@ -2281,12 +2688,14 @@ declare namespace LocalJSX {
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
+        "ui-listbox": Omit<UiListbox, keyof UiListboxAttributes> & { [K in keyof UiListbox & keyof UiListboxAttributes]?: UiListbox[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `attr:${K}`]?: UiListboxAttributes[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `prop:${K}`]?: UiListbox[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
         "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
         "ui-password-field": Omit<UiPasswordField, keyof UiPasswordFieldAttributes> & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes]?: UiPasswordField[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `attr:${K}`]?: UiPasswordFieldAttributes[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `prop:${K}`]?: UiPasswordField[K] };
         "ui-radio-field": Omit<UiRadioField, keyof UiRadioFieldAttributes> & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes]?: UiRadioField[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `attr:${K}`]?: UiRadioFieldAttributes[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `prop:${K}`]?: UiRadioField[K] };
         "ui-radio-group": Omit<UiRadioGroup, keyof UiRadioGroupAttributes> & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes]?: UiRadioGroup[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `attr:${K}`]?: UiRadioGroupAttributes[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `prop:${K}`]?: UiRadioGroup[K] };
         "ui-search-field": Omit<UiSearchField, keyof UiSearchFieldAttributes> & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes]?: UiSearchField[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `attr:${K}`]?: UiSearchFieldAttributes[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `prop:${K}`]?: UiSearchField[K] };
+        "ui-select-field": Omit<UiSelectField, keyof UiSelectFieldAttributes> & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes]?: UiSelectField[K] } & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes as `attr:${K}`]?: UiSelectFieldAttributes[K] } & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes as `prop:${K}`]?: UiSelectField[K] };
         "ui-switch-field": Omit<UiSwitchField, keyof UiSwitchFieldAttributes> & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes]?: UiSwitchField[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `attr:${K}`]?: UiSwitchFieldAttributes[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `prop:${K}`]?: UiSwitchField[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
         "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
@@ -2343,6 +2752,18 @@ declare module "@stencil/core" {
              * address, so no pointer, key or menu can follow it.
              */
             "ui-link-button": LocalJSX.IntrinsicElements["ui-link-button"] & JSXBase.HTMLAttributes<HTMLUiLinkButtonElement>;
+            /**
+             * A visible list of options from which a user chooses one value or several.
+             * The list takes one stop in the order of the Tab key and names its highlighted option with
+             * `aria-activedescendant`. The arrow keys, Home, End, Page Up and Page Down move the highlight,
+             * and typed letters move it to the option they start; in a single choice the choice follows the
+             * highlight, as in a native select that shows its options, and in a multiple choice Space and a
+             * click turn an option on and off. The host is form-associated: it submits one entry for each
+             * chosen value. The `value` attribute supplies the initial and reset value of a single choice,
+             * the `defaultValue` property that of a multiple choice, and the `value` property holds the
+             * current one. An author's `aria-label` names the list when it has no visible label.
+             */
+            "ui-listbox": LocalJSX.IntrinsicElements["ui-listbox"] & JSXBase.HTMLAttributes<HTMLUiListboxElement>;
             /**
              * Shows that content is loading or that an action is in progress.
              * The loader is a progress indicator without a value. Its role and its accessible name go through
@@ -2403,6 +2824,19 @@ declare module "@stencil/core" {
              * input.
              */
             "ui-search-field": LocalJSX.IntrinsicElements["ui-search-field"] & JSXBase.HTMLAttributes<HTMLUiSearchFieldElement>;
+            /**
+             * A field that opens a list of options from which a user chooses one value.
+             * The trigger is a button with the role combobox, which keeps the focus while its list is open
+             * and names the highlighted option with `aria-activedescendant`. The arrow keys, Enter, Space, Home
+             * and End open the list; in an open list they move the highlight, Enter and Space choose, Escape
+             * and Tab close without a change, and typed letters move to the option they start, also while it
+             * is closed. The list opens in the top layer, below the field or above it when the window has no
+             * room below. The host is form-associated and submits the chosen value, or an empty string. The
+             * `value` attribute supplies the initial and reset value, and the property holds the current one;
+             * the reflected `open` attribute shows whether the list is open. An author's `aria-label` names the
+             * field when it has no visible label.
+             */
+            "ui-select-field": LocalJSX.IntrinsicElements["ui-select-field"] & JSXBase.HTMLAttributes<HTMLUiSelectFieldElement>;
             /**
              * A switch with a label and hint that turns a setting on or off at once.
              * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the

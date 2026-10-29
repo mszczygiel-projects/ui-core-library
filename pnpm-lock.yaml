@@ -18,6 +18,9 @@ catalogs:
     '@figma/code-connect':
       specifier: 2.0.2
       version: 2.0.2
+    '@floating-ui/dom':
+      specifier: 1.8.0
+      version: 1.8.0
     '@fontsource/inter':
       specifier: 5.3.0
       version: 5.3.0
@@ -344,6 +347,9 @@ importers:
 
   packages/react:
     dependencies:
+      '@floating-ui/dom':
+        specifier: 'catalog:'
+        version: 1.8.0
       '@mszczygiel-projects/ui-core-foundations':
         specifier: workspace:^
         version: link:../foundations
@@ -396,6 +402,9 @@ importers:
 
   packages/web-components:
     dependencies:
+      '@floating-ui/dom':
+        specifier: 'catalog:'
+        version: 1.8.0
       '@mszczygiel-projects/ui-core-foundations':
         specifier: workspace:^
         version: link:../foundations
@@ -1500,6 +1509,15 @@ packages:
     resolution: {integrity: sha512-67qTEIb2dmqKE8HQ1tz/TJlveD5gfD/yfT9jgmUj0dAdazl92zHaeMmQ88CJD4qtZHxTMcodMh5MeEeyd7Cv3w==}
     engines: {node: '>=18'}
     hasBin: true
+
+  '@floating-ui/core@1.8.0':
+    resolution: {integrity: sha512-0CIZ5itps/8x7BG8dEIhs53BvCUH2PCoogtakwRTut+Arm58sJooJ0AuZhLw2HJYIR5cMLNPBSS728sPho2khQ==}
+
+  '@floating-ui/dom@1.8.0':
+    resolution: {integrity: sha512-yXSrzeHZBTZadLOlfyhCkJHNeLJnHRnRInwdZ40L7ZiaAtrBwoYlsDrX3v5zB1Utk7CLfzcOVnVVWoXEky7Ceg==}
+
+  '@floating-ui/utils@0.2.12':
+    resolution: {integrity: sha512-HpCo8tmWzLVad5s2d19EhAz5zqrrQ6s69qd6moPMQvkOuSwDT1YgRfWSVuc4ennqrgv3OHppiOGMQ7oC13yIww==}
 
   '@fontsource/inter@5.3.0':
     resolution: {integrity: sha512-RofMylZmjlJEfELXeNHFWBRcSs75rGU/6bV2S2jfnvv/3rPXPGe0LgUJTklcHZ9lM4OZmAVFhcJPnACfb91A3g==}
@@ -6616,6 +6634,17 @@ snapshots:
       - canvas
       - supports-color
       - utf-8-validate
+
+  '@floating-ui/core@1.8.0':
+    dependencies:
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/dom@1.8.0':
+    dependencies:
+      '@floating-ui/core': 1.8.0
+      '@floating-ui/utils': 0.2.12
+
+  '@floating-ui/utils@0.2.12': {}
 
   '@fontsource/inter@5.3.0': {}
 

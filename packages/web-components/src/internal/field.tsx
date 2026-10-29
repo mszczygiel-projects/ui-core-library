@@ -1,6 +1,6 @@
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import {
-  type TextControlProps,
+  type FieldControlProps,
   textField,
   type TextFieldLabelPlacement,
 } from '@mszczygiel-projects/ui-core-shared/text-field';
@@ -9,7 +9,7 @@ import { h, type VNode } from '@stencil/core';
 const { options } = textField;
 
 /** The appearance classes of a field and its label placement, after invalid values fall back. */
-export function fieldAppearance(props: TextControlProps): {
+export function fieldAppearance(props: FieldControlProps): {
   readonly classes: string;
   readonly placement: TextFieldLabelPlacement;
   readonly error: boolean;

@@ -14,6 +14,8 @@ catalog:
   '@eslint/js': 10.0.1
   # Publishes and checks the Code Connect templates of both frameworks.
   '@figma/code-connect': 2.0.2
+  # Places the popup of a list next to its field, flipped and resized to fit the window.
+  '@floating-ui/dom': 1.8.0
   '@fontsource/inter': 5.3.0
   '@nx/eslint': 24.0.1
   '@nx/devkit': 24.0.1
