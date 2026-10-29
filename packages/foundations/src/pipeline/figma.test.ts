@@ -251,7 +251,7 @@ describe('variableMetadata', () => {
   it('knows every variable of the library', () => {
     const { variables, unknown } = variableMetadata(parseExports(readExports(EXPORTS_DIR)));
     expect(unknown).toEqual([]);
-    expect(variables).toHaveLength(1286);
+    expect(variables).toHaveLength(1279);
     expect(variables.filter((v) => v.scopes === null)).toHaveLength(12);
     expect(variables.filter((v) => v.scopes?.length === 0)).toHaveLength(334);
     expect(variables.filter((v) => v.needsDescription)).toHaveLength(283);
