@@ -6,7 +6,7 @@ export const switchField = defineComponent({
   name: 'SwitchField',
   tag: 'ui-switch-field',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '2251:2499',
   design: {
     flags: ['checked', 'disabled'],

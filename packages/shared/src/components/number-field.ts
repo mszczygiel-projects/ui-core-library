@@ -60,15 +60,7 @@ export const numberField = defineComponent({
   ],
   slots: [],
   events: ['ui-value-change'],
-  stories: [
-    'Playground',
-    'Variants',
-    'WithControls',
-    'WithDecimals',
-    'WithLocale',
-    'InForm',
-    'OnSurfaces',
-  ],
+  stories: ['Playground', 'Variants', 'WithControls', 'WithDecimals', 'WithLocale', 'OnSurfaces'],
   exceptions: [
     ...textField.exceptions,
     {

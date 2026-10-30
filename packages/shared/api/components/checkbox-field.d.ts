@@ -3,7 +3,7 @@ export declare const checkboxField: {
     readonly name: "CheckboxField";
     readonly tag: "ui-checkbox-field";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "1145:1141";
     readonly design: {
         readonly flags: readonly ["checked", "indeterminate", "disabled"];

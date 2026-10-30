@@ -5,7 +5,7 @@ export const notification = defineComponent({
   name: 'Notification',
   tag: 'ui-notification',
   category: 'Feedback',
-  status: 'in-progress',
+  status: 'done',
   figma: '1731:2969',
   design: {
     flags: [],

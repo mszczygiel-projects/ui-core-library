@@ -4,7 +4,7 @@ export declare const switchField: {
     readonly name: "SwitchField";
     readonly tag: "ui-switch-field";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2251:2499";
     readonly design: {
         readonly flags: readonly ["checked", "disabled"];

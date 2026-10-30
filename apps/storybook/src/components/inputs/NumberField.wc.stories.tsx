@@ -82,7 +82,9 @@ const meta = {
     },
   },
 } satisfies Meta<NumberFieldProps>;
+
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
@@ -100,7 +102,7 @@ export const Variants: Story = {
 export const WithControls: Story = {
   args: { controls: 'inline', min: 0, max: 20 },
   render: (args) => (
-    <div className="sb-row">
+    <div className="sb-row sb-row--align-bottom">
       {options.labelPlacement.options.map((labelPlacement) => (
         <UiNumberField key={labelPlacement} {...args} labelPlacement={labelPlacement} />
       ))}
@@ -122,16 +124,4 @@ export const WithLocale: Story = {
   ),
 };
 
-export const InForm: Story = {
-  args: { name: 'quantity', required: true },
-  render: (args) => (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
-    >
-      <UiNumberField {...args} />
-    </form>
-  ),
-};
 export const OnSurfaces: Story = { decorators: [onSurfaces], ...Variants };

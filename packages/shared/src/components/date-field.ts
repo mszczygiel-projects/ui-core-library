@@ -39,7 +39,7 @@ export const dateField = defineComponent({
   parts: ['base', 'control', 'input-row', 'input', 'label', 'label-text', 'hint', 'hint-text'],
   slots: [],
   events: ['ui-value-change'],
-  stories: ['Playground', 'Variants', 'WithLocale', 'WithConstraints', 'InForm', 'OnSurfaces'],
+  stories: ['Playground', 'Variants', 'WithLocale', 'WithConstraints', 'OnSurfaces'],
   exceptions: [
     ...textField.exceptions,
     {

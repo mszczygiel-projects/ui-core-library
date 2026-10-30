@@ -41,7 +41,7 @@ export declare const numberField: {
     readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-text", "hint", "hint-text", "decrement", "decrement-icon", "increment", "increment-icon"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change"];
-    readonly stories: readonly ["Playground", "Variants", "WithControls", "WithDecimals", "WithLocale", "InForm", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Variants", "WithControls", "WithDecimals", "WithLocale", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
         readonly reason: "The web component exposes its form-associated state. React exposes the native state through the ref of its input, and its form prop is the native form ID attribute.";

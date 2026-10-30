@@ -6,7 +6,7 @@ export const passwordField = defineComponent({
   name: 'PasswordField',
   tag: 'ui-password-field',
   category: 'Inputs',
-  status: 'in-progress',
+  status: 'done',
   figma: '229:3491',
   design: {
     flags: ['revealed'],

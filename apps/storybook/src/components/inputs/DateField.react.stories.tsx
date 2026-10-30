@@ -42,7 +42,9 @@ const meta = {
     getValidationMessageLabel: { control: false },
   },
 } satisfies Meta<typeof DateField>;
+
 export default meta;
+
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
@@ -76,16 +78,4 @@ export const WithConstraints: Story = {
   },
 };
 
-export const InForm: Story = {
-  args: { name: 'delivery', required: true },
-  render: (args) => (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-      }}
-    >
-      <DateField {...args} />
-    </form>
-  ),
-};
 export const OnSurfaces: Story = { decorators: [onSurfaces], ...Variants };

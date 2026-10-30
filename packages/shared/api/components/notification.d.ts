@@ -3,7 +3,7 @@ export declare const notification: {
     readonly name: "Notification";
     readonly tag: "ui-notification";
     readonly category: "Feedback";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "1731:2969";
     readonly design: {
         readonly flags: readonly [];
