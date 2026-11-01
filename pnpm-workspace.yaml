@@ -86,3 +86,9 @@ ignoredBuiltDependencies:
 # Preserve typed relative imports under NodeNext without changing IMask runtime code.
 patchedDependencies:
   imask@7.6.1: patches/imask@7.6.1.patch
+
+# Storybook 10.6 pins its docgen plugin to ^0.7.0, whose glob 13 and minimatch 10 carry
+# GHSA-3g3m-2fjr-6pw4 and GHSA-g3hv-75wg-m249. The plugin only calls globSync, which glob 14
+# keeps. Remove this once Storybook depends on a plugin with glob 14 or later.
+overrides:
+  '@joshwooding/vite-plugin-react-docgen-typescript>glob': 14.0.3
