@@ -1,6 +1,13 @@
 import { resolveLocale } from '@mszczygiel-projects/ui-core-shared/locale';
 import type { ParsedInput } from '@mszczygiel-projects/ui-core-shared/parsed-input';
-import { type RefObject, useEffect, useLayoutEffect, useState, useSyncExternalStore } from 'react';
+import {
+  type RefObject,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from 'react';
 
 import { useUiCoreConfig } from './use-ui-core-config.ts';
 
@@ -75,13 +82,20 @@ export function useParsedField<Value extends number | string | null, Error exten
     inputRef.current?.setCustomValidity(message);
   }, [message, inputRef, draft]);
 
+  // The listeners read the latest render, so they subscribe once per form instead of per keystroke.
+  const latest = useRef({ options, configured, locale, text });
+  useLayoutEffect(() => {
+    latest.current = { options, configured, locale, text };
+  });
+
   useEffect(() => {
     const input = inputRef.current;
     const form = input?.form;
     const events = new AbortController();
     const restore = () => {
-      if (input !== null && input.value !== text) {
-        setDraft({ text: input.value, source: options.value, locale });
+      const current = latest.current;
+      if (input !== null && input.value !== current.text) {
+        setDraft({ text: input.value, source: current.options.value, locale: current.locale });
       }
     };
     form?.addEventListener(
@@ -91,12 +105,13 @@ export function useParsedField<Value extends number | string | null, Error exten
           if (event.defaultPrevented) {
             return;
           }
+          const { options: current, configured: resetLocale } = latest.current;
           setTouched(false);
           setEditingLocale(undefined);
           setDraft({
-            text: options.format(acceptedValue(options.value, options.defaultValue), configured),
-            source: options.value,
-            locale: configured,
+            text: current.format(acceptedValue(current.value, current.defaultValue), resetLocale),
+            source: current.value,
+            locale: resetLocale,
           });
         });
       },
@@ -106,7 +121,7 @@ export function useParsedField<Value extends number | string | null, Error exten
     return () => {
       events.abort();
     };
-  }, [options, configured, locale, text, inputRef]);
+  }, [inputRef, options.form]);
 
   const edit = (nextText: string) => {
     const next = options.parse(nextText, locale);

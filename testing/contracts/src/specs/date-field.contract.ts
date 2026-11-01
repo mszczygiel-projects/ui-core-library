@@ -204,6 +204,13 @@ export function dateFieldContract(adapter: Mount<DateFieldContractProps>): void 
     expect(input(field).validity.customError).toBe(true);
   });
 
+  it('completes a typed date in a locale whose format ends with a literal', async () => {
+    const field = await mount({ locale: 'hu-HU' });
+    await page.elementLocator(input(field)).fill('20261231');
+    expect(input(field).value).toBe('2026. 12. 31');
+    expect(input(field).validity.valid).toBe(true);
+  });
+
   it('accepts ISO paste and enforces excluded dates', async () => {
     const field = await mount({ disabledDates: ['2026-12-31'] });
     await page.elementLocator(input(field)).fill('2026-12-31');

@@ -29,6 +29,17 @@ export interface DateFormatPart {
 }
 export declare function dateFormatParts(locale: string): readonly DateFormatPart[];
 export declare function dateMaskPattern(locale: string): string;
+export interface DateMaskOptions {
+    readonly mask: string;
+    readonly lazy: true;
+    readonly overwrite: false;
+    readonly autofix: false;
+    readonly definitions: {
+        readonly '0': RegExp;
+    };
+    readonly prepare: (value: string) => string;
+}
+export declare function dateMaskOptions(locale: string): DateMaskOptions;
 export declare function formatDateText(iso: string, locale: string): string;
 export declare function prepareDateText(text: string, locale: string): string;
 export declare function parseDateText(text: string, locale: string): ParsedInput<string>;

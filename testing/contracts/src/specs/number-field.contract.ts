@@ -227,6 +227,47 @@ export function numberFieldContract(adapter: Mount<NumberFieldContractProps>): v
     await userEvent.keyboard('{End}');
     expect(input(field).value).toBe('10');
   });
+
+  it('takes the allowed value inside a bound that is off the step grid', async () => {
+    const field = await mount({ defaultValue: 5, min: 0, max: 12, step: 5 });
+    await page.elementLocator(input(field)).click();
+    await userEvent.keyboard('{End}');
+    expect(input(field).value).toBe('10');
+    expect(input(field).validity.valid).toBe(true);
+  });
+
+  it('keeps unfinished text when a step key or button is used', async () => {
+    const changed = vi.fn();
+    const field = await mount({ controls: 'inline', max: 10, onValueChange: changed });
+    await page.elementLocator(input(field)).fill('12,');
+    changed.mockClear();
+    await userEvent.keyboard('{ArrowUp}{End}');
+    expect(input(field).value).toBe('12,');
+    expect(field.part('increment').matches(':disabled')).toBe(true);
+    expect(changed).not.toHaveBeenCalled();
+  });
+
+  it('reports a composed edit once, after composition ends', async () => {
+    const changed = vi.fn();
+    const field = await mount({ onValueChange: changed });
+    const node = input(field);
+    node.focus();
+    node.dispatchEvent(new CompositionEvent('compositionstart', { bubbles: true, composed: true }));
+    for (const text of ['1', '12']) {
+      node.value = text;
+      node.dispatchEvent(
+        new InputEvent('input', { bubbles: true, composed: true, isComposing: true }),
+      );
+    }
+    expect(changed).not.toHaveBeenCalled();
+    node.dispatchEvent(new CompositionEvent('compositionend', { bubbles: true, composed: true }));
+    // Some browsers repeat the result as an input event after compositionend.
+    node.dispatchEvent(new InputEvent('input', { bubbles: true, composed: true }));
+    await expect.poll(() => changed.mock.calls.length).toBe(1);
+    expect(changed.mock.calls[0]?.[0]).toBe(12);
+    expect(node.value).toBe('12');
+  });
+
   it('keeps the editing grammar stable through configuration changes and preserves partial input', async () => {
     const changed = vi.fn();
     configureUiCore({ locale: 'pl-PL' });

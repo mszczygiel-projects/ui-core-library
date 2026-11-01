@@ -41,6 +41,7 @@ import {
 } from '../internal/field.tsx';
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
+import { restoreLocaleState, saveLocaleState } from '../internal/locale-state.ts';
 import { TextControl } from '../internal/text-control.ts';
 import type { DateFieldValueChange } from './events.ts';
 
@@ -170,25 +171,14 @@ export class UiDateField implements DateFieldProps, FormAssociated {
     defaultText: (value) => formatDateText(value, this.displayLocale),
     serialize: (text) => parseDateText(text, this.displayLocale).value,
     validationMessage: () => this.parserMessage(),
-    saveState: (text) => JSON.stringify({ text, locale: this.displayLocale }),
+    saveState: (text) => saveLocaleState({ text, locale: this.displayLocale }),
     restoreText: (state) => {
-      try {
-        const saved: unknown = JSON.parse(state);
-        if (
-          typeof saved === 'object' &&
-          saved !== null &&
-          'text' in saved &&
-          typeof saved.text === 'string' &&
-          'locale' in saved &&
-          typeof saved.locale === 'string'
-        ) {
-          this.displayLocale = resolveLocale(saved.locale);
-          return saved.text;
-        }
-      } catch {
-        // Browsers may restore a plain string from an earlier state.
+      const saved = restoreLocaleState(state);
+      if (saved === null) {
+        return state;
       }
-      return state;
+      this.displayLocale = resolveLocale(saved.locale);
+      return saved.text;
     },
   });
 
@@ -367,7 +357,6 @@ export class UiDateField implements DateFieldProps, FormAssociated {
             inputMode={this.hostAttributes['inputmode'] ?? 'numeric'}
             aria-invalid={appearance.error ? 'true' : undefined}
             aria-describedby={fieldDescription(hint)}
-
             onFocus={() => {
               this.editing = true;
             }}

@@ -45,12 +45,17 @@ function finiteOr(value: number | undefined, fallback: number): number {
   return value !== undefined && Number.isFinite(value) ? value : fallback;
 }
 
-/** Removes division drift without treating a small nonzero fraction as zero steps. */
+/**
+ * Removes division drift without treating a small nonzero fraction as zero steps. The drift of
+ * `value - base` is relative to the operands, not to the position, so the nearest grid value is
+ * compared with `value` at their own magnitude.
+ */
 function gridPosition(value: number, base: number, step: number): number {
   const position = (value - base) / step;
   const nearest = Math.round(position);
+  const magnitude = Math.max(Math.abs(value), Math.abs(base));
   return Number.isFinite(position) &&
-    Math.abs(position - nearest) <= Number.EPSILON * Math.abs(position) * 4
+    Math.abs(value - (base + nearest * step)) <= Number.EPSILON * magnitude * 4
     ? nearest
     : position;
 }
@@ -303,22 +308,68 @@ export function validateNumber(
   return Number.isInteger(position) ? null : 'step';
 }
 
-/** The next allowed value, or the current one if no valid step exists in that direction. */
+/** The number in a canonical form value or attribute, such as `-12.5`; null otherwise. */
+export function parseSerializedNumber(text: string): number | null {
+  // Number() would also take exponents, hex and blank text, which the field never submits.
+  return /^[+-]?(?:\d+(?:\.\d+)?|\.\d+)$/.test(text.trim())
+    ? parseNumberText(text, 'en-US').value
+    : null;
+}
+
+/** Unfinished or malformed text belongs to the user; stepping would replace it. */
+function steppable(parsed: ParsedInput<number | null>): boolean {
+  return parsed.inputState === 'empty' || parsed.inputState === 'valid';
+}
+
+function allowed(value: number, constraints: NumberConstraints): boolean {
+  return (
+    safeNumber(value) !== null &&
+    validateNumber({ value, inputState: 'valid' }, constraints) === null
+  );
+}
+
+/**
+ * The next allowed value, or the current one if no valid step exists in that direction or the
+ * text is unfinished or malformed.
+ */
 export function nextNumberValue(
-  value: number | null,
+  parsed: ParsedInput<number | null>,
   direction: 1 | -1,
   constraints: NumberConstraints,
 ): number | null {
+  const { value } = parsed;
   if (
-    constraints.min !== undefined &&
-    constraints.max !== undefined &&
-    constraints.min > constraints.max
+    !steppable(parsed) ||
+    (constraints.min !== undefined &&
+      constraints.max !== undefined &&
+      constraints.min > constraints.max)
   ) {
     return value;
   }
   const next = stepValue(value, direction, { ...constraints, step: numberStep(constraints.step) });
-  return safeNumber(next) !== null &&
-    validateNumber({ value: next, inputState: 'valid' }, constraints) === null
-    ? next
-    : value;
+  return allowed(next, constraints) ? next : value;
+}
+
+/**
+ * The allowed value nearest the finite min (-1) or max (1), for Home and End. A bound off the
+ * step grid gives the grid value inside it. Undefined when there is no such value or the text
+ * is unfinished or malformed, so the key keeps its native caret movement.
+ */
+export function boundNumberValue(
+  parsed: ParsedInput<number | null>,
+  direction: 1 | -1,
+  constraints: NumberConstraints,
+): number | undefined {
+  const bound = direction < 0 ? constraints.min : constraints.max;
+  if (bound === undefined || !Number.isFinite(bound) || !steppable(parsed)) {
+    return undefined;
+  }
+  if (allowed(bound, constraints)) {
+    return bound;
+  }
+  const inside = stepValue(bound, direction < 0 ? 1 : -1, {
+    ...constraints,
+    step: numberStep(constraints.step),
+  });
+  return allowed(inside, constraints) ? inside : undefined;
 }

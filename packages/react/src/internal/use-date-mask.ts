@@ -1,5 +1,4 @@
-import { dateMaskPattern, prepareDateText } from '@mszczygiel-projects/ui-core-shared/date';
-import { localeDigits } from '@mszczygiel-projects/ui-core-shared/parsed-input';
+import { dateMaskOptions } from '@mszczygiel-projects/ui-core-shared/date';
 import IMask from 'imask';
 import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
@@ -22,16 +21,7 @@ export function useDateMask(
     if (input === null || !enabled) {
       return;
     }
-    const mask = IMask(input, {
-      mask: dateMaskPattern(locale),
-      lazy: true,
-      overwrite: false,
-      autofix: false,
-      definitions: { '0': new RegExp(`[0-9${localeDigits(locale).join('')}]`) },
-      prepare: (value: string) => {
-        return prepareDateText(value, locale);
-      },
-    });
+    const mask = IMask(input, { ...dateMaskOptions(locale) });
     maskRef.current = mask;
     const events = new AbortController();
     const options = { signal: events.signal };

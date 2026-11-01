@@ -25,4 +25,6 @@ export declare function parseNumberText(text: string, locale: string): ParsedInp
 export declare function formatNumberText(value: number | null, locale: string): string;
 export declare function numberStep(step: number | undefined): number;
 export declare function validateNumber(parsed: ParsedInput<number | null>, constraints: NumberConstraints): NumberValidationError | null;
-export declare function nextNumberValue(value: number | null, direction: 1 | -1, constraints: NumberConstraints): number | null;
+export declare function parseSerializedNumber(text: string): number | null;
+export declare function nextNumberValue(parsed: ParsedInput<number | null>, direction: 1 | -1, constraints: NumberConstraints): number | null;
+export declare function boundNumberValue(parsed: ParsedInput<number | null>, direction: 1 | -1, constraints: NumberConstraints): number | undefined;

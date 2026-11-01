@@ -1,5 +1,4 @@
-import { dateMaskPattern, prepareDateText } from '@mszczygiel-projects/ui-core-shared/date';
-import { localeDigits } from '@mszczygiel-projects/ui-core-shared/parsed-input';
+import { dateMaskOptions } from '@mszczygiel-projects/ui-core-shared/date';
 import IMask from 'imask';
 
 /** Owns only the DOM mask; calendar parsing and validation remain in shared. */
@@ -20,16 +19,7 @@ export class DateMask {
     if (this.locale !== locale || this.mask === undefined) {
       this.disconnect();
       this.locale = locale;
-      this.mask = IMask(input, {
-        mask: dateMaskPattern(locale),
-        lazy: true,
-        overwrite: false,
-        autofix: false,
-        definitions: { '0': new RegExp(`[0-9${localeDigits(locale).join('')}]`) },
-        prepare: (value: string) => {
-          return prepareDateText(value, locale);
-        },
-      });
+      this.mask = IMask(input, { ...dateMaskOptions(locale) });
       const events = new AbortController();
       this.events = events;
       const options = { signal: events.signal };

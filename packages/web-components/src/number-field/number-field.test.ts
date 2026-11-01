@@ -34,6 +34,18 @@ afterEach(() => {
 });
 
 describe('ui-number-field', () => {
+  it.each(['1e3', '0x10', ' ', 'abc'])(
+    'treats the non-canonical value attribute %j as empty',
+    async (value) => {
+      const { field, form } = create();
+      field.setAttribute('value', value);
+      form.append(field);
+      await nextRender();
+      expect(field.value).toBeNull();
+      expect(inputOf(field).value).toBe('');
+    },
+  );
+
   it('separates current property and default attribute, synchronously', async () => {
     const { field, form } = create();
     field.setAttribute('value', '12.5');

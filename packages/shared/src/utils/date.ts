@@ -248,6 +248,28 @@ export function dateMaskPattern(locale: string): string {
     .join('');
 }
 
+/** The IMask options of a date input, as plain data, so both implementations mask alike. */
+export interface DateMaskOptions {
+  readonly mask: string;
+  readonly lazy: true;
+  readonly overwrite: false;
+  readonly autofix: false;
+  readonly definitions: { readonly '0': RegExp };
+  readonly prepare: (value: string) => string;
+}
+
+/** Digits of the locale or ASCII, with ISO pastes reordered into the locale's format. */
+export function dateMaskOptions(locale: string): DateMaskOptions {
+  return {
+    mask: dateMaskPattern(locale),
+    lazy: true,
+    overwrite: false,
+    autofix: false,
+    definitions: { '0': new RegExp(`[0-9${localeDigits(locale).join('')}]`) },
+    prepare: (value) => prepareDateText(value, locale),
+  };
+}
+
 /** Formats a calendar date by parts, with no time-zone conversion or missing-year inference. */
 export function formatDateText(iso: string, locale: string): string {
   const date = parseIsoDate(iso);
@@ -302,9 +324,22 @@ export function parseDateText(text: string, locale: string): ParsedInput<string>
   const compact = /^\d{8}$/.test(normalized);
   let offset = 0;
   const values = { year: 0, month: 0, day: 0 };
-  for (const part of parts) {
+  for (const [index, part] of parts.entries()) {
     if (part.type === 'literal' && compact) {
       continue;
+    }
+    // A lazy mask never types a trailing literal such as the final dot of hu-HU or the era of
+    // bg-BG, so the date is complete once every number has been read.
+    const rest = parts.slice(index);
+    if (
+      rest.every((remaining) => remaining.type === 'literal') &&
+      rest
+        .map((remaining) => remaining.value)
+        .join('')
+        .startsWith(normalized.slice(offset))
+    ) {
+      offset = normalized.length;
+      break;
     }
     const piece = normalized.slice(offset, offset + part.value.length);
     if (part.type === 'literal' ? !part.value.startsWith(piece) : !/^\d*$/.test(piece)) {

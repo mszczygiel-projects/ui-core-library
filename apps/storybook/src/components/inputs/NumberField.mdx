@@ -56,7 +56,7 @@ React accepts `defaultValue`, or a controlled `value` with `onValueChange`. An e
 ## Accessibility
 
 - **Pattern:** [WAI-ARIA spinbutton](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/), on the visible input. `aria-valuenow` is present only for a parsed number; bounds use `aria-valuemin` / `aria-valuemax`, and localized text uses `aria-valuetext`.
-- **Keys:** ArrowUp/ArrowDown take one step; Home/End choose a finite min/max. Modified editing keys remain native. Buttons support click, Enter and Space, and disable when no step is available. Their pointer targets are at least 24 × 24 CSS pixels.
+- **Keys:** ArrowUp/ArrowDown take one step; Home/End choose the allowed value nearest a finite min/max. While the text is unfinished or malformed, these keys keep their native caret movement and the buttons are disabled, so the text is never replaced. Modified editing keys remain native. Buttons support click, Enter and Space, and disable when no step is available. Their pointer targets are at least 24 × 24 CSS pixels.
 - **Forms:** Enter follows native implicit submission, including cancellation and composition. Required empty input uses `valueMissing`; parsing and domain constraints use `customError`. Error details name the reason rather than promising native numeric range flags on a text input.
 - **Descriptions:** label, hint and the input are in the same root. The web component forwards aria-label; external ID references cannot cross its shadow boundary. React combines an external description with the hint.
 - **Preferences:** logical layout supports RTL; focus uses existing focus-visible rules, forced colors preserve native system contrast and reduced motion removes label animation.

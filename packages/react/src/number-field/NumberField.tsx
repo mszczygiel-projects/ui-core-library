@@ -6,6 +6,7 @@ import type {
   NumberFieldValueChangeDetails as SharedDetails,
 } from '@mszczygiel-projects/ui-core-shared/number-field';
 import {
+  boundNumberValue,
   formatNumberText,
   nextNumberValue,
   parseNumberText,
@@ -84,6 +85,7 @@ export function NumberField({
   onBlur,
   onInvalid,
   onKeyDown,
+  onCompositionEnd,
   id,
   className,
   style,
@@ -122,6 +124,11 @@ export function NumberField({
   const attributes = splitFieldAttributes(rest);
   const visibleHint = hint;
   const visualState = state === 'error' || field.invalid ? 'error' : state;
+  // Composition edits the draft silently; its result is one edit, emitted once at compositionend.
+  const compositionRef = useRef<{ pending: boolean; confirmed: string | null }>({
+    pending: false,
+    confirmed: null,
+  });
   const notify = (text: string, originalEvent: Event) => {
     const { value: next, ...details } = field.edit(text);
     onValueChange?.(next, { ...details, originalEvent });
@@ -141,8 +148,8 @@ export function NumberField({
     input.focus();
     notify(text, originalEvent);
   };
-  const decrement = nextNumberValue(field.parsed.value, -1, constraints);
-  const increment = nextNumberValue(field.parsed.value, 1, constraints);
+  const decrement = nextNumberValue(field.parsed, -1, constraints);
+  const increment = nextNumberValue(field.parsed, 1, constraints);
   const keyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     onKeyDown?.(event);
     if (
@@ -161,10 +168,10 @@ export function NumberField({
         ? increment
         : event.key === 'ArrowDown'
           ? decrement
-          : event.key === 'Home' && Number.isFinite(min)
-            ? min
-            : event.key === 'End' && Number.isFinite(max)
-              ? max
+          : event.key === 'Home'
+            ? boundNumberValue(field.parsed, -1, constraints)
+            : event.key === 'End'
+              ? boundNumberValue(field.parsed, 1, constraints)
               : undefined;
     if (next !== undefined) {
       event.preventDefault();
@@ -227,8 +234,25 @@ export function NumberField({
             };
           }}
           onInput={(event) => {
-            notify(event.currentTarget.value, event.nativeEvent);
+            const text = event.currentTarget.value;
+            const { confirmed } = compositionRef.current;
+            compositionRef.current.confirmed = null;
+            if (event.nativeEvent instanceof InputEvent && event.nativeEvent.isComposing) {
+              compositionRef.current.pending = true;
+              field.edit(text);
+            } else if (text !== confirmed) {
+              notify(text, event.nativeEvent);
+            }
             onInput?.(event);
+          }}
+          onCompositionEnd={(event) => {
+            const text = event.currentTarget.value;
+            if (compositionRef.current.pending) {
+              // Some browsers repeat the result as a final input event, which must not emit again.
+              compositionRef.current = { pending: false, confirmed: text };
+              notify(text, event.nativeEvent);
+            }
+            onCompositionEnd?.(event);
           }}
           onChange={onChange}
           onFocus={(event) => {

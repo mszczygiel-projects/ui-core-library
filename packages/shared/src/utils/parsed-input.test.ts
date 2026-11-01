@@ -2,12 +2,16 @@ import { describe, expect, it } from 'vitest';
 
 import { dateMaskPattern, formatDateText, parseDateText, validateDate } from './date.ts';
 import {
+  boundNumberValue,
   formatNumberText,
   nextNumberValue,
   parseNumberText,
+  parseSerializedNumber,
   serializeNumber,
   validateNumber,
 } from './numeric.ts';
+
+const valid = (value: number | null) => ({ value, inputState: 'valid' as const });
 
 describe('localized number input', () => {
   it.each([
@@ -53,16 +57,56 @@ describe('localized number input', () => {
     expect(validateNumber(parsed, { step: 0.001 })).toBeNull();
     expect(parsed.value).toBe(12.345);
     expect(validateNumber(parseNumberText('0.0000000001', 'en-US'), {})).toBe('step');
-    expect(nextNumberValue(0.0000000001, -1, { step: 1 })).toBe(0);
+    expect(nextNumberValue(valid(0.0000000001), -1, { step: 1 })).toBe(0);
   });
   it('takes ten decimal steps without drift and stops at the bound', () => {
     let value: number | null = 0;
     for (let index = 0; index < 10; index += 1) {
-      value = nextNumberValue(value, 1, { step: 0.1, max: 1 });
+      value = nextNumberValue(valid(value), 1, { step: 0.1, max: 1 });
     }
     expect(value).toBe(1);
-    expect(nextNumberValue(value, 1, { step: 0.1, max: 1 })).toBe(1);
-    expect(nextNumberValue(0.35, 1, { min: 0.05, step: 0.1 })).toBe(0.45);
+    expect(nextNumberValue(valid(value), 1, { step: 0.1, max: 1 })).toBe(1);
+    expect(nextNumberValue(valid(0.35), 1, { min: 0.05, step: 0.1 })).toBe(0.45);
+  });
+  it('keeps values on a fractional grid from a nonzero min', () => {
+    expect(validateNumber({ value: 10.3, inputState: 'valid' }, { min: 10, step: 0.1 })).toBeNull();
+    expect(
+      validateNumber({ value: 1000000.3, inputState: 'valid' }, { min: 1000000, step: 0.1 }),
+    ).toBeNull();
+    expect(validateNumber({ value: 10.35, inputState: 'valid' }, { min: 10, step: 0.1 })).toBe(
+      'step',
+    );
+    expect(nextNumberValue(valid(10.2), 1, { min: 10, step: 0.1 })).toBe(10.3);
+    expect(nextNumberValue(valid(10.3), -1, { min: 10, step: 0.1 })).toBe(10.2);
+  });
+  it('never steps over unfinished or malformed text', () => {
+    for (const text of ['12,', '1,23,456']) {
+      const parsed = parseNumberText(text, text === '12,' ? 'pl-PL' : 'en-US');
+      expect(nextNumberValue(parsed, 1, {})).toBeNull();
+      expect(boundNumberValue(parsed, 1, { max: 10 })).toBeUndefined();
+    }
+    expect(nextNumberValue(parseNumberText('', 'pl-PL'), 1, {})).toBe(1);
+  });
+  it('chooses the allowed value inside a bound for Home and End', () => {
+    const current = valid(5);
+    expect(boundNumberValue(current, -1, { min: 1, max: 10 })).toBe(1);
+    expect(boundNumberValue(current, 1, { min: 1, max: 10 })).toBe(10);
+    expect(boundNumberValue(current, 1, { min: 0, max: 12, step: 5 })).toBe(10);
+    expect(boundNumberValue(current, -1, { max: 12, step: 5 })).toBeUndefined();
+    expect(boundNumberValue(current, -1, { min: 0.005, precision: 2 })).toBeUndefined();
+  });
+  it.each([
+    ['12', 12],
+    ['-0.5', -0.5],
+    [' 3 ', 3],
+    ['', null],
+    [' ', null],
+    ['1e3', null],
+    ['0x10', null],
+    ['Infinity', null],
+    ['1,5', null],
+  ])('reads the canonical attribute %j as %s', (text, value) => {
+    expect(parseSerializedNumber(text)).toBe(value);
   });
 });
 
@@ -75,6 +119,10 @@ describe('localized calendar-date input', () => {
     ['29.02.2024', 'pl-PL', '2024-02-29'],
     ['01.01.0001', 'pl-PL', '0001-01-01'],
     ['31.12.9999', 'pl-PL', '9999-12-31'],
+    ['2026. 12. 31', 'hu-HU', '2026-12-31'],
+    ['2026. 12. 31.', 'hu-HU', '2026-12-31'],
+    ['31.12.2026', 'bg-BG', '2026-12-31'],
+    [formatDateText('2026-12-31', 'bg-BG').slice(0, -1), 'bg-BG', '2026-12-31'],
   ])('parses %s with the %s grammar', (text, locale, value) => {
     expect(parseDateText(text, locale)).toEqual({ value, inputState: 'valid' });
   });

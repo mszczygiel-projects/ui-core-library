@@ -9,10 +9,12 @@ import type {
   NumberFieldProps,
 } from '@mszczygiel-projects/ui-core-shared/number-field';
 import {
+  boundNumberValue,
   formatNumberText,
   nextNumberValue,
   type NumberValidationContext,
   parseNumberText,
+  parseSerializedNumber,
   serializeNumber,
   validateNumber,
 } from '@mszczygiel-projects/ui-core-shared/numeric';
@@ -45,6 +47,7 @@ import {
 } from '../internal/field.tsx';
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
+import { restoreLocaleState, saveLocaleState } from '../internal/locale-state.ts';
 import { TextControl } from '../internal/text-control.ts';
 import type { NumberFieldValueChange } from './events.ts';
 
@@ -172,6 +175,12 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
 
   private stopFollowing: (() => void)[] = [];
 
+  // Composition edits the draft silently; its result is one edit, emitted once at compositionend.
+  private composition: { pending: boolean; confirmed: string | null } = {
+    pending: false,
+    confirmed: null,
+  };
+
   private readonly control = new TextControl({
     host: () => this.host,
     internals: () => this.internals,
@@ -184,29 +193,17 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
     },
     restorable: true,
     implicitSubmission: true,
-    defaultText: (value) =>
-      formatNumberText(value === '' ? null : Number(value), this.displayLocale),
+    defaultText: (value) => formatNumberText(parseSerializedNumber(value), this.displayLocale),
     serialize: (text) => serializeNumber(parseNumberText(text, this.displayLocale).value),
     validationMessage: () => this.parserMessage(),
-    saveState: (text) => JSON.stringify({ text, locale: this.displayLocale }),
+    saveState: (text) => saveLocaleState({ text, locale: this.displayLocale }),
     restoreText: (state) => {
-      try {
-        const saved: unknown = JSON.parse(state);
-        if (
-          typeof saved === 'object' &&
-          saved !== null &&
-          'text' in saved &&
-          typeof saved.text === 'string' &&
-          'locale' in saved &&
-          typeof saved.locale === 'string'
-        ) {
-          this.displayLocale = resolveLocale(saved.locale);
-          return saved.text;
-        }
-      } catch {
-        // Browsers may restore a plain string from an earlier state.
+      const saved = restoreLocaleState(state);
+      if (saved === null) {
+        return state;
       }
-      return state;
+      this.displayLocale = resolveLocale(saved.locale);
+      return saved.text;
     },
   });
 
@@ -387,6 +384,7 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
               this.touched = true;
             }}
             onChange={this.onChange}
+            onCompositionend={this.onCompositionEnd}
           />
           {this.controls === 'inline' && this.action(1)}
         </div>
@@ -400,6 +398,10 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
 
   private isDisabled(): boolean {
     return this.disabled || this.formDisabled;
+  }
+
+  private parsed() {
+    return parseNumberText(this.control.value, this.displayLocale);
   }
 
   private constraints() {
@@ -442,7 +444,7 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
 
   private action(direction: -1 | 1): VNode {
     const part = direction < 0 ? 'decrement' : 'increment';
-    const next = nextNumberValue(this.value, direction, this.constraints());
+    const next = nextNumberValue(this.parsed(), direction, this.constraints());
     return (
       <button
         part={part}
@@ -494,13 +496,13 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
     }
     const next =
       event.key === 'ArrowUp'
-        ? nextNumberValue(this.value, 1, this.constraints())
+        ? nextNumberValue(this.parsed(), 1, this.constraints())
         : event.key === 'ArrowDown'
-          ? nextNumberValue(this.value, -1, this.constraints())
-          : event.key === 'Home' && Number.isFinite(this.min)
-            ? this.min
-            : event.key === 'End' && Number.isFinite(this.max)
-              ? this.max
+          ? nextNumberValue(this.parsed(), -1, this.constraints())
+          : event.key === 'Home'
+            ? boundNumberValue(this.parsed(), -1, this.constraints())
+            : event.key === 'End'
+              ? boundNumberValue(this.parsed(), 1, this.constraints())
               : undefined;
     if (next !== undefined) {
       event.preventDefault();
@@ -510,7 +512,24 @@ export class UiNumberField implements NumberFieldProps, FormAssociated {
 
   private readonly onInput = (event: globalThis.Event): void => {
     const input = event.target;
-    if (input instanceof HTMLInputElement) {
+    if (!(input instanceof HTMLInputElement)) {
+      return;
+    }
+    const { confirmed } = this.composition;
+    this.composition.confirmed = null;
+    if (event instanceof InputEvent && event.isComposing) {
+      this.composition.pending = true;
+      this.control.edit(input.value);
+    } else if (input.value !== confirmed) {
+      this.notify(input.value, event);
+    }
+  };
+
+  private readonly onCompositionEnd = (event: CompositionEvent): void => {
+    const input = event.target;
+    if (input instanceof HTMLInputElement && this.composition.pending) {
+      // Some browsers repeat the result as a final input event, which must not emit again.
+      this.composition = { pending: false, confirmed: input.value };
       this.notify(input.value, event);
     }
   };
