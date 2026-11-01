@@ -5,10 +5,12 @@ import type {
   CheckedChangeDetail,
 } from '@mszczygiel-projects/ui-core-shared/checkbox-field';
 import type { ChipProps } from '@mszczygiel-projects/ui-core-shared/chip';
+import type { DateFieldProps } from '@mszczygiel-projects/ui-core-shared/date-field';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
+import type { NumberFieldProps } from '@mszczygiel-projects/ui-core-shared/number-field';
 import type { PasswordFieldProps } from '@mszczygiel-projects/ui-core-shared/password-field';
 import type { RadioFieldProps } from '@mszczygiel-projects/ui-core-shared/radio-field';
 import type { RadioGroupProps } from '@mszczygiel-projects/ui-core-shared/radio-group';
@@ -27,6 +29,8 @@ type CustomElement<Props> = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLE
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-date-field': CustomElement<DateFieldProps>;
+      'ui-number-field': CustomElement<NumberFieldProps>;
       'ui-radio-field': CustomElement<RadioFieldProps>;
       'ui-radio-group': CustomElement<RadioGroupProps>;
       'ui-switch-field': CustomElement<SwitchFieldProps>;

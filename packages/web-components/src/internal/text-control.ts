@@ -5,7 +5,13 @@ import { copyValidity, submitNamed } from './form-value.ts';
 export type NativeTextControl = HTMLInputElement | HTMLTextAreaElement;
 
 /** The tags of the single-line text fields, which a native form counts for implicit submission. */
-const TEXT_FIELD_TAGS = ['ui-text-field', 'ui-password-field', 'ui-search-field'];
+const TEXT_FIELD_TAGS = [
+  'ui-text-field',
+  'ui-password-field',
+  'ui-search-field',
+  'ui-number-field',
+  'ui-date-field',
+];
 
 /** The input types that a native form counts when it decides on implicit submission. */
 const IMPLICIT_SUBMISSION_TYPES = [
@@ -25,6 +31,15 @@ const IMPLICIT_SUBMISSION_TYPES = [
 
 /** What a text field gives the controller of its value and form. */
 export interface TextControlOptions {
+  /** Parsed fields display localized text but submit a canonical value. */
+  readonly serialize?: (text: string) => string;
+  /** Converts the canonical default attribute to editable text. */
+  readonly defaultText?: (value: string) => string;
+  /** Saves and restores both the draft and its formatting locale. */
+  readonly saveState?: (text: string) => string;
+  readonly restoreText?: (state: string) => string;
+  /** A parser's constraint, independent of a consumer's custom validity. */
+  readonly validationMessage?: () => string;
   /** Getters, since Stencil attaches the host and its internals after the fields initialize. */
   readonly host: () => HTMLElement;
   readonly internals: () => ElementInternals;
@@ -68,7 +83,7 @@ export class TextControl {
       followAttribute(this.options.host(), 'value', (value) => {
         // Once the value is dirty, the attribute only supplies what a reset restores.
         if (!this.dirty) {
-          this.restore(value ?? '');
+          this.restore(this.options.defaultText?.(value ?? '') ?? value ?? '');
         }
       }),
     );
@@ -105,14 +120,17 @@ export class TextControl {
 
   /** Restores the value of the attribute; after a reset the attribute leads the value again. */
   reset(): void {
-    this.restore(this.options.host().getAttribute('value') ?? '');
+    const value = this.options.host().getAttribute('value') ?? '';
+    this.restore(this.options.defaultText?.(value) ?? value);
     this.dirty = false;
   }
 
   /** Restores a string the browser saved. */
   restoreState(state: string | File | FormData | null): void {
     if (this.options.restorable && typeof state === 'string') {
-      this.restore(state);
+      // Browser restoration is a current value, not a new default when the host reconnects.
+      this.dirty = true;
+      this.restore(this.options.restoreText?.(state) ?? state);
     }
   }
 
@@ -140,13 +158,20 @@ export class TextControl {
   syncValidity(): void {
     const rendered = this.options.control();
     const control = rendered ?? this.options.detached();
-    control.setCustomValidity(this.customValidity);
+    control.setCustomValidity(
+      this.customValidity !== '' ? this.customValidity : (this.options.validationMessage?.() ?? ''),
+    );
     copyValidity(this.options.internals(), control, rendered ?? undefined);
   }
 
   /** Tracks keyboard submission when the owning form changes. */
   formAssociated(form: HTMLFormElement | null): void {
     this.observeFormKeys(form);
+  }
+
+  /** Changes formatting without turning a pristine default into a user edit. */
+  reformat(text: string): void {
+    this.restore(text);
   }
 
   /**
@@ -185,11 +210,13 @@ export class TextControl {
   }
 
   private submit(): void {
+    const text = this.options.control()?.value ?? this.value;
     submitNamed(
       this.options.internals(),
       this.options.name(),
-      this.options.control()?.value ?? this.value,
+      this.options.serialize?.(text) ?? text,
       this.options.restorable,
+      this.options.saveState?.(text) ?? text,
     );
   }
 

@@ -1,0 +1,438 @@
+import {
+  getUiCoreConfig,
+  type UiCoreConfig,
+} from '@mszczygiel-projects/ui-core-foundations/config';
+import {
+  type DateConstraints,
+  type DateValidationContext,
+  formatDateText,
+  parseDateText,
+  validateDate,
+} from '@mszczygiel-projects/ui-core-shared/date';
+import type { DateFieldProps } from '@mszczygiel-projects/ui-core-shared/date-field';
+import { resolveLocale } from '@mszczygiel-projects/ui-core-shared/locale';
+import type {
+  TextFieldLabelPlacement,
+  TextFieldSize,
+  TextFieldState,
+  TextFieldVariant,
+} from '@mszczygiel-projects/ui-core-shared/text-field';
+import {
+  AttachInternals,
+  Component,
+  Element,
+  Event,
+  type EventEmitter,
+  h,
+  Prop,
+  State,
+  type VNode,
+} from '@stencil/core';
+
+import { followConfig } from '../internal/config.ts';
+import { DateMask } from '../internal/date-mask.ts';
+import {
+  Field,
+  fieldAppearance,
+  fieldDescription,
+  fieldPlaceholder,
+  FORWARDED_ATTRIBUTES,
+  forwardedAttributes,
+} from '../internal/field.tsx';
+import { followAttribute } from '../internal/follow-attribute.ts';
+import type { FormAssociated } from '../internal/form-associated.ts';
+import { restoreLocaleState, saveLocaleState } from '../internal/locale-state.ts';
+import { TextControl } from '../internal/text-control.ts';
+import type { DateFieldValueChange } from './events.ts';
+
+// HTMLElement is repeated because the first build runs before Stencil declares the element.
+declare global {
+  interface HTMLUiDateFieldElement extends HTMLElement, FormAssociated {
+    /** The canonical value. The value attribute supplies the initial and reset value. */
+    value: string;
+    /** Sets a custom constraint; an empty string clears it. */
+    setCustomValidity(message: string): void;
+  }
+}
+
+/**
+ * A masked date input with a locale-aware display and an ISO calendar-date value.
+ *
+ * The native input owns accessibility and editable text. ElementInternals submits the canonical
+ * value and saves the draft with its locale. Parsing and constraint errors use customError.
+ *
+ * @part base - The field, label and hint.
+ * @part control - The input surface, border and focus indicator.
+ * @part input-row - The input.
+ * @part input - The native editable input.
+ * @part label - The visible label and its floating background.
+ * @part label-text - The visible label text.
+ * @part hint - The help or feedback container.
+ * @part hint-text - The help or feedback text.
+ */
+@Component({
+  tag: 'ui-date-field',
+  styleUrls: ['../internal/field.css', 'date-field.css'],
+  shadow: { delegatesFocus: true },
+  formAssociated: true,
+})
+export class UiDateField implements DateFieldProps, FormAssociated {
+  @Element() host!: HTMLUiDateFieldElement;
+
+  @AttachInternals() internals!: ElementInternals;
+
+  /** The surface and border treatment. */
+  @Prop() variant: TextFieldVariant = 'outline';
+
+  /** The size, which follows the density. */
+  @Prop() size: TextFieldSize = 'medium';
+
+  /** The position of the visible label. */
+  @Prop() labelPlacement: TextFieldLabelPlacement = 'top';
+
+  /** Visual feedback, independent of form validity. */
+  @Prop() state: TextFieldState = 'default';
+
+  /** A persistent visible name. Include any required marker in this text. */
+  @Prop() label?: string;
+
+  /** An example or short prompt, never a replacement for the label. */
+  @Prop() placeholder?: string;
+
+  /** Help or feedback connected to the input. */
+  @Prop() hint?: string;
+
+  /** Prevents interaction and submission. */
+  @Prop({ reflect: true }) disabled = false;
+
+  /** Prevents editing but keeps submission. */
+  @Prop({ attribute: 'readonly', reflect: true }) readOnly = false;
+
+  /** Requires a nonempty value. */
+  @Prop() required = false;
+
+  /** The name of the canonical form entry. */
+  @Prop({ reflect: true }) name?: string;
+
+  /** The purpose of the browser's autofill. */
+  @Prop() autoComplete?: string;
+
+  /** BCP 47 locale, before configuration and browser language. */
+  @Prop() locale?: string;
+
+  /** Inclusive lower ISO date bound. */
+  @Prop() min?: string;
+
+  /** Inclusive upper ISO date bound. */
+  @Prop() max?: string;
+
+  /** ISO dates that cannot be submitted, or a predicate; property only. */
+  @Prop({ attribute: null }) disabledDates?: DateConstraints['disabledDates'];
+
+  /** A complete sentence describing the format, used when hint is absent. */
+  @Prop({ attribute: null }) getFormatHintLabel?: (example: string) => string;
+
+  /** A complete translated validation message; property only. */
+  @Prop({ attribute: null }) getValidationMessageLabel?: (context: DateValidationContext) => string;
+
+  /** One user edit, including partial text, with its canonical value and validation result. */
+  @Event({ eventName: 'ui-value-change' }) valueChange!: EventEmitter<DateFieldValueChange>;
+
+  @State() private current = '';
+
+  @State() private touched = false;
+
+  @State() private formDisabled = false;
+
+  @State() private hostAttributes: Readonly<Record<string, string | null>> = {};
+
+  @State() private config: UiCoreConfig = getUiCoreConfig();
+
+  private displayLocale = 'en-US';
+
+  @State() private editing = false;
+
+  private stopFollowing: (() => void)[] = [];
+
+  private readonly mask = new DateMask();
+
+  private readonly control = new TextControl({
+    host: () => this.host,
+    internals: () => this.internals,
+    control: () => this.input(),
+    detached: () => this.detachedInput(),
+    name: () => this.name,
+    disabled: () => this.isDisabled(),
+    onValue: (text) => {
+      this.current = text;
+    },
+    restorable: true,
+    implicitSubmission: true,
+    defaultText: (value) => formatDateText(value, this.displayLocale),
+    serialize: (text) => parseDateText(text, this.displayLocale).value,
+    validationMessage: () => this.parserMessage(),
+    saveState: (text) => saveLocaleState({ text, locale: this.displayLocale }),
+    restoreText: (state) => {
+      const saved = restoreLocaleState(state);
+      if (saved === null) {
+        return state;
+      }
+      this.displayLocale = resolveLocale(saved.locale);
+      return saved.text;
+    },
+  });
+
+  /** Canonical value; the value attribute supplies the initial and reset value. */
+  get value(): string {
+    return parseDateText(this.control.value, this.displayLocale).value;
+  }
+
+  set value(value: string) {
+    if (!this.editing) {
+      this.displayLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
+    }
+    this.control.set(formatDateText(value, this.displayLocale));
+  }
+
+  /** The associated form, including an explicit form attribute. */
+  get form(): HTMLFormElement | null {
+    return this.internals.form;
+  }
+
+  /** Native validity, synchronized from the visible input. */
+  get validity(): ValidityState {
+    this.control.syncValidity();
+    return this.internals.validity;
+  }
+
+  /** Native or custom validation message. */
+  get validationMessage(): string {
+    this.control.syncValidity();
+    return this.internals.validationMessage;
+  }
+
+  /** Whether the host participates in constraint validation. */
+  get willValidate(): boolean {
+    return this.internals.willValidate;
+  }
+
+  /** Checks validity and dispatches invalid when needed. */
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- the synchronous API of a native control
+  checkValidity(): boolean {
+    this.control.syncValidity();
+    return this.internals.checkValidity();
+  }
+
+  /** Reports invalidity with the visible input as anchor. */
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- the synchronous API of a native control
+  reportValidity(): boolean {
+    this.control.syncValidity();
+    return this.internals.reportValidity();
+  }
+
+  /** Sets a consumer constraint; an empty string clears it. */
+  // eslint-disable-next-line stencil/own-methods-must-be-private -- the synchronous API of a native control
+  setCustomValidity(message: string): void {
+    this.control.setCustomValidity(message);
+  }
+
+  connectedCallback(): void {
+    const parsed = parseDateText(this.control.value, this.displayLocale);
+    const nextLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
+    if (parsed.inputState === 'empty' || parsed.inputState === 'valid') {
+      this.displayLocale = nextLocale;
+      this.control.reformat(formatDateText(parsed.value, nextLocale));
+    }
+    this.stopFollowing = [
+      followConfig((config) => {
+        this.config = config;
+      }),
+      ...FORWARDED_ATTRIBUTES.map((name) =>
+        followAttribute(this.host, name, (value) => {
+          this.hostAttributes = { ...this.hostAttributes, [name]: value };
+        }),
+      ),
+    ];
+    this.host.addEventListener('invalid', this.onInvalid);
+    this.control.connect();
+  }
+
+  disconnectedCallback(): void {
+    for (const stop of this.stopFollowing) {
+      stop();
+    }
+    this.stopFollowing = [];
+    this.host.removeEventListener('invalid', this.onInvalid);
+    this.control.disconnect();
+    this.mask.disconnect();
+  }
+
+  /** Tracks keyboard submission when the owning form changes. */
+  formAssociatedCallback(form: HTMLFormElement | null): void {
+    this.control.formAssociated(form);
+  }
+
+  /** Uses the browser's disabled fieldset calculation, including the first legend exception. */
+  formDisabledCallback(disabled: boolean): void {
+    this.formDisabled = disabled;
+  }
+
+  /** Restores the current default attribute without an edit event. */
+  formResetCallback(): void {
+    this.touched = false;
+    this.editing = false;
+    this.displayLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
+    this.control.reset();
+  }
+
+  /** Restores the saved draft and grammar, then validates it again. */
+  formStateRestoreCallback(state: string | File | FormData | null): void {
+    this.control.restoreState(state);
+  }
+
+  componentWillRender(): void {
+    const nextLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
+    const parsed = parseDateText(this.control.value, this.displayLocale);
+    if (
+      !this.editing &&
+      nextLocale !== this.displayLocale &&
+      (parsed.inputState === 'empty' || parsed.inputState === 'valid')
+    ) {
+      this.displayLocale = nextLocale;
+      this.control.reformat(formatDateText(parsed.value, nextLocale));
+    }
+    if (this.isDisabled()) {
+      this.internals.states.add('disabled');
+    } else {
+      this.internals.states.delete('disabled');
+    }
+  }
+
+  componentDidRender(): void {
+    const input = this.input();
+    if (input !== null) {
+      this.mask.update(input, this.displayLocale, (event) => {
+        if (input.value !== this.control.value) {
+          this.notify(input.value, event);
+        }
+      });
+    }
+    this.control.rendered();
+  }
+
+  render(): VNode {
+    const invalid = this.touched && !this.validity.valid;
+    const appearance = fieldAppearance({
+      variant: this.variant,
+      size: this.size,
+      labelPlacement: this.labelPlacement,
+      state: invalid ? 'error' : this.state,
+    });
+    const hint =
+      this.hint ??
+      (this.getFormatHintLabel ?? this.config.labels.dateField.formatHint)(
+        formatDateText('2026-12-31', this.displayLocale),
+      );
+    return (
+      <Field
+        classes={appearance.classes}
+        placement={appearance.placement}
+        label={this.label}
+        hint={hint}
+        onSubmit={this.control.onInnerSubmit}
+      >
+        <div part="input-row" class="input-row" onInput={this.onInput}>
+          <input
+            id="input"
+            part="input"
+            class="input"
+            type="text"
+            value={this.current}
+            placeholder={fieldPlaceholder(this.placeholder)}
+            disabled={this.isDisabled()}
+            readOnly={this.readOnly}
+            required={this.required}
+            autoComplete={this.autoComplete}
+            {...forwardedAttributes(this.hostAttributes)}
+            inputMode={this.hostAttributes['inputmode'] ?? 'numeric'}
+            aria-invalid={appearance.error ? 'true' : undefined}
+            aria-describedby={fieldDescription(hint)}
+            onFocus={() => {
+              this.editing = true;
+            }}
+            onBlur={() => {
+              this.editing = false;
+              this.touched = true;
+            }}
+            onChange={this.onChange}
+          />
+        </div>
+      </Field>
+    );
+  }
+
+  private input(): HTMLInputElement | null {
+    return this.host.shadowRoot?.querySelector('input') ?? null;
+  }
+
+  private isDisabled(): boolean {
+    return this.disabled || this.formDisabled;
+  }
+
+  private constraints() {
+    return { min: this.min, max: this.max, disabledDates: this.disabledDates };
+  }
+
+  private parserMessage(): string {
+    const reason = validateDate(
+      parseDateText(this.control.value, this.displayLocale),
+      this.constraints(),
+    );
+    return reason === null
+      ? ''
+      : (this.getValidationMessageLabel ?? this.config.labels.dateField.validationMessage)({
+          ...this.constraints(),
+          reason,
+          locale: this.displayLocale,
+        });
+  }
+
+  private detachedInput(): HTMLInputElement {
+    const input = document.createElement('input');
+    input.required = this.required;
+    input.readOnly = this.readOnly;
+    input.disabled = this.isDisabled();
+    input.value = this.control.value;
+    return input;
+  }
+
+  private notify(text: string, originalEvent: globalThis.Event): void {
+    this.control.edit(text);
+    const parsed = parseDateText(text, this.displayLocale);
+    this.valueChange.emit({
+      ...parsed,
+      text,
+      originalEvent,
+      validationError: validateDate(parsed, this.constraints()),
+    });
+  }
+
+  private readonly onInput = (event: globalThis.Event): void => {
+    const input = event.target;
+    if (input instanceof HTMLInputElement && !(event instanceof InputEvent && event.isComposing)) {
+      this.notify(input.value, event);
+    }
+  };
+
+  private readonly onInvalid = (): void => {
+    this.touched = true;
+  };
+
+  /** Native change does not cross a shadow boundary. */
+  private readonly onChange = (): void => {
+    this.host.dispatchEvent(new globalThis.Event('change', { bubbles: true, composed: true }));
+  };
+}
+
+/** Checks that optional specification props are present in the implementation too. */
+type _DeclaresEveryProp = Pick<UiDateField, keyof DateFieldProps>;

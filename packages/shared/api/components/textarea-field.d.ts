@@ -4,7 +4,7 @@ export declare const textareaField: {
     readonly name: "TextareaField";
     readonly tag: "ui-textarea-field";
     readonly category: "Inputs";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2175:457";
     readonly design: {
         readonly flags: readonly ["disabled"];

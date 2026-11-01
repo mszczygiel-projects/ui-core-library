@@ -4,7 +4,7 @@ export declare const radioGroup: {
     readonly name: "RadioGroup";
     readonly tag: "ui-radio-group";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2997:163";
     readonly design: {
         readonly flags: readonly ["disabled"];

@@ -1,0 +1,89 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as ReactStories from './NumberField.react.stories.tsx';
+import * as WebComponentStories from './NumberField.wc.stories.tsx';
+
+<Meta title="Components/Inputs/NumberField/Docs" />
+
+# NumberField
+
+<ComponentOverview name="NumberField" />
+
+## Usage
+
+Use NumberField for quantities that need arithmetic, constraints or a numeric form value. Use TextField for identifiers such as account numbers and postal codes. Currency, percentages and arbitrary-precision arithmetic are outside its scope.
+
+## Anatomy
+
+The **base** holds **control**, **label** and **hint**. Inside **control**, **input-row** holds the visible **input**, **decrement** and **increment** buttons. **label-text** and **hint-text** hold the text. Each button has a decrement-icon or increment-icon part. There are no slots. React uses `.ui-number-field__<part>`; the web component exposes the corresponding parts. Figma holds an exposed TextField instance named `field`.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+`outline` is the default; `filled` adds a surface and `underlined` keeps the bottom border. There is no separate tone. The appearance follows TextField.
+
+## Sizes & density
+
+`small`, `medium` (default) and `large` follow the surrounding density. `labelPlacement` supports `top` (default), `floating` and `inner`. Inline controls support all three label placements and do not change the selected placement.
+
+## States
+
+`state` is `default`, `error` or `success`. Explicit error sets `aria-invalid` without creating a form error. Parsing and constraint errors block submission immediately; their visual error state appears after blur or an invalid submission attempt. Hover and press share active styling; focus is a separate indicator. Disabled fields are excluded from data; read-only fields remain focusable and submit, but are barred from native validation.
+
+## Content & labels
+
+The decrement and increment names come from `decrementLabel` / `incrementLabel`, then `labels.numberField.decrement` / `increment`. `getValidationMessageLabel(context)` overrides `labels.numberField.validationMessage` and returns a complete translated sentence. Its context contains `reason`, `locale` and the numeric constraints.
+
+Supply label, placeholder and hint in the language of the page. A placeholder never replaces the label. Include any required marker in the label; the component adds none.
+
+## Behaviour
+
+`value` is a finite JavaScript `number` or `null`. The field accepts localized digits, signs and decimal separators, and validates grouping when pasting a grouped number. It does not insert grouping during editing. Partial text such as `-` or `12,` stays visible. Hexadecimal, exponent notation, infinity and text that loses significant digits on conversion are rejected.
+
+`step` defaults to 1 and defines a grid from `min`, or zero. Set a fractional step for decimals. `precision` is an optional maximum of 0–20 decimal places; it never rounds or pads. A value outside `min`/`max`, off the step grid or beyond precision remains visible and invalid. Each activation of an inline button takes one allowed step; holding does not repeat. There is no wheel or PageUp/PageDown stepping.
+
+The locale is selected from the prop, `configureUiCore({ locale })`, the browser after hydration, then `en-US`. Invalid locale candidates are skipped. Editing keeps its grammar stable; a partial draft is never reinterpreted in a new locale. Locale changes do not emit a value event.
+
+Each user edit calls `onValueChange(value, details)` in React or emits `ui-value-change` with `detail.value` in the web component. Details contain `originalEvent`, `text`, `inputState` (`empty`, `incomplete`, `invalid`, `valid`) and `validationError`. A parsed value can be outside a constraint while inputState remains valid. Partial or invalid text has the empty canonical value. Every edit, even between partial texts, notifies once. Programmatic updates, locale changes, reset and restoration are silent. Native input, change, focus, blur and invalid keep their platform meaning.
+
+React accepts `defaultValue`, or a controlled `value` with `onValueChange`. An echoed empty parsed value preserves the partial draft. External value changes replace the draft; rejected complete changes do not enter form data. The web component uses its value attribute for the initial/reset value, and its property for the current canonical value. Reset uses the current default, respects cancellation and clears the draft; controlled React reset remains the parent's responsibility.
+
+## Accessibility
+
+- **Pattern:** [WAI-ARIA spinbutton](https://www.w3.org/WAI/ARIA/apg/patterns/spinbutton/), on the visible input. `aria-valuenow` is present only for a parsed number; bounds use `aria-valuemin` / `aria-valuemax`, and localized text uses `aria-valuetext`.
+- **Keys:** ArrowUp/ArrowDown take one step; Home/End choose the allowed value nearest a finite min/max. While the text is unfinished or malformed, these keys keep their native caret movement and the buttons are disabled, so the text is never replaced. Modified editing keys remain native. Buttons support click, Enter and Space, and disable when no step is available. Their pointer targets are at least 24 × 24 CSS pixels.
+- **Forms:** Enter follows native implicit submission, including cancellation and composition. Required empty input uses `valueMissing`; parsing and domain constraints use `customError`. Error details name the reason rather than promising native numeric range flags on a text input.
+- **Descriptions:** label, hint and the input are in the same root. The web component forwards aria-label; external ID references cannot cross its shadow boundary. React combines an external description with the hint.
+- **Preferences:** logical layout supports RTL; focus uses existing focus-visible rules, forced colors preserve native system contrast and reduced motion removes label animation.
+
+## Surfaces & themes
+
+The field reuses the control palette in Light/Dark and default, subtle, inverse and primary surfaces. Filled label, hint and placeholder contrast is checked against their actual backgrounds; floating labels have their own background roles.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="NumberField" />}
+  webComponents={<WebComponentApi tag="ui-number-field" />}
+/>
+
+## Tokens
+
+<ComponentTokens component="control" />
+
+All geometry, typography and action styling reuse `control/*` and `color/control/*`. Underlined uses outline colors. Focus uses ring roles and transitions use permitted motion primitives; no component-specific token family is needed.
+
+## Implementation notes
+
+- Both implementations import parsing and validation from shared. DOM, selection, focus, subscriptions and form ownership remain in their own packages.
+- The web component uses ElementInternals, one canonical named entry and saved draft text with its locale. It exposes form, validity, validationMessage, willValidate, checkValidity(), reportValidity() and setCustomValidity(message).
+- React renders a visible text input for editing and validity plus a hidden canonical entry. Both follow an external form attribute and disabled fieldset rules, including the first legend. The ref's value is display text; component value and FormData are canonical.
+- Optional empty fields submit an empty string. Nameless fields still validate but create no entry. Invalid drafts never submit a previous uncontrolled value. Read-only fields retain data and native validation exclusion.
+- SSR and the first hydration render use identical locale inputs. Native restored text is synchronized without a user callback.
+- Figma previews interaction and valueState on the nested field. These are not code props. Code Connect remains unpublished; display text in Figma is a preview, so the template leaves canonical value and locale to the consumer.

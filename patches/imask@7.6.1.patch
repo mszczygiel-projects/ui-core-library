@@ -1,0 +1,500 @@
+diff --git a/esm/controls/html-contenteditable-mask-element.d.ts b/esm/controls/html-contenteditable-mask-element.d.ts
+index c8142c6d4b653c64cb949e658336014359cd8e8b..0926957aa4096ac43329b3c152c1447d73c966a2 100644
+--- a/esm/controls/html-contenteditable-mask-element.d.ts
++++ b/esm/controls/html-contenteditable-mask-element.d.ts
+@@ -1,4 +1,4 @@
+-import HTMLMaskElement from './html-mask-element';
++import HTMLMaskElement from './html-mask-element.js';
+ export default class HTMLContenteditableMaskElement extends HTMLMaskElement {
+     input: HTMLElement;
+     /** Returns HTMLElement selection start */
+diff --git a/esm/controls/html-input-mask-element.d.ts b/esm/controls/html-input-mask-element.d.ts
+index 98dbde9d27526f7ed891fac8aa6e1d3ddd933436..fac3efb3f9b0d42db5d8320212ecaf9dd1517bc1 100644
+--- a/esm/controls/html-input-mask-element.d.ts
++++ b/esm/controls/html-input-mask-element.d.ts
+@@ -1,4 +1,4 @@
+-import HTMLMaskElement from './html-mask-element';
++import HTMLMaskElement from './html-mask-element.js';
+ export type InputElement = HTMLTextAreaElement | HTMLInputElement;
+ /** Bridge between InputElement and {@link Masked} */
+ export default class HTMLInputMaskElement extends HTMLMaskElement {
+diff --git a/esm/controls/html-mask-element.d.ts b/esm/controls/html-mask-element.d.ts
+index 1e236f90644c3e6b3a8c6ba52e211990e4b227c8..54686cf06b10b65ab0a2c663c4dc87df6561a23f 100644
+--- a/esm/controls/html-mask-element.d.ts
++++ b/esm/controls/html-mask-element.d.ts
+@@ -1,4 +1,4 @@
+-import MaskElement, { EventHandlers } from './mask-element';
++import MaskElement, { EventHandlers } from './mask-element.js';
+ /** Bridge between HTMLElement and {@link Masked} */
+ export default abstract class HTMLMaskElement extends MaskElement {
+     /** HTMLElement to use mask on */
+diff --git a/esm/controls/input-history.d.ts b/esm/controls/input-history.d.ts
+index 9de5eb179a977bc681ed2fab2330dcd75bffa1f2..8bc071f823ec65efdb2516417b09f2c75da7cf68 100644
+--- a/esm/controls/input-history.d.ts
++++ b/esm/controls/input-history.d.ts
+@@ -1,4 +1,4 @@
+-import { type Selection } from '../core/utils';
++import { type Selection } from '../core/utils.js';
+ export type InputHistoryState = {
+     unmaskedValue: string;
+     selection: Selection;
+diff --git a/esm/controls/input.d.ts b/esm/controls/input.d.ts
+index 084bf3157b88639263de12f18f29e69f1814c025..23b358c73d79a277518fad7317214303881df90e 100644
+--- a/esm/controls/input.d.ts
++++ b/esm/controls/input.d.ts
+@@ -1,8 +1,8 @@
+-import { type Selection } from '../core/utils';
+-import { type UpdateOpts, type FactoryArg, type FactoryReturnMasked } from '../masked/factory';
+-import MaskElement from './mask-element';
+-import { type InputElement } from './html-input-mask-element';
+-import InputHistory, { type InputHistoryState } from './input-history';
++import { type Selection } from '../core/utils.js';
++import { type UpdateOpts, type FactoryArg, type FactoryReturnMasked } from '../masked/factory.js';
++import MaskElement from './mask-element.js';
++import { type InputElement } from './html-input-mask-element.js';
++import InputHistory, { type InputHistoryState } from './input-history.js';
+ export type InputMaskElement = MaskElement | InputElement | HTMLElement;
+ export type InputMaskEventListener = (e?: InputEvent) => void;
+ /** Listens to element events and controls changes between element and {@link Masked} */
+diff --git a/esm/core/action-details.d.ts b/esm/core/action-details.d.ts
+index edd7f85d974abb370f67510ae80233b356614c58..1ebdcb34111dad54b0f23529e961bd8ba08d6652 100644
+--- a/esm/core/action-details.d.ts
++++ b/esm/core/action-details.d.ts
+@@ -1,4 +1,4 @@
+-import { type Direction, type Selection } from './utils';
++import { type Direction, type Selection } from './utils.js';
+ export type ActionDetailsOptions = Pick<ActionDetails, 'value' | 'cursorPos' | 'oldValue' | 'oldSelection'>;
+ /** Provides details of changing input */
+ export default class ActionDetails {
+diff --git a/esm/core/continuous-tail-details.d.ts b/esm/core/continuous-tail-details.d.ts
+index a307e0e2b584d56131b0c5a0307c2e2f799c440c..982084eb50215e2cf298c782b68239f05b8d290f 100644
+--- a/esm/core/continuous-tail-details.d.ts
++++ b/esm/core/continuous-tail-details.d.ts
+@@ -1,5 +1,5 @@
+-import type { TailDetails, AppendTail } from './tail-details';
+-import type ChangeDetails from './change-details';
++import type { TailDetails, AppendTail } from './tail-details.js';
++import type ChangeDetails from './change-details.js';
+ type ContinuousTailState = Pick<ContinuousTailDetails, 'value' | 'from' | 'stop'>;
+ /** Provides details of continuous extracted tail */
+ export default class ContinuousTailDetails implements TailDetails {
+diff --git a/esm/core/holder.d.ts b/esm/core/holder.d.ts
+index 4af7896721a02d735e3dc39e22bbfe56c11ab94b..69b42b47b43b4e68b5725113222ffb86a7187e46 100644
+--- a/esm/core/holder.d.ts
++++ b/esm/core/holder.d.ts
+@@ -1,20 +1,20 @@
+-import type { default as _InputMask, InputMaskElement as _InputMaskElement } from '../controls/input';
+-import type { default as _Masked } from '../masked/base';
+-import type { default as _MaskedPattern } from '../masked/pattern';
+-import type { default as _RepeatBlock } from '../masked/repeat';
+-import type { default as _MaskedDate } from '../masked/date';
+-import type { default as _MaskedDynamic } from '../masked/dynamic';
+-import type { default as _MaskedEnum } from '../masked/enum';
+-import type { default as _MaskedRange } from '../masked/range';
+-import type { default as _MaskedNumber } from '../masked/number';
+-import type { default as _MaskedFunction } from '../masked/function';
+-import type { default as _MaskedRegExp } from '../masked/regexp';
+-import type { default as _createMask, FactoryArg } from '../masked/factory';
+-import type { default as _ChangeDetails } from './change-details';
+-import type { default as _MaskElement } from '../controls/mask-element';
+-import type { default as _HTMLMaskElement } from '../controls/html-mask-element';
+-import type { default as _HTMLContenteditableMaskElement } from '../controls/html-contenteditable-mask-element';
+-import type { createPipe as _createPipe, pipe as _pipe, PIPE_TYPE as _PIPE_TYPE } from '../masked/pipe';
++import type { default as _InputMask, InputMaskElement as _InputMaskElement } from '../controls/input.js';
++import type { default as _Masked } from '../masked/base.js';
++import type { default as _MaskedPattern } from '../masked/pattern.js';
++import type { default as _RepeatBlock } from '../masked/repeat.js';
++import type { default as _MaskedDate } from '../masked/date.js';
++import type { default as _MaskedDynamic } from '../masked/dynamic.js';
++import type { default as _MaskedEnum } from '../masked/enum.js';
++import type { default as _MaskedRange } from '../masked/range.js';
++import type { default as _MaskedNumber } from '../masked/number.js';
++import type { default as _MaskedFunction } from '../masked/function.js';
++import type { default as _MaskedRegExp } from '../masked/regexp.js';
++import type { default as _createMask, FactoryArg } from '../masked/factory.js';
++import type { default as _ChangeDetails } from './change-details.js';
++import type { default as _MaskElement } from '../controls/mask-element.js';
++import type { default as _HTMLMaskElement } from '../controls/html-mask-element.js';
++import type { default as _HTMLContenteditableMaskElement } from '../controls/html-contenteditable-mask-element.js';
++import type { createPipe as _createPipe, pipe as _pipe, PIPE_TYPE as _PIPE_TYPE } from '../masked/pipe.js';
+ /** Applies mask on element */
+ declare function IMask<Opts extends FactoryArg>(el: _InputMaskElement, opts: Opts): _InputMask<Opts>;
+ declare namespace IMask {
+diff --git a/esm/core/tail-details.d.ts b/esm/core/tail-details.d.ts
+index 977ee18715c47c76f02b4c2bd65ba40752db76ce..60af7f8162efa6925b37cfc237ab63f4fe6e17a4 100644
+--- a/esm/core/tail-details.d.ts
++++ b/esm/core/tail-details.d.ts
+@@ -1,5 +1,5 @@
+-import type { AppendFlags } from '../masked/base';
+-import type ChangeDetails from './change-details';
++import type { AppendFlags } from '../masked/base.js';
++import type ChangeDetails from './change-details.js';
+ export interface AppendTail {
+     append(str: string, flags?: AppendFlags): ChangeDetails;
+     _appendPlaceholder(): ChangeDetails;
+diff --git a/esm/imask.d.ts b/esm/imask.d.ts
+index 3bfd9c08f9c81b8211ab15d078a9c6c6c2f5b3d4..487fd5fc087b0681dbb2ca60d1bb53e4e6807cf7 100644
+--- a/esm/imask.d.ts
++++ b/esm/imask.d.ts
+@@ -1,4 +1,4 @@
+-import './controls/input';
+-import IMask from './core/holder';
++import './controls/input.js';
++import IMask from './core/holder.js';
+ export default IMask;
+ //# sourceMappingURL=imask.d.ts.map
+\ No newline at end of file
+diff --git a/esm/index.d.ts b/esm/index.d.ts
+index 60674609523190ca6b464dc26599a9f373731de0..2db8b35d1d2f8f75782b79887768ba12eb04d8cf 100644
+--- a/esm/index.d.ts
++++ b/esm/index.d.ts
+@@ -1,27 +1,27 @@
+-import IMask from './imask';
+-export { default as HTMLContenteditableMaskElement } from './controls/html-contenteditable-mask-element';
+-export { default as HTMLInputMaskElement, type InputElement } from './controls/html-input-mask-element';
+-export { default as HTMLMaskElement } from './controls/html-mask-element';
+-export { default as InputMask, type InputMaskElement } from './controls/input';
+-export { default as MaskElement } from './controls/mask-element';
+-export { default as ChangeDetails, type ChangeDetailsOptions } from './core/change-details';
+-export { type AppendTail, type TailDetails } from './core/tail-details';
+-export { DIRECTION, forceDirection, type Direction, type Selection } from './core/utils';
+-export { default as Masked, type AppendFlags, type ExtractFlags, type MaskedOptions, type MaskedState } from './masked/base';
+-export { default as MaskedDate, type DateMaskType, type MaskedDateOptions } from './masked/date';
+-export { default as MaskedDynamic, type DynamicMaskType, type MaskedDynamicOptions, type MaskedDynamicState } from './masked/dynamic';
+-export { default as MaskedEnum, type MaskedEnumOptions } from './masked/enum';
+-export { default as createMask, normalizeOpts, type AllFactoryStaticOpts, type FactoryArg, type FactoryConstructorOpts, type FactoryConstructorReturnMasked, type FactoryInstanceOpts, type FactoryInstanceReturnMasked, type FactoryOpts, type FactoryReturnMasked, type FactoryStaticOpts, type FactoryStaticReturnMasked, type NormalizedOpts, type UpdateOpts, } from './masked/factory';
+-export { default as MaskedFunction, type MaskedFunctionOptions } from './masked/function';
+-export { default as MaskedNumber, type MaskedNumberOptions } from './masked/number';
+-export { default as MaskedPattern, type BlockPosData, type Definitions, type MaskedPatternOptions, type MaskedPatternState } from './masked/pattern';
+-export { type default as PatternBlock } from './masked/pattern/block';
+-export { default as ChunksTailDetails, type ChunksTailState } from './masked/pattern/chunk-tail-details';
+-export { default as PatternFixedDefinition, type PatternFixedDefinitionOptions } from './masked/pattern/fixed-definition';
+-export { default as PatternInputDefinition, type PatternInputDefinitionOptions, type PatternInputDefinitionState } from './masked/pattern/input-definition';
+-export { createPipe, pipe, PIPE_TYPE } from './masked/pipe';
+-export { default as MaskedRange, type MaskedRangeOptions } from './masked/range';
+-export { default as MaskedRegExp, type MaskedRegExpOptions } from './masked/regexp';
+-export { default as RepeatBlock, type RepeatBlockOptions } from './masked/repeat';
++import IMask from './imask.js';
++export { default as HTMLContenteditableMaskElement } from './controls/html-contenteditable-mask-element.js';
++export { default as HTMLInputMaskElement, type InputElement } from './controls/html-input-mask-element.js';
++export { default as HTMLMaskElement } from './controls/html-mask-element.js';
++export { default as InputMask, type InputMaskElement } from './controls/input.js';
++export { default as MaskElement } from './controls/mask-element.js';
++export { default as ChangeDetails, type ChangeDetailsOptions } from './core/change-details.js';
++export { type AppendTail, type TailDetails } from './core/tail-details.js';
++export { DIRECTION, forceDirection, type Direction, type Selection } from './core/utils.js';
++export { default as Masked, type AppendFlags, type ExtractFlags, type MaskedOptions, type MaskedState } from './masked/base.js';
++export { default as MaskedDate, type DateMaskType, type MaskedDateOptions } from './masked/date.js';
++export { default as MaskedDynamic, type DynamicMaskType, type MaskedDynamicOptions, type MaskedDynamicState } from './masked/dynamic.js';
++export { default as MaskedEnum, type MaskedEnumOptions } from './masked/enum.js';
++export { default as createMask, normalizeOpts, type AllFactoryStaticOpts, type FactoryArg, type FactoryConstructorOpts, type FactoryConstructorReturnMasked, type FactoryInstanceOpts, type FactoryInstanceReturnMasked, type FactoryOpts, type FactoryReturnMasked, type FactoryStaticOpts, type FactoryStaticReturnMasked, type NormalizedOpts, type UpdateOpts, } from './masked/factory.js';
++export { default as MaskedFunction, type MaskedFunctionOptions } from './masked/function.js';
++export { default as MaskedNumber, type MaskedNumberOptions } from './masked/number.js';
++export { default as MaskedPattern, type BlockPosData, type Definitions, type MaskedPatternOptions, type MaskedPatternState } from './masked/pattern.js';
++export { type default as PatternBlock } from './masked/pattern/block.js';
++export { default as ChunksTailDetails, type ChunksTailState } from './masked/pattern/chunk-tail-details.js';
++export { default as PatternFixedDefinition, type PatternFixedDefinitionOptions } from './masked/pattern/fixed-definition.js';
++export { default as PatternInputDefinition, type PatternInputDefinitionOptions, type PatternInputDefinitionState } from './masked/pattern/input-definition.js';
++export { createPipe, pipe, PIPE_TYPE } from './masked/pipe.js';
++export { default as MaskedRange, type MaskedRangeOptions } from './masked/range.js';
++export { default as MaskedRegExp, type MaskedRegExpOptions } from './masked/regexp.js';
++export { default as RepeatBlock, type RepeatBlockOptions } from './masked/repeat.js';
+ export default IMask;
+ //# sourceMappingURL=index.d.ts.map
+\ No newline at end of file
+diff --git a/esm/masked/base.d.ts b/esm/masked/base.d.ts
+index 33d3e946c3b4618d15e681b83db63d1c4ab2ed0e..83b63b6d4a21df9d067aa204fdbf370d74cc2884 100644
+--- a/esm/masked/base.d.ts
++++ b/esm/masked/base.d.ts
+@@ -1,6 +1,6 @@
+-import ChangeDetails from '../core/change-details';
+-import { type Direction } from '../core/utils';
+-import { type TailDetails } from '../core/tail-details';
++import ChangeDetails from '../core/change-details.js';
++import { type Direction } from '../core/utils.js';
++import { type TailDetails } from '../core/tail-details.js';
+ export type MaskedState = {
+     _value: string;
+     _rawInputValue: string;
+diff --git a/esm/masked/date.d.ts b/esm/masked/date.d.ts
+index 17a8b56ef5fe286a000ea71a15c182c734158c7b..e5fc8ebfb9db667860a301dd515a75c279516d31 100644
+--- a/esm/masked/date.d.ts
++++ b/esm/masked/date.d.ts
+@@ -1,7 +1,7 @@
+-import MaskedPattern, { type MaskedPatternOptions } from './pattern';
+-import { type MaskedRangeOptions } from './range';
+-import type Masked from './base';
+-import { type AppendFlags } from './base';
++import MaskedPattern, { type MaskedPatternOptions } from './pattern.js';
++import { type MaskedRangeOptions } from './range.js';
++import type Masked from './base.js';
++import { type AppendFlags } from './base.js';
+ export type DateMaskType = DateConstructor;
+ type DateOptionsKeys = 'pattern' | 'min' | 'max' | 'autofix';
+ export type DateValue = Date | null;
+diff --git a/esm/masked/dynamic.d.ts b/esm/masked/dynamic.d.ts
+index 4d9020ca4faa039f3810d14b4f5fe2346697e0e8..2df2c45e345e3173f2b121e886a4e061fca25a25 100644
+--- a/esm/masked/dynamic.d.ts
++++ b/esm/masked/dynamic.d.ts
+@@ -1,8 +1,8 @@
+-import ChangeDetails from '../core/change-details';
+-import { type ExtendFactoryArgOptions } from './factory';
+-import Masked, { type AppendFlags, type MaskedState, type MaskedOptions, type ExtractFlags } from './base';
+-import { type Direction } from '../core/utils';
+-import { type TailDetails } from '../core/tail-details';
++import ChangeDetails from '../core/change-details.js';
++import { type ExtendFactoryArgOptions } from './factory.js';
++import Masked, { type AppendFlags, type MaskedState, type MaskedOptions, type ExtractFlags } from './base.js';
++import { type Direction } from '../core/utils.js';
++import { type TailDetails } from '../core/tail-details.js';
+ type MaskedDynamicNoRefState = MaskedState & {
+     compiledMasks: Array<MaskedState>;
+ };
+diff --git a/esm/masked/enum.d.ts b/esm/masked/enum.d.ts
+index d496c396ffc64f5a84e290127d5553c76113fdd2..19b0881a739becf90e6d96baebf68404bf1e26be 100644
+--- a/esm/masked/enum.d.ts
++++ b/esm/masked/enum.d.ts
+@@ -1,7 +1,7 @@
+-import MaskedPattern, { MaskedPatternState, type MaskedPatternOptions } from './pattern';
+-import { AppendFlags } from './base';
+-import ChangeDetails from '../core/change-details';
+-import { TailDetails } from '../core/tail-details';
++import MaskedPattern, { MaskedPatternState, type MaskedPatternOptions } from './pattern.js';
++import { AppendFlags } from './base.js';
++import ChangeDetails from '../core/change-details.js';
++import { TailDetails } from '../core/tail-details.js';
+ export type MaskedEnumOptions = Omit<MaskedPatternOptions, 'mask'> & Pick<MaskedEnum, 'enum'> & Partial<Pick<MaskedEnum, 'matchValue'>>;
+ export type MaskedEnumPatternOptions = MaskedPatternOptions & Partial<Pick<MaskedEnum, 'enum' | 'matchValue'>>;
+ /** Pattern which validates enum values */
+diff --git a/esm/masked/factory.d.ts b/esm/masked/factory.d.ts
+index ff7c450a6fffa41cac78a6addea3f348655f8a25..e4239b58f65168cd01c45e79b463d903eda351ba 100644
+--- a/esm/masked/factory.d.ts
++++ b/esm/masked/factory.d.ts
+@@ -1,21 +1,21 @@
+-import type Masked from './base';
+-import { type MaskedOptions } from './base';
+-import type MaskedRegExp from './regexp';
+-import type MaskedPattern from './pattern';
+-import type MaskedFunction from './function';
+-import type MaskedDate from './date';
+-import type MaskedNumber from './number';
+-import type MaskedDynamic from './dynamic';
+-import type MaskedRange from './range';
+-import type MaskedEnum from './enum';
+-import { type MaskedEnumOptions } from './enum';
+-import { type MaskedRangeOptions } from './range';
+-import { type MaskedDynamicOptions } from './dynamic';
+-import { type MaskedPatternOptions } from './pattern';
+-import { type MaskedNumberOptions } from './number';
+-import { type MaskedRegExpOptions } from './regexp';
+-import { type MaskedFunctionOptions } from './function';
+-import { type MaskedDateOptions } from './date';
++import type Masked from './base.js';
++import { type MaskedOptions } from './base.js';
++import type MaskedRegExp from './regexp.js';
++import type MaskedPattern from './pattern.js';
++import type MaskedFunction from './function.js';
++import type MaskedDate from './date.js';
++import type MaskedNumber from './number.js';
++import type MaskedDynamic from './dynamic.js';
++import type MaskedRange from './range.js';
++import type MaskedEnum from './enum.js';
++import { type MaskedEnumOptions } from './enum.js';
++import { type MaskedRangeOptions } from './range.js';
++import { type MaskedDynamicOptions } from './dynamic.js';
++import { type MaskedPatternOptions } from './pattern.js';
++import { type MaskedNumberOptions } from './number.js';
++import { type MaskedRegExpOptions } from './regexp.js';
++import { type MaskedFunctionOptions } from './function.js';
++import { type MaskedDateOptions } from './date.js';
+ type MaskedDateFactoryOptions = Omit<MaskedDateOptions, 'mask'> & {
+     mask: DateConstructor;
+ };
+diff --git a/esm/masked/function.d.ts b/esm/masked/function.d.ts
+index c2a139ea687e485157a23fc736ebae7eb4eea7cc..3b9d93f6188cb21d6a1b92075ee272f353975bed 100644
+--- a/esm/masked/function.d.ts
++++ b/esm/masked/function.d.ts
+@@ -1,4 +1,4 @@
+-import Masked, { type MaskedOptions } from './base';
++import Masked, { type MaskedOptions } from './base.js';
+ export type MaskedFunctionOptions = MaskedOptions<MaskedFunction>;
+ /** Masking by custom Function */
+ export default class MaskedFunction<Value = any> extends Masked<Value> {
+diff --git a/esm/masked/number.d.ts b/esm/masked/number.d.ts
+index 5844cc180397211ed7558f9fc95f77610f032ed4..dc8d68c181acd9cb33fbe30a8efe3fe992b763c9 100644
+--- a/esm/masked/number.d.ts
++++ b/esm/masked/number.d.ts
+@@ -1,7 +1,7 @@
+-import { type Direction } from '../core/utils';
+-import ChangeDetails from '../core/change-details';
+-import { type TailDetails } from '../core/tail-details';
+-import Masked, { type MaskedOptions, type ExtractFlags, type AppendFlags } from './base';
++import { type Direction } from '../core/utils.js';
++import ChangeDetails from '../core/change-details.js';
++import { type TailDetails } from '../core/tail-details.js';
++import Masked, { type MaskedOptions, type ExtractFlags, type AppendFlags } from './base.js';
+ export type MaskedNumberOptions = MaskedOptions<MaskedNumber, 'radix' | 'thousandsSeparator' | 'mapToRadix' | 'scale' | 'min' | 'max' | 'normalizeZeros' | 'padFractionalZeros'>;
+ /** Number mask */
+ export default class MaskedNumber extends Masked<number> {
+diff --git a/esm/masked/pattern/block.d.ts b/esm/masked/pattern/block.d.ts
+index c2f4e793448f88ef47954409c3359fa846e67ce3..fa8924214c435bd38797716ad5c85654408b346f 100644
+--- a/esm/masked/pattern/block.d.ts
++++ b/esm/masked/pattern/block.d.ts
+@@ -1,7 +1,7 @@
+-import type ChangeDetails from '../../core/change-details';
+-import { type TailDetails } from '../../core/tail-details';
+-import { type ExtractFlags, type AppendFlags, type MaskedState } from '../base';
+-import { type Direction } from '../../core/utils';
++import type ChangeDetails from '../../core/change-details.js';
++import { type TailDetails } from '../../core/tail-details.js';
++import { type ExtractFlags, type AppendFlags, type MaskedState } from '../base.js';
++import { type Direction } from '../../core/utils.js';
+ /** Subset of {@link Masked} attributes used with pattern */
+ export default interface PatternBlock<State = MaskedState> {
+     readonly value: string;
+diff --git a/esm/masked/pattern/chunk-tail-details.d.ts b/esm/masked/pattern/chunk-tail-details.d.ts
+index 55f449a675f7b6e36dbcbc981fec688f6f2acfcf..8e88ec8efdec30896528a8347b7017cd5639c81f 100644
+--- a/esm/masked/pattern/chunk-tail-details.d.ts
++++ b/esm/masked/pattern/chunk-tail-details.d.ts
+@@ -1,6 +1,6 @@
+-import type { TailDetails, AppendTail } from '../../core/tail-details';
+-import ChangeDetails from '../../core/change-details';
+-import type MaskedPattern from '../pattern';
++import type { TailDetails, AppendTail } from '../../core/tail-details.js';
++import ChangeDetails from '../../core/change-details.js';
++import type MaskedPattern from '../pattern.js';
+ export type ChunksTailState = Pick<ChunksTailDetails, 'from' | 'stop' | 'blockIndex'> & {
+     chunks: Array<TailDetails['state']>;
+ };
+diff --git a/esm/masked/pattern/cursor.d.ts b/esm/masked/pattern/cursor.d.ts
+index 1a7eaa68ad119be56fed0ea62621962b2c10ae14..7240e8190b3a448d13de0fb370305e31ea2457f7 100644
+--- a/esm/masked/pattern/cursor.d.ts
++++ b/esm/masked/pattern/cursor.d.ts
+@@ -1,5 +1,5 @@
+-import type MaskedPattern from '../pattern';
+-import type PatternBlock from './block';
++import type MaskedPattern from '../pattern.js';
++import type PatternBlock from './block.js';
+ type PatternCursorState = {
+     offset: number;
+     index: number;
+diff --git a/esm/masked/pattern/fixed-definition.d.ts b/esm/masked/pattern/fixed-definition.d.ts
+index fbcfffe62c1105482e3ffc51b61f7b460316487f..811da240ee62a2d60bc75c4a31a5b04412924167 100644
+--- a/esm/masked/pattern/fixed-definition.d.ts
++++ b/esm/masked/pattern/fixed-definition.d.ts
+@@ -1,8 +1,8 @@
+-import ChangeDetails from '../../core/change-details';
+-import { type Direction } from '../../core/utils';
+-import { type TailDetails } from '../../core/tail-details';
+-import { type ExtractFlags, type AppendFlags, type MaskedState } from '../base';
+-import type PatternBlock from './block';
++import ChangeDetails from '../../core/change-details.js';
++import { type Direction } from '../../core/utils.js';
++import { type TailDetails } from '../../core/tail-details.js';
++import { type ExtractFlags, type AppendFlags, type MaskedState } from '../base.js';
++import type PatternBlock from './block.js';
+ export type PatternFixedDefinitionOptions = Pick<PatternFixedDefinition, 'char' | 'isUnmasking' | 'eager'>;
+ export default class PatternFixedDefinition implements PatternBlock {
+     /** */
+diff --git a/esm/masked/pattern/input-definition.d.ts b/esm/masked/pattern/input-definition.d.ts
+index a91dee4eddde0b0ffcc18d759c8089d369871e91..1700cc497519493e01f0af27a40f15f5e60633cf 100644
+--- a/esm/masked/pattern/input-definition.d.ts
++++ b/esm/masked/pattern/input-definition.d.ts
+@@ -1,11 +1,11 @@
+-import { type FactoryArg, type FactoryOpts, type FactoryReturnMasked } from '../factory';
+-import type Masked from '../base';
+-import type MaskedPattern from '../pattern';
+-import { type TailDetails } from '../../core/tail-details';
+-import { type ExtractFlags, type AppendFlags, type MaskedState } from '../base';
+-import ChangeDetails from '../../core/change-details';
+-import { type Direction } from '../../core/utils';
+-import type PatternBlock from './block';
++import { type FactoryArg, type FactoryOpts, type FactoryReturnMasked } from '../factory.js';
++import type Masked from '../base.js';
++import type MaskedPattern from '../pattern.js';
++import { type TailDetails } from '../../core/tail-details.js';
++import { type ExtractFlags, type AppendFlags, type MaskedState } from '../base.js';
++import ChangeDetails from '../../core/change-details.js';
++import { type Direction } from '../../core/utils.js';
++import type PatternBlock from './block.js';
+ export type PatternInputDefinitionOptions<Opts extends FactoryOpts> = Omit<Opts, 'parent' | 'isOptional' | 'lazy' | 'eager' | 'placeholderChar' | 'displayChar'> & Partial<Pick<PatternInputDefinition, 'parent' | 'isOptional' | 'lazy' | 'eager' | 'placeholderChar' | 'displayChar'>>;
+ export type PatternInputDefinitionState<Opts extends FactoryArg> = MaskedState & {
+     masked: FactoryReturnMasked<Opts>['state'];
+diff --git a/esm/masked/pattern.d.ts b/esm/masked/pattern.d.ts
+index a7c895e852d156543bd99191c4be49874830ecc5..a5c2ed0e8773c3b7863c2f719ff4a114e25e7385 100644
+--- a/esm/masked/pattern.d.ts
++++ b/esm/masked/pattern.d.ts
+@@ -1,12 +1,12 @@
+-import ChangeDetails from '../core/change-details';
+-import { type TailDetails } from '../core/tail-details';
+-import { type Direction } from '../core/utils';
+-import Masked, { type AppendFlags, type ExtractFlags, type MaskedOptions, type MaskedState } from './base';
+-import { type FactoryArg, type ExtendFactoryArgOptions } from './factory';
+-import type PatternBlock from './pattern/block';
+-import PatternFixedDefinition from './pattern/fixed-definition';
+-import PatternInputDefinition from './pattern/input-definition';
+-import './regexp';
++import ChangeDetails from '../core/change-details.js';
++import { type TailDetails } from '../core/tail-details.js';
++import { type Direction } from '../core/utils.js';
++import Masked, { type AppendFlags, type ExtractFlags, type MaskedOptions, type MaskedState } from './base.js';
++import { type FactoryArg, type ExtendFactoryArgOptions } from './factory.js';
++import type PatternBlock from './pattern/block.js';
++import PatternFixedDefinition from './pattern/fixed-definition.js';
++import PatternInputDefinition from './pattern/input-definition.js';
++import './regexp.js';
+ export type MaskedPatternOptions<Value = string, M extends MaskedPattern<Value> = MaskedPattern<Value>, Props extends keyof M = never> = MaskedOptions<M, 'definitions' | 'blocks' | 'placeholderChar' | 'displayChar' | 'lazy' | Props>;
+ export type Definitions = {
+     [k: string]: FactoryArg;
+diff --git a/esm/masked/pipe.d.ts b/esm/masked/pipe.d.ts
+index 66ce7455bee450ea5448849244eacad7e48ebd85..88d429e104795f4033ee0470f8efe7aa843e2211 100644
+--- a/esm/masked/pipe.d.ts
++++ b/esm/masked/pipe.d.ts
+@@ -1,4 +1,4 @@
+-import { type FactoryArg, type FactoryReturnMasked } from './factory';
++import { type FactoryArg, type FactoryReturnMasked } from './factory.js';
+ /** Mask pipe source and destination types */
+ export declare const PIPE_TYPE: {
+     readonly MASKED: "value";
+diff --git a/esm/masked/range.d.ts b/esm/masked/range.d.ts
+index 7c1840f216745a22bb9dfceba751301af3ad5f43..fb204b7ba2af4c6924118226797b00a8b92f70e3 100644
+--- a/esm/masked/range.d.ts
++++ b/esm/masked/range.d.ts
+@@ -1,6 +1,6 @@
+-import ChangeDetails from '../core/change-details';
+-import { type AppendFlags } from './base';
+-import MaskedPattern, { MaskedPatternState, type MaskedPatternOptions } from './pattern';
++import ChangeDetails from '../core/change-details.js';
++import { type AppendFlags } from './base.js';
++import MaskedPattern, { MaskedPatternState, type MaskedPatternOptions } from './pattern.js';
+ type MaskedRangePatternOptions = MaskedPatternOptions & Pick<MaskedRange, 'from' | 'to'> & Partial<Pick<MaskedRange, 'maxLength'>>;
+ export type MaskedRangeOptions = Omit<MaskedRangePatternOptions, 'mask'>;
+ /** Pattern which accepts ranges */
+diff --git a/esm/masked/regexp.d.ts b/esm/masked/regexp.d.ts
+index c19c2f495d7dc168f0140d29ff3f3a27bfbf5dc4..ac6ccd6a930c1d0a241256a4e614327be8ff0bd8 100644
+--- a/esm/masked/regexp.d.ts
++++ b/esm/masked/regexp.d.ts
+@@ -1,4 +1,4 @@
+-import Masked, { type MaskedOptions } from './base';
++import Masked, { type MaskedOptions } from './base.js';
+ export type MaskedRegExpOptions = MaskedOptions<MaskedRegExp>;
+ /** Masking by RegExp */
+ export default class MaskedRegExp extends Masked<string> {
+diff --git a/esm/masked/repeat.d.ts b/esm/masked/repeat.d.ts
+index 5677eaaa9ec9d36de4562d36862d4502f2f7834b..4b2dc153ccf86b271f78ec54d90d0b973b2d5626 100644
+--- a/esm/masked/repeat.d.ts
++++ b/esm/masked/repeat.d.ts
+@@ -1,8 +1,8 @@
+-import ChangeDetails from '../core/change-details';
+-import { type AppendFlags } from './base';
+-import { type FactoryArg, type ExtendFactoryArgOptions, type UpdateOpts } from './factory';
+-import MaskedPattern, { type BlockExtraOptions, type MaskedPatternState } from './pattern';
+-import type PatternBlock from './pattern/block';
++import ChangeDetails from '../core/change-details.js';
++import { type AppendFlags } from './base.js';
++import { type FactoryArg, type ExtendFactoryArgOptions, type UpdateOpts } from './factory.js';
++import MaskedPattern, { type BlockExtraOptions, type MaskedPatternState } from './pattern.js';
++import type PatternBlock from './pattern/block.js';
+ export type RepeatBlockExtraOptions = Pick<BlockExtraOptions, 'repeat'>;
+ export type RepeatBlockOptions = ExtendFactoryArgOptions<RepeatBlockExtraOptions>;
+ /** Pattern mask */

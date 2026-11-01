@@ -3,7 +3,7 @@ export declare const radioField: {
     readonly name: "RadioField";
     readonly tag: "ui-radio-field";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "1217:1382";
     readonly design: {
         readonly flags: readonly ["disabled"];
