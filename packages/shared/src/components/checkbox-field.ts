@@ -5,7 +5,7 @@ export const checkboxField = defineComponent({
   name: 'CheckboxField',
   tag: 'ui-checkbox-field',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '1145:1141',
   design: {
     flags: ['checked', 'indeterminate', 'disabled'],

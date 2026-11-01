@@ -34,6 +34,10 @@
       "types": "./dist/utils/date.d.ts",
       "default": "./dist/utils/date.js"
     },
+    "./date-field": {
+      "types": "./dist/components/date-field.d.ts",
+      "default": "./dist/components/date-field.js"
+    },
     "./icon-button": {
       "types": "./dist/components/icon-button.d.ts",
       "default": "./dist/components/icon-button.js"
@@ -62,6 +66,10 @@
       "types": "./dist/components/notification.d.ts",
       "default": "./dist/components/notification.js"
     },
+    "./number-field": {
+      "types": "./dist/components/number-field.d.ts",
+      "default": "./dist/components/number-field.js"
+    },
     "./numeric": {
       "types": "./dist/utils/numeric.d.ts",
       "default": "./dist/utils/numeric.js"
@@ -77,6 +85,10 @@
     "./password-field": {
       "types": "./dist/components/password-field.d.ts",
       "default": "./dist/components/password-field.js"
+    },
+    "./parsed-input": {
+      "types": "./dist/utils/parsed-input.d.ts",
+      "default": "./dist/utils/parsed-input.js"
     },
     "./radio-field": {
       "types": "./dist/components/radio-field.d.ts",

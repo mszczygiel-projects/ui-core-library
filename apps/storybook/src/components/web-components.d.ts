@@ -5,11 +5,13 @@ import type {
   CheckedChangeDetail,
 } from '@mszczygiel-projects/ui-core-shared/checkbox-field';
 import type { ChipProps } from '@mszczygiel-projects/ui-core-shared/chip';
+import type { DateFieldProps } from '@mszczygiel-projects/ui-core-shared/date-field';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
 import type { ListboxProps } from '@mszczygiel-projects/ui-core-shared/listbox';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
+import type { NumberFieldProps } from '@mszczygiel-projects/ui-core-shared/number-field';
 import type { PasswordFieldProps } from '@mszczygiel-projects/ui-core-shared/password-field';
 import type { RadioFieldProps } from '@mszczygiel-projects/ui-core-shared/radio-field';
 import type { RadioGroupProps } from '@mszczygiel-projects/ui-core-shared/radio-group';
@@ -31,6 +33,8 @@ declare module 'react' {
     interface IntrinsicElements {
       'ui-select-field': CustomElement<SelectFieldProps>;
       'ui-listbox': CustomElement<ListboxProps>;
+      'ui-date-field': CustomElement<DateFieldProps>;
+      'ui-number-field': CustomElement<NumberFieldProps>;
       'ui-radio-field': CustomElement<RadioFieldProps>;
       'ui-radio-group': CustomElement<RadioGroupProps>;
       'ui-switch-field': CustomElement<SwitchFieldProps>;

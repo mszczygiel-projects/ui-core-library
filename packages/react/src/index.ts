@@ -15,6 +15,11 @@ export {
 } from './checkbox-field/CheckboxField.tsx';
 export { Chip, type ChipProps } from './chip/Chip.tsx';
 export {
+  DateField,
+  type DateFieldProps,
+  type DateFieldValueChangeDetails,
+} from './date-field/DateField.tsx';
+export {
   IconButton,
   type IconButtonProps,
   type IconButtonSize,
@@ -39,6 +44,12 @@ export {
 } from './listbox/Listbox.tsx';
 export { Loader, type LoaderProps, type LoaderSize } from './loader/Loader.tsx';
 export { Notification, type NotificationProps } from './notification/Notification.tsx';
+export {
+  NumberField,
+  type NumberFieldControls,
+  type NumberFieldProps,
+  type NumberFieldValueChangeDetails,
+} from './number-field/NumberField.tsx';
 export {
   PasswordField,
   type PasswordFieldProps,

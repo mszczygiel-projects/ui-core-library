@@ -6,7 +6,7 @@ export const textareaField = defineComponent({
   name: 'TextareaField',
   tag: 'ui-textarea-field',
   category: 'Inputs',
-  status: 'in-progress',
+  status: 'done',
   figma: '2175:457',
   design: {
     flags: ['disabled'],

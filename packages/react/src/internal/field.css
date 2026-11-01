@@ -360,6 +360,10 @@
   --_trailing-space: calc(var(--_icon-size) + var(--control-icon-gap));
 }
 
+.ui-field:has(.ui-field__action--leading:not([hidden])) {
+  --_leading-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
 .ui-field__action {
   appearance: none;
   box-sizing: border-box;

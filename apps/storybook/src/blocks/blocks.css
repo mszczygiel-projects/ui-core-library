@@ -168,6 +168,10 @@
   align-items: center;
 }
 
+.sb-row--align-bottom {
+  align-items: flex-end;
+}
+
 .sb-stack {
   display: flex;
   flex-direction: column;

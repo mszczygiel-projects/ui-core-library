@@ -13,11 +13,13 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Button        | `Button`        |
 | CheckboxField | `CheckboxField` |
 | Chip          | `Chip`          |
+| DateField     | `DateField`     |
 | IconButton    | `IconButton`    |
 | LinkButton    | `LinkButton`    |
 | Listbox       | `Listbox`       |
 | Loader        | `Loader`        |
 | Notification  | `Notification`  |
+| NumberField   | `NumberField`   |
 | PasswordField | `PasswordField` |
 | RadioField    | `RadioField`    |
 | RadioGroup    | `RadioGroup`    |

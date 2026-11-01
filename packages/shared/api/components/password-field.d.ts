@@ -3,7 +3,7 @@ export declare const passwordField: {
     readonly name: "PasswordField";
     readonly tag: "ui-password-field";
     readonly category: "Inputs";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "229:3491";
     readonly design: {
         readonly flags: readonly ["revealed"];

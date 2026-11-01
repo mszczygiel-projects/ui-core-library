@@ -6,7 +6,7 @@ export const searchField = defineComponent({
   name: 'SearchField',
   tag: 'ui-search-field',
   category: 'Inputs',
-  status: 'in-progress',
+  status: 'done',
   figma: '2972:1698',
   design: {
     flags: [],

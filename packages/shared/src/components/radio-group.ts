@@ -6,7 +6,7 @@ export const radioGroup = defineComponent({
   name: 'RadioGroup',
   tag: 'ui-radio-group',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '2997:163',
   design: { flags: ['disabled'], booleans: [], codeOnly: [], previews: {} },
   summary: 'A set of radio options from which a user chooses exactly one value.',

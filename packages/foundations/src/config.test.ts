@@ -21,6 +21,22 @@ describe('the configuration', () => {
     expect(getUiCoreConfig().labels.loader.label).toBe('Loading');
   });
 
+  it('updates and resets locale while retaining complete function labels', () => {
+    const listener = vi.fn();
+    const stop = subscribeUiCoreConfig(listener);
+    const formatHint = (example: string) => `Format: ${example}`;
+    configureUiCore({ locale: 'pl-PL', labels: { dateField: { formatHint } } });
+    expect(getUiCoreConfig().locale).toBe('pl-PL');
+    expect(getUiCoreConfig().labels.dateField.formatHint('31.12.2026')).toBe('Format: 31.12.2026');
+    configureUiCore({ locale: 'pl-PL' });
+    expect(listener).toHaveBeenCalledOnce();
+    resetUiCoreConfig();
+    expect(listener).toHaveBeenCalledTimes(2);
+    expect(getUiCoreConfig().locale).toBeUndefined();
+    expect(getUiCoreConfig().labels.dateField.formatHint).toBe(defaultLabels.dateField.formatHint);
+    stop();
+  });
+
   it('merges labels one by one and keeps the earlier ones', () => {
     configureUiCore({ labels: { loader: { label: 'Ładowanie' } } });
     configureUiCore({});
@@ -96,6 +112,8 @@ describe('the configuration', () => {
     Reflect.set(state, 'version', Number(Reflect.get(state, 'version')) + 1);
     expect(getUiCoreConfig()).toEqual({
       labels: {
+        numberField: defaultLabels.numberField,
+        dateField: defaultLabels.dateField,
         button: { loading: 'Loading' },
         chip: { dismiss: 'Remove' },
         iconButton: { loading: 'Loading' },

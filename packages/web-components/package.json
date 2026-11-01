@@ -29,6 +29,10 @@
       "types": "./dist/components/ui-chip.d.ts",
       "default": "./dist/components/ui-chip.js"
     },
+    "./date-field": {
+      "types": "./dist/components/ui-date-field.d.ts",
+      "default": "./dist/components/ui-date-field.js"
+    },
     "./icon-button": {
       "types": "./dist/components/ui-icon-button.d.ts",
       "default": "./dist/components/ui-icon-button.js"
@@ -48,6 +52,10 @@
     "./notification": {
       "types": "./dist/components/ui-notification.d.ts",
       "default": "./dist/components/ui-notification.js"
+    },
+    "./number-field": {
+      "types": "./dist/components/ui-number-field.d.ts",
+      "default": "./dist/components/ui-number-field.js"
     },
     "./password-field": {
       "types": "./dist/components/ui-password-field.d.ts",
@@ -101,7 +109,8 @@
     "@floating-ui/dom": "catalog:",
     "@mszczygiel-projects/ui-core-foundations": "workspace:^",
     "@mszczygiel-projects/ui-core-icons": "workspace:^",
-    "@mszczygiel-projects/ui-core-shared": "workspace:^"
+    "@mszczygiel-projects/ui-core-shared": "workspace:^",
+    "imask": "catalog:"
   },
   "nx": {
     "name": "web-components",

@@ -3,11 +3,13 @@ import { button } from './button.ts';
 import { checkboxField } from './checkbox-field.ts';
 import { chip } from './chip.ts';
 import type { ComponentSpec } from './component.ts';
+import { dateField } from './date-field.ts';
 import { iconButton } from './icon-button.ts';
 import { linkButton } from './link-button.ts';
 import { listbox } from './listbox.ts';
 import { loader } from './loader.ts';
 import { notification } from './notification.ts';
+import { numberField } from './number-field.ts';
 import { passwordField } from './password-field.ts';
 import { radioField } from './radio-field.ts';
 import { radioGroup } from './radio-group.ts';
@@ -36,4 +38,6 @@ export const specs: readonly ComponentSpec[] = [
   radioField,
   listbox,
   selectField,
+  numberField,
+  dateField,
 ];

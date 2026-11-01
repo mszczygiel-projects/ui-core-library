@@ -12,11 +12,35 @@ export type LoaderVariant = 'spinner';
 /** The looks of loaders that this version of the library draws. */
 export const loaderVariants: readonly LoaderVariant[] = ['spinner'];
 
+/** Data for a whole validation sentence; each field specifies its own reason vocabulary. */
+export interface FieldValidationContext {
+  readonly reason: string;
+  readonly locale: string;
+  readonly min?: number | string;
+  readonly max?: number | string;
+  readonly step?: number;
+  readonly precision?: number;
+}
+
 /**
  * Every text that a component renders on its own, grouped by component. A label that holds a
  * value is a function of that value, so that a whole sentence is translated at once.
  */
 export interface UiCoreLabels {
+  readonly numberField: {
+    /** The name of the decrement button. */
+    readonly decrement: string;
+    /** The name of the increment button. */
+    readonly increment: string;
+    /** A complete sentence describing the failed constraint. */
+    readonly validationMessage: (context: FieldValidationContext) => string;
+  };
+  readonly dateField: {
+    /** A complete sentence describing the expected display format. */
+    readonly formatHint: (example: string) => string;
+    /** A complete sentence describing the failed constraint. */
+    readonly validationMessage: (context: FieldValidationContext) => string;
+  };
   readonly button: {
     /** The description of a button while its action is in progress. */
     readonly loading: string;
@@ -57,12 +81,16 @@ export interface UiCoreLabels {
 
 /** The configuration as components read it: always complete. */
 export interface UiCoreConfig {
+  /** The preferred locale; a field's locale prop takes precedence. */
+  readonly locale?: string;
   readonly labels: UiCoreLabels;
   readonly loaderVariant: LoaderVariant;
 }
 
 /** What {@link configureUiCore} takes: any group of labels and any label in it, alone. */
 export interface UiCoreConfigInput {
+  /** BCP 47 locale used before the browser language. Reset clears it. */
+  readonly locale?: string;
   readonly labels?: {
     readonly [Group in keyof UiCoreLabels]?: Partial<UiCoreLabels[Group]>;
   };
@@ -71,6 +99,47 @@ export interface UiCoreConfigInput {
 
 /** The English labels that the packages ship. */
 export const defaultLabels: UiCoreLabels = freezeLabels({
+  numberField: {
+    decrement: 'Decrease value',
+    increment: 'Increase value',
+    validationMessage: ({ reason, min, max, step, precision }) => {
+      switch (reason) {
+        case 'min':
+          return `Enter a number greater than or equal to ${String(min)}.`;
+        case 'max':
+          return `Enter a number less than or equal to ${String(max)}.`;
+        case 'step':
+          return `Enter a number in steps of ${String(step ?? 1)} from ${String(min ?? 0)}.`;
+        case 'precision':
+          return `Enter a number with at most ${String(precision)} decimal places.`;
+        case 'incomplete':
+          return 'Complete the number.';
+        case 'constraints':
+          return 'The number limits are inconsistent.';
+        default:
+          return 'Enter a valid number.';
+      }
+    },
+  },
+  dateField: {
+    formatHint: (example) => `Use the format ${example}.`,
+    validationMessage: ({ reason, min, max }) => {
+      switch (reason) {
+        case 'min':
+          return `Enter a date on or after ${String(min)}.`;
+        case 'max':
+          return `Enter a date on or before ${String(max)}.`;
+        case 'disabled':
+          return 'This date is unavailable.';
+        case 'incomplete':
+          return 'Complete the date.';
+        case 'constraints':
+          return 'The date limits are inconsistent.';
+        default:
+          return 'Enter a valid date.';
+      }
+    },
+  },
   button: { loading: 'Loading' },
   chip: { dismiss: 'Remove' },
   iconButton: { loading: 'Loading' },
@@ -91,6 +160,7 @@ type LabelGroups = Readonly<Record<string, Readonly<Record<string, unknown>>>>;
 
 /** What the application set, shared by every copy of the packages on the page. */
 interface SharedState {
+  locale?: string;
   version: number;
   labels: LabelGroups;
   loaderVariant: string | undefined;
@@ -125,6 +195,7 @@ export function getUiCoreConfig(): UiCoreConfig {
     cached = {
       version: state.version,
       config: Object.freeze({
+        locale: state.locale,
         labels: mergeLabels(defaultLabels, state.labels),
         loaderVariant: isLoaderVariant(state.loaderVariant)
           ? state.loaderVariant
@@ -136,7 +207,7 @@ export function getUiCoreConfig(): UiCoreConfig {
 }
 
 /**
- * Sets labels and the look of loaders for every component on the page, those already rendered
+ * Sets labels, locale and the look of loaders for every component on the page, those already rendered
  * included. Labels merge one by one over the earlier configuration, so setting one label keeps
  * the others.
  *
@@ -147,22 +218,29 @@ export function configureUiCore(input: UiCoreConfigInput): void {
   const state = sharedState();
   const labels = mergeOverrides(state.labels, input.labels ?? {});
   const loaderVariant = input.loaderVariant ?? state.loaderVariant;
-  if (labels === state.labels && loaderVariant === state.loaderVariant) {
+  const locale = input.locale ?? state.locale;
+  if (labels === state.labels && loaderVariant === state.loaderVariant && locale === state.locale) {
     return;
   }
   state.labels = labels;
   state.loaderVariant = loaderVariant;
+  state.locale = locale;
   changed(state);
 }
 
-/** Restores the English labels and the default loader, for tests and for applications alike. */
+/** Restores English labels, the default loader and automatic locale selection. */
 export function resetUiCoreConfig(): void {
   const state = sharedState();
-  if (Object.keys(state.labels).length === 0 && state.loaderVariant === undefined) {
+  if (
+    Object.keys(state.labels).length === 0 &&
+    state.loaderVariant === undefined &&
+    state.locale === undefined
+  ) {
     return;
   }
   state.labels = {};
   state.loaderVariant = undefined;
+  state.locale = undefined;
   changed(state);
 }
 

@@ -3,7 +3,7 @@ export declare const searchField: {
     readonly name: "SearchField";
     readonly tag: "ui-search-field";
     readonly category: "Inputs";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2972:1698";
     readonly design: {
         readonly flags: readonly [];

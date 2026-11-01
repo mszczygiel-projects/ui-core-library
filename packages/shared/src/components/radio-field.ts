@@ -6,7 +6,7 @@ export const radioField = defineComponent({
   name: 'RadioField',
   tag: 'ui-radio-field',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '1217:1382',
   design: {
     flags: ['disabled'],
