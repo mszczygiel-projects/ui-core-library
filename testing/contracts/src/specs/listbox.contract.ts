@@ -240,6 +240,13 @@ export function listboxContract(adapter: Mount<ListboxContractProps>): void {
     expect(changed).not.toHaveBeenCalled();
   });
 
+  it('keeps a single choice in the form after a reset before any change', async () => {
+    const { form, fieldset } = formFixture(fixtures);
+    await mount({ name: 'fruit', defaultValue: 'apple' }, { parent: fieldset });
+    form.reset();
+    await expect.poll(() => [...new FormData(form)]).toEqual([['fruit', 'apple']]);
+  });
+
   it('submits an empty single choice as an empty string, and a value no option has as none', async () => {
     const { form, fieldset } = formFixture(fixtures);
     const list = await mount({ name: 'fruit', value: 'grape' }, { parent: fieldset });

@@ -1,3 +1,5 @@
+'use client';
+
 import { iconCheckmark } from '@mszczygiel-projects/ui-core-icons';
 import type {
   ListboxItems,
@@ -6,9 +8,20 @@ import type {
   ListboxValue,
 } from '@mszczygiel-projects/ui-core-shared/listbox';
 import { isChosen, isGrouped } from '@mszczygiel-projects/ui-core-shared/listbox-navigation';
-import type { FocusEvent, KeyboardEvent, MouseEvent, PointerEvent, ReactNode, Ref } from 'react';
+import {
+  type FocusEvent,
+  type KeyboardEvent,
+  type MouseEvent,
+  type PointerEvent,
+  type ReactNode,
+  type Ref,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+} from 'react';
 
 import { classNames } from './class-names.ts';
+import { setRef } from './set-ref.ts';
 
 /** The options of a React component carry their icon as a React node. */
 export type ReactListboxItems = ListboxItems<ReactNode>;
@@ -233,9 +246,55 @@ export function NativeSelect({
   readonly values: readonly string[];
   readonly onInvalid: () => void;
 }) {
+  const own = useRef<HTMLSelectElement | null>(null);
+  const latest = useRef(values);
+  useLayoutEffect(() => {
+    latest.current = values;
+  });
+
+  useEffect(() => {
+    const owner = own.current?.form;
+    if (owner === null || owner === undefined) {
+      return;
+    }
+    const events = new AbortController();
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    owner.addEventListener(
+      'reset',
+      () => {
+        // The reset selects the options by their attributes, which React never sets. When the
+        // reset leaves the state of the component as it was, React renders nothing, so the
+        // selection returns to the values after the form has reset its controls.
+        timer = setTimeout(() => {
+          const element = own.current;
+          if (element !== null) {
+            for (const option of element.options) {
+              option.selected =
+                option.value === ''
+                  ? latest.current.length === 0
+                  : latest.current.includes(option.value);
+            }
+          }
+        });
+      },
+      { signal: events.signal },
+    );
+    return () => {
+      events.abort();
+      clearTimeout(timer);
+    };
+  }, [form]);
+
   return (
     <select
-      ref={ref}
+      ref={(element) => {
+        own.current = element;
+        const release = setRef(ref, element);
+        return () => {
+          own.current = null;
+          release();
+        };
+      }}
       className="ui-list__native"
       hidden
       aria-hidden="true"
