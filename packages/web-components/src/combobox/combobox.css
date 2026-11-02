@@ -27,9 +27,19 @@
   min-inline-size: 25%;
 }
 
-/* Chips are taller than a line of text, so the field gives them its inner space. */
-.base:has(.chip) {
-  --_padding-stack: var(--combobox-chips-padding-stack);
+/*
+ * Chips are taller than a line of text, so the field gives them its inner space. The row grows by
+ * the space it takes, so that chips never make the field shorter than it is without them.
+ */
+.base:has(.chip) .control {
+  padding-block: var(--combobox-chips-padding-stack);
+}
+
+.base:has(.chip) .input-row {
+  min-block-size: calc(
+    var(--_font-size) * var(--_line-height) + 2 *
+      (var(--_padding-stack) - var(--combobox-chips-padding-stack))
+  );
 }
 
 .indicator {

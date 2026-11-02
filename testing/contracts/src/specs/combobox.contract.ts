@@ -251,6 +251,16 @@ export function comboboxContract(adapter: Mount<ComboboxContractProps>): void {
     expect(changed).toHaveBeenLastCalledWith(['cherry'], expect.anything());
   });
 
+  it('never gets shorter when chips fill it, in every size', async () => {
+    const height = (field: Field) => field.part('control').getBoundingClientRect().height;
+    for (const size of ['small', 'medium', 'large'] as const) {
+      const empty = await mount({ multiple: true, size });
+      const filled = await mount({ multiple: true, size, defaultValue: ['apple', 'cherry'] });
+      await expect.poll(() => chipsOf(filled)).toEqual(['Apple', 'Cherry']);
+      expect(height(filled), size).toBeGreaterThanOrEqual(height(empty));
+    }
+  });
+
   it('removes a chip with its button, which stays out of the Tab order', async () => {
     const field = await mount({ multiple: true, defaultValue: ['apple', 'cherry'] });
     const root = field.element.shadowRoot ?? field.element;
