@@ -118,6 +118,8 @@ describe('the configuration', () => {
         button: { loading: 'Loading' },
         chip: { dismiss: 'Remove' },
         combobox: defaultLabels.combobox,
+        dialog: { close: 'Close' },
+        drawer: { close: 'Close' },
         iconButton: { loading: 'Loading' },
         listbox: { empty: 'No options', loading: 'Loading options' },
         loader: { label: 'Wait' },

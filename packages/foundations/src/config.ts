@@ -55,6 +55,14 @@ export interface UiCoreLabels {
     /** The text of the option that creates one from the query, as a whole phrase. */
     readonly create: (query: string) => string;
   };
+  readonly dialog: {
+    /** The name of the button that closes a dialog. */
+    readonly close: string;
+  };
+  readonly drawer: {
+    /** The name of the button that closes a drawer. */
+    readonly close: string;
+  };
   readonly iconButton: {
     /** The description of an icon button while its action is in progress. */
     readonly loading: string;
@@ -151,6 +159,8 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   button: { loading: 'Loading' },
   chip: { dismiss: 'Remove' },
   combobox: { clear: 'Clear', create: (query) => `Create “${query}”` },
+  dialog: { close: 'Close' },
+  drawer: { close: 'Close' },
   iconButton: { loading: 'Loading' },
   listbox: { empty: 'No options', loading: 'Loading options' },
   loader: { label: 'Loading' },

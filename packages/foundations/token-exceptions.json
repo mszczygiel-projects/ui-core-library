@@ -29,6 +29,14 @@
       "reason": "The width of a small dialog; no brand or mode changes it."
     },
     {
+      "token": "Components/dialog/grabber/height",
+      "reason": "The height of the drag handle of a dialog shown as a sheet."
+    },
+    {
+      "token": "Components/dialog/grabber/width",
+      "reason": "The width of the drag handle of a dialog shown as a sheet."
+    },
+    {
       "token": "Components/drawer/grabber/height",
       "reason": "The height of the drag handle of a bottom drawer."
     },
