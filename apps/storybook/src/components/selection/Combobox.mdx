@@ -6,6 +6,7 @@ import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
 import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
 import * as WebComponentStories from './Combobox.wc.stories.tsx';
 import * as ReactStories from './Combobox.react.stories.tsx';
+import remoteFiltering from './Combobox.remote-filtering.example.tsx?raw';
 
 <Meta title="Components/Selection/Combobox/Docs" />
 
@@ -61,31 +62,7 @@ With `filterMode="remote"` the component shows the options as given, and the aut
   webComponents={WebComponentStories.RemoteFiltering}
 />
 
-<Source
-  language="tsx"
-  code={`const [query, setQuery] = useState('');
-const [options, setOptions] = useState([]);
-const [loading, setLoading] = useState(true);
-
-useEffect(() => {
-const controller = new AbortController();
-const timer = setTimeout(() => {
-setLoading(true);
-fetch(\`/api/cities?q=\${encodeURIComponent(query)}\`, { signal: controller.signal })
-.then((response) => response.json())
-.then((found) => {
-setOptions(found);
-setLoading(false);
-}, () => undefined);
-}, 300);
-return () => {
-clearTimeout(timer);
-controller.abort();
-};
-}, [query]);
-
-<Combobox label="City" filterMode="remote" options={options} loading={loading} onQueryChange={setQuery} />;`}
-/>
+<Source language="tsx" code={remoteFiltering} />
 
 ### Creating options
 
@@ -105,8 +82,6 @@ With `allowCreate`, a query that no label equals adds an option at the end of th
 ## Surfaces & themes
 
 The field follows Light and Dark and the default, subtle, inverse and primary surfaces, and its chips follow the surface with it. Its list keeps the background of the surface it opens from.
-
-<FrameworkCanvas react={ReactStories.OnSurfaces} webComponents={WebComponentStories.OnSurfaces} />
 
 ## API
 
