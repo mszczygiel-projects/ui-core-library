@@ -61,7 +61,7 @@ The dismiss button is named by a word and the text of the chip, such as “Remov
 ## Accessibility
 
 - **Pattern.** A selectable chip follows the [WAI-ARIA button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/) as a toggle button, with `aria-pressed`. The dismiss button is a native button. A chip that is not selectable is static text and takes no focus.
-- **Keys.** Tab and Shift+Tab move between the toggles and the dismiss buttons. Enter and Space toggle. Delete and Backspace ask to remove a dismissible chip.
+- **Keys.** Tab and Shift+Tab move between the toggles and the dismiss buttons. Enter and Space toggle. Delete and Backspace ask to remove a dismissible chip. A component that removes its chips with keys of its own, such as Combobox with Backspace, sets `skipDismissInTabOrder`: the dismiss buttons then leave the Tab order, and a pointer and assistive technology still reach them.
 - **Names.** The text names the toggle. The dismiss word and the text name the dismiss button. An author's `aria-label`, such as “Filter: open now” for a chip that shows “Open”, names the toggle instead, and the dismiss button after the dismiss word.
 - **Groups.** Put related chips in a container with `role="group"` and an `aria-label`, such as “Filters”.
 - **Target size.** The toggle and the dismiss button take targets of at least 24 by 24 pixels in every size and density.

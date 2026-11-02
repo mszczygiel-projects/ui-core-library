@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { foldText, matchText } from './text.ts';
+import { foldText, matchText, sameText } from './text.ts';
 
 describe('foldText', () => {
   it('removes diacritics and lowercases', () => {
@@ -90,5 +90,12 @@ describe('matchText', () => {
   it('matches every candidate with an empty query', () => {
     expect(matchText('Żółw', '')).toBe(true);
     expect(matchText('Żółw', '   ')).toBe(true);
+  });
+});
+
+describe('sameText', () => {
+  it('compares whole texts without case, diacritics and extra spacing', () => {
+    expect(sameText('Żółw  morski', ' zolw MORSKI')).toBe(true);
+    expect(sameText('Żółw', 'Żółwie')).toBe(false);
   });
 });

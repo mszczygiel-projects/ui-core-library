@@ -29,6 +29,10 @@
       "types": "./dist/components/ui-chip.d.ts",
       "default": "./dist/components/ui-chip.js"
     },
+    "./combobox": {
+      "types": "./dist/components/ui-combobox.d.ts",
+      "default": "./dist/components/ui-combobox.js"
+    },
     "./date-field": {
       "types": "./dist/components/ui-date-field.d.ts",
       "default": "./dist/components/ui-date-field.js"

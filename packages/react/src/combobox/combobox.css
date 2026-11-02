@@ -1,0 +1,84 @@
+/*
+ * Combobox: the chips of a multiple choice wrap before the query, and the field grows with them.
+ * The arrow opens and closes the list; the rest of the row focuses the input.
+ */
+
+.ui-combobox__input-row {
+  cursor: text;
+}
+
+.ui-combobox {
+  --_trailing-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
+.ui-combobox__chips {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--combobox-chips-gap);
+  min-inline-size: 0;
+}
+
+/* The query takes the rest of the last line of chips, and a line of its own when that is short. */
+.ui-combobox__chips .ui-combobox__input {
+  flex: 1 1 0;
+  inline-size: auto;
+  min-inline-size: 25%;
+}
+
+/*
+ * Chips are taller than a line of text, so the field gives them its inner space. The row grows by
+ * the space it takes, so that chips never make the field shorter than it is without them.
+ */
+.ui-combobox:has(.ui-combobox__chip) .ui-combobox__control {
+  padding-block: var(--combobox-chips-padding-stack);
+}
+
+.ui-combobox:has(.ui-combobox__chip) .ui-combobox__input-row {
+  min-block-size: calc(
+    var(--_font-size) * var(--_line-height) + 2 *
+      (var(--_padding-stack) - var(--combobox-chips-padding-stack))
+  );
+}
+
+.ui-combobox__indicator {
+  /* An icon is 1em, so it takes the icon size however deeply the page wraps it. */
+  font-size: var(--_icon-size);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  color: var(--_icon);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ui-combobox__indicator {
+    transition-property: transform;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}
+
+.ui-combobox--open .ui-combobox__indicator {
+  transform: rotate(0.5turn);
+}
+
+.ui-combobox:has(.ui-combobox__input:disabled) .ui-combobox__input-row,
+.ui-combobox:has(.ui-combobox__input:disabled) .ui-combobox__indicator {
+  cursor: default;
+}
+
+.ui-combobox__message-loader {
+  display: inline-flex;
+  flex: none;
+}
+
+@media (forced-colors: active) {
+  .ui-combobox__indicator {
+    color: CanvasText;
+  }
+}

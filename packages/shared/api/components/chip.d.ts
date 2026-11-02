@@ -8,7 +8,7 @@ export declare const chip: {
     readonly design: {
         readonly flags: readonly ["selected", "disabled"];
         readonly booleans: readonly ["dismissible"];
-        readonly codeOnly: readonly ["selectable"];
+        readonly codeOnly: readonly ["selectable", "skipDismissInTabOrder"];
         readonly previews: {
             readonly interaction: {
                 readonly options: readonly ["rest", "active", "focus"];
@@ -60,4 +60,5 @@ export interface ChipProps {
     disabled?: boolean;
     dismissible?: boolean;
     dismissLabel?: string;
+    skipDismissInTabOrder?: boolean;
 }

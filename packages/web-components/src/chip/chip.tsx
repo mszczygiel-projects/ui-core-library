@@ -91,6 +91,12 @@ export class UiChip implements ChipProps {
    */
   @Prop() dismissLabel?: string;
 
+  /**
+   * Takes the dismiss button out of the Tab order, for a component that removes its chips with
+   * keys of its own. A pointer and assistive technology still reach it.
+   */
+  @Prop() skipDismissInTabOrder = false;
+
   /** The user turned a selectable chip on or off. */
   @Event({ eventName: 'ui-selected-change' }) selectedChange!: EventEmitter<ChipSelectedChange>;
 
@@ -191,6 +197,7 @@ export class UiChip implements ChipProps {
             part="dismiss"
             class="dismiss"
             type="button"
+            tabIndex={this.skipDismissInTabOrder ? -1 : undefined}
             aria-labelledby={`dismiss-label ${named ? 'control' : 'label'}`}
             onClick={this.onDismiss}
             onKeyDown={this.onKeyDown}

@@ -3,8 +3,10 @@ import { describe, expect, it } from 'vitest';
 import type { ListboxOption } from '../components/listbox.ts';
 import {
   EMPTY_TYPEAHEAD,
+  filterItems,
   firstEnabled,
   flattenOptions,
+  hasExactLabel,
   indexOfValue,
   isChosen,
   isGrouped,
@@ -46,6 +48,32 @@ describe('isGrouped and flattenOptions', () => {
       'Blueberry',
     ]);
     expect(flattenOptions(undefined)).toEqual([]);
+  });
+});
+
+describe('filterItems and hasExactLabel', () => {
+  const fauna = [option('Żółw'), option('Strauß'), option('Zebra')];
+
+  it('keeps the options whose labels contain the query, ignoring case and diacritics', () => {
+    expect(filterItems(fauna, 'zolw').map(({ label }) => label)).toEqual(['Żółw']);
+    expect(filterItems(fauna, 'STRAUSS').map(({ label }) => label)).toEqual(['Strauß']);
+    expect(filterItems(fauna, 'e').map(({ label }) => label)).toEqual(['Zebra']);
+    expect(filterItems(fauna, '  ')).toEqual(fauna);
+    expect(filterItems(undefined, 'a')).toEqual([]);
+  });
+
+  it('drops the groups without a match and keeps the others with their labels', () => {
+    const groups = [
+      { label: 'Fruit', options: [option('Apple'), option('Banana')] },
+      { label: 'Vegetables', options: [option('Carrot')] },
+    ];
+    expect(filterItems(groups, 'an')).toEqual([{ label: 'Fruit', options: [option('Banana')] }]);
+  });
+
+  it('finds a label equal to the query, not one that only contains it', () => {
+    expect(hasExactLabel(fauna, ' zolw ')).toBe(true);
+    expect(hasExactLabel(fauna, 'zol')).toBe(false);
+    expect(hasExactLabel([{ options: fauna }], 'ZEBRA')).toBe(true);
   });
 });
 

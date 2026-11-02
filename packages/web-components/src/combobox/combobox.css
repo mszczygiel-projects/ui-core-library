@@ -1,0 +1,84 @@
+/*
+ * Combobox: the chips of a multiple choice wrap before the query, and the field grows with them.
+ * The arrow opens and closes the list; the rest of the row focuses the input.
+ */
+
+.input-row {
+  cursor: text;
+}
+
+.base {
+  --_trailing-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
+.chips {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--combobox-chips-gap);
+  min-inline-size: 0;
+}
+
+/* The query takes the rest of the last line of chips, and a line of its own when that is short. */
+.chips .input {
+  flex: 1 1 0;
+  inline-size: auto;
+  min-inline-size: 25%;
+}
+
+/*
+ * Chips are taller than a line of text, so the field gives them its inner space. The row grows by
+ * the space it takes, so that chips never make the field shorter than it is without them.
+ */
+.base:has(.chip) .control {
+  padding-block: var(--combobox-chips-padding-stack);
+}
+
+.base:has(.chip) .input-row {
+  min-block-size: calc(
+    var(--_font-size) * var(--_line-height) + 2 *
+      (var(--_padding-stack) - var(--combobox-chips-padding-stack))
+  );
+}
+
+.indicator {
+  /* An icon is 1em, so it takes the icon size however deeply the page wraps it. */
+  font-size: var(--_icon-size);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  color: var(--_icon);
+  cursor: pointer;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .indicator {
+    transition-property: transform;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}
+
+.open .indicator {
+  transform: rotate(0.5turn);
+}
+
+.base:has(.input:disabled) .input-row,
+.base:has(.input:disabled) .indicator {
+  cursor: default;
+}
+
+.message-loader {
+  display: inline-flex;
+  flex: none;
+}
+
+@media (forced-colors: active) {
+  .indicator {
+    color: CanvasText;
+  }
+}

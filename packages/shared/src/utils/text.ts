@@ -64,3 +64,8 @@ export function matchText(candidate: string, query: string, mode: MatchMode = 'c
   const haystack = normalized(candidate);
   return mode === 'startsWith' ? haystack.startsWith(needle) : haystack.includes(needle);
 }
+
+/** Whether two texts are the same, ignoring case, diacritics and runs of white space. */
+export function sameText(first: string, second: string): boolean {
+  return normalized(first) === normalized(second);
+}

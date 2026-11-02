@@ -10,7 +10,7 @@ export const chip = defineComponent({
   design: {
     flags: ['selected', 'disabled'],
     booleans: ['dismissible'],
-    codeOnly: ['selectable'],
+    codeOnly: ['selectable', 'skipDismissInTabOrder'],
     previews: {
       interaction: {
         options: ['rest', 'active', 'focus'],
@@ -110,4 +110,11 @@ export interface ChipProps {
    * `labels.chip.dismiss`.
    */
   dismissLabel?: string;
+  /**
+   * Takes the dismiss button out of the Tab order, for a component that removes its chips with
+   * keys of its own, such as Backspace in a Combobox. A pointer and assistive technology still
+   * reach it.
+   * @default false
+   */
+  skipDismissInTabOrder?: boolean;
 }

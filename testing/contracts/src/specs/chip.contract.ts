@@ -122,6 +122,20 @@ export function chipContract(adapter: Mount<ChipContractProps>): void {
     expect(component.part('control').getAttribute('aria-pressed')).toBe('false');
   });
 
+  it('can leave its dismiss button out of the Tab order, still reachable by the pointer', async () => {
+    const dismissed = vi.fn();
+    const tabbable = await mount({ dismissible: true });
+    expect(dismissButton(tabbable).tabIndex).toBe(0);
+    const component = await mount({
+      dismissible: true,
+      skipDismissInTabOrder: true,
+      onDismiss: dismissed,
+    });
+    expect(dismissButton(component).tabIndex).toBe(-1);
+    await userEvent.click(dismissButton(component));
+    expect(dismissed).toHaveBeenCalledOnce();
+  });
+
   it('ignores Delete and Backspace when it is not dismissible', async () => {
     const dismissed = vi.fn();
     const component = await mount({ selectable: true, onDismiss: dismissed });

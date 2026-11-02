@@ -9,4 +9,5 @@ Storybook documents the library for its consumers. [Decision 09](../decisions/09
 - The site reads the built packages. Rebuild a changed package, for example with `pnpm nx run foundations:build`, before you look at it.
 - The CSS of the site may use raw values, but only token names that exist.
 - MDX pages render no Markdown tables. Use lists, or a block of the site.
+- A code sample with blank lines goes into a file next to the page, such as `Combobox.remote-filtering.example.tsx`, which the page imports with `?raw` and shows with `<Source code={…} />`. Prettier strips the indentation of the lines after a blank line in a template string of an MDX page, and the file is checked by TypeScript and ESLint.
 - The sections Usage, Variants & tone, Sizes & density and States of a component page also become its Figma guidelines.

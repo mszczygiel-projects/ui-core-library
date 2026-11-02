@@ -22,6 +22,10 @@
       "types": "./dist/components/chip.d.ts",
       "default": "./dist/components/chip.js"
     },
+    "./combobox": {
+      "types": "./dist/components/combobox.d.ts",
+      "default": "./dist/components/combobox.js"
+    },
     "./component": {
       "types": "./dist/components/component.d.ts",
       "default": "./dist/components/component.js"
@@ -82,13 +86,13 @@
       "types": "./dist/utils/paginate.d.ts",
       "default": "./dist/utils/paginate.js"
     },
-    "./password-field": {
-      "types": "./dist/components/password-field.d.ts",
-      "default": "./dist/components/password-field.js"
-    },
     "./parsed-input": {
       "types": "./dist/utils/parsed-input.d.ts",
       "default": "./dist/utils/parsed-input.js"
+    },
+    "./password-field": {
+      "types": "./dist/components/password-field.d.ts",
+      "default": "./dist/components/password-field.js"
     },
     "./radio-field": {
       "types": "./dist/components/radio-field.d.ts",
