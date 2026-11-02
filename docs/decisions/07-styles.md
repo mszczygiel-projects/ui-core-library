@@ -23,21 +23,21 @@
 
 ### Families of components
 
-- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton, `field.css` for TextField, PasswordField, SearchField, NumberField, DateField and TextareaField, `choice.css` for CheckboxField, RadioField and SwitchField, and `listbox.css` for the list of Listbox and of the popup of SelectField: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts. A family also shares its anatomy and, in the web components, the controller of its form value. Field actions may occupy either logical side and reuse `control/*`; no number/date token family duplicates that surface.
+- Components that share a surface share one stylesheet in `src/internal` of each package, such as `action.css` for Button, IconButton and LinkButton, `field.css` for TextField, PasswordField, SearchField, NumberField, DateField and TextareaField, `choice.css` for CheckboxField, RadioField and SwitchField, and `listbox.css` for the list of Listbox and of the popups of SelectField and Combobox: their variants, sizes, states and focus ring. Each component adds a stylesheet for its own parts. A family also shares its anatomy and, in the web components, the controller of its form value. Field actions may occupy either logical side and reuse `control/*`; no number/date token family duplicates that surface.
 - The shared rules take their states from classes as well as from native pseudo-classes, so that an element without a native disabled state, such as a link, uses them too.
 
 ### Layout and browsers
 
 - Values that change with the screen come from Sizes tokens. A layout that must change uses a media query at the breakpoint of `tokens.json` (`64rem`).
 - Logical properties only, so components follow right-to-left text.
-- A popup, such as the list of SelectField, opens in the top layer as `popover="manual"`, and its component closes it on Escape, on a press outside and when the focus leaves. `@floating-ui/dom` places it in fixed position, below its field or above it when the window has no room below, at least as wide as the field and no taller than the room in the window.
+- A popup, such as the list of SelectField or Combobox, opens in the top layer as `popover="manual"`, and its component closes it on Escape, on a press outside and when the focus leaves. `@floating-ui/dom` places it in fixed position, below its field or above it when the window has no room below, at least as wide as the field and no taller than the room in the window.
 - Supported browsers are Baseline Widely available. A newer feature needs a fallback and a decision.
 - Decided newer features:
 
-  | Feature     | Where                                | Fallback                                                                                                                   |
-  | ----------- | ------------------------------------ | -------------------------------------------------------------------------------------------------------------------------- |
-  | `resize`    | the textarea of TextareaField        | the textarea keeps the height of its tokens, and `resize="auto"` still grows, measured by script                           |
-  | Popover API | the popup of the list of SelectField | the popup opens in fixed position without the top layer, where a modal dialog or an ancestor with a transform can cover it |
+  | Feature     | Where                                             | Fallback                                                                                                                   |
+  | ----------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+  | `resize`    | the textarea of TextareaField                     | the textarea keeps the height of its tokens, and `resize="auto"` still grows, measured by script                           |
+  | Popover API | the popup of the list of SelectField and Combobox | the popup opens in fixed position without the top layer, where a modal dialog or an ancestor with a transform can cover it |
 
   Each use carries a `stylelint-disable-next-line plugin/use-baseline` comment that names its fallback.
 

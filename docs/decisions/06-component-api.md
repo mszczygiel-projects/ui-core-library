@@ -50,6 +50,7 @@
 - Submitted values are canonical: a date is `YYYY-MM-DD`, a number uses a dot and no grouping, several values are several entries, and a range is `start/end`.
 - NumberField and DateField keep editable text separate from the canonical value. React uses a visible text input for focus and validity and one hidden named input for submission, both associated with the same form. The ref exposes display text. ElementInternals submits one canonical entry and saves draft text with its locale.
 - Parsed fields preserve incomplete and invalid text. Their value event adds `text`, `inputState` and `validationError` to `originalEvent`; one event accompanies every user edit, even if its parsed value remains empty. Parsing and constraint failures use `customError`, empty required fields use `valueMissing`. Visual error appears after blur or failed validation; explicit `state="error"` does not create a constraint failure.
+- A query that a user types to filter options is never a value. It is reported as `ui-query-change` and `onQueryChange(query, details)`, and `filterMode` (`local` or `remote`) says whether the component filters the options or the author does from the query.
 - NumberField uses `number | null`, a positive step grid from min or zero, and optional maximum decimal precision without rounding or clamping. Each step activation changes once. DateField uses one Gregorian ISO calendar date or an empty string, a numeric locale mask and optional excluded dates, without a calendar or range.
 
 ### Accessibility
@@ -59,11 +60,12 @@
 - Labels, hints and errors render in the same root as the control and link to it.
 - Focus shows only on `:focus-visible`, as an outline drawn with the focus-ring tokens.
 - No interactive element is nested in another. Targets are at least 24 × 24 px.
+- A component that operates the controls of its parts from its own keys, such as Combobox and the remove buttons of its chips, takes them out of the order of the Tab key with a prop of the part, such as `skipDismissInTabOrder` of Chip, so that Tab leaves it in one press.
 - Components respect `prefers-reduced-motion` and `forced-colors`.
 
 ### Text
 
-- Text a component renders on its own comes from a prop (`<key>Label`, or `get<Key>Label` for text with a value), then from `labels.<component>.<key>` in the configuration.
+- Text a component renders on its own comes from a prop (`<key>Label`, or `get<Key>Label` for text with a value), then from `labels.<component>.<key>` in the configuration. A label with a value is a function in the configuration too, such as `labels.combobox.create(query)`.
 - The packages ship English labels.
 - A lint rule rejects literal text in JSX.
 - Formats follow the `locale` prop, then the configured locale, then the browser's language after hydration, then English.
