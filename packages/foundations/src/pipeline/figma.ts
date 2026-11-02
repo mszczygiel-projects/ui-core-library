@@ -84,14 +84,17 @@ const ANY_PAINT: readonly FigmaScope[] = ['FRAME_FILL', 'SHAPE_FILL', 'STROKE_CO
 
 /**
  * What a colour paints, read from the last segment of its name that names a part. A tint is a
- * fill laid over another fill. A text colour
- * also paints the icons beside the text, drawn as strokes or filled shapes; a separator is a
+ * fill laid over another fill, and a backdrop the fill that covers the page behind a modal. A text
+ * colour also paints the icons beside the text, drawn as strokes or filled shapes; a separator is a
  * stroke or a thin filled shape, and so is the indicator of a loader; a focus ring is a stroke or
  * a spread shadow.
  */
 const COLOR_PARTS: readonly (readonly [parts: readonly string[], scopes: readonly FigmaScope[]])[] =
   [
-    [['background', 'label-background', 'fill', 'tint', 'track', 'thumb', 'grabber'], FILL],
+    [
+      ['background', 'label-background', 'fill', 'tint', 'track', 'thumb', 'grabber', 'backdrop'],
+      FILL,
+    ],
     [['text', 'label', 'placeholder', 'foreground', 'hint', 'meta', 'name', 'link'], CONTENT],
     [['border'], STROKE],
     [['separator', 'divider', 'icon', 'mark', 'dot', 'check', 'indicator'], SHAPE],

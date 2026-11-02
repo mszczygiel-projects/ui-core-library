@@ -62,8 +62,9 @@ describe('scopesOf', () => {
     ]);
   });
 
-  it('offers a tint over a fill as a fill, and a smallest target as a size', () => {
+  it('offers a tint over a fill and the backdrop of a modal as fills, and a smallest target as a size', () => {
     expect(scopes('Components', 'color/chip/tint/active')).toEqual(['FRAME_FILL', 'SHAPE_FILL']);
+    expect(scopes('Components', 'color/dialog/backdrop')).toEqual(['FRAME_FILL', 'SHAPE_FILL']);
     expect(scopes('Components', 'chip/target/min-size', 'number', 24)).toEqual(['WIDTH_HEIGHT']);
   });
 
