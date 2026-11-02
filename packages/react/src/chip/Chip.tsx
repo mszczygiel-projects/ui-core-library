@@ -70,6 +70,7 @@ export function Chip({
   disabled = false,
   dismissible = false,
   dismissLabel,
+  skipDismissInTabOrder = false,
   onSelectedChange,
   onDismiss,
   icon,
@@ -179,6 +180,7 @@ export function Chip({
         <button
           type="button"
           className="ui-chip__dismiss"
+          tabIndex={skipDismissInTabOrder ? -1 : undefined}
           aria-labelledby={`${dismissLabelId} ${nameIds}`}
           onClick={(event) => {
             // The dismiss button acts on its own, so a listener of clicks on the chip never sees it.
