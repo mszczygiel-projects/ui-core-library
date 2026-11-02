@@ -54,8 +54,8 @@ The close button is named by `closeLabel`, then `labels.dialog.close`, â€œCloseâ
 <FrameworkCanvas react={ReactStories.WithForm} webComponents={WebComponentStories.WithForm} />
 
 - The page opens the dialog with `open`. It opens as a modal in the top layer, the rest of the page becomes inert and stops scrolling, and the width of the page stays.
-- The focus moves to the element marked with `autofocus` or `data-autofocus`, else to the first focusable element of the content and the footer, else to the panel. It returns where it was when the dialog closes.
-- Escape, a press on the backdrop, the close button, a form with `method="dialog"` and a drag down of the sheet ask the dialog to close, with a `reason`: `escape`, `backdrop`, `close-button`, `form` or `drag`. A form gives the `value` of its submit button as `returnValue`, a Button of the library included.
+- The focus moves to the element marked with `autofocus` or `data-autofocus`, which may be outside the order of Tab with `tabindex="-1"`, else to the first focusable element of the content and the footer, else to the panel. It returns where it was when the dialog closes.
+- Escape, a press on the backdrop, the close button, a form with `method="dialog"` and a drag down of the sheet ask the dialog to close, with a `reason`: `escape`, `backdrop`, `close-button`, `form` or `drag`. A form gives the `value` of its submit button as `returnValue`, a Button of the library included. The `formmethod` of a submit button wins over the method of its form, and a form handler that cancels the submission keeps the dialog open.
 - The web component closes itself and reflects `open`, after `ui-open-change`, which the page may cancel to keep it open. React reports `onOpenChange(false, details)`: an uncontrolled dialog closes, a controlled one when its parent sets `open` to false.
 - The browser may close a dialog after repeated presses of Escape, which no page can refuse; the dialog follows it and reports `escape`.
 - A press that starts on the content and ends on the backdrop, such as a selection of text, does not close it. Escape in an open list of a SelectField or Combobox closes only the list.

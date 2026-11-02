@@ -105,7 +105,9 @@ export class Overlay {
       },
       { signal },
     );
-    dialog.addEventListener('submit', this.onSubmit, { signal });
+    // The root of the dialog hears a submission after the handlers of the page between, React's
+    // delegated `onSubmit` included, so that they can still cancel it.
+    dialog.getRootNode().addEventListener('submit', this.onSubmit, { signal });
     dialog.addEventListener('pointerdown', this.onPointerDown, { signal });
     dialog.addEventListener('pointermove', this.onPointerMove, { signal });
     dialog.addEventListener('pointerup', this.onPointerUp, { signal });
@@ -147,8 +149,15 @@ export class Overlay {
       ...(root.matches(AUTOFOCUS) ? [root] : []),
       ...root.querySelectorAll(AUTOFOCUS),
     ]);
-    for (const candidate of [...marked, ...content.flatMap(descendants)]) {
-      if (tryFocus(candidate)) {
+    // A marked element takes the focus outside the order of Tab too, such as a paragraph with
+    // `tabindex="-1"` to read first.
+    for (const candidate of marked) {
+      if (tryFocus(candidate, true)) {
+        return;
+      }
+    }
+    for (const candidate of content.flatMap(descendants)) {
+      if (tryFocus(candidate, false)) {
         return;
       }
     }
@@ -159,9 +168,17 @@ export class Overlay {
     this.options.onCloseRequest({ reason, returnValue, originalEvent, forced: false });
   }
 
-  private readonly onSubmit = (event: SubmitEvent): void => {
+  private readonly onSubmit = (event: Event): void => {
+    const dialog = this.options.dialog();
     const form = event.target;
-    if (!(form instanceof HTMLFormElement) || form.method !== 'dialog' || event.defaultPrevented) {
+    if (
+      !(event instanceof SubmitEvent) ||
+      !(form instanceof HTMLFormElement) ||
+      event.defaultPrevented ||
+      submissionMethod(form, event.submitter) !== 'dialog' ||
+      // A form of a dialog inside the content belongs to that dialog.
+      event.composedPath().find((target) => target instanceof HTMLDialogElement) !== dialog
+    ) {
       return;
     }
     // The modal closes the dialog when the request is granted; a refused one keeps it open.
@@ -263,6 +280,17 @@ function onBackdrop(dialog: HTMLDialogElement, event: MouseEvent): boolean {
   );
 }
 
+/** The method of a submission: that of its submit button when the button overrides the form's. */
+function submissionMethod(form: HTMLFormElement, submitter: HTMLElement | null): string {
+  if (
+    (submitter instanceof HTMLButtonElement || submitter instanceof HTMLInputElement) &&
+    submitter.hasAttribute('formmethod')
+  ) {
+    return submitter.formMethod;
+  }
+  return form.method;
+}
+
 /**
  * The value of the button that submits a form. A submit button that is a custom element, such as
  * `ui-button`, submits without a submitter, so the latest click names it.
@@ -291,16 +319,32 @@ function descendants(root: Element): Element[] {
   return [root, ...root.querySelectorAll('*')];
 }
 
-/** Focuses an element that can take the focus and reports whether it did. */
-function tryFocus(element: Element): boolean {
+/**
+ * Focuses an element and reports whether it took the focus. Only a marked element may be outside
+ * the order of Tab.
+ */
+function tryFocus(element: Element, marked: boolean): boolean {
   if (!(element instanceof HTMLElement) || !element.checkVisibility()) {
     return false;
   }
   const delegates = element.shadowRoot?.delegatesFocus === true;
-  if (element.tabIndex < 0 && !delegates) {
+  if (!marked && element.tabIndex < 0 && !delegates) {
     return false;
   }
   element.focus();
-  const active = document.activeElement;
-  return active === element || (active !== null && element.contains(active));
+  return activeElements().some((active) => active === element || element.contains(active));
+}
+
+/**
+ * The element with the focus in the document and in every shadow root down to it. A modal inside
+ * a shadow root sees only the host of that root as the active element of the document.
+ */
+function activeElements(): Element[] {
+  const chain: Element[] = [];
+  let active = document.activeElement;
+  while (active !== null) {
+    chain.push(active);
+    active = active.shadowRoot?.activeElement ?? null;
+  }
+  return chain;
 }

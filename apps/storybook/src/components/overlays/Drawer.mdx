@@ -50,7 +50,7 @@ The close button is named by `closeLabel`, then `labels.drawer.close`, â€œCloseâ
 <FrameworkCanvas react={ReactStories.WithForm} webComponents={WebComponentStories.WithForm} />
 
 - The page opens the drawer with `open`. It opens as a modal in the top layer, the rest of the page becomes inert and stops scrolling, and the width of the page stays.
-- The focus moves to the element marked with `autofocus` or `data-autofocus`, else to the first focusable element of the content, else to the panel. It returns where it was when the drawer closes.
+- The focus moves to the element marked with `autofocus` or `data-autofocus`, which may be outside the order of Tab with `tabindex="-1"`, else to the first focusable element of the content, else to the panel. It returns where it was when the drawer closes.
 - Escape, a press on the backdrop, the close button, a form with `method="dialog"` and a drag down of a bottom drawer ask it to close, with a `reason`, as Dialog does. The web component closes itself after `ui-open-change`, which the page may cancel; React reports `onOpenChange(false, details)`.
 - `dragToDismiss` lets the user drag a bottom drawer down by its grabber or its header: past a quarter of its height, or with a flick, it closes; otherwise it returns. It has no effect on a side drawer.
 - Setting `open` does not report a request. A drawer and a dialog open together share one lock of the scroll.

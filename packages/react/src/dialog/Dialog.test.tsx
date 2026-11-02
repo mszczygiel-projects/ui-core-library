@@ -74,4 +74,24 @@ describe('Dialog', () => {
     );
     await expect.element(screen.getByRole('textbox', { name: 'Second' })).toHaveFocus();
   });
+
+  it('stays open when the onSubmit of its form cancels the submission', async () => {
+    const onOpenChange = vi.fn();
+    const screen = await render(
+      <Dialog heading="Rename" defaultOpen onOpenChange={onOpenChange}>
+        <form
+          method="dialog"
+          onSubmit={(event) => {
+            event.preventDefault();
+          }}
+        >
+          <button value="save">Save</button>
+        </form>
+      </Dialog>,
+    );
+    await userEvent.click(screen.getByRole('button', { name: 'Save' }));
+    await nextFrame();
+    expect(onOpenChange).not.toHaveBeenCalled();
+    expect(screen.container.querySelector('dialog')?.matches(':modal')).toBe(true);
+  });
 });

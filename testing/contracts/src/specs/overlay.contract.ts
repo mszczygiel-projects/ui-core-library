@@ -14,11 +14,12 @@ import { pseudoLabels } from '../pseudo.ts';
  * The content a harness renders inside a modal, with the components of its own framework:
  * `fields` two text fields, `autofocus` the same with the second marked to take the focus, `form`
  * a form with `method="dialog"` and two native submit buttons, `buttons` the same with two Buttons
- * of the library, `select` a SelectField and `long` enough
- * paragraphs to scroll.
+ * of the library, `methods` a button of method post in a dialog form and a button of method dialog
+ * in a form of the page, `reading` a marked paragraph outside the order of Tab before a field,
+ * `select` a SelectField and `long` enough paragraphs to scroll.
  */
 export type OverlayContent =
-  'text' | 'fields' | 'autofocus' | 'form' | 'buttons' | 'select' | 'long';
+  'text' | 'fields' | 'autofocus' | 'form' | 'buttons' | 'methods' | 'reading' | 'select' | 'long';
 
 /** The props of a modal in a contract, plus what each harness translates. */
 export interface OverlayContractProps extends OverlayProps {
@@ -202,6 +203,21 @@ export function overlayContract<Props extends OverlayContractProps>(
     await expect.poll(() => focused()?.getAttribute('aria-label')).toBe('Second');
   });
 
+  it('gives the focus to a marked element outside the order of Tab', async () => {
+    await mount({ content: 'reading' });
+    await expect.poll(() => focused()?.textContent).toBe('Read this first');
+  });
+
+  it('gives the focus to its content inside a shadow root', async () => {
+    const host = document.createElement('div');
+    document.body.append(host);
+    fixtures.push(host);
+    const parent = document.createElement('div');
+    host.attachShadow({ mode: 'open' }).append(parent);
+    await mount({ content: 'autofocus' }, { parent });
+    await expect.poll(() => focused()?.getAttribute('aria-label')).toBe('Second');
+  });
+
   it('gives the focus to the panel when its content has nothing focusable', async () => {
     const modal = await mount({ hideCloseButton: true });
     await expect.poll(() => focused()).toBe(nativeDialog(modal));
@@ -288,6 +304,33 @@ export function overlayContract<Props extends OverlayContractProps>(
     await expect.poll(() => nativeDialog(modal).open).toBe(false);
     expect(changed.mock.lastCall?.[1]).toMatchObject({ reason: 'form', returnValue: 'confirm' });
     expect(nativeDialog(modal).returnValue).toBe('confirm');
+  });
+
+  it('follows the method of the submit button over that of its form', async () => {
+    const changed = vi.fn<NonNullable<OverlayContractProps['onOpenChange']>>(() => false);
+    const modal = await mount({ content: 'methods', onOpenChange: changed });
+    // The page keeps itself from navigating, after the modal has seen the submission.
+    const cancelled: boolean[] = [];
+    const guard = (event: Event) => {
+      cancelled.push(event.defaultPrevented);
+      event.preventDefault();
+    };
+    window.addEventListener('submit', guard);
+    try {
+      await userEvent.click(modal.screen.getByRole('button', { name: 'Save' }));
+      await expect.poll(() => cancelled).toEqual([false]);
+      expect(changed).not.toHaveBeenCalled();
+      await userEvent.click(modal.screen.getByRole('button', { name: 'Done' }));
+      await expect
+        .poll(() => changed.mock.lastCall?.[1])
+        .toMatchObject({
+          reason: 'form',
+          returnValue: 'done',
+        });
+      expect(nativeDialog(modal).matches(':modal')).toBe(true);
+    } finally {
+      window.removeEventListener('submit', guard);
+    }
   });
 
   it('stays open and modal when the page refuses to close it', async () => {
