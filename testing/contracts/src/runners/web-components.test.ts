@@ -2,6 +2,7 @@ import '@mszczygiel-projects/ui-core-web-components/badge';
 import '@mszczygiel-projects/ui-core-web-components/button';
 import '@mszczygiel-projects/ui-core-web-components/checkbox-field';
 import '@mszczygiel-projects/ui-core-web-components/chip';
+import '@mszczygiel-projects/ui-core-web-components/combobox';
 import '@mszczygiel-projects/ui-core-web-components/date-field';
 import '@mszczygiel-projects/ui-core-web-components/icon-button';
 import '@mszczygiel-projects/ui-core-web-components/link-button';
@@ -24,6 +25,7 @@ import { mountWebComponentBadge } from '../harness/badge.tsx';
 import { mountWebComponentButton } from '../harness/button.tsx';
 import { mountWebComponentCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountWebComponentChip } from '../harness/chip.tsx';
+import { mountWebComponentCombobox } from '../harness/combobox.tsx';
 import { mountWebComponentDateField } from '../harness/date-field.tsx';
 import { mountWebComponentIconButton } from '../harness/icon-button.tsx';
 import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
@@ -43,6 +45,7 @@ import { badgeContract } from '../specs/badge.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
+import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
@@ -133,4 +136,8 @@ describe('NumberField, web component', () => {
 
 describe('DateField, web component', () => {
   dateFieldContract(mountWebComponentDateField);
+});
+
+describe('Combobox, web component', () => {
+  comboboxContract(mountWebComponentCombobox);
 });

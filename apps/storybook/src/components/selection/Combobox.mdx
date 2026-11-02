@@ -1,0 +1,138 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Combobox.wc.stories.tsx';
+import * as ReactStories from './Combobox.react.stories.tsx';
+
+<Meta title="Components/Selection/Combobox/Docs" />
+
+# Combobox
+
+<ComponentOverview name="Combobox" />
+
+## Usage
+
+Use Combobox when a user chooses from more options than a list can show at a glance, such as a city, a person or a set of tags, and finds them faster by typing. It chooses one value or, with `multiple`, several, filters the options itself or lets the author fetch them from a server, and can offer to create an option the list lacks. Use SelectField for a short list a user reads rather than searches, and a text field when the answer is open and the options only suggest it.
+
+## Anatomy
+
+The **base** holds the **label** with its **label-text**, the **control** and the **hint** with its **hint-text**. The control holds the **input-row**: an optional **leading-icon**, the **chips** of a multiple choice with a **chip** for each chosen option, the **input**, the **clear** button and the **indicator** arrow. The open list is a **popup** that holds the **listbox** and its **option**, **group**, **group-label** and **message** parts, as in Listbox, and the **create** option. The web component exposes these parts; React uses `.ui-combobox__<part>` classes.
+
+## Variants & tone
+
+`variant` is `outline` (the default), `filled` or `underlined`, as in every field.
+
+## Sizes & density
+
+`size` is `small`, `medium` (the default) or `large`, for the field, its chips and the rows of its list, each following the surrounding density. `labelPlacement` puts the label on `top` (the default), lets it `float` in the field until it holds text or a chip, or puts it `inner`, above the query. Chips wrap onto new lines, and the field grows with them.
+
+## States
+
+`state` is `default`, `error` or `success`. Error sets `aria-invalid` on the input. `disabled` disables the field, its chips and the clear button, and closes the list, and so does a disabled fieldset. The arrow turns while the list is open. `loading` replaces the options with a loader and `loadingLabel`, and marks the list busy.
+
+## Content & labels
+
+Supply `label`, `placeholder`, `hint` and the labels of the options in the language of the page. The placeholder shows while the field holds no text and no chip, and never names the field; a field without a visible label takes its name from `aria-label`. The texts come from props, or from `configureUiCore`:
+
+- the clear button: `clearLabel`, or `labels.combobox.clear` (Clear);
+- a list without matches: `emptyLabel`, or `labels.listbox.empty` (No options);
+- a list that loads: `loadingLabel`, or `labels.listbox.loading` (Loading options);
+- the option that creates one: `getCreateLabel(query)`, or `labels.combobox.create(query)` (Create “query”), a function, since the text holds the query.
+
+## Behaviour
+
+- Typing opens the list, filters it by the labels that contain the query, ignoring case and accents, and highlights the first match. Enter chooses it. A single choice closes the list and shows the label of the option in the field; a multiple choice adds a chip, empties the query and keeps the list open.
+- The query is never a value. Escape, Tab, a press outside and the focus leaving the field close the list, and the field shows the label of the chosen option again. A press on the arrow opens and closes the list; a press elsewhere on the field opens it, and a click of the label only moves the focus to the input.
+- The list opens in the top layer, above other content and a modal dialog, below the field or above it when the window has no room below, at least as wide as the field.
+- Each choice reports the value once: `ui-value-change` with `detail.value` in the web component and `onValueChange(value, details)` in React, with a native `change` from the host of the web component. Opening and closing report `ui-open-change` and `onOpenChange(open, details)`. Each change of the query reports `ui-query-change` and `onQueryChange(query, details)`.
+- The field submits each chosen value as an entry under `name`, and an empty string without a choice. `required` blocks the submission until an option is chosen. A reset restores the initial value, empties the query and closes the list, without an event.
+
+<FrameworkCanvas react={ReactStories.Multiple} webComponents={WebComponentStories.Multiple} />
+
+### Remote options
+
+With `filterMode="remote"` the component shows the options as given, and the author fetches them from the query events. The component sends every keystroke and waits for nothing: the author decides how long to wait, and aborts a request that a newer query replaces. Set `loading` while a request runs. A chosen option keeps its chip and its label after it leaves the options.
+
+<FrameworkCanvas
+  react={ReactStories.RemoteFiltering}
+  webComponents={WebComponentStories.RemoteFiltering}
+/>
+
+<Source
+  language="tsx"
+  code={`const [query, setQuery] = useState('');
+const [options, setOptions] = useState([]);
+const [loading, setLoading] = useState(true);
+
+useEffect(() => {
+const controller = new AbortController();
+const timer = setTimeout(() => {
+setLoading(true);
+fetch(\`/api/cities?q=\${encodeURIComponent(query)}\`, { signal: controller.signal })
+.then((response) => response.json())
+.then((found) => {
+setOptions(found);
+setLoading(false);
+}, () => undefined);
+}, 300);
+return () => {
+clearTimeout(timer);
+controller.abort();
+};
+}, [query]);
+
+<Combobox label="City" filterMode="remote" options={options} loading={loading} onQueryChange={setQuery} />;`}
+/>
+
+### Creating options
+
+With `allowCreate`, a query that no label equals adds an option at the end of the list that creates one. Choosing it reports `ui-create` and `onCreate(query, details)` with the trimmed query and changes no value: the author adds the option and chooses it.
+
+<FrameworkCanvas react={ReactStories.Create} webComponents={WebComponentStories.Create} />
+
+## Accessibility
+
+- **Pattern.** The [editable combobox with list autocomplete](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/): the input has the role `combobox` and `aria-autocomplete="list"`, keeps the focus, and names the highlighted option with `aria-activedescendant`. The label names the input, the hint describes it, and a multiple list is `aria-multiselectable`.
+- **Keys.** Down opens the list on the chosen or first option, Up on the chosen or last one. On an open list, Down and Up move past disabled options and stop at the ends, Page Down and Page Up move further, Enter chooses, Escape and Alt+Up close it, and Tab closes it and moves on. Home, End, Left and Right move the cursor in the text. Backspace in an empty query removes the last chip.
+- **Chips.** They name the chosen options. Their remove buttons are out of the order of the Tab key, so Tab leaves the field in one press, and a press on one removes its option; Backspace removes them from the keyboard.
+- **Clear button.** It is out of the order of the Tab key: a user clears the text as in any text field.
+- **Required and invalid.** `aria-required` and `aria-invalid` reach the input.
+- **Preferences.** Forced colours keep the frame, the arrow and the highlight. Reduced motion stops the arrow from turning.
+
+## Surfaces & themes
+
+The field follows Light and Dark and the default, subtle, inverse and primary surfaces, and its chips follow the surface with it. Its list keeps the background of the surface it opens from.
+
+<FrameworkCanvas react={ReactStories.OnSurfaces} webComponents={WebComponentStories.OnSurfaces} />
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Combobox" />}
+  webComponents={<WebComponentApi tag="ui-combobox" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Combobox } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/combobox';`}
+/>
+
+React's className, style and data-\* attributes reach the root; its ref, id, ARIA and native attributes reach the input, and `form` reaches the hidden select. React takes `value` or `defaultValue`, and `open` or `defaultOpen`. The web component takes one value from its `value` attribute, several from its `defaultValue` property, and the current value from its `value` property. The slot `leading-icon` of the web component pairs with `leadingIcon` in React. An option's `icon` is a React node in React, and the SVG string of an icon of the icon package in the web component, which renders it as markup: never put text from a user there. The web component is form-associated: it exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity()`, follows a disabled fieldset, and passes an `aria-label` of its host to the input and the list.
+
+## Tokens
+
+<ComponentTokens component="combobox" />
+
+Combobox uses the tokens of the `control` family for the field, as the text fields do, the `listbox` tokens for its list and popup, and the `chip` tokens for its chips. Its own tokens set the gap between the chips and the inner space of a field that holds them.
+
+## Implementation notes
+
+- Both place the popup with Floating UI in fixed position, in the top layer through the Popover API. A browser without the Popover API shows it in fixed position without the top layer, where a modal dialog or an ancestor with a transform can cover it.
+- The chips are Chip components with `skipDismissInTabOrder`.
+- React renders the list only while it is open, and a hidden native select submits the values and validates `required`. The web component submits through ElementInternals, and a native select with the same constraints, not on the page, answers its validity.
+- Both wait for the end of a composition, as with an input method for Japanese, before they filter.

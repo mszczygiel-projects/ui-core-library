@@ -5,6 +5,7 @@ import { mountReactBadge } from '../harness/badge.tsx';
 import { mountReactButton } from '../harness/button.tsx';
 import { mountReactCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountReactChip } from '../harness/chip.tsx';
+import { mountReactCombobox } from '../harness/combobox.tsx';
 import { mountReactDateField } from '../harness/date-field.tsx';
 import { mountReactIconButton } from '../harness/icon-button.tsx';
 import { mountReactLinkButton } from '../harness/link-button.tsx';
@@ -24,6 +25,7 @@ import { badgeContract } from '../specs/badge.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
+import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
@@ -114,4 +116,8 @@ describe('NumberField, React', () => {
 
 describe('DateField, React', () => {
   dateFieldContract(mountReactDateField);
+});
+
+describe('Combobox, React', () => {
+  comboboxContract(mountReactCombobox);
 });

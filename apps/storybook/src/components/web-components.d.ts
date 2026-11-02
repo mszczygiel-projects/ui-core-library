@@ -5,10 +5,17 @@ import type {
   CheckedChangeDetail,
 } from '@mszczygiel-projects/ui-core-shared/checkbox-field';
 import type { ChipProps } from '@mszczygiel-projects/ui-core-shared/chip';
+import type {
+  ComboboxProps,
+  ComboboxQueryDetail,
+} from '@mszczygiel-projects/ui-core-shared/combobox';
 import type { DateFieldProps } from '@mszczygiel-projects/ui-core-shared/date-field';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
-import type { ListboxProps } from '@mszczygiel-projects/ui-core-shared/listbox';
+import type {
+  ListboxProps,
+  ListboxValueChangeDetail,
+} from '@mszczygiel-projects/ui-core-shared/listbox';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
 import type { NumberFieldProps } from '@mszczygiel-projects/ui-core-shared/number-field';
@@ -31,6 +38,15 @@ type CustomElement<Props> = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLE
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-combobox': CustomElement<
+        ComboboxProps & {
+          readonly 'onui-query-change'?: (event: CustomEvent<ComboboxQueryDetail<Event>>) => void;
+          readonly 'onui-create'?: (event: CustomEvent<ComboboxQueryDetail<Event>>) => void;
+          readonly 'onui-value-change'?: (
+            event: CustomEvent<ListboxValueChangeDetail<Event>>,
+          ) => void;
+        }
+      >;
       'ui-select-field': CustomElement<SelectFieldProps>;
       'ui-listbox': CustomElement<ListboxProps>;
       'ui-date-field': CustomElement<DateFieldProps>;

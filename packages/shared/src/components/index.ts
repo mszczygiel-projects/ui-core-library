@@ -2,6 +2,7 @@ import { badge } from './badge.ts';
 import { button } from './button.ts';
 import { checkboxField } from './checkbox-field.ts';
 import { chip } from './chip.ts';
+import { combobox } from './combobox.ts';
 import type { ComponentSpec } from './component.ts';
 import { dateField } from './date-field.ts';
 import { iconButton } from './icon-button.ts';
@@ -40,4 +41,5 @@ export const specs: readonly ComponentSpec[] = [
   selectField,
   numberField,
   dateField,
+  combobox,
 ];

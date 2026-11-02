@@ -13,6 +13,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Button        | `Button`        |
 | CheckboxField | `CheckboxField` |
 | Chip          | `Chip`          |
+| Combobox      | `Combobox`      |
 | DateField     | `DateField`     |
 | IconButton    | `IconButton`    |
 | LinkButton    | `LinkButton`    |

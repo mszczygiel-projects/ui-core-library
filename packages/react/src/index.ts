@@ -14,6 +14,7 @@ export {
   type ChoiceState,
 } from './checkbox-field/CheckboxField.tsx';
 export { Chip, type ChipProps } from './chip/Chip.tsx';
+export { Combobox, type ComboboxProps } from './combobox/Combobox.tsx';
 export {
   DateField,
   type DateFieldProps,

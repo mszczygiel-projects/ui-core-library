@@ -12,6 +12,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Button        | `ui-button`         | `./button`         |
 | CheckboxField | `ui-checkbox-field` | `./checkbox-field` |
 | Chip          | `ui-chip`           | `./chip`           |
+| Combobox      | `ui-combobox`       | `./combobox`       |
 | DateField     | `ui-date-field`     | `./date-field`     |
 | IconButton    | `ui-icon-button`    | `./icon-button`    |
 | LinkButton    | `ui-link-button`    | `./link-button`    |
