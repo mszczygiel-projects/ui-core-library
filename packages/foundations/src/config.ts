@@ -49,6 +49,12 @@ export interface UiCoreLabels {
     /** The word that names the dismiss button of a chip, read before the text of the chip. */
     readonly dismiss: string;
   };
+  readonly combobox: {
+    /** The name of the button that clears the chosen options and the query. */
+    readonly clear: string;
+    /** The text of the option that creates one from the query, as a whole phrase. */
+    readonly create: (query: string) => string;
+  };
   readonly iconButton: {
     /** The description of an icon button while its action is in progress. */
     readonly loading: string;
@@ -56,6 +62,8 @@ export interface UiCoreLabels {
   readonly listbox: {
     /** The message of a list without options. */
     readonly empty: string;
+    /** The message of a list while its options load. */
+    readonly loading: string;
   };
   readonly loader: {
     /** The accessible name of a loader that has no `label` of its own. */
@@ -142,8 +150,9 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   },
   button: { loading: 'Loading' },
   chip: { dismiss: 'Remove' },
+  combobox: { clear: 'Clear', create: (query) => `Create “${query}”` },
   iconButton: { loading: 'Loading' },
-  listbox: { empty: 'No options' },
+  listbox: { empty: 'No options', loading: 'Loading options' },
   loader: { label: 'Loading' },
   notification: { dismiss: 'Dismiss' },
   passwordField: { reveal: 'Show password' },

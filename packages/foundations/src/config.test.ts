@@ -28,6 +28,7 @@ describe('the configuration', () => {
     configureUiCore({ locale: 'pl-PL', labels: { dateField: { formatHint } } });
     expect(getUiCoreConfig().locale).toBe('pl-PL');
     expect(getUiCoreConfig().labels.dateField.formatHint('31.12.2026')).toBe('Format: 31.12.2026');
+    expect(getUiCoreConfig().labels.combobox.create('kiwi')).toBe('Create “kiwi”');
     configureUiCore({ locale: 'pl-PL' });
     expect(listener).toHaveBeenCalledOnce();
     resetUiCoreConfig();
@@ -116,8 +117,9 @@ describe('the configuration', () => {
         dateField: defaultLabels.dateField,
         button: { loading: 'Loading' },
         chip: { dismiss: 'Remove' },
+        combobox: defaultLabels.combobox,
         iconButton: { loading: 'Loading' },
-        listbox: { empty: 'No options' },
+        listbox: { empty: 'No options', loading: 'Loading options' },
         loader: { label: 'Wait' },
         notification: { dismiss: 'Dismiss' },
         passwordField: { reveal: 'Show password' },

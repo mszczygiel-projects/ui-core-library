@@ -1,6 +1,8 @@
 import type { ListboxGroup, ListboxItems, ListboxOption, ListboxValue } from '../components/listbox.ts';
 export declare function isGrouped<Icon>(items: ListboxItems<Icon> | undefined): items is readonly ListboxGroup<Icon>[];
 export declare function flattenOptions<Icon>(items: ListboxItems<Icon> | undefined): readonly ListboxOption<Icon>[];
+export declare function filterItems<Icon>(items: ListboxItems<Icon> | undefined, query: string): ListboxItems<Icon>;
+export declare function hasExactLabel(items: ListboxItems<unknown> | undefined, query: string): boolean;
 export declare function valuesOf(value: ListboxValue | undefined): readonly string[];
 export declare function normalizeValue(value: ListboxValue | undefined, multiple: boolean): ListboxValue;
 export declare function isChosen(value: ListboxValue | undefined, optionValue: string): boolean;

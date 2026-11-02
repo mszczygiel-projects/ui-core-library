@@ -4,7 +4,7 @@ import type {
   ListboxOption,
   ListboxValue,
 } from '../components/listbox.ts';
-import { matchText } from './text.ts';
+import { matchText, sameText } from './text.ts';
 
 /** Whether the items of a list are groups of options. */
 export function isGrouped<Icon>(
@@ -24,6 +24,33 @@ export function flattenOptions<Icon>(
     return [];
   }
   return isGrouped(items) ? items.flatMap((group) => group.options) : items;
+}
+
+/**
+ * The items whose labels contain the query, ignoring case and diacritics, in their order. A group
+ * keeps its matching options and goes when none matches. An empty query keeps every item.
+ */
+export function filterItems<Icon>(
+  items: ListboxItems<Icon> | undefined,
+  query: string,
+): ListboxItems<Icon> {
+  if (items === undefined) {
+    return [];
+  }
+  if (isGrouped(items)) {
+    return items
+      .map((group) => ({
+        ...group,
+        options: group.options.filter((option) => matchText(option.label, query)),
+      }))
+      .filter((group) => group.options.length > 0);
+  }
+  return items.filter((option) => matchText(option.label, query));
+}
+
+/** Whether an option has a label equal to the query, ignoring case, diacritics and spacing. */
+export function hasExactLabel(items: ListboxItems<unknown> | undefined, query: string): boolean {
+  return flattenOptions(items).some((option) => sameText(option.label, query));
 }
 
 /** The chosen values as a list, whatever the shape of the value. Empty strings choose nothing. */
