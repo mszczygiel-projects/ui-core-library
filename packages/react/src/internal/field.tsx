@@ -68,6 +68,11 @@ export interface FieldProps extends Pick<
   readonly rootRef?: Ref<HTMLDivElement>;
   /** Receives the control, the surface with the border. */
   readonly controlRef?: Ref<HTMLDivElement>;
+  /**
+   * A popup of the field, inside the root so that it inherits the theme, the density and the
+   * token overrides set on the component, while the top layer takes it out of the layout.
+   */
+  readonly popup?: ReactNode;
 }
 
 /** The anatomy of every text field: the label, the control with its border, and the hint. */
@@ -90,6 +95,7 @@ export function Field({
   labelId,
   rootRef,
   controlRef,
+  popup,
 }: FieldProps) {
   const placement = oneOf(
     labelPlacement,
@@ -134,6 +140,7 @@ export function Field({
           <span className={fieldPart(block, 'hint-text')}>{hint}</span>
         </span>
       )}
+      {popup}
     </div>
   );
 }

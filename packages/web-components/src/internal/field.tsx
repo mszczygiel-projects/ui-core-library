@@ -45,16 +45,22 @@ export interface FieldProps {
    * field without it, such as a textarea, renders its base as a plain element.
    */
   readonly onSubmit?: (event: Event) => void;
+  /**
+   * Replaces the click that the label forwards to the control, for a control whose click does
+   * more than take the focus, such as a trigger that opens a list.
+   */
+  readonly onLabelClick?: (event: MouseEvent) => void;
 }
 
 /**
  * The anatomy of every text field: the label, the control with its border, and the hint. The
- * children are the content of the control, whose native element has the id `input`.
+ * children are the content of the control, whose native element has the id `input`. The label has
+ * the id `label`, for a control that names something else with it, such as a list.
  */
 export function Field(props: FieldProps, children: VNode[]): VNode {
   const label =
     props.label !== undefined && props.label !== '' ? (
-      <label part="label" class="label" htmlFor="input">
+      <label id="label" part="label" class="label" htmlFor="input" onClick={props.onLabelClick}>
         <span part="label-text">{props.label}</span>
       </label>
     ) : null;

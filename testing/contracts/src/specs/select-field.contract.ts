@@ -124,6 +124,23 @@ export function selectFieldContract(adapter: Mount<SelectFieldContractProps>): v
     expect(trigger(field).matches(':focus')).toBe(true);
   });
 
+  it('opens on an activation without a pointer, as a script or assistive technology sends it', async () => {
+    const field = await mount();
+    trigger(field).click();
+    await expect.poll(() => isOpen(field)).toBe(true);
+    trigger(field).click();
+    await expect.poll(() => isOpen(field)).toBe(false);
+  });
+
+  it('names its open list by the label of the field', async () => {
+    const field = await mount();
+    await userEvent.click(trigger(field));
+    const node = (await field.accessibleTree()).find((item) => item.role === 'listbox');
+    expect(node?.name).toBe(
+      tokenValue('--control-label-text-uppercase') === 'uppercase' ? 'FRUIT' : 'Fruit',
+    );
+  });
+
   it('opens with the keys of a closed list and highlights where they say', async () => {
     const field = await mount({ defaultValue: 'blueberry' });
     trigger(field).focus();
@@ -230,6 +247,9 @@ export function selectFieldContract(adapter: Mount<SelectFieldContractProps>): v
       { parent: fieldset },
     );
     expect([...new FormData(form)]).toEqual([['fruit', 'apple']]);
+    // A reset before any change leaves the state as it was, yet still resets the native control.
+    form.reset();
+    await expect.poll(() => [...new FormData(form)]).toEqual([['fruit', 'apple']]);
     await userEvent.click(trigger(field));
     await page.getByRole('option', { name: 'Cherry' }).click();
     expect([...new FormData(form)]).toEqual([['fruit', 'cherry']]);
@@ -266,11 +286,34 @@ export function selectFieldContract(adapter: Mount<SelectFieldContractProps>): v
     expect(isOpen(field)).toBe(false);
   });
 
-  it('follows a controlled open state', async () => {
-    const field = await mount({ open: true });
+  it('follows a controlled open state, highlighting the chosen option', async () => {
+    const field = await mount({ open: true, defaultValue: 'cherry' });
     await expect.poll(() => isOpen(field)).toBe(true);
+    expect(highlightedOf(field, trigger(field))).toBe('Cherry');
     await field.update({ open: false });
     await expect.poll(() => isOpen(field)).toBe(false);
+    expect(trigger(field).hasAttribute('aria-activedescendant')).toBe(false);
+    await field.update({ open: true });
+    await expect.poll(() => isOpen(field)).toBe(true);
+    expect(highlightedOf(field, trigger(field))).toBe('Cherry');
+    trigger(field).focus();
+    await userEvent.keyboard('{ArrowUp}{Enter}');
+    expect(field.part('value').textContent).toBe('Blueberry');
+  });
+
+  it('opens its list in the density set on the field itself', async () => {
+    const heightOf = async (field: Field) => {
+      await userEvent.click(trigger(field));
+      const [first] = optionsOf(field);
+      const height = first?.getBoundingClientRect().height;
+      await userEvent.keyboard('{Escape}');
+      return height;
+    };
+    const comfortable = await heightOf(await mount());
+    const framed = await heightOf(await mount({}, { density: 'compact' }));
+    const own = await heightOf(await mount({}, { attributes: { 'data-density': 'compact' } }));
+    expect(framed).not.toBe(comfortable);
+    expect(own).toBe(framed);
   });
 
   it('sets aria-invalid on the trigger for the error state', async () => {

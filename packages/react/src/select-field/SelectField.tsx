@@ -20,6 +20,7 @@ import {
   type ComponentPropsWithRef,
   type KeyboardEvent,
   type ReactNode,
+  useEffect,
   useId,
   useLayoutEffect,
   useRef,
@@ -108,7 +109,6 @@ export function SelectField({
   onOpenChange,
   onKeyDown,
   onClick,
-  onPointerDown,
   id,
   className,
   style,
@@ -120,10 +120,7 @@ export function SelectField({
   const { labels } = useUiCoreConfig();
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
-  const [highlighted, setHighlighted] = useState(-1);
   const search = useRef(EMPTY_TYPEAHEAD);
-  /** Whether the pointer pressed the trigger itself, rather than the label that forwards a click. */
-  const pressed = useRef(false);
   const current = value ?? uncontrolledValue;
   const attributes = splitFieldAttributes(rest);
   const generatedId = useId();
@@ -152,6 +149,18 @@ export function SelectField({
   const initialHighlight = () =>
     chosen !== undefined && chosen.disabled !== true ? chosenIndex : (firstEnabled(flat) ?? -1);
 
+  const [highlighted, setHighlighted] = useState(() => (isOpen ? initialHighlight() : -1));
+  const [wasOpen, setWasOpen] = useState(isOpen);
+  // Props open and close the list too, by defaultOpen and controlled open, without setOpen.
+  if (wasOpen !== isOpen) {
+    setWasOpen(isOpen);
+    if (!isOpen) {
+      setHighlighted(-1);
+    } else if (highlighted < 0) {
+      setHighlighted(initialHighlight());
+    }
+  }
+
   const setOpen = (next: boolean, originalEvent: Event, highlight?: number) => {
     if (next && inactive) {
       return;
@@ -173,6 +182,30 @@ export function SelectField({
       setOpen(false, event);
     },
   });
+
+  useEffect(() => {
+    const root = rootRef.current;
+    if (root === null) {
+      return;
+    }
+    const events = new AbortController();
+    root.addEventListener(
+      'click',
+      (event) => {
+        // A click of the label only moves the focus, as the label of a native select does, and
+        // never reaches the trigger, whose every activation toggles the list.
+        const label = event.target instanceof Element ? event.target.closest('label') : null;
+        if (label !== null && root.contains(label)) {
+          event.preventDefault();
+          triggerRef.current?.focus();
+        }
+      },
+      { signal: events.signal },
+    );
+    return () => {
+      events.abort();
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (isOpen) {
@@ -286,138 +319,133 @@ export function SelectField({
   const showClear = clearable && chosen !== undefined && !inactive;
 
   return (
-    <>
-      <Field
-        block="select-field"
-        controlId={triggerId}
-        hintId={hintId}
-        className={className}
-        style={style}
-        dir={dir}
-        rootAttributes={attributes.root}
-        modifiers={[isOpen && 'ui-select-field--open']}
-        variant={variant}
-        size={size}
-        labelPlacement={labelPlacement}
-        state={state}
-        label={label}
-        hint={hint}
-        labelId={`${generatedId}-label`}
-        rootRef={rootRef}
-        controlRef={controlRef}
-      >
-        <div className={fieldPart('select-field', 'input-row')}>
-          {leadingIcon === undefined || leadingIcon === null ? null : (
-            <span className={fieldPart('select-field', 'leading-icon')} aria-hidden="true">
-              {leadingIcon}
-            </span>
-          )}
-          <button
-            {...attributes.control}
-            ref={(element) => {
-              triggerRef.current = element;
-              const release = setRef(ref, element);
-              return () => {
-                triggerRef.current = null;
-                release();
-              };
-            }}
-            id={triggerId}
-            type="button"
-            role="combobox"
-            className={`${fieldPart('select-field', 'trigger')} ui-field__input${chosen === undefined ? ' ui-field__input--empty' : ''}`}
-            disabled={inactive}
-            aria-haspopup="listbox"
-            aria-expanded={isOpen}
-            aria-controls={listId}
-            aria-activedescendant={
-              isOpen && highlighted >= 0 ? optionId(listId, highlighted) : undefined
-            }
-            aria-invalid={state === 'error' || undefined}
-            aria-required={required || undefined}
-            aria-describedby={fieldDescription(describedBy, hint, hintId)}
-            onPointerDown={(event) => {
-              onPointerDown?.(event);
-              pressed.current = event.button === 0;
-            }}
-            onClick={(event) => {
-              onClick?.(event);
-              // A click that the label forwards only moves the focus, as on a native select.
-              if (pressed.current) {
-                pressed.current = false;
-                setOpen(!isOpen, event.nativeEvent);
-              }
-            }}
-            onKeyDown={handleKeyDown}
+    <Field
+      block="select-field"
+      controlId={triggerId}
+      hintId={hintId}
+      className={className}
+      style={style}
+      dir={dir}
+      rootAttributes={attributes.root}
+      modifiers={[isOpen && 'ui-select-field--open']}
+      variant={variant}
+      size={size}
+      labelPlacement={labelPlacement}
+      state={state}
+      label={label}
+      hint={hint}
+      labelId={`${generatedId}-label`}
+      rootRef={rootRef}
+      controlRef={controlRef}
+      popup={
+        isOpen ? (
+          <div
+            ref={popupRef}
+            className="ui-list__popup ui-select-field__popup"
+            popover="manual"
+            dir={dir}
           >
-            <span
-              className={`${fieldPart('select-field', 'value')}${chosen === undefined ? ' ui-select-field__value--placeholder' : ''}`}
-            >
-              {chosen?.label ?? placeholder ?? ''}
-            </span>
-          </button>
-          <button
-            type="button"
-            className={`${fieldPart('select-field', 'clear')} ui-field__action`}
-            hidden={!showClear}
-            tabIndex={-1}
-            aria-label={clearLabel ?? labels.selectField.clear}
-            onClick={(event) => {
-              triggerRef.current?.focus();
-              change('', event.nativeEvent);
-            }}
-          >
-            <span
-              className="ui-field__action-icon"
-              aria-hidden="true"
-              dangerouslySetInnerHTML={{ __html: iconClose }}
+            <ListboxView
+              block="select-field"
+              id={listId}
+              items={options}
+              value={current}
+              multiple={false}
+              size={oneOf(size, sizes.options, sizes.default)}
+              highlighted={highlighted}
+              emptyLabel={emptyLabel ?? labels.listbox.empty}
+              labelledBy={label ? `${generatedId}-label` : undefined}
+              ariaLabel={label ? undefined : ariaLabel}
+              focusable={false}
+              onChoose={(index, event) => {
+                choose(index, event.nativeEvent);
+              }}
+              onHighlight={setHighlighted}
             />
-          </button>
-          <span
-            className={fieldPart('select-field', 'indicator')}
-            aria-hidden="true"
-            dangerouslySetInnerHTML={{ __html: iconChevronDown }}
-          />
-        </div>
-        <NativeSelect
-          ref={selectRef}
-          name={name}
-          form={form}
-          multiple={false}
-          required={required}
-          disabled={disabled}
-          values={chosen === undefined ? [] : [chosen.value]}
-          onInvalid={() => {
-            triggerRef.current?.focus();
+          </div>
+        ) : null
+      }
+    >
+      <div className={fieldPart('select-field', 'input-row')}>
+        {leadingIcon === undefined || leadingIcon === null ? null : (
+          <span className={fieldPart('select-field', 'leading-icon')} aria-hidden="true">
+            {leadingIcon}
+          </span>
+        )}
+        <button
+          {...attributes.control}
+          ref={(element) => {
+            triggerRef.current = element;
+            const release = setRef(ref, element);
+            return () => {
+              triggerRef.current = null;
+              release();
+            };
           }}
-        />
-      </Field>
-      {isOpen ? (
-        <div
-          ref={popupRef}
-          className="ui-list__popup ui-select-field__popup"
-          popover="manual"
-          dir={dir}
+          id={triggerId}
+          type="button"
+          role="combobox"
+          className={`${fieldPart('select-field', 'trigger')} ui-field__input${chosen === undefined ? ' ui-field__input--empty' : ''}`}
+          disabled={inactive}
+          aria-haspopup="listbox"
+          aria-expanded={isOpen}
+          aria-controls={listId}
+          aria-activedescendant={
+            isOpen && highlighted >= 0 ? optionId(listId, highlighted) : undefined
+          }
+          aria-invalid={state === 'error' || undefined}
+          aria-required={required || undefined}
+          aria-describedby={fieldDescription(describedBy, hint, hintId)}
+          onClick={(event) => {
+            onClick?.(event);
+            // Any activation, by the pointer, a script or assistive technology, toggles the list.
+            if (!event.defaultPrevented) {
+              setOpen(!isOpen, event.nativeEvent);
+            }
+          }}
+          onKeyDown={handleKeyDown}
         >
-          <ListboxView
-            block="select-field"
-            id={listId}
-            items={options}
-            value={current}
-            multiple={false}
-            size={oneOf(size, sizes.options, sizes.default)}
-            highlighted={highlighted}
-            emptyLabel={emptyLabel ?? labels.listbox.empty}
-            labelledBy={label ? `${generatedId}-label` : undefined}
-            ariaLabel={label ? undefined : ariaLabel}
-            focusable={false}
-            onChoose={(index, event) => {
-              choose(index, event.nativeEvent);
-            }}
-            onHighlight={setHighlighted}
+          <span
+            className={`${fieldPart('select-field', 'value')}${chosen === undefined ? ' ui-select-field__value--placeholder' : ''}`}
+          >
+            {chosen?.label ?? placeholder ?? ''}
+          </span>
+        </button>
+        <button
+          type="button"
+          className={`${fieldPart('select-field', 'clear')} ui-field__action`}
+          hidden={!showClear}
+          tabIndex={-1}
+          aria-label={clearLabel ?? labels.selectField.clear}
+          onClick={(event) => {
+            triggerRef.current?.focus();
+            change('', event.nativeEvent);
+          }}
+        >
+          <span
+            className="ui-field__action-icon"
+            aria-hidden="true"
+            dangerouslySetInnerHTML={{ __html: iconClose }}
           />
-        </div>
-      ) : null}
-    </>
+        </button>
+        <span
+          className={fieldPart('select-field', 'indicator')}
+          aria-hidden="true"
+          dangerouslySetInnerHTML={{ __html: iconChevronDown }}
+        />
+      </div>
+      <NativeSelect
+        ref={selectRef}
+        name={name}
+        form={form}
+        multiple={false}
+        required={required}
+        disabled={disabled}
+        values={chosen === undefined ? [] : [chosen.value]}
+        onInvalid={() => {
+          triggerRef.current?.focus();
+        }}
+      />
+    </Field>
   );
 }

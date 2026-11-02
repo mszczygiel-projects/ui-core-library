@@ -172,9 +172,6 @@ export class UiSelectField implements SelectFieldProps<string>, FormAssociated {
 
   private search: TypeaheadState = EMPTY_TYPEAHEAD;
 
-  /** Whether the pointer pressed the trigger itself, rather than the label that forwards a click. */
-  private pressed = false;
-
   private stopFollowing: (() => void)[] = [];
 
   private readonly control = new ListboxValueControl({
@@ -337,6 +334,7 @@ export class UiSelectField implements SelectFieldProps<string>, FormAssociated {
         placement={appearance.placement}
         label={this.label}
         hint={this.hint}
+        onLabelClick={this.onLabelClick}
       >
         <div part="input-row" class="input-row">
           <span
@@ -364,7 +362,6 @@ export class UiSelectField implements SelectFieldProps<string>, FormAssociated {
             aria-invalid={appearance.error ? 'true' : undefined}
             aria-required={this.required ? 'true' : undefined}
             aria-describedby={fieldDescription(this.hint)}
-            onPointerDown={this.onTriggerPointerDown}
             onClick={this.onTriggerClick}
             onKeyDown={this.onKeyDown}
           >
@@ -480,20 +477,15 @@ export class UiSelectField implements SelectFieldProps<string>, FormAssociated {
     this.highlighted = index;
   };
 
-  /**
-   * A press of the pointer on the field opens and closes the list. A click that the label
-   * forwards only moves the focus, as the label of a native select does.
-   */
+  /** Any activation of the trigger, by the pointer, a script or assistive technology, toggles the list. */
   private readonly onTriggerClick = (event: MouseEvent): void => {
-    if (!this.pressed) {
-      return;
-    }
-    this.pressed = false;
     this.setOpen(!this.open, event);
   };
 
-  private readonly onTriggerPointerDown = (event: PointerEvent): void => {
-    this.pressed = event.button === 0;
+  /** A click of the label only moves the focus, as the label of a native select does. */
+  private readonly onLabelClick = (event: MouseEvent): void => {
+    event.preventDefault();
+    this.trigger()?.focus();
   };
 
   private readonly onClear = (event: MouseEvent): void => {
