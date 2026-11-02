@@ -256,7 +256,7 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
     anchor: () => this.host.shadowRoot?.querySelector<HTMLElement>('.control') ?? null,
     popup: () => this.host.shadowRoot?.querySelector<HTMLElement>('.popup') ?? null,
     onDismiss: (event) => {
-      this.setOpen(false, event);
+      this.leave(event);
     },
   });
 
@@ -557,15 +557,19 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
     ];
   }
 
-  /** Remembers the chosen options that the options hold, and forgets those no longer chosen. */
+  /**
+   * Remembers the options of the chosen and the default value that the options hold, so that a
+   * reset finds its labels, and forgets the others.
+   */
   private remember(): void {
+    const kept = new Set([...valuesOf(this.current), ...valuesOf(this.control.defaultValue())]);
     for (const option of flattenOptions(this.options)) {
-      if (isChosen(this.current, option.value)) {
+      if (kept.has(option.value)) {
         this.remembered.set(option.value, option);
       }
     }
     for (const value of this.remembered.keys()) {
-      if (!isChosen(this.current, value)) {
+      if (!kept.has(value)) {
         this.remembered.delete(value);
       }
     }
@@ -645,6 +649,23 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
     }
     this.open = open;
     this.openChange.emit({ value: open, originalEvent });
+  }
+
+  /**
+   * Closes the list as a user leaves it. A single clearable choice whose text the user emptied
+   * becomes no choice, which the keyboard reaches without the clear button.
+   */
+  private leave(originalEvent: globalThis.Event): void {
+    if (
+      this.editing &&
+      !this.multiple &&
+      this.clearable &&
+      this.query.trim() === '' &&
+      this.current !== ''
+    ) {
+      this.emitValue('', originalEvent);
+    }
+    this.setOpen(false, originalEvent);
   }
 
   private setQuery(query: string, originalEvent: globalThis.Event): void {
@@ -751,7 +772,11 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
       return;
     }
     this.input()?.focus();
-    this.setOpen(target.closest('.indicator') === null ? true : !this.open, event);
+    if (target.closest('.indicator') !== null && this.open) {
+      this.leave(event);
+    } else {
+      this.setOpen(true, event);
+    }
   };
 
   /** A click of the label only moves the focus, as on the other fields with a list. */
@@ -802,7 +827,7 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
       event.stopPropagation();
       this.setOpen(false, event);
     } else if (key === 'Tab' || (key === 'ArrowUp' && event.altKey)) {
-      this.setOpen(false, event);
+      this.leave(event);
     } else if (key === 'Enter') {
       if (this.highlighted >= 0) {
         event.preventDefault();

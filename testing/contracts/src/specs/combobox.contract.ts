@@ -284,6 +284,50 @@ export function comboboxContract(adapter: Mount<ComboboxContractProps>): void {
     expect([...new FormData(form)]).toEqual([['fruit', 'apple']]);
   });
 
+  it('keeps the label of a value set from outside after the options change', async () => {
+    const { form, fieldset } = formFixture(fixtures);
+    const field = await mount(
+      { name: 'fruit', filterMode: 'remote', value: '' },
+      { parent: fieldset },
+    );
+    await field.update({ value: 'apple' });
+    await field.update({ options: [{ value: 'kiwi', label: 'Kiwi' }] });
+    await expect.poll(() => input(field).value).toBe('Apple');
+    expect([...new FormData(form)]).toEqual([['fruit', 'apple']]);
+  });
+
+  it('restores the default value on reset after its option left the options', async () => {
+    const { form, fieldset } = formFixture(fixtures);
+    const field = await mount(
+      { name: 'fruit', filterMode: 'remote', defaultValue: 'apple' },
+      { parent: fieldset },
+    );
+    await field.update({ options: [{ value: 'banana', label: 'Banana' }] });
+    await userEvent.click(input(field));
+    await page.getByRole('option', { name: 'Banana' }).click();
+    expect([...new FormData(form)]).toEqual([['fruit', 'banana']]);
+    form.reset();
+    await expect.poll(() => input(field).value).toBe('Apple');
+    expect([...new FormData(form)]).toEqual([['fruit', 'apple']]);
+    expect(form.checkValidity()).toBe(true);
+  });
+
+  it('clears a single clearable choice whose text a user empties, unless Escape cancels', async () => {
+    const changed = vi.fn();
+    const field = await mount({ clearable: true, defaultValue: 'apple', onValueChange: changed });
+    await retype(field, '{Backspace}{Escape}');
+    expect(input(field).value).toBe('Apple');
+    expect(changed).not.toHaveBeenCalled();
+    await retype(field, '{Backspace}{Tab}');
+    expect(changed).toHaveBeenCalledExactlyOnceWith('', expect.anything());
+    await expect.poll(() => input(field).value).toBe('');
+    const kept = await mount({ defaultValue: 'apple', onValueChange: changed });
+    changed.mockClear();
+    await retype(kept, '{Backspace}{Tab}');
+    expect(changed).not.toHaveBeenCalled();
+    await expect.poll(() => input(kept).value).toBe('Apple');
+  });
+
   it('offers to create an option from a query that no label equals', async () => {
     const created = vi.fn<NonNullable<ComboboxContractProps['onCreate']>>();
     const changed = vi.fn();

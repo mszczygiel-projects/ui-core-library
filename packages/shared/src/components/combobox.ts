@@ -113,7 +113,8 @@ export interface ComboboxProps<Icon = unknown> extends FieldControlProps {
    */
   open?: boolean;
   /**
-   * Shows a button that clears the chosen options and the query.
+   * Shows a button that clears the chosen options and the query. From the keyboard, a single
+   * choice whose text a user empties is cleared when the user leaves the field, except with Escape.
    * @default false
    */
   clearable?: boolean;

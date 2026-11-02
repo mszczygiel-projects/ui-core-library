@@ -2,6 +2,7 @@ import { createRef } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
+import { userEvent } from 'vitest/browser';
 import { render } from 'vitest-browser-react';
 
 import { Combobox } from './Combobox.tsx';
@@ -64,5 +65,13 @@ describe('Combobox', () => {
   it('does not render its popup while closed', async () => {
     const screen = await render(<Combobox label="Fruit" options={options} />);
     expect(screen.container.ownerDocument.querySelector('[role="listbox"]')).toBeNull();
+  });
+
+  it('renders again after a press when it has no options', async () => {
+    const screen = await render(<Combobox label="Fruit" allowCreate />);
+    const input = screen.getByRole('combobox');
+    await userEvent.click(input);
+    await userEvent.keyboard('kiwi');
+    await expect.element(screen.getByRole('option', { name: 'Create “kiwi”' })).toBeVisible();
   });
 });

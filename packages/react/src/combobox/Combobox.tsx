@@ -106,20 +106,27 @@ const { filterMode: filterModes } = combobox.options;
 /** The keys that move the highlight of an open list; Home and End stay with the text. */
 const MOVING_KEYS = new Set(['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp']);
 
-/** The chosen options seen so far, whose labels outlast them in remote filtering. */
+/** One stable empty list, so that a render without options never looks like new options. */
+const NO_OPTIONS: ReactListboxItems = [];
+
+/**
+ * The options seen so far that the chosen or the default value holds, whose labels outlast them in
+ * remote filtering and after a reset.
+ */
 function rememberChosen(
   known: ReadonlyMap<string, ListboxOption<ReactNode>>,
   options: readonly ListboxOption<ReactNode>[],
-  value: ListboxValue,
+  values: readonly string[],
 ): ReadonlyMap<string, ListboxOption<ReactNode>> {
+  const kept = new Set(values);
   const next = new Map<string, ListboxOption<ReactNode>>();
   for (const [key, option] of known) {
-    if (isChosen(value, key)) {
+    if (kept.has(key)) {
       next.set(key, option);
     }
   }
   for (const option of options) {
-    if (isChosen(value, option.value)) {
+    if (kept.has(option.value)) {
       next.set(option.value, option);
     }
   }
@@ -152,7 +159,7 @@ export function Combobox({
   required = false,
   name,
   form,
-  options = [],
+  options = NO_OPTIONS,
   value,
   defaultValue,
   multiple = false,
@@ -194,13 +201,19 @@ export function Combobox({
   const [highlightState, setHighlighted] = useState(-1);
   const current = normalizeValue(value ?? uncontrolledValue, multiple);
   const flatOptions = flattenOptions(options);
+  const keptValues = [
+    ...new Set([...valuesOf(current), ...valuesOf(normalizeValue(defaultValue, multiple))]),
+  ];
+  // A string compares by content, so a value that only changes identity triggers nothing.
+  const keptKey = JSON.stringify(keptValues);
   const [seen, setSeen] = useState(() => ({
     options,
-    known: rememberChosen(new Map(), flatOptions, current),
+    keptKey,
+    known: rememberChosen(new Map(), flatOptions, keptValues),
   }));
   // New options or a new value: remember the chosen options they hold, while rendering.
-  if (seen.options !== options) {
-    setSeen({ options, known: rememberChosen(seen.known, flatOptions, current) });
+  if (seen.options !== options || seen.keptKey !== keptKey) {
+    setSeen({ options, keptKey, known: rememberChosen(seen.known, flatOptions, keptValues) });
   }
   const attributes = splitFieldAttributes(rest);
   const generatedId = useId();
@@ -294,13 +307,24 @@ export function Combobox({
     onOpenChange?.(next, { originalEvent });
   };
 
+  /**
+   * Closes the list as a user leaves it. A single clearable choice whose text the user emptied
+   * becomes no choice, which the keyboard reaches without the clear button.
+   */
+  const leave = (originalEvent: Event) => {
+    if (editing && !multiple && clearable && query.trim() === '' && current !== '') {
+      change('', originalEvent);
+    }
+    setOpen(false, originalEvent);
+  };
+
   usePopup({
     open: isOpen,
     root: rootRef,
     anchor: controlRef,
     popup: popupRef,
     onDismiss: (event) => {
-      setOpen(false, event);
+      leave(event);
     },
   });
 
@@ -315,9 +339,10 @@ export function Combobox({
   const change = (next: ListboxValue, originalEvent: Event) => {
     const shaped = normalizeValue(next, multiple);
     setUncontrolledValue(shaped);
+    // The chosen option may be one the options no longer hold by the next render.
     setSeen((previous) => ({
-      options: previous.options,
-      known: rememberChosen(previous.known, known, shaped),
+      ...previous,
+      known: rememberChosen(previous.known, known, [...valuesOf(shaped), ...keptValues]),
     }));
     onValueChange?.(shaped, { originalEvent });
   };
@@ -425,7 +450,7 @@ export function Combobox({
       event.stopPropagation();
       setOpen(false, native);
     } else if (key === 'Tab' || (key === 'ArrowUp' && event.altKey)) {
-      setOpen(false, native);
+      leave(native);
     } else if (key === 'Enter') {
       if (highlighted >= 0) {
         event.preventDefault();
@@ -463,7 +488,11 @@ export function Combobox({
       }
       // A press elsewhere in the row focuses the input; the arrow also opens and closes the list.
       inputRef.current?.focus();
-      setOpen(target.closest('.ui-combobox__indicator') === null ? true : !isOpen, event);
+      if (target.closest('.ui-combobox__indicator') !== null && isOpen) {
+        leave(event);
+      } else {
+        setOpen(true, event);
+      }
     };
   });
 

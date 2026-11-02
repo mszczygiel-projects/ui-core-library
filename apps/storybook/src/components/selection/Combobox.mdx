@@ -45,7 +45,7 @@ Supply `label`, `placeholder`, `hint` and the labels of the options in the langu
 ## Behaviour
 
 - Typing opens the list, filters it by the labels that contain the query, ignoring case and accents, and highlights the first match. Enter chooses it. A single choice closes the list and shows the label of the option in the field; a multiple choice adds a chip, empties the query and keeps the list open.
-- The query is never a value. Escape, Tab, a press outside and the focus leaving the field close the list, and the field shows the label of the chosen option again. A press on the arrow opens and closes the list; a press elsewhere on the field opens it, and a click of the label only moves the focus to the input.
+- The query is never a value. Escape, Tab, a press outside and the focus leaving the field close the list, and the field shows the label of the chosen option again. With `clearable`, a single choice whose text the user emptied is cleared when the user leaves the field, except with Escape. A press on the arrow opens and closes the list; a press elsewhere on the field opens it, and a click of the label only moves the focus to the input.
 - The list opens in the top layer, above other content and a modal dialog, below the field or above it when the window has no room below, at least as wide as the field.
 - Each choice reports the value once: `ui-value-change` with `detail.value` in the web component and `onValueChange(value, details)` in React, with a native `change` from the host of the web component. Opening and closing report `ui-open-change` and `onOpenChange(open, details)`. Each change of the query reports `ui-query-change` and `onQueryChange(query, details)`.
 - The field submits each chosen value as an entry under `name`, and an empty string without a choice. `required` blocks the submission until an option is chosen. A reset restores the initial value, empties the query and closes the list, without an event.
@@ -54,7 +54,7 @@ Supply `label`, `placeholder`, `hint` and the labels of the options in the langu
 
 ### Remote options
 
-With `filterMode="remote"` the component shows the options as given, and the author fetches them from the query events. The component sends every keystroke and waits for nothing: the author decides how long to wait, and aborts a request that a newer query replaces. Set `loading` while a request runs. A chosen option keeps its chip and its label after it leaves the options.
+With `filterMode="remote"` the component shows the options as given, and the author fetches them from the query events. The component sends every keystroke and waits for nothing: the author decides how long to wait, and aborts a request that a newer query replaces. Set `loading` while a request runs. A chosen option, and the option of the default value that a reset restores, keep their chips and labels after they leave the options.
 
 <FrameworkCanvas
   react={ReactStories.RemoteFiltering}
@@ -98,7 +98,7 @@ With `allowCreate`, a query that no label equals adds an option at the end of th
 - **Pattern.** The [editable combobox with list autocomplete](https://www.w3.org/WAI/ARIA/apg/patterns/combobox/examples/combobox-autocomplete-list/): the input has the role `combobox` and `aria-autocomplete="list"`, keeps the focus, and names the highlighted option with `aria-activedescendant`. The label names the input, the hint describes it, and a multiple list is `aria-multiselectable`.
 - **Keys.** Down opens the list on the chosen or first option, Up on the chosen or last one. On an open list, Down and Up move past disabled options and stop at the ends, Page Down and Page Up move further, Enter chooses, Escape and Alt+Up close it, and Tab closes it and moves on. Home, End, Left and Right move the cursor in the text. Backspace in an empty query removes the last chip.
 - **Chips.** They name the chosen options. Their remove buttons are out of the order of the Tab key, so Tab leaves the field in one press, and a press on one removes its option; Backspace removes them from the keyboard.
-- **Clear button.** It is out of the order of the Tab key: a user clears the text as in any text field.
+- **Clear button.** It is out of the order of the Tab key. From the keyboard, a user empties the text of a single `clearable` choice and leaves the field with Tab, which clears the choice; Escape gives the label back instead.
 - **Required and invalid.** `aria-required` and `aria-invalid` reach the input.
 - **Preferences.** Forced colours keep the frame, the arrow and the highlight. Reduced motion stops the arrow from turning.
 
