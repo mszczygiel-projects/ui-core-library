@@ -16,6 +16,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | DateField     | `DateField`     |
 | IconButton    | `IconButton`    |
 | LinkButton    | `LinkButton`    |
+| Listbox       | `Listbox`       |
 | Loader        | `Loader`        |
 | Notification  | `Notification`  |
 | NumberField   | `NumberField`   |
@@ -23,6 +24,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | RadioField    | `RadioField`    |
 | RadioGroup    | `RadioGroup`    |
 | SearchField   | `SearchField`   |
+| SelectField   | `SelectField`   |
 | SwitchField   | `SwitchField`   |
 | TextField     | `TextField`     |
 | TextareaField | `TextareaField` |

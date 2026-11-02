@@ -1,0 +1,81 @@
+/*
+ * SelectField: the trigger fills the field and takes every press on it, the arrow shows that a
+ * list opens, and the placeholder stands in for the value until an option is chosen.
+ */
+
+.trigger {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* The whole field opens the list, except the clear button, which comes later and sits above. */
+.trigger::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.trigger:disabled {
+  cursor: default;
+}
+
+.value {
+  flex: 1;
+  min-inline-size: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.value.placeholder {
+  color: var(--_placeholder);
+}
+
+.floating:has(.label) .trigger.empty:not(:focus) .placeholder {
+  color: transparent;
+}
+
+/* A label inside the field lies over the trigger and lets its presses through. */
+.control .label {
+  pointer-events: none;
+}
+
+.indicator {
+  /* An icon is 1em, so it takes the icon size however deeply the page wraps it. */
+  font-size: var(--_icon-size);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  color: var(--_icon);
+  pointer-events: none;
+}
+
+.base {
+  --_trailing-space: calc(var(--_icon-size) + var(--control-icon-gap));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .indicator {
+    transition-property: transform;
+    transition-duration: var(--duration-150);
+    transition-timing-function: var(--ease-out);
+  }
+}
+
+.open .indicator {
+  transform: rotate(0.5turn);
+}
+
+@media (forced-colors: active) {
+  .indicator {
+    color: CanvasText;
+  }
+
+  .trigger:disabled .value {
+    color: GrayText;
+  }
+}

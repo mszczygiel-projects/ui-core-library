@@ -5,6 +5,7 @@ import '@mszczygiel-projects/ui-core-web-components/chip';
 import '@mszczygiel-projects/ui-core-web-components/date-field';
 import '@mszczygiel-projects/ui-core-web-components/icon-button';
 import '@mszczygiel-projects/ui-core-web-components/link-button';
+import '@mszczygiel-projects/ui-core-web-components/listbox';
 import '@mszczygiel-projects/ui-core-web-components/loader';
 import '@mszczygiel-projects/ui-core-web-components/notification';
 import '@mszczygiel-projects/ui-core-web-components/number-field';
@@ -12,6 +13,7 @@ import '@mszczygiel-projects/ui-core-web-components/password-field';
 import '@mszczygiel-projects/ui-core-web-components/radio-field';
 import '@mszczygiel-projects/ui-core-web-components/radio-group';
 import '@mszczygiel-projects/ui-core-web-components/search-field';
+import '@mszczygiel-projects/ui-core-web-components/select-field';
 import '@mszczygiel-projects/ui-core-web-components/switch-field';
 import '@mszczygiel-projects/ui-core-web-components/text-field';
 import '@mszczygiel-projects/ui-core-web-components/textarea-field';
@@ -25,12 +27,14 @@ import { mountWebComponentChip } from '../harness/chip.tsx';
 import { mountWebComponentDateField } from '../harness/date-field.tsx';
 import { mountWebComponentIconButton } from '../harness/icon-button.tsx';
 import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
+import { mountWebComponentListbox } from '../harness/listbox.tsx';
 import { mountWebComponentNotification } from '../harness/notification.tsx';
 import { mountWebComponentNumberField } from '../harness/number-field.tsx';
 import { mountWebComponentPasswordField } from '../harness/password-field.tsx';
 import { mountWebComponentRadioField } from '../harness/radio-field.tsx';
 import { mountWebComponentRadioGroup } from '../harness/radio-group.tsx';
 import { mountWebComponentSearchField } from '../harness/search-field.tsx';
+import { mountWebComponentSelectField } from '../harness/select-field.tsx';
 import { mountWebComponentSwitchField } from '../harness/switch-field.tsx';
 import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { mountWebComponentTextareaField } from '../harness/textarea-field.tsx';
@@ -42,6 +46,7 @@ import { chipContract } from '../specs/chip.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
+import { listboxContract } from '../specs/listbox.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
@@ -49,6 +54,7 @@ import { passwordFieldContract } from '../specs/password-field.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
 import { searchFieldContract } from '../specs/search-field.contract.ts';
+import { selectFieldContract } from '../specs/select-field.contract.ts';
 import { switchFieldContract } from '../specs/switch-field.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
@@ -111,6 +117,14 @@ describe('RadioGroup, web component', () => {
 
 describe('RadioField, web component', () => {
   radioFieldContract(mountWebComponentRadioField);
+});
+
+describe('Listbox, web component', () => {
+  listboxContract(mountWebComponentListbox);
+});
+
+describe('SelectField, web component', () => {
+  selectFieldContract(mountWebComponentSelectField);
 });
 
 describe('NumberField, web component', () => {

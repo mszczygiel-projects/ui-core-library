@@ -250,8 +250,11 @@
   transition-timing-function: var(--ease-out);
 }
 
-/* Native value selectors also cover browser autofill, reset and controlled value changes. */
-.floating:has(.input:is(:focus, :not(:placeholder-shown))) .label {
+/*
+ * Native value selectors also cover browser autofill, reset and controlled value changes. A control
+ * without a placeholder of its own, such as the trigger of SelectField, marks itself empty.
+ */
+.floating:has(.input:is(:focus, :not(:placeholder-shown, .empty))) .label {
   inset-block-start: calc(-1 * var(--control-label-floating-padding-inline));
   inset-inline-start: calc(var(--_padding-inline) - var(--control-label-floating-padding-inline));
 
@@ -335,7 +338,7 @@
   border-block-end: var(--ring-width) var(--ring-style) var(--color-ring-default);
 }
 
-.underlined.floating:has(.input:is(:focus, :not(:placeholder-shown))) .label {
+.underlined.floating:has(.input:is(:focus, :not(:placeholder-shown, .empty))) .label {
   inset-inline-start: 0;
   padding-inline: 0;
 }

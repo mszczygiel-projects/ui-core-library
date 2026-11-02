@@ -239,7 +239,10 @@
 }
 
 /* Native value selectors also cover browser autofill, reset and controlled value changes. */
-.ui-field--floating:has(.ui-field__input:is(:focus, :not(:placeholder-shown))) .ui-field__label {
+.ui-field--floating:has(
+    .ui-field__input:is(:focus, :not(:placeholder-shown, .ui-field__input--empty))
+  )
+  .ui-field__label {
   inset-block-start: calc(-1 * var(--control-label-floating-padding-inline));
   inset-inline-start: calc(var(--_padding-inline) - var(--control-label-floating-padding-inline));
 
@@ -334,7 +337,9 @@
   border-block-end: var(--ring-width) var(--ring-style) var(--color-ring-default);
 }
 
-.ui-field--underlined.ui-field--floating:has(.ui-field__input:is(:focus, :not(:placeholder-shown)))
+.ui-field--underlined.ui-field--floating:has(
+    .ui-field__input:is(:focus, :not(:placeholder-shown, .ui-field__input--empty))
+  )
   .ui-field__label {
   inset-inline-start: 0;
   padding-inline: 0;

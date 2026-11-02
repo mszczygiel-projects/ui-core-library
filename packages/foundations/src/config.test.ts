@@ -117,10 +117,12 @@ describe('the configuration', () => {
         button: { loading: 'Loading' },
         chip: { dismiss: 'Remove' },
         iconButton: { loading: 'Loading' },
+        listbox: { empty: 'No options' },
         loader: { label: 'Wait' },
         notification: { dismiss: 'Dismiss' },
         passwordField: { reveal: 'Show password' },
         searchField: { clear: 'Clear search' },
+        selectField: { clear: 'Clear selection' },
       },
       loaderVariant: 'spinner' satisfies LoaderVariant,
     });

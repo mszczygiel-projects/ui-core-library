@@ -53,6 +53,10 @@ export interface UiCoreLabels {
     /** The description of an icon button while its action is in progress. */
     readonly loading: string;
   };
+  readonly listbox: {
+    /** The message of a list without options. */
+    readonly empty: string;
+  };
   readonly loader: {
     /** The accessible name of a loader that has no `label` of its own. */
     readonly label: string;
@@ -67,6 +71,10 @@ export interface UiCoreLabels {
   };
   readonly searchField: {
     /** The name of the button that clears the query. */
+    readonly clear: string;
+  };
+  readonly selectField: {
+    /** The name of the button that clears the chosen option. */
     readonly clear: string;
   };
 }
@@ -135,10 +143,12 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   button: { loading: 'Loading' },
   chip: { dismiss: 'Remove' },
   iconButton: { loading: 'Loading' },
+  listbox: { empty: 'No options' },
   loader: { label: 'Loading' },
   notification: { dismiss: 'Dismiss' },
   passwordField: { reveal: 'Show password' },
   searchField: { clear: 'Clear search' },
+  selectField: { clear: 'Clear selection' },
 });
 
 const DEFAULT_CONFIG: UiCoreConfig = Object.freeze({
