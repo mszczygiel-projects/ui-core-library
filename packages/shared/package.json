@@ -42,6 +42,18 @@
       "types": "./dist/components/date-field.d.ts",
       "default": "./dist/components/date-field.js"
     },
+    "./dialog": {
+      "types": "./dist/components/dialog.d.ts",
+      "default": "./dist/components/dialog.js"
+    },
+    "./drag-dismiss": {
+      "types": "./dist/utils/drag-dismiss.d.ts",
+      "default": "./dist/utils/drag-dismiss.js"
+    },
+    "./drawer": {
+      "types": "./dist/components/drawer.d.ts",
+      "default": "./dist/components/drawer.js"
+    },
     "./icon-button": {
       "types": "./dist/components/icon-button.d.ts",
       "default": "./dist/components/icon-button.js"
@@ -105,6 +117,10 @@
     "./radio-navigation": {
       "types": "./dist/utils/radio-navigation.d.ts",
       "default": "./dist/utils/radio-navigation.js"
+    },
+    "./scroll-lock": {
+      "types": "./dist/utils/scroll-lock.d.ts",
+      "default": "./dist/utils/scroll-lock.js"
     },
     "./search-field": {
       "types": "./dist/components/search-field.d.ts",

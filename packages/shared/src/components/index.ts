@@ -5,6 +5,8 @@ import { chip } from './chip.ts';
 import { combobox } from './combobox.ts';
 import type { ComponentSpec } from './component.ts';
 import { dateField } from './date-field.ts';
+import { dialog } from './dialog.ts';
+import { drawer } from './drawer.ts';
 import { iconButton } from './icon-button.ts';
 import { linkButton } from './link-button.ts';
 import { listbox } from './listbox.ts';
@@ -42,4 +44,6 @@ export const specs: readonly ComponentSpec[] = [
   numberField,
   dateField,
   combobox,
+  dialog,
+  drawer,
 ];
