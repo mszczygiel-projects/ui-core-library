@@ -1,9 +1,9 @@
 /*
- * The list of options of Listbox and of the popup of SelectField, in the classes of the list
- * family `ui-list`: its groups, its options in each size and state, the mark of a chosen option
- * and the message of an empty list. A single choice marks the chosen option with a check; a
- * multiple choice draws a checkbox in its place. The highlight follows the keyboard and the
- * pointer alike.
+ * The list of options of Listbox and of the popups of SelectField and Combobox, in the classes of
+ * the list family `ui-list`: its groups, its options in each size and state, the mark of a chosen
+ * option, the option that creates one from a query and the message of an empty or loading list. A
+ * single choice marks the chosen option with a check; a multiple choice draws a checkbox in its
+ * place. The highlight follows the keyboard and the pointer alike.
  */
 
 .ui-list__listbox {
@@ -183,7 +183,15 @@
   --_box-mark: var(--color-checkbox-checked-mark-disabled);
 }
 
+.ui-list__create {
+  --_option-text: var(--color-listbox-create-text);
+  --_option-icon: var(--color-listbox-create-text);
+}
+
 .ui-list__message {
+  display: flex;
+  align-items: center;
+  gap: var(--_option-gap);
   padding-block: var(--_option-padding-stack);
   padding-inline: var(--listbox-option-padding-inline);
   color: var(--color-listbox-message-text);

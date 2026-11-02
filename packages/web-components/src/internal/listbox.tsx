@@ -1,4 +1,4 @@
-import { iconCheckmark } from '@mszczygiel-projects/ui-core-icons';
+import { iconCheckmark, iconPlus } from '@mszczygiel-projects/ui-core-icons';
 import type {
   ListboxItems,
   ListboxOption,
@@ -26,6 +26,17 @@ export interface ListboxViewProps {
   /** The index of the highlighted option among all options, or -1. */
   readonly highlighted: number;
   readonly emptyLabel: string;
+  /**
+   * The text of an option after the others that creates one from a query, at the index that
+   * follows the last option.
+   */
+  readonly create?: string;
+  /**
+   * The indicator of a list whose options load, which the component renders so that the element
+   * it uses is its own dependency. The list then shows `loadingLabel` instead of its options.
+   */
+  readonly loader?: VNode;
+  readonly loadingLabel?: string;
   readonly labelledBy?: string;
   readonly ariaLabel?: string;
   readonly describedBy?: string;
@@ -45,7 +56,8 @@ export interface ListboxViewProps {
 
 /**
  * The anatomy of every list of options: groups with their headings, options with an icon, a label
- * and a mark, and the message of an empty list. It renders into the shadow root of its component,
+ * and a mark, an option that creates one from a query, and the message of an empty or loading
+ * list. It renders into the shadow root of its component,
  * since `aria-activedescendant` and `aria-controls` name elements of their own tree.
  */
 export function ListboxView(props: ListboxViewProps): VNode {
@@ -80,7 +92,32 @@ export function ListboxView(props: ListboxViewProps): VNode {
   } else {
     options.push(...props.items.map(optionOf));
   }
-  const empty = index === 0;
+  const count = index;
+  const loading = props.loader !== undefined;
+  const create =
+    props.create === undefined || loading ? null : (
+      <div
+        id={optionId(props.id, count)}
+        part="create"
+        class={`option create${count === props.highlighted ? ' highlighted' : ''}`}
+        role="option"
+        aria-selected="false"
+        onMouseDown={(event: MouseEvent) => {
+          event.preventDefault();
+        }}
+        onClick={(event: MouseEvent) => {
+          props.onChoose(count, event);
+        }}
+        onPointerMove={() => {
+          if (count !== props.highlighted) {
+            props.onHighlight(count);
+          }
+        }}
+      >
+        <span class="option-icon" aria-hidden="true" innerHTML={iconPlus} />
+        <span class="option-label">{props.create}</span>
+      </div>
+    );
   return (
     <div
       id={props.id}
@@ -95,6 +132,7 @@ export function ListboxView(props: ListboxViewProps): VNode {
       aria-invalid={props.invalid === true ? 'true' : undefined}
       aria-required={props.required === true ? 'true' : undefined}
       aria-disabled={props.disabled === true ? 'true' : undefined}
+      aria-busy={loading ? 'true' : undefined}
       aria-activedescendant={
         props.focusable && props.highlighted >= 0
           ? optionId(props.id, props.highlighted)
@@ -103,12 +141,17 @@ export function ListboxView(props: ListboxViewProps): VNode {
       onKeyDown={props.onKeyDown}
       onFocus={props.onFocus}
     >
-      {empty ? (
+      {loading ? (
+        <div part="message" class="message" role="presentation">
+          {props.loader}
+          {props.loadingLabel}
+        </div>
+      ) : count === 0 && create === null ? (
         <div part="message" class="message" role="presentation">
           {props.emptyLabel}
         </div>
       ) : (
-        options
+        [...options, create]
       )}
     </div>
   );

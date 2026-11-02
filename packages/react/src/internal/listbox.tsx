@@ -1,6 +1,6 @@
 'use client';
 
-import { iconCheckmark } from '@mszczygiel-projects/ui-core-icons';
+import { iconCheckmark, iconPlus } from '@mszczygiel-projects/ui-core-icons';
 import type {
   ListboxItems,
   ListboxOption,
@@ -51,6 +51,14 @@ export interface ListboxViewProps {
   /** The index of the highlighted option among all options, or -1. */
   readonly highlighted: number;
   readonly emptyLabel: string;
+  /**
+   * The text of an option after the others that creates one from a query, at the index that
+   * follows the last option.
+   */
+  readonly create?: string;
+  /** The indicator of a list whose options load; the list then shows `loadingLabel` instead. */
+  readonly loader?: ReactNode;
+  readonly loadingLabel?: string;
   readonly labelledBy?: string;
   readonly ariaLabel?: string;
   readonly describedBy?: string;
@@ -85,7 +93,8 @@ function enabledOptionAt(event: MouseEvent | PointerEvent): number | undefined {
 
 /**
  * The anatomy of every list of options: groups with their headings, options with an icon, a label
- * and a mark, and the message of an empty list. The list takes the presses of the pointer for its
+ * and a mark, an option that creates one from a query, and the message of an empty or loading
+ * list. The list takes the presses of the pointer for its
  * options, which a list with `aria-activedescendant` never focuses.
  */
 export function ListboxView({
@@ -97,6 +106,9 @@ export function ListboxView({
   size,
   highlighted,
   emptyLabel,
+  create,
+  loader,
+  loadingLabel,
   labelledBy,
   ariaLabel,
   describedBy,
@@ -171,7 +183,30 @@ export function ListboxView({
   } else {
     content = items.map(optionOf);
   }
-  const empty = index === 0;
+  const count = index;
+  const loading = loader !== undefined;
+  const createRow =
+    create === undefined || loading ? null : (
+      <div
+        key="create"
+        id={optionId(id, count)}
+        data-index={count}
+        className={classNames(
+          'ui-list__option',
+          listPart(block, 'create'),
+          count === highlighted && 'ui-list__option--highlighted',
+        )}
+        role="option"
+        aria-selected={false}
+      >
+        <span
+          className="ui-list__option-icon"
+          aria-hidden="true"
+          dangerouslySetInnerHTML={{ __html: iconPlus }}
+        />
+        <span className="ui-list__option-label">{create}</span>
+      </div>
+    );
   return (
     <div
       {...attributes}
@@ -191,6 +226,7 @@ export function ListboxView({
       aria-invalid={invalid === true || undefined}
       aria-required={required === true || undefined}
       aria-disabled={disabled === true || undefined}
+      aria-busy={loading || undefined}
       aria-activedescendant={focusable && highlighted >= 0 ? optionId(id, highlighted) : undefined}
       onKeyDown={onKeyDown}
       onFocus={onFocus}
@@ -211,12 +247,20 @@ export function ListboxView({
         }
       }}
     >
-      {empty ? (
+      {loading ? (
+        <div className={listPart(block, 'message')} role="presentation">
+          {loader}
+          {loadingLabel}
+        </div>
+      ) : count === 0 && createRow === null ? (
         <div className={listPart(block, 'message')} role="presentation">
           {emptyLabel}
         </div>
       ) : (
-        content
+        <>
+          {content}
+          {createRow}
+        </>
       )}
     </div>
   );
