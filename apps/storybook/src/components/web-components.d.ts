@@ -10,6 +10,11 @@ import type {
   ComboboxQueryDetail,
 } from '@mszczygiel-projects/ui-core-shared/combobox';
 import type { DateFieldProps } from '@mszczygiel-projects/ui-core-shared/date-field';
+import type {
+  DialogProps,
+  OverlayOpenChangeDetail,
+} from '@mszczygiel-projects/ui-core-shared/dialog';
+import type { DrawerProps } from '@mszczygiel-projects/ui-core-shared/drawer';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
 import type {
@@ -38,6 +43,20 @@ type CustomElement<Props> = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLE
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-drawer': CustomElement<
+        DrawerProps & {
+          readonly 'onui-open-change'?: (
+            event: CustomEvent<OverlayOpenChangeDetail<Event>>,
+          ) => void;
+        }
+      >;
+      'ui-dialog': CustomElement<
+        DialogProps & {
+          readonly 'onui-open-change'?: (
+            event: CustomEvent<OverlayOpenChangeDetail<Event>>,
+          ) => void;
+        }
+      >;
       'ui-combobox': CustomElement<
         ComboboxProps & {
           readonly 'onui-query-change'?: (event: CustomEvent<ComboboxQueryDetail<Event>>) => void;

@@ -15,6 +15,8 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Chip          | `Chip`          |
 | Combobox      | `Combobox`      |
 | DateField     | `DateField`     |
+| Dialog        | `Dialog`        |
+| Drawer        | `Drawer`        |
 | IconButton    | `IconButton`    |
 | LinkButton    | `LinkButton`    |
 | Listbox       | `Listbox`       |

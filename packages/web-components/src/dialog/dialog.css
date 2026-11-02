@@ -1,0 +1,130 @@
+.base {
+  --_max-width: var(--dialog-medium-max-width);
+  --_margin: var(--dialog-margin);
+  --_radius: var(--dialog-radius);
+
+  inline-size: var(--_max-width);
+  max-inline-size: calc(100% - 2 * var(--_margin));
+  max-block-size: calc(100% - 2 * var(--_margin));
+  margin: auto;
+  padding-block: var(--_padding-stack);
+  border-width: var(--_border-width);
+  border-radius: var(--_radius);
+}
+
+.small {
+  --_max-width: var(--dialog-small-max-width);
+}
+
+.large {
+  --_max-width: var(--dialog-large-max-width);
+}
+
+.fullscreen {
+  inline-size: 100%;
+  block-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  border-width: 0;
+  border-radius: 0;
+}
+
+.header {
+  display: flex;
+  flex: none;
+  align-items: flex-start;
+  gap: var(--dialog-header-gap);
+  padding-inline: var(--_padding-inline);
+  padding-block-end: var(--dialog-gap);
+}
+
+.titles {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--dialog-header-gap);
+  min-inline-size: 0;
+}
+
+.heading {
+  margin: 0;
+  font-family: var(--dialog-heading-font-family);
+  font-size: var(--dialog-heading-font-size);
+  font-weight: var(--dialog-heading-font-weight);
+  line-height: var(--dialog-heading-line-height);
+  letter-spacing: var(--dialog-heading-letter-spacing);
+}
+
+.description {
+  margin: 0;
+  color: var(--color-dialog-description-text);
+  font-family: var(--dialog-description-font-family);
+  font-size: var(--dialog-description-font-size);
+  font-weight: var(--dialog-description-font-weight);
+  line-height: var(--dialog-description-line-height);
+  letter-spacing: var(--dialog-description-letter-spacing);
+}
+
+.close {
+  flex: none;
+}
+
+.footer {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--dialog-footer-gap);
+  padding-inline: var(--_padding-inline);
+  padding-block-start: var(--dialog-gap);
+}
+
+/* The attribute hidden loses to the display of a part, so an empty part needs this rule. */
+.header[hidden],
+.footer[hidden] {
+  display: none;
+}
+
+/* A separator shows only where the content runs on under the header or the footer. */
+.scrolled-from-start .header {
+  box-shadow: 0 var(--_border-width) 0 var(--color-dialog-divider);
+}
+
+.scrolled-before-end .footer {
+  box-shadow: 0 calc(-1 * var(--_border-width)) 0 var(--color-dialog-divider);
+}
+
+.grabber {
+  display: none;
+}
+
+/* Below the breakpoint, the dialog rises from the bottom of the window as a sheet. */
+@media (width < 64rem) {
+  .base:not(.fullscreen) {
+    --_enter-from: 0 100%;
+
+    inline-size: 100%;
+    max-inline-size: 100%;
+    max-block-size: calc(100% - var(--_margin));
+    margin-block: auto 0;
+    margin-inline: 0;
+    border-block-end-width: 0;
+    border-inline-width: 0;
+    border-start-start-radius: var(--dialog-sheet-radius);
+    border-start-end-radius: var(--dialog-sheet-radius);
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+  }
+
+  .base:not(.fullscreen) .grabber {
+    display: block;
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+  }
+
+  ::slotted([slot='footer']) {
+    inline-size: 100%;
+  }
+}
