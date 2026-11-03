@@ -696,6 +696,7 @@ css --color-pagination-item-foreground-disabled
 css --color-pagination-item-foreground-hover
 css --color-pagination-item-selected-background
 css --color-pagination-item-selected-foreground
+css --color-pagination-status-foreground
 css --color-popover-background
 css --color-popover-border
 css --color-radio-background-default
@@ -1038,7 +1039,12 @@ css --padding-stack-xl
 css --padding-stack-xs
 css --pagination-gap
 css --pagination-item-size
+css --pagination-jump-gap
 css --pagination-jump-input-width
+css --pagination-section-gap
+css --pagination-status-font-size
+css --pagination-status-font-weight
+css --pagination-status-line-height
 css --popover-arrow-size
 css --popover-border-width
 css --popover-offset
@@ -1825,6 +1831,7 @@ tailwind --color-pagination-item-foreground-disabled
 tailwind --color-pagination-item-foreground-hover
 tailwind --color-pagination-item-selected-background
 tailwind --color-pagination-item-selected-foreground
+tailwind --color-pagination-status-foreground
 tailwind --color-popover-background
 tailwind --color-popover-border
 tailwind --color-radio-background-default
@@ -2343,6 +2350,7 @@ ts tokens.components.color.pagination.item.foreground.disabled
 ts tokens.components.color.pagination.item.foreground.hover
 ts tokens.components.color.pagination.item.selected.background
 ts tokens.components.color.pagination.item.selected.foreground
+ts tokens.components.color.pagination.status.foreground
 ts tokens.components.color.popover.background
 ts tokens.components.color.popover.border
 ts tokens.components.color.radio.background.default
@@ -2569,7 +2577,12 @@ ts tokens.components.notification.padding.stack
 ts tokens.components.notification.radius
 ts tokens.components.pagination.gap
 ts tokens.components.pagination.item.size
+ts tokens.components.pagination.jump.gap
 ts tokens.components.pagination.jump.input.width
+ts tokens.components.pagination.section.gap
+ts tokens.components.pagination.status.fontSize
+ts tokens.components.pagination.status.fontWeight
+ts tokens.components.pagination.status.lineHeight
 ts tokens.components.popover.arrow.size
 ts tokens.components.popover.border.width
 ts tokens.components.popover.offset
