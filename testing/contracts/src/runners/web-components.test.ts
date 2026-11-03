@@ -6,6 +6,7 @@ import '@mszczygiel-projects/ui-core-web-components/combobox';
 import '@mszczygiel-projects/ui-core-web-components/date-field';
 import '@mszczygiel-projects/ui-core-web-components/dialog';
 import '@mszczygiel-projects/ui-core-web-components/drawer';
+import '@mszczygiel-projects/ui-core-web-components/file-input-field';
 import '@mszczygiel-projects/ui-core-web-components/icon-button';
 import '@mszczygiel-projects/ui-core-web-components/link-button';
 import '@mszczygiel-projects/ui-core-web-components/listbox';
@@ -31,6 +32,7 @@ import { mountWebComponentCombobox } from '../harness/combobox.tsx';
 import { mountWebComponentDateField } from '../harness/date-field.tsx';
 import { mountWebComponentDialog } from '../harness/dialog.tsx';
 import { mountWebComponentDrawer } from '../harness/drawer.tsx';
+import { mountWebComponentFileInputField } from '../harness/file-input-field.tsx';
 import { mountWebComponentIconButton } from '../harness/icon-button.tsx';
 import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
 import { mountWebComponentListbox } from '../harness/listbox.tsx';
@@ -53,6 +55,7 @@ import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
 import { dialogContract } from '../specs/dialog.contract.ts';
 import { drawerContract } from '../specs/drawer.contract.ts';
+import { fileInputFieldContract } from '../specs/file-input-field.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { listboxContract } from '../specs/listbox.contract.ts';
@@ -161,4 +164,8 @@ describe('Drawer and Dialog, web components', () => {
   sharedScrollLockContract(mountWebComponentDrawer, { label: 'Filters' }, mountWebComponentDialog, {
     heading: 'Delete file',
   });
+});
+
+describe('FileInputField, web component', () => {
+  fileInputFieldContract(mountWebComponentFileInputField);
 });

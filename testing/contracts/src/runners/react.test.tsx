@@ -11,6 +11,7 @@ import { mountReactCombobox } from '../harness/combobox.tsx';
 import { mountReactDateField } from '../harness/date-field.tsx';
 import { mountReactDialog } from '../harness/dialog.tsx';
 import { mountReactDrawer, mountWebComponentDrawer } from '../harness/drawer.tsx';
+import { mountReactFileInputField } from '../harness/file-input-field.tsx';
 import { mountReactIconButton } from '../harness/icon-button.tsx';
 import { mountReactLinkButton } from '../harness/link-button.tsx';
 import { mountReactListbox } from '../harness/listbox.tsx';
@@ -33,6 +34,7 @@ import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
 import { dialogContract } from '../specs/dialog.contract.ts';
 import { drawerContract } from '../specs/drawer.contract.ts';
+import { fileInputFieldContract } from '../specs/file-input-field.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { listboxContract } from '../specs/listbox.contract.ts';
@@ -147,4 +149,8 @@ describe('Drawer of the web components under Dialog of React', () => {
   sharedScrollLockContract(mountWebComponentDrawer, { label: 'Filters' }, mountReactDialog, {
     heading: 'Delete file',
   });
+});
+
+describe('FileInputField, React', () => {
+  fileInputFieldContract(mountReactFileInputField);
 });
