@@ -15,6 +15,11 @@ import type {
   OverlayOpenChangeDetail,
 } from '@mszczygiel-projects/ui-core-shared/dialog';
 import type { DrawerProps } from '@mszczygiel-projects/ui-core-shared/drawer';
+import type {
+  FileInputFieldProps,
+  FileInputFieldRejectDetail,
+  FileInputFieldValueChangeDetail,
+} from '@mszczygiel-projects/ui-core-shared/file-input-field';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
 import type { LinkButtonProps } from '@mszczygiel-projects/ui-core-shared/link-button';
 import type {
@@ -40,9 +45,27 @@ import type { DetailedHTMLProps, HTMLAttributes } from 'react';
  */
 type CustomElement<Props> = DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement> & Props;
 
+/** An element whose defaultValue property holds files, which the string attribute of React cannot. */
+type FileElement<Props> = Omit<
+  DetailedHTMLProps<HTMLAttributes<HTMLElement>, HTMLElement>,
+  'defaultValue'
+> &
+  Props;
+
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-file-input-field': FileElement<
+        FileInputFieldProps<File> & {
+          readonly defaultValue?: readonly File[];
+          readonly 'onui-value-change'?: (
+            event: CustomEvent<FileInputFieldValueChangeDetail<Event, File>>,
+          ) => void;
+          readonly 'onui-reject'?: (
+            event: CustomEvent<FileInputFieldRejectDetail<Event, File>>,
+          ) => void;
+        }
+      >;
       'ui-drawer': CustomElement<
         DrawerProps & {
           readonly 'onui-open-change'?: (

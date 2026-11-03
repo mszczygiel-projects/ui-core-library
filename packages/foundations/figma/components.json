@@ -4327,7 +4327,7 @@
               }
             }
           },
-          "hover": {
+          "active": {
             "$value": "{Surfaces.color.background.tint}",
             "$type": "color",
             "$extensions": {
@@ -4339,7 +4339,7 @@
                   "SHAPE_FILL"
                 ],
                 "codeSyntax": {
-                  "WEB": "var(--color-file-input-item-background-hover)"
+                  "WEB": "var(--color-file-input-item-background-active)"
                 },
                 "hiddenFromPublishing": false
               }

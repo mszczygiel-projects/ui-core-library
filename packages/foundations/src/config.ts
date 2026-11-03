@@ -63,6 +63,14 @@ export interface UiCoreLabels {
     /** The name of the button that closes a drawer. */
     readonly close: string;
   };
+  readonly fileInputField: {
+    /** The text of the zone that takes files from a dialog or a drop. */
+    readonly prompt: string;
+    /** The text of the button that replaces a previewed image. */
+    readonly replace: string;
+    /** The name of the button that removes a file, as a whole phrase. */
+    readonly remove: (fileName: string) => string;
+  };
   readonly iconButton: {
     /** The description of an icon button while its action is in progress. */
     readonly loading: string;
@@ -161,6 +169,11 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   combobox: { clear: 'Clear', create: (query) => `Create “${query}”` },
   dialog: { close: 'Close' },
   drawer: { close: 'Close' },
+  fileInputField: {
+    prompt: 'Drag files here or browse',
+    replace: 'Replace',
+    remove: (fileName) => `Remove ${fileName}`,
+  },
   iconButton: { loading: 'Loading' },
   listbox: { empty: 'No options', loading: 'Loading options' },
   loader: { label: 'Loading' },

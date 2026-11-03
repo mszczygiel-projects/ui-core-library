@@ -8,7 +8,7 @@ import { type RefObject, useEffect, useState } from 'react';
  * its own control needs to know.
  */
 export function useFormState(
-  control: RefObject<HTMLSelectElement | null>,
+  control: RefObject<HTMLSelectElement | HTMLInputElement | null>,
   onReset: () => void,
 ): boolean {
   const [fieldsetDisabled, setFieldsetDisabled] = useState(false);
@@ -21,9 +21,15 @@ export function useFormState(
     const events = new AbortController();
     element.form?.addEventListener(
       'reset',
-      () => {
-        // The form resets its controls after the event.
-        queueMicrotask(onReset);
+      (event) => {
+        // The form resets its controls after the event, and only when no listener canceled it.
+        // A reset button dispatches the event from a click, where a microtask runs between two
+        // listeners, so the check waits for a task, after every listener and the reset itself.
+        setTimeout(() => {
+          if (!event.defaultPrevented) {
+            onReset();
+          }
+        }, 0);
       },
       { signal: events.signal },
     );
