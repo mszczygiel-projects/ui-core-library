@@ -22,7 +22,7 @@
   | Options as data | `options`: options `{ value, label, disabled?, icon? }`, alone or in groups `{ label?, options }`. The empty string is no value                                          |
   | Accessible name | `label`, required where nothing visible names the component                                                                                                              |
   | Modal           | `open` as for a popup. A request to close carries a `reason`: `escape`, `backdrop`, `close-button`, `drag` or `form`, with the `returnValue` of the form                 |
-  | Edge            | `placement`: `start`, `end` or `bottom`; `start` and `end` follow the direction of the text                                                                              |
+  | Edge            | `placement`: `start`, `end` or `bottom`; `start` and `end` follow the direction of the text. A popup beside its trigger adds `top`                                       |
 
 - Booleans are false by default and named after the case they turn on, such as `hideLabel`.
 - A modal closes at the request of the user. The web component dispatches a cancelable `ui-open-change` first and closes unless the page cancels it; React calls `onOpenChange(false, details)`, and a controlled modal closes when its parent agrees. A close that the browser forces cannot be refused, and setting `open` reports nothing. `alert` makes a dialog an alert dialog that a press on the backdrop does not close, `hideCloseButton` removes its close button, and `dragToDismiss` lets the user drag a sheet down to close it. The element marked with `autofocus` or `data-autofocus` takes the focus when a modal opens, since React's `autoFocus` sets no attribute.
@@ -40,7 +40,8 @@
   - The web component follows native elements: its attribute is the default that a reset restores, and its property holds the current value.
 - **Attributes**: React passes `className`, `style` and `data-*` to the root, and `id`, `aria-*` and native attributes to the native control.
 - **The host belongs to the page**: a web component reflects only `name`, `disabled`, `readonly` and `open`. It never writes `role`, `aria-*`, `class`, `style` or `tabindex` on its host.
-- **Native attributes of the host**: a web component never declares a prop that `HTMLElement` already owns, such as `inputMode`, `enterKeyHint` or `spellcheck`. It passes the native attribute of its host to its inner control, and an author's `aria-label` too.
+- **Native attributes of the host**: a web component never declares a prop that `HTMLElement` already owns, such as `inputMode`, `enterKeyHint` or `spellcheck`. It passes the native attribute of its host to its inner control, and an author's `aria-label` too. Button, IconButton and LinkButton also pass `aria-expanded`, `aria-haspopup` and the elements of `ariaDescribedByElements`, so that a popup can describe its trigger.
+- **The trigger of a popup**: Popover and Tooltip write the relationship on the element of their trigger, which the page gives them: `aria-expanded` and `aria-haspopup` for Popover, `ariaDescribedByElements` for Tooltip. They never write anything else on it, nor on their own host.
 - **Exceptions**: an exception to these rules is written in the component's specification with its reason.
 
 ### Forms
@@ -63,6 +64,7 @@
 - Labels, hints and errors render in the same root as the control and link to it.
 - Focus shows only on `:focus-visible`, as an outline drawn with the focus-ring tokens.
 - No interactive element is nested in another. Targets are at least 24 × 24 px.
+- A Popover opens from an element that acts as a button, never from text, an icon or a link. A Tooltip shows on hover after a delay and on keyboard focus at once, stays while the pointer moves onto it, and closes on Escape before anything around it (WCAG 1.4.13). It holds plain text that nothing else needs to reach, since touch never shows it.
 - A component that operates the controls of its parts from its own keys, such as Combobox and the remove buttons of its chips, takes them out of the order of the Tab key with a prop of the part, such as `skipDismissInTabOrder` of Chip, so that Tab leaves it in one press.
 - Components respect `prefers-reduced-motion` and `forced-colors`.
 
