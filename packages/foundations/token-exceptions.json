@@ -65,6 +65,22 @@
       "reason": "The size of the popover arrow."
     },
     {
+      "token": "Components/tooltip/arrow/size",
+      "reason": "The size of the tooltip arrow."
+    },
+    {
+      "token": "Components/tooltip/hide-delay",
+      "reason": "The delay before a tooltip hides once the pointer leaves, so that the pointer can move onto it."
+    },
+    {
+      "token": "Components/tooltip/max-width",
+      "reason": "The width after which the text of a tooltip wraps."
+    },
+    {
+      "token": "Components/tooltip/show-delay",
+      "reason": "The delay before a tooltip shows on hover, so that a pointer passing over its trigger shows nothing."
+    },
+    {
       "token": "Components/radio/border/inner-width",
       "reason": "The size of the dot of a selected radio button."
     },
