@@ -1,4 +1,5 @@
 import '@mszczygiel-projects/ui-core-web-components/badge';
+import '@mszczygiel-projects/ui-core-web-components/breadcrumbs';
 import '@mszczygiel-projects/ui-core-web-components/button';
 import '@mszczygiel-projects/ui-core-web-components/checkbox-field';
 import '@mszczygiel-projects/ui-core-web-components/chip';
@@ -13,6 +14,7 @@ import '@mszczygiel-projects/ui-core-web-components/listbox';
 import '@mszczygiel-projects/ui-core-web-components/loader';
 import '@mszczygiel-projects/ui-core-web-components/notification';
 import '@mszczygiel-projects/ui-core-web-components/number-field';
+import '@mszczygiel-projects/ui-core-web-components/pagination';
 import '@mszczygiel-projects/ui-core-web-components/password-field';
 import '@mszczygiel-projects/ui-core-web-components/radio-field';
 import '@mszczygiel-projects/ui-core-web-components/radio-group';
@@ -25,6 +27,7 @@ import '@mszczygiel-projects/ui-core-web-components/textarea-field';
 import { describe } from 'vitest';
 
 import { mountWebComponentBadge } from '../harness/badge.tsx';
+import { mountWebComponentBreadcrumbs } from '../harness/breadcrumbs.tsx';
 import { mountWebComponentButton } from '../harness/button.tsx';
 import { mountWebComponentCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountWebComponentChip } from '../harness/chip.tsx';
@@ -38,6 +41,7 @@ import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
 import { mountWebComponentListbox } from '../harness/listbox.tsx';
 import { mountWebComponentNotification } from '../harness/notification.tsx';
 import { mountWebComponentNumberField } from '../harness/number-field.tsx';
+import { mountWebComponentPagination } from '../harness/pagination.tsx';
 import { mountWebComponentPasswordField } from '../harness/password-field.tsx';
 import { mountWebComponentRadioField } from '../harness/radio-field.tsx';
 import { mountWebComponentRadioGroup } from '../harness/radio-group.tsx';
@@ -48,6 +52,7 @@ import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { mountWebComponentTextareaField } from '../harness/textarea-field.tsx';
 import { webComponentMount } from '../harness/web-component.ts';
 import { badgeContract } from '../specs/badge.contract.ts';
+import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
@@ -63,6 +68,7 @@ import { loaderContract } from '../specs/loader.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
 import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
+import { paginationContract } from '../specs/pagination.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
@@ -168,4 +174,12 @@ describe('Drawer and Dialog, web components', () => {
 
 describe('FileInputField, web component', () => {
   fileInputFieldContract(mountWebComponentFileInputField);
+});
+
+describe('Breadcrumbs, web component', () => {
+  breadcrumbsContract(mountWebComponentBreadcrumbs);
+});
+
+describe('Pagination, web component', () => {
+  paginationContract(mountWebComponentPagination);
 });
