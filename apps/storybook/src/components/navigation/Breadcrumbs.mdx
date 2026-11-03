@@ -50,7 +50,7 @@ Supply the label of each item in the language of the page, short and as the page
 
 ## Behaviour
 
-- `items` lists the steps, each with a `label`, an optional `href` and an optional `icon`. An item with `href` is a link; the last item is the current page and never links, whatever its `href`.
+- `items` lists the steps, each with a `label`, an optional `href` and an optional `icon`. `iconOnly` shows the icon alone: the label still names the item for a screen reader but takes no space. An item with `href` is a link; the last item is the current page and never links, whatever its `href`.
 - A press on a link emits the cancelable `ui-navigate` in the web component, with `detail.item`, `detail.index` and `detail.originalEvent`; canceling it keeps the browser from following the link. React calls `onNavigate(details)` with the same details, and `details.originalEvent.preventDefault()` does the same. A page with client-side routing cancels the press and moves on its own.
 - The width of the container alone decides the collapse: there is no prop for it.
 
@@ -58,7 +58,7 @@ Supply the label of each item in the language of the page, short and as the page
   language="tsx"
   code={`<Breadcrumbs
   items={[
-    { label: 'Home', href: '/', icon: <HomeIcon /> },
+    { label: 'Home', href: '/', icon: <HomeIcon />, iconOnly: true },
     { label: 'Products', href: '/products' },
     { label: 'Widget' },
   ]}

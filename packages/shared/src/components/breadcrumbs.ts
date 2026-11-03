@@ -68,6 +68,11 @@ export interface BreadcrumbsItem<Icon = never> {
   readonly href?: string;
   /** A decorative icon before the label, such as a home icon on the first item. */
   readonly icon?: Icon;
+  /**
+   * Shows the icon alone. The label still names the item for assistive technology but takes no
+   * space. It applies only to an item with an icon.
+   */
+  readonly iconOnly?: boolean;
 }
 
 /**

@@ -3,7 +3,7 @@ import type { BreadcrumbsItem } from '@mszczygiel-projects/ui-core-shared/breadc
 
 /** The trail of the Breadcrumbs stories, its first item with a home icon as an SVG string. */
 export const trail: readonly BreadcrumbsItem<string>[] = [
-  { label: 'Home', href: '#home', icon: iconHome },
+  { label: 'Home', href: '#home', icon: iconHome, iconOnly: true },
   { label: 'Products', href: '#products' },
   { label: 'Category', href: '#category' },
   { label: 'Widget' },

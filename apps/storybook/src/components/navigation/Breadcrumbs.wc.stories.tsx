@@ -41,7 +41,7 @@ const source = (args: BreadcrumbsArgs) =>
   })}
 <script type="module">
   document.querySelector('ui-breadcrumbs').items = [
-    { label: 'Home', href: '/', icon: iconHome },
+    { label: 'Home', href: '/', icon: iconHome, iconOnly: true },
     { label: 'Products', href: '/products' },
     { label: 'Category', href: '/products/category' },
     { label: 'Widget' },

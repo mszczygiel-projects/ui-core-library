@@ -85,6 +85,14 @@
   block-size: 100%;
 }
 
+/* The label of an icon alone leaves the layout, so no gap follows the icon, but still names it. */
+.ui-breadcrumbs__item-label--hidden {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
 .ui-breadcrumbs__separator > svg {
   inline-size: 100%;
   block-size: 100%;

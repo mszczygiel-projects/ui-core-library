@@ -146,11 +146,11 @@ export class UiBreadcrumbs implements BreadcrumbsProps<string> {
   }
 
   private renderItem(item: BreadcrumbsItem<string>, index: number, last: boolean): VNode {
+    const hasIcon = typeof item.icon === 'string' && item.icon !== '';
     const content = [
-      typeof item.icon === 'string' && item.icon !== '' && (
-        <span part="item-icon" class="icon" aria-hidden="true" innerHTML={item.icon} />
-      ),
-      <span part="item-label" class="label">
+      hasIcon && <span part="item-icon" class="icon" aria-hidden="true" innerHTML={item.icon} />,
+      // An icon alone keeps its label as the name, out of sight.
+      <span part="item-label" class={`label${hasIcon && item.iconOnly === true ? ' hidden' : ''}`}>
         {item.label}
       </span>,
     ];

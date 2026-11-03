@@ -94,6 +94,14 @@
   block-size: 100%;
 }
 
+/* The label of an icon alone leaves the layout, so no gap follows the icon, but still names it. */
+.label.hidden {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
 .separator > svg {
   inline-size: 100%;
   block-size: 100%;

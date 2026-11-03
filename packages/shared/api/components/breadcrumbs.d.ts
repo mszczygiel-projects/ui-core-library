@@ -47,6 +47,7 @@ export interface BreadcrumbsItem<Icon = never> {
     readonly label: string;
     readonly href?: string;
     readonly icon?: Icon;
+    readonly iconOnly?: boolean;
 }
 export interface BreadcrumbsNavigateDetails<OriginalEvent, Icon = never> {
     readonly item: BreadcrumbsItem<Icon>;

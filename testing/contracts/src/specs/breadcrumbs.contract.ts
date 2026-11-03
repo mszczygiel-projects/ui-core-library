@@ -14,6 +14,7 @@ export interface BreadcrumbsContractItem {
   readonly label: string;
   readonly href?: string;
   readonly icon?: boolean;
+  readonly iconOnly?: boolean;
 }
 
 /**
@@ -183,6 +184,19 @@ export function breadcrumbsContract(adapter: Mount<BreadcrumbsContractProps>): v
     expect(drawing?.height).toBe(tokenNumber('--breadcrumbs-medium-icon-size'));
     const middle = (rect: DOMRect) => rect.top + rect.height / 2;
     expect(Math.abs((drawing ? middle(drawing) : 0) - middle(label))).toBeLessThanOrEqual(0.5);
+  });
+
+  it('shows an icon alone with its label as the name, and no gap after the icon', async () => {
+    const component = await mount(
+      { items: [{ label: 'Home', href: '#home', icon: true, iconOnly: true }, ...TRAIL.slice(1)] },
+      { parent: column('800px') },
+    );
+    expect(component.screen.getByRole('link', { name: 'Home' }).element()).toBeTruthy();
+    expect(visible(component.part('item-label'))).toBe(false);
+    // The link ends with the icon: a label in the flow would add the gap and its own width.
+    const link = component.part('link').getBoundingClientRect();
+    const icon = component.part('item-icon').getBoundingClientRect();
+    expect(link.width).toBe(icon.width);
   });
 
   it('draws the slash or the chevron, and turns the chevron around in right-to-left text', async () => {

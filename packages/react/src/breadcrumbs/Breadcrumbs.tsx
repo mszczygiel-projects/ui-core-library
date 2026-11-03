@@ -85,14 +85,23 @@ export function Breadcrumbs({
         )}
         {items.map((item, index) => {
           const last = index === items.length - 1;
+          const hasIcon = item.icon !== undefined && item.icon !== null && item.icon !== false;
           const content = (
             <>
-              {item.icon !== undefined && item.icon !== null && item.icon !== false && (
+              {hasIcon && (
                 <span className="ui-breadcrumbs__item-icon" aria-hidden="true">
                   {item.icon}
                 </span>
               )}
-              <span className="ui-breadcrumbs__item-label">{item.label}</span>
+              {/* An icon alone keeps its label as the name, out of sight. */}
+              <span
+                className={classNames(
+                  'ui-breadcrumbs__item-label',
+                  hasIcon && item.iconOnly === true && 'ui-breadcrumbs__item-label--hidden',
+                )}
+              >
+                {item.label}
+              </span>
             </>
           );
           let node: ReactNode;
