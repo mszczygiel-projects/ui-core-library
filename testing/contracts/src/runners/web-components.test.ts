@@ -16,6 +16,7 @@ import '@mszczygiel-projects/ui-core-web-components/notification';
 import '@mszczygiel-projects/ui-core-web-components/number-field';
 import '@mszczygiel-projects/ui-core-web-components/pagination';
 import '@mszczygiel-projects/ui-core-web-components/password-field';
+import '@mszczygiel-projects/ui-core-web-components/popover';
 import '@mszczygiel-projects/ui-core-web-components/radio-field';
 import '@mszczygiel-projects/ui-core-web-components/radio-group';
 import '@mszczygiel-projects/ui-core-web-components/search-field';
@@ -23,6 +24,7 @@ import '@mszczygiel-projects/ui-core-web-components/select-field';
 import '@mszczygiel-projects/ui-core-web-components/switch-field';
 import '@mszczygiel-projects/ui-core-web-components/text-field';
 import '@mszczygiel-projects/ui-core-web-components/textarea-field';
+import '@mszczygiel-projects/ui-core-web-components/tooltip';
 
 import { describe } from 'vitest';
 
@@ -43,6 +45,7 @@ import { mountWebComponentNotification } from '../harness/notification.tsx';
 import { mountWebComponentNumberField } from '../harness/number-field.tsx';
 import { mountWebComponentPagination } from '../harness/pagination.tsx';
 import { mountWebComponentPasswordField } from '../harness/password-field.tsx';
+import { mountWebComponentPopover } from '../harness/popover.tsx';
 import { mountWebComponentRadioField } from '../harness/radio-field.tsx';
 import { mountWebComponentRadioGroup } from '../harness/radio-group.tsx';
 import { mountWebComponentSearchField } from '../harness/search-field.tsx';
@@ -50,6 +53,7 @@ import { mountWebComponentSelectField } from '../harness/select-field.tsx';
 import { mountWebComponentSwitchField } from '../harness/switch-field.tsx';
 import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { mountWebComponentTextareaField } from '../harness/textarea-field.tsx';
+import { mountWebComponentTooltip } from '../harness/tooltip.tsx';
 import { webComponentMount } from '../harness/web-component.ts';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
@@ -70,6 +74,7 @@ import { numberFieldContract } from '../specs/number-field.contract.ts';
 import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
 import { paginationContract } from '../specs/pagination.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
+import { popoverContract } from '../specs/popover.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
 import { searchFieldContract } from '../specs/search-field.contract.ts';
@@ -77,6 +82,7 @@ import { selectFieldContract } from '../specs/select-field.contract.ts';
 import { switchFieldContract } from '../specs/switch-field.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
+import { tooltipContract } from '../specs/tooltip.contract.ts';
 
 describe('Loader, web component', () => {
   loaderContract(webComponentMount('ui-loader'));
@@ -182,4 +188,12 @@ describe('Breadcrumbs, web component', () => {
 
 describe('Pagination, web component', () => {
   paginationContract(mountWebComponentPagination);
+});
+
+describe('Popover, web component', () => {
+  popoverContract(mountWebComponentPopover);
+});
+
+describe('Tooltip, web component', () => {
+  tooltipContract(mountWebComponentTooltip);
 });

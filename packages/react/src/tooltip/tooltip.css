@@ -1,0 +1,31 @@
+.ui-tooltip {
+  display: inline-flex;
+}
+
+/* The bubble reads the tokens of tooltip, and the floating surface draws its arrow. */
+.ui-tooltip__bubble {
+  --_offset: var(--tooltip-offset);
+  --_arrow-size: var(--tooltip-arrow-size);
+  --_show-delay: var(--tooltip-show-delay);
+  --_hide-delay: var(--tooltip-hide-delay);
+
+  max-inline-size: var(--tooltip-max-width);
+  padding-block: var(--tooltip-padding-stack);
+  padding-inline: var(--tooltip-padding-inline);
+  border: 0;
+  border-radius: var(--tooltip-radius);
+  background: var(--color-tooltip-background);
+  color: var(--color-tooltip-text);
+  font-family: var(--tooltip-font-family);
+  font-size: var(--tooltip-font-size);
+  font-weight: var(--tooltip-font-weight);
+  line-height: var(--tooltip-line-height);
+  letter-spacing: var(--tooltip-letter-spacing);
+  overflow-wrap: break-word;
+}
+
+@media (forced-colors: active) {
+  .ui-tooltip__bubble {
+    outline: var(--ring-width) solid CanvasText;
+  }
+}

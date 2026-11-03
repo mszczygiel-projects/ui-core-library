@@ -27,6 +27,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | NumberField    | `NumberField`    |
 | Pagination     | `Pagination`     |
 | PasswordField  | `PasswordField`  |
+| Popover        | `Popover`        |
 | RadioField     | `RadioField`     |
 | RadioGroup     | `RadioGroup`     |
 | SearchField    | `SearchField`    |
@@ -34,5 +35,6 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | SwitchField    | `SwitchField`    |
 | TextField      | `TextField`      |
 | TextareaField  | `TextareaField`  |
+| Tooltip        | `Tooltip`        |
 
 The components read the tokens of `@mszczygiel-projects/ui-core-foundations`, which a page loads once. `react` and `react-dom` 19 are peer dependencies. The Storybook site documents each component.

@@ -20,6 +20,7 @@ import { mountReactNotification } from '../harness/notification.tsx';
 import { mountReactNumberField } from '../harness/number-field.tsx';
 import { mountReactPagination } from '../harness/pagination.tsx';
 import { mountReactPasswordField } from '../harness/password-field.tsx';
+import { mountReactPopover } from '../harness/popover.tsx';
 import { mountReactRadioField } from '../harness/radio-field.tsx';
 import { mountReactRadioGroup } from '../harness/radio-group.tsx';
 import { reactMount } from '../harness/react.tsx';
@@ -28,6 +29,7 @@ import { mountReactSelectField } from '../harness/select-field.tsx';
 import { mountReactSwitchField } from '../harness/switch-field.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
+import { mountReactTooltip } from '../harness/tooltip.tsx';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
@@ -47,6 +49,7 @@ import { numberFieldContract } from '../specs/number-field.contract.ts';
 import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
 import { paginationContract } from '../specs/pagination.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
+import { popoverContract } from '../specs/popover.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
 import { searchFieldContract } from '../specs/search-field.contract.ts';
@@ -54,6 +57,7 @@ import { selectFieldContract } from '../specs/select-field.contract.ts';
 import { switchFieldContract } from '../specs/switch-field.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
+import { tooltipContract } from '../specs/tooltip.contract.ts';
 
 describe('Loader, React', () => {
   loaderContract(reactMount(Loader, 'ui-loader'));
@@ -165,4 +169,12 @@ describe('Breadcrumbs, React', () => {
 
 describe('Pagination, React', () => {
   paginationContract(mountReactPagination);
+});
+
+describe('Popover, React', () => {
+  popoverContract(mountReactPopover);
+});
+
+describe('Tooltip, React', () => {
+  tooltipContract(mountReactTooltip);
 });

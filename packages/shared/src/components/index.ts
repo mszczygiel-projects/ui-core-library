@@ -17,6 +17,7 @@ import { notification } from './notification.ts';
 import { numberField } from './number-field.ts';
 import { pagination } from './pagination.ts';
 import { passwordField } from './password-field.ts';
+import { popover } from './popover.ts';
 import { radioField } from './radio-field.ts';
 import { radioGroup } from './radio-group.ts';
 import { searchField } from './search-field.ts';
@@ -24,6 +25,7 @@ import { selectField } from './select-field.ts';
 import { switchField } from './switch-field.ts';
 import { textField } from './text-field.ts';
 import { textareaField } from './textarea-field.ts';
+import { tooltip } from './tooltip.ts';
 
 /** The specifications of every component the library has, for documentation and tooling. */
 export const specs: readonly ComponentSpec[] = [
@@ -52,4 +54,6 @@ export const specs: readonly ComponentSpec[] = [
   fileInputField,
   breadcrumbs,
   pagination,
+  popover,
+  tooltip,
 ];

@@ -1,0 +1,86 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Tooltip.wc.stories.tsx';
+import * as ReactStories from './Tooltip.react.stories.tsx';
+
+<Meta title="Components/Overlays/Tooltip/Docs" />
+
+# Tooltip
+
+<ComponentOverview name="Tooltip" />
+
+## Usage
+
+Use Tooltip for a short text that describes a control, such as what an icon button does or the shortcut of a command.
+
+A tooltip shows nothing on touch, so never put information there that the user cannot find another way. Use Popover for content with controls or links, and a hint of a field for text the user needs while filling it.
+
+## Anatomy
+
+The **base** holds the trigger, the child of the tooltip, and the **bubble**, which holds the text and, with `showArrow`, the **arrow**. The web component exposes these as parts; React uses the matching `.ui-tooltip__<part>` classes. Figma names the layers the same way, and its `content` text property is the text.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Placements} webComponents={WebComponentStories.Placements} />
+
+`placement` sets the side of the trigger: `top`, the default, `bottom`, and `start` and `end`, which follow the direction of the text. The bubble is centred on its trigger and opens on the opposite side when the window has no room. `showArrow` adds an arrow that points at the middle of the trigger.
+
+## Sizes & density
+
+The bubble is as wide as its text, up to its maximum width, and the text wraps beyond it.
+
+## States
+
+A tooltip is shown or hidden; it has no states of its own.
+
+## Content & labels
+
+`content` is plain text. A tooltip without text shows nothing and describes nothing. The trigger is one element that takes the focus, such as a Button or an IconButton, and keeps its own accessible name: the tooltip describes it, never names it.
+
+## Behaviour
+
+- A mouse resting on the trigger shows the bubble after the delay of `tooltip/show-delay`; the keyboard focus shows it at once. A press that focuses the trigger shows nothing.
+- The bubble stays while the pointer moves onto it, and hides after the delay of `tooltip/hide-delay` when the pointer leaves both; it hides at once when the focus leaves and on a press.
+- Escape hides it; inside a modal, Escape hides the tooltip first, and the modal stays open.
+- One tooltip shows at a time. While one shows, or just after it hides, the next opens at once.
+
+## Accessibility
+
+- **Pattern.** Tooltip follows the [WAI-ARIA tooltip pattern](https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/): the text has the role `tooltip` and describes its trigger.
+- **Keys.** The focus shows it and Escape hides it. The tooltip itself never takes the focus.
+- **Names.** The trigger gets the text as its accessible description, through `ariaDescribedByElements` in the web component and `aria-describedby` in React. Button, IconButton and LinkButton pass it to their native control.
+- **Contrast.** The text keeps a contrast of at least 4.5 to 1 on the bubble, in Light and Dark. In forced colours the bubble has an outline.
+- **Preferences.** The bubble stays while the pointer is over it, and Escape dismisses it, as WCAG 1.4.13 asks.
+
+## Surfaces & themes
+
+The bubble uses the inverse surface: dark in Light, light in Dark, through the Components tokens of tooltip.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Tooltip" />}
+  webComponents={<WebComponentApi tag="ui-tooltip" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Tooltip } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/tooltip';`}
+/>
+
+## Tokens
+
+<ComponentTokens component="tooltip" />
+
+## Implementation notes
+
+- Both open the bubble with the native `popover="manual"` attribute in the top layer, and Floating UI places it. A group shared by every copy of the library on the page shows one tooltip at a time.
+- The web component keeps its text in its light DOM, in its `content` slot, because an element reference cannot reach into a shadow root. It sets `ariaDescribedByElements` on its trigger; a browser without ARIA element reflection shows the text but gives the trigger no description.
+- React clones its child to add `aria-describedby` and a ref, keeping the description and the ref of the page.
+- The Figma set has the variant property `showArrow` and the text property `content`; `placement` lives only in code.

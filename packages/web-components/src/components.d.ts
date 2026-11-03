@@ -38,11 +38,14 @@ import { NumberFieldValueChange } from "./number-field/events";
 import { PaginationPageChange } from "./pagination/events";
 import { TextFieldValueChange } from "./text-field/events";
 import { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
+import { PopoverPlacement } from "@mszczygiel-projects/ui-core-shared/popover";
+import { PopoverOpenChange } from "./popover/events";
 import { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
 import { RadioGroupValueChange } from "./radio-group/events";
 import { SearchFieldClear } from "./search-field/events";
 import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
+import { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 export { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 export { BreadcrumbsNavigate } from "./breadcrumbs/events";
@@ -76,11 +79,14 @@ export { NumberFieldValueChange } from "./number-field/events";
 export { PaginationPageChange } from "./pagination/events";
 export { TextFieldValueChange } from "./text-field/events";
 export { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
+export { PopoverPlacement } from "@mszczygiel-projects/ui-core-shared/popover";
+export { PopoverOpenChange } from "./popover/events";
 export { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
 export { RadioGroupValueChange } from "./radio-group/events";
 export { SearchFieldClear } from "./search-field/events";
 export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
+export { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export namespace Components {
     /**
      * Marks a status, a category or a count with a short label, an icon or both.
@@ -1173,6 +1179,38 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
     /**
+     * A panel that a button opens beside it, over the page, with content that the page around it can
+     * still be used with.
+     * The element of the `trigger` slot, a button, opens and closes the panel, and carries
+     * `aria-expanded` and `aria-haspopup`. The panel is a non-modal dialog in the top layer, on the
+     * side that `placement` asks for or the opposite one when the window has no room. When a press on
+     * the trigger opens it, the focus moves to the element marked with `autofocus` or `data-autofocus`,
+     * else to the panel. Escape closes it and returns the focus to the trigger; a press outside and
+     * the focus leaving close it too. Each request dispatches the cancelable `ui-open-change` first,
+     * and the reflected `open` attribute follows the panel.
+     */
+    interface UiPopover {
+        /**
+          * The accessible name of the panel, which nothing visible gives.
+         */
+        "label"?: string;
+        /**
+          * Whether the panel is open. The attribute supplies the initial state and follows the panel.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The side of the trigger on which the panel opens.
+          * @default 'bottom'
+         */
+        "placement": PopoverPlacement;
+        /**
+          * Shows an arrow that points at the middle of the trigger.
+          * @default false
+         */
+        "showArrow": boolean;
+    }
+    /**
      * One option of a RadioGroup, with a label and hint.
      * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
      * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
@@ -1623,6 +1661,33 @@ export namespace Components {
          */
         "variant": TextFieldVariant;
     }
+    /**
+     * A short text that names or describes an element while the pointer rests on it or the keyboard
+     * focuses it.
+     * The first element of the default slot is the trigger, which the text describes. The bubble shows
+     * after a delay when a mouse rests on the trigger, at once when the keyboard focuses it, and at
+     * once while another tooltip of the page is shown or has just hidden. It stays while the pointer
+     * moves onto it, and hides when the pointer leaves both, when the focus leaves, on a press and on
+     * Escape, which no modal around it then sees. The bubble opens in the top layer, on the side that
+     * `placement` asks for or the opposite one when the window has no room. Touch shows nothing, so the
+     * text must not be the only way to a piece of information.
+     */
+    interface UiTooltip {
+        /**
+          * The text of the tooltip, which describes its trigger.
+         */
+        "content"?: string;
+        /**
+          * The side of the trigger on which the tooltip opens.
+          * @default 'top'
+         */
+        "placement": TooltipPlacement;
+        /**
+          * Shows an arrow that points at the middle of the trigger.
+          * @default false
+         */
+        "showArrow": boolean;
+    }
 }
 export interface UiBreadcrumbsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1675,6 +1740,10 @@ export interface UiPaginationCustomEvent<T> extends CustomEvent<T> {
 export interface UiPasswordFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiPasswordFieldElement;
+}
+export interface UiPopoverCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiPopoverElement;
 }
 export interface UiRadioGroupCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2126,6 +2195,34 @@ declare global {
         prototype: HTMLUiPasswordFieldElement;
         new (): HTMLUiPasswordFieldElement;
     };
+    interface HTMLUiPopoverElementEventMap {
+        "ui-open-change": PopoverOpenChange;
+    }
+    /**
+     * A panel that a button opens beside it, over the page, with content that the page around it can
+     * still be used with.
+     * The element of the `trigger` slot, a button, opens and closes the panel, and carries
+     * `aria-expanded` and `aria-haspopup`. The panel is a non-modal dialog in the top layer, on the
+     * side that `placement` asks for or the opposite one when the window has no room. When a press on
+     * the trigger opens it, the focus moves to the element marked with `autofocus` or `data-autofocus`,
+     * else to the panel. Escape closes it and returns the focus to the trigger; a press outside and
+     * the focus leaving close it too. Each request dispatches the cancelable `ui-open-change` first,
+     * and the reflected `open` attribute follows the panel.
+     */
+    interface HTMLUiPopoverElement extends Components.UiPopover, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiPopoverElementEventMap>(type: K, listener: (this: HTMLUiPopoverElement, ev: UiPopoverCustomEvent<HTMLUiPopoverElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiPopoverElementEventMap>(type: K, listener: (this: HTMLUiPopoverElement, ev: UiPopoverCustomEvent<HTMLUiPopoverElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiPopoverElement: {
+        prototype: HTMLUiPopoverElement;
+        new (): HTMLUiPopoverElement;
+    };
     /**
      * One option of a RadioGroup, with a label and hint.
      * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
@@ -2298,6 +2395,23 @@ declare global {
         prototype: HTMLUiTextareaFieldElement;
         new (): HTMLUiTextareaFieldElement;
     };
+    /**
+     * A short text that names or describes an element while the pointer rests on it or the keyboard
+     * focuses it.
+     * The first element of the default slot is the trigger, which the text describes. The bubble shows
+     * after a delay when a mouse rests on the trigger, at once when the keyboard focuses it, and at
+     * once while another tooltip of the page is shown or has just hidden. It stays while the pointer
+     * moves onto it, and hides when the pointer leaves both, when the focus leaves, on a press and on
+     * Escape, which no modal around it then sees. The bubble opens in the top layer, on the side that
+     * `placement` asks for or the opposite one when the window has no room. Touch shows nothing, so the
+     * text must not be the only way to a piece of information.
+     */
+    interface HTMLUiTooltipElement extends Components.UiTooltip, HTMLStencilElement {
+    }
+    var HTMLUiTooltipElement: {
+        prototype: HTMLUiTooltipElement;
+        new (): HTMLUiTooltipElement;
+    };
     interface HTMLElementTagNameMap {
         "ui-badge": HTMLUiBadgeElement;
         "ui-breadcrumbs": HTMLUiBreadcrumbsElement;
@@ -2317,6 +2431,7 @@ declare global {
         "ui-number-field": HTMLUiNumberFieldElement;
         "ui-pagination": HTMLUiPaginationElement;
         "ui-password-field": HTMLUiPasswordFieldElement;
+        "ui-popover": HTMLUiPopoverElement;
         "ui-radio-field": HTMLUiRadioFieldElement;
         "ui-radio-group": HTMLUiRadioGroupElement;
         "ui-search-field": HTMLUiSearchFieldElement;
@@ -2324,6 +2439,7 @@ declare global {
         "ui-switch-field": HTMLUiSwitchFieldElement;
         "ui-text-field": HTMLUiTextFieldElement;
         "ui-textarea-field": HTMLUiTextareaFieldElement;
+        "ui-tooltip": HTMLUiTooltipElement;
     }
 }
 declare namespace LocalJSX {
@@ -3550,6 +3666,42 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
     /**
+     * A panel that a button opens beside it, over the page, with content that the page around it can
+     * still be used with.
+     * The element of the `trigger` slot, a button, opens and closes the panel, and carries
+     * `aria-expanded` and `aria-haspopup`. The panel is a non-modal dialog in the top layer, on the
+     * side that `placement` asks for or the opposite one when the window has no room. When a press on
+     * the trigger opens it, the focus moves to the element marked with `autofocus` or `data-autofocus`,
+     * else to the panel. Escape closes it and returns the focus to the trigger; a press outside and
+     * the focus leaving close it too. Each request dispatches the cancelable `ui-open-change` first,
+     * and the reflected `open` attribute follows the panel.
+     */
+    interface UiPopover {
+        /**
+          * The accessible name of the panel, which nothing visible gives.
+         */
+        "label"?: string;
+        /**
+          * The user asked to open or close the panel; canceling it keeps the panel as it is.
+         */
+        "onUi-open-change"?: (event: UiPopoverCustomEvent<PopoverOpenChange>) => void;
+        /**
+          * Whether the panel is open. The attribute supplies the initial state and follows the panel.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The side of the trigger on which the panel opens.
+          * @default 'bottom'
+         */
+        "placement"?: PopoverPlacement;
+        /**
+          * Shows an arrow that points at the middle of the trigger.
+          * @default false
+         */
+        "showArrow"?: boolean;
+    }
+    /**
      * One option of a RadioGroup, with a label and hint.
      * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
      * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
@@ -4056,6 +4208,33 @@ declare namespace LocalJSX {
          */
         "variant"?: TextFieldVariant;
     }
+    /**
+     * A short text that names or describes an element while the pointer rests on it or the keyboard
+     * focuses it.
+     * The first element of the default slot is the trigger, which the text describes. The bubble shows
+     * after a delay when a mouse rests on the trigger, at once when the keyboard focuses it, and at
+     * once while another tooltip of the page is shown or has just hidden. It stays while the pointer
+     * moves onto it, and hides when the pointer leaves both, when the focus leaves, on a press and on
+     * Escape, which no modal around it then sees. The bubble opens in the top layer, on the side that
+     * `placement` asks for or the opposite one when the window has no room. Touch shows nothing, so the
+     * text must not be the only way to a piece of information.
+     */
+    interface UiTooltip {
+        /**
+          * The text of the tooltip, which describes its trigger.
+         */
+        "content"?: string;
+        /**
+          * The side of the trigger on which the tooltip opens.
+          * @default 'top'
+         */
+        "placement"?: TooltipPlacement;
+        /**
+          * Shows an arrow that points at the middle of the trigger.
+          * @default false
+         */
+        "showArrow"?: boolean;
+    }
 
     interface UiBadgeAttributes {
         "tone": BadgeTone;
@@ -4274,6 +4453,12 @@ declare namespace LocalJSX {
         "revealed": boolean;
         "revealLabel": string;
     }
+    interface UiPopoverAttributes {
+        "open": boolean;
+        "placement": PopoverPlacement;
+        "showArrow": boolean;
+        "label": string;
+    }
     interface UiRadioFieldAttributes {
         "value": string;
         "label": string;
@@ -4370,6 +4555,11 @@ declare namespace LocalJSX {
         "resize": TextareaFieldResize;
         "maxRows": number;
     }
+    interface UiTooltipAttributes {
+        "content": string;
+        "placement": TooltipPlacement;
+        "showArrow": boolean;
+    }
 
     interface IntrinsicElements {
         "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
@@ -4390,6 +4580,7 @@ declare namespace LocalJSX {
         "ui-number-field": Omit<UiNumberField, keyof UiNumberFieldAttributes> & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes]?: UiNumberField[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `attr:${K}`]?: UiNumberFieldAttributes[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `prop:${K}`]?: UiNumberField[K] };
         "ui-pagination": Omit<UiPagination, keyof UiPaginationAttributes> & { [K in keyof UiPagination & keyof UiPaginationAttributes]?: UiPagination[K] } & { [K in keyof UiPagination & keyof UiPaginationAttributes as `attr:${K}`]?: UiPaginationAttributes[K] } & { [K in keyof UiPagination & keyof UiPaginationAttributes as `prop:${K}`]?: UiPagination[K] };
         "ui-password-field": Omit<UiPasswordField, keyof UiPasswordFieldAttributes> & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes]?: UiPasswordField[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `attr:${K}`]?: UiPasswordFieldAttributes[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `prop:${K}`]?: UiPasswordField[K] };
+        "ui-popover": Omit<UiPopover, keyof UiPopoverAttributes> & { [K in keyof UiPopover & keyof UiPopoverAttributes]?: UiPopover[K] } & { [K in keyof UiPopover & keyof UiPopoverAttributes as `attr:${K}`]?: UiPopoverAttributes[K] } & { [K in keyof UiPopover & keyof UiPopoverAttributes as `prop:${K}`]?: UiPopover[K] };
         "ui-radio-field": Omit<UiRadioField, keyof UiRadioFieldAttributes> & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes]?: UiRadioField[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `attr:${K}`]?: UiRadioFieldAttributes[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `prop:${K}`]?: UiRadioField[K] };
         "ui-radio-group": Omit<UiRadioGroup, keyof UiRadioGroupAttributes> & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes]?: UiRadioGroup[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `attr:${K}`]?: UiRadioGroupAttributes[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `prop:${K}`]?: UiRadioGroup[K] };
         "ui-search-field": Omit<UiSearchField, keyof UiSearchFieldAttributes> & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes]?: UiSearchField[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `attr:${K}`]?: UiSearchFieldAttributes[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `prop:${K}`]?: UiSearchField[K] };
@@ -4397,6 +4588,7 @@ declare namespace LocalJSX {
         "ui-switch-field": Omit<UiSwitchField, keyof UiSwitchFieldAttributes> & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes]?: UiSwitchField[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `attr:${K}`]?: UiSwitchFieldAttributes[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `prop:${K}`]?: UiSwitchField[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
         "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
+        "ui-tooltip": Omit<UiTooltip, keyof UiTooltipAttributes> & { [K in keyof UiTooltip & keyof UiTooltipAttributes]?: UiTooltip[K] } & { [K in keyof UiTooltip & keyof UiTooltipAttributes as `attr:${K}`]?: UiTooltipAttributes[K] } & { [K in keyof UiTooltip & keyof UiTooltipAttributes as `prop:${K}`]?: UiTooltip[K] };
     }
 }
 export { LocalJSX as JSX };
@@ -4590,6 +4782,18 @@ declare module "@stencil/core" {
              */
             "ui-password-field": LocalJSX.IntrinsicElements["ui-password-field"] & JSXBase.HTMLAttributes<HTMLUiPasswordFieldElement>;
             /**
+             * A panel that a button opens beside it, over the page, with content that the page around it can
+             * still be used with.
+             * The element of the `trigger` slot, a button, opens and closes the panel, and carries
+             * `aria-expanded` and `aria-haspopup`. The panel is a non-modal dialog in the top layer, on the
+             * side that `placement` asks for or the opposite one when the window has no room. When a press on
+             * the trigger opens it, the focus moves to the element marked with `autofocus` or `data-autofocus`,
+             * else to the panel. Escape closes it and returns the focus to the trigger; a press outside and
+             * the focus leaving close it too. Each request dispatches the cancelable `ui-open-change` first,
+             * and the reflected `open` attribute follows the panel.
+             */
+            "ui-popover": LocalJSX.IntrinsicElements["ui-popover"] & JSXBase.HTMLAttributes<HTMLUiPopoverElement>;
+            /**
              * One option of a RadioGroup, with a label and hint.
              * Its inner radio button owns accessibility. The group that holds it chooses it by its value,
              * gives the group one stop in the order of the Tab key, and moves the choice with the arrow keys.
@@ -4658,6 +4862,18 @@ declare module "@stencil/core" {
              * textarea.
              */
             "ui-textarea-field": LocalJSX.IntrinsicElements["ui-textarea-field"] & JSXBase.HTMLAttributes<HTMLUiTextareaFieldElement>;
+            /**
+             * A short text that names or describes an element while the pointer rests on it or the keyboard
+             * focuses it.
+             * The first element of the default slot is the trigger, which the text describes. The bubble shows
+             * after a delay when a mouse rests on the trigger, at once when the keyboard focuses it, and at
+             * once while another tooltip of the page is shown or has just hidden. It stays while the pointer
+             * moves onto it, and hides when the pointer leaves both, when the focus leaves, on a press and on
+             * Escape, which no modal around it then sees. The bubble opens in the top layer, on the side that
+             * `placement` asks for or the opposite one when the window has no room. Touch shows nothing, so the
+             * text must not be the only way to a piece of information.
+             */
+            "ui-tooltip": LocalJSX.IntrinsicElements["ui-tooltip"] & JSXBase.HTMLAttributes<HTMLUiTooltipElement>;
         }
     }
 }
