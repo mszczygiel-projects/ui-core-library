@@ -17,6 +17,10 @@
       "types": "./dist/components/ui-badge.d.ts",
       "default": "./dist/components/ui-badge.js"
     },
+    "./breadcrumbs": {
+      "types": "./dist/components/ui-breadcrumbs.d.ts",
+      "default": "./dist/components/ui-breadcrumbs.js"
+    },
     "./button": {
       "types": "./dist/components/ui-button.d.ts",
       "default": "./dist/components/ui-button.js"
@@ -72,6 +76,10 @@
     "./number-field": {
       "types": "./dist/components/ui-number-field.d.ts",
       "default": "./dist/components/ui-number-field.js"
+    },
+    "./pagination": {
+      "types": "./dist/components/ui-pagination.d.ts",
+      "default": "./dist/components/ui-pagination.js"
     },
     "./password-field": {
       "types": "./dist/components/ui-password-field.d.ts",

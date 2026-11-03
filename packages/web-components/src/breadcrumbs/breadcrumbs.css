@@ -1,0 +1,165 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  --_font-size: var(--breadcrumbs-medium-font-size);
+  --_line-height: var(--breadcrumbs-medium-line-height);
+  --_gap: var(--breadcrumbs-medium-gap);
+  --_icon-size: var(--breadcrumbs-medium-icon-size);
+  --_separator-size: var(--breadcrumbs-medium-separator-size);
+
+  position: relative;
+  container-type: inline-size;
+  font-family: var(--breadcrumbs-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--breadcrumbs-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--breadcrumbs-letter-spacing);
+}
+
+.small {
+  --_font-size: var(--breadcrumbs-small-font-size);
+  --_line-height: var(--breadcrumbs-small-line-height);
+  --_gap: var(--breadcrumbs-small-gap);
+  --_icon-size: var(--breadcrumbs-small-icon-size);
+  --_separator-size: var(--breadcrumbs-small-separator-size);
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-inline-size: 0;
+}
+
+.link,
+.text,
+.current {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--breadcrumbs-item-gap);
+  border-radius: var(--breadcrumbs-radius);
+  color: var(--color-breadcrumbs-item-foreground-default);
+}
+
+.link {
+  text-decoration: none;
+}
+
+/* Hover and press share the active state. */
+.link:is(:hover, :active) {
+  color: var(--color-breadcrumbs-item-foreground-active);
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.current {
+  color: var(--color-breadcrumbs-current-foreground);
+  font-weight: var(--breadcrumbs-current-font-weight);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  font-size: var(--_icon-size);
+}
+
+/* An icon may sit inside a wrapper of the page, so it is centred as a box, not on the baseline. */
+.icon svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+/* The label of an icon alone leaves the layout, so no gap follows the icon, but still names it. */
+.label.hidden {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.separator > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.separator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--_separator-size);
+  block-size: var(--_separator-size);
+  color: var(--color-breadcrumbs-separator-foreground);
+}
+
+.slash .separator::before {
+  content: '/';
+}
+
+/* A chevron points along the text, so it turns around in right-to-left text. */
+.separator:dir(rtl) > svg {
+  transform: scaleX(-1);
+}
+
+.ellipsis {
+  color: var(--color-breadcrumbs-ellipsis-foreground);
+}
+
+.ellipsis::before {
+  content: '…';
+}
+
+.ellipsis-item {
+  display: none;
+}
+
+/*
+ * A narrow container shows the ellipsis and the last two items. The others leave the layout but
+ * stay in the accessibility tree, so a screen reader still reads the whole trail. Keyboard focus
+ * inside the trail shows all of it, so a focused link is never one that the collapse hides.
+ */
+@container (width < 40rem) {
+  .list:not(:focus-within) > .ellipsis-item {
+    display: inline-flex;
+  }
+
+  .list:not(:focus-within) > .collapsible {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+}
+
+@media (forced-colors: active) {
+  .link:focus-visible {
+    outline-color: Highlight;
+  }
+}

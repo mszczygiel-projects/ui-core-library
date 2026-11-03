@@ -121,6 +121,8 @@ describe('the configuration', () => {
         dialog: { close: 'Close' },
         drawer: { close: 'Close' },
         fileInputField: defaultLabels.fileInputField,
+        breadcrumbs: { label: 'Breadcrumb' },
+        pagination: defaultLabels.pagination,
         iconButton: { loading: 'Loading' },
         listbox: { empty: 'No options', loading: 'Loading options' },
         loader: { label: 'Wait' },

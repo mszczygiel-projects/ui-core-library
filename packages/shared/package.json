@@ -10,6 +10,10 @@
       "types": "./dist/components/badge.d.ts",
       "default": "./dist/components/badge.js"
     },
+    "./breadcrumbs": {
+      "types": "./dist/components/breadcrumbs.d.ts",
+      "default": "./dist/components/breadcrumbs.js"
+    },
     "./button": {
       "types": "./dist/components/button.d.ts",
       "default": "./dist/components/button.js"
@@ -105,6 +109,10 @@
     "./paginate": {
       "types": "./dist/utils/paginate.d.ts",
       "default": "./dist/utils/paginate.js"
+    },
+    "./pagination": {
+      "types": "./dist/components/pagination.d.ts",
+      "default": "./dist/components/pagination.js"
     },
     "./parsed-input": {
       "types": "./dist/utils/parsed-input.d.ts",

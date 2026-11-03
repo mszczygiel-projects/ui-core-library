@@ -6,7 +6,13 @@ import stylelint from 'stylelint';
 import { describe, expect, it } from 'vitest';
 
 import { isReadableByComponents, manifest, tokensByName } from './manifest.ts';
-import { customPropertiesRead, mediaLengths, rawValues, uiCorePlugins } from './stylelint.ts';
+import {
+  containerBreakpoints,
+  customPropertiesRead,
+  mediaLengths,
+  rawValues,
+  uiCorePlugins,
+} from './stylelint.ts';
 
 const plugins = uiCorePlugins(stylelint);
 
@@ -148,6 +154,19 @@ describe('ui-core/no-raw-values', () => {
   it('accepts zero, keywords and geometry', async () => {
     const code = '.a { margin: 0; inset: auto; transform: rotate(1turn); inline-size: 100%; }';
     expect(await lint(code, rules)).toEqual([]);
+  });
+});
+
+describe('ui-core/container-breakpoint', () => {
+  const rules = { 'ui-core/container-breakpoint': true };
+
+  it('accepts the value of a breakpoint token and rejects any other length', async () => {
+    const code = `@container (width < 40rem) { .a { display: none; } }
+      @container (width < 30rem) { .b { display: none; } }`;
+    expect(containerBreakpoints).toContain('40rem');
+    expect(await lint(code, rules)).toEqual([
+      `Container query at 30rem: a component changes with its own width at a breakpoint of tokens.json, ${containerBreakpoints.join(', ')} (ui-core/container-breakpoint)`,
+    ]);
   });
 });
 

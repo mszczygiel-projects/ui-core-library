@@ -41,6 +41,10 @@ export interface UiCoreLabels {
     /** A complete sentence describing the failed constraint. */
     readonly validationMessage: (context: FieldValidationContext) => string;
   };
+  readonly breadcrumbs: {
+    /** The accessible name of the navigation of a trail. */
+    readonly label: string;
+  };
   readonly button: {
     /** The description of a button while its action is in progress. */
     readonly loading: string;
@@ -88,6 +92,22 @@ export interface UiCoreLabels {
   readonly notification: {
     /** The word that names the dismiss button of a notification, read before its heading. */
     readonly dismiss: string;
+  };
+  readonly pagination: {
+    /** The accessible name of the navigation between pages. */
+    readonly label: string;
+    /** The name of the button that moves to the previous page. */
+    readonly previous: string;
+    /** The name of the button that moves to the next page. */
+    readonly next: string;
+    /** The name of the button of a page, as a whole phrase. */
+    readonly page: (page: number) => string;
+    /** The status text, as a whole sentence. */
+    readonly status: (page: number, pageCount: number) => string;
+    /** The label of the field that moves to a typed page. */
+    readonly jump: string;
+    /** The text after the jump field in a narrow container. */
+    readonly total: (pageCount: number) => string;
   };
   readonly passwordField: {
     /** The name of the button that shows the password as plain text, whatever its state. */
@@ -164,6 +184,7 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
       }
     },
   },
+  breadcrumbs: { label: 'Breadcrumb' },
   button: { loading: 'Loading' },
   chip: { dismiss: 'Remove' },
   combobox: { clear: 'Clear', create: (query) => `Create “${query}”` },
@@ -178,6 +199,15 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   listbox: { empty: 'No options', loading: 'Loading options' },
   loader: { label: 'Loading' },
   notification: { dismiss: 'Dismiss' },
+  pagination: {
+    label: 'Pagination',
+    previous: 'Previous page',
+    next: 'Next page',
+    page: (page) => `Page ${String(page)}`,
+    status: (page, pageCount) => `Page ${String(page)} of ${String(pageCount)}`,
+    jump: 'Go to page',
+    total: (pageCount) => `of ${String(pageCount)}`,
+  },
   passwordField: { reveal: 'Show password' },
   searchField: { clear: 'Clear search' },
   selectField: { clear: 'Clear selection' },

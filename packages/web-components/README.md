@@ -9,6 +9,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Component      | Tag                   | Subpath              |
 | -------------- | --------------------- | -------------------- |
 | Badge          | `ui-badge`            | `./badge`            |
+| Breadcrumbs    | `ui-breadcrumbs`      | `./breadcrumbs`      |
 | Button         | `ui-button`           | `./button`           |
 | CheckboxField  | `ui-checkbox-field`   | `./checkbox-field`   |
 | Chip           | `ui-chip`             | `./chip`             |
@@ -23,6 +24,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Loader         | `ui-loader`           | `./loader`           |
 | Notification   | `ui-notification`     | `./notification`     |
 | NumberField    | `ui-number-field`     | `./number-field`     |
+| Pagination     | `ui-pagination`       | `./pagination`       |
 | PasswordField  | `ui-password-field`   | `./password-field`   |
 | RadioField     | `ui-radio-field`      | `./radio-field`      |
 | RadioGroup     | `ui-radio-group`      | `./radio-group`      |

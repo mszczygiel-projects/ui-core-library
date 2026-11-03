@@ -4,6 +4,7 @@ import { Loader } from '@mszczygiel-projects/ui-core-react';
 import { describe } from 'vitest';
 
 import { mountReactBadge } from '../harness/badge.tsx';
+import { mountReactBreadcrumbs } from '../harness/breadcrumbs.tsx';
 import { mountReactButton } from '../harness/button.tsx';
 import { mountReactCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountReactChip } from '../harness/chip.tsx';
@@ -17,6 +18,7 @@ import { mountReactLinkButton } from '../harness/link-button.tsx';
 import { mountReactListbox } from '../harness/listbox.tsx';
 import { mountReactNotification } from '../harness/notification.tsx';
 import { mountReactNumberField } from '../harness/number-field.tsx';
+import { mountReactPagination } from '../harness/pagination.tsx';
 import { mountReactPasswordField } from '../harness/password-field.tsx';
 import { mountReactRadioField } from '../harness/radio-field.tsx';
 import { mountReactRadioGroup } from '../harness/radio-group.tsx';
@@ -27,6 +29,7 @@ import { mountReactSwitchField } from '../harness/switch-field.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
 import { badgeContract } from '../specs/badge.contract.ts';
+import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
@@ -42,6 +45,7 @@ import { loaderContract } from '../specs/loader.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
 import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
+import { paginationContract } from '../specs/pagination.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
@@ -153,4 +157,12 @@ describe('Drawer of the web components under Dialog of React', () => {
 
 describe('FileInputField, React', () => {
   fileInputFieldContract(mountReactFileInputField);
+});
+
+describe('Breadcrumbs, React', () => {
+  breadcrumbsContract(mountReactBreadcrumbs);
+});
+
+describe('Pagination, React', () => {
+  paginationContract(mountReactPagination);
 });

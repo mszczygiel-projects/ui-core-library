@@ -27,6 +27,7 @@ export default {
     'ui-core/known-tokens': true,
     'ui-core/no-raw-values': true,
     'ui-core/breakpoint': true,
+    'ui-core/container-breakpoint': true,
     'color-no-hex': true,
     'color-named': 'never',
     'function-disallowed-list': [

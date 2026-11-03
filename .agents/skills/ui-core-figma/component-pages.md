@@ -16,7 +16,8 @@ Set `PAGE_ID` and `SET_ID` at the top; optionally supply `EXAMPLES` for named st
 ```js
 const PAGE_ID = '<page id>';
 const SET_ID = '<component set or standalone component id>';
-// Optional named examples: { label, properties?, fieldProperties?, instanceId? }.
+// Optional named examples: { label, properties?, fieldProperties?, instanceId? }. `properties`
+// may name a boolean or text property by its full key, such as `showJump#3145:5`.
 // An instanceId moves an existing example into the legend instead of discarding it.
 const EXAMPLES = null;
 // Builds the legend of one component page in [Core] UI Library to the left of the card
@@ -161,7 +162,10 @@ for (const sample of samples) {
           (candidate) =>
             candidate.type === 'COMPONENT' &&
             Object.entries(sample.properties ?? {}).every(
-              ([name, value]) => candidate.variantProperties[name] === value,
+              // A boolean or text property, such as `showJump#3145:5`, is not a variant axis.
+              ([name, value]) =>
+                !(name in candidate.variantProperties) ||
+                candidate.variantProperties[name] === value,
             ),
         );
   if (!variant) throw new Error('Missing example variant: ' + sample.label);

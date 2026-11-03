@@ -3,6 +3,8 @@
 # imports.
 check
 checkmark
+chevron-left
+chevron-right
 close
 danger
 delete

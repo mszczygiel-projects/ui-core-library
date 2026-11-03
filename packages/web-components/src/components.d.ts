@@ -6,6 +6,8 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
+import { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
+import { BreadcrumbsNavigate } from "./breadcrumbs/events";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 import { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
 import { CheckedChange } from "./checkbox-field/events";
@@ -33,6 +35,7 @@ import { NotificationDismiss } from "./notification/events";
 import { NumberFieldControls } from "@mszczygiel-projects/ui-core-shared/number-field";
 import { NumberValidationContext } from "@mszczygiel-projects/ui-core-shared/numeric";
 import { NumberFieldValueChange } from "./number-field/events";
+import { PaginationPageChange } from "./pagination/events";
 import { TextFieldValueChange } from "./text-field/events";
 import { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
 import { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
@@ -41,6 +44,8 @@ import { SearchFieldClear } from "./search-field/events";
 import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
+export { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
+export { BreadcrumbsNavigate } from "./breadcrumbs/events";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 export { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
 export { CheckedChange } from "./checkbox-field/events";
@@ -68,6 +73,7 @@ export { NotificationDismiss } from "./notification/events";
 export { NumberFieldControls } from "@mszczygiel-projects/ui-core-shared/number-field";
 export { NumberValidationContext } from "@mszczygiel-projects/ui-core-shared/numeric";
 export { NumberFieldValueChange } from "./number-field/events";
+export { PaginationPageChange } from "./pagination/events";
 export { TextFieldValueChange } from "./text-field/events";
 export { PasswordFieldRevealedChange as RevealedChange } from "./password-field/events";
 export { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
@@ -107,6 +113,38 @@ export namespace Components {
           * @default 'solid'
          */
         "variant": BadgeVariant;
+    }
+    /**
+     * A trail of links from the top of a site down to the current page.
+     * A navigation landmark holds an ordered list of the items. The last item is the current page:
+     * text with `aria-current="page"`, never a link. An item with `href` is a link, and one without
+     * is text. A press on a link dispatches the cancelable `ui-navigate`; a page with client-side
+     * routing cancels it and moves on its own. In a container narrower than `breakpoint/sm` the
+     * items before the last two hide behind an ellipsis; they stay in the accessibility tree, so a
+     * screen reader still reads the whole trail. The separators are decorative and follow the
+     * direction of the text. An `aria-label` that the page writes on the host names the navigation
+     * instead of the label.
+     */
+    interface UiBreadcrumbs {
+        /**
+          * The steps from the top of the site to the current page, which is the last one. Each icon is an SVG string of the icon package. A property only, since an attribute cannot hold a list.
+          * @default []
+         */
+        "items": readonly BreadcrumbsItem<string>[];
+        /**
+          * The accessible name of the navigation, falling back to `labels.breadcrumbs.label`.
+         */
+        "label"?: string;
+        /**
+          * The mark between two items, which follows the direction of the text.
+          * @default 'chevron'
+         */
+        "separator": BreadcrumbsSeparator;
+        /**
+          * The size of the text, which follows the density.
+          * @default 'medium'
+         */
+        "size": BreadcrumbsSize;
     }
     /**
      * Triggers an action, with optional icons and a loading state.
@@ -965,6 +1003,89 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
     /**
+     * Buttons or links that move between the pages of a long list.
+     * A navigation landmark holds the previous and next buttons and a list of the pages, with an
+     * ellipsis where pages are left out. The current page carries `aria-current="page"`. Without
+     * `getPageHref` the pages are buttons; with it they are links that a crawler can follow. Every
+     * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
+     * page cancels it, the element takes the new page; a link follows its address, and in link mode
+     * the previous, next and jump controls load the address of their page. The `page` attribute is
+     * the first page and the property the current one. The optional status reads such as "Page 5 of
+     * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
+     * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
+     * field when it is shown. An `aria-label` that the page writes on the host names the navigation
+     * instead of the label.
+     */
+    interface UiPagination {
+        /**
+          * How many pages to show at each end, at least 1.
+          * @default 1
+         */
+        "boundaryCount": number;
+        /**
+          * Prevents every move between pages.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The address of a page. With it the pages are links, and without it they are buttons.
+         */
+        "getPageHref"?: (page: number) => string;
+        /**
+          * The name of a page button, falling back to `labels.pagination.page(page)`.
+         */
+        "getPageLabel"?: (page: number) => string;
+        /**
+          * The status text, falling back to `labels.pagination.status(page, pageCount)`.
+         */
+        "getStatusLabel"?: (page: number, pageCount: number) => string;
+        /**
+          * The text after the jump field, falling back to `labels.pagination.total(pageCount)`.
+         */
+        "getTotalLabel"?: (pageCount: number) => string;
+        /**
+          * The label of the jump field, falling back to `labels.pagination.jump`.
+         */
+        "jumpLabel"?: string;
+        /**
+          * The accessible name of the navigation, falling back to `labels.pagination.label`.
+         */
+        "label"?: string;
+        /**
+          * The name of the next button, falling back to `labels.pagination.next`.
+         */
+        "nextLabel"?: string;
+        /**
+          * The current page, from 1. The attribute is the first page and the property the current one.
+          * @default 1
+         */
+        "page": number;
+        /**
+          * The number of pages, at least 1.
+          * @default 1
+         */
+        "pageCount": number;
+        /**
+          * The name of the previous button, falling back to `labels.pagination.previous`.
+         */
+        "previousLabel"?: string;
+        /**
+          * Shows a field that moves to a page whose number a user types.
+          * @default false
+         */
+        "showJump": boolean;
+        /**
+          * Shows the status text, such as "Page 5 of 10", after the pages.
+          * @default false
+         */
+        "showStatus": boolean;
+        /**
+          * How many pages to show on each side of the current page.
+          * @default 1
+         */
+        "siblingCount": number;
+    }
+    /**
      * A password input with a button that shows or hides the password.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The reveal button is a toggle button with one name, whose pressed state says whether the
@@ -1503,6 +1624,10 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
 }
+export interface UiBreadcrumbsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiBreadcrumbsElement;
+}
 export interface UiCheckboxFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiCheckboxFieldElement;
@@ -1542,6 +1667,10 @@ export interface UiNotificationCustomEvent<T> extends CustomEvent<T> {
 export interface UiNumberFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiNumberFieldElement;
+}
+export interface UiPaginationCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiPaginationElement;
 }
 export interface UiPasswordFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -1583,6 +1712,34 @@ declare global {
     var HTMLUiBadgeElement: {
         prototype: HTMLUiBadgeElement;
         new (): HTMLUiBadgeElement;
+    };
+    interface HTMLUiBreadcrumbsElementEventMap {
+        "ui-navigate": BreadcrumbsNavigate;
+    }
+    /**
+     * A trail of links from the top of a site down to the current page.
+     * A navigation landmark holds an ordered list of the items. The last item is the current page:
+     * text with `aria-current="page"`, never a link. An item with `href` is a link, and one without
+     * is text. A press on a link dispatches the cancelable `ui-navigate`; a page with client-side
+     * routing cancels it and moves on its own. In a container narrower than `breakpoint/sm` the
+     * items before the last two hide behind an ellipsis; they stay in the accessibility tree, so a
+     * screen reader still reads the whole trail. The separators are decorative and follow the
+     * direction of the text. An `aria-label` that the page writes on the host names the navigation
+     * instead of the label.
+     */
+    interface HTMLUiBreadcrumbsElement extends Components.UiBreadcrumbs, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiBreadcrumbsElementEventMap>(type: K, listener: (this: HTMLUiBreadcrumbsElement, ev: UiBreadcrumbsCustomEvent<HTMLUiBreadcrumbsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiBreadcrumbsElementEventMap>(type: K, listener: (this: HTMLUiBreadcrumbsElement, ev: UiBreadcrumbsCustomEvent<HTMLUiBreadcrumbsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiBreadcrumbsElement: {
+        prototype: HTMLUiBreadcrumbsElement;
+        new (): HTMLUiBreadcrumbsElement;
     };
     /**
      * Triggers an action, with optional icons and a loading state.
@@ -1911,6 +2068,37 @@ declare global {
         prototype: HTMLUiNumberFieldElement;
         new (): HTMLUiNumberFieldElement;
     };
+    interface HTMLUiPaginationElementEventMap {
+        "ui-page-change": PaginationPageChange;
+    }
+    /**
+     * Buttons or links that move between the pages of a long list.
+     * A navigation landmark holds the previous and next buttons and a list of the pages, with an
+     * ellipsis where pages are left out. The current page carries `aria-current="page"`. Without
+     * `getPageHref` the pages are buttons; with it they are links that a crawler can follow. Every
+     * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
+     * page cancels it, the element takes the new page; a link follows its address, and in link mode
+     * the previous, next and jump controls load the address of their page. The `page` attribute is
+     * the first page and the property the current one. The optional status reads such as "Page 5 of
+     * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
+     * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
+     * field when it is shown. An `aria-label` that the page writes on the host names the navigation
+     * instead of the label.
+     */
+    interface HTMLUiPaginationElement extends Components.UiPagination, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiPaginationElementEventMap>(type: K, listener: (this: HTMLUiPaginationElement, ev: UiPaginationCustomEvent<HTMLUiPaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiPaginationElementEventMap>(type: K, listener: (this: HTMLUiPaginationElement, ev: UiPaginationCustomEvent<HTMLUiPaginationElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiPaginationElement: {
+        prototype: HTMLUiPaginationElement;
+        new (): HTMLUiPaginationElement;
+    };
     interface HTMLUiPasswordFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
         "ui-revealed-change": RevealedChange;
@@ -2112,6 +2300,7 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "ui-badge": HTMLUiBadgeElement;
+        "ui-breadcrumbs": HTMLUiBreadcrumbsElement;
         "ui-button": HTMLUiButtonElement;
         "ui-checkbox-field": HTMLUiCheckboxFieldElement;
         "ui-chip": HTMLUiChipElement;
@@ -2126,6 +2315,7 @@ declare global {
         "ui-loader": HTMLUiLoaderElement;
         "ui-notification": HTMLUiNotificationElement;
         "ui-number-field": HTMLUiNumberFieldElement;
+        "ui-pagination": HTMLUiPaginationElement;
         "ui-password-field": HTMLUiPasswordFieldElement;
         "ui-radio-field": HTMLUiRadioFieldElement;
         "ui-radio-group": HTMLUiRadioGroupElement;
@@ -2168,6 +2358,42 @@ declare namespace LocalJSX {
           * @default 'solid'
          */
         "variant"?: BadgeVariant;
+    }
+    /**
+     * A trail of links from the top of a site down to the current page.
+     * A navigation landmark holds an ordered list of the items. The last item is the current page:
+     * text with `aria-current="page"`, never a link. An item with `href` is a link, and one without
+     * is text. A press on a link dispatches the cancelable `ui-navigate`; a page with client-side
+     * routing cancels it and moves on its own. In a container narrower than `breakpoint/sm` the
+     * items before the last two hide behind an ellipsis; they stay in the accessibility tree, so a
+     * screen reader still reads the whole trail. The separators are decorative and follow the
+     * direction of the text. An `aria-label` that the page writes on the host names the navigation
+     * instead of the label.
+     */
+    interface UiBreadcrumbs {
+        /**
+          * The steps from the top of the site to the current page, which is the last one. Each icon is an SVG string of the icon package. A property only, since an attribute cannot hold a list.
+          * @default []
+         */
+        "items"?: readonly BreadcrumbsItem<string>[];
+        /**
+          * The accessible name of the navigation, falling back to `labels.breadcrumbs.label`.
+         */
+        "label"?: string;
+        /**
+          * The user pressed the link of an item. Cancel it to keep the browser from following the link, as a page with client-side routing does.
+         */
+        "onUi-navigate"?: (event: UiBreadcrumbsCustomEvent<BreadcrumbsNavigate>) => void;
+        /**
+          * The mark between two items, which follows the direction of the text.
+          * @default 'chevron'
+         */
+        "separator"?: BreadcrumbsSeparator;
+        /**
+          * The size of the text, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: BreadcrumbsSize;
     }
     /**
      * Triggers an action, with optional icons and a loading state.
@@ -3138,6 +3364,93 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
     /**
+     * Buttons or links that move between the pages of a long list.
+     * A navigation landmark holds the previous and next buttons and a list of the pages, with an
+     * ellipsis where pages are left out. The current page carries `aria-current="page"`. Without
+     * `getPageHref` the pages are buttons; with it they are links that a crawler can follow. Every
+     * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
+     * page cancels it, the element takes the new page; a link follows its address, and in link mode
+     * the previous, next and jump controls load the address of their page. The `page` attribute is
+     * the first page and the property the current one. The optional status reads such as "Page 5 of
+     * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
+     * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
+     * field when it is shown. An `aria-label` that the page writes on the host names the navigation
+     * instead of the label.
+     */
+    interface UiPagination {
+        /**
+          * How many pages to show at each end, at least 1.
+          * @default 1
+         */
+        "boundaryCount"?: number;
+        /**
+          * Prevents every move between pages.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The address of a page. With it the pages are links, and without it they are buttons.
+         */
+        "getPageHref"?: (page: number) => string;
+        /**
+          * The name of a page button, falling back to `labels.pagination.page(page)`.
+         */
+        "getPageLabel"?: (page: number) => string;
+        /**
+          * The status text, falling back to `labels.pagination.status(page, pageCount)`.
+         */
+        "getStatusLabel"?: (page: number, pageCount: number) => string;
+        /**
+          * The text after the jump field, falling back to `labels.pagination.total(pageCount)`.
+         */
+        "getTotalLabel"?: (pageCount: number) => string;
+        /**
+          * The label of the jump field, falling back to `labels.pagination.jump`.
+         */
+        "jumpLabel"?: string;
+        /**
+          * The accessible name of the navigation, falling back to `labels.pagination.label`.
+         */
+        "label"?: string;
+        /**
+          * The name of the next button, falling back to `labels.pagination.next`.
+         */
+        "nextLabel"?: string;
+        /**
+          * A user moved to another page. Cancel it to keep the page, and in link mode to keep the browser from loading the address, as a page with client-side routing does.
+         */
+        "onUi-page-change"?: (event: UiPaginationCustomEvent<PaginationPageChange>) => void;
+        /**
+          * The current page, from 1. The attribute is the first page and the property the current one.
+          * @default 1
+         */
+        "page"?: number;
+        /**
+          * The number of pages, at least 1.
+          * @default 1
+         */
+        "pageCount"?: number;
+        /**
+          * The name of the previous button, falling back to `labels.pagination.previous`.
+         */
+        "previousLabel"?: string;
+        /**
+          * Shows a field that moves to a page whose number a user types.
+          * @default false
+         */
+        "showJump"?: boolean;
+        /**
+          * Shows the status text, such as "Page 5 of 10", after the pages.
+          * @default false
+         */
+        "showStatus"?: boolean;
+        /**
+          * How many pages to show on each side of the current page.
+          * @default 1
+         */
+        "siblingCount"?: number;
+    }
+    /**
      * A password input with a button that shows or hides the password.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The reveal button is a toggle button with one name, whose pressed state says whether the
@@ -3751,6 +4064,11 @@ declare namespace LocalJSX {
         "shape": BadgeShape;
         "label": string;
     }
+    interface UiBreadcrumbsAttributes {
+        "label": string;
+        "size": BreadcrumbsSize;
+        "separator": BreadcrumbsSeparator;
+    }
     interface UiButtonAttributes {
         "variant": ButtonVariant;
         "size": ButtonSize;
@@ -3924,6 +4242,19 @@ declare namespace LocalJSX {
         "decrementLabel": string;
         "incrementLabel": string;
     }
+    interface UiPaginationAttributes {
+        "page": number;
+        "pageCount": number;
+        "siblingCount": number;
+        "boundaryCount": number;
+        "disabled": boolean;
+        "showStatus": boolean;
+        "showJump": boolean;
+        "label": string;
+        "previousLabel": string;
+        "nextLabel": string;
+        "jumpLabel": string;
+    }
     interface UiPasswordFieldAttributes {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
@@ -4042,6 +4373,7 @@ declare namespace LocalJSX {
 
     interface IntrinsicElements {
         "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
+        "ui-breadcrumbs": Omit<UiBreadcrumbs, keyof UiBreadcrumbsAttributes> & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes]?: UiBreadcrumbs[K] } & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes as `attr:${K}`]?: UiBreadcrumbsAttributes[K] } & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes as `prop:${K}`]?: UiBreadcrumbs[K] };
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
         "ui-checkbox-field": Omit<UiCheckboxField, keyof UiCheckboxFieldAttributes> & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes]?: UiCheckboxField[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `attr:${K}`]?: UiCheckboxFieldAttributes[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `prop:${K}`]?: UiCheckboxField[K] };
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
@@ -4056,6 +4388,7 @@ declare namespace LocalJSX {
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
         "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
         "ui-number-field": Omit<UiNumberField, keyof UiNumberFieldAttributes> & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes]?: UiNumberField[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `attr:${K}`]?: UiNumberFieldAttributes[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `prop:${K}`]?: UiNumberField[K] };
+        "ui-pagination": Omit<UiPagination, keyof UiPaginationAttributes> & { [K in keyof UiPagination & keyof UiPaginationAttributes]?: UiPagination[K] } & { [K in keyof UiPagination & keyof UiPaginationAttributes as `attr:${K}`]?: UiPaginationAttributes[K] } & { [K in keyof UiPagination & keyof UiPaginationAttributes as `prop:${K}`]?: UiPagination[K] };
         "ui-password-field": Omit<UiPasswordField, keyof UiPasswordFieldAttributes> & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes]?: UiPasswordField[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `attr:${K}`]?: UiPasswordFieldAttributes[K] } & { [K in keyof UiPasswordField & keyof UiPasswordFieldAttributes as `prop:${K}`]?: UiPasswordField[K] };
         "ui-radio-field": Omit<UiRadioField, keyof UiRadioFieldAttributes> & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes]?: UiRadioField[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `attr:${K}`]?: UiRadioFieldAttributes[K] } & { [K in keyof UiRadioField & keyof UiRadioFieldAttributes as `prop:${K}`]?: UiRadioField[K] };
         "ui-radio-group": Omit<UiRadioGroup, keyof UiRadioGroupAttributes> & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes]?: UiRadioGroup[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `attr:${K}`]?: UiRadioGroupAttributes[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `prop:${K}`]?: UiRadioGroup[K] };
@@ -4077,6 +4410,18 @@ declare module "@stencil/core" {
              * on it, and an `aria-label` that the page writes there names the image instead of `label`.
              */
             "ui-badge": LocalJSX.IntrinsicElements["ui-badge"] & JSXBase.HTMLAttributes<HTMLUiBadgeElement>;
+            /**
+             * A trail of links from the top of a site down to the current page.
+             * A navigation landmark holds an ordered list of the items. The last item is the current page:
+             * text with `aria-current="page"`, never a link. An item with `href` is a link, and one without
+             * is text. A press on a link dispatches the cancelable `ui-navigate`; a page with client-side
+             * routing cancels it and moves on its own. In a container narrower than `breakpoint/sm` the
+             * items before the last two hide behind an ellipsis; they stay in the accessibility tree, so a
+             * screen reader still reads the whole trail. The separators are decorative and follow the
+             * direction of the text. An `aria-label` that the page writes on the host names the navigation
+             * instead of the label.
+             */
+            "ui-breadcrumbs": LocalJSX.IntrinsicElements["ui-breadcrumbs"] & JSXBase.HTMLAttributes<HTMLUiBreadcrumbsElement>;
             /**
              * Triggers an action, with optional icons and a loading state.
              * The native button inside the shadow root owns the accessible semantics. The host takes part in
@@ -4219,6 +4564,21 @@ declare module "@stencil/core" {
              * value and saves the draft with its locale. Parsing and constraint errors use customError.
              */
             "ui-number-field": LocalJSX.IntrinsicElements["ui-number-field"] & JSXBase.HTMLAttributes<HTMLUiNumberFieldElement>;
+            /**
+             * Buttons or links that move between the pages of a long list.
+             * A navigation landmark holds the previous and next buttons and a list of the pages, with an
+             * ellipsis where pages are left out. The current page carries `aria-current="page"`. Without
+             * `getPageHref` the pages are buttons; with it they are links that a crawler can follow. Every
+             * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
+             * page cancels it, the element takes the new page; a link follows its address, and in link mode
+             * the previous, next and jump controls load the address of their page. The `page` attribute is
+             * the first page and the property the current one. The optional status reads such as "Page 5 of
+             * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
+             * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
+             * field when it is shown. An `aria-label` that the page writes on the host names the navigation
+             * instead of the label.
+             */
+            "ui-pagination": LocalJSX.IntrinsicElements["ui-pagination"] & JSXBase.HTMLAttributes<HTMLUiPaginationElement>;
             /**
              * A password input with a button that shows or hides the password.
              * Its inner input owns accessibility; ElementInternals associates the host with the outer form.

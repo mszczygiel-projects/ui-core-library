@@ -1,0 +1,188 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap);
+  container-type: inline-size;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  display: inline-flex;
+}
+
+.page,
+.ellipsis {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--pagination-item-size);
+  block-size: var(--pagination-item-size);
+  font-family: var(--control-font-family);
+  font-size: var(--control-font-size);
+  font-weight: var(--control-font-weight);
+  line-height: var(--control-line-height);
+  letter-spacing: var(--control-letter-spacing);
+}
+
+.page {
+  --_background: var(--color-pagination-item-background-default);
+  --_border: var(--color-pagination-item-border-default);
+  --_text: var(--color-pagination-item-foreground-default);
+
+  margin: 0;
+  padding: 0;
+  border: var(--control-border-width) solid var(--_border);
+  border-radius: var(--control-radius);
+  background-color: var(--_background);
+  color: var(--_text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.current {
+  --_background: var(--color-pagination-item-selected-background);
+  --_border: var(--color-pagination-item-selected-background);
+  --_text: var(--color-pagination-item-selected-foreground);
+}
+
+.page:is(:disabled, .disabled) {
+  --_background: var(--color-pagination-item-background-disabled);
+  --_border: var(--color-pagination-item-border-disabled);
+  --_text: var(--color-pagination-item-foreground-disabled);
+
+  cursor: default;
+}
+
+.page:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* Hover and press share the active state. */
+.page:is(:hover, :active):not(:disabled, .disabled, .current) {
+  --_background: var(--color-pagination-item-background-active);
+  --_border: var(--color-pagination-item-border-active);
+  --_text: var(--color-pagination-item-foreground-active);
+}
+
+/* The chevrons point along the reading direction. */
+.chevron:dir(rtl) > svg {
+  transform: scaleX(-1);
+}
+
+.ellipsis {
+  color: var(--color-pagination-ellipsis-foreground);
+}
+
+.ellipsis::before {
+  content: '…';
+}
+
+.status,
+.jump-label,
+.jump-total {
+  color: var(--color-pagination-status-foreground);
+  font-family: var(--control-font-family);
+  font-size: var(--pagination-status-font-size);
+  font-weight: var(--pagination-status-font-weight);
+  line-height: var(--pagination-status-line-height);
+}
+
+/*
+ * A wide container puts the status and the jump field at its end. With both, the status sits
+ * between the pages and the field, which ends the row. A minimum padding keeps them off the pages.
+ */
+@container (width >= 40rem) {
+  .status,
+  .jump {
+    margin-inline-start: auto;
+    padding-inline-start: calc(var(--pagination-section-gap) - var(--pagination-gap));
+  }
+
+  .with-status.with-jump .status {
+    margin-inline-end: auto;
+  }
+
+  .with-status.with-jump .jump {
+    margin-inline-start: 0;
+  }
+}
+
+.jump {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pagination-jump-gap);
+}
+
+.jump-field {
+  inline-size: var(--pagination-jump-input-width);
+}
+
+.jump-total,
+.status.fallback {
+  display: none;
+}
+
+/*
+ * A narrow container leaves out the pages and puts the status, or the jump field when it is
+ * shown, between the previous and next buttons.
+ */
+@container (width < 40rem) {
+  .list,
+  .jump-label {
+    display: none;
+  }
+
+  .previous {
+    order: 0;
+  }
+
+  .status,
+  .jump {
+    order: 1;
+    margin-inline: auto;
+  }
+
+  .next {
+    order: 2;
+  }
+
+  .jump-total,
+  .status.fallback {
+    display: inline;
+  }
+
+  /* The jump field takes the place of the status. */
+  .with-jump .status {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .page:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .current {
+    border-color: Highlight;
+  }
+}
