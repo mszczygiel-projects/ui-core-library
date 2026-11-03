@@ -80,11 +80,20 @@
 .icon {
   display: inline-flex;
   flex: none;
+  align-items: center;
+  justify-content: center;
   inline-size: var(--_icon-size);
   block-size: var(--_icon-size);
+  font-size: var(--_icon-size);
 }
 
-.icon > svg,
+/* An icon may sit inside a wrapper of the page, so it is centred as a box, not on the baseline. */
+.icon svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 .separator > svg {
   inline-size: 100%;
   block-size: 100%;

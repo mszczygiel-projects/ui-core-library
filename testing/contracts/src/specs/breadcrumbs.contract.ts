@@ -177,6 +177,12 @@ export function breadcrumbsContract(adapter: Mount<BreadcrumbsContractProps>): v
     expect(medium.part('item-icon').getBoundingClientRect().width).toBe(
       tokenNumber('--breadcrumbs-medium-icon-size'),
     );
+    // The drawing itself fills the box and sits on the middle of the label, not on its baseline.
+    const drawing = medium.part('item-icon').querySelector('svg')?.getBoundingClientRect();
+    const label = medium.part('item-label').getBoundingClientRect();
+    expect(drawing?.height).toBe(tokenNumber('--breadcrumbs-medium-icon-size'));
+    const middle = (rect: DOMRect) => rect.top + rect.height / 2;
+    expect(Math.abs((drawing ? middle(drawing) : 0) - middle(label))).toBeLessThanOrEqual(0.5);
   });
 
   it('draws the slash or the chevron, and turns the chevron around in right-to-left text', async () => {
