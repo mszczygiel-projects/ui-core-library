@@ -465,6 +465,28 @@ export function fileInputFieldContract(adapter: Mount<FileInputFieldContractProp
     expect(look(field)).toEqual(look(explicit));
   });
 
+  it('stacks its label, zone, list and hint across its width in every layout of the value', async () => {
+    const layouts = [
+      { defaultValue: [] },
+      { defaultValue: [photo] },
+      { defaultValue: [notes, report], multiple: true },
+    ];
+    for (const props of layouts) {
+      const field = await mount({ hint: 'Help', ...props });
+      const parts = ['label', 'dropzone', ...(props.multiple ? ['list'] : []), 'hint'].map((name) =>
+        field.part(name).getBoundingClientRect(),
+      );
+      for (const [index, box] of parts.entries()) {
+        const previous = parts[index - 1];
+        if (previous !== undefined) {
+          expect(box.top).toBeGreaterThanOrEqual(previous.bottom - 0.5);
+        }
+      }
+      const width = field.part('base').getBoundingClientRect().width;
+      expect(field.part('dropzone').getBoundingClientRect().width).toBeCloseTo(width, 0);
+    }
+  });
+
   it('lays out its rows in right-to-left text', async () => {
     const field = await mount({ defaultValue: [notes, report], multiple: true }, { dir: 'rtl' });
     const [item] = [field.part('item')];

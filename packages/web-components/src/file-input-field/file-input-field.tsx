@@ -341,7 +341,8 @@ export class UiFileInputField implements FileInputFieldProps<File>, FormAssociat
           [variant]: true,
           [size]: true,
           [state]: true,
-          [valueState]: true,
+          // Prefixed: the bare names would collide with the preview and list parts.
+          [`value-${valueState}`]: true,
           disabled,
           dragover: this.dragging && !disabled,
         }}
