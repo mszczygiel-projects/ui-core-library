@@ -1,7 +1,8 @@
-import { Button, Popover } from '@mszczygiel-projects/ui-core-react';
+import { Button, Popover, SelectField } from '@mszczygiel-projects/ui-core-react';
 import type { PopoverOpenChangeDetail } from '@mszczygiel-projects/ui-core-shared/popover';
 import { useState } from 'react';
 
+import { FRUIT } from '../specs/listbox.contract.ts';
 import type { PopoverContractProps } from '../specs/popover.contract.ts';
 import { reactMount } from './react.tsx';
 import { webComponentMount } from './web-component.ts';
@@ -16,6 +17,14 @@ function webContent(content: PopoverContractProps['content']): Element[] {
     node.textContent = text;
     return node;
   };
+  if (content === 'select') {
+    const field = document.createElement('ui-select-field');
+    Object.assign(field, { label: 'Fruit', options: FRUIT });
+    return [field];
+  }
+  if (content === 'tall') {
+    return Array.from({ length: 40 }, (_, index) => element('p', {}, `Line ${String(index + 1)}`));
+  }
   return content === 'fields'
     ? [
         element('input', { 'aria-label': 'First' }),
@@ -75,7 +84,11 @@ function ControlledPopover({
         }
       }}
     >
-      {content === 'fields' ? (
+      {content === 'select' ? (
+        <SelectField label="Fruit" options={FRUIT} />
+      ) : content === 'tall' ? (
+        Array.from({ length: 40 }, (_, index) => <p key={index}>Line {index + 1}</p>)
+      ) : content === 'fields' ? (
         <>
           <input aria-label="First" />
           <input aria-label="Second" data-autofocus="" />

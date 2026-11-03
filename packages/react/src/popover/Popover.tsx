@@ -123,16 +123,23 @@ export function Popover({
       return;
     }
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape' && !event.defaultPrevented) {
+      if (
+        event.key === 'Escape' &&
+        !event.defaultPrevented &&
+        event.composedPath().includes(root)
+      ) {
         // A popover inside a modal closes first, and the modal stays open.
         event.preventDefault();
         event.stopPropagation();
         escapeRef.current(false, 'escape', event);
       }
     };
-    root.addEventListener('keydown', onKeyDown);
+    // The document hears Escape after React has handled it, so that a component inside the panel,
+    // such as an open list, consumes it first.
+    const { ownerDocument } = root;
+    ownerDocument.addEventListener('keydown', onKeyDown);
     return () => {
-      root.removeEventListener('keydown', onKeyDown);
+      ownerDocument.removeEventListener('keydown', onKeyDown);
     };
   }, [isOpen]);
 
@@ -186,7 +193,7 @@ export function Popover({
             aria-hidden="true"
           />
         )}
-        {children}
+        <div className="ui-floating__body">{children}</div>
       </div>
     </span>
   );

@@ -259,7 +259,7 @@ export function Tooltip({
             aria-hidden="true"
           />
         )}
-        {content}
+        <span className="ui-floating__body">{content}</span>
       </div>
     </span>
   );

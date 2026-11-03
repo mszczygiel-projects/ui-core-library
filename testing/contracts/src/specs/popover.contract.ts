@@ -17,8 +17,11 @@ import { tokenNumber } from '../tokens.ts';
 export interface PopoverContractProps extends PopoverProps {
   /** A Button of the library, or a native button of the page. */
   readonly trigger?: 'button' | 'native';
-  /** A paragraph, or two fields of which the second carries `data-autofocus`. */
-  readonly content?: 'text' | 'fields';
+  /**
+   * A paragraph, two fields of which the second carries `data-autofocus`, a SelectField, or more
+   * lines than the window holds.
+   */
+  readonly content?: 'text' | 'fields' | 'select' | 'tall';
   readonly onOpenChange?: (
     open: boolean,
     details: PopoverOpenChangeDetails<Event>,
@@ -35,8 +38,8 @@ export function popoverContract(adapter: Mount<PopoverContractProps>): void {
     return component;
   }
   /** A parent placed somewhere in the window, with a button after the popover. */
-  function spot(style: Partial<CSSStyleDeclaration> = {}): HTMLElement {
-    const parent = document.createElement('div');
+  function spot(style: Partial<CSSStyleDeclaration> = {}, tag = 'div'): HTMLElement {
+    const parent = document.createElement(tag);
     Object.assign(
       parent.style,
       { position: 'fixed', insetBlockStart: '200px', insetInlineStart: '300px' },
@@ -66,6 +69,12 @@ export function popoverContract(adapter: Mount<PopoverContractProps>): void {
   };
   const isOpen = (component: Mounted<PopoverContractProps>) =>
     component.part('panel').matches(':popover-open');
+  /** Whether the list of the SelectField inside the panel is open. */
+  const listOpen = (component: Mounted<PopoverContractProps>) => {
+    const field = component.element.querySelector('ui-select-field, .ui-select-field');
+    const list = (field?.shadowRoot ?? field)?.querySelector('[popover]');
+    return list?.matches(':popover-open') === true;
+  };
   const press = (component: Mounted<PopoverContractProps>) => userEvent.click(controlOf(component));
   /** The focused element, inside the shadow roots too. */
   const focused = () => {
@@ -143,6 +152,34 @@ export function popoverContract(adapter: Mount<PopoverContractProps>): void {
     await expect.poll(() => isOpen(component)).toBe(false);
     expect(onOpenChange.mock.calls.at(-1)?.[1]).toMatchObject({ reason: 'escape' });
     await expect.poll(focused).toBe(controlOf(component));
+  });
+
+  it('lets a list inside it close first on Escape, and closes before a modal around it', async () => {
+    const dialog = spot({}, 'dialog') as HTMLDialogElement;
+    dialog.showModal();
+    const component = await mount({ content: 'select' }, { parent: dialog });
+    await press(component);
+    await expect.poll(() => isOpen(component)).toBe(true);
+    const field = component.element.querySelector('ui-select-field, .ui-select-field');
+    (field?.shadowRoot ?? field)?.querySelector<HTMLElement>('[role="combobox"]')?.focus();
+    await userEvent.keyboard('{ArrowDown}');
+    await expect.poll(() => listOpen(component)).toBe(true);
+    await userEvent.keyboard('{Escape}');
+    await expect.poll(() => listOpen(component)).toBe(false);
+    expect(isOpen(component)).toBe(true);
+    await userEvent.keyboard('{Escape}');
+    await expect.poll(() => isOpen(component)).toBe(false);
+    expect(dialog.open).toBe(true);
+  });
+
+  it('is no taller than the window, and scrolls its content', async () => {
+    const component = await mount({ open: true, content: 'tall' }, { parent: spot() });
+    await expect.poll(() => isOpen(component)).toBe(true);
+    await new Promise((resolve) => requestAnimationFrame(resolve));
+    const panel = component.part('panel');
+    expect(panel.getBoundingClientRect().bottom).toBeLessThanOrEqual(window.innerHeight);
+    const body = panel.querySelector<HTMLElement>('.body, .ui-floating__body');
+    expect(body?.scrollHeight).toBeGreaterThan(body?.clientHeight ?? Infinity);
   });
 
   it('closes on a press outside and when the focus leaves, without taking the focus back', async () => {

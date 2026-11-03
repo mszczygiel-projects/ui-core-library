@@ -87,4 +87,27 @@ describe('Popover', () => {
     expect(onOpenChange).not.toHaveBeenCalled();
     expect(screen.container.querySelector('[role="dialog"]')?.matches(':popover-open')).toBe(false);
   });
+
+  it('hides a closed panel with hidden in a browser without the Popover API', async () => {
+    const prototype = HTMLElement.prototype as Partial<HTMLElement>;
+    const api = Object.getOwnPropertyDescriptors(HTMLElement.prototype);
+    delete prototype.showPopover;
+    delete prototype.hidePopover;
+    try {
+      const screen = await render(
+        <Popover label="Filters" trigger={<button type="button">Filters</button>}>
+          <p>Content</p>
+        </Popover>,
+      );
+      const panel = screen.container.querySelector<HTMLElement>('[role="dialog"]');
+      expect(panel?.hidden).toBe(true);
+      await userEvent.click(screen.getByRole('button', { name: 'Filters' }));
+      expect(panel?.hidden).toBe(false);
+      await userEvent.click(screen.getByRole('button', { name: 'Filters' }));
+      expect(panel?.hidden).toBe(true);
+    } finally {
+      Object.defineProperty(HTMLElement.prototype, 'showPopover', api.showPopover);
+      Object.defineProperty(HTMLElement.prototype, 'hidePopover', api.hidePopover);
+    }
+  });
 });

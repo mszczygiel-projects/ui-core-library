@@ -53,15 +53,16 @@ export function usePopup({
     const reference = anchor.current;
     const floating = popup.current;
     const container = root.current;
+    // Without the Popover API, nothing but `hidden` keeps a closed popup out of sight.
+    const native = floating !== null && typeof floating.showPopover === 'function';
+    if (floating !== null && !native) {
+      floating.hidden = !open;
+    }
     if (!open || reference === null || floating === null || container === null) {
       return;
     }
-    if (typeof floating.showPopover === 'function') {
-      if (!floating.matches(':popover-open')) {
-        floating.showPopover();
-      }
-    } else {
-      floating.hidden = false;
+    if (native && !floating.matches(':popover-open')) {
+      floating.showPopover();
     }
     const stop = autoUpdate(reference, floating, () => {
       void placePopup(reference, floating, {
@@ -97,7 +98,9 @@ export function usePopup({
     return () => {
       stop();
       events.abort();
-      if (typeof floating.hidePopover === 'function' && floating.matches(':popover-open')) {
+      if (!native) {
+        floating.hidden = true;
+      } else if (floating.matches(':popover-open')) {
         floating.hidePopover();
       }
     };

@@ -8,6 +8,7 @@
   --_arrow-size: var(--popover-arrow-size);
   --_border-width: var(--popover-border-width);
   --_border-color: var(--color-popover-border);
+  --_padding-block: var(--popover-padding);
 
   padding: var(--popover-padding);
   border: var(--_border-width) solid var(--_border-color);

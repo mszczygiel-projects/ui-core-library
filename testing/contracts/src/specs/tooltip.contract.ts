@@ -9,6 +9,8 @@ import { tokenNumber } from '../tokens.ts';
 export interface TooltipContractProps extends TooltipProps {
   /** A Button of the library, or a native button of the page. */
   readonly trigger?: 'button' | 'native';
+  /** The id of an element of the page that already describes the trigger. */
+  readonly hint?: string;
 }
 
 /** The behaviour of Tooltip, applied unchanged to the web component and the React component. */
@@ -83,6 +85,20 @@ export function tooltipContract(adapter: Mount<TooltipContractProps>): void {
         .poll(async () => (await component.accessibleTree()).find((node) => node.role === 'button'))
         .toMatchObject({ description: 'Copy link' });
     }
+  });
+
+  it('keeps the description its trigger has already', async () => {
+    const parent = spot();
+    const hint = document.createElement('span');
+    hint.id = 'tooltip-hint';
+    hint.textContent = 'Copies the address';
+    parent.append(hint);
+    const component = await mount({ trigger: 'native', hint: hint.id }, { parent });
+    const description = async () =>
+      (await component.accessibleTree()).find((node) => node.role === 'button')?.description;
+    await expect.poll(description).toBe('Copies the address Copy link');
+    await component.update({ content: '' });
+    await expect.poll(description).toBe('Copies the address');
   });
 
   it('shows after the delay while the mouse rests on its trigger, and hides when it leaves', async () => {

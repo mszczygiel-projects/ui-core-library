@@ -13,12 +13,13 @@
 /* The bubble reads the tokens of tooltip, and the floating surface draws its arrow. */
 .bubble {
   --_offset: var(--tooltip-offset);
+  --_padding-block: var(--tooltip-padding-stack);
   --_arrow-size: var(--tooltip-arrow-size);
   --_show-delay: var(--tooltip-show-delay);
   --_hide-delay: var(--tooltip-hide-delay);
 
   max-inline-size: var(--tooltip-max-width);
-  padding-block: var(--tooltip-padding-stack);
+  padding-block: var(--_padding-block);
   padding-inline: var(--tooltip-padding-inline);
   border: 0;
   border-radius: var(--tooltip-radius);

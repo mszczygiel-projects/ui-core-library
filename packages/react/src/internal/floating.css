@@ -1,19 +1,34 @@
 /*
  * A popup beside its trigger, in the top layer: the panel of Popover and the bubble of Tooltip.
- * A component sets --_offset, --_arrow-size, --_border-width and --_border-color from its
- * tokens. The script places the popup, writes the side it opened on into data-side and places
+ * A component sets --_offset, --_arrow-size, --_border-width, --_border-color and
+ * --_padding-block from its tokens. The script places the popup, writes the side it opened on into data-side and places
  * the arrow on the facing edge.
  */
 .ui-floating {
   --_border-width: 0px;
   --_border-color: transparent;
   --_arrow-size: 0px;
+  --_padding-block: 0px;
+  --_available-block-size: none;
 
   position: fixed;
   inset: auto;
   box-sizing: border-box;
   margin: 0;
   overflow: visible;
+}
+
+/*
+ * The script writes the room in the window into --_available-block-size. The body fills it less
+ * the padding and the border of the popup, and scrolls, so that the arrow outside it stays
+ * visible. Before the script runs, the calculation with none is invalid, and the body has no limit.
+ */
+.ui-floating__body {
+  display: block;
+  max-block-size: calc(
+    var(--_available-block-size) - 2 * (var(--_padding-block) + var(--_border-width))
+  );
+  overflow: auto;
 }
 
 .ui-floating[hidden] {

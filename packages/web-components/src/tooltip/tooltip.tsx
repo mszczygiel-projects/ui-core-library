@@ -103,6 +103,12 @@ export class UiTooltip implements TooltipProps {
   @Watch('content')
   protected contentChanged(): void {
     this.text.textContent = this.content ?? '';
+    // A tooltip without text describes nothing.
+    if ((this.content ?? '') === '') {
+      this.undescribe(this.trigger);
+    } else {
+      this.describe(this.trigger);
+    }
   }
 
   connectedCallback(): void {
@@ -149,7 +155,9 @@ export class UiTooltip implements TooltipProps {
           hidden={typeof HTMLElement.prototype.showPopover !== 'function'}
         >
           {this.showArrow && <span part="arrow" class="arrow" aria-hidden="true" />}
-          <slot name="content" />
+          <span class="body">
+            <slot name="content" />
+          </span>
         </div>
       </span>
     );
@@ -205,16 +213,26 @@ export class UiTooltip implements TooltipProps {
   }
 
   // Element reflection crosses the shadow root of an action to the text; a browser without it
-  // leaves the trigger without its description, and the bubble still shows the text.
+  // leaves the trigger without its description, and the bubble still shows the text. The text
+  // joins the description the trigger has already, which stays when the tooltip goes.
   private describe(trigger: HTMLElement | null): void {
-    if (trigger !== null && reflectsDescription(trigger)) {
-      trigger.ariaDescribedByElements = [this.text];
+    if (trigger === null || !reflectsDescription(trigger) || (this.content ?? '') === '') {
+      return;
+    }
+    const current = trigger.ariaDescribedByElements ?? [];
+    if (!current.includes(this.text)) {
+      trigger.ariaDescribedByElements = [...current, this.text];
     }
   }
 
   private undescribe(trigger: HTMLElement | null): void {
-    if (trigger !== null && reflectsDescription(trigger)) {
-      trigger.ariaDescribedByElements = null;
+    if (trigger === null || !reflectsDescription(trigger)) {
+      return;
+    }
+    const current = trigger.ariaDescribedByElements ?? [];
+    if (current.includes(this.text)) {
+      const rest = current.filter((element) => element !== this.text);
+      trigger.ariaDescribedByElements = rest.length > 0 ? rest : null;
     }
   }
 

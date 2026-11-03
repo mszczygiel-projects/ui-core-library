@@ -111,7 +111,9 @@ export class UiPopover implements PopoverProps {
           tabindex={-1}
         >
           {this.showArrow && <span part="arrow" class="arrow" aria-hidden="true" />}
-          <slot />
+          <div class="body">
+            <slot />
+          </div>
         </div>
       </span>
     );
