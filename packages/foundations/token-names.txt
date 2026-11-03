@@ -413,8 +413,8 @@ css --color-feedback-warning-subtle
 css --color-file-input-dropzone-background-dragover
 css --color-file-input-dropzone-border-dragover
 css --color-file-input-dropzone-icon-dragover
+css --color-file-input-item-background-active
 css --color-file-input-item-background-default
-css --color-file-input-item-background-hover
 css --color-file-input-item-border-default
 css --color-file-input-item-meta
 css --color-file-input-item-name
@@ -1542,8 +1542,8 @@ tailwind --color-feedback-warning-subtle
 tailwind --color-file-input-dropzone-background-dragover
 tailwind --color-file-input-dropzone-border-dragover
 tailwind --color-file-input-dropzone-icon-dragover
+tailwind --color-file-input-item-background-active
 tailwind --color-file-input-item-background-default
-tailwind --color-file-input-item-background-hover
 tailwind --color-file-input-item-border-default
 tailwind --color-file-input-item-meta
 tailwind --color-file-input-item-name
@@ -2287,8 +2287,8 @@ ts tokens.components.color.drawer.text
 ts tokens.components.color.fileInput.dropzone.background.dragover
 ts tokens.components.color.fileInput.dropzone.border.dragover
 ts tokens.components.color.fileInput.dropzone.icon.dragover
+ts tokens.components.color.fileInput.item.background.active
 ts tokens.components.color.fileInput.item.background.default
-ts tokens.components.color.fileInput.item.background.hover
 ts tokens.components.color.fileInput.item.border.default
 ts tokens.components.color.fileInput.item.meta
 ts tokens.components.color.fileInput.item.name
