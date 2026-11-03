@@ -1,4 +1,5 @@
 import { badge } from './badge.ts';
+import { breadcrumbs } from './breadcrumbs.ts';
 import { button } from './button.ts';
 import { checkboxField } from './checkbox-field.ts';
 import { chip } from './chip.ts';
@@ -14,6 +15,7 @@ import { listbox } from './listbox.ts';
 import { loader } from './loader.ts';
 import { notification } from './notification.ts';
 import { numberField } from './number-field.ts';
+import { pagination } from './pagination.ts';
 import { passwordField } from './password-field.ts';
 import { radioField } from './radio-field.ts';
 import { radioGroup } from './radio-group.ts';
@@ -48,4 +50,6 @@ export const specs: readonly ComponentSpec[] = [
   dialog,
   drawer,
   fileInputField,
+  breadcrumbs,
+  pagination,
 ];
