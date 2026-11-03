@@ -1,0 +1,52 @@
+/*
+ * A popup beside its trigger, in the top layer: the panel of Popover and the bubble of Tooltip.
+ * A component sets --_offset, --_arrow-size, --_border-width and --_border-color from its
+ * tokens. The script places the popup, writes the side it opened on into data-side and places
+ * the arrow on the facing edge.
+ */
+.ui-floating {
+  --_border-width: 0px;
+  --_border-color: transparent;
+  --_arrow-size: 0px;
+
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  margin: 0;
+  overflow: visible;
+}
+
+.ui-floating[hidden] {
+  display: none;
+}
+
+/*
+ * The arrow is a square turned by 45°, in the colours of the popup. Its clip keeps the half that
+ * stands out of the popup, with the two edges of the border that face the trigger.
+ */
+.ui-floating__arrow {
+  position: absolute;
+  box-sizing: border-box;
+  inline-size: var(--_arrow-size);
+  block-size: var(--_arrow-size);
+  border: var(--_border-width) solid var(--_border-color);
+  background: inherit;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.ui-floating[data-side='bottom'] > .ui-floating__arrow {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.ui-floating[data-side='top'] > .ui-floating__arrow {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.ui-floating[data-side='right'] > .ui-floating__arrow {
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.ui-floating[data-side='left'] > .ui-floating__arrow {
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}
