@@ -1,7 +1,7 @@
 /**
  * The local Stylelint rules of the components: token names and layers from `tokens.json`, private
- * aliases, raw values and the breakpoint. The configuration at the root of the repository applies
- * them; the components get all four, the CSS of the Storybook site every rule but the layers.
+ * aliases, raw values and the breakpoints of media and container queries. The configuration at the
+ * root of the repository applies them; the components get all five, the CSS of the Storybook site every rule but the layers.
  *
  * The configuration passes Stylelint in, so this tool needs it only for its tests and never adds
  * it to what the repository depends on at run time.
@@ -106,6 +106,14 @@ export function mediaLengths(params: string): string[] {
   );
 }
 
+/**
+ * The lengths a container query may use: the values of the breakpoint tokens. A container query
+ * cannot read a custom property, so it names the value of the token.
+ */
+export const containerBreakpoints: readonly string[] = manifest.tokens
+  .filter((token) => token.path.startsWith('breakpoint/'))
+  .flatMap((token) => token.values.map((entry) => entry.value));
+
 /** The local rules, as Stylelint plugins made with the Stylelint of the caller. */
 export function uiCorePlugins(stylelintApi: typeof stylelint): stylelint.Plugin[] {
   const { createPlugin, utils } = stylelintApi;
@@ -199,5 +207,20 @@ export function uiCorePlugins(stylelintApi: typeof stylelint): stylelint.Plugin[
     },
   );
 
-  return [knownTokens, tokenLayer, noRawValues, breakpoint];
+  const containerBreakpoint = plugin(
+    'ui-core/container-breakpoint',
+    (length = '') =>
+      `Container query at ${length}: a component changes with its own width at a breakpoint of tokens.json, ${containerBreakpoints.join(', ')}`,
+    (root, report) => {
+      root.walkAtRules(/^container$/i, (atRule) => {
+        for (const length of mediaLengths(atRule.params)) {
+          if (!containerBreakpoints.includes(length)) {
+            report(atRule, length);
+          }
+        }
+      });
+    },
+  );
+
+  return [knownTokens, tokenLayer, noRawValues, breakpoint, containerBreakpoint];
 }

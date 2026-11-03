@@ -29,6 +29,7 @@
 ### Layout and browsers
 
 - Values that change with the screen come from Sizes tokens. A layout that must change uses a media query at the breakpoint of `tokens.json` (`64rem`).
+- A component whose layout follows its own width, such as Breadcrumbs collapsing its trail or Pagination giving its pages way to the status, uses a container query on its root at a breakpoint of `tokens.json`, never a media query or a prop. A container query cannot read a custom property, so it names the value of the token, such as `40rem` for `breakpoint/sm`.
 - Logical properties only, so components follow right-to-left text.
 - A popup, such as the list of SelectField or Combobox, opens in the top layer as `popover="manual"`, and its component closes it on Escape, on a press outside and when the focus leaves. `@floating-ui/dom` places it in fixed position, below its field or above it when the window has no room below, at least as wide as the field and no taller than the room in the window.
 - A modal, such as Dialog or Drawer, is a native `<dialog>` opened with `showModal()`: the top layer, an inert page and the return of the focus come from the browser, with no portal, z-index or focus trap. Its component locks the scroll of the page through `shared`, adds the width of the scrollbar to the padding of the page, and enters with a transition from `@starting-style`.
@@ -51,7 +52,7 @@ Stylelint checks components with local rules in `tools/lint-rules`, which read `
 - token names and their layer;
 - private aliases;
 - raw values;
-- the breakpoint.
+- the breakpoint of media queries, and the breakpoints of container queries.
 
 The standard rules check logical properties and Baseline. The CSS of the Storybook site may use raw values, but its token names are checked.
 
