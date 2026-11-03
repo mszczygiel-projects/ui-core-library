@@ -1,12 +1,33 @@
 import { Button, FileInputField } from '@mszczygiel-projects/ui-core-react';
 import { fileInputField } from '@mszczygiel-projects/ui-core-shared/file-input-field';
 import type { Meta, StoryObj } from '@storybook/react-vite';
-import { useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 
 import { onSurfaces } from '../decorators.tsx';
+import { rejectionHint } from '../file-rejections.ts';
 import { documents, picture } from '../sample-files.ts';
 
 const { options } = fileInputField;
+
+/** A field that explains the files it rejected in its hint, until the next accepted change. */
+function WithRejections(props: ComponentProps<typeof FileInputField>) {
+  const [message, setMessage] = useState<string>();
+  return (
+    <FileInputField
+      {...props}
+      state={message === undefined ? props.state : 'error'}
+      hint={message ?? props.hint}
+      onValueChange={(value, details) => {
+        setMessage(undefined);
+        props.onValueChange?.(value, details);
+      }}
+      onReject={(rejections, details) => {
+        setMessage(rejectionHint(rejections, props));
+        props.onReject?.(rejections, details);
+      }}
+    />
+  );
+}
 
 /** A form that shows what it would submit, instead of leaving the page. */
 function FileForm() {
@@ -75,6 +96,7 @@ const meta = {
     defaultValue: { control: false },
     getRemoveLabel: { control: false },
   },
+  render: (args) => <WithRejections {...args} />,
 } satisfies Meta<typeof FileInputField>;
 
 export default meta;

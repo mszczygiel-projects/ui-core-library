@@ -17,6 +17,7 @@ import type {
 import type { DrawerProps } from '@mszczygiel-projects/ui-core-shared/drawer';
 import type {
   FileInputFieldProps,
+  FileInputFieldRejectDetail,
   FileInputFieldValueChangeDetail,
 } from '@mszczygiel-projects/ui-core-shared/file-input-field';
 import type { IconButtonProps } from '@mszczygiel-projects/ui-core-shared/icon-button';
@@ -59,6 +60,9 @@ declare module 'react' {
           readonly defaultValue?: readonly File[];
           readonly 'onui-value-change'?: (
             event: CustomEvent<FileInputFieldValueChangeDetail<Event, File>>,
+          ) => void;
+          readonly 'onui-reject'?: (
+            event: CustomEvent<FileInputFieldRejectDetail<Event, File>>,
           ) => void;
         }
       >;

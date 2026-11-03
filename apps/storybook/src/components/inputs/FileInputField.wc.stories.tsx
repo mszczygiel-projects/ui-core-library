@@ -10,6 +10,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type CSSProperties, useState } from 'react';
 
 import { onSurfaces } from '../decorators.tsx';
+import { rejectionHint } from '../file-rejections.ts';
 import { htmlOf } from '../html.ts';
 import { documents, picture } from '../sample-files.ts';
 
@@ -37,6 +38,24 @@ const { options } = fileInputField;
 
 function UiFileInputField(args: FileInputFieldArgs & { readonly style?: CSSProperties }) {
   return <ui-file-input-field {...args} />;
+}
+
+/** A field that explains the files it rejected in its hint, until the next accepted change. */
+function WithRejections(args: FileInputFieldArgs) {
+  const [message, setMessage] = useState<string>();
+  return (
+    <ui-file-input-field
+      {...args}
+      state={message === undefined ? args.state : 'error'}
+      hint={message ?? args.hint}
+      onui-value-change={() => {
+        setMessage(undefined);
+      }}
+      onui-reject={(event) => {
+        setMessage(rejectionHint(event.detail.rejections, args));
+      }}
+    />
+  );
 }
 
 const source = (args: FileInputFieldArgs) =>
@@ -123,7 +142,7 @@ const meta = {
     locale: { control: 'text' },
     defaultValue: { control: false },
   },
-  render: (args) => <UiFileInputField {...args} />,
+  render: (args) => <WithRejections {...args} />,
   parameters: {
     docs: {
       source: {
