@@ -5,6 +5,9 @@ check
 checkmark
 close
 danger
+delete
+file
 info
 minus
 plus
+upload

@@ -22,6 +22,8 @@ import { DateFieldValueChange } from "./date-field/events";
 import { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 import { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
+import { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
+import { FileInputFieldReject, FileInputFieldValueChange } from "./file-input-field/events";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
@@ -55,6 +57,8 @@ export { DateFieldValueChange } from "./date-field/events";
 export { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 export { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
+export { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
+export { FileInputFieldReject, FileInputFieldValueChange } from "./file-input-field/events";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
@@ -555,6 +559,91 @@ export namespace Components {
           * @default 'end'
          */
         "placement": DrawerPlacement;
+    }
+    /**
+     * A field that takes files from a dialog or a drop, and lists or previews them.
+     * A visually hidden native file input is the only control in the tab order: the label names it,
+     * the hint describes it, and Enter or Space opens the dialog of the system. A press on the zone
+     * opens the same dialog, and the zone takes files dropped on it. Without `multiple` a new file
+     * replaces the value, and one image shows as a preview with Replace and Remove buttons; with
+     * `multiple` new files join the value, a file already in it is skipped, and the files are a list
+     * below the zone, each with a remove button. `accept`, `maxSize` and `maxFiles` reject files with
+     * `ui-reject`, which never changes validity. The host is form-associated and submits one entry for
+     * each file under its name. An author's `aria-label` names the input when it has no visible label.
+     * Custom states: `disabled`, `dragover` while files are dragged over the zone, and `invalid` while
+     * `state` is `error`.
+     */
+    interface UiFileInputField {
+        /**
+          * The file types a user may choose: extensions such as `.png`, MIME types and `type/*` wildcards. A dropped file of another type is rejected.
+         */
+        "accept"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The name of the button that removes a file, falling back to `labels.fileInputField.remove`.
+         */
+        "getRemoveLabel"?: (fileName: string) => string;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * BCP 47 locale of the file sizes, before the configured locale and browser language.
+         */
+        "locale"?: string;
+        /**
+          * The largest number of files, with `multiple`. Further files are rejected.
+         */
+        "maxFiles"?: number;
+        /**
+          * The largest size of a file, in bytes. A larger file is rejected.
+         */
+        "maxSize"?: number;
+        /**
+          * Lets a user choose several files, which join the value. Without it a new file replaces it.
+          * @default false
+         */
+        "multiple": boolean;
+        /**
+          * The name of the form entries, one for each file.
+         */
+        "name"?: string;
+        /**
+          * The text of the zone, falling back to `labels.fileInputField.prompt`.
+         */
+        "promptLabel"?: string;
+        /**
+          * The text of the button that replaces a previewed image, falling back to `labels.fileInputField.replace`.
+         */
+        "replaceLabel"?: string;
+        /**
+          * Requires at least one file for native validation.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment of the zone.
+          * @default 'outline'
+         */
+        "variant": FileInputFieldVariant;
     }
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -1438,6 +1527,10 @@ export interface UiDrawerCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiDrawerElement;
 }
+export interface UiFileInputFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiFileInputFieldElement;
+}
 export interface UiListboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiListboxElement;
@@ -1672,6 +1765,37 @@ declare global {
     var HTMLUiDrawerElement: {
         prototype: HTMLUiDrawerElement;
         new (): HTMLUiDrawerElement;
+    };
+    interface HTMLUiFileInputFieldElementEventMap {
+        "ui-value-change": FileInputFieldValueChange;
+        "ui-reject": FileInputFieldReject;
+    }
+    /**
+     * A field that takes files from a dialog or a drop, and lists or previews them.
+     * A visually hidden native file input is the only control in the tab order: the label names it,
+     * the hint describes it, and Enter or Space opens the dialog of the system. A press on the zone
+     * opens the same dialog, and the zone takes files dropped on it. Without `multiple` a new file
+     * replaces the value, and one image shows as a preview with Replace and Remove buttons; with
+     * `multiple` new files join the value, a file already in it is skipped, and the files are a list
+     * below the zone, each with a remove button. `accept`, `maxSize` and `maxFiles` reject files with
+     * `ui-reject`, which never changes validity. The host is form-associated and submits one entry for
+     * each file under its name. An author's `aria-label` names the input when it has no visible label.
+     * Custom states: `disabled`, `dragover` while files are dragged over the zone, and `invalid` while
+     * `state` is `error`.
+     */
+    interface HTMLUiFileInputFieldElement extends Components.UiFileInputField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiFileInputFieldElementEventMap>(type: K, listener: (this: HTMLUiFileInputFieldElement, ev: UiFileInputFieldCustomEvent<HTMLUiFileInputFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiFileInputFieldElementEventMap>(type: K, listener: (this: HTMLUiFileInputFieldElement, ev: UiFileInputFieldCustomEvent<HTMLUiFileInputFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiFileInputFieldElement: {
+        prototype: HTMLUiFileInputFieldElement;
+        new (): HTMLUiFileInputFieldElement;
     };
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -1995,6 +2119,7 @@ declare global {
         "ui-date-field": HTMLUiDateFieldElement;
         "ui-dialog": HTMLUiDialogElement;
         "ui-drawer": HTMLUiDrawerElement;
+        "ui-file-input-field": HTMLUiFileInputFieldElement;
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-listbox": HTMLUiListboxElement;
@@ -2559,6 +2684,103 @@ declare namespace LocalJSX {
           * @default 'end'
          */
         "placement"?: DrawerPlacement;
+    }
+    /**
+     * A field that takes files from a dialog or a drop, and lists or previews them.
+     * A visually hidden native file input is the only control in the tab order: the label names it,
+     * the hint describes it, and Enter or Space opens the dialog of the system. A press on the zone
+     * opens the same dialog, and the zone takes files dropped on it. Without `multiple` a new file
+     * replaces the value, and one image shows as a preview with Replace and Remove buttons; with
+     * `multiple` new files join the value, a file already in it is skipped, and the files are a list
+     * below the zone, each with a remove button. `accept`, `maxSize` and `maxFiles` reject files with
+     * `ui-reject`, which never changes validity. The host is form-associated and submits one entry for
+     * each file under its name. An author's `aria-label` names the input when it has no visible label.
+     * Custom states: `disabled`, `dragover` while files are dragged over the zone, and `invalid` while
+     * `state` is `error`.
+     */
+    interface UiFileInputField {
+        /**
+          * The file types a user may choose: extensions such as `.png`, MIME types and `type/*` wildcards. A dropped file of another type is rejected.
+         */
+        "accept"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * The name of the button that removes a file, falling back to `labels.fileInputField.remove`.
+         */
+        "getRemoveLabel"?: (fileName: string) => string;
+        /**
+          * Help or validation feedback, connected to the description of the input.
+         */
+        "hint"?: string;
+        /**
+          * A persistent visible name. Include any required marker in this text.
+         */
+        "label"?: string;
+        /**
+          * BCP 47 locale of the file sizes, before the configured locale and browser language.
+         */
+        "locale"?: string;
+        /**
+          * The largest number of files, with `multiple`. Further files are rejected.
+         */
+        "maxFiles"?: number;
+        /**
+          * The largest size of a file, in bytes. A larger file is rejected.
+         */
+        "maxSize"?: number;
+        /**
+          * Lets a user choose several files, which join the value. Without it a new file replaces it.
+          * @default false
+         */
+        "multiple"?: boolean;
+        /**
+          * The name of the form entries, one for each file.
+         */
+        "name"?: string;
+        /**
+          * Files that did not enter the value, each with the reason, and the original event.
+         */
+        "onUi-reject"?: (event: UiFileInputFieldCustomEvent<FileInputFieldReject>) => void;
+        /**
+          * Files a user added or removed, with the new value, the reason and the original event.
+         */
+        "onUi-value-change"?: (event: UiFileInputFieldCustomEvent<FileInputFieldValueChange>) => void;
+        /**
+          * The text of the zone, falling back to `labels.fileInputField.prompt`.
+         */
+        "promptLabel"?: string;
+        /**
+          * The text of the button that replaces a previewed image, falling back to `labels.fileInputField.replace`.
+         */
+        "replaceLabel"?: string;
+        /**
+          * Requires at least one file for native validation.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback; `error` also sets `aria-invalid` without changing native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment of the zone.
+          * @default 'outline'
+         */
+        "variant"?: FileInputFieldVariant;
     }
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -3618,6 +3840,23 @@ declare namespace LocalJSX {
         "closeLabel": string;
         "dragToDismiss": boolean;
     }
+    interface UiFileInputFieldAttributes {
+        "variant": FileInputFieldVariant;
+        "size": TextFieldSize;
+        "label": string;
+        "hint": string;
+        "state": TextFieldState;
+        "disabled": boolean;
+        "required": boolean;
+        "name": string;
+        "accept": string;
+        "multiple": boolean;
+        "maxSize": number;
+        "maxFiles": number;
+        "locale": string;
+        "promptLabel": string;
+        "replaceLabel": string;
+    }
     interface UiIconButtonAttributes {
         "label": string;
         "variant": IconButtonVariant;
@@ -3810,6 +4049,7 @@ declare namespace LocalJSX {
         "ui-date-field": Omit<UiDateField, keyof UiDateFieldAttributes> & { [K in keyof UiDateField & keyof UiDateFieldAttributes]?: UiDateField[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `attr:${K}`]?: UiDateFieldAttributes[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `prop:${K}`]?: UiDateField[K] };
         "ui-dialog": Omit<UiDialog, keyof UiDialogAttributes> & { [K in keyof UiDialog & keyof UiDialogAttributes]?: UiDialog[K] } & { [K in keyof UiDialog & keyof UiDialogAttributes as `attr:${K}`]?: UiDialogAttributes[K] } & { [K in keyof UiDialog & keyof UiDialogAttributes as `prop:${K}`]?: UiDialog[K] };
         "ui-drawer": Omit<UiDrawer, keyof UiDrawerAttributes> & { [K in keyof UiDrawer & keyof UiDrawerAttributes]?: UiDrawer[K] } & { [K in keyof UiDrawer & keyof UiDrawerAttributes as `attr:${K}`]?: UiDrawerAttributes[K] } & { [K in keyof UiDrawer & keyof UiDrawerAttributes as `prop:${K}`]?: UiDrawer[K] };
+        "ui-file-input-field": Omit<UiFileInputField, keyof UiFileInputFieldAttributes> & { [K in keyof UiFileInputField & keyof UiFileInputFieldAttributes]?: UiFileInputField[K] } & { [K in keyof UiFileInputField & keyof UiFileInputFieldAttributes as `attr:${K}`]?: UiFileInputFieldAttributes[K] } & { [K in keyof UiFileInputField & keyof UiFileInputFieldAttributes as `prop:${K}`]?: UiFileInputField[K] };
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-listbox": Omit<UiListbox, keyof UiListboxAttributes> & { [K in keyof UiListbox & keyof UiListboxAttributes]?: UiListbox[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `attr:${K}`]?: UiListboxAttributes[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `prop:${K}`]?: UiListbox[K] };
@@ -3914,6 +4154,20 @@ declare module "@stencil/core" {
              * `open` and writes no role or ARIA attribute on it.
              */
             "ui-drawer": LocalJSX.IntrinsicElements["ui-drawer"] & JSXBase.HTMLAttributes<HTMLUiDrawerElement>;
+            /**
+             * A field that takes files from a dialog or a drop, and lists or previews them.
+             * A visually hidden native file input is the only control in the tab order: the label names it,
+             * the hint describes it, and Enter or Space opens the dialog of the system. A press on the zone
+             * opens the same dialog, and the zone takes files dropped on it. Without `multiple` a new file
+             * replaces the value, and one image shows as a preview with Replace and Remove buttons; with
+             * `multiple` new files join the value, a file already in it is skipped, and the files are a list
+             * below the zone, each with a remove button. `accept`, `maxSize` and `maxFiles` reject files with
+             * `ui-reject`, which never changes validity. The host is form-associated and submits one entry for
+             * each file under its name. An author's `aria-label` names the input when it has no visible label.
+             * Custom states: `disabled`, `dragover` while files are dragged over the zone, and `invalid` while
+             * `state` is `error`.
+             */
+            "ui-file-input-field": LocalJSX.IntrinsicElements["ui-file-input-field"] & JSXBase.HTMLAttributes<HTMLUiFileInputFieldElement>;
             /**
              * Triggers an action named only by an icon, as a square of the height of a button.
              * The native button inside the shadow root owns the accessible semantics, named by `label`. The

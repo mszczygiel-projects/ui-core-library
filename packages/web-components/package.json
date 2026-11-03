@@ -45,6 +45,10 @@
       "types": "./dist/components/ui-drawer.d.ts",
       "default": "./dist/components/ui-drawer.js"
     },
+    "./file-input-field": {
+      "types": "./dist/components/ui-file-input-field.d.ts",
+      "default": "./dist/components/ui-file-input-field.js"
+    },
     "./icon-button": {
       "types": "./dist/components/ui-icon-button.d.ts",
       "default": "./dist/components/ui-icon-button.js"

@@ -1,0 +1,359 @@
+/*
+ * The base takes a variant, a size, a state and a value state class, and `disabled` and
+ * `dragover`. The zone and the field text follow the tokens of the control family, its layout the
+ * tokens of file-input.
+ */
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  --_background: var(--color-control-outline-background-default);
+  --_border: var(--color-control-outline-border-default);
+  --_border-style: dashed;
+  --_label: var(--color-control-outline-label-default);
+  --_hint: var(--color-control-outline-hint-default);
+  --_text: var(--color-control-outline-text-default);
+  --_icon: var(--color-control-outline-icon-default);
+  --_item-icon: var(--color-control-outline-icon-default);
+  --_name: var(--color-file-input-item-name);
+  --_meta: var(--color-file-input-item-meta);
+  --_tint: transparent;
+  --_gap: var(--file-input-gap);
+  --_icon-size: var(--file-input-icon-size);
+  --_min-height: var(--file-input-min-height);
+  --_padding-inline: var(--file-input-padding-inline);
+  --_padding-stack: var(--file-input-padding-stack);
+  --_title-font-size: var(--file-input-title-font-size);
+  --_title-line-height: var(--file-input-title-line-height);
+
+  position: relative;
+  display: block;
+  min-inline-size: 0;
+  font-family: var(--control-font-family);
+  font-weight: var(--control-font-weight);
+  letter-spacing: var(--control-letter-spacing);
+}
+
+.base *,
+.base *::before {
+  box-sizing: border-box;
+}
+
+.small {
+  --_gap: var(--file-input-small-gap);
+  --_icon-size: var(--file-input-small-icon-size);
+  --_min-height: var(--file-input-small-min-height);
+  --_padding-inline: var(--file-input-small-padding-inline);
+  --_padding-stack: var(--file-input-small-padding-stack);
+  --_title-font-size: var(--file-input-small-title-font-size);
+  --_title-line-height: var(--file-input-small-title-line-height);
+}
+
+.large {
+  --_gap: var(--file-input-large-gap);
+  --_icon-size: var(--file-input-large-icon-size);
+  --_min-height: var(--file-input-large-min-height);
+  --_padding-inline: var(--file-input-large-padding-inline);
+  --_padding-stack: var(--file-input-large-padding-stack);
+  --_title-font-size: var(--file-input-large-title-font-size);
+  --_title-line-height: var(--file-input-large-title-line-height);
+}
+
+.outline:where(:not(.disabled):has(.dropzone:hover, .dropzone:active, .input:focus-visible)) {
+  --_border: var(--color-control-outline-border-active);
+}
+
+.outline.success {
+  --_border: var(--color-control-outline-border-success);
+  --_label: var(--color-control-outline-label-success);
+  --_hint: var(--color-control-outline-hint-success);
+}
+
+.outline.error {
+  --_border: var(--color-control-outline-border-error);
+  --_label: var(--color-control-outline-label-error);
+  --_hint: var(--color-control-outline-hint-error);
+  --_text: var(--color-control-outline-text-error);
+  --_icon: var(--color-control-outline-icon-error);
+}
+
+.outline.disabled {
+  --_background: var(--color-control-outline-background-disabled);
+  --_border: var(--color-control-outline-border-disabled);
+  --_label: var(--color-control-outline-label-disabled);
+  --_hint: var(--color-control-outline-hint-disabled);
+  --_text: var(--color-control-outline-text-disabled);
+  --_icon: var(--color-control-outline-icon-disabled);
+  --_item-icon: var(--color-control-outline-icon-disabled);
+  --_name: var(--color-control-outline-text-disabled);
+  --_meta: var(--color-control-outline-text-disabled);
+}
+
+.filled {
+  --_background: var(--color-control-filled-background-default);
+  --_border: var(--color-control-filled-border-default);
+  --_border-style: solid;
+  --_label: var(--color-control-filled-label-default);
+  --_hint: var(--color-control-filled-hint-default);
+  --_text: var(--color-control-filled-text-default);
+  --_icon: var(--color-control-filled-icon-default);
+  --_item-icon: var(--color-control-filled-icon-default);
+}
+
+.filled.success {
+  --_border: var(--color-control-filled-border-success);
+  --_label: var(--color-control-filled-label-success);
+  --_hint: var(--color-control-filled-hint-success);
+}
+
+.filled.error {
+  --_border: var(--color-control-filled-border-error);
+  --_label: var(--color-control-filled-label-error);
+  --_hint: var(--color-control-filled-hint-error);
+  --_text: var(--color-control-filled-text-error);
+  --_icon: var(--color-control-filled-icon-error);
+}
+
+.filled.disabled {
+  --_background: var(--color-control-filled-background-disabled);
+  --_border: var(--color-control-filled-border-disabled);
+  --_label: var(--color-control-filled-label-disabled);
+  --_hint: var(--color-control-filled-hint-disabled);
+  --_text: var(--color-control-filled-text-disabled);
+  --_icon: var(--color-control-filled-icon-disabled);
+  --_item-icon: var(--color-control-filled-icon-disabled);
+  --_name: var(--color-control-filled-text-disabled);
+  --_meta: var(--color-control-filled-text-disabled);
+}
+
+/* The tint of the drag is translucent, so it lies over the background of the zone. */
+.base.dragover {
+  --_border: var(--color-file-input-dropzone-border-dragover);
+  --_icon: var(--color-file-input-dropzone-icon-dragover);
+  --_tint: var(--color-file-input-dropzone-background-dragover);
+}
+
+.label {
+  display: block;
+  inline-size: fit-content;
+  max-inline-size: 100%;
+  margin-block-end: var(--control-label-gap);
+  color: var(--_label);
+  font-family: var(--control-label-font-family);
+  font-size: var(--control-label-font-size);
+  font-weight: var(--control-label-font-weight);
+  line-height: var(--control-label-line-height);
+  letter-spacing: var(--control-label-letter-spacing);
+  text-transform: var(--control-label-text-uppercase);
+  overflow-wrap: anywhere;
+}
+
+/* The input stays in the tab order and the accessibility tree, and the zone draws its focus. */
+.input {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dropzone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--_gap);
+  min-block-size: var(--_min-height);
+  padding-block: var(--_padding-stack);
+  padding-inline: var(--_padding-inline);
+  border: var(--file-input-border-width) var(--_border-style) var(--_border);
+  border-radius: var(--file-input-radius);
+  background-color: var(--_background);
+  background-image: linear-gradient(var(--_tint), var(--_tint));
+  color: var(--_text);
+  text-align: center;
+  cursor: pointer;
+}
+
+.disabled .dropzone {
+  cursor: not-allowed;
+}
+
+.input:focus-visible + .dropzone {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+  color: var(--_icon);
+  font-size: var(--_icon-size);
+}
+
+.icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.prompt {
+  font-family: var(--file-input-title-font-family);
+  font-size: var(--_title-font-size);
+  font-weight: var(--file-input-title-font-weight);
+  line-height: var(--_title-line-height);
+  letter-spacing: var(--file-input-title-letter-spacing);
+  overflow-wrap: anywhere;
+}
+
+.preview {
+  display: flex;
+  justify-content: center;
+  align-self: stretch;
+  overflow: hidden;
+  border-radius: var(--file-input-preview-radius);
+  background: var(--color-file-input-preview-background);
+}
+
+.preview-image {
+  display: block;
+  max-inline-size: 100%;
+  max-block-size: var(--file-input-preview-max-height);
+  object-fit: contain;
+}
+
+.actions {
+  display: flex;
+  align-self: stretch;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--file-input-actions-gap);
+  cursor: default;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--file-input-list-gap);
+  margin-block: var(--file-input-gap) 0;
+  margin-inline: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.item {
+  --_item-tint: transparent;
+
+  display: flex;
+  align-items: center;
+  gap: var(--file-input-item-gap);
+  min-block-size: var(--file-input-item-height);
+  padding-block: var(--file-input-item-padding-stack);
+  padding-inline: var(--file-input-item-padding-inline);
+  border: var(--file-input-border-width) solid var(--color-file-input-item-border-default);
+  border-radius: var(--file-input-item-radius);
+  background-color: var(--color-file-input-item-background-default);
+  background-image: linear-gradient(var(--_item-tint), var(--_item-tint));
+}
+
+.base:not(.disabled) .item:is(:hover, :active) {
+  --_item-tint: var(--color-file-input-item-background-active);
+}
+
+.thumb {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--file-input-item-thumb-size);
+  block-size: var(--file-input-item-thumb-size);
+  border-radius: var(--file-input-item-radius);
+  background: var(--color-file-input-preview-background);
+}
+
+.item-icon {
+  display: inline-flex;
+  inline-size: var(--control-icon-size);
+  block-size: var(--control-icon-size);
+  color: var(--_item-icon);
+  font-size: var(--control-icon-size);
+}
+
+.item-icon svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.info {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-inline-size: 0;
+}
+
+.name {
+  overflow: hidden;
+  color: var(--_name);
+  font-size: var(--file-input-item-name-font-size);
+  font-weight: var(--file-input-item-name-font-weight);
+  line-height: var(--file-input-item-name-line-height);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  color: var(--_meta);
+  font-size: var(--file-input-item-meta-font-size);
+  line-height: var(--file-input-item-meta-line-height);
+}
+
+.hint {
+  display: block;
+  margin-block-start: var(--control-hint-gap);
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  font-weight: var(--control-hint-font-weight);
+  line-height: var(--control-hint-line-height);
+  overflow-wrap: anywhere;
+}
+
+@media (forced-colors: active) {
+  .dropzone,
+  .item {
+    border-color: CanvasText;
+    background: Canvas;
+    color: CanvasText;
+  }
+
+  .dragover .dropzone {
+    border-color: Highlight;
+  }
+
+  .input:focus-visible + .dropzone {
+    outline-color: Highlight;
+  }
+
+  .label,
+  .hint,
+  .icon,
+  .name,
+  .meta,
+  .item-icon {
+    color: CanvasText;
+  }
+
+  .disabled :is(.label, .hint, .icon, .dropzone, .name, .meta, .item-icon) {
+    color: GrayText;
+  }
+}
