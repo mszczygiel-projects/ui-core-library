@@ -10,6 +10,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Component      | Export           |
 | -------------- | ---------------- |
 | Badge          | `Badge`          |
+| Breadcrumbs    | `Breadcrumbs`    |
 | Button         | `Button`         |
 | CheckboxField  | `CheckboxField`  |
 | Chip           | `Chip`           |
@@ -24,6 +25,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Loader         | `Loader`         |
 | Notification   | `Notification`   |
 | NumberField    | `NumberField`    |
+| Pagination     | `Pagination`     |
 | PasswordField  | `PasswordField`  |
 | RadioField     | `RadioField`     |
 | RadioGroup     | `RadioGroup`     |

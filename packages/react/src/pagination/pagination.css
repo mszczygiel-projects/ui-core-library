@@ -1,0 +1,163 @@
+.ui-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap);
+  container-type: inline-size;
+}
+
+.ui-pagination__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pagination-gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-pagination__item {
+  display: inline-flex;
+}
+
+:is(.ui-pagination__page, .ui-pagination__ellipsis) {
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--pagination-item-size);
+  block-size: var(--pagination-item-size);
+  font-family: var(--control-font-family);
+  font-size: var(--control-font-size);
+  font-weight: var(--control-font-weight);
+  line-height: var(--control-line-height);
+  letter-spacing: var(--control-letter-spacing);
+}
+
+.ui-pagination__page {
+  --_background: var(--color-pagination-item-background-default);
+  --_border: var(--color-pagination-item-border-default);
+  --_text: var(--color-pagination-item-foreground-default);
+
+  margin: 0;
+  padding: 0;
+  border: var(--control-border-width) solid var(--_border);
+  border-radius: var(--control-radius);
+  background-color: var(--_background);
+  color: var(--_text);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ui-pagination__page--current {
+  --_background: var(--color-pagination-item-selected-background);
+  --_border: var(--color-pagination-item-selected-background);
+  --_text: var(--color-pagination-item-selected-foreground);
+}
+
+.ui-pagination__page:is(:disabled, .ui-pagination__page--disabled) {
+  --_background: var(--color-pagination-item-background-disabled);
+  --_border: var(--color-pagination-item-border-disabled);
+  --_text: var(--color-pagination-item-foreground-disabled);
+
+  cursor: default;
+}
+
+.ui-pagination__page:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* Hover and press share the active state. */
+.ui-pagination__page:is(:hover, :active):not(
+    :disabled,
+    .ui-pagination__page--disabled,
+    .ui-pagination__page--current
+  ) {
+  --_background: var(--color-pagination-item-background-active);
+  --_border: var(--color-pagination-item-border-active);
+  --_text: var(--color-pagination-item-foreground-active);
+}
+
+.ui-pagination__ellipsis {
+  color: var(--color-pagination-ellipsis-foreground);
+}
+
+.ui-pagination__ellipsis::before {
+  content: '…';
+}
+
+:is(.ui-pagination__status, .ui-pagination__jump-label, .ui-pagination__jump-total) {
+  color: var(--color-pagination-status-foreground);
+  font-family: var(--control-font-family);
+  font-size: var(--pagination-status-font-size);
+  font-weight: var(--pagination-status-font-weight);
+  line-height: var(--pagination-status-line-height);
+}
+
+/* The status and the jump field stand apart from the pages. */
+:is(.ui-pagination__status, .ui-pagination__jump) {
+  margin-inline-start: calc(var(--pagination-section-gap) - var(--pagination-gap));
+}
+
+/* The chevrons point along the reading direction. */
+.ui-pagination__chevron:dir(rtl) > svg {
+  transform: scaleX(-1);
+}
+
+.ui-pagination__jump {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--pagination-jump-gap);
+}
+
+.ui-pagination__jump-field {
+  inline-size: var(--pagination-jump-input-width);
+}
+
+.ui-pagination__jump-total {
+  display: none;
+}
+
+/*
+ * A narrow container leaves out the pages and puts the status, or the jump field when it is
+ * shown, between the previous and next buttons.
+ */
+@container (width < 40rem) {
+  .ui-pagination__list,
+  .ui-pagination__jump-label {
+    display: none;
+  }
+
+  .ui-pagination__previous {
+    order: 0;
+  }
+
+  :is(.ui-pagination__status, .ui-pagination__jump) {
+    order: 1;
+    margin-inline: auto;
+  }
+
+  .ui-pagination__next {
+    order: 2;
+  }
+
+  .ui-pagination__jump-total {
+    display: inline;
+  }
+
+  /* The jump field takes the place of the status. */
+  .ui-pagination--with-jump .ui-pagination__status {
+    display: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-pagination__page:focus-visible {
+    outline-color: Highlight;
+  }
+
+  .ui-pagination__page--current {
+    border-color: Highlight;
+  }
+}

@@ -1,5 +1,6 @@
 /** Every React component of the library. Their styles are in `styles.css`, imported once. */
 export { Badge, type BadgeProps } from './badge/Badge.tsx';
+export { Breadcrumbs, type BreadcrumbsProps } from './breadcrumbs/Breadcrumbs.tsx';
 export {
   Button,
   type ButtonProps,
@@ -70,6 +71,7 @@ export {
   type NumberFieldProps,
   type NumberFieldValueChangeDetails,
 } from './number-field/NumberField.tsx';
+export { Pagination, type PaginationProps } from './pagination/Pagination.tsx';
 export {
   PasswordField,
   type PasswordFieldProps,

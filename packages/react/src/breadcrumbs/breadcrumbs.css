@@ -1,0 +1,137 @@
+.ui-breadcrumbs {
+  --_font-size: var(--breadcrumbs-medium-font-size);
+  --_line-height: var(--breadcrumbs-medium-line-height);
+  --_gap: var(--breadcrumbs-medium-gap);
+  --_icon-size: var(--breadcrumbs-medium-icon-size);
+  --_separator-size: var(--breadcrumbs-medium-separator-size);
+
+  position: relative;
+  display: block;
+  container-type: inline-size;
+  font-family: var(--breadcrumbs-font-family);
+  font-size: var(--_font-size);
+  font-weight: var(--breadcrumbs-font-weight);
+  line-height: var(--_line-height);
+  letter-spacing: var(--breadcrumbs-letter-spacing);
+}
+
+.ui-breadcrumbs--small {
+  --_font-size: var(--breadcrumbs-small-font-size);
+  --_line-height: var(--breadcrumbs-small-line-height);
+  --_gap: var(--breadcrumbs-small-gap);
+  --_icon-size: var(--breadcrumbs-small-icon-size);
+  --_separator-size: var(--breadcrumbs-small-separator-size);
+}
+
+.ui-breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--_gap);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ui-breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--_gap);
+  min-inline-size: 0;
+}
+
+:is(.ui-breadcrumbs__link, .ui-breadcrumbs__text, .ui-breadcrumbs__current) {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--breadcrumbs-item-gap);
+  border-radius: var(--breadcrumbs-radius);
+  color: var(--color-breadcrumbs-item-foreground-default);
+}
+
+.ui-breadcrumbs__link {
+  text-decoration: none;
+}
+
+/* Hover and press share the active state. */
+.ui-breadcrumbs__link:is(:hover, :active) {
+  color: var(--color-breadcrumbs-item-foreground-active);
+  text-decoration: underline;
+}
+
+.ui-breadcrumbs__link:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.ui-breadcrumbs__current {
+  color: var(--color-breadcrumbs-current-foreground);
+  font-weight: var(--breadcrumbs-current-font-weight);
+}
+
+.ui-breadcrumbs__item-icon {
+  display: inline-flex;
+  flex: none;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+}
+
+:is(.ui-breadcrumbs__item-icon, .ui-breadcrumbs__separator) > svg {
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.ui-breadcrumbs__separator {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  min-inline-size: var(--_separator-size);
+  block-size: var(--_separator-size);
+  color: var(--color-breadcrumbs-separator-foreground);
+}
+
+.ui-breadcrumbs--slash .ui-breadcrumbs__separator::before {
+  content: '/';
+}
+
+/* A chevron points along the text, so it turns around in right-to-left text. */
+.ui-breadcrumbs__separator:dir(rtl) > svg {
+  transform: scaleX(-1);
+}
+
+.ui-breadcrumbs__ellipsis {
+  color: var(--color-breadcrumbs-ellipsis-foreground);
+}
+
+.ui-breadcrumbs__ellipsis::before {
+  content: '…';
+}
+
+.ui-breadcrumbs__item--ellipsis {
+  display: none;
+}
+
+/*
+ * A narrow container shows the ellipsis and the last two items. The others leave the layout but
+ * stay in the accessibility tree, so a screen reader still reads the whole trail.
+ */
+@container (width < 40rem) {
+  .ui-breadcrumbs__item--ellipsis {
+    display: inline-flex;
+  }
+
+  .ui-breadcrumbs__item--collapsible {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    clip-path: inset(50%);
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-breadcrumbs__link:focus-visible {
+    outline-color: Highlight;
+  }
+}
