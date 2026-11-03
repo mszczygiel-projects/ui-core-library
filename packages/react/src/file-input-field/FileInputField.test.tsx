@@ -63,12 +63,11 @@ describe('FileInputField', () => {
     const errors = vi.spyOn(console, 'error').mockImplementation(() => undefined);
     const recoverable = vi.fn();
     const root = hydrateRoot(container, element, { onRecoverableError: recoverable });
-    await nextFrame();
-    await nextFrame();
+    // The preview gets its source in an effect, which a slow machine runs some frames later.
+    await expect.poll(() => container.querySelector('img')?.getAttribute('src')).toMatch(/^blob:/);
+    expect(container.querySelector('input')?.files?.[0]?.name).toBe('photo.png');
     expect(recoverable).not.toHaveBeenCalled();
     expect(errors).not.toHaveBeenCalled();
-    expect(container.querySelector('img')?.getAttribute('src')).toMatch(/^blob:/);
-    expect(container.querySelector('input')?.files?.[0]?.name).toBe('photo.png');
     root.unmount();
     container.remove();
     errors.mockRestore();
