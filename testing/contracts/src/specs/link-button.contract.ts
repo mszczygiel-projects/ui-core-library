@@ -7,6 +7,7 @@ import { iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions, required } from '../harness/types.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 import { actionSurfaceContract, resolvedColor } from './action.contract.ts';
+import { popupTriggerContract } from './popup-trigger.contract.ts';
 
 /**
  * The props of the specification, plus content as text and icons as flags, which the harness of
@@ -49,6 +50,8 @@ export function linkButtonContract(adapter: Mount<LinkButtonContractProps>): voi
     }
     history.replaceState(null, '', location.pathname + location.search);
   });
+
+  popupTriggerContract(() => mount(), { role: 'link', popup: false });
 
   it('uses the documented defaults and falls back after invalid runtime settings', async () => {
     const defaults = await mount();

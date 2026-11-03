@@ -14,6 +14,11 @@ import { cancelInactiveClick, runFormAction, setState } from '../internal/action
 import { followConfig } from '../internal/config.ts';
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
+import {
+  followForwardedAria,
+  forwardDescription,
+  type ForwardedAria,
+} from '../internal/forward-aria.ts';
 
 const { options } = iconButton;
 
@@ -81,6 +86,9 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
   /** The `aria-label` that the page wrote on the host. */
   @State() private authorLabel: string | null = null;
 
+  /** The popup attributes that a Popover or Tooltip wrote on the host. */
+  @State() private forwardedAria: ForwardedAria = {};
+
   private stopFollowing: (() => void)[] = [];
 
   /** The outer form associated by the browser, including an explicit `form` attribute. */
@@ -135,6 +143,9 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
       followAttribute(this.host, 'aria-label', (value) => {
         this.authorLabel = value;
       }),
+      followForwardedAria(this.host, (aria) => {
+        this.forwardedAria = aria;
+      }),
     ];
   }
 
@@ -163,6 +174,15 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
     this.internals.setFormValue(null);
   }
 
+  componentDidRender(): void {
+    const root = this.host.shadowRoot;
+    forwardDescription(
+      this.host,
+      root?.querySelector('button'),
+      this.loading ? [...(root?.querySelectorAll('#loading-description') ?? [])] : [],
+    );
+  }
+
   componentWillRender(): void {
     setState(this.internals, 'disabled', this.isDisabled());
     setState(this.internals, 'loading', this.loading);
@@ -186,6 +206,7 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
           aria-busy={this.loading ? 'true' : undefined}
           aria-disabled={this.loading ? 'true' : undefined}
           aria-describedby={this.loading ? 'loading-description' : undefined}
+          {...this.forwardedAria}
           onClickCapture={this.onClick}
         >
           <span part="icon" class="icon" aria-hidden="true">
