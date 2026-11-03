@@ -4,6 +4,8 @@ import '@mszczygiel-projects/ui-core-web-components/checkbox-field';
 import '@mszczygiel-projects/ui-core-web-components/chip';
 import '@mszczygiel-projects/ui-core-web-components/combobox';
 import '@mszczygiel-projects/ui-core-web-components/date-field';
+import '@mszczygiel-projects/ui-core-web-components/dialog';
+import '@mszczygiel-projects/ui-core-web-components/drawer';
 import '@mszczygiel-projects/ui-core-web-components/icon-button';
 import '@mszczygiel-projects/ui-core-web-components/link-button';
 import '@mszczygiel-projects/ui-core-web-components/listbox';
@@ -27,6 +29,8 @@ import { mountWebComponentCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountWebComponentChip } from '../harness/chip.tsx';
 import { mountWebComponentCombobox } from '../harness/combobox.tsx';
 import { mountWebComponentDateField } from '../harness/date-field.tsx';
+import { mountWebComponentDialog } from '../harness/dialog.tsx';
+import { mountWebComponentDrawer } from '../harness/drawer.tsx';
 import { mountWebComponentIconButton } from '../harness/icon-button.tsx';
 import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
 import { mountWebComponentListbox } from '../harness/listbox.tsx';
@@ -47,12 +51,15 @@ import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
+import { dialogContract } from '../specs/dialog.contract.ts';
+import { drawerContract } from '../specs/drawer.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { listboxContract } from '../specs/listbox.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
+import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
@@ -140,4 +147,18 @@ describe('DateField, web component', () => {
 
 describe('Combobox, web component', () => {
   comboboxContract(mountWebComponentCombobox);
+});
+
+describe('Dialog, web component', () => {
+  dialogContract(mountWebComponentDialog);
+});
+
+describe('Drawer, web component', () => {
+  drawerContract(mountWebComponentDrawer);
+});
+
+describe('Drawer and Dialog, web components', () => {
+  sharedScrollLockContract(mountWebComponentDrawer, { label: 'Filters' }, mountWebComponentDialog, {
+    heading: 'Delete file',
+  });
 });

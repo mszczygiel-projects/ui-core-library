@@ -37,6 +37,14 @@
       "types": "./dist/components/ui-date-field.d.ts",
       "default": "./dist/components/ui-date-field.js"
     },
+    "./dialog": {
+      "types": "./dist/components/ui-dialog.d.ts",
+      "default": "./dist/components/ui-dialog.js"
+    },
+    "./drawer": {
+      "types": "./dist/components/ui-drawer.d.ts",
+      "default": "./dist/components/ui-drawer.js"
+    },
     "./icon-button": {
       "types": "./dist/components/ui-icon-button.d.ts",
       "default": "./dist/components/ui-icon-button.js"

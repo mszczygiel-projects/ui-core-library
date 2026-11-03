@@ -21,8 +21,11 @@
   | Open popup      | `open`, which the web component reflects; React pairs it with `defaultOpen` and `onOpenChange`                                                                           |
   | Options as data | `options`: options `{ value, label, disabled?, icon? }`, alone or in groups `{ label?, options }`. The empty string is no value                                          |
   | Accessible name | `label`, required where nothing visible names the component                                                                                                              |
+  | Modal           | `open` as for a popup. A request to close carries a `reason`: `escape`, `backdrop`, `close-button`, `drag` or `form`, with the `returnValue` of the form                 |
+  | Edge            | `placement`: `start`, `end` or `bottom`; `start` and `end` follow the direction of the text                                                                              |
 
 - Booleans are false by default and named after the case they turn on, such as `hideLabel`.
+- A modal closes at the request of the user. The web component dispatches a cancelable `ui-open-change` first and closes unless the page cancels it; React calls `onOpenChange(false, details)`, and a controlled modal closes when its parent agrees. A close that the browser forces cannot be refused, and setting `open` reports nothing. `alert` makes a dialog an alert dialog that a press on the backdrop does not close, `hideCloseButton` removes its close button, and `dragToDismiss` lets the user drag a sheet down to close it. The element marked with `autofocus` or `data-autofocus` takes the focus when a modal opens, since React's `autoFocus` sets no attribute.
 - An invalid runtime value falls back to the default with `one-of` from `shared`.
 
 ### Pairing the two APIs

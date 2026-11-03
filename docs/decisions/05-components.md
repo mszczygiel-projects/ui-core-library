@@ -25,6 +25,7 @@
 - Calendar dates are ISO strings, counted in whole days without `Date` objects.
 - Parsed inputs share their text parser, canonical serialization, validation reasons and locale grammar. A fixed UTC probe discovers Gregorian part order through Intl; calendar validation still uses numeric parts. IMask owns only the DOM editing mechanics of DateField, separately in each component package.
 - State that must be unique on a page lives under `globalThis[Symbol.for('ui-core.<name>')]`.
+- A protocol that touches the page keeps only its state and its rules in `shared`, and each package passes in the DOM work. The lock of the scroll of the page counts its owners under `ui-core.scroll-lock`: the first owner applies the styles of the lock and the last one restores them, so modals of both packages share one lock. The gesture of a drag to dismiss is pure functions of positions and times.
 - Every module has a subpath export, and the package declares `"sideEffects": false`.
 - The public declarations are a file snapshot in `packages/shared/api/`, which `pnpm shared:snapshot` rewrites after an intended change.
 - The package knows no browser types. A type that names a DOM event takes it as a parameter, such as `TextFieldValueChangeDetail<Event>`.

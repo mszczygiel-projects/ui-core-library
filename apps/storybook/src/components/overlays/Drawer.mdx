@@ -1,0 +1,95 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Drawer.wc.stories.tsx';
+import * as ReactStories from './Drawer.react.stories.tsx';
+
+<Meta title="Components/Overlays/Drawer/Docs" />
+
+# Drawer
+
+<ComponentOverview name="Drawer" />
+
+## Usage
+
+Use Drawer for secondary content that the user opens beside the page and closes again: filters of a list, the navigation of a small window, the details of an item. It slides in from an edge over a backdrop, and the page waits until it closes.
+
+Use Dialog for a decision that must stop the user, and keep content that the user needs while working on the page in the page itself.
+
+## Anatomy
+
+The **base** is the panel, a native `<dialog>`, with its backdrop. The **header** holds the **close** button, and the **body** holds the content and scrolls. A bottom drawer that can be dragged shows the **grabber** above the header. The web component exposes these as parts; React uses the matching `.ui-drawer__<part>` classes, and Figma names the layers the same way.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Placements} webComponents={WebComponentStories.Placements} />
+
+`placement` sets the edge: `end`, the default, and `start` follow the direction of the text, so `end` is the right edge in English and the left in Arabic; `bottom` rises from the bottom of the window. A side drawer is as tall as the window; a bottom drawer is as tall as its content, up to the window.
+
+## Sizes & density
+
+A side drawer has the width of its token, up to the window; a bottom drawer fills the width. Density changes the padding and the gaps.
+
+## States
+
+A drawer is open or closed. The close button has the states of IconButton.
+
+## Content & labels
+
+Nothing visible names a drawer, so `label` is required; an `aria-label` of the page names it above `label`, and React also accepts `aria-labelledby`. The content goes into the default slot, or `children`, and the actions into the content.
+
+The close button is named by `closeLabel`, then `labels.drawer.close`, “Close” in English. `hideCloseButton` removes it, and its header with it.
+
+<Source language="ts" code={`configureUiCore({ labels: { drawer: { close: 'Zamknij' } } });`} />
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.WithForm} webComponents={WebComponentStories.WithForm} />
+
+- The page opens the drawer with `open`. It opens as a modal in the top layer, the rest of the page becomes inert and stops scrolling, and the width of the page stays.
+- The focus moves to the element marked with `autofocus` or `data-autofocus`, which may be outside the order of Tab with `tabindex="-1"`, else to the first focusable element of the content, else to the panel. It returns where it was when the drawer closes.
+- Escape, a press on the backdrop, the close button, a form with `method="dialog"` and a drag down of a bottom drawer ask it to close, with a `reason`, as Dialog does. The web component closes itself after `ui-open-change`, which the page may cancel; React reports `onOpenChange(false, details)`.
+- `dragToDismiss` lets the user drag a bottom drawer down by its grabber or its header: past a quarter of its height, or with a flick, it closes; otherwise it returns. It has no effect on a side drawer.
+- Setting `open` does not report a request. A drawer and a dialog open together share one lock of the scroll.
+
+<FrameworkCanvas react={ReactStories.Draggable} webComponents={WebComponentStories.Draggable} />
+
+## Accessibility
+
+- **Pattern.** Drawer follows the [WAI-ARIA dialog (modal) pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/): a native modal dialog that makes the rest of the page inert.
+- **Keys.** Tab and Shift+Tab move through the drawer; Escape asks it to close.
+- **Names.** `label` names the drawer. The grabber is decorative: every way to close stays for every user.
+- **Contrast.** The content has a contrast of at least 4.5 to 1 on the panel, in Light and Dark.
+- **Preferences.** With reduced motion, the drawer opens without sliding or fading.
+
+## Surfaces & themes
+
+The panel, its text and the backdrop follow the theme through the Components tokens of the drawer.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Drawer" />}
+  webComponents={<WebComponentApi tag="ui-drawer" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Drawer } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/drawer';`}
+/>
+
+## Tokens
+
+<ComponentTokens component="drawer" />
+
+## Implementation notes
+
+- The web component renders the native dialog in an open shadow root and reflects only `open`; it writes no role or ARIA attribute on its host. `ui-open-change` bubbles, so check `event.target` when a component inside the drawer sends its own.
+- React renders the drawer in place, without a portal, closed on the server, and opens it after hydration. The ref is the native dialog; open and close it through `open`. Mark the element to focus with `data-autofocus`.
+- The icons come from the icons package, so a consumer's icon set must hold `close`.
+- The Figma set has the variant properties `placement` and `hideCloseButton` and the boolean `dragToDismiss`.

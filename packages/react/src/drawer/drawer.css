@@ -1,0 +1,58 @@
+.ui-drawer.ui-drawer__base {
+  --_width: var(--drawer-width);
+  --_radius: var(--drawer-radius);
+
+  inline-size: min(var(--_width), 100%);
+  block-size: 100%;
+  margin: 0;
+  padding-block: var(--_padding-stack);
+}
+
+.ui-drawer.ui-drawer--end {
+  --_enter-from: 100% 0;
+
+  margin-inline-start: auto;
+  border-inline-start-width: var(--_border-width);
+}
+
+.ui-drawer.ui-drawer--start {
+  --_enter-from: -100% 0;
+
+  margin-inline-end: auto;
+  border-inline-end-width: var(--_border-width);
+}
+
+/* stylelint-disable-next-line plugin/use-baseline -- without it, the panel slides in from the left */
+.ui-drawer.ui-drawer--end:dir(rtl) {
+  --_enter-from: -100% 0;
+}
+
+/* stylelint-disable-next-line plugin/use-baseline -- without it, the panel slides in from the right */
+.ui-drawer.ui-drawer--start:dir(rtl) {
+  --_enter-from: 100% 0;
+}
+
+.ui-drawer.ui-drawer--bottom {
+  --_enter-from: 0 100%;
+
+  inline-size: 100%;
+
+  /* An auto height between the insets of a modal would stretch it to the top of the window. */
+  block-size: fit-content;
+  margin-block-start: auto;
+  border-block-start-width: var(--_border-width);
+  border-start-start-radius: var(--_radius);
+  border-start-end-radius: var(--_radius);
+}
+
+.ui-drawer__header {
+  display: flex;
+  flex: none;
+  justify-content: flex-end;
+  padding-inline: var(--_padding-inline);
+  padding-block-end: var(--drawer-gap);
+}
+
+.ui-drawer__close {
+  flex: none;
+}

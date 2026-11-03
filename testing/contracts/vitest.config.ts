@@ -13,6 +13,7 @@ const ELEMENT_NODE = 1;
 
 interface DomNode {
   readonly nodeType: number;
+  readonly nodeName?: string;
   readonly backendNodeId: number;
   readonly attributes?: readonly string[];
   readonly children?: readonly DomNode[];
@@ -70,7 +71,22 @@ const accessibleNode: BrowserCommand<[string]> = async ({ page }, frameId) => {
   }
 };
 
-/** Reads descendants, including native controls inside shadow roots and excluding ignored nodes. */
+/** The first native dialog below a node, shadow roots included. */
+function findDialog(node: DomNode): DomNode | undefined {
+  for (const child of [...(node.children ?? []), ...(node.shadowRoots ?? [])]) {
+    const found = child.nodeName === 'DIALOG' ? child : findDialog(child);
+    if (found !== undefined) {
+      return found;
+    }
+  }
+  return undefined;
+}
+
+/**
+ * Reads descendants, including native controls inside shadow roots and excluding ignored nodes.
+ * A modal dialog leaves the rest of the page out of the tree, its frame included, so the tree of
+ * a frame with a dialog starts at the dialog.
+ */
 const accessibleTree: BrowserCommand<[string]> = async ({ page }, frameId) => {
   const session = await page.context().newCDPSession(page);
   try {
@@ -80,7 +96,7 @@ const accessibleTree: BrowserCommand<[string]> = async ({ page }, frameId) => {
       throw new Error(`No accessibility frame ${frameId}`);
     }
     const { nodes } = await session.send('Accessibility.queryAXTree', {
-      backendNodeId: frame.backendNodeId,
+      backendNodeId: (findDialog(frame) ?? frame).backendNodeId,
     });
     const result: AccessibleNode[] = nodes
       .filter((node) => !node.ignored)

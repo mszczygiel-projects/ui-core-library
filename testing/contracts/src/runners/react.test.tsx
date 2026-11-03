@@ -1,3 +1,5 @@
+import '@mszczygiel-projects/ui-core-web-components/drawer';
+
 import { Loader } from '@mszczygiel-projects/ui-core-react';
 import { describe } from 'vitest';
 
@@ -7,6 +9,8 @@ import { mountReactCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountReactChip } from '../harness/chip.tsx';
 import { mountReactCombobox } from '../harness/combobox.tsx';
 import { mountReactDateField } from '../harness/date-field.tsx';
+import { mountReactDialog } from '../harness/dialog.tsx';
+import { mountReactDrawer, mountWebComponentDrawer } from '../harness/drawer.tsx';
 import { mountReactIconButton } from '../harness/icon-button.tsx';
 import { mountReactLinkButton } from '../harness/link-button.tsx';
 import { mountReactListbox } from '../harness/listbox.tsx';
@@ -27,12 +31,15 @@ import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
+import { dialogContract } from '../specs/dialog.contract.ts';
+import { drawerContract } from '../specs/drawer.contract.ts';
 import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { listboxContract } from '../specs/listbox.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
+import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
 import { passwordFieldContract } from '../specs/password-field.contract.ts';
 import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
@@ -120,4 +127,24 @@ describe('DateField, React', () => {
 
 describe('Combobox, React', () => {
   comboboxContract(mountReactCombobox);
+});
+
+describe('Dialog, React', () => {
+  dialogContract(mountReactDialog);
+});
+
+describe('Drawer, React', () => {
+  drawerContract(mountReactDrawer);
+});
+
+describe('Drawer and Dialog, React', () => {
+  sharedScrollLockContract(mountReactDrawer, { label: 'Filters' }, mountReactDialog, {
+    heading: 'Delete file',
+  });
+});
+
+describe('Drawer of the web components under Dialog of React', () => {
+  sharedScrollLockContract(mountWebComponentDrawer, { label: 'Filters' }, mountReactDialog, {
+    heading: 'Delete file',
+  });
 });

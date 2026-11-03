@@ -14,6 +14,8 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Chip          | `ui-chip`           | `./chip`           |
 | Combobox      | `ui-combobox`       | `./combobox`       |
 | DateField     | `ui-date-field`     | `./date-field`     |
+| Dialog        | `ui-dialog`         | `./dialog`         |
+| Drawer        | `ui-drawer`         | `./drawer`         |
 | IconButton    | `ui-icon-button`    | `./icon-button`    |
 | LinkButton    | `ui-link-button`    | `./link-button`    |
 | Listbox       | `ui-listbox`        | `./listbox`        |

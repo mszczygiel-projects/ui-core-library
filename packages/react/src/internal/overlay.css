@@ -1,0 +1,122 @@
+/*
+ * The surface of every modal: Dialog and Drawer. The native dialog with the class `ui-overlay`
+ * takes the modifier of its component, and `ui-overlay--dragging` while it follows a drag down. A
+ * component sets `--_enter-from`, where the panel comes from when it opens. This stylesheet comes
+ * after those of the components, so they override it with two classes.
+ */
+
+.ui-overlay {
+  --_drag-offset: 0px;
+  --_enter-from: 0 0;
+
+  box-sizing: border-box;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  max-inline-size: 100%;
+  max-block-size: 100%;
+  border: 0 solid var(--_border);
+  background: var(--_background);
+  color: var(--_text);
+  overflow: hidden;
+  translate: 0 var(--_drag-offset);
+}
+
+.ui-overlay[open] {
+  display: flex;
+}
+
+/* The panel takes the focus only when its content has nothing focusable; it is not a control. */
+.ui-overlay:focus {
+  outline: none;
+}
+
+.ui-overlay::backdrop {
+  background: var(--_backdrop);
+}
+
+.ui-overlay--dialog {
+  --_backdrop: var(--color-dialog-backdrop);
+  --_background: var(--color-dialog-background);
+  --_border: var(--color-dialog-border);
+  --_border-width: var(--dialog-border-width);
+  --_text: var(--color-dialog-text);
+  --_grabber: var(--color-dialog-grabber);
+  --_grabber-width: var(--dialog-grabber-width);
+  --_grabber-height: var(--dialog-grabber-height);
+  --_grabber-gap: var(--dialog-grabber-gap);
+  --_padding-inline: var(--dialog-padding-inline);
+  --_padding-stack: var(--dialog-padding-stack);
+}
+
+.ui-overlay--drawer {
+  --_backdrop: var(--color-drawer-backdrop);
+  --_background: var(--color-drawer-background);
+  --_border: var(--color-drawer-border);
+  --_border-width: var(--drawer-border-width);
+  --_text: var(--color-drawer-text);
+  --_grabber: var(--color-drawer-grabber);
+  --_grabber-width: var(--drawer-grabber-width);
+  --_grabber-height: var(--drawer-grabber-height);
+  --_grabber-gap: var(--drawer-grabber-gap);
+  --_padding-inline: var(--drawer-padding-inline);
+  --_padding-stack: var(--drawer-padding-stack);
+}
+
+/*
+ * The handle is decoration: the other ways to close the panel stay for every user. It spans the
+ * width of the panel, so a drag can start anywhere along its bar.
+ */
+.ui-overlay__grabber {
+  flex: none;
+  margin-block-start: calc(var(--_grabber-gap) - var(--_padding-stack));
+  padding-block: var(--_grabber-gap);
+  cursor: grab;
+}
+
+.ui-overlay__grabber::before {
+  display: block;
+  inline-size: var(--_grabber-width);
+  block-size: var(--_grabber-height);
+  margin-inline: auto;
+  background: var(--_grabber);
+  content: '';
+}
+
+/* A drag down from the handle or the header moves the panel instead of scrolling the page. */
+.ui-overlay__grabber,
+.ui-overlay__grabber ~ .ui-overlay__header {
+  touch-action: none;
+}
+
+.ui-overlay__body {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  padding-inline: var(--_padding-inline);
+  overflow: auto;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ui-overlay,
+  .ui-overlay::backdrop {
+    transition:
+      opacity var(--duration-200) var(--ease-out),
+      translate var(--duration-200) var(--ease-out);
+  }
+
+  /* stylelint-disable-next-line plugin/use-baseline -- without it, the panel opens without motion */
+  @starting-style {
+    .ui-overlay[open] {
+      opacity: 0;
+      translate: var(--_enter-from);
+    }
+
+    .ui-overlay[open]::backdrop {
+      opacity: 0;
+    }
+  }
+
+  .ui-overlay--dragging {
+    transition: none;
+  }
+}

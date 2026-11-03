@@ -21,6 +21,14 @@ export {
   type DateFieldValueChangeDetails,
 } from './date-field/DateField.tsx';
 export {
+  Dialog,
+  type DialogProps,
+  type DialogSize,
+  type OverlayCloseReason,
+  type OverlayOpenChangeDetails,
+} from './dialog/Dialog.tsx';
+export { Drawer, type DrawerPlacement, type DrawerProps } from './drawer/Drawer.tsx';
+export {
   IconButton,
   type IconButtonProps,
   type IconButtonSize,

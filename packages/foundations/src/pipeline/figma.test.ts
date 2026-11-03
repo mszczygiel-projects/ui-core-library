@@ -62,8 +62,9 @@ describe('scopesOf', () => {
     ]);
   });
 
-  it('offers a tint over a fill as a fill, and a smallest target as a size', () => {
+  it('offers a tint over a fill and the backdrop of a modal as fills, and a smallest target as a size', () => {
     expect(scopes('Components', 'color/chip/tint/active')).toEqual(['FRAME_FILL', 'SHAPE_FILL']);
+    expect(scopes('Components', 'color/dialog/backdrop')).toEqual(['FRAME_FILL', 'SHAPE_FILL']);
     expect(scopes('Components', 'chip/target/min-size', 'number', 24)).toEqual(['WIDTH_HEIGHT']);
   });
 
@@ -251,7 +252,7 @@ describe('variableMetadata', () => {
   it('knows every variable of the library', () => {
     const { variables, unknown } = variableMetadata(parseExports(readExports(EXPORTS_DIR)));
     expect(unknown).toEqual([]);
-    expect(variables).toHaveLength(1279);
+    expect(variables).toHaveLength(1288);
     expect(variables.filter((v) => v.scopes === null)).toHaveLength(12);
     expect(variables.filter((v) => v.scopes?.length === 0)).toHaveLength(334);
     expect(variables.filter((v) => v.needsDescription)).toHaveLength(283);

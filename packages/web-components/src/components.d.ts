@@ -19,6 +19,9 @@ import { SelectFieldOpenChange } from "./select-field/events";
 import { ComboboxQuery } from "./combobox/events";
 import { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
 import { DateFieldValueChange } from "./date-field/events";
+import { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
+import { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
+import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
@@ -49,6 +52,9 @@ export { SelectFieldOpenChange } from "./select-field/events";
 export { ComboboxQuery } from "./combobox/events";
 export { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
 export { DateFieldValueChange } from "./date-field/events";
+export { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
+export { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
+export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
@@ -449,6 +455,106 @@ export namespace Components {
           * @default 'outline'
          */
         "variant": TextFieldVariant;
+    }
+    /**
+     * A modal window over the page that asks the user to read, decide or enter something before going
+     * on.
+     * The page opens the dialog with `open`; it opens as a native modal dialog in the top layer, makes
+     * the rest of the page inert and stops it from scrolling. The focus moves to the element of the
+     * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
+     * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
+     * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
+     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
+     * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+     * and the description describes it; without a heading, `label` or an author's `aria-label` names
+     * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
+     * attribute on it.
+     */
+    interface UiDialog {
+        /**
+          * Makes the dialog an alert dialog, which a press on the backdrop does not close.
+          * @default false
+         */
+        "alert": boolean;
+        /**
+          * The name of the close button, falling back to `labels.dialog.close`.
+         */
+        "closeLabel"?: string;
+        /**
+          * The text below the heading, which describes the dialog.
+         */
+        "description"?: string;
+        /**
+          * Lets a user drag the sheet down to close it, below the breakpoint.
+          * @default false
+         */
+        "dragToDismiss": boolean;
+        /**
+          * The heading, which names the dialog.
+         */
+        "heading"?: string;
+        /**
+          * Hides the close button.
+          * @default false
+         */
+        "hideCloseButton": boolean;
+        /**
+          * The accessible name of a dialog without a heading.
+         */
+        "label"?: string;
+        /**
+          * Whether the dialog is open. The attribute follows the dialog, which closes on its own at the request of the user.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The width of the window, or the whole window.
+          * @default 'medium'
+         */
+        "size": DialogSize;
+    }
+    /**
+     * A modal panel at an edge of the window that holds secondary content, such as filters,
+     * navigation or details.
+     * The page opens the drawer with `open`; it opens as a native modal dialog in the top layer at the
+     * start or the end of the line, which follow the direction of the text, or at the bottom. The rest
+     * of the page is inert and does not scroll. The focus moves to the element of the content marked
+     * with `autofocus` or `data-autofocus`, else to its first focusable element, and returns where it
+     * was when the drawer closes. Escape, a press on the backdrop, the close button, a form with
+     * `method="dialog"` and a drag down of a bottom drawer close it: it dispatches `ui-open-change`
+     * first, which an author may cancel to keep it open. Nothing visible names a drawer, so `label` or
+     * an author's `aria-label` is required. The host belongs to the page: the component reflects only
+     * `open` and writes no role or ARIA attribute on it.
+     */
+    interface UiDrawer {
+        /**
+          * The name of the close button, falling back to `labels.drawer.close`.
+         */
+        "closeLabel"?: string;
+        /**
+          * Lets a user drag a bottom drawer down to close it.
+          * @default false
+         */
+        "dragToDismiss": boolean;
+        /**
+          * Hides the close button.
+          * @default false
+         */
+        "hideCloseButton": boolean;
+        /**
+          * The accessible name of the drawer, which nothing visible gives it.
+         */
+        "label"?: string;
+        /**
+          * Whether the drawer is open. The attribute follows the drawer, which closes on its own at the request of the user.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The edge the drawer sits at.
+          * @default 'end'
+         */
+        "placement": DrawerPlacement;
     }
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -1324,6 +1430,14 @@ export interface UiDateFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiDateFieldElement;
 }
+export interface UiDialogCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiDialogElement;
+}
+export interface UiDrawerCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiDrawerElement;
+}
 export interface UiListboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiListboxElement;
@@ -1497,6 +1611,67 @@ declare global {
     var HTMLUiDateFieldElement: {
         prototype: HTMLUiDateFieldElement;
         new (): HTMLUiDateFieldElement;
+    };
+    interface HTMLUiDialogElementEventMap {
+        "ui-open-change": OpenChange;
+    }
+    /**
+     * A modal window over the page that asks the user to read, decide or enter something before going
+     * on.
+     * The page opens the dialog with `open`; it opens as a native modal dialog in the top layer, makes
+     * the rest of the page inert and stops it from scrolling. The focus moves to the element of the
+     * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
+     * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
+     * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
+     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
+     * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+     * and the description describes it; without a heading, `label` or an author's `aria-label` names
+     * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
+     * attribute on it.
+     */
+    interface HTMLUiDialogElement extends Components.UiDialog, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiDialogElementEventMap>(type: K, listener: (this: HTMLUiDialogElement, ev: UiDialogCustomEvent<HTMLUiDialogElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiDialogElementEventMap>(type: K, listener: (this: HTMLUiDialogElement, ev: UiDialogCustomEvent<HTMLUiDialogElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiDialogElement: {
+        prototype: HTMLUiDialogElement;
+        new (): HTMLUiDialogElement;
+    };
+    interface HTMLUiDrawerElementEventMap {
+        "ui-open-change": OpenChange;
+    }
+    /**
+     * A modal panel at an edge of the window that holds secondary content, such as filters,
+     * navigation or details.
+     * The page opens the drawer with `open`; it opens as a native modal dialog in the top layer at the
+     * start or the end of the line, which follow the direction of the text, or at the bottom. The rest
+     * of the page is inert and does not scroll. The focus moves to the element of the content marked
+     * with `autofocus` or `data-autofocus`, else to its first focusable element, and returns where it
+     * was when the drawer closes. Escape, a press on the backdrop, the close button, a form with
+     * `method="dialog"` and a drag down of a bottom drawer close it: it dispatches `ui-open-change`
+     * first, which an author may cancel to keep it open. Nothing visible names a drawer, so `label` or
+     * an author's `aria-label` is required. The host belongs to the page: the component reflects only
+     * `open` and writes no role or ARIA attribute on it.
+     */
+    interface HTMLUiDrawerElement extends Components.UiDrawer, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiDrawerElementEventMap>(type: K, listener: (this: HTMLUiDrawerElement, ev: UiDrawerCustomEvent<HTMLUiDrawerElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiDrawerElementEventMap>(type: K, listener: (this: HTMLUiDrawerElement, ev: UiDrawerCustomEvent<HTMLUiDrawerElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiDrawerElement: {
+        prototype: HTMLUiDrawerElement;
+        new (): HTMLUiDrawerElement;
     };
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -1818,6 +1993,8 @@ declare global {
         "ui-chip": HTMLUiChipElement;
         "ui-combobox": HTMLUiComboboxElement;
         "ui-date-field": HTMLUiDateFieldElement;
+        "ui-dialog": HTMLUiDialogElement;
+        "ui-drawer": HTMLUiDrawerElement;
         "ui-icon-button": HTMLUiIconButtonElement;
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-listbox": HTMLUiListboxElement;
@@ -2274,6 +2451,114 @@ declare namespace LocalJSX {
           * @default 'outline'
          */
         "variant"?: TextFieldVariant;
+    }
+    /**
+     * A modal window over the page that asks the user to read, decide or enter something before going
+     * on.
+     * The page opens the dialog with `open`; it opens as a native modal dialog in the top layer, makes
+     * the rest of the page inert and stops it from scrolling. The focus moves to the element of the
+     * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
+     * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
+     * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
+     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
+     * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+     * and the description describes it; without a heading, `label` or an author's `aria-label` names
+     * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
+     * attribute on it.
+     */
+    interface UiDialog {
+        /**
+          * Makes the dialog an alert dialog, which a press on the backdrop does not close.
+          * @default false
+         */
+        "alert"?: boolean;
+        /**
+          * The name of the close button, falling back to `labels.dialog.close`.
+         */
+        "closeLabel"?: string;
+        /**
+          * The text below the heading, which describes the dialog.
+         */
+        "description"?: string;
+        /**
+          * Lets a user drag the sheet down to close it, below the breakpoint.
+          * @default false
+         */
+        "dragToDismiss"?: boolean;
+        /**
+          * The heading, which names the dialog.
+         */
+        "heading"?: string;
+        /**
+          * Hides the close button.
+          * @default false
+         */
+        "hideCloseButton"?: boolean;
+        /**
+          * The accessible name of a dialog without a heading.
+         */
+        "label"?: string;
+        /**
+          * The user asked the dialog to close. Cancel the event to keep the dialog open; the browser may still close it after repeated presses of Escape, which cannot be cancelled.
+         */
+        "onUi-open-change"?: (event: UiDialogCustomEvent<OpenChange>) => void;
+        /**
+          * Whether the dialog is open. The attribute follows the dialog, which closes on its own at the request of the user.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The width of the window, or the whole window.
+          * @default 'medium'
+         */
+        "size"?: DialogSize;
+    }
+    /**
+     * A modal panel at an edge of the window that holds secondary content, such as filters,
+     * navigation or details.
+     * The page opens the drawer with `open`; it opens as a native modal dialog in the top layer at the
+     * start or the end of the line, which follow the direction of the text, or at the bottom. The rest
+     * of the page is inert and does not scroll. The focus moves to the element of the content marked
+     * with `autofocus` or `data-autofocus`, else to its first focusable element, and returns where it
+     * was when the drawer closes. Escape, a press on the backdrop, the close button, a form with
+     * `method="dialog"` and a drag down of a bottom drawer close it: it dispatches `ui-open-change`
+     * first, which an author may cancel to keep it open. Nothing visible names a drawer, so `label` or
+     * an author's `aria-label` is required. The host belongs to the page: the component reflects only
+     * `open` and writes no role or ARIA attribute on it.
+     */
+    interface UiDrawer {
+        /**
+          * The name of the close button, falling back to `labels.drawer.close`.
+         */
+        "closeLabel"?: string;
+        /**
+          * Lets a user drag a bottom drawer down to close it.
+          * @default false
+         */
+        "dragToDismiss"?: boolean;
+        /**
+          * Hides the close button.
+          * @default false
+         */
+        "hideCloseButton"?: boolean;
+        /**
+          * The accessible name of the drawer, which nothing visible gives it.
+         */
+        "label"?: string;
+        /**
+          * The user asked the drawer to close. Cancel the event to keep the drawer open; the browser may still close it after repeated presses of Escape, which cannot be cancelled.
+         */
+        "onUi-open-change"?: (event: UiDrawerCustomEvent<OpenChange>) => void;
+        /**
+          * Whether the drawer is open. The attribute follows the drawer, which closes on its own at the request of the user.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The edge the drawer sits at.
+          * @default 'end'
+         */
+        "placement"?: DrawerPlacement;
     }
     /**
      * Triggers an action named only by an icon, as a square of the height of a button.
@@ -3314,6 +3599,25 @@ declare namespace LocalJSX {
         "min": string;
         "max": string;
     }
+    interface UiDialogAttributes {
+        "open": boolean;
+        "size": DialogSize;
+        "alert": boolean;
+        "heading": string;
+        "description": string;
+        "label": string;
+        "hideCloseButton": boolean;
+        "closeLabel": string;
+        "dragToDismiss": boolean;
+    }
+    interface UiDrawerAttributes {
+        "open": boolean;
+        "placement": DrawerPlacement;
+        "label": string;
+        "hideCloseButton": boolean;
+        "closeLabel": string;
+        "dragToDismiss": boolean;
+    }
     interface UiIconButtonAttributes {
         "label": string;
         "variant": IconButtonVariant;
@@ -3504,6 +3808,8 @@ declare namespace LocalJSX {
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
         "ui-combobox": Omit<UiCombobox, keyof UiComboboxAttributes> & { [K in keyof UiCombobox & keyof UiComboboxAttributes]?: UiCombobox[K] } & { [K in keyof UiCombobox & keyof UiComboboxAttributes as `attr:${K}`]?: UiComboboxAttributes[K] } & { [K in keyof UiCombobox & keyof UiComboboxAttributes as `prop:${K}`]?: UiCombobox[K] };
         "ui-date-field": Omit<UiDateField, keyof UiDateFieldAttributes> & { [K in keyof UiDateField & keyof UiDateFieldAttributes]?: UiDateField[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `attr:${K}`]?: UiDateFieldAttributes[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `prop:${K}`]?: UiDateField[K] };
+        "ui-dialog": Omit<UiDialog, keyof UiDialogAttributes> & { [K in keyof UiDialog & keyof UiDialogAttributes]?: UiDialog[K] } & { [K in keyof UiDialog & keyof UiDialogAttributes as `attr:${K}`]?: UiDialogAttributes[K] } & { [K in keyof UiDialog & keyof UiDialogAttributes as `prop:${K}`]?: UiDialog[K] };
+        "ui-drawer": Omit<UiDrawer, keyof UiDrawerAttributes> & { [K in keyof UiDrawer & keyof UiDrawerAttributes]?: UiDrawer[K] } & { [K in keyof UiDrawer & keyof UiDrawerAttributes as `attr:${K}`]?: UiDrawerAttributes[K] } & { [K in keyof UiDrawer & keyof UiDrawerAttributes as `prop:${K}`]?: UiDrawer[K] };
         "ui-icon-button": Omit<UiIconButton, keyof UiIconButtonAttributes> & { [K in keyof UiIconButton & keyof UiIconButtonAttributes]?: UiIconButton[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `attr:${K}`]?: UiIconButtonAttributes[K] } & { [K in keyof UiIconButton & keyof UiIconButtonAttributes as `prop:${K}`]?: UiIconButton[K] };
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-listbox": Omit<UiListbox, keyof UiListboxAttributes> & { [K in keyof UiListbox & keyof UiListboxAttributes]?: UiListbox[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `attr:${K}`]?: UiListboxAttributes[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `prop:${K}`]?: UiListbox[K] };
@@ -3579,6 +3885,35 @@ declare module "@stencil/core" {
              * value and saves the draft with its locale. Parsing and constraint errors use customError.
              */
             "ui-date-field": LocalJSX.IntrinsicElements["ui-date-field"] & JSXBase.HTMLAttributes<HTMLUiDateFieldElement>;
+            /**
+             * A modal window over the page that asks the user to read, decide or enter something before going
+             * on.
+             * The page opens the dialog with `open`; it opens as a native modal dialog in the top layer, makes
+             * the rest of the page inert and stops it from scrolling. The focus moves to the element of the
+             * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
+             * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
+             * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
+             * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
+             * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+             * and the description describes it; without a heading, `label` or an author's `aria-label` names
+             * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
+             * attribute on it.
+             */
+            "ui-dialog": LocalJSX.IntrinsicElements["ui-dialog"] & JSXBase.HTMLAttributes<HTMLUiDialogElement>;
+            /**
+             * A modal panel at an edge of the window that holds secondary content, such as filters,
+             * navigation or details.
+             * The page opens the drawer with `open`; it opens as a native modal dialog in the top layer at the
+             * start or the end of the line, which follow the direction of the text, or at the bottom. The rest
+             * of the page is inert and does not scroll. The focus moves to the element of the content marked
+             * with `autofocus` or `data-autofocus`, else to its first focusable element, and returns where it
+             * was when the drawer closes. Escape, a press on the backdrop, the close button, a form with
+             * `method="dialog"` and a drag down of a bottom drawer close it: it dispatches `ui-open-change`
+             * first, which an author may cancel to keep it open. Nothing visible names a drawer, so `label` or
+             * an author's `aria-label` is required. The host belongs to the page: the component reflects only
+             * `open` and writes no role or ARIA attribute on it.
+             */
+            "ui-drawer": LocalJSX.IntrinsicElements["ui-drawer"] & JSXBase.HTMLAttributes<HTMLUiDrawerElement>;
             /**
              * Triggers an action named only by an icon, as a square of the height of a button.
              * The native button inside the shadow root owns the accessible semantics, named by `label`. The
