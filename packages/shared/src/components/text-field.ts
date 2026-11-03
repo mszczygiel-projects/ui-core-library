@@ -96,9 +96,10 @@ export interface TextFieldValueChangeDetail<
 }
 
 /**
- * The props every control of the field family shares: the text fields and SelectField.
+ * The props every field of the family shares, whatever its control: the text fields, SelectField
+ * and FileInputField.
  */
-export interface FieldControlProps {
+export interface FieldBaseProps {
   /**
    * The surface and border treatment.
    * @default 'outline'
@@ -109,15 +110,8 @@ export interface FieldControlProps {
    * @default 'medium'
    */
   size?: TextFieldSize;
-  /**
-   * The position of the visible label.
-   * @default 'top'
-   */
-  labelPlacement?: TextFieldLabelPlacement;
   /** A persistent visible name. Include any required marker in this text. */
   label?: string;
-  /** An example or short prompt, never a replacement for the label. */
-  placeholder?: string;
   /** Help or validation feedback, connected to the description of the control. */
   hint?: string;
   /**
@@ -137,6 +131,20 @@ export interface FieldControlProps {
   required?: boolean;
   /** The name of the form entry. */
   name?: string;
+}
+
+/**
+ * The props every control of the field family shares that has a text line: the text fields and
+ * SelectField.
+ */
+export interface FieldControlProps extends FieldBaseProps {
+  /**
+   * The position of the visible label.
+   * @default 'top'
+   */
+  labelPlacement?: TextFieldLabelPlacement;
+  /** An example or short prompt, never a replacement for the label. */
+  placeholder?: string;
 }
 
 /**

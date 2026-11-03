@@ -54,6 +54,14 @@
       "types": "./dist/components/drawer.d.ts",
       "default": "./dist/components/drawer.js"
     },
+    "./file-input-field": {
+      "types": "./dist/components/file-input-field.d.ts",
+      "default": "./dist/components/file-input-field.js"
+    },
+    "./file-selection": {
+      "types": "./dist/utils/file-selection.d.ts",
+      "default": "./dist/utils/file-selection.js"
+    },
     "./icon-button": {
       "types": "./dist/components/icon-button.d.ts",
       "default": "./dist/components/icon-button.js"

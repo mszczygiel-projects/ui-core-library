@@ -120,6 +120,7 @@ describe('the configuration', () => {
         combobox: defaultLabels.combobox,
         dialog: { close: 'Close' },
         drawer: { close: 'Close' },
+        fileInputField: defaultLabels.fileInputField,
         iconButton: { loading: 'Loading' },
         listbox: { empty: 'No options', loading: 'Loading options' },
         loader: { label: 'Wait' },
