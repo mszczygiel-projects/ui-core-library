@@ -110,7 +110,10 @@ export interface PaginationProps {
   boundaryCount?: number;
   /** Prevents every move between pages. */
   disabled?: boolean;
-  /** Shows the status text, such as "Page 5 of 10", after the pages. */
+  /**
+   * Shows the status text, such as "Page 5 of 10", after the pages. A narrow container shows it
+   * in place of the pages either way, unless the jump field takes that place.
+   */
   showStatus?: boolean;
   /** Shows a field that moves to a page whose number a user types. */
   showJump?: boolean;

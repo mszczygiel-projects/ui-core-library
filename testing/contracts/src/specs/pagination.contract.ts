@@ -199,6 +199,51 @@ export function paginationContract(adapter: Mount<PaginationContractProps>): voi
     expect(onPageChange).toHaveBeenCalledTimes(2);
   });
 
+  it('restores the current page in place of text that holds no number', async () => {
+    const component = await mount({ showJump: true });
+    await userEvent.fill(jumpInput(component), '-');
+    await userEvent.keyboard('{Enter}');
+    await expect.element(jumpInput(component)).toHaveValue('5');
+    await expect.poll(() => jumpInput(component).element().matches(':invalid')).toBe(false);
+    await userEvent.fill(jumpInput(component), '-');
+    await userEvent.tab();
+    await expect.element(jumpInput(component)).toHaveValue('5');
+  });
+
+  it('commits the jump field on Enter without submitting a form around it', async () => {
+    const form = document.createElement('form');
+    const submitted = vi.fn((event: Event) => {
+      event.preventDefault();
+    });
+    form.addEventListener('submit', submitted);
+    const button = document.createElement('button');
+    button.type = 'submit';
+    form.append(button);
+    document.body.append(form);
+    parents.push(form);
+    const component = await mount({ showJump: true }, { parent: form });
+    await userEvent.fill(jumpInput(component), '8');
+    await userEvent.keyboard('{Enter}');
+    expect(current(component)).toBe('8');
+    expect(submitted).not.toHaveBeenCalled();
+  });
+
+  it('keeps the page and the address when a jump on blur is canceled', async () => {
+    const onPageChange = vi.fn<NonNullable<PaginationContractProps['onPageChange']>>();
+    const component = await mount({
+      showJump: true,
+      getPageHref: (page) => `#jump-${String(page)}`,
+      onPageChange,
+      cancelChange: true,
+    });
+    const before = window.location.hash;
+    await userEvent.fill(jumpInput(component), '7');
+    await userEvent.tab();
+    expect(onPageChange.mock.calls.at(-1)?.[0]).toBe(7);
+    expect(current(component)).toBe('5');
+    expect(window.location.hash).toBe(before);
+  });
+
   it('prevents every move while disabled', async () => {
     const onPageChange = vi.fn<NonNullable<PaginationContractProps['onPageChange']>>();
     const component = await mount({ disabled: true, onPageChange, showJump: true });
@@ -229,6 +274,11 @@ export function paginationContract(adapter: Mount<PaginationContractProps>): voi
     expect(shown(withJump.part('jump-total'))).toBe(true);
     expect(shown(withJump.part('jump-label'))).toBe(false);
     expect(withJump.part('jump-total').textContent).toBe('of 10');
+    const plain = await mount({}, { parent: column('320px') });
+    expect(shown(plain.part('status'))).toBe(true);
+    expect(plain.part('status').textContent).toBe('Page 5 of 10');
+    const plainWide = await mount();
+    expect(shown(plainWide.part('status'))).toBe(false);
     const wide = await mount({ showJump: true });
     expect(shown(wide.part('list'))).toBe(true);
     expect(shown(wide.part('jump-label'))).toBe(true);

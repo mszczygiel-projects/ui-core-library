@@ -113,14 +113,15 @@
 
 /*
  * A narrow container shows the ellipsis and the last two items. The others leave the layout but
- * stay in the accessibility tree, so a screen reader still reads the whole trail.
+ * stay in the accessibility tree, so a screen reader still reads the whole trail. Keyboard focus
+ * inside the trail shows all of it, so a focused link is never one that the collapse hides.
  */
 @container (width < 40rem) {
-  .ui-breadcrumbs__item--ellipsis {
+  .ui-breadcrumbs__list:not(:focus-within) > .ui-breadcrumbs__item--ellipsis {
     display: inline-flex;
   }
 
-  .ui-breadcrumbs__item--collapsible {
+  .ui-breadcrumbs__list:not(:focus-within) > .ui-breadcrumbs__item--collapsible {
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;

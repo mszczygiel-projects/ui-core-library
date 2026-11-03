@@ -132,6 +132,16 @@ export function breadcrumbsContract(adapter: Mount<BreadcrumbsContractProps>): v
     expect(links.map((node) => node.name)).toEqual(['Home', 'Products', 'Category']);
   });
 
+  it('shows the whole trail while keyboard focus is inside a narrow one', async () => {
+    const narrow = await mount({}, { parent: column('300px') });
+    await userEvent.tab();
+    const [ellipsis, ...rest] = items(narrow);
+    expect(ellipsis && visible(ellipsis)).toBe(false);
+    expect(rest.every(visible)).toBe(true);
+    const focused = narrow.part('link');
+    expect(focused.getBoundingClientRect().width).toBeGreaterThan(1);
+  });
+
   it('never collapses a trail of two items', async () => {
     const component = await mount({ items: TRAIL.slice(2) }, { parent: column('200px') });
     expect(items(component).every(visible)).toBe(true);

@@ -123,7 +123,8 @@
   inline-size: var(--pagination-jump-input-width);
 }
 
-.jump-total {
+.jump-total,
+.status.fallback {
   display: none;
 }
 
@@ -151,7 +152,8 @@
     order: 2;
   }
 
-  .jump-total {
+  .jump-total,
+  .status.fallback {
     display: inline;
   }
 

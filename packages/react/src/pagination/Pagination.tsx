@@ -7,7 +7,7 @@ import type {
   PaginationPageChangeDetails,
   PaginationProps as SharedPaginationProps,
 } from '@mszczygiel-projects/ui-core-shared/pagination';
-import { type ComponentPropsWithRef, useState } from 'react';
+import { type ComponentPropsWithRef, useLayoutEffect, useRef, useState } from 'react';
 
 import { IconButton } from '../icon-button/IconButton.tsx';
 import { classNames } from '../internal/class-names.ts';
@@ -29,9 +29,25 @@ export interface PaginationProps
   /**
    * Called with the new page when a user moves to it. Call `preventDefault()` on the original
    * event to keep the page, and in link mode to keep the browser from loading the address, as a
-   * page with client-side routing does.
+   * page with client-side routing does. A move from the jump field passes a cancelable copy of
+   * its key or focus event, since the field has already handled the key and a focus event cannot
+   * be canceled.
    */
   onPageChange?: (page: number, details: PaginationPageChangeDetails<Event>) => void;
+}
+
+/**
+ * A cancelable copy of an event that the jump field has handled: the Enter key, whose default it
+ * prevents so that a form around it does not submit, or a focus event, which cannot be canceled.
+ */
+function cancelableCopy(event: Event): Event {
+  if (event instanceof KeyboardEvent) {
+    return new KeyboardEvent(event.type, { key: event.key, code: event.code, cancelable: true });
+  }
+  if (event instanceof FocusEvent) {
+    return new FocusEvent(event.type, { relatedTarget: event.relatedTarget, cancelable: true });
+  }
+  return new Event(event.type, { cancelable: true });
 }
 
 /**
@@ -72,6 +88,17 @@ export function Pagination({
   const [uncontrolled, setUncontrolled] = useState(defaultPage);
   // What a user typed in the jump field since the last commit; undefined shows the current page.
   const [typed, setTyped] = useState<number | null>();
+  // A new key shows the current page again in place of text that holds no number, such as "-",
+  // which the field keeps as an unfinished draft.
+  const [jumpKey, setJumpKey] = useState(0);
+  const jumpInput = useRef<HTMLInputElement | null>(null);
+  const refocusJump = useRef(false);
+  useLayoutEffect(() => {
+    if (refocusJump.current) {
+      refocusJump.current = false;
+      jumpInput.current?.focus();
+    }
+  }, [jumpKey]);
   const { page: current, pageCount: count } = pageBounds(page ?? uncontrolled, pageCount);
   const jumpName = jumpLabel ?? labels.jump;
 
@@ -96,8 +123,12 @@ export function Pagination({
   }
 
   /** Moves to the typed page, kept within the pages, and shows the current page again. */
-  function commitJump(event: Event) {
+  function commitJump(event: Event, keepFocus: boolean) {
     setTyped(undefined);
+    if (typed === null) {
+      refocusJump.current = keepFocus;
+      setJumpKey((key) => key + 1);
+    }
     if (typed !== undefined && typed !== null) {
       const next = pageBounds(Math.round(typed), count).page;
       if (next !== current) {
@@ -208,8 +239,14 @@ export function Pagination({
           move(current + 1, 'next', event.nativeEvent, true);
         }}
       />
-      {showStatus && (
-        <span className="ui-pagination__status">
+      {/* Without the jump field, a narrow container shows the status in place of the pages. */}
+      {(showStatus || !showJump) && (
+        <span
+          className={classNames(
+            'ui-pagination__status',
+            !showStatus && 'ui-pagination__status--fallback',
+          )}
+        >
           {getStatusLabel?.(current, count) ?? labels.status(current, count)}
         </span>
       )}
@@ -220,6 +257,8 @@ export function Pagination({
             {jumpName}
           </span>
           <NumberField
+            key={jumpKey}
+            ref={jumpInput}
             className="ui-pagination__jump-field"
             aria-label={jumpName}
             value={typed === undefined ? current : typed}
@@ -231,11 +270,12 @@ export function Pagination({
             }}
             onKeyDown={(event) => {
               if (event.key === 'Enter' && !event.nativeEvent.isComposing) {
-                commitJump(event.nativeEvent);
+                event.preventDefault();
+                commitJump(cancelableCopy(event.nativeEvent), true);
               }
             }}
             onBlur={(event) => {
-              commitJump(event.nativeEvent);
+              commitJump(cancelableCopy(event.nativeEvent), false);
             }}
           />
           <span className="ui-pagination__jump-total">

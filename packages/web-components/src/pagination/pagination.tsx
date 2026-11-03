@@ -204,8 +204,9 @@ export class UiPagination implements PaginationProps {
         >
           <span slot="icon" class="chevron" innerHTML={iconChevronRight} />
         </ui-icon-button>
-        {this.showStatus && (
-          <span part="status" class="status">
+        {/* Without the jump field, a narrow container shows the status in place of the pages. */}
+        {(this.showStatus || !this.showJump) && (
+          <span part="status" class={`status${this.showStatus ? '' : ' fallback'}`}>
             {this.getStatusLabel?.(current, count) ?? labels.status(current, count)}
           </span>
         )}
@@ -234,6 +235,8 @@ export class UiPagination implements PaginationProps {
               }}
               onKeyDown={(event: KeyboardEvent) => {
                 if (event.key === 'Enter' && !event.isComposing) {
+                  // Enter commits the page, so it never submits a form as well.
+                  event.preventDefault();
                   this.commitJump(event);
                 }
               }}
