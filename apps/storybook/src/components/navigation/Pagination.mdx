@@ -23,7 +23,7 @@ The **base** is a navigation landmark. The **previous** and **next** buttons sit
 
 ## Variants & tone
 
-<FrameworkCanvas react={ReactStories.WithStatus} webComponents={WebComponentStories.WithStatus} />
+<FrameworkCanvas react={ReactStories.Playground} webComponents={WebComponentStories.Playground} />
 
 Pagination has no variant or tone. `showStatus` adds the status text, and `showJump` the jump field.
 
@@ -34,8 +34,6 @@ Pagination has one size: each page button has the size of a hit area, which foll
 ## States
 
 A page button rests with a border. Hover and press share the active state. Keyboard focus draws the focus ring around the button. The current page is selected: filled and bold, with `aria-current="page"`. The previous button is disabled on the first page, and the next button on the last one. `disabled` disables every button and the field.
-
-<FrameworkCanvas react={ReactStories.WithJump} webComponents={WebComponentStories.WithJump} />
 
 In a container narrower than `breakpoint/sm` (40rem), the pages give way to the status between the previous and next buttons, even without `showStatus`, or, with `showJump`, to the jump field followed by the count: ‹ [5] of 10 ›.
 

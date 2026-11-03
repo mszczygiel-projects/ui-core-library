@@ -51,7 +51,7 @@ export const pagination = defineComponent({
   ],
   slots: [],
   events: ['ui-page-change'],
-  stories: ['Playground', 'WithStatus', 'WithJump', 'WithLinks', 'OnSurfaces'],
+  stories: ['Playground', 'OnSurfaces'],
   exceptions: [
     {
       items: ['size'],
