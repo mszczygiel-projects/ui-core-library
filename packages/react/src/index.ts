@@ -29,6 +29,17 @@ export {
 } from './dialog/Dialog.tsx';
 export { Drawer, type DrawerPlacement, type DrawerProps } from './drawer/Drawer.tsx';
 export {
+  FileInputField,
+  type FileInputFieldChangeReason,
+  type FileInputFieldProps,
+  type FileInputFieldRejectDetails,
+  type FileInputFieldRejection,
+  type FileInputFieldSize,
+  type FileInputFieldState,
+  type FileInputFieldValueChangeDetails,
+  type FileInputFieldVariant,
+} from './file-input-field/FileInputField.tsx';
+export {
   IconButton,
   type IconButtonProps,
   type IconButtonSize,

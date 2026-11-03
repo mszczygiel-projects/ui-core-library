@@ -7,29 +7,30 @@ import { Button } from '@mszczygiel-projects/ui-core-react';
 import '@mszczygiel-projects/ui-core-react/styles.css';
 ```
 
-| Component     | Export          |
-| ------------- | --------------- |
-| Badge         | `Badge`         |
-| Button        | `Button`        |
-| CheckboxField | `CheckboxField` |
-| Chip          | `Chip`          |
-| Combobox      | `Combobox`      |
-| DateField     | `DateField`     |
-| Dialog        | `Dialog`        |
-| Drawer        | `Drawer`        |
-| IconButton    | `IconButton`    |
-| LinkButton    | `LinkButton`    |
-| Listbox       | `Listbox`       |
-| Loader        | `Loader`        |
-| Notification  | `Notification`  |
-| NumberField   | `NumberField`   |
-| PasswordField | `PasswordField` |
-| RadioField    | `RadioField`    |
-| RadioGroup    | `RadioGroup`    |
-| SearchField   | `SearchField`   |
-| SelectField   | `SelectField`   |
-| SwitchField   | `SwitchField`   |
-| TextField     | `TextField`     |
-| TextareaField | `TextareaField` |
+| Component      | Export           |
+| -------------- | ---------------- |
+| Badge          | `Badge`          |
+| Button         | `Button`         |
+| CheckboxField  | `CheckboxField`  |
+| Chip           | `Chip`           |
+| Combobox       | `Combobox`       |
+| DateField      | `DateField`      |
+| Dialog         | `Dialog`         |
+| Drawer         | `Drawer`         |
+| FileInputField | `FileInputField` |
+| IconButton     | `IconButton`     |
+| LinkButton     | `LinkButton`     |
+| Listbox        | `Listbox`        |
+| Loader         | `Loader`         |
+| Notification   | `Notification`   |
+| NumberField    | `NumberField`    |
+| PasswordField  | `PasswordField`  |
+| RadioField     | `RadioField`     |
+| RadioGroup     | `RadioGroup`     |
+| SearchField    | `SearchField`    |
+| SelectField    | `SelectField`    |
+| SwitchField    | `SwitchField`    |
+| TextField      | `TextField`      |
+| TextareaField  | `TextareaField`  |
 
 The components read the tokens of `@mszczygiel-projects/ui-core-foundations`, which a page loads once. `react` and `react-dom` 19 are peer dependencies. The Storybook site documents each component.

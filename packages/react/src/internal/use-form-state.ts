@@ -8,7 +8,7 @@ import { type RefObject, useEffect, useState } from 'react';
  * its own control needs to know.
  */
 export function useFormState(
-  control: RefObject<HTMLSelectElement | null>,
+  control: RefObject<HTMLSelectElement | HTMLInputElement | null>,
   onReset: () => void,
 ): boolean {
   const [fieldsetDisabled, setFieldsetDisabled] = useState(false);
