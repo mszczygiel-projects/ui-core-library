@@ -180,6 +180,10 @@ export function fileInputFieldContract(adapter: Mount<FileInputFieldContractProp
     await expect
       .poll(() => new FormData(form).getAll('files').map((entry) => (entry as File).name))
       .toEqual(['report.pdf']);
+    // The last file leaves no empty entry behind, as a native empty file input would.
+    await userEvent.click(removeButtons(field)[0] ?? field.element);
+    await expect.poll(() => names(field)).toEqual([]);
+    expect(new FormData(form).getAll('files')).toEqual([]);
   });
 
   it('submits under a name given after the files', async () => {
@@ -198,7 +202,9 @@ export function fileInputFieldContract(adapter: Mount<FileInputFieldContractProp
     const { form, fieldset } = formFixture(fixtures);
     await mount({ defaultValue: [notes] }, { parent: fieldset });
     await mount({ name: 'off', disabled: true, defaultValue: [notes] }, { parent: fieldset });
+    await mount({ name: 'empty', required: true }, { parent: fieldset });
     expect([...new FormData(form)].filter(([, entry]) => entry instanceof File)).toEqual([]);
+    expect(form.checkValidity()).toBe(false);
   });
 
   it('resets to its initial files without an event', async () => {
@@ -227,6 +233,33 @@ export function fileInputFieldContract(adapter: Mount<FileInputFieldContractProp
       'notes.txt',
     ]);
     expect(changed).not.toHaveBeenCalled();
+  });
+
+  it('keeps its files when the page cancels a reset from a reset button', async () => {
+    const { form, fieldset } = formFixture(fixtures);
+    const field = await mount({ name: 'files', defaultValue: [notes] }, { parent: fieldset });
+    await upload(field, report);
+    await expect.poll(() => names(field)).toEqual(['report.pdf']);
+    const button = document.createElement('button');
+    button.type = 'reset';
+    button.textContent = 'Reset';
+    form.append(button);
+    const cancel = (event: Event) => {
+      event.preventDefault();
+    };
+    form.addEventListener('reset', cancel);
+    await userEvent.click(button);
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(names(field)).toEqual(['report.pdf']);
+    expect(new FormData(form).getAll('files').map((entry) => (entry as File).name)).toEqual([
+      'report.pdf',
+    ]);
+    form.removeEventListener('reset', cancel);
+    await userEvent.click(button);
+    await expect.poll(() => names(field)).toEqual(['notes.txt']);
+    await expect
+      .poll(() => new FormData(form).getAll('files').map((entry) => (entry as File).name))
+      .toEqual(['notes.txt']);
   });
 
   it('follows a disabled fieldset, and comes back after its own disabled prop is removed', async () => {

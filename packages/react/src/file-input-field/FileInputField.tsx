@@ -13,7 +13,6 @@ import {
 import {
   admitFiles,
   fileMeta,
-  isSameFile,
   removeAt,
   valueStateOf,
 } from '@mszczygiel-projects/ui-core-shared/file-selection';
@@ -125,6 +124,7 @@ export function FileInputField({
   getRemoveLabel,
   onValueChange,
   onReject,
+  onChange,
   id,
   className,
   style,
@@ -288,7 +288,8 @@ export function FileInputField({
         type="file"
         id={inputId}
         className={part('input')}
-        name={name}
+        // A named file input without files still submits an empty entry, so the name waits for a file.
+        name={current.length > 0 ? name : undefined}
         accept={accept}
         multiple={multiple}
         required={required}
@@ -306,6 +307,7 @@ export function FileInputField({
           };
         }}
         onChange={(event) => {
+          onChange?.(event);
           add([...(event.currentTarget.files ?? [])], event.nativeEvent);
         }}
       />
@@ -430,10 +432,8 @@ function syncInputFiles(input: HTMLInputElement | null, files: readonly File[]):
   const listed = [...(input.files ?? [])];
   const same =
     listed.length === files.length &&
-    listed.every((file, index) => {
-      const chosen = files[index];
-      return chosen !== undefined && isSameFile(file, chosen);
-    });
+    // The same object, not the same metadata: a new File with the old name has new bytes.
+    listed.every((file, index) => file === files[index]);
   if (!same) {
     const transfer = new DataTransfer();
     for (const file of files) {

@@ -9,7 +9,6 @@ import {
 import {
   admitFiles,
   fileMeta,
-  isSameFile,
   removeAt,
   valueStateOf,
 } from '@mszczygiel-projects/ui-core-shared/file-selection';
@@ -677,10 +676,8 @@ function sameFiles(list: FileList | null, files: readonly File[]): boolean {
   const listed = [...(list ?? [])];
   return (
     listed.length === files.length &&
-    listed.every((file, index) => {
-      const chosen = files[index];
-      return chosen !== undefined && isSameFile(file, chosen);
-    })
+    // The same object, not the same metadata: a new File with the old name has new bytes.
+    listed.every((file, index) => file === files[index])
   );
 }
 

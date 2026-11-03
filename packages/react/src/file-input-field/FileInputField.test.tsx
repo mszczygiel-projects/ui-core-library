@@ -1,4 +1,4 @@
-import { createRef, StrictMode } from 'react';
+import { type ChangeEvent, createRef, StrictMode } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
@@ -103,6 +103,42 @@ describe('FileInputField', () => {
     );
     expect(new FormData(form).getAll('files')).toEqual([notes, photo]);
     form.remove();
+  });
+
+  it('replaces a file in its input when only the bytes differ', async () => {
+    const form = document.createElement('form');
+    document.body.append(form);
+    const before = new File(['old'], 'a.txt', { lastModified: 1 });
+    const after = new File(['new'], 'a.txt', { lastModified: 1 });
+    const screen = await render(<FileInputField label="File" name="file" value={[before]} />, {
+      container: form,
+    });
+    expect(new FormData(form).get('file')).toBe(before);
+    await screen.rerender(<FileInputField label="File" name="file" value={[after]} />);
+    expect(new FormData(form).get('file')).toBe(after);
+    form.remove();
+  });
+
+  it('calls a native onChange of the input along with onValueChange', async () => {
+    const targets: EventTarget[] = [];
+    // React clears currentTarget after the handler, so the handler keeps it.
+    const changed = vi.fn((event: ChangeEvent<HTMLInputElement>) => {
+      targets.push(event.currentTarget);
+    });
+    const valueChanged = vi.fn();
+    const screen = await render(
+      <FileInputField label="File" onChange={changed} onValueChange={valueChanged} />,
+    );
+    const input = screen.container.querySelector('input');
+    if (input !== null) {
+      const transfer = new DataTransfer();
+      transfer.items.add(notes);
+      input.files = transfer.files;
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    expect(changed).toHaveBeenCalledTimes(1);
+    expect(targets).toEqual([input]);
+    expect(valueChanged).toHaveBeenCalledWith([notes], expect.objectContaining({ reason: 'add' }));
   });
 
   it('revokes the object URL of a preview when it unmounts, also in strict mode', async () => {
