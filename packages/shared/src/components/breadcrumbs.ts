@@ -39,7 +39,7 @@ export const breadcrumbs = defineComponent({
   ],
   slots: [],
   events: ['ui-navigate'],
-  stories: ['Playground', 'Sizes', 'Separators', 'Collapsed', 'OnSurfaces'],
+  stories: ['Playground', 'Collapsed', 'OnSurfaces'],
   exceptions: [
     {
       items: ['size'],

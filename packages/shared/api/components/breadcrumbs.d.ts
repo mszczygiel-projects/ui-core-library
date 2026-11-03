@@ -32,7 +32,7 @@ export declare const breadcrumbs: {
     readonly parts: readonly ["base", "list", "item", "link", "text", "current", "item-icon", "item-label", "separator", "ellipsis"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-navigate"];
-    readonly stories: readonly ["Playground", "Sizes", "Separators", "Collapsed", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Collapsed", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["size"];
         readonly reason: "A trail sits in running text or a page header, so it has the small and medium sizes of body text and no large one.";

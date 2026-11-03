@@ -40,31 +40,6 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-export const Sizes: Story = {
-  render: (args) => (
-    <div className="sb-stack">
-      {options.size.options.map((size) => (
-        <Breadcrumbs key={size} {...args} size={size} label={`Breadcrumb, ${size}`} />
-      ))}
-    </div>
-  ),
-};
-
-export const Separators: Story = {
-  render: (args) => (
-    <div className="sb-stack">
-      {options.separator.options.map((separator) => (
-        <Breadcrumbs
-          key={separator}
-          {...args}
-          separator={separator}
-          label={`Breadcrumb, ${separator}`}
-        />
-      ))}
-    </div>
-  ),
-};
-
 /** A container narrower than breakpoint/sm, where the items before the last two collapse. */
 export const Collapsed: Story = {
   render: (args) => (
