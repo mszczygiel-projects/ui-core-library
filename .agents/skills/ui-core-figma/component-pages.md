@@ -102,6 +102,8 @@ function stack(parent, name, gap) {
   const f = figma.createAutoLayout('VERTICAL');
   f.name = name;
   f.fills = [];
+  // An arrow or a shadow of an example reaches outside its bounds, which a clipping frame cuts.
+  f.clipsContent = false;
   f.setBoundVariable('itemSpacing', gap);
   parent.appendChild(f);
   return f;
