@@ -107,10 +107,24 @@
   line-height: var(--pagination-status-line-height);
 }
 
-/* The status and the jump field stand apart from the pages. */
-.status,
-.jump {
-  margin-inline-start: calc(var(--pagination-section-gap) - var(--pagination-gap));
+/*
+ * A wide container puts the status and the jump field at its end. With both, the status sits
+ * between the pages and the field, which ends the row. A minimum padding keeps them off the pages.
+ */
+@container (width >= 40rem) {
+  .status,
+  .jump {
+    margin-inline-start: auto;
+    padding-inline-start: calc(var(--pagination-section-gap) - var(--pagination-gap));
+  }
+
+  .with-status.with-jump .status {
+    margin-inline-end: auto;
+  }
+
+  .with-status.with-jump .jump {
+    margin-inline-start: 0;
+  }
 }
 
 .jump {

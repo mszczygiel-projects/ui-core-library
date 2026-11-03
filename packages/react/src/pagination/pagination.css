@@ -95,9 +95,24 @@
   line-height: var(--pagination-status-line-height);
 }
 
-/* The status and the jump field stand apart from the pages. */
-:is(.ui-pagination__status, .ui-pagination__jump) {
-  margin-inline-start: calc(var(--pagination-section-gap) - var(--pagination-gap));
+/*
+ * A wide container puts the status and the jump field at its end. With both, the status sits
+ * between the pages and the field, which ends the row. A minimum padding keeps them off the pages.
+ */
+@container (width >= 40rem) {
+  .ui-pagination__status,
+  .ui-pagination__jump {
+    margin-inline-start: auto;
+    padding-inline-start: calc(var(--pagination-section-gap) - var(--pagination-gap));
+  }
+
+  .ui-pagination--with-status.ui-pagination--with-jump .ui-pagination__status {
+    margin-inline-end: auto;
+  }
+
+  .ui-pagination--with-status.ui-pagination--with-jump .ui-pagination__jump {
+    margin-inline-start: 0;
+  }
 }
 
 /* The chevrons point along the reading direction. */

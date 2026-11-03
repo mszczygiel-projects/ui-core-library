@@ -260,6 +260,22 @@ export function paginationContract(adapter: Mount<PaginationContractProps>): voi
     expect(onPageChange).not.toHaveBeenCalled();
   });
 
+  it('puts the status or the jump field at the end of a wide row, and the status between both', async () => {
+    const end = (component: Mounted<PaginationContractProps>, part: string) =>
+      Math.round(component.part(part).getBoundingClientRect().right);
+    const status = await mount({ showStatus: true });
+    expect(end(status, 'status')).toBe(end(status, 'base'));
+    const jump = await mount({ showJump: true });
+    expect(end(jump, 'jump')).toBe(end(jump, 'base'));
+    const both = await mount({ showStatus: true, showJump: true });
+    expect(end(both, 'jump')).toBe(end(both, 'base'));
+    const next = both.part('next').getBoundingClientRect();
+    const text = both.part('status').getBoundingClientRect();
+    const field = both.part('jump').getBoundingClientRect();
+    expect(text.left - next.right).toBeGreaterThan(tokenNumber('--pagination-section-gap'));
+    expect(Math.abs(text.left - next.right - (field.left - text.right))).toBeLessThanOrEqual(1);
+  });
+
   it('gives its pages way to the status or the jump field in a narrow container', async () => {
     const narrow = await mount({ showStatus: true }, { parent: column('320px') });
     expect(shown(narrow.part('list'))).toBe(false);

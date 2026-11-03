@@ -142,6 +142,7 @@ export function Pagination({
       className={classNames(
         'ui-pagination',
         'ui-pagination__base',
+        showStatus && 'ui-pagination--with-status',
         showJump && 'ui-pagination--with-jump',
         className,
       )}

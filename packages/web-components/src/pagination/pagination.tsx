@@ -163,7 +163,7 @@ export class UiPagination implements PaginationProps {
     return (
       <nav
         part="base"
-        class={`base${this.showJump ? ' with-jump' : ''}`}
+        class={`base${this.showStatus ? ' with-status' : ''}${this.showJump ? ' with-jump' : ''}`}
         aria-label={this.authorLabel ?? this.label ?? labels.label}
       >
         <ui-icon-button

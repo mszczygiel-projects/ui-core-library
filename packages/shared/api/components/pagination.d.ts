@@ -22,7 +22,7 @@ export declare const pagination: {
     readonly parts: readonly ["base", "list", "item", "page", "ellipsis", "previous", "next", "status", "jump", "jump-label", "jump-field", "jump-total"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-page-change"];
-    readonly stories: readonly ["Playground", "WithStatus", "WithJump", "WithLinks", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["size"];
         readonly reason: "The page buttons have the one size of a hit area, so the control has no size prop.";
