@@ -3918,25 +3918,6 @@
               }
             }
           },
-          "hover": {
-            "$value": "{Surfaces.color.text.primary}",
-            "$type": "color",
-            "$extensions": {
-              "com.figma": {
-                "variableId": "VariableID:600:353",
-                "collectionId": "VariableCollectionId:600:2",
-                "scopes": [
-                  "SHAPE_FILL",
-                  "TEXT_FILL",
-                  "STROKE_COLOR"
-                ],
-                "codeSyntax": {
-                  "WEB": "var(--color-pagination-item-foreground-hover)"
-                },
-                "hiddenFromPublishing": false
-              }
-            }
-          },
           "active": {
             "$value": "{Surfaces.color.text.primary}",
             "$type": "color",
@@ -3997,24 +3978,6 @@
           }
         },
         "background": {
-          "hover": {
-            "$value": "{Surfaces.color.background.subtle}",
-            "$type": "color",
-            "$extensions": {
-              "com.figma": {
-                "variableId": "VariableID:600:344",
-                "collectionId": "VariableCollectionId:600:2",
-                "scopes": [
-                  "FRAME_FILL",
-                  "SHAPE_FILL"
-                ],
-                "codeSyntax": {
-                  "WEB": "var(--color-pagination-item-background-hover)"
-                },
-                "hiddenFromPublishing": false
-              }
-            }
-          },
           "active": {
             "$value": "{Surfaces.color.background.subtle}",
             "$type": "color",
@@ -4071,23 +4034,6 @@
           }
         },
         "border": {
-          "hover": {
-            "$value": "{Surfaces.color.background.subtle}",
-            "$type": "color",
-            "$extensions": {
-              "com.figma": {
-                "variableId": "VariableID:600:346",
-                "collectionId": "VariableCollectionId:600:2",
-                "scopes": [
-                  "STROKE_COLOR"
-                ],
-                "codeSyntax": {
-                  "WEB": "var(--color-pagination-item-border-hover)"
-                },
-                "hiddenFromPublishing": false
-              }
-            }
-          },
           "active": {
             "$value": "{Surfaces.color.background.subtle}",
             "$type": "color",
@@ -4180,25 +4126,6 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-breadcrumbs-item-foreground-default)"
-                },
-                "hiddenFromPublishing": false
-              }
-            }
-          },
-          "hover": {
-            "$value": "{Surfaces.color.text.primary}",
-            "$type": "color",
-            "$extensions": {
-              "com.figma": {
-                "variableId": "VariableID:600:360",
-                "collectionId": "VariableCollectionId:600:2",
-                "scopes": [
-                  "SHAPE_FILL",
-                  "TEXT_FILL",
-                  "STROKE_COLOR"
-                ],
-                "codeSyntax": {
-                  "WEB": "var(--color-breadcrumbs-item-foreground-hover)"
                 },
                 "hiddenFromPublishing": false
               }
