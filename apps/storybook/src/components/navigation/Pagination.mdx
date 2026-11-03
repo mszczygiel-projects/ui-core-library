@@ -1,0 +1,125 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as ReactStories from './Pagination.react.stories.tsx';
+import * as WebComponentStories from './Pagination.wc.stories.tsx';
+
+<Meta title="Components/Navigation/Pagination/Docs" />
+
+# Pagination
+
+<ComponentOverview name="Pagination" />
+
+## Usage
+
+Use Pagination below a long list or a table whose items are split into pages, such as search results or orders, so that a user moves to the next page, the previous one or any other. Leave it out of a feed that loads more as a user scrolls, of a short list that fits on one page and of the steps of a form, which a stepper shows.
+
+## Anatomy
+
+The **base** is a navigation landmark. The **previous** and **next** buttons sit at its ends, around the **list**, an ordered list with one **item** for each **page** button and for each **ellipsis**, which stands for the pages between. The optional **status** names the current page and the count. The optional **jump** holds the **jump-label**, the **jump-field**, a number field, and the **jump-total**, which a narrow container shows after the field. The web component exposes the parts; React uses `.ui-pagination__<part>` classes. Figma names its layers after the same parts, and draws a page with the private `.PaginationItem`.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.WithStatus} webComponents={WebComponentStories.WithStatus} />
+
+Pagination has no variant or tone. `showStatus` adds the status text, and `showJump` the jump field.
+
+## Sizes & density
+
+Pagination has one size: each page button has the size of a hit area, which follows the surrounding density. There is no size prop.
+
+## States
+
+A page button rests with a border. Hover and press share the active state. Keyboard focus draws the focus ring around the button. The current page is selected: filled and bold, with `aria-current="page"`. The previous button is disabled on the first page, and the next button on the last one. `disabled` disables every button and the field.
+
+<FrameworkCanvas react={ReactStories.WithJump} webComponents={WebComponentStories.WithJump} />
+
+In a container narrower than `breakpoint/sm` (40rem), the pages give way to the status between the previous and next buttons, or, with `showJump`, to the jump field followed by the count: ‹ [5] of 10 ›.
+
+## Content & labels
+
+The labels come from props, else from `labels.pagination`: the name of the navigation, of the previous and next buttons, of each page, the status, the label of the field and the count after it. The last four are functions of the page and the count, so that a language puts the numbers where it needs them.
+
+<Source
+  language="ts"
+  code={`configureUiCore({
+  labels: {
+    pagination: {
+      label: 'Stronicowanie',
+      previous: 'Poprzednia strona',
+      next: 'Następna strona',
+      page: (page) => \`Strona \${page}\`,
+      status: (page, count) => \`Strona \${page} z \${count}\`,
+      jump: 'Przejdź do strony',
+      total: (count) => \`z \${count}\`,
+    },
+  },
+});`}
+/>
+
+## Behaviour
+
+- `pageCount`, `siblingCount` and `boundaryCount` decide the pages shown: the current page with `siblingCount` pages on each side and `boundaryCount` pages at each end, with an ellipsis for every gap of more than one page.
+- A press on a page, on previous or next, or a number committed in the jump field moves to a page. The web component emits the cancelable `ui-page-change` with `detail.page`, `detail.reason` (`page`, `previous`, `next` or `jump`), `detail.href` and `detail.originalEvent`, and holds the new page in `page` unless the event is canceled. React calls `onPageChange(page, details)`; it holds the page itself with `defaultPage`, or follows `page`.
+- The jump field commits on Enter or when it loses focus. A number out of range goes to the nearest page, and an empty field returns to the current page.
+- With `getPageHref` the pages are links that a crawler can follow, and the browser loads them. The previous and next buttons and the jump field stay buttons and a field: they load the address of their page with `location.assign`. Canceling the change, or calling `details.originalEvent.preventDefault()` in React, keeps the browser on the page, so that client-side routing moves on its own.
+
+<FrameworkCanvas react={ReactStories.WithLinks} webComponents={WebComponentStories.WithLinks} />
+
+<Source
+  language="tsx"
+  code={`<Pagination
+  pageCount={10}
+  page={page}
+  getPageHref={(page) => \`?page=\${page}\`}
+  onPageChange={(next, { originalEvent }) => {
+    originalEvent.preventDefault();
+    router.push(\`?page=\${next}\`);
+  }}
+/>`}
+/>
+
+## Accessibility
+
+- **Pattern.** A `nav` landmark with a name around a list of buttons or links; the current page carries `aria-current="page"`. Each page has a name such as “Page 5”, since a bare number says little out of context.
+- **Keys.** Tab moves between the buttons and the field. Enter or Space presses a button, Enter follows a link, and Enter commits the field, whose arrow keys step the number.
+- **Disabled.** A disabled button leaves the tab order. A disabled link loses its address and keeps `aria-disabled`, so that it is still announced.
+- **Decoration.** The ellipses are hidden from assistive technology. The status is plain text, read where it sits, and not a live region: the page that loads announces itself.
+- **Preferences.** Forced colours draw the current page and the focus ring in the system highlight. The layout uses logical properties, and the chevrons turn around in right-to-left text.
+
+## Surfaces & themes
+
+The pages, the ellipsis and the status use the colours of pagination, and the previous and next buttons those of the ghost IconButton, aliases of the action, text and border roles, so they follow Light and Dark and the default, subtle, inverse and primary surfaces.
+
+<FrameworkCanvas react={ReactStories.OnSurfaces} webComponents={WebComponentStories.OnSurfaces} />
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Pagination" />}
+  webComponents={<WebComponentApi tag="ui-pagination" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Pagination } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/pagination';`}
+/>
+
+The current page is a number from 1. The web component takes its first page from the `page` attribute and holds the current one in the `page` property; `getPageHref` and the label functions are properties only. Its host reflects `disabled`. React passes its ref and the attributes of a `nav` to its root.
+
+## Tokens
+
+<ComponentTokens component="pagination" />
+
+Pagination reads the layout, type and colours of pagination and the shape and type of the controls, plus the focus-ring roles. The previous and next buttons and the jump field read their own tokens.
+
+## Implementation notes
+
+- Both implementations take the pages from `paginate` in the shared package and the narrow layout from a container query on the navigation, at the value of `breakpoint/sm`, since a container query cannot read a custom property.
+- The web component nests `ui-icon-button` and `ui-number-field`, and sets the value of the field as a property after each render. React nests `IconButton` and `NumberField`, and resets the field by its key once a number is committed.
+- Figma's `layout` previews a narrow container, and `interaction` of `.PaginationItem` previews rest, active and focus. Code derives them from the width, the pointer and the focus, and has no props for them.

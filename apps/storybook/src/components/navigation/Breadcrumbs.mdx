@@ -1,0 +1,114 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as ReactStories from './Breadcrumbs.react.stories.tsx';
+import * as WebComponentStories from './Breadcrumbs.wc.stories.tsx';
+
+<Meta title="Components/Navigation/Breadcrumbs/Docs" />
+
+# Breadcrumbs
+
+<ComponentOverview name="Breadcrumbs" />
+
+## Usage
+
+Use Breadcrumbs below the header of a page that sits deep in a hierarchy, such as a product in a category of a shop, so that a user sees where they are and moves up in one press. Leave it out of a flat site, of a page at the top level and of a sequence of steps, which a stepper shows. The trail starts at the top of the site and ends at the current page.
+
+## Anatomy
+
+The **base** is a navigation landmark around the **list**, an ordered list with one **item** for each step. An item holds a **link**, the **text** of a step without an address, or the **current** page, which is always the last item. Each of them holds the decorative **item-icon** and the **item-label**. A **separator** follows every item but the last, and the **ellipsis** stands for the hidden items in a narrow container. The web component exposes the parts; React uses `.ui-breadcrumbs__<part>` classes. Figma names its layers after the same parts, and draws an item with the private `.BreadcrumbsItem` and a separator with `.BreadcrumbsSeparator`.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Separators} webComponents={WebComponentStories.Separators} />
+
+`separator` is `chevron`, the default, or `slash`. A trail has no tone or variant: its links share the colours of the breadcrumbs tokens.
+
+## Sizes & density
+
+<FrameworkCanvas react={ReactStories.Sizes} webComponents={WebComponentStories.Sizes} />
+
+`small` and `medium` (the default) set the type size, the gap, the icon and the separator. Each follows the surrounding density. There is no large size, since a trail sits in running text or a page header.
+
+## States
+
+A link rests in the secondary text colour. Hover and press share the active state: the primary text colour and an underline. Keyboard focus draws the focus ring around the link. The current page uses the primary text colour and a stronger weight, and has no interactive state. A step without an address is text in the colour of a link at rest.
+
+<FrameworkCanvas react={ReactStories.Collapsed} webComponents={WebComponentStories.Collapsed} />
+
+In a container narrower than `breakpoint/sm` (40rem), the items before the last two leave the layout and an ellipsis takes their place. They stay in the accessibility tree. A trail of two items never collapses.
+
+## Content & labels
+
+Supply the label of each item in the language of the page, short and as the page names itself. The navigation is named by `label`, else by `labels.breadcrumbs.label` (“Breadcrumb”); an `aria-label` written by the page wins.
+
+<Source
+  language="ts"
+  code={`configureUiCore({ labels: { breadcrumbs: { label: 'Ścieżka' } } });`}
+/>
+
+## Behaviour
+
+- `items` lists the steps, each with a `label`, an optional `href` and an optional `icon`. An item with `href` is a link; the last item is the current page and never links, whatever its `href`.
+- A press on a link emits the cancelable `ui-navigate` in the web component, with `detail.item`, `detail.index` and `detail.originalEvent`; canceling it keeps the browser from following the link. React calls `onNavigate(details)` with the same details, and `details.originalEvent.preventDefault()` does the same. A page with client-side routing cancels the press and moves on its own.
+- The width of the container alone decides the collapse: there is no prop for it.
+
+<Source
+  language="tsx"
+  code={`<Breadcrumbs
+  items={[
+    { label: 'Home', href: '/', icon: <HomeIcon /> },
+    { label: 'Products', href: '/products' },
+    { label: 'Widget' },
+  ]}
+  onNavigate={({ item, originalEvent }) => {
+    originalEvent.preventDefault();
+    router.push(item.href);
+  }}
+/>`}
+/>
+
+## Accessibility
+
+- **Pattern.** The WAI-ARIA breadcrumb pattern: a `nav` landmark with a name, an ordered list, and `aria-current="page"` on the current page.
+- **Keys.** Tab moves between the links. Enter follows a link. The current page and the text steps are not in the tab order.
+- **Decoration.** The separators, the ellipsis and the icons are hidden from assistive technology, so a screen reader reads the steps alone.
+- **Collapse.** The hidden items of a narrow container stay readable by a screen reader, so the whole trail is still announced; a keyboard user reaches their links too.
+- **Preferences.** Forced colours draw the focus ring in the system highlight. The layout uses logical properties, and the chevron turns around in right-to-left text.
+
+## Surfaces & themes
+
+The links, the current page, the separator and the ellipsis use the colours of breadcrumbs, aliases of the text and border roles, so they follow Light and Dark and the default, subtle, inverse and primary surfaces.
+
+<FrameworkCanvas react={ReactStories.OnSurfaces} webComponents={WebComponentStories.OnSurfaces} />
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Breadcrumbs" />}
+  webComponents={<WebComponentApi tag="ui-breadcrumbs" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Breadcrumbs } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/breadcrumbs';`}
+/>
+
+The items are data, not slots, so that the last item is always the current page. The web component takes `items` as a property only, since an attribute cannot hold a list, and the icon of an item as an SVG string of the icon package; React takes a node. Its host reflects nothing. React passes its ref and the attributes of a `nav` to its root.
+
+## Tokens
+
+<ComponentTokens component="breadcrumbs" />
+
+Breadcrumbs reads the layout, type and colours of breadcrumbs, plus the focus-ring roles.
+
+## Implementation notes
+
+- Both implementations render the same list and take the collapse from a container query on the navigation, at the value of `breakpoint/sm`, since a container query cannot read a custom property. The collapsed items are clipped out of the layout instead of hidden, so the accessibility tree keeps them.
+- The web component draws the chevron from the icon package and the slash and the ellipsis as generated content, so the template holds no text.
+- Figma's `collapsed` previews a narrow container, and `interaction` of `.BreadcrumbsItem` previews rest, active and focus. Code derives them from the width, the pointer and the focus, and has no props for them.

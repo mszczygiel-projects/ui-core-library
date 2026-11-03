@@ -1,4 +1,8 @@
 import type { BadgeProps } from '@mszczygiel-projects/ui-core-shared/badge';
+import type {
+  BreadcrumbsNavigateDetail,
+  BreadcrumbsProps,
+} from '@mszczygiel-projects/ui-core-shared/breadcrumbs';
 import type { ButtonProps } from '@mszczygiel-projects/ui-core-shared/button';
 import type {
   CheckboxFieldProps,
@@ -29,6 +33,10 @@ import type {
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
 import type { NumberFieldProps } from '@mszczygiel-projects/ui-core-shared/number-field';
+import type {
+  PaginationPageChangeDetail,
+  PaginationProps,
+} from '@mszczygiel-projects/ui-core-shared/pagination';
 import type { PasswordFieldProps } from '@mszczygiel-projects/ui-core-shared/password-field';
 import type { RadioFieldProps } from '@mszczygiel-projects/ui-core-shared/radio-field';
 import type { RadioGroupProps } from '@mszczygiel-projects/ui-core-shared/radio-group';
@@ -55,6 +63,21 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-pagination': CustomElement<
+        PaginationProps & {
+          readonly page?: number;
+          readonly 'onui-page-change'?: (
+            event: CustomEvent<PaginationPageChangeDetail<Event>>,
+          ) => void;
+        }
+      >;
+      'ui-breadcrumbs': CustomElement<
+        BreadcrumbsProps<string> & {
+          readonly 'onui-navigate'?: (
+            event: CustomEvent<BreadcrumbsNavigateDetail<MouseEvent, string>>,
+          ) => void;
+        }
+      >;
       'ui-file-input-field': FileElement<
         FileInputFieldProps<File> & {
           readonly defaultValue?: readonly File[];
