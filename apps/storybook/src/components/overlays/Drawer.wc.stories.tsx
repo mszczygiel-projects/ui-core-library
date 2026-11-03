@@ -43,6 +43,7 @@ function UiDrawer({
         onClick={() => {
           setOpen(true);
         }}
+        size="small"
       >
         {trigger}
       </ui-button>
@@ -119,7 +120,7 @@ export const Playground: Story = {};
 
 export const Placements: Story = {
   render: (args) => (
-    <div className="sb-stack">
+    <div className="sb-row">
       {options.placement.options.map((placement) => (
         <UiDrawer key={placement} {...args} placement={placement} trigger={placement} />
       ))}
@@ -131,7 +132,7 @@ export const WithForm: Story = {
   render: function Render(args) {
     const [applied, setApplied] = useState('');
     return (
-      <div className="sb-stack">
+      <div className="sb-row">
         <UiDrawer {...args} trigger="Filters" onClose={setApplied}>
           <form method="dialog" className="sb-stack">
             <ui-checkbox-field label="In stock" />

@@ -416,6 +416,8 @@ export function overlayContract<Props extends OverlayContractProps>(
     const dialog = nativeDialog(modal);
     const grabber = modal.part('grabber');
     expect(grabber.checkVisibility()).toBe(true);
+    // The handle spans the panel, so a drag can start anywhere along its bar.
+    expect(grabber.offsetWidth).toBe(dialog.clientWidth);
     await dragDown(grabber, 10, 200);
     expect(changed).not.toHaveBeenCalled();
     expect(dialog.style.getPropertyValue('--_drag-offset')).toBe('');

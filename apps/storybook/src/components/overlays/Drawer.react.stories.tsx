@@ -18,6 +18,7 @@ function DrawerDemo({ trigger = 'Open drawer', children, ...args }: DemoProps) {
         onClick={() => {
           setOpen(true);
         }}
+        size="small"
       >
         {trigger}
       </Button>
@@ -61,7 +62,7 @@ export const Playground: Story = {};
 
 export const Placements: Story = {
   render: (args) => (
-    <div className="sb-stack">
+    <div className="sb-row">
       {options.placement.options.map((placement) => (
         <DrawerDemo key={placement} {...args} placement={placement} trigger={placement} />
       ))}
@@ -74,11 +75,12 @@ export const WithForm: Story = {
     const [open, setOpen] = useState(false);
     const [applied, setApplied] = useState('none');
     return (
-      <div className="sb-stack">
+      <div className="sb-row">
         <Button
           onClick={() => {
             setOpen(true);
           }}
+          size="small"
         >
           Filters
         </Button>

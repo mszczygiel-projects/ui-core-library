@@ -35,7 +35,7 @@
   align-items: flex-start;
   gap: var(--dialog-header-gap);
   padding-inline: var(--_padding-inline);
-  padding-block-end: var(--dialog-gap);
+  padding-block-end: calc(var(--dialog-gap) / 2);
 }
 
 .titles {
@@ -76,7 +76,12 @@
   justify-content: flex-end;
   gap: var(--dialog-footer-gap);
   padding-inline: var(--_padding-inline);
-  padding-block-start: var(--dialog-gap);
+  padding-block-start: calc(var(--dialog-gap) / 2);
+}
+
+/* Each part gives half of the gap between the parts, so the content keeps it inside its scroll. */
+.base .body {
+  padding-block: calc(var(--dialog-gap) / 2);
 }
 
 /* The attribute hidden loses to the display of a part, so an empty part needs this rule. */

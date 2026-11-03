@@ -51,6 +51,7 @@ function UiDialog({
         onClick={() => {
           setOpen(true);
         }}
+        size="small"
       >
         {trigger}
       </ui-button>
@@ -144,7 +145,7 @@ export const Playground: Story = {};
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="sb-stack">
+    <div className="sb-row">
       {options.size.options.map((size) => (
         <UiDialog key={size} {...args} size={size} heading={`A ${size} dialog`} trigger={size} />
       ))}
@@ -165,7 +166,7 @@ export const Alert: Story = {
       {...args}
       trigger="Discard"
       footer={
-        <form method="dialog" slot="footer" className="sb-stack">
+        <form method="dialog" slot="footer" className="sb-row">
           <ui-button type="submit" variant="secondary" value="keep" data-autofocus>
             Keep editing
           </ui-button>
@@ -183,13 +184,13 @@ export const WithForm: Story = {
   render: function Render(args) {
     const [result, setResult] = useState('');
     return (
-      <div className="sb-stack">
+      <div className="sb-row">
         <UiDialog
           {...args}
           trigger="Rename"
           onClose={setResult}
           footer={
-            <form method="dialog" slot="footer" className="sb-stack">
+            <form method="dialog" slot="footer" className="sb-row">
               <ui-button type="submit" variant="secondary" value="cancel">
                 Cancel
               </ui-button>

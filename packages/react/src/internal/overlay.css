@@ -63,17 +63,24 @@
   --_padding-stack: var(--drawer-padding-stack);
 }
 
-/* The handle is decoration: the other ways to close the panel stay for every user. */
+/*
+ * The handle is decoration: the other ways to close the panel stay for every user. It spans the
+ * width of the panel, so a drag can start anywhere along its bar.
+ */
 .ui-overlay__grabber {
   flex: none;
-  align-self: center;
-  box-sizing: content-box;
-  inline-size: var(--_grabber-width);
-  block-size: var(--_grabber-height);
   margin-block-start: calc(var(--_grabber-gap) - var(--_padding-stack));
   padding-block: var(--_grabber-gap);
-  background: var(--_grabber) content-box;
   cursor: grab;
+}
+
+.ui-overlay__grabber::before {
+  display: block;
+  inline-size: var(--_grabber-width);
+  block-size: var(--_grabber-height);
+  margin-inline: auto;
+  background: var(--_grabber);
+  content: '';
 }
 
 /* A drag down from the handle or the header moves the panel instead of scrolling the page. */

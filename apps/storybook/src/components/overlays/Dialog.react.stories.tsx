@@ -21,6 +21,7 @@ function DialogDemo({ trigger = 'Open dialog', footer, ...args }: DemoProps) {
         onClick={() => {
           setOpen(true);
         }}
+        size="small"
       >
         {trigger}
       </Button>
@@ -77,7 +78,7 @@ export const Playground: Story = {};
 
 export const Sizes: Story = {
   render: (args) => (
-    <div className="sb-stack">
+    <div className="sb-row">
       {options.size.options.map((size) => (
         <DialogDemo key={size} {...args} size={size} heading={`A ${size} dialog`} trigger={size} />
       ))}
@@ -104,6 +105,7 @@ export const Alert: Story = {
           onClick={() => {
             setOpen(true);
           }}
+          size="small"
         >
           Discard
         </Button>
@@ -132,12 +134,13 @@ export const WithForm: Story = {
     const [name, setName] = useState('Report.pdf');
     const [draft, setDraft] = useState(name);
     return (
-      <div className="sb-stack">
+      <div className="sb-row">
         <Button
           onClick={() => {
             setDraft(name);
             setOpen(true);
           }}
+          size="small"
         >
           Rename
         </Button>

@@ -35,7 +35,7 @@
   align-items: flex-start;
   gap: var(--dialog-header-gap);
   padding-inline: var(--_padding-inline);
-  padding-block-end: var(--dialog-gap);
+  padding-block-end: calc(var(--dialog-gap) / 2);
 }
 
 .ui-dialog__titles {
@@ -76,7 +76,12 @@
   justify-content: flex-end;
   gap: var(--dialog-footer-gap);
   padding-inline: var(--_padding-inline);
-  padding-block-start: var(--dialog-gap);
+  padding-block-start: calc(var(--dialog-gap) / 2);
+}
+
+/* Each part gives half of the gap between the parts, so the content keeps it inside its scroll. */
+.ui-dialog .ui-dialog__body {
+  padding-block: calc(var(--dialog-gap) / 2);
 }
 
 /* A separator shows only where the content runs on under the header or the footer. */

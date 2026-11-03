@@ -122,6 +122,16 @@ export function dialogContract(adapter: Mount<DialogContractProps>): void {
     }
   });
 
+  it('splits the gap between its parts, so that its content keeps half of it inside the scroll', async () => {
+    const modal = await mount({ content: 'text', footer: 'OK' });
+    modal.element.style.setProperty('--dialog-gap', '40px');
+    const style = (name: string) => getComputedStyle(modal.part(name));
+    expect(style('header').paddingBlockEnd).toBe('20px');
+    expect(style('body').paddingBlockStart).toBe('20px');
+    expect(style('body').paddingBlockEnd).toBe('20px');
+    expect(style('footer').paddingBlockStart).toBe('20px');
+  });
+
   it('shows its footer only with content, and separators only where the content scrolls on', async () => {
     const plain = await mount();
     expect(plain.part('footer').checkVisibility()).toBe(false);
