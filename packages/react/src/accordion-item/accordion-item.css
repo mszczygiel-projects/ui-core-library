@@ -79,7 +79,11 @@
   block-size: 100%;
 }
 
-.ui-accordion-item--open .ui-accordion-item__icon {
+/* Only the own icon turns, not those of an accordion nested in the panel. */
+.ui-accordion-item--open
+  > .ui-accordion-item__heading
+  > .ui-accordion-item__trigger
+  > .ui-accordion-item__icon {
   rotate: 180deg;
 }
 

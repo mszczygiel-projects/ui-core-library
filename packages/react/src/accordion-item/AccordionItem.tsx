@@ -75,7 +75,15 @@ export function AccordionItem({
   const triggerId = `${id}-trigger`;
   const panelId = `${id}-panel`;
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
-  const isOpen = open ?? uncontrolledOpen;
+  // The browser shows the content of a match before the page answers, so a controlled section that
+  // keeps `open` false still shows it, until it closes or `open` changes.
+  const [found, setFound] = useState(false);
+  const [followedOpen, setFollowedOpen] = useState(open);
+  if (open !== followedOpen) {
+    setFollowedOpen(open);
+    setFound(false);
+  }
+  const isOpen = found || (open ?? uncontrolledOpen);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const openingRef = useRef<Event | null>(null);
   const Heading = `h${String(accordionHeadingLevel(headingLevel))}` as
@@ -86,6 +94,7 @@ export function AccordionItem({
       return;
     }
     setUncontrolledOpen(next);
+    setFound(next && reason === 'find');
     openingRef.current = next ? originalEvent : null;
     onOpenChange?.(next, { reason, originalEvent });
   };
@@ -96,11 +105,12 @@ export function AccordionItem({
   });
 
   // The others close once the section has opened, so that a controlled parent that keeps it closed
-  // keeps them open, as a canceled request does in the web component.
+  // keeps them open, as a canceled request does in the web component. The request waits for a
+  // parent that opens the section later, after an asynchronous answer.
   useBrowserLayoutEffect(() => {
     const opening = openingRef.current;
-    openingRef.current = null;
     if (isOpen && opening !== null) {
+      openingRef.current = null;
       group?.opened(id, opening);
     }
   });

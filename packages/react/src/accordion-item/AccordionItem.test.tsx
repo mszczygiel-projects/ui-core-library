@@ -1,3 +1,6 @@
+// The package tests load no stylesheet otherwise, and the rotation of the icon is a rule of its own.
+import './accordion-item.css';
+
 import { createRef, useState } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
@@ -114,5 +117,82 @@ describe('AccordionItem', () => {
       .element(screen.getByRole('button', { name: 'Shipping' }))
       .toHaveAttribute('aria-expanded', 'false');
     expect(changes).toEqual(['false group']);
+  });
+
+  it('shows a match in a controlled section that stays closed, until it closes', async () => {
+    const onOpenChange = vi.fn();
+    const screen = await render(
+      <AccordionItem label="Shipping" open={false} onOpenChange={onOpenChange}>
+        Content
+      </AccordionItem>,
+    );
+    const button = screen.getByRole('button', { name: 'Shipping' });
+    screen.container.querySelector('[role="region"]')?.dispatchEvent(new Event('beforematch'));
+    await expect.element(button).toHaveAttribute('aria-expanded', 'true');
+    await userEvent.click(button);
+    expect(onOpenChange).toHaveBeenLastCalledWith(
+      false,
+      expect.objectContaining({ reason: 'trigger' }),
+    );
+    await expect.element(button).toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('closes the others once a parent opens the section after an asynchronous answer', async () => {
+    function Controlled() {
+      const [open, setOpen] = useState<readonly boolean[]>([true, false]);
+      const set = (index: number, next: boolean) => {
+        setOpen((current) => current.map((value, at) => (at === index ? next : value)));
+      };
+      return (
+        <Accordion>
+          <AccordionItem
+            label="Shipping"
+            open={open[0]}
+            onOpenChange={(next) => {
+              set(0, next);
+            }}
+          >
+            Shipping content
+          </AccordionItem>
+          <AccordionItem
+            label="Returns"
+            open={open[1]}
+            onOpenChange={(next) => {
+              setTimeout(() => {
+                set(1, next);
+              }, 50);
+            }}
+          >
+            Returns content
+          </AccordionItem>
+        </Accordion>
+      );
+    }
+    const screen = await render(<Controlled />);
+    await userEvent.click(screen.getByRole('button', { name: 'Returns' }));
+    await expect
+      .element(screen.getByRole('button', { name: 'Returns' }))
+      .toHaveAttribute('aria-expanded', 'true');
+    await expect
+      .element(screen.getByRole('button', { name: 'Shipping' }))
+      .toHaveAttribute('aria-expanded', 'false');
+  });
+
+  it('turns only its own icon, not those of an accordion in its panel', async () => {
+    const screen = await render(
+      <Accordion>
+        <AccordionItem label="Outer" defaultOpen>
+          <Accordion>
+            <AccordionItem label="Inner">Inner content</AccordionItem>
+          </Accordion>
+        </AccordionItem>
+      </Accordion>,
+    );
+    const icon = (name: string) =>
+      screen.getByRole('button', { name }).element().querySelector('.ui-accordion-item__icon');
+    const outer = icon('Outer');
+    const inner = icon('Inner');
+    expect(outer === null ? undefined : getComputedStyle(outer).rotate).toBe('180deg');
+    expect(inner === null ? undefined : getComputedStyle(inner).rotate).toBe('none');
   });
 });
