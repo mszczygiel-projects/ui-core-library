@@ -598,8 +598,12 @@ export function pickCell(
   cell: Pick<CalendarCell, 'date' | 'disabled'>,
   range: boolean,
 ): CalendarPick | undefined {
-  if (cell.disabled || cell.date === '') {
+  if (cell.date === '') {
     return undefined;
+  }
+  if (cell.disabled) {
+    // A press focuses a disabled cell, so the state follows it, and Enter there picks nothing.
+    return cell.date === state.focused ? undefined : { state: { ...state, focused: cell.date } };
   }
   if (state.view === 'years') {
     return { state: { ...state, view: 'months', focused: cell.date } };

@@ -167,8 +167,10 @@ export function calendarContract(adapter: Mount<CalendarContractProps>): void {
     }
     await component.update({});
     expect(onValueChange).not.toHaveBeenCalled();
+    // A press moves the focus to a disabled day without picking it.
+    expect(focusable(component)).toEqual(['2026-07-31']);
     await focusCell(component);
-    await press(component, '{ArrowRight}{ArrowRight}');
+    await press(component, '{ArrowUp}{ArrowUp}{ArrowUp}');
     expect(focused(component)).toBe('2026-07-10');
     await press(component, '{Enter}');
     expect(onValueChange).not.toHaveBeenCalled();
@@ -305,5 +307,30 @@ export function calendarContract(adapter: Mount<CalendarContractProps>): void {
     expect(getComputedStyle(label('2026-07-08')).outlineColor).toBe(
       resolvedColor(tokenValue('--color-ring-default')),
     );
+  });
+
+  it('follows a press onto a disabled day, so that Enter there picks nothing', async () => {
+    const onValueChange = vi.fn<Change>();
+    const component = await mount({ onValueChange, disabledDates: ['2026-07-10'] });
+    // A real pointer focuses the cell, which a test runner refuses to press for aria-disabled.
+    await userEvent.click(cell(component, '2026-07-10'), { force: true });
+    await component.update({});
+    expect(focusable(component)).toEqual(['2026-07-10']);
+    await press(component, '{Enter}');
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(selected(component)).toEqual(['2026-07-08']);
+  });
+
+  it('reports the month that Escape from the months brings back to the days', async () => {
+    const onMonthChange = vi.fn<Change>();
+    const component = await mount({ defaultMonth: '2026-07', onMonthChange });
+    await component.screen.getByRole('button', { name: 'July 2026, choose a month' }).click();
+    await component.update({});
+    await press(component, '{ArrowRight}{Escape}');
+    expect(view(component)).toBe('days');
+    expect(heading(component)).toBe('August 2026');
+    expect(focused(component)).toBe('2026-08-08');
+    expect(onMonthChange).toHaveBeenCalledOnce();
+    expect(onMonthChange.mock.calls[0]?.[0]).toBe('2026-08');
   });
 }

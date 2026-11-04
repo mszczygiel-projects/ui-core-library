@@ -200,7 +200,7 @@ export function Calendar({
         event.preventDefault();
         event.stopPropagation();
         focusCellRef.current = true;
-        setStored({ ...from, view });
+        moveTo({ ...from, view }, event.nativeEvent);
       }
       return;
     }

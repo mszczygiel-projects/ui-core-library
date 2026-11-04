@@ -345,7 +345,13 @@ describe('the state of a calendar', () => {
       state: { view: 'days', focused: '2026-07-09' },
       value: '2026-07-09',
     });
-    expect(pickCell(days, { date: '2026-07-09', disabled: true }, false)).toBeUndefined();
+    // A disabled cell takes the focus without a value, and picking it again does nothing.
+    expect(pickCell(days, { date: '2026-07-09', disabled: true }, false)).toEqual({
+      state: { view: 'days', focused: '2026-07-09' },
+    });
+    expect(
+      pickCell({ ...days, focused: '2026-07-09' }, { date: '2026-07-09', disabled: true }, false),
+    ).toBeUndefined();
     const started = pickCell(days, { date: '2026-07-14', disabled: false }, true);
     expect(started).toEqual({
       state: { view: 'days', focused: '2026-07-14', anchor: '2026-07-14' },

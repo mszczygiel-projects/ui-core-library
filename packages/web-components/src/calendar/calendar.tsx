@@ -385,8 +385,8 @@ export class UiCalendar implements CalendarProps {
         // Escape goes back one grid before it closes anything around the calendar.
         event.preventDefault();
         event.stopPropagation();
-        this.state = { ...state, view };
         this.focusCell = true;
+        this.moveTo({ ...state, view }, event);
       }
       return;
     }
