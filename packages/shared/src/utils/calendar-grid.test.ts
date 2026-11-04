@@ -1,12 +1,16 @@
 import { describe, expect, it } from 'vitest';
 
 import {
+  type CalendarContext,
   type CalendarKeyOptions,
+  calendarModel,
   dayLabel,
   firstDayOfWeek,
+  focusInMonth,
   formatIsoMonth,
   formatIsoRange,
   fullDateLabel,
+  initialFocus,
   isDateDisabled,
   isMonthDisabled,
   isYearDisabled,
@@ -16,13 +20,17 @@ import {
   nextFocusedDate,
   parseIsoMonth,
   parseIsoRange,
+  pickCell,
   selectedDate,
   selectionOf,
   shiftMonth,
+  stepDate,
   weekdayLabels,
   weekdayOrder,
   yearPage,
   yearPageLabel,
+  zoomIn,
+  zoomOut,
 } from './calendar-grid.ts';
 
 describe('months', () => {
@@ -237,5 +245,135 @@ describe('labels', () => {
 
   it('names a page of years by its first and last year', () => {
     expect(yearPageLabel(2026, 'en-US')).toMatch(/^2016\s?–\s?2039$/);
+  });
+});
+
+describe('calendarModel', () => {
+  const context: CalendarContext = {
+    value: '2026-07-08',
+    range: false,
+    constraints: { min: '2026-06-15', max: '2026-08-20', disabledDates: ['2026-07-10'] },
+    locale: 'en-US',
+    firstDayOfWeek: 1,
+    today: '2026-07-19',
+  };
+
+  it('describes the days of the focused month', () => {
+    const model = calendarModel({ view: 'days', focused: '2026-07-08' }, context);
+    expect(model.heading).toBe('July 2026');
+    expect(model.zoom).toEqual({ label: 'chooseMonth', text: 'July 2026' });
+    expect(model.weekdays.map((weekday) => weekday.short)).toEqual([
+      'Mon',
+      'Tue',
+      'Wed',
+      'Thu',
+      'Fri',
+      'Sat',
+      'Sun',
+    ]);
+    const cells = model.rows.flat();
+    const cell = (date: string) => cells.find((candidate) => candidate.date === date);
+    expect(cell('2026-06-29')).toMatchObject({ outside: true, disabled: false });
+    expect(cell('2026-07-08')).toMatchObject({
+      selection: 'selected',
+      focusable: true,
+      name: 'Wednesday, July 8, 2026',
+    });
+    expect(cell('2026-07-10')?.disabled).toBe(true);
+    expect(cell('2026-07-19')?.current).toBe(true);
+    expect(cells.filter((candidate) => candidate.focusable)).toHaveLength(1);
+  });
+
+  it('disables a step to a month that min or max rules out', () => {
+    expect(calendarModel({ view: 'days', focused: '2026-06-20' }, context).previous).toEqual({
+      label: 'previousMonth',
+      disabled: true,
+    });
+    expect(calendarModel({ view: 'days', focused: '2026-08-20' }, context).next.disabled).toBe(
+      true,
+    );
+    expect(calendarModel({ view: 'days', focused: '2026-07-20' }, context).next.disabled).toBe(
+      false,
+    );
+  });
+
+  it('describes the months of the focused year in rows of three', () => {
+    const model = calendarModel({ view: 'months', focused: '2026-07-31' }, context);
+    expect(model.heading).toBe('2026');
+    expect(model.rows).toHaveLength(4);
+    const cells = model.rows.flat();
+    expect(cells[1]).toMatchObject({ label: 'Feb', date: '2026-02-28', disabled: true });
+    expect(cells[6]).toMatchObject({ selection: 'selected', current: true, focusable: true });
+    expect(model.previous).toEqual({ label: 'previousYear', disabled: true });
+  });
+
+  it('describes a page of years in rows of four, with a heading that opens nothing', () => {
+    const model = calendarModel({ view: 'years', focused: '2026-07-08' }, context);
+    expect(model.zoom).toBeNull();
+    expect(model.rows).toHaveLength(6);
+    expect(model.rows[0]?.[0]).toMatchObject({ label: '2016', disabled: true });
+    expect(model.rows.flat().find((cell) => cell.focusable)?.date).toBe('2026-07-08');
+    expect(model.previous.disabled).toBe(true);
+    expect(model.next.disabled).toBe(true);
+  });
+});
+
+describe('the state of a calendar', () => {
+  it('focuses the value, then today, then the first day of the month', () => {
+    expect(initialFocus('2026-07-08', false, undefined, '2026-01-01')).toBe('2026-07-08');
+    expect(initialFocus('', false, undefined, '2026-01-01')).toBe('2026-01-01');
+    expect(initialFocus('', false, '2026-03', '2026-01-01')).toBe('2026-03-01');
+    expect(initialFocus('2026-03-09/2026-03-12', true, '2026-03', undefined)).toBe('2026-03-09');
+    expect(initialFocus('', false, undefined, undefined)).toBeUndefined();
+  });
+
+  it('keeps the day when a month is set', () => {
+    expect(focusInMonth('2026-01-31', '2026-02')).toBe('2026-02-28');
+    expect(focusInMonth('2026-01-31', 'not a month')).toBe('2026-01-31');
+  });
+
+  it('steps by a month, a year or a page of years', () => {
+    expect(stepDate('days', '2026-03-31', -1)).toBe('2026-02-28');
+    expect(stepDate('months', '2026-03-31', 1)).toBe('2027-03-31');
+    expect(stepDate('years', '2026-03-31', 1)).toBe('2050-03-31');
+    expect(stepDate('days', '0001-01-15', -1)).toBeNull();
+  });
+
+  it('picks a date, a range in two steps, a month and a year', () => {
+    const days = { view: 'days' as const, focused: '2026-07-08' };
+    expect(pickCell(days, { date: '2026-07-09', disabled: false }, false)).toEqual({
+      state: { view: 'days', focused: '2026-07-09' },
+      value: '2026-07-09',
+    });
+    expect(pickCell(days, { date: '2026-07-09', disabled: true }, false)).toBeUndefined();
+    const started = pickCell(days, { date: '2026-07-14', disabled: false }, true);
+    expect(started).toEqual({
+      state: { view: 'days', focused: '2026-07-14', anchor: '2026-07-14' },
+    });
+    expect(
+      started && pickCell(started.state, { date: '2026-07-08', disabled: false }, true)?.value,
+    ).toBe('2026-07-08/2026-07-14');
+    expect(
+      pickCell(
+        { view: 'months', focused: '2026-07-08' },
+        { date: '2026-03-08', disabled: false },
+        false,
+      ),
+    ).toEqual({ state: { view: 'days', focused: '2026-03-08' } });
+    expect(
+      pickCell(
+        { view: 'years', focused: '2026-07-08' },
+        { date: '2030-07-08', disabled: false },
+        false,
+      ),
+    ).toEqual({ state: { view: 'months', focused: '2030-07-08' } });
+  });
+
+  it('zooms out from the days to the years and back in', () => {
+    expect(zoomOut('days')).toBe('months');
+    expect(zoomOut('months')).toBe('years');
+    expect(zoomIn('years')).toBe('months');
+    expect(zoomIn('months')).toBe('days');
+    expect(zoomIn('days')).toBeUndefined();
   });
 });

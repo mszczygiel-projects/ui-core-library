@@ -53,3 +53,54 @@ export interface WeekdayLabel {
     readonly long: string;
 }
 export declare function weekdayLabels(locale: string, firstDay: number): readonly WeekdayLabel[];
+export interface CalendarState {
+    readonly view: CalendarView;
+    readonly focused: string;
+    readonly anchor?: string;
+}
+export interface CalendarContext extends SelectionContext {
+    readonly constraints: DateConstraints;
+    readonly locale: string;
+    readonly firstDayOfWeek: number;
+    readonly today?: string;
+}
+export interface CalendarCell {
+    readonly date: string;
+    readonly label: string;
+    readonly name: string;
+    readonly selection: CalendarSelection;
+    readonly current: boolean;
+    readonly disabled: boolean;
+    readonly outside: boolean;
+    readonly focusable: boolean;
+}
+export type CalendarStepLabel = 'previousMonth' | 'nextMonth' | 'previousYear' | 'nextYear' | 'previousYears' | 'nextYears';
+export interface CalendarModel {
+    readonly view: CalendarView;
+    readonly heading: string;
+    readonly zoom: {
+        readonly label: 'chooseMonth' | 'chooseYear';
+        readonly text: string;
+    } | null;
+    readonly previous: {
+        readonly label: CalendarStepLabel;
+        readonly disabled: boolean;
+    };
+    readonly next: {
+        readonly label: CalendarStepLabel;
+        readonly disabled: boolean;
+    };
+    readonly weekdays: readonly WeekdayLabel[];
+    readonly rows: readonly (readonly CalendarCell[])[];
+}
+export declare function initialFocus(value: string, range: boolean, month: string | undefined, today: string | undefined): string | undefined;
+export declare function focusInMonth(focused: string, month: string): string;
+export declare function stepDate(view: CalendarView, focused: string, step: -1 | 1): string | null;
+export declare function calendarModel(state: CalendarState, context: CalendarContext): CalendarModel;
+export interface CalendarPick {
+    readonly state: CalendarState;
+    readonly value?: string;
+}
+export declare function pickCell(state: CalendarState, cell: Pick<CalendarCell, 'date' | 'disabled'>, range: boolean): CalendarPick | undefined;
+export declare function zoomOut(view: CalendarView): CalendarView;
+export declare function zoomIn(view: CalendarView): CalendarView | undefined;

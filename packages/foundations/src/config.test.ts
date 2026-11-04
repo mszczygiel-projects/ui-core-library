@@ -116,6 +116,7 @@ describe('the configuration', () => {
         numberField: defaultLabels.numberField,
         dateField: defaultLabels.dateField,
         button: { loading: 'Loading' },
+        calendar: defaultLabels.calendar,
         chip: { dismiss: 'Remove' },
         combobox: defaultLabels.combobox,
         dialog: { close: 'Close' },

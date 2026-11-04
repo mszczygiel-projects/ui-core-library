@@ -364,6 +364,271 @@ export function weekdayLabels(locale: string, firstDay: number): readonly Weekda
   });
 }
 
+/** What a calendar holds between renders: the grid it shows, its focused date and a range start. */
+export interface CalendarState {
+  readonly view: CalendarView;
+  /** The date that takes the focus; its month, year or page is what the grid shows. */
+  readonly focused: string;
+  /** The first date of a range that the user has picked, until they pick its last. */
+  readonly anchor?: string;
+}
+
+/** What the props of a calendar decide about its grid. */
+export interface CalendarContext extends SelectionContext {
+  readonly constraints: DateConstraints;
+  readonly locale: string;
+  /** The first day of the week, as an ISO weekday. */
+  readonly firstDayOfWeek: number;
+  /** Today's date, when it is known. */
+  readonly today?: string;
+}
+
+/** A cell of a grid: a day, a month or a year, each named by a date in it. */
+export interface CalendarCell {
+  /** The date the cell stands for: the day, or the focused day moved into the month or year. */
+  readonly date: string;
+  /** The text of the cell, such as `8`, `Jul` or `2026`. */
+  readonly label: string;
+  /** The accessible name of the cell, such as `Wednesday, July 8, 2026`. */
+  readonly name: string;
+  readonly selection: CalendarSelection;
+  /** Whether the cell holds today. */
+  readonly current: boolean;
+  readonly disabled: boolean;
+  /** Whether a day belongs to the month before or after the one shown. */
+  readonly outside: boolean;
+  /** Whether the cell takes the focus when the grid does. */
+  readonly focusable: boolean;
+}
+
+/** The name of a label in `labels.calendar`, which a component resolves with its own props. */
+export type CalendarStepLabel =
+  'previousMonth' | 'nextMonth' | 'previousYear' | 'nextYear' | 'previousYears' | 'nextYears';
+
+/** Everything a calendar renders for one state, the same in both packages. */
+export interface CalendarModel {
+  readonly view: CalendarView;
+  /** The text of the heading: the month and year, the year, or the first and last year. */
+  readonly heading: string;
+  /** What the heading button opens, or null over the years, where the heading is plain text. */
+  readonly zoom: { readonly label: 'chooseMonth' | 'chooseYear'; readonly text: string } | null;
+  readonly previous: { readonly label: CalendarStepLabel; readonly disabled: boolean };
+  readonly next: { readonly label: CalendarStepLabel; readonly disabled: boolean };
+  /** The column headers of the day grid, empty over the months and years. */
+  readonly weekdays: readonly WeekdayLabel[];
+  readonly rows: readonly (readonly CalendarCell[])[];
+}
+
+/** The date a calendar first focuses: the value, else today, else the first day of `month`. */
+export function initialFocus(
+  value: string,
+  range: boolean,
+  month: string | undefined,
+  today: string | undefined,
+): string | undefined {
+  const chosen = selectedDate(value, range);
+  const fallback =
+    chosen ?? (today !== undefined && parseIsoDate(today) !== null ? today : undefined);
+  if (month === undefined || parseIsoMonth(month) === null) {
+    return fallback;
+  }
+  return fallback !== undefined && monthOf(fallback) === month ? fallback : firstDateOf(month);
+}
+
+/**
+ * The focused date moved into another month, keeping its day where the month has one, so that a
+ * month that a parent sets shows with the same day focused.
+ */
+export function focusInMonth(focused: string, month: string): string {
+  if (parseIsoMonth(month) === null || monthOf(focused) === month) {
+    return focused;
+  }
+  const { year, month: monthNumber } = requireDate(firstDateOf(month));
+  const { day } = requireDate(focused);
+  return formatIsoDate({
+    year,
+    month: monthNumber,
+    day: Math.min(day, daysInMonth(year, monthNumber)),
+  });
+}
+
+/** The date the previous or next button moves to: a month, a year or a page of years away. */
+export function stepDate(view: CalendarView, focused: string, step: -1 | 1): string | null {
+  const months = view === 'days' ? 1 : view === 'months' ? 12 : 12 * YEARS_PER_PAGE;
+  return attempt(() => addMonths(focused, step * months));
+}
+
+/** The grid, heading and buttons of a calendar in a state. */
+export function calendarModel(state: CalendarState, context: CalendarContext): CalendarModel {
+  const { view, focused } = state;
+  const { constraints, locale } = context;
+  const focusedParts = requireDate(focused);
+  const chosen = selectedDate(context.value, context.range);
+  const stepDisabled = (step: -1 | 1): boolean => {
+    const target = stepDate(view, focused, step);
+    if (target === null) {
+      return true;
+    }
+    if (view === 'days') {
+      return isMonthDisabled(monthOf(target), constraints);
+    }
+    if (view === 'months') {
+      return isYearDisabled(requireDate(target).year, constraints);
+    }
+    return yearPage(requireDate(target).year).every((year) => isYearDisabled(year, constraints));
+  };
+  const steps = {
+    days: ['previousMonth', 'nextMonth'],
+    months: ['previousYear', 'nextYear'],
+    years: ['previousYears', 'nextYears'],
+  } as const;
+  const [previousLabel, nextLabel] = steps[view];
+  const previous = { label: previousLabel, disabled: stepDisabled(-1) };
+  const next = { label: nextLabel, disabled: stepDisabled(1) };
+  const rowsOf = (cells: readonly CalendarCell[], columns: number): CalendarCell[][] =>
+    Array.from({ length: Math.ceil(cells.length / columns) }, (_, row) =>
+      cells.slice(row * columns, row * columns + columns),
+    );
+
+  if (view === 'days') {
+    const month = monthOf(focused);
+    const heading = monthYearLabel(month, locale);
+    const rows = monthWeeks(month, context.firstDayOfWeek).map((week) =>
+      week.map((date): CalendarCell =>
+        date === ''
+          ? {
+              date,
+              label: '',
+              name: '',
+              selection: 'none',
+              current: false,
+              disabled: true,
+              outside: true,
+              focusable: false,
+            }
+          : {
+              date,
+              label: dayLabel(date, locale),
+              name: fullDateLabel(date, locale),
+              selection: selectionOf(date, { ...context, anchor: state.anchor }),
+              current: date === context.today,
+              disabled: isDateDisabled(date, constraints),
+              outside: monthOf(date) !== month,
+              focusable: date === focused,
+            },
+      ),
+    );
+    return {
+      view,
+      heading,
+      zoom: { label: 'chooseMonth', text: heading },
+      previous,
+      next,
+      weekdays: weekdayLabels(locale, context.firstDayOfWeek),
+      rows,
+    };
+  }
+
+  if (view === 'months') {
+    const { year } = focusedParts;
+    const heading = yearLabel(year, locale);
+    const cells = Array.from({ length: 12 }, (_, index): CalendarCell => {
+      const month = formatIsoMonth({ year, month: index + 1 });
+      const date = focusInMonth(focused, month);
+      return {
+        date,
+        label: monthLabel(month, locale),
+        name: monthYearLabel(month, locale),
+        selection: chosen !== undefined && monthOf(chosen) === month ? 'selected' : 'none',
+        current: context.today !== undefined && monthOf(context.today) === month,
+        disabled: isMonthDisabled(month, constraints),
+        outside: false,
+        focusable: date === focused,
+      };
+    });
+    return {
+      view,
+      heading,
+      zoom: { label: 'chooseYear', text: heading },
+      previous,
+      next,
+      weekdays: [],
+      rows: rowsOf(cells, MONTH_COLUMNS),
+    };
+  }
+
+  const cells = yearPage(focusedParts.year).map((year): CalendarCell => {
+    const date = attempt(() => addMonths(focused, (year - focusedParts.year) * 12)) ?? focused;
+    const label = yearLabel(year, locale);
+    return {
+      date,
+      label,
+      name: label,
+      selection: chosen !== undefined && requireDate(chosen).year === year ? 'selected' : 'none',
+      current: context.today !== undefined && requireDate(context.today).year === year,
+      disabled: isYearDisabled(year, constraints),
+      outside: false,
+      focusable: year === focusedParts.year,
+    };
+  });
+  return {
+    view,
+    heading: yearPageLabel(focusedParts.year, locale),
+    zoom: null,
+    previous,
+    next,
+    weekdays: [],
+    rows: rowsOf(cells, YEAR_COLUMNS),
+  };
+}
+
+/** What a pick in a grid changes: the state, and the new value when the user chose one. */
+export interface CalendarPick {
+  readonly state: CalendarState;
+  /** The new value, or undefined when the pick chose none, as the first day of a range. */
+  readonly value?: string;
+}
+
+/**
+ * Picks a cell. A day becomes the value, or in a range its first and then its last day; a month
+ * opens its days and a year its months. A disabled cell picks nothing and returns undefined.
+ */
+export function pickCell(
+  state: CalendarState,
+  cell: Pick<CalendarCell, 'date' | 'disabled'>,
+  range: boolean,
+): CalendarPick | undefined {
+  if (cell.disabled || cell.date === '') {
+    return undefined;
+  }
+  if (state.view === 'years') {
+    return { state: { ...state, view: 'months', focused: cell.date } };
+  }
+  if (state.view === 'months') {
+    return { state: { ...state, view: 'days', focused: cell.date } };
+  }
+  if (!range) {
+    return { state: { view: 'days', focused: cell.date }, value: cell.date };
+  }
+  if (state.anchor === undefined) {
+    return { state: { view: 'days', focused: cell.date, anchor: cell.date } };
+  }
+  return {
+    state: { view: 'days', focused: cell.date },
+    value: formatIsoRange(state.anchor, cell.date),
+  };
+}
+
+/** The grid the heading button opens, one level out: the months over the days, the years over them. */
+export function zoomOut(view: CalendarView): CalendarView {
+  return view === 'days' ? 'months' : 'years';
+}
+
+/** The grid Escape goes back to, one level in, or undefined over the days, where Escape is free. */
+export function zoomIn(view: CalendarView): CalendarView | undefined {
+  return view === 'years' ? 'months' : view === 'months' ? 'days' : undefined;
+}
+
 const formatters = new Map<string, Intl.DateTimeFormat>();
 
 function formatter(locale: string, options: Intl.DateTimeFormatOptions): Intl.DateTimeFormat {
