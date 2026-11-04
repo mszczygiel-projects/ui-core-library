@@ -154,40 +154,42 @@ export function Tabs({
       )}
       {...rest}
     >
-      {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- the keys reach the list from its tabs, which take the focus in turn */}
-      <div
-        className="ui-tabs__list"
-        role="tablist"
-        aria-orientation={layout}
-        aria-label={label === '' ? undefined : label}
-        onKeyDown={onKeyDown}
-      >
-        {items.map((item, index) => {
-          const isSelected = item.value === selected;
-          return (
-            <button
-              key={item.value}
-              type="button"
-              role="tab"
-              id={`${id}-tab-${String(index)}`}
-              className={classNames('ui-tabs__tab', isSelected && 'ui-tabs__tab--selected')}
-              aria-selected={isSelected}
-              aria-controls={panelIdOf(index)}
-              tabIndex={isSelected ? 0 : -1}
-              disabled={item.disabled}
-              onClick={(event) => {
-                select(item.value, 'trigger', event.nativeEvent);
-              }}
-            >
-              {item.icon === undefined || item.icon === null ? null : (
-                <span className="ui-tabs__tab-icon" aria-hidden="true">
-                  {item.icon}
-                </span>
-              )}
-              <span className="ui-tabs__tab-label">{item.label}</span>
-            </button>
-          );
-        })}
+      <div className="ui-tabs__scroller">
+        {/* eslint-disable-next-line jsx-a11y/interactive-supports-focus -- the keys reach the list from its tabs, which take the focus in turn */}
+        <div
+          className="ui-tabs__list"
+          role="tablist"
+          aria-orientation={layout}
+          aria-label={label === '' ? undefined : label}
+          onKeyDown={onKeyDown}
+        >
+          {items.map((item, index) => {
+            const isSelected = item.value === selected;
+            return (
+              <button
+                key={item.value}
+                type="button"
+                role="tab"
+                id={`${id}-tab-${String(index)}`}
+                className={classNames('ui-tabs__tab', isSelected && 'ui-tabs__tab--selected')}
+                aria-selected={isSelected}
+                aria-controls={panelIdOf(index)}
+                tabIndex={isSelected ? 0 : -1}
+                disabled={item.disabled}
+                onClick={(event) => {
+                  select(item.value, 'trigger', event.nativeEvent);
+                }}
+              >
+                {item.icon === undefined || item.icon === null ? null : (
+                  <span className="ui-tabs__tab-icon" aria-hidden="true">
+                    {item.icon}
+                  </span>
+                )}
+                <span className="ui-tabs__tab-label">{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
       </div>
       <div className="ui-tabs__panels">
         <TabsContext value={context}>{children}</TabsContext>

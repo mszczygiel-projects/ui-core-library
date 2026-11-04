@@ -132,41 +132,43 @@ export class UiTabs implements TabsProps {
     const selected = this.selected();
     return (
       <div part="base" class={`base ${variant} ${orientation}`}>
-        <div
-          part="list"
-          class="list"
-          role="tablist"
-          aria-orientation={orientation}
-          aria-label={this.label === undefined || this.label === '' ? undefined : this.label}
-          onKeyDown={this.onKeyDown}
-        >
-          {this.entries.map((entry, index) => {
-            const isSelected = entry.value() === selected;
-            const icon = entry.icon();
-            return (
-              <button
-                type="button"
-                role="tab"
-                id={`tab-${String(index)}`}
-                part="tab"
-                class={`tab${isSelected ? ' selected' : ''}`}
-                aria-selected={String(isSelected)}
-                aria-controls={`panel-${String(index)}`}
-                tabIndex={isSelected ? 0 : -1}
-                disabled={entry.disabled()}
-                onClick={(event) => {
-                  this.select(entry.value(), 'trigger', event);
-                }}
-              >
-                {icon === undefined || icon === '' ? null : (
-                  <span part="tab-icon" class="icon" aria-hidden="true" innerHTML={icon} />
-                )}
-                <span part="tab-label" class="label">
-                  {entry.label()}
-                </span>
-              </button>
-            );
-          })}
+        <div class="scroller">
+          <div
+            part="list"
+            class="list"
+            role="tablist"
+            aria-orientation={orientation}
+            aria-label={this.label === undefined || this.label === '' ? undefined : this.label}
+            onKeyDown={this.onKeyDown}
+          >
+            {this.entries.map((entry, index) => {
+              const isSelected = entry.value() === selected;
+              const icon = entry.icon();
+              return (
+                <button
+                  type="button"
+                  role="tab"
+                  id={`tab-${String(index)}`}
+                  part="tab"
+                  class={`tab${isSelected ? ' selected' : ''}`}
+                  aria-selected={String(isSelected)}
+                  aria-controls={`panel-${String(index)}`}
+                  tabIndex={isSelected ? 0 : -1}
+                  disabled={entry.disabled()}
+                  onClick={(event) => {
+                    this.select(entry.value(), 'trigger', event);
+                  }}
+                >
+                  {icon === undefined || icon === '' ? null : (
+                    <span part="tab-icon" class="icon" aria-hidden="true" innerHTML={icon} />
+                  )}
+                  <span part="tab-label" class="label">
+                    {entry.label()}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
         </div>
         <div class="panels">
           {this.entries.map((entry, index) => (

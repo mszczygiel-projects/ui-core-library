@@ -13,60 +13,63 @@
   align-items: flex-start;
 }
 
-.ui-tabs__list {
+/*
+ * The scroller holds the list. A horizontal list of either look scrolls when its tabs do not fit, and
+ * a scroller clips what is drawn outside its box, so room for the focus ring surrounds the list and a
+ * negative margin of the same size keeps it where it would be.
+ */
+.ui-tabs--horizontal > .ui-tabs__scroller {
   --_ring-space: calc(var(--ring-width) + var(--ring-offset));
 
+  margin: calc(var(--_ring-space) * -1);
+  padding: var(--_ring-space);
+  overflow-x: auto;
+}
+
+.ui-tabs--vertical > .ui-tabs__scroller {
+  flex: none;
+}
+
+.ui-tabs__list {
   display: flex;
   gap: var(--tabs-list-gap);
 }
 
-.ui-tabs--vertical > .ui-tabs__list {
-  flex: none;
+/* A horizontal list is as wide as its tabs, so the frame or the track scrolls with them. */
+.ui-tabs--horizontal > .ui-tabs__scroller > .ui-tabs__list {
+  box-sizing: border-box;
+  inline-size: max-content;
+}
+
+.ui-tabs--vertical > .ui-tabs__scroller > .ui-tabs__list {
   flex-direction: column;
 }
 
-.ui-tabs--segmented > .ui-tabs__list {
-  box-sizing: border-box;
-  inline-size: fit-content;
-  max-inline-size: 100%;
+.ui-tabs--segmented > .ui-tabs__scroller > .ui-tabs__list {
   padding: var(--tabs-segmented-padding);
   border: var(--tabs-segmented-border-width) solid var(--color-tabs-segmented-border);
   border-radius: var(--tabs-segmented-radius);
   background: var(--color-tabs-segmented-background);
 }
 
-/* The track lies at the end of the content box and scrolls with the tabs. */
-.ui-tabs--underline > .ui-tabs__list {
+/* The track lies at the end of the list, under the tabs. */
+.ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list {
   background-image: linear-gradient(var(--color-tabs-track), var(--color-tabs-track));
   background-repeat: no-repeat;
-  background-attachment: local;
-  background-origin: content-box;
-  background-clip: content-box;
 }
 
-/* A horizontal list of either look scrolls when its tabs do not fit. */
-.ui-tabs--horizontal > .ui-tabs__list {
-  overflow-x: auto;
-}
-
-/*
- * A scroller clips what is drawn outside its box, so room for the focus ring surrounds the tabs and
- * a negative margin of the same size keeps them where they would be. The frame of the segmented
- * look holds its own room instead.
- */
-.ui-tabs--horizontal.ui-tabs--underline > .ui-tabs__list {
-  margin: calc(var(--_ring-space) * -1);
-  padding: var(--_ring-space);
+.ui-tabs--horizontal.ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list {
+  min-inline-size: 100%;
   background-position: bottom;
   background-size: 100% var(--tabs-track-width);
 }
 
-.ui-tabs--vertical.ui-tabs--underline > .ui-tabs__list {
+.ui-tabs--vertical.ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list {
   background-position: right;
   background-size: var(--tabs-track-width) 100%;
 }
 
-.ui-tabs--vertical.ui-tabs--underline > .ui-tabs__list:dir(rtl) {
+.ui-tabs--vertical.ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list:dir(rtl) {
   background-position: left;
 }
 
@@ -117,42 +120,46 @@
   --_text: var(--color-tabs-tab-text-selected);
 }
 
-.ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab.ui-tabs__tab--selected:not(:disabled) {
+.ui-tabs--segmented
+  > .ui-tabs__scroller
+  > .ui-tabs__list
+  > .ui-tabs__tab.ui-tabs__tab--selected:not(:disabled) {
   --_text: var(--color-tabs-segmented-tab-text-selected);
   --_background: var(--color-tabs-segmented-tab-background-selected);
 }
 
-.ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab.ui-tabs__tab--selected:disabled {
+.ui-tabs--segmented
+  > .ui-tabs__scroller
+  > .ui-tabs__list
+  > .ui-tabs__tab.ui-tabs__tab--selected:disabled {
   --_background: var(--color-tabs-segmented-tab-background-disabled);
 }
 
-.ui-tabs--vertical > .ui-tabs__list > .ui-tabs__tab {
+.ui-tabs--vertical > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab {
   white-space: normal;
 }
 
-/* The segmented frame clips its tabs when it scrolls, so the ring fits inside its padding. */
-.ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab:focus-visible {
-  outline-offset: calc(var(--tabs-segmented-padding) - var(--ring-width));
-}
-
 /* The indicator of the selected tab covers the track. */
-.ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected::after {
+.ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab--selected::after {
   position: absolute;
   background: var(--color-tabs-indicator-default);
   content: '';
 }
 
-.ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected:disabled::after {
+.ui-tabs--underline
+  > .ui-tabs__scroller
+  > .ui-tabs__list
+  > .ui-tabs__tab--selected:disabled::after {
   background: var(--color-tabs-indicator-disabled);
 }
 
-.ui-tabs--horizontal > .ui-tabs__list > .ui-tabs__tab::after {
+.ui-tabs--horizontal > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab::after {
   inset-block-end: 0;
   inset-inline: 0;
   block-size: var(--tabs-indicator-width);
 }
 
-.ui-tabs--vertical > .ui-tabs__list > .ui-tabs__tab::after {
+.ui-tabs--vertical > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab::after {
   inset-block: 0;
   inset-inline-end: 0;
   inline-size: var(--tabs-indicator-width);
@@ -188,11 +195,14 @@
 
 @media (forced-colors: active) {
   /* Forced colours replace the fill and the indicator, so a system colour marks the selected tab. */
-  .ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected::after {
+  .ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab--selected::after {
     background: Highlight;
   }
 
-  .ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab.ui-tabs__tab--selected::after {
+  .ui-tabs--segmented
+    > .ui-tabs__scroller
+    > .ui-tabs__list
+    > .ui-tabs__tab.ui-tabs__tab--selected::after {
     position: absolute;
     inset: 0;
     border: var(--tabs-indicator-width) solid Highlight;
@@ -200,11 +210,17 @@
     content: '';
   }
 
-  .ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected:disabled::after {
+  .ui-tabs--underline
+    > .ui-tabs__scroller
+    > .ui-tabs__list
+    > .ui-tabs__tab--selected:disabled::after {
     background: GrayText;
   }
 
-  .ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab.ui-tabs__tab--selected:disabled::after {
+  .ui-tabs--segmented
+    > .ui-tabs__scroller
+    > .ui-tabs__list
+    > .ui-tabs__tab.ui-tabs__tab--selected:disabled::after {
     border-color: GrayText;
   }
 }

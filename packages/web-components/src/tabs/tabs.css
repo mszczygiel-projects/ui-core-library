@@ -21,50 +21,53 @@
   align-items: flex-start;
 }
 
-.list {
+/*
+ * The scroller holds the list. A horizontal list of either look scrolls when its tabs do not fit, and
+ * a scroller clips what is drawn outside its box, so room for the focus ring surrounds the list and a
+ * negative margin of the same size keeps it where it would be.
+ */
+.horizontal .scroller {
   --_ring-space: calc(var(--ring-width) + var(--ring-offset));
 
+  margin: calc(var(--_ring-space) * -1);
+  padding: var(--_ring-space);
+  overflow-x: auto;
+}
+
+.vertical .scroller {
+  flex: none;
+}
+
+.list {
   display: flex;
   gap: var(--tabs-list-gap);
 }
 
+/* A horizontal list is as wide as its tabs, so the frame or the track scrolls with them. */
+.horizontal .list {
+  box-sizing: border-box;
+  inline-size: max-content;
+}
+
 .vertical .list {
-  flex: none;
   flex-direction: column;
 }
 
 .segmented .list {
-  box-sizing: border-box;
-  inline-size: fit-content;
-  max-inline-size: 100%;
   padding: var(--tabs-segmented-padding);
   border: var(--tabs-segmented-border-width) solid var(--color-tabs-segmented-border);
   border-radius: var(--tabs-segmented-radius);
   background: var(--color-tabs-segmented-background);
 }
 
-/* The track lies at the end of the content box and scrolls with the tabs. */
+/* The track lies at the end of the list, under the tabs. */
 .underline .list {
   background-image: linear-gradient(var(--color-tabs-track), var(--color-tabs-track));
   background-repeat: no-repeat;
-  background-attachment: local;
-  background-origin: content-box;
-  background-clip: content-box;
 }
 
-/* A horizontal list of either look scrolls when its tabs do not fit. */
-.horizontal .list {
-  overflow-x: auto;
-}
-
-/*
- * A scroller clips what is drawn outside its box, so room for the focus ring surrounds the tabs and
- * a negative margin of the same size keeps them where they would be. The frame of the segmented
- * look holds its own room instead.
- */
 .horizontal.underline .list {
-  margin: calc(var(--_ring-space) * -1);
-  padding: var(--_ring-space);
+  min-inline-size: 100%;
   background-position: bottom;
   background-size: 100% var(--tabs-track-width);
 }
@@ -136,11 +139,6 @@
 
 .segmented .tab.selected:disabled {
   --_background: var(--color-tabs-segmented-tab-background-disabled);
-}
-
-/* The segmented frame clips its tabs when it scrolls, so the ring fits inside its padding. */
-.segmented .tab:focus-visible {
-  outline-offset: calc(var(--tabs-segmented-padding) - var(--ring-width));
 }
 
 /* The indicator of the selected tab covers the track. */

@@ -272,16 +272,29 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
     await component.unmount();
   });
 
-  it('shows keyboard focus on a tab with the focus ring', async () => {
-    const component = await mount({ tabs: TABS });
-    await userEvent.tab();
-    const [tab] = parts(component, 'tab');
-    expect(tab?.matches(':focus-visible')).toBe(true);
-    expect(parseFloat(getComputedStyle(tab ?? document.body).outlineWidth)).toBe(
-      tokenNumber('--ring-width'),
-    );
-    await component.unmount();
-  });
+  for (const variant of ['underline', 'segmented'] as const) {
+    it(`shows keyboard focus on a ${variant} tab with the whole focus ring`, async () => {
+      const component = await mount({ tabs: TABS, variant });
+      await userEvent.tab();
+      const [tab] = parts(component, 'tab');
+      if (tab === undefined) {
+        throw new Error('Missing the tab');
+      }
+      expect(tab.matches(':focus-visible')).toBe(true);
+      const style = getComputedStyle(tab);
+      expect(parseFloat(style.outlineWidth)).toBe(tokenNumber('--ring-width'));
+      expect(parseFloat(style.outlineOffset)).toBe(tokenNumber('--ring-offset'));
+      // The scroller around the list clips, so it must hold the ring of every tab.
+      const room = tokenNumber('--ring-width') + tokenNumber('--ring-offset');
+      const scroller = tab.closest<HTMLElement>('.scroller, .ui-tabs__scroller');
+      const box = tab.getBoundingClientRect();
+      const clip = scroller?.getBoundingClientRect();
+      expect(clip?.top).toBeLessThanOrEqual(box.top - room);
+      expect(clip?.bottom).toBeGreaterThanOrEqual(box.bottom + room);
+      expect(clip?.left).toBeLessThanOrEqual(box.left - room);
+      await component.unmount();
+    });
+  }
 
   for (const variant of ['underline', 'segmented'] as const) {
     it(`scrolls a horizontal ${variant} list that does not fit, inside its own box`, async () => {
@@ -290,11 +303,12 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
       document.body.append(parent);
       const component = await mount({ tabs: TABS, variant }, { parent });
       const [list] = parts(component, 'list');
-      expect(list?.scrollWidth).toBeGreaterThan(list?.clientWidth ?? 0);
-      // The underline list reaches past its box by the room of the focus ring, and no further.
-      const room =
-        variant === 'underline' ? tokenNumber('--ring-width') + tokenNumber('--ring-offset') : 0;
-      expect(list?.getBoundingClientRect().right).toBeLessThanOrEqual(
+      // The list keeps the width of its tabs, and the scroller around it scrolls.
+      const scroller = list?.closest<HTMLElement>('.scroller, .ui-tabs__scroller');
+      expect(scroller?.scrollWidth).toBeGreaterThan(scroller?.clientWidth ?? 0);
+      // The scroller reaches past its box by the room of the focus ring, and no further.
+      const room = tokenNumber('--ring-width') + tokenNumber('--ring-offset');
+      expect(scroller?.getBoundingClientRect().right).toBeLessThanOrEqual(
         parent.getBoundingClientRect().right + room,
       );
       expect(component.element.getBoundingClientRect().width).toBeLessThanOrEqual(160);
