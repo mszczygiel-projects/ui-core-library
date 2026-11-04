@@ -21,7 +21,7 @@ import { ListboxValueChange } from "./listbox/events";
 import { SelectFieldOpenChange } from "./select-field/events";
 import { ComboboxQuery } from "./combobox/events";
 import { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
-import { DateFieldValueChange } from "./date-field/events";
+import { DateFieldOpenChange, DateFieldValueChange } from "./date-field/events";
 import { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 import { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
@@ -63,7 +63,7 @@ export { ListboxValueChange } from "./listbox/events";
 export { SelectFieldOpenChange } from "./select-field/events";
 export { ComboboxQuery } from "./combobox/events";
 export { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
-export { DateFieldValueChange } from "./date-field/events";
+export { DateFieldOpenChange, DateFieldValueChange } from "./date-field/events";
 export { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 export { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
@@ -509,6 +509,10 @@ export namespace Components {
      * A masked date input with a locale-aware display and an ISO calendar-date value.
      * The native input owns accessibility and editable text. ElementInternals submits the canonical
      * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
+     * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
+     * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
+     * change. The reflected `open` attribute shows whether the calendar is open.
      */
     interface UiDateField {
         /**
@@ -525,6 +529,10 @@ export namespace Components {
          */
         "disabledDates"?: DateConstraints['disabledDates'];
         /**
+          * The first day of the week in the calendar, from 1 for Monday to 7 for Sunday.
+         */
+        "firstDayOfWeek"?: number;
+        /**
           * A complete sentence describing the format, used when hint is absent.
          */
         "getFormatHintLabel"?: (example: string) => string;
@@ -532,6 +540,11 @@ export namespace Components {
           * A complete translated validation message; property only.
          */
         "getValidationMessageLabel"?: (context: DateValidationContext) => string;
+        /**
+          * Hides the button that opens the calendar.
+          * @default false
+         */
+        "hideCalendarButton": boolean;
         /**
           * Help or feedback connected to the input.
          */
@@ -562,6 +575,15 @@ export namespace Components {
          */
         "name"?: string;
         /**
+          * Whether the calendar is open. The attribute follows the calendar.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The name of the calendar button and its dialog.
+         */
+        "openCalendarLabel"?: string;
+        /**
           * An example or short prompt, never a replacement for the label.
          */
         "placeholder"?: string;
@@ -585,6 +607,10 @@ export namespace Components {
           * @default 'default'
          */
         "state": TextFieldState;
+        /**
+          * Today's date, YYYY-MM-DD, which the calendar marks; the clock of the browser by default.
+         */
+        "today"?: string;
         /**
           * The surface and border treatment.
           * @default 'outline'
@@ -2033,11 +2059,16 @@ declare global {
     };
     interface HTMLUiDateFieldElementEventMap {
         "ui-value-change": DateFieldValueChange;
+        "ui-open-change": DateFieldOpenChange;
     }
     /**
      * A masked date input with a locale-aware display and an ISO calendar-date value.
      * The native input owns accessibility and editable text. ElementInternals submits the canonical
      * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
+     * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
+     * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
+     * change. The reflected `open` attribute shows whether the calendar is open.
      */
     interface HTMLUiDateFieldElement extends Components.UiDateField, HTMLStencilElement {
         addEventListener<K extends keyof HTMLUiDateFieldElementEventMap>(type: K, listener: (this: HTMLUiDateFieldElement, ev: UiDateFieldCustomEvent<HTMLUiDateFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3045,6 +3076,10 @@ declare namespace LocalJSX {
      * A masked date input with a locale-aware display and an ISO calendar-date value.
      * The native input owns accessibility and editable text. ElementInternals submits the canonical
      * value and saves the draft with its locale. Parsing and constraint errors use customError.
+     * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
+     * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
+     * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
+     * change. The reflected `open` attribute shows whether the calendar is open.
      */
     interface UiDateField {
         /**
@@ -3061,6 +3096,10 @@ declare namespace LocalJSX {
          */
         "disabledDates"?: DateConstraints['disabledDates'];
         /**
+          * The first day of the week in the calendar, from 1 for Monday to 7 for Sunday.
+         */
+        "firstDayOfWeek"?: number;
+        /**
           * The `id` of a `<form>` element to associate this element with.
          */
         "form"?: string;
@@ -3072,6 +3111,11 @@ declare namespace LocalJSX {
           * A complete translated validation message; property only.
          */
         "getValidationMessageLabel"?: (context: DateValidationContext) => string;
+        /**
+          * Hides the button that opens the calendar.
+          * @default false
+         */
+        "hideCalendarButton"?: boolean;
         /**
           * Help or feedback connected to the input.
          */
@@ -3102,9 +3146,22 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * The user opened or closed the calendar, with the original event.
+         */
+        "onUi-open-change"?: (event: UiDateFieldCustomEvent<DateFieldOpenChange>) => void;
+        /**
           * One user edit, including partial text, with its canonical value and validation result.
          */
         "onUi-value-change"?: (event: UiDateFieldCustomEvent<DateFieldValueChange>) => void;
+        /**
+          * Whether the calendar is open. The attribute follows the calendar.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The name of the calendar button and its dialog.
+         */
+        "openCalendarLabel"?: string;
         /**
           * An example or short prompt, never a replacement for the label.
          */
@@ -3129,6 +3186,10 @@ declare namespace LocalJSX {
           * @default 'default'
          */
         "state"?: TextFieldState;
+        /**
+          * Today's date, YYYY-MM-DD, which the calendar marks; the clock of the browser by default.
+         */
+        "today"?: string;
         /**
           * The surface and border treatment.
           * @default 'outline'
@@ -4549,6 +4610,11 @@ declare namespace LocalJSX {
         "locale": string;
         "min": string;
         "max": string;
+        "open": boolean;
+        "hideCalendarButton": boolean;
+        "firstDayOfWeek": number;
+        "today": string;
+        "openCalendarLabel": string;
     }
     interface UiDialogAttributes {
         "open": boolean;
@@ -4907,6 +4973,10 @@ declare module "@stencil/core" {
              * A masked date input with a locale-aware display and an ISO calendar-date value.
              * The native input owns accessibility and editable text. ElementInternals submits the canonical
              * value and saves the draft with its locale. Parsing and constraint errors use customError.
+             * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
+             * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
+             * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
+             * change. The reflected `open` attribute shows whether the calendar is open.
              */
             "ui-date-field": LocalJSX.IntrinsicElements["ui-date-field"] & JSXBase.HTMLAttributes<HTMLUiDateFieldElement>;
             /**

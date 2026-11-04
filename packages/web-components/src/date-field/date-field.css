@@ -1,1 +1,31 @@
 /* The shared field anatomy supplies this component's surface, typography and interactions. */
+
+/* The dialog of the calendar, in the top layer, placed by script below or above the field. */
+.panel {
+  --_offset: var(--popover-offset);
+  --_anchor-inline-size: auto;
+  --_available-block-size: none;
+
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  max-block-size: var(--_available-block-size);
+  margin: 0;
+  padding: var(--popover-padding);
+  overflow: auto;
+  border: var(--popover-border-width) solid var(--color-popover-border);
+  border-radius: var(--popover-radius);
+  background: var(--color-popover-background);
+  box-shadow: var(--popover-shadow);
+  color: inherit;
+}
+
+.panel[hidden] {
+  display: none;
+}
+
+@media (forced-colors: active) {
+  .panel {
+    border-color: CanvasText;
+  }
+}

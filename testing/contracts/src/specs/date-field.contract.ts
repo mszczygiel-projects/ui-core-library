@@ -3,6 +3,7 @@ import {
   resetUiCoreConfig,
 } from '@mszczygiel-projects/ui-core-foundations/config';
 import type {
+  DateFieldOpenChangeDetails,
   DateFieldProps,
   DateFieldValueChangeDetails,
 } from '@mszczygiel-projects/ui-core-shared/date-field';
@@ -17,6 +18,25 @@ import { parsedFieldAppearanceContract } from './parsed-field-appearance.contrac
 export interface DateFieldContractProps extends DateFieldProps {
   readonly defaultValue?: string;
   readonly onValueChange?: (value: string, details: DateFieldValueChangeDetails<Event>) => void;
+  readonly onOpenChange?: OpenChange;
+}
+
+/** A callback of an opened or closed calendar. */
+type OpenChange = (open: boolean, details: DateFieldOpenChangeDetails<Event>) => void;
+
+/** The element that has the focus, inside every shadow root on the way. */
+function deepActiveElement(): Element | null {
+  let active = document.activeElement;
+  while (active?.shadowRoot?.activeElement) {
+    active = active.shadowRoot.activeElement;
+  }
+  return active;
+}
+
+/** The date of the calendar cell that has the focus. */
+function focusedDate(): string | undefined {
+  const active = deepActiveElement();
+  return active instanceof HTMLElement ? active.dataset['date'] : undefined;
 }
 
 /** Runs unchanged against each native implementation. */
@@ -342,5 +362,165 @@ export function dateFieldContract(adapter: Mount<DateFieldContractProps>): void 
     await field.update({ readOnly: true });
     await userEvent.keyboard('{Control>}z{/Control}');
     expect(input(field).value).toBe('30.11.2026');
+  });
+
+  function calendarButton(field: Mounted<DateFieldContractProps>): HTMLButtonElement {
+    const node = field.part('calendar-button');
+    if (!(node instanceof HTMLButtonElement)) {
+      throw new Error('Missing calendar button');
+    }
+    return node;
+  }
+  /** The calendar inside the dialog, or null while the dialog is closed. */
+  function calendarCell(field: Mounted<DateFieldContractProps>, date: string): HTMLElement {
+    const root = field.element.shadowRoot ?? field.element;
+    const calendar = root.querySelector('ui-calendar, .ui-calendar');
+    const cell = (calendar?.shadowRoot ?? calendar)?.querySelector<HTMLElement>(
+      `[data-date="${date}"]`,
+    );
+    if (cell === null || cell === undefined) {
+      throw new Error(`Missing the cell of ${date}`);
+    }
+    return cell;
+  }
+  const dialog = (field: Mounted<DateFieldContractProps>) =>
+    field.screen.getByRole('dialog', { name: 'Choose date' });
+  async function openCalendar(field: Mounted<DateFieldContractProps>) {
+    await page.elementLocator(calendarButton(field)).click();
+    await field.update({});
+    await expect.poll(focusedDate).toBeDefined();
+  }
+
+  it('opens a named calendar dialog with the focus on the date of the value', async () => {
+    const opened = vi.fn<OpenChange>();
+    const field = await mount({
+      defaultValue: '2026-07-08',
+      today: '2026-07-19',
+      onOpenChange: opened,
+    });
+    const button = calendarButton(field);
+    expect(button.getAttribute('aria-label')).toBe('Choose date');
+    expect(button.getAttribute('aria-haspopup')).toBe('dialog');
+    expect(button.getAttribute('aria-expanded')).toBe('false');
+    await openCalendar(field);
+    await expect.element(dialog(field)).toBeVisible();
+    expect(button.getAttribute('aria-expanded')).toBe('true');
+    expect(focusedDate()).toBe('2026-07-08');
+    expect(opened).toHaveBeenCalledOnce();
+    expect(opened.mock.calls[0]?.[0]).toBe(true);
+    expect(opened.mock.calls[0]?.[1].originalEvent).toBeInstanceOf(Event);
+  });
+
+  it('focuses today without a value, and the month of a date typed before opening', async () => {
+    const field = await mount({ today: '2026-07-19' });
+    await openCalendar(field);
+    expect(focusedDate()).toBe('2026-07-19');
+    await userEvent.keyboard('{Escape}');
+    await field.update({});
+    await page.elementLocator(input(field)).fill('15.03.2027');
+    await openCalendar(field);
+    expect(focusedDate()).toBe('2027-03-15');
+  });
+
+  it('writes a picked date as one edit, closes and returns the focus to the button', async () => {
+    const { node } = form();
+    const changed = vi.fn<NonNullable<DateFieldContractProps['onValueChange']>>();
+    const opened = vi.fn<OpenChange>();
+    const field = await mount(
+      {
+        name: 'entry',
+        defaultValue: '2026-07-08',
+        today: '2026-07-19',
+        onValueChange: changed,
+        onOpenChange: opened,
+      },
+      { parent: node },
+    );
+    await openCalendar(field);
+    // Moving to the next month is not an edit of the field.
+    await userEvent.keyboard('{PageDown}');
+    await field.update({});
+    expect(focusedDate()).toBe('2026-08-08');
+    await userEvent.keyboard('{ArrowRight}{Enter}');
+    await field.update({});
+    expect(input(field).value).toBe('09.08.2026');
+    expect(new FormData(node).get('entry')).toBe('2026-08-09');
+    expect(changed).toHaveBeenCalledOnce();
+    expect(changed.mock.calls[0]?.[0]).toBe('2026-08-09');
+    expect(changed.mock.calls[0]?.[1]).toMatchObject({ inputState: 'valid', text: '09.08.2026' });
+    await expect.element(dialog(field)).not.toBeInTheDocument();
+    expect(deepActiveElement()).toBe(calendarButton(field));
+    expect(opened.mock.calls.map(([open]) => open)).toEqual([true, false]);
+  });
+
+  it('closes with Escape without a change, after Escape has left the grid of months', async () => {
+    const changed = vi.fn<NonNullable<DateFieldContractProps['onValueChange']>>();
+    const field = await mount({ defaultValue: '2026-07-08', onValueChange: changed });
+    await openCalendar(field);
+    await page
+      .elementLocator(field.part('calendar'))
+      .getByRole('button', { name: /choose a month/ })
+      .click();
+    await field.update({});
+    await userEvent.keyboard('{Escape}');
+    await field.update({});
+    await expect.element(dialog(field)).toBeVisible();
+    await userEvent.keyboard('{Escape}');
+    await field.update({});
+    await expect.element(dialog(field)).not.toBeInTheDocument();
+    expect(deepActiveElement()).toBe(calendarButton(field));
+    expect(input(field).value).toBe('08.07.2026');
+    expect(changed).not.toHaveBeenCalled();
+  });
+
+  it('keeps Tab and Shift+Tab inside the dialog', async () => {
+    const field = await mount({ defaultValue: '2026-07-08' });
+    await openCalendar(field);
+    const cell = calendarCell(field, '2026-07-08');
+    await userEvent.keyboard('{Tab}');
+    await field.update({});
+    expect(deepActiveElement()?.getAttribute('aria-label')).toBe('Previous month');
+    await userEvent.keyboard('{Shift>}{Tab}{/Shift}');
+    await field.update({});
+    expect(deepActiveElement()).toBe(cell);
+    await userEvent.keyboard('{Shift>}{Tab}{/Shift}');
+    await field.update({});
+    expect(deepActiveElement()?.getAttribute('aria-label')).toBe('Next month');
+    await expect.element(dialog(field)).toBeVisible();
+  });
+
+  it('closes when a pointer presses outside the field', async () => {
+    const opened = vi.fn<OpenChange>();
+    const field = await mount({ onOpenChange: opened });
+    await openCalendar(field);
+    const outside = document.createElement('p');
+    outside.textContent = 'Outside';
+    outside.style.cssText = 'position: fixed; inset-block-end: 0; inset-inline-end: 0; margin: 0;';
+    document.body.append(outside);
+    fixtures.push(outside);
+    await userEvent.click(outside);
+    await field.update({});
+    await expect.element(dialog(field)).not.toBeInTheDocument();
+    expect(opened.mock.calls.map(([open]) => open)).toEqual([true, false]);
+  });
+
+  it('keeps the calendar of a read-only or disabled field closed, and hides the button on request', async () => {
+    const field = await mount({ readOnly: true, open: true });
+    expect(calendarButton(field).disabled).toBe(true);
+    await expect.element(dialog(field)).not.toBeInTheDocument();
+    await field.update({ readOnly: false, disabled: true });
+    expect(calendarButton(field).disabled).toBe(true);
+    await field.update({ disabled: false, hideCalendarButton: true });
+    expect(calendarButton(field).hidden).toBe(true);
+  });
+
+  it('names the button and the dialog with the configured label or its override', async () => {
+    configureUiCore({ labels: pseudoLabels });
+    const field = await mount();
+    expect(calendarButton(field).getAttribute('aria-label')).toBe(
+      pseudoLabels.dateField.openCalendar,
+    );
+    await field.update({ openCalendarLabel: 'Pick a day' });
+    expect(calendarButton(field).getAttribute('aria-label')).toBe('Pick a day');
   });
 }

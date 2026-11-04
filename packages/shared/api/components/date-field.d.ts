@@ -8,12 +8,12 @@ export declare const dateField: {
     readonly figma: "3018:39";
     readonly design: {
         readonly nested: "TextField";
-        readonly flags: readonly [];
-        readonly booleans: readonly [];
+        readonly flags: readonly ["open"];
+        readonly booleans: readonly ["hideCalendarButton"];
         readonly previews: {};
-        readonly codeOnly: readonly ["locale", "min", "max", "disabledDates", "readOnly", "required", "name", "autoComplete", "getFormatHintLabel", "getValidationMessageLabel"];
+        readonly codeOnly: readonly ["locale", "min", "max", "disabledDates", "firstDayOfWeek", "today", "openCalendarLabel", "readOnly", "required", "name", "autoComplete", "getFormatHintLabel", "getValidationMessageLabel"];
     };
-    readonly summary: "A masked date input with a locale-aware display and an ISO calendar-date value.";
+    readonly summary: "A masked date input with a locale-aware display and an ISO calendar-date value, and a calendar to pick the date from.";
     readonly options: {
         readonly variant: {
             readonly options: readonly ["outline", "filled", "underlined"];
@@ -32,10 +32,10 @@ export declare const dateField: {
             readonly default: "default";
         };
     };
-    readonly labels: readonly ["formatHint", "validationMessage"];
-    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-text", "hint", "hint-text"];
+    readonly labels: readonly ["formatHint", "validationMessage", "openCalendar"];
+    readonly parts: readonly ["base", "control", "input-row", "input", "calendar-button", "panel", "calendar", "label", "label-text", "hint", "hint-text"];
     readonly slots: readonly [];
-    readonly events: readonly ["ui-value-change"];
+    readonly events: readonly ["ui-value-change", "ui-open-change"];
     readonly stories: readonly ["Playground", "Variants", "WithLocale", "WithConstraints", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
@@ -52,14 +52,28 @@ export declare const dateField: {
     }, {
         readonly items: readonly ["disabledDates"];
         readonly reason: "The web component takes an array or predicate as a property only, without an attribute.";
+    }, {
+        readonly items: readonly ["defaultOpen"];
+        readonly reason: "React uses defaultOpen for an uncontrolled initial state. The web component uses its open attribute for that, and its property for the current state.";
     }];
 };
 export type DateFieldValueChangeDetails<OriginalEvent> = ParsedInputDetails<OriginalEvent, DateValidationError>;
 export interface DateFieldValueChangeDetail<OriginalEvent> extends DateFieldValueChangeDetails<OriginalEvent> {
     readonly value: string;
 }
+export interface DateFieldOpenChangeDetails<OriginalEvent> {
+    readonly originalEvent: OriginalEvent;
+}
+export interface DateFieldOpenChangeDetail<OriginalEvent> extends DateFieldOpenChangeDetails<OriginalEvent> {
+    readonly value: boolean;
+}
 export interface DateFieldProps extends ParsedFieldProps, DateConstraints {
     value?: string;
+    open?: boolean;
+    hideCalendarButton?: boolean;
+    firstDayOfWeek?: number;
+    today?: string;
+    openCalendarLabel?: string;
     getFormatHintLabel?: (example: string) => string;
     getValidationMessageLabel?: (context: DateValidationContext) => string;
 }

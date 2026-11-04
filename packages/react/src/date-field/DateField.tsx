@@ -1,16 +1,27 @@
 'use client';
 
+import { iconCalendar } from '@mszczygiel-projects/ui-core-icons';
 import {
   formatDateText,
   parseDateText,
   validateDate,
 } from '@mszczygiel-projects/ui-core-shared/date';
 import type {
+  DateFieldOpenChangeDetails as SharedOpenChangeDetails,
   DateFieldProps as SharedProps,
   DateFieldValueChangeDetails as SharedDetails,
 } from '@mszczygiel-projects/ui-core-shared/date-field';
-import { type ComponentPropsWithRef, useId, useRef } from 'react';
+import {
+  type ComponentPropsWithRef,
+  type KeyboardEvent,
+  useEffect,
+  useId,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
+import { Calendar } from '../calendar/Calendar.tsx';
 import {
   Field,
   fieldDescription,
@@ -21,10 +32,17 @@ import {
 import { setRef } from '../internal/set-ref.ts';
 import { useDateMask } from '../internal/use-date-mask.ts';
 import { useParsedField } from '../internal/use-parsed-field.ts';
+import { usePopup } from '../internal/use-popup.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
 
 /** The editable text, parse state and validation result of one user edit. */
 export type DateFieldValueChangeDetails = SharedDetails<Event>;
+
+/** The native event that opened or closed the calendar, before React wraps it. */
+export type DateFieldOpenChangeDetails = SharedOpenChangeDetails<Event>;
+
+/** The elements of a calendar that take the focus, in the order of Tab. */
+const CALENDAR_STOPS = 'button:enabled, [role="gridcell"][tabindex="0"]';
 
 /** Appearance attributes reach the root; native attributes and ref reach the visible text input. */
 export interface DateFieldProps
@@ -46,9 +64,22 @@ export interface DateFieldProps
   defaultValue?: string;
   /** Called once for each user edit, including incomplete and invalid text. */
   onValueChange?: (value: string, details: DateFieldValueChangeDetails) => void;
+  /** The controlled open state of the calendar. Pair it with onOpenChange. */
+  open?: boolean;
+  /** Whether the uncontrolled calendar starts open. @default false */
+  defaultOpen?: boolean;
+  /** Called when the user opens or closes the calendar. */
+  onOpenChange?: (open: boolean, details: DateFieldOpenChangeDetails) => void;
 }
 
-/** A masked date input with a locale-aware display and an ISO calendar-date value. */
+/**
+ * A masked date input with a locale-aware display and an ISO calendar-date value.
+ *
+ * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
+ * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
+ * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
+ * change.
+ */
 export function DateField({
   variant,
   size,
@@ -63,6 +94,12 @@ export function DateField({
   min,
   max,
   disabledDates,
+  open,
+  defaultOpen = false,
+  hideCalendarButton = false,
+  firstDayOfWeek,
+  today,
+  openCalendarLabel,
   getFormatHintLabel,
   getValidationMessageLabel,
   name,
@@ -71,6 +108,7 @@ export function DateField({
   readOnly,
   required,
   onValueChange,
+  onOpenChange,
   onChange,
   onInput,
   onFocus,
@@ -120,6 +158,93 @@ export function DateField({
     onValueChange?.(next, { ...details, originalEvent });
   };
 
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const controlRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDivElement | null>(null);
+  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
+  // A read-only field keeps its date, so its calendar stays closed as well.
+  const canOpen = disabled !== true && readOnly !== true;
+  const isOpen = (open ?? uncontrolledOpen) && canOpen;
+  const calendarLabel = openCalendarLabel ?? labels.dateField.openCalendar;
+  const panelId = `${generatedId}-panel`;
+
+  const setOpen = (next: boolean, originalEvent: Event) => {
+    if ((next && !canOpen) || next === isOpen) {
+      return;
+    }
+    setUncontrolledOpen(next);
+    onOpenChange?.(next, { originalEvent });
+  };
+
+  const close = (originalEvent: Event) => {
+    setOpen(false, originalEvent);
+    buttonRef.current?.focus();
+  };
+
+  usePopup({
+    open: isOpen,
+    root: rootRef,
+    anchor: controlRef,
+    popup: panelRef,
+    onDismiss: (event) => {
+      setOpen(false, event);
+    },
+  });
+
+  // The calendar takes the focus when it opens, after the popup is in the top layer.
+  const wasOpenRef = useRef(isOpen);
+  useLayoutEffect(() => {
+    if (isOpen && !wasOpenRef.current) {
+      panelRef.current?.querySelector<HTMLElement>('[role="gridcell"][tabindex="0"]')?.focus();
+    }
+    wasOpenRef.current = isOpen;
+  }, [isOpen]);
+
+  useEffect(() => {
+    const owner = inputRef.current?.form;
+    if (owner === null || owner === undefined) {
+      return;
+    }
+    const events = new AbortController();
+    owner.addEventListener(
+      'reset',
+      () => {
+        setUncontrolledOpen(false);
+      },
+      { signal: events.signal },
+    );
+    return () => {
+      events.abort();
+    };
+  }, [form]);
+
+  /**
+   * Escape that the calendar leaves, in its days, closes the dialog. Tab and Shift+Tab go round
+   * the stops of the calendar, which a modal dialog never lets the focus leave. The calendar stops
+   * the Escape that it uses, so the handler sits on it rather than on the dialog.
+   */
+  const onCalendarKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      close(event.nativeEvent);
+      return;
+    }
+    if (event.key !== 'Tab') {
+      return;
+    }
+    const stops = [...event.currentTarget.querySelectorAll<HTMLElement>(CALENDAR_STOPS)];
+    const first = stops.at(0);
+    const last = stops.at(-1);
+    if (first === undefined || last === undefined) {
+      return;
+    }
+    if (event.target === (event.shiftKey ? first : last)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus();
+    }
+  };
+
   useDateMask(
     inputRef,
     field.locale,
@@ -148,6 +273,38 @@ export function DateField({
       state={visualState}
       label={label}
       hint={visibleHint}
+      rootRef={rootRef}
+      controlRef={controlRef}
+      popup={
+        isOpen ? (
+          <div
+            ref={panelRef}
+            id={panelId}
+            className={fieldPart('date-field', 'panel')}
+            role="dialog"
+            aria-modal="true"
+            aria-label={calendarLabel}
+            popover="manual"
+            dir={dir}
+          >
+            <Calendar
+              className={fieldPart('date-field', 'calendar')}
+              value={field.parsed.value}
+              min={min}
+              max={max}
+              disabledDates={disabledDates}
+              locale={field.locale}
+              firstDayOfWeek={firstDayOfWeek}
+              today={today}
+              onKeyDown={onCalendarKeyDown}
+              onValueChange={(picked, details) => {
+                notify(formatDateText(picked, field.locale), details.originalEvent);
+                close(details.originalEvent);
+              }}
+            />
+          </div>
+        ) : null
+      }
     >
       <div className={fieldPart('date-field', 'input-row')}>
         <input
@@ -192,6 +349,27 @@ export function DateField({
             onInvalid?.(event);
           }}
         />
+
+        <button
+          ref={buttonRef}
+          type="button"
+          className={`${fieldPart('date-field', 'calendar-button')} ui-field__action`}
+          hidden={hideCalendarButton}
+          disabled={!canOpen}
+          aria-label={calendarLabel}
+          aria-haspopup="dialog"
+          aria-expanded={isOpen}
+          aria-controls={isOpen ? panelId : undefined}
+          onClick={(event) => {
+            setOpen(!isOpen, event.nativeEvent);
+          }}
+        >
+          <span
+            className="ui-field__action-icon"
+            aria-hidden="true"
+            dangerouslySetInnerHTML={{ __html: iconCalendar }}
+          />
+        </button>
 
         <input
           type="hidden"
