@@ -138,7 +138,7 @@ export function Pagination({
 
   /**
    * The previous or next control. In link mode it is a link with the address of its page, which a
-   * crawler follows, and at either end a link without an address, as a disabled page is.
+   * crawler follows, and at either end a link without an address.
    */
   function renderStep(step: 'previous' | 'next', target: number, atEnd: boolean) {
     const name =
@@ -165,34 +165,39 @@ export function Pagination({
         />
       );
     }
-    const inactive = disabled || atEnd;
+    const className = classNames(
+      'ui-icon-button',
+      'ui-action',
+      'ui-action--ghost',
+      'ui-action--medium',
+      'ui-pagination__step',
+      `ui-pagination__${step}`,
+      (disabled || atEnd) && 'ui-action--disabled',
+    );
+    const icon = (
+      <span className="ui-icon-button__icon" aria-hidden="true">
+        {chevron}
+      </span>
+    );
+    if (disabled || atEnd) {
+      // A link without an address, as a disabled page is, so no pointer, key or menu follows it.
+      return (
+        <span className={className} role="link" aria-disabled="true" aria-label={name}>
+          {icon}
+        </span>
+      );
+    }
     return (
       <a
-        className={classNames(
-          'ui-icon-button',
-          'ui-action',
-          'ui-action--ghost',
-          'ui-action--medium',
-          'ui-pagination__step',
-          `ui-pagination__${step}`,
-          inactive && 'ui-action--disabled',
-        )}
-        href={inactive ? undefined : getPageHref(target)}
-        rel={inactive ? undefined : step === 'previous' ? 'prev' : 'next'}
-        role={inactive ? 'link' : undefined}
-        aria-disabled={inactive ? 'true' : undefined}
+        className={className}
+        href={getPageHref(target)}
+        rel={step === 'previous' ? 'prev' : 'next'}
         aria-label={name}
-        onClick={
-          inactive
-            ? undefined
-            : (event) => {
-                move(target, step, event.nativeEvent, false);
-              }
-        }
+        onClick={(event) => {
+          move(target, step, event.nativeEvent, false);
+        }}
       >
-        <span className="ui-icon-button__icon" aria-hidden="true">
-          {chevron}
-        </span>
+        {icon}
       </a>
     );
   }

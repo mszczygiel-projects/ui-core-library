@@ -1016,12 +1016,11 @@ export namespace Components {
      * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
      * page cancels it, the element takes the new page and a link follows its address. In link mode
      * the previous and next controls are links too, so that a crawler reaches every page, and the
-     * jump field loads the address of its page. The `page` attribute is
-     * the first page and the property the current one. The optional status reads such as "Page 5 of
-     * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
-     * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
-     * field when it is shown. An `aria-label` that the page writes on the host names the navigation
-     * instead of the label.
+     * jump field loads the address of its page. The `page` attribute is the first page and the
+     * property the current one. The optional status reads such as "Page 5 of 10", and the optional
+     * jump field moves to a typed page on Enter or when it loses the focus. In a container narrower
+     * than `breakpoint/sm` the pages give way to the status, or to the jump field when it is shown.
+     * An `aria-label` that the page writes on the host names the navigation instead of the label.
      */
     interface UiPagination {
         /**
@@ -2149,12 +2148,11 @@ declare global {
      * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
      * page cancels it, the element takes the new page and a link follows its address. In link mode
      * the previous and next controls are links too, so that a crawler reaches every page, and the
-     * jump field loads the address of its page. The `page` attribute is
-     * the first page and the property the current one. The optional status reads such as "Page 5 of
-     * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
-     * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
-     * field when it is shown. An `aria-label` that the page writes on the host names the navigation
-     * instead of the label.
+     * jump field loads the address of its page. The `page` attribute is the first page and the
+     * property the current one. The optional status reads such as "Page 5 of 10", and the optional
+     * jump field moves to a typed page on Enter or when it loses the focus. In a container narrower
+     * than `breakpoint/sm` the pages give way to the status, or to the jump field when it is shown.
+     * An `aria-label` that the page writes on the host names the navigation instead of the label.
      */
     interface HTMLUiPaginationElement extends Components.UiPagination, HTMLStencilElement {
         addEventListener<K extends keyof HTMLUiPaginationElementEventMap>(type: K, listener: (this: HTMLUiPaginationElement, ev: UiPaginationCustomEvent<HTMLUiPaginationElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3489,12 +3487,11 @@ declare namespace LocalJSX {
      * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
      * page cancels it, the element takes the new page and a link follows its address. In link mode
      * the previous and next controls are links too, so that a crawler reaches every page, and the
-     * jump field loads the address of its page. The `page` attribute is
-     * the first page and the property the current one. The optional status reads such as "Page 5 of
-     * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
-     * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
-     * field when it is shown. An `aria-label` that the page writes on the host names the navigation
-     * instead of the label.
+     * jump field loads the address of its page. The `page` attribute is the first page and the
+     * property the current one. The optional status reads such as "Page 5 of 10", and the optional
+     * jump field moves to a typed page on Enter or when it loses the focus. In a container narrower
+     * than `breakpoint/sm` the pages give way to the status, or to the jump field when it is shown.
+     * An `aria-label` that the page writes on the host names the navigation instead of the label.
      */
     interface UiPagination {
         /**
@@ -4767,12 +4764,11 @@ declare module "@stencil/core" {
              * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
              * page cancels it, the element takes the new page and a link follows its address. In link mode
              * the previous and next controls are links too, so that a crawler reaches every page, and the
-             * jump field loads the address of its page. The `page` attribute is
-             * the first page and the property the current one. The optional status reads such as "Page 5 of
-             * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
-             * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
-             * field when it is shown. An `aria-label` that the page writes on the host names the navigation
-             * instead of the label.
+             * jump field loads the address of its page. The `page` attribute is the first page and the
+             * property the current one. The optional status reads such as "Page 5 of 10", and the optional
+             * jump field moves to a typed page on Enter or when it loses the focus. In a container narrower
+             * than `breakpoint/sm` the pages give way to the status, or to the jump field when it is shown.
+             * An `aria-label` that the page writes on the host names the navigation instead of the label.
              */
             "ui-pagination": LocalJSX.IntrinsicElements["ui-pagination"] & JSXBase.HTMLAttributes<HTMLUiPaginationElement>;
             /**

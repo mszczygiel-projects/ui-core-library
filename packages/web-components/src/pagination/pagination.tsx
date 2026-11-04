@@ -37,12 +37,11 @@ declare global {
  * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
  * page cancels it, the element takes the new page and a link follows its address. In link mode
  * the previous and next controls are links too, so that a crawler reaches every page, and the
- * jump field loads the address of its page. The `page` attribute is
- * the first page and the property the current one. The optional status reads such as "Page 5 of
- * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
- * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
- * field when it is shown. An `aria-label` that the page writes on the host names the navigation
- * instead of the label.
+ * jump field loads the address of its page. The `page` attribute is the first page and the
+ * property the current one. The optional status reads such as "Page 5 of 10", and the optional
+ * jump field moves to a typed page on Enter or when it loses the focus. In a container narrower
+ * than `breakpoint/sm` the pages give way to the status, or to the jump field when it is shown.
+ * An `aria-label` that the page writes on the host names the navigation instead of the label.
  *
  * @part base - The navigation landmark, which is the container of the width queries.
  * @part previous - The button or link that moves to the previous page.
@@ -238,7 +237,7 @@ export class UiPagination implements PaginationProps {
 
   /**
    * The previous or next control. In link mode it is a link with the address of its page, which a
-   * crawler follows, and at either end a link without an address, as a disabled page is.
+   * crawler follows, and at either end a link without an address.
    */
   private renderStep(
     step: 'previous' | 'next',
@@ -269,21 +268,36 @@ export class UiPagination implements PaginationProps {
         </ui-icon-button>
       );
     }
-    const inactive = this.disabled || atEnd;
+    const className = `${step} step action ghost`;
+    const icon = (
+      <span class="step-icon" aria-hidden="true">
+        <span class="chevron" innerHTML={chevron} />
+      </span>
+    );
+    if (this.disabled || atEnd) {
+      // A link without an address, as a disabled page is, so no pointer, key or menu follows it.
+      return (
+        <span
+          part={step}
+          class={`${className} disabled`}
+          role="link"
+          aria-disabled="true"
+          aria-label={label}
+        >
+          {icon}
+        </span>
+      );
+    }
     return (
       <a
         part={step}
-        class={`${step} step action ghost${inactive ? ' disabled' : ''}`}
-        href={inactive ? undefined : href(page)}
-        rel={inactive ? undefined : step === 'previous' ? 'prev' : 'next'}
-        role={inactive ? 'link' : undefined}
-        aria-disabled={inactive ? 'true' : undefined}
+        class={className}
+        href={href(page)}
+        rel={step === 'previous' ? 'prev' : 'next'}
         aria-label={label}
-        onClick={inactive ? undefined : onClick}
+        onClick={onClick}
       >
-        <span class="step-icon" aria-hidden="true">
-          <span class="chevron" innerHTML={chevron} />
-        </span>
+        {icon}
       </a>
     );
   }
