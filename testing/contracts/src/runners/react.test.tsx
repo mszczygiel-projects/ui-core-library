@@ -17,6 +17,7 @@ import { mountReactFileInputField } from '../harness/file-input-field.tsx';
 import { mountReactIconButton } from '../harness/icon-button.tsx';
 import { mountReactLinkButton } from '../harness/link-button.tsx';
 import { mountReactListbox } from '../harness/listbox.tsx';
+import { mountReactMenu } from '../harness/menu.tsx';
 import { mountReactNotification } from '../harness/notification.tsx';
 import { mountReactNumberField } from '../harness/number-field.tsx';
 import { mountReactPagination } from '../harness/pagination.tsx';
@@ -27,6 +28,7 @@ import { mountReactRadioGroup } from '../harness/radio-group.tsx';
 import { reactMount } from '../harness/react.tsx';
 import { mountReactSearchField } from '../harness/search-field.tsx';
 import { mountReactSelectField } from '../harness/select-field.tsx';
+import { mountReactSplitButton } from '../harness/split-button.tsx';
 import { mountReactSwitchField } from '../harness/switch-field.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
@@ -46,6 +48,7 @@ import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { listboxContract } from '../specs/listbox.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
+import { menuContract } from '../specs/menu.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
 import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
@@ -56,6 +59,7 @@ import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
 import { searchFieldContract } from '../specs/search-field.contract.ts';
 import { selectFieldContract } from '../specs/select-field.contract.ts';
+import { splitButtonContract } from '../specs/split-button.contract.ts';
 import { switchFieldContract } from '../specs/switch-field.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
@@ -183,4 +187,12 @@ describe('Tooltip, React', () => {
 
 describe('Calendar, React', () => {
   calendarContract(mountReactCalendar);
+});
+
+describe('Menu, React', () => {
+  menuContract(mountReactMenu);
+});
+
+describe('SplitButton, React', () => {
+  splitButtonContract(mountReactSplitButton);
 });

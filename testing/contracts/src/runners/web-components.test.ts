@@ -13,6 +13,7 @@ import '@mszczygiel-projects/ui-core-web-components/icon-button';
 import '@mszczygiel-projects/ui-core-web-components/link-button';
 import '@mszczygiel-projects/ui-core-web-components/listbox';
 import '@mszczygiel-projects/ui-core-web-components/loader';
+import '@mszczygiel-projects/ui-core-web-components/menu';
 import '@mszczygiel-projects/ui-core-web-components/notification';
 import '@mszczygiel-projects/ui-core-web-components/number-field';
 import '@mszczygiel-projects/ui-core-web-components/pagination';
@@ -22,6 +23,7 @@ import '@mszczygiel-projects/ui-core-web-components/radio-field';
 import '@mszczygiel-projects/ui-core-web-components/radio-group';
 import '@mszczygiel-projects/ui-core-web-components/search-field';
 import '@mszczygiel-projects/ui-core-web-components/select-field';
+import '@mszczygiel-projects/ui-core-web-components/split-button';
 import '@mszczygiel-projects/ui-core-web-components/switch-field';
 import '@mszczygiel-projects/ui-core-web-components/text-field';
 import '@mszczygiel-projects/ui-core-web-components/textarea-field';
@@ -43,6 +45,7 @@ import { mountWebComponentFileInputField } from '../harness/file-input-field.tsx
 import { mountWebComponentIconButton } from '../harness/icon-button.tsx';
 import { mountWebComponentLinkButton } from '../harness/link-button.tsx';
 import { mountWebComponentListbox } from '../harness/listbox.tsx';
+import { mountWebComponentMenu } from '../harness/menu.tsx';
 import { mountWebComponentNotification } from '../harness/notification.tsx';
 import { mountWebComponentNumberField } from '../harness/number-field.tsx';
 import { mountWebComponentPagination } from '../harness/pagination.tsx';
@@ -52,6 +55,7 @@ import { mountWebComponentRadioField } from '../harness/radio-field.tsx';
 import { mountWebComponentRadioGroup } from '../harness/radio-group.tsx';
 import { mountWebComponentSearchField } from '../harness/search-field.tsx';
 import { mountWebComponentSelectField } from '../harness/select-field.tsx';
+import { mountWebComponentSplitButton } from '../harness/split-button.tsx';
 import { mountWebComponentSwitchField } from '../harness/switch-field.tsx';
 import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { mountWebComponentTextareaField } from '../harness/textarea-field.tsx';
@@ -72,6 +76,7 @@ import { iconButtonContract } from '../specs/icon-button.contract.ts';
 import { linkButtonContract } from '../specs/link-button.contract.ts';
 import { listboxContract } from '../specs/listbox.contract.ts';
 import { loaderContract } from '../specs/loader.contract.ts';
+import { menuContract } from '../specs/menu.contract.ts';
 import { notificationContract } from '../specs/notification.contract.ts';
 import { numberFieldContract } from '../specs/number-field.contract.ts';
 import { sharedScrollLockContract } from '../specs/overlay.contract.ts';
@@ -82,6 +87,7 @@ import { radioFieldContract } from '../specs/radio-field.contract.ts';
 import { radioGroupContract } from '../specs/radio-group.contract.ts';
 import { searchFieldContract } from '../specs/search-field.contract.ts';
 import { selectFieldContract } from '../specs/select-field.contract.ts';
+import { splitButtonContract } from '../specs/split-button.contract.ts';
 import { switchFieldContract } from '../specs/switch-field.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
@@ -203,4 +209,12 @@ describe('Tooltip, web component', () => {
 
 describe('Calendar, web component', () => {
   calendarContract(mountWebComponentCalendar);
+});
+
+describe('Menu, web component', () => {
+  menuContract(mountWebComponentMenu);
+});
+
+describe('SplitButton, web component', () => {
+  splitButtonContract(mountWebComponentSplitButton);
 });
