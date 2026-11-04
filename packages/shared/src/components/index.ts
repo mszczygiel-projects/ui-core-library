@@ -14,6 +14,7 @@ import { iconButton } from './icon-button.ts';
 import { linkButton } from './link-button.ts';
 import { listbox } from './listbox.ts';
 import { loader } from './loader.ts';
+import { menu } from './menu.ts';
 import { notification } from './notification.ts';
 import { numberField } from './number-field.ts';
 import { pagination } from './pagination.ts';
@@ -23,6 +24,7 @@ import { radioField } from './radio-field.ts';
 import { radioGroup } from './radio-group.ts';
 import { searchField } from './search-field.ts';
 import { selectField } from './select-field.ts';
+import { splitButton } from './split-button.ts';
 import { switchField } from './switch-field.ts';
 import { textField } from './text-field.ts';
 import { textareaField } from './textarea-field.ts';
@@ -58,4 +60,6 @@ export const specs: readonly ComponentSpec[] = [
   popover,
   tooltip,
   calendar,
+  menu,
+  splitButton,
 ];
