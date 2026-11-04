@@ -129,6 +129,14 @@
       "types": "./dist/components/ui-switch-field.d.ts",
       "default": "./dist/components/ui-switch-field.js"
     },
+    "./tab": {
+      "types": "./dist/components/ui-tab.d.ts",
+      "default": "./dist/components/ui-tab.js"
+    },
+    "./tabs": {
+      "types": "./dist/components/ui-tabs.d.ts",
+      "default": "./dist/components/ui-tabs.js"
+    },
     "./text-field": {
       "types": "./dist/components/ui-text-field.d.ts",
       "default": "./dist/components/ui-text-field.js"

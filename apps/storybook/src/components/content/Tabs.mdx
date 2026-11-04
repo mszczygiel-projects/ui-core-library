@@ -1,0 +1,107 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Tabs.wc.stories.tsx';
+import * as ReactStories from './Tabs.react.stories.tsx';
+
+<Meta title="Components/Content/Tabs/Docs" />
+
+# Tabs
+
+<ComponentOverview name="Tabs" />
+
+## Usage
+
+Use Tabs for a few views of one subject that replace one another in the same place, such as the overview, the details and the reviews of a product. Each view is a Tab. Keep content that a reader compares side by side in the page itself, use Accordion for sections that a reader opens one by one, and use links for views that are pages of their own: a tab never navigates.
+
+## Anatomy
+
+The **base** holds the **list** of tabs and the **panels**. Each **tab** has an optional **tab-icon** and a **tab-label**. The web component exposes these parts on `ui-tabs`; React uses `.ui-tabs__base` and `.ui-tabs__<part>` classes. Figma names the layers the same, and holds the tab as the component set Tab.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Segmented} webComponents={WebComponentStories.Segmented} />
+
+- **`underline`**, the default: a line runs along the list, and a thicker line in the action colour marks the selected tab.
+- **`segmented`**: the tabs sit in a frame, and the selected tab is filled with the action colour.
+
+<FrameworkCanvas react={ReactStories.Vertical} webComponents={WebComponentStories.Vertical} />
+
+`orientation="vertical"` places the tabs in a column at the start of the panels, with the line of `underline` at the end of the column.
+
+## Sizes & density
+
+Tabs has one size, which follows the surrounding density through its tokens.
+
+## States
+
+<FrameworkCanvas
+  react={ReactStories.WithDisabledTab}
+  webComponents={WebComponentStories.WithDisabledTab}
+/>
+
+A tab is selected or not. It shows hover and press with a tint, and keyboard focus with the focus ring. A disabled tab cannot be selected and leaves the arrow keys; when the page selects it anyway, it keeps its disabled colours.
+
+## Content & labels
+
+<FrameworkCanvas react={ReactStories.WithIcons} webComponents={WebComponentStories.WithIcons} />
+
+Give each tab a short `label` of one or two words, in the language of the page; it names the tab and its panel. An `icon` before the label is decorative, so every tab keeps its label. The content of each panel goes into its Tab as children or into its slot, so it is in the HTML of the page. Give the list a `label` when no heading before the tabs names them. Tabs renders no text of its own.
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.Overflow} webComponents={WebComponentStories.Overflow} />
+
+- A press on a tab selects it, and its panel replaces the others. Exactly one tab is selected: the one whose value is `value`, or the first enabled tab.
+- Each tab the user selects is reported: `ui-value-change` in the web component, which cannot be canceled, and `onValueChange(value, details)` in React, where a controlled Tabs keeps its tab until `value` changes. Setting `value` reports nothing.
+- The panels of the other tabs stay in the page, hidden until find in page reaches them. Find in page and a link to a text fragment select the tab of a match, with the reason `find`.
+- A horizontal list that does not fit scrolls sideways within its own box.
+
+<Source
+  language="tsx"
+  code={`<Tabs label="Product information" defaultValue="overview">
+  <Tab value="overview" label="Overview">A light jacket for wind and rain.</Tab>
+  <Tab value="details" label="Details">Recycled polyester shell, two zipped pockets.</Tab>
+</Tabs>;`}
+/>
+
+## Accessibility
+
+- **Pattern.** The [tabs](https://www.w3.org/WAI/ARIA/apg/patterns/tabs/) with automatic activation: a `tablist` with `aria-orientation`, `tab` elements with `aria-selected` and `aria-controls`, and a `tabpanel` named by its tab.
+- **Keys.** Tab moves to the selected tab, and from there into its panel. In a horizontal list Arrow Right and Arrow Left move to the next and previous enabled tab and select it, around the ends, turned in right-to-left text; in a vertical list Arrow Down and Arrow Up do. Home and End move to the first and last enabled tab.
+- **Panels.** The shown panel takes the focus with Tab, so a reader reaches content that holds nothing focusable.
+- **Preferences.** Forced colours keep the focus ring and the selected tab.
+
+## Surfaces & themes
+
+Tabs has no background of its own apart from the frame of `segmented`, so it sits on any surface. Its text, lines, frame and fills follow Light and Dark and the default, subtle, inverse and primary surfaces.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Tabs" />}
+  webComponents={<WebComponentApi tag="ui-tabs" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Tab, Tabs } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/tabs';
+import '@mszczygiel-projects/ui-core-web-components/tab';`}
+/>
+
+React's ref, className, style and other attributes reach the root element.
+
+## Tokens
+
+<ComponentTokens component="tabs" />
+
+## Implementation notes
+
+- React reads the tabs from its Tab children, so each Tab is a direct child of Tabs. It renders the list and every panel on the server, with the content in the HTML. Since React writes `hidden` as a boolean, the other panels are `hidden` in the server HTML and become `hidden="until-found"` once they hydrate.
+- The web component renders the list and a panel for each `ui-tab` in its shadow root, which assigns its slots by hand, so that the tabs and the panels that name one another are in one tree. The content stays in each `ui-tab`, so a crawler that runs no script reads it; the labels are properties and need the script.
+- A horizontal list scrolls inside room for the focus ring, which a negative margin of the same size hides.

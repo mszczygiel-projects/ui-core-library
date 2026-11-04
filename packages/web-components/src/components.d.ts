@@ -51,6 +51,8 @@ import { RadioGroupValueChange } from "./radio-group/events";
 import { SearchFieldClear } from "./search-field/events";
 import { SplitButtonAction, SplitButtonOpenChange } from "./split-button/events";
 import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
+import { TabsOrientation, TabsVariant } from "@mszczygiel-projects/ui-core-shared/tabs";
+import { TabsValueChange as ValueChange } from "./tabs/events";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 import { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export { AccordionHeadingLevel } from "@mszczygiel-projects/ui-core-shared/accordion-item";
@@ -99,6 +101,8 @@ export { RadioGroupValueChange } from "./radio-group/events";
 export { SearchFieldClear } from "./search-field/events";
 export { SplitButtonAction, SplitButtonOpenChange } from "./split-button/events";
 export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
+export { TabsOrientation, TabsVariant } from "@mszczygiel-projects/ui-core-shared/tabs";
+export { TabsValueChange as ValueChange } from "./tabs/events";
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export namespace Components {
@@ -1779,6 +1783,62 @@ export namespace Components {
         "value": string;
     }
     /**
+     * One tab of Tabs: its label, an optional icon, and the content of its panel.
+     * It holds the content of its panel, in the page whether its tab is selected or not. The Tabs
+     * around it renders its tab from `label`, `icon` and `disabled`, and places the element in the
+     * panel of that tab.
+     */
+    interface UiTab {
+        /**
+          * Keeps the tab from being selected and takes it out of the arrow keys.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * A decorative icon before the label, an SVG string of the icon package.
+         */
+        "icon"?: string;
+        /**
+          * The text of the tab, which names the tab and its panel.
+          * @default ''
+         */
+        "label": string;
+        /**
+          * The value that selects the tab, unique among the tabs of a Tabs.
+          * @default ''
+         */
+        "value": string;
+    }
+    /**
+     * A list of tabs, each of which shows its own panel of content in place of the others.
+     * Its children are `ui-tab` elements. It renders a tab for each in a list with the role `tablist`,
+     * and places each `ui-tab` in a panel named by its tab, so the content stays in the page. The
+     * panels of the other tabs are `hidden="until-found"`, so find in page and a link to a text
+     * fragment select the tab of a match. A press selects a tab, and the arrow keys along the list
+     * move the focus and select the tab they reach, Home and End the first and last; each dispatches
+     * `ui-value-change`. Tab moves the focus from the selected tab to its panel.
+     */
+    interface UiTabs {
+        /**
+          * The accessible name of the list of tabs. Leave it out when a heading before the tabs names them.
+         */
+        "label"?: string;
+        /**
+          * The direction in which the tabs follow each other, which also sets the arrow keys that move between them.
+          * @default 'horizontal'
+         */
+        "orientation": TabsOrientation;
+        /**
+          * The value of the selected tab. The attribute supplies the initial tab, and the property follows the selection. A value that no tab has selects the first enabled tab.
+         */
+        "value"?: string;
+        /**
+          * How the tabs look: a line under the selected tab, or a filled tab in a frame.
+          * @default 'underline'
+         */
+        "variant": TabsVariant;
+    }
+    /**
      * A single-line text input with a label, hint and validation feedback.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -2057,6 +2117,10 @@ export interface UiSplitButtonCustomEvent<T> extends CustomEvent<T> {
 export interface UiSwitchFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiSwitchFieldElement;
+}
+export interface UiTabsCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiTabsElement;
 }
 export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2775,6 +2839,44 @@ declare global {
         prototype: HTMLUiSwitchFieldElement;
         new (): HTMLUiSwitchFieldElement;
     };
+    /**
+     * One tab of Tabs: its label, an optional icon, and the content of its panel.
+     * It holds the content of its panel, in the page whether its tab is selected or not. The Tabs
+     * around it renders its tab from `label`, `icon` and `disabled`, and places the element in the
+     * panel of that tab.
+     */
+    interface HTMLUiTabElement extends Components.UiTab, HTMLStencilElement {
+    }
+    var HTMLUiTabElement: {
+        prototype: HTMLUiTabElement;
+        new (): HTMLUiTabElement;
+    };
+    interface HTMLUiTabsElementEventMap {
+        "ui-value-change": ValueChange;
+    }
+    /**
+     * A list of tabs, each of which shows its own panel of content in place of the others.
+     * Its children are `ui-tab` elements. It renders a tab for each in a list with the role `tablist`,
+     * and places each `ui-tab` in a panel named by its tab, so the content stays in the page. The
+     * panels of the other tabs are `hidden="until-found"`, so find in page and a link to a text
+     * fragment select the tab of a match. A press selects a tab, and the arrow keys along the list
+     * move the focus and select the tab they reach, Home and End the first and last; each dispatches
+     * `ui-value-change`. Tab moves the focus from the selected tab to its panel.
+     */
+    interface HTMLUiTabsElement extends Components.UiTabs, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiTabsElementEventMap>(type: K, listener: (this: HTMLUiTabsElement, ev: UiTabsCustomEvent<HTMLUiTabsElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiTabsElementEventMap>(type: K, listener: (this: HTMLUiTabsElement, ev: UiTabsCustomEvent<HTMLUiTabsElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiTabsElement: {
+        prototype: HTMLUiTabsElement;
+        new (): HTMLUiTabsElement;
+    };
     interface HTMLUiTextFieldElementEventMap {
         "ui-value-change": TextFieldValueChange;
     }
@@ -2872,6 +2974,8 @@ declare global {
         "ui-select-field": HTMLUiSelectFieldElement;
         "ui-split-button": HTMLUiSplitButtonElement;
         "ui-switch-field": HTMLUiSwitchFieldElement;
+        "ui-tab": HTMLUiTabElement;
+        "ui-tabs": HTMLUiTabsElement;
         "ui-text-field": HTMLUiTextFieldElement;
         "ui-textarea-field": HTMLUiTextareaFieldElement;
         "ui-tooltip": HTMLUiTooltipElement;
@@ -4767,6 +4871,66 @@ declare namespace LocalJSX {
         "value"?: string;
     }
     /**
+     * One tab of Tabs: its label, an optional icon, and the content of its panel.
+     * It holds the content of its panel, in the page whether its tab is selected or not. The Tabs
+     * around it renders its tab from `label`, `icon` and `disabled`, and places the element in the
+     * panel of that tab.
+     */
+    interface UiTab {
+        /**
+          * Keeps the tab from being selected and takes it out of the arrow keys.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * A decorative icon before the label, an SVG string of the icon package.
+         */
+        "icon"?: string;
+        /**
+          * The text of the tab, which names the tab and its panel.
+          * @default ''
+         */
+        "label"?: string;
+        /**
+          * The value that selects the tab, unique among the tabs of a Tabs.
+          * @default ''
+         */
+        "value"?: string;
+    }
+    /**
+     * A list of tabs, each of which shows its own panel of content in place of the others.
+     * Its children are `ui-tab` elements. It renders a tab for each in a list with the role `tablist`,
+     * and places each `ui-tab` in a panel named by its tab, so the content stays in the page. The
+     * panels of the other tabs are `hidden="until-found"`, so find in page and a link to a text
+     * fragment select the tab of a match. A press selects a tab, and the arrow keys along the list
+     * move the focus and select the tab they reach, Home and End the first and last; each dispatches
+     * `ui-value-change`. Tab moves the focus from the selected tab to its panel.
+     */
+    interface UiTabs {
+        /**
+          * The accessible name of the list of tabs. Leave it out when a heading before the tabs names them.
+         */
+        "label"?: string;
+        /**
+          * The user selected another tab. Setting `value` reports nothing.
+         */
+        "onUi-value-change"?: (event: UiTabsCustomEvent<ValueChange>) => void;
+        /**
+          * The direction in which the tabs follow each other, which also sets the arrow keys that move between them.
+          * @default 'horizontal'
+         */
+        "orientation"?: TabsOrientation;
+        /**
+          * The value of the selected tab. The attribute supplies the initial tab, and the property follows the selection. A value that no tab has selects the first enabled tab.
+         */
+        "value"?: string;
+        /**
+          * How the tabs look: a line under the selected tab, or a filled tab in a frame.
+          * @default 'underline'
+         */
+        "variant"?: TabsVariant;
+    }
+    /**
      * A single-line text input with a label, hint and validation feedback.
      * Its inner input owns accessibility; ElementInternals associates the host with the outer form.
      * The `value` attribute supplies the reset value, and the property holds the current value. The
@@ -5307,6 +5471,18 @@ declare namespace LocalJSX {
         "name": string;
         "value": string;
     }
+    interface UiTabAttributes {
+        "value": string;
+        "label": string;
+        "icon": string;
+        "disabled": boolean;
+    }
+    interface UiTabsAttributes {
+        "value": string;
+        "variant": TabsVariant;
+        "orientation": TabsOrientation;
+        "label": string;
+    }
     interface UiTextFieldAttributes {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
@@ -5379,6 +5555,8 @@ declare namespace LocalJSX {
         "ui-select-field": Omit<UiSelectField, keyof UiSelectFieldAttributes> & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes]?: UiSelectField[K] } & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes as `attr:${K}`]?: UiSelectFieldAttributes[K] } & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes as `prop:${K}`]?: UiSelectField[K] };
         "ui-split-button": Omit<UiSplitButton, keyof UiSplitButtonAttributes> & { [K in keyof UiSplitButton & keyof UiSplitButtonAttributes]?: UiSplitButton[K] } & { [K in keyof UiSplitButton & keyof UiSplitButtonAttributes as `attr:${K}`]?: UiSplitButtonAttributes[K] } & { [K in keyof UiSplitButton & keyof UiSplitButtonAttributes as `prop:${K}`]?: UiSplitButton[K] };
         "ui-switch-field": Omit<UiSwitchField, keyof UiSwitchFieldAttributes> & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes]?: UiSwitchField[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `attr:${K}`]?: UiSwitchFieldAttributes[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `prop:${K}`]?: UiSwitchField[K] };
+        "ui-tab": Omit<UiTab, keyof UiTabAttributes> & { [K in keyof UiTab & keyof UiTabAttributes]?: UiTab[K] } & { [K in keyof UiTab & keyof UiTabAttributes as `attr:${K}`]?: UiTabAttributes[K] } & { [K in keyof UiTab & keyof UiTabAttributes as `prop:${K}`]?: UiTab[K] };
+        "ui-tabs": Omit<UiTabs, keyof UiTabsAttributes> & { [K in keyof UiTabs & keyof UiTabsAttributes]?: UiTabs[K] } & { [K in keyof UiTabs & keyof UiTabsAttributes as `attr:${K}`]?: UiTabsAttributes[K] } & { [K in keyof UiTabs & keyof UiTabsAttributes as `prop:${K}`]?: UiTabs[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
         "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
         "ui-tooltip": Omit<UiTooltip, keyof UiTooltipAttributes> & { [K in keyof UiTooltip & keyof UiTooltipAttributes]?: UiTooltip[K] } & { [K in keyof UiTooltip & keyof UiTooltipAttributes as `attr:${K}`]?: UiTooltipAttributes[K] } & { [K in keyof UiTooltip & keyof UiTooltipAttributes as `prop:${K}`]?: UiTooltip[K] };
@@ -5697,6 +5875,23 @@ declare module "@stencil/core" {
              * label.
              */
             "ui-switch-field": LocalJSX.IntrinsicElements["ui-switch-field"] & JSXBase.HTMLAttributes<HTMLUiSwitchFieldElement>;
+            /**
+             * One tab of Tabs: its label, an optional icon, and the content of its panel.
+             * It holds the content of its panel, in the page whether its tab is selected or not. The Tabs
+             * around it renders its tab from `label`, `icon` and `disabled`, and places the element in the
+             * panel of that tab.
+             */
+            "ui-tab": LocalJSX.IntrinsicElements["ui-tab"] & JSXBase.HTMLAttributes<HTMLUiTabElement>;
+            /**
+             * A list of tabs, each of which shows its own panel of content in place of the others.
+             * Its children are `ui-tab` elements. It renders a tab for each in a list with the role `tablist`,
+             * and places each `ui-tab` in a panel named by its tab, so the content stays in the page. The
+             * panels of the other tabs are `hidden="until-found"`, so find in page and a link to a text
+             * fragment select the tab of a match. A press selects a tab, and the arrow keys along the list
+             * move the focus and select the tab they reach, Home and End the first and last; each dispatches
+             * `ui-value-change`. Tab moves the focus from the selected tab to its panel.
+             */
+            "ui-tabs": LocalJSX.IntrinsicElements["ui-tabs"] & JSXBase.HTMLAttributes<HTMLUiTabsElement>;
             /**
              * A single-line text input with a label, hint and validation feedback.
              * Its inner input owns accessibility; ElementInternals associates the host with the outer form.

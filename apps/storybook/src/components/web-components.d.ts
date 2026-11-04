@@ -56,6 +56,8 @@ import type { SearchFieldProps } from '@mszczygiel-projects/ui-core-shared/searc
 import type { SelectFieldProps } from '@mszczygiel-projects/ui-core-shared/select-field';
 import type { SplitButtonProps } from '@mszczygiel-projects/ui-core-shared/split-button';
 import type { SwitchFieldProps } from '@mszczygiel-projects/ui-core-shared/switch-field';
+import type { TabProps } from '@mszczygiel-projects/ui-core-shared/tab';
+import type { TabsProps } from '@mszczygiel-projects/ui-core-shared/tabs';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import type { TextareaFieldProps } from '@mszczygiel-projects/ui-core-shared/textarea-field';
 import type { TooltipProps } from '@mszczygiel-projects/ui-core-shared/tooltip';
@@ -77,6 +79,8 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-tab': CustomElement<TabProps>;
+      'ui-tabs': CustomElement<TabsProps>;
       'ui-accordion-item': CustomElement<AccordionItemProps>;
       'ui-accordion': CustomElement<AccordionProps>;
       'ui-split-button': CustomElement<

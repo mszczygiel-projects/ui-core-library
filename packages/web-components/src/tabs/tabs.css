@@ -1,0 +1,227 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  display: flex;
+  flex-direction: column;
+  gap: var(--tabs-gap);
+  font-family: var(--tabs-font-family);
+  font-size: var(--tabs-font-size);
+  line-height: var(--tabs-line-height);
+  letter-spacing: var(--tabs-letter-spacing);
+}
+
+.base.vertical {
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/*
+ * The scroller holds the list. A horizontal list of either look scrolls when its tabs do not fit, and
+ * a scroller clips what is drawn outside its box, so room for the focus ring surrounds the list and a
+ * negative margin of the same size keeps it where it would be.
+ */
+.horizontal .scroller {
+  --_ring-space: calc(var(--ring-width) + var(--ring-offset));
+
+  margin: calc(var(--_ring-space) * -1);
+  padding: var(--_ring-space);
+  overflow-x: auto;
+}
+
+.vertical .scroller {
+  flex: none;
+}
+
+.list {
+  display: flex;
+  gap: var(--tabs-list-gap);
+}
+
+/* A horizontal list is as wide as its tabs, so the frame or the track scrolls with them. */
+.horizontal .list {
+  box-sizing: border-box;
+  inline-size: max-content;
+}
+
+.vertical .list {
+  flex-direction: column;
+}
+
+.segmented .list {
+  padding: var(--tabs-segmented-padding);
+  border: var(--tabs-segmented-border-width) solid var(--color-tabs-segmented-border);
+  border-radius: var(--tabs-segmented-radius);
+  background: var(--color-tabs-segmented-background);
+}
+
+/* The track lies at the end of the list, under the tabs. */
+.underline .list {
+  background-image: linear-gradient(var(--color-tabs-track), var(--color-tabs-track));
+  background-repeat: no-repeat;
+}
+
+.horizontal.underline .list {
+  min-inline-size: 100%;
+  background-position: bottom;
+  background-size: 100% var(--tabs-track-width);
+}
+
+.vertical.underline .list {
+  background-position: right;
+  background-size: var(--tabs-track-width) 100%;
+}
+
+.vertical.underline .list:dir(rtl) {
+  background-position: left;
+}
+
+.tab {
+  --_text: var(--color-tabs-tab-text-default);
+  --_background: var(--color-tabs-tab-background-default);
+
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--tabs-tab-gap);
+  margin: 0;
+  padding-block: var(--tabs-tab-padding-stack);
+  padding-inline: var(--tabs-tab-padding-inline);
+  border: none;
+  border-radius: var(--tabs-tab-radius);
+  background: var(--_background);
+  color: var(--_text);
+  font: inherit;
+  font-weight: var(--tabs-font-weight);
+  text-align: start;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.vertical .tab {
+  white-space: normal;
+}
+
+.tab:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.tab:disabled {
+  --_text: var(--color-tabs-tab-text-disabled);
+
+  cursor: default;
+}
+
+.tab:hover:not(:disabled) {
+  --_text: var(--color-tabs-tab-text-hover);
+  --_background: var(--color-tabs-tab-background-hover);
+}
+
+.tab:active:not(:disabled) {
+  --_background: var(--color-tabs-tab-background-active);
+}
+
+.tab.selected:not(:disabled) {
+  --_text: var(--color-tabs-tab-text-selected);
+}
+
+.segmented .tab.selected:not(:disabled) {
+  --_text: var(--color-tabs-segmented-tab-text-selected);
+  --_background: var(--color-tabs-segmented-tab-background-selected);
+}
+
+.segmented .tab.selected:disabled {
+  --_background: var(--color-tabs-segmented-tab-background-disabled);
+}
+
+/* The indicator of the selected tab covers the track. */
+.underline .tab.selected::after {
+  position: absolute;
+  background: var(--color-tabs-indicator-default);
+  content: '';
+}
+
+.underline .tab.selected:disabled::after {
+  background: var(--color-tabs-indicator-disabled);
+}
+
+.horizontal .tab::after {
+  inset-block-end: 0;
+  inset-inline: 0;
+  block-size: var(--tabs-indicator-width);
+}
+
+.vertical .tab::after {
+  inset-block: 0;
+  inset-inline-end: 0;
+  inline-size: var(--tabs-indicator-width);
+}
+
+.icon {
+  /* An icon is 1em, so it takes the icon size of the tab, whatever wraps it. */
+  font-size: var(--tabs-icon-size);
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--tabs-icon-size);
+  block-size: var(--tabs-icon-size);
+}
+
+.icon svg {
+  display: block;
+}
+
+/*
+ * Every panel takes the same cell. A panel hidden until found keeps its box, so in a row or a column
+ * of their own the hidden panels would push the shown one away.
+ */
+.panels {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.vertical .panels {
+  flex: 1;
+}
+
+.panel {
+  grid-area: 1 / 1;
+  align-self: start;
+  min-inline-size: 0;
+}
+
+.panel:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+@media (forced-colors: active) {
+  /* Forced colours replace the fill and the indicator, so a system colour marks the selected tab. */
+  .underline .tab.selected::after {
+    background: Highlight;
+  }
+
+  .segmented .tab.selected::after {
+    position: absolute;
+    inset: 0;
+    border: var(--tabs-indicator-width) solid Highlight;
+    border-radius: inherit;
+    content: '';
+  }
+
+  .underline .tab.selected:disabled::after {
+    background: GrayText;
+  }
+
+  .segmented .tab.selected:disabled::after {
+    border-color: GrayText;
+  }
+}

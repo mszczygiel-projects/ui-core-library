@@ -38,6 +38,8 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | SelectField    | `SelectField`    |
 | SplitButton    | `SplitButton`    |
 | SwitchField    | `SwitchField`    |
+| Tab            | `Tab`            |
+| Tabs           | `Tabs`           |
 | TextField      | `TextField`      |
 | TextareaField  | `TextareaField`  |
 | Tooltip        | `Tooltip`        |

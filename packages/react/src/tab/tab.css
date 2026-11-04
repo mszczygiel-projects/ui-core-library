@@ -1,0 +1,10 @@
+.ui-tabs__panels > .ui-tabs__panel {
+  grid-area: 1 / 1;
+  align-self: start;
+  min-inline-size: 0;
+}
+
+.ui-tabs__panel:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}

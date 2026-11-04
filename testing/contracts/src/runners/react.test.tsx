@@ -32,6 +32,8 @@ import { mountReactSearchField } from '../harness/search-field.tsx';
 import { mountReactSelectField } from '../harness/select-field.tsx';
 import { mountReactSplitButton } from '../harness/split-button.tsx';
 import { mountReactSwitchField } from '../harness/switch-field.tsx';
+import { mountReactTab } from '../harness/tab.tsx';
+import { mountReactTabs } from '../harness/tabs.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
 import { mountReactTooltip } from '../harness/tooltip.tsx';
@@ -65,6 +67,8 @@ import { searchFieldContract } from '../specs/search-field.contract.ts';
 import { selectFieldContract } from '../specs/select-field.contract.ts';
 import { splitButtonContract } from '../specs/split-button.contract.ts';
 import { switchFieldContract } from '../specs/switch-field.contract.ts';
+import { tabContract } from '../specs/tab.contract.ts';
+import { tabsContract } from '../specs/tabs.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
 import { tooltipContract } from '../specs/tooltip.contract.ts';
@@ -207,4 +211,12 @@ describe('Accordion, React', () => {
 
 describe('AccordionItem, React', () => {
   accordionItemContract(mountReactAccordionItem);
+});
+
+describe('Tabs, React', () => {
+  tabsContract(mountReactTabs);
+});
+
+describe('Tab, React', () => {
+  tabContract(mountReactTab);
 });
