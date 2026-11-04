@@ -187,6 +187,16 @@ export function Menu({
     menuRef.current?.focus();
   }, [isOpen]);
 
+  useBrowserLayoutEffect(() => {
+    if (!isOpen || highlighted < 0) {
+      return;
+    }
+    // The keys can highlight an action below or above the scrolled edge of a long menu.
+    menuRef.current
+      ?.querySelector(`#${CSS.escape(`${menuId}-item-${String(highlighted)}`)}`)
+      ?.scrollIntoView({ block: 'nearest' });
+  }, [isOpen, highlighted, menuId]);
+
   const onMenuKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Tab') {
       // Tab leaves from the trigger, as if the menu were not there, and the focus leaving the

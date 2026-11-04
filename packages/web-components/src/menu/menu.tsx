@@ -155,6 +155,10 @@ export class UiMenu implements MenuProps<string> {
         this.focusOnOpen = false;
         element?.focus();
       }
+      // The keys can highlight an action below or above the scrolled edge of a long menu.
+      element
+        ?.querySelector(`#${CSS.escape(itemId(this.highlighted))}`)
+        ?.scrollIntoView({ block: 'nearest' });
     } else {
       this.popup.hide();
     }

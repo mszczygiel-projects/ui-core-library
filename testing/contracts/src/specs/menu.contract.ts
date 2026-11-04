@@ -137,6 +137,43 @@ export function menuContract(adapter: Mount<MenuContractProps>): void {
     await expect.poll(() => highlighted(component)).toBe('Rename');
   });
 
+  it('scrolls a long menu to keep the highlighted action in view', async () => {
+    const parent = spot();
+    // A short menu, so that most of its actions lie beyond its scrolled edge.
+    parent.style.setProperty('--menu-max-height', '120px');
+    const options = Array.from({ length: 20 }, (_, index) => ({
+      value: `action-${String(index + 1)}`,
+      label: `Action ${String(index + 1)}`,
+    }));
+    const component = await mount({ options }, { parent });
+    const menu = component.part('menu');
+    const inView = () => {
+      const id = menu.getAttribute('aria-activedescendant');
+      const root = menu.getRootNode();
+      const item =
+        id === null || !(root instanceof Document || root instanceof ShadowRoot)
+          ? null
+          : root.getElementById(id);
+      if (item === null) {
+        return false;
+      }
+      const box = menu.getBoundingClientRect();
+      const { top, bottom } = item.getBoundingClientRect();
+      return top >= box.top - 0.5 && bottom <= box.bottom + 0.5;
+    };
+    triggerOf(component).focus();
+    await userEvent.keyboard('{ArrowUp}');
+    await expect.poll(() => highlighted(component)).toBe('Action 20');
+    expect(menu.scrollHeight).toBeGreaterThan(menu.clientHeight);
+    await expect.poll(inView).toBe(true);
+    await userEvent.keyboard('{Home}');
+    await expect.poll(() => highlighted(component)).toBe('Action 1');
+    await expect.poll(inView).toBe(true);
+    await userEvent.keyboard('{ArrowUp}');
+    await expect.poll(() => highlighted(component)).toBe('Action 20');
+    await expect.poll(inView).toBe(true);
+  });
+
   it('moves the highlight past disabled actions, wrapping, with Home, End and typed letters', async () => {
     const component = await mount({}, { parent: spot() });
     await userEvent.click(triggerOf(component));
