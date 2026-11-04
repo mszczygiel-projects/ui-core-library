@@ -115,6 +115,11 @@
   }
 }
 
+/* In link mode the previous and next links take the surface of a ghost IconButton. */
+.ui-pagination__step {
+  text-decoration: none;
+}
+
 /* The chevrons point along the reading direction. */
 .ui-pagination__chevron:dir(rtl) > svg {
   transform: scaleX(-1);

@@ -1,0 +1,101 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guides/SEO and server rendering" />
+
+# SEO and server rendering
+
+A search engine indexes what it finds in the HTML of a page and, when it runs scripts, in the page it renders. The two packages reach it differently, so choose the package of a page by how it must be indexed.
+
+## What a crawler sees
+
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>HTML from the server</th>
+      <th>After the scripts run</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>React</td>
+      <td>every text, link and heading, when the page renders on a server</td>
+      <td>the same, after hydration</td>
+    </tr>
+    <tr>
+      <td>Web components</td>
+      <td>the content of the slots, such as the text of a Button or the body of a Dialog</td>
+      <td>everything, through the shadow roots</td>
+    </tr>
+  </tbody>
+</table>
+
+- **React renders on the server.** Each component renders without browser state and hydrates without a warning, so a page rendered by Next.js or another server holds its texts, its `nav` landmarks, its lists of links and its headings before any script runs.
+- **Web components render in the browser only.** A crawler that runs scripts, such as Googlebot, reads the shadow roots as one tree: the texts of props, such as `label` or `heading`, and the links of LinkButton, Breadcrumbs and Pagination. A crawler that runs no script reads only the light DOM, which is the content of the slots.
+- Put content that a page must have indexed in a slot or in a React component, never only in a prop of a web component.
+
+## Links
+
+- Navigation renders `<a href>`, which a crawler follows. Give LinkButton an `href`, give each item of Breadcrumbs an `href`, and give Pagination `getPageHref`: its pages, previous and next are then links, and previous and next carry `rel="prev"` and `rel="next"`.
+- Client-side routing keeps the addresses. Cancel the move and route on your own: `ui-navigate` or `onNavigate` for Breadcrumbs, `ui-page-change` or `onPageChange` for Pagination, or the `render` prop of the React LinkButton for the link of a router.
+
+```tsx
+<Pagination
+  page={page}
+  pageCount={20}
+  getPageHref={(page) => `/products?page=${page}`}
+  onPageChange={(page, { originalEvent }) => {
+    originalEvent.preventDefault();
+    router.push(`/products?page=${page}`);
+  }}
+/>
+```
+
+## Structured data for Breadcrumbs
+
+A search engine shows a `BreadcrumbList` as the path of the page in its results. `breadcrumbListJsonLd` turns the items of Breadcrumbs into its JSON-LD. It comes from `@mszczygiel-projects/ui-core-shared`, which the component packages depend on; add it to the dependencies of the application in the same version. Give it a function that resolves an address into an absolute URL, and put the text in a script element of the page:
+
+```tsx
+import { breadcrumbListJsonLd } from '@mszczygiel-projects/ui-core-shared/breadcrumb-list';
+
+const items = [
+  { label: 'Home', href: '/' },
+  { label: 'Shoes', href: '/shoes' },
+  { label: 'Trail runners' },
+];
+
+<script
+  type="application/ld+json"
+  dangerouslySetInnerHTML={{
+    __html: breadcrumbListJsonLd(items, {
+      resolveUrl: (href) => new URL(href, 'https://example.com').href,
+    }),
+  }}
+/>
+<Breadcrumbs items={items} />
+```
+
+An item before the last one without an address is left out, since every item but the current page must name a URL. The text escapes `<`, so a label cannot close the script element.
+
+## Hidden content
+
+- The content of a closed Dialog, Drawer or Popover and the text of a Tooltip are in the page but not shown. A search engine may index them with less weight, so keep the content that a page is about in the page itself.
+- The title of a Dialog is an `h2`. A page that renders closed dialogs on the server adds their titles to its outline.
+- A Notification with `announce` renders its content hidden on the server and shows it after hydration, since a live region announces only a change. Leave `announce` off for a message that is part of the page when it loads.
+
+## Before the web components load
+
+The styles of a web component live in its shadow root, which exists only once its element is defined. Until then the browser shows the content of its slots as plain text, such as the body of a closed Dialog. Hide the modals of the page until their elements are defined, in a stylesheet of the page that loads before the scripts:
+
+```css
+ui-dialog:not(:defined),
+ui-drawer:not(:defined) {
+  display: none;
+}
+```
+
+Do not hide `ui-popover` or `ui-tooltip` this way: their slots hold the trigger, which must stay visible.
+
+## Loading the web components
+
+Import each web component from its own entry point, such as `@mszczygiel-projects/ui-core-web-components/link-button`, instead of the root, which defines every component. A page then loads only the script that it renders, which keeps its loading fast.

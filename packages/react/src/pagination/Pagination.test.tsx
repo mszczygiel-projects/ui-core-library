@@ -1,4 +1,4 @@
-import { createRef, type ReactElement } from 'react';
+import { createRef, type ReactElement, useState } from 'react';
 import { hydrateRoot } from 'react-dom/client';
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
@@ -42,6 +42,28 @@ describe('Pagination', () => {
     await expectHydrates(<Pagination pageCount={10} defaultPage={5} showStatus showJump />);
   });
 
+  it('puts every link of link mode in the HTML of the server, previous and next among them', async () => {
+    const element = (
+      <Pagination pageCount={10} defaultPage={5} getPageHref={(page) => `?page=${String(page)}`} />
+    );
+    const container = document.createElement('div');
+    container.innerHTML = renderToString(element);
+    const links = [...container.querySelectorAll('a[href]')].map((link) => [
+      link.getAttribute('href'),
+      link.getAttribute('rel'),
+    ]);
+    expect(links).toEqual([
+      ['?page=4', 'prev'],
+      ['?page=1', null],
+      ['?page=4', null],
+      ['?page=5', null],
+      ['?page=6', null],
+      ['?page=10', null],
+      ['?page=6', 'next'],
+    ]);
+    await expectHydrates(element);
+  });
+
   it('follows a controlled page, and moves only when the page prop changes', async () => {
     const onPageChange = vi.fn();
     const screen = await render(<Pagination pageCount={5} page={2} onPageChange={onPageChange} />);
@@ -51,6 +73,29 @@ describe('Pagination', () => {
     expect(current()).toBe('2');
     await screen.rerender(<Pagination pageCount={5} page={3} onPageChange={onPageChange} />);
     expect(current()).toBe('3');
+  });
+
+  it('follows the address of the pressed link when the parent controls the page', async () => {
+    function Controlled() {
+      const [page, setPage] = useState(5);
+      return (
+        <Pagination
+          pageCount={10}
+          page={page}
+          onPageChange={setPage}
+          getPageHref={(target) => `#controlled-${String(target)}`}
+        />
+      );
+    }
+    const screen = await render(<Controlled />);
+    await screen.getByRole('link', { name: 'Next page' }).click();
+    await expect.poll(() => window.location.hash).toBe('#controlled-6');
+    await expect
+      .element(screen.getByRole('link', { name: 'Next page' }))
+      .toHaveAttribute('href', '#controlled-7');
+    await screen.getByRole('link', { name: 'Previous page' }).click();
+    await expect.poll(() => window.location.hash).toBe('#controlled-5');
+    window.history.replaceState(null, '', window.location.pathname + window.location.search);
   });
 
   it('keeps the page within the count when the count shrinks', async () => {

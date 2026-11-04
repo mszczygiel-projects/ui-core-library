@@ -18,6 +18,7 @@ description: Use when writing or changing a web component of UI Core Library in 
 - Name custom events with `@Event({ eventName: 'ui-<name>' }) name!: EventEmitter<Detail>` on one line: the lint rule wants inline decorators. Inside a component, the imported `Event` decorator shadows the DOM type, so write `globalThis.Event`.
 - Stencil's JSX has no element type of its own; `src/internal/jsx.d.ts` names `VNode`. Type `render(): VNode`.
 - Track optional slots with `hasAssignedContent` in an `onSlotchange` handler, and hide the empty wrapper.
+- Content that a page indexes, such as the body of a panel, goes through a slot, so it is in the HTML of the page before any script runs. A prop holds only a short name or description, and every link of navigation renders as `<a href>` ([05](../../../docs/decisions/05-components.md)).
 
 ## Forms
 

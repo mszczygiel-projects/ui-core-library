@@ -31,7 +31,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Guides',
-          ['Getting started', 'Custom tokens and icons'],
+          ['Getting started', 'Custom tokens and icons', 'SEO and server rendering'],
           'Foundations',
           [
             'Overview',

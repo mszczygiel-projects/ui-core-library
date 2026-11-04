@@ -160,9 +160,47 @@ export function paginationContract(adapter: Mount<PaginationContractProps>): voi
     await component.update({ cancelChange: false });
     await userEvent.click(component.screen.getByRole('link', { name: 'Page 4' }));
     expect(window.location.hash).toBe('#page-4');
-    // The next button has no address of its own, so it loads the address of its page.
-    await userEvent.click(component.screen.getByRole('button', { name: 'Next page' }));
+    expect(current(component)).toBe('4');
+    await userEvent.click(component.screen.getByRole('link', { name: 'Next page' }));
     await expect.poll(() => window.location.hash).toBe('#page-5');
+  });
+
+  it('makes previous and next links in link mode, with no address at either end', async () => {
+    const getPageHref = (page: number) => `#step-${String(page)}`;
+    const onPageChange = vi.fn<NonNullable<PaginationContractProps['onPageChange']>>();
+    const component = await mount({ getPageHref, onPageChange, cancelChange: true });
+    const previous = component.part('previous');
+    const next = component.part('next');
+    expect(previous.tagName).toBe('A');
+    expect(previous.getAttribute('href')).toBe('#step-4');
+    expect(previous.getAttribute('rel')).toBe('prev');
+    expect(next.getAttribute('href')).toBe('#step-6');
+    expect(next.getAttribute('rel')).toBe('next');
+    await userEvent.click(component.screen.getByRole('link', { name: 'Next page' }));
+    expect(window.location.hash).toBe('');
+    expect(onPageChange.mock.calls[0]?.[1]).toEqual(
+      expect.objectContaining({ reason: 'next', href: '#step-6' }),
+    );
+    const first = await mount({ getPageHref, defaultPage: 1 });
+    const start = first.part('previous');
+    expect(start.hasAttribute('href')).toBe(false);
+    expect(start.getAttribute('aria-disabled')).toBe('true');
+    await userEvent.click(start, { force: true });
+    expect(window.location.hash).toBe('');
+    const tree = await first.accessibleTree();
+    expect(tree.some((node) => node.role === 'link' && node.name === 'Previous page')).toBe(true);
+  });
+
+  it('gives the previous and next links the size of the buttons', async () => {
+    const box = (component: Mounted<PaginationContractProps>, part: string) => {
+      const { width, height } = component.part(part).getBoundingClientRect();
+      return [Math.round(width), Math.round(height)];
+    };
+    const buttons = await mount();
+    const links = await mount({ getPageHref: (page) => `#size-${String(page)}` });
+    expect(box(links, 'previous')).toEqual(box(buttons, 'previous'));
+    expect(box(links, 'next')).toEqual(box(buttons, 'next'));
+    expect(getComputedStyle(links.part('next')).textDecorationLine).toBe('none');
   });
 
   it('shows the status when asked, in the words of the labels', async () => {
