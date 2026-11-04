@@ -215,6 +215,67 @@ export function splitButtonContract(adapter: Mount<SplitButtonContractProps>): v
     await expect.poll(() => component.part('toggle').matches(':disabled')).toBe(false);
   });
 
+  it('closes its menu, and keeps it closed, inside a disabled fieldset', async () => {
+    const { fieldset } = formFixture();
+    const component = await mount({ open: true }, { parent: fieldset });
+    await expect.poll(() => isOpen(component)).toBe(true);
+    fieldset.disabled = true;
+    await expect.poll(() => isOpen(component)).toBe(false);
+    expect(component.part('toggle').getAttribute('aria-expanded')).toBe('false');
+    const closed = await mount({ open: true }, { parent: fieldset });
+    await expect.poll(() => closed.part('toggle').matches(':disabled')).toBe(true);
+    await expect.poll(() => isOpen(closed)).toBe(false);
+    fieldset.disabled = false;
+    await expect.poll(() => closed.part('toggle').matches(':disabled')).toBe(false);
+    expect(isOpen(closed)).toBe(false);
+  });
+
+  it('lets Tab leave its loading menu button', async () => {
+    const before = document.createElement('button');
+    before.textContent = 'Before';
+    const after = document.createElement('button');
+    after.textContent = 'After';
+    const component = await mount({ loading: true });
+    component.element.before(before);
+    component.element.after(after);
+    try {
+      component.part('toggle').focus();
+      await userEvent.keyboard('{Tab}');
+      expect(focused()).toBe(after);
+      component.part('toggle').focus();
+      await userEvent.keyboard('{Shift>}{Tab}{/Shift}');
+      expect(focused()).not.toBe(component.part('toggle'));
+    } finally {
+      before.remove();
+      after.remove();
+    }
+  });
+
+  it('keeps presses on its menu button and its actions from the page, but not the main action', async () => {
+    const onAction = vi.fn();
+    const component = await mount({ onAction });
+    const heard: EventTarget[] = [];
+    const listen = (event: Event) => {
+      heard.push(event.target ?? document);
+    };
+    // A listener of the page around the component.
+    document.addEventListener('click', listen);
+    try {
+      await userEvent.click(component.part('toggle'));
+      await expect.poll(() => isOpen(component)).toBe(true);
+      await page
+        .elementLocator(menuOf(component))
+        .getByRole('menuitem', { name: 'Save as template' })
+        .click();
+      expect(onAction).toHaveBeenCalledOnce();
+      expect(heard).toHaveLength(0);
+      await page.elementLocator(component.part('action')).click();
+      expect(heard).toHaveLength(1);
+    } finally {
+      document.removeEventListener('click', listen);
+    }
+  });
+
   it('keeps the focus and the name of its menu button while loading, and opens nothing', async () => {
     const onOpenChange = vi.fn();
     const component = await mount({ loading: true, onOpenChange });
@@ -279,6 +340,7 @@ export function splitButtonContract(adapter: Mount<SplitButtonContractProps>): v
 
   for (const dir of ['ltr', 'rtl'] as const) {
     it(`puts its menu button at the end and opens its menu along that edge, in ${dir}`, async () => {
+      await page.viewport(1000, 700);
       // A parent away from the edges, so that the menu has room on both sides of its edge.
       const parent = document.createElement('div');
       Object.assign(parent.style, {

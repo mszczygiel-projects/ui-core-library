@@ -12,11 +12,20 @@ import {
   type SplitButtonOpenChangeDetails as SharedOpenChangeDetails,
   type SplitButtonProps as SharedSplitButtonProps,
 } from '@mszczygiel-projects/ui-core-shared/split-button';
-import { type ComponentPropsWithRef, type KeyboardEvent, type ReactNode, useState } from 'react';
+import {
+  type ComponentPropsWithRef,
+  type KeyboardEvent,
+  type MouseEvent,
+  type ReactNode,
+  useCallback,
+  useRef,
+  useState,
+} from 'react';
 
 import { Button } from '../button/Button.tsx';
 import { useActionRef } from '../internal/action.ts';
 import { classNames } from '../internal/class-names.ts';
+import { useFormState } from '../internal/use-form-state.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
 import { Menu } from '../menu/Menu.tsx';
 
@@ -50,6 +59,13 @@ export interface SplitButtonProps
 
 const { options: specOptions } = splitButton;
 
+/** The keys that open the menu from its button, which a loading button ignores. */
+const OPENING_KEYS = new Set(['Enter', ' ', 'ArrowDown', 'ArrowUp']);
+
+function ignoreReset(): void {
+  // An action has no state for a form reset to restore.
+}
+
 /**
  * Triggers a main action, with a button beside it that opens a menu of related actions.
  *
@@ -77,10 +93,24 @@ export function SplitButton({
   const { labels } = useUiCoreConfig();
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
   const toggleAction = useActionRef<HTMLButtonElement>(undefined);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+  const toggleElement = useCallback(
+    (element: HTMLButtonElement) => {
+      toggleRef.current = element;
+      const release = toggleAction(element);
+      return () => {
+        toggleRef.current = null;
+        release();
+      };
+    },
+    [toggleAction],
+  );
+  // A disabled fieldset disables the menu button with the main one, which the browser decides.
+  const fieldsetDisabled = useFormState(toggleRef, ignoreReset);
   const surface = oneOf(variant, specOptions.variant.options, specOptions.variant.default);
   const buttonSize = oneOf(size, specOptions.size.options, specOptions.size.default);
   const hasEnabledAction = firstEnabled(flattenOptions(options)) !== undefined;
-  const available = !disabled && !loading && hasEnabledAction;
+  const available = !disabled && !fieldsetDisabled && !loading && hasEnabledAction;
   // A menu of an action that stops being available closes with it, as setting open does.
   const isOpen = (open ?? uncontrolledOpen) && available;
   const data = Object.fromEntries(Object.entries(rest).filter(([key]) => key.startsWith('data-')));
@@ -113,6 +143,12 @@ export function SplitButton({
       <span className="ui-split-button__divider" aria-hidden="true" />
       <Menu
         className="ui-split-button__menu"
+        onClick={(event: MouseEvent<HTMLSpanElement>) => {
+          // A press on the menu button or on an action of the menu stays inside, so that a click
+          // reaching the page is the main action alone. Native listeners within the React root
+          // still hear it before React does.
+          event.stopPropagation();
+        }}
         open={isOpen}
         options={options}
         size={buttonSize}
@@ -128,7 +164,7 @@ export function SplitButton({
         onAction={onAction}
         trigger={
           <button
-            ref={toggleAction}
+            ref={toggleElement}
             type="button"
             className={classNames(
               'ui-split-button__toggle',
@@ -141,8 +177,9 @@ export function SplitButton({
             aria-label={menuLabel ?? labels.splitButton.menu}
             aria-disabled={(loading && !disabled && hasEnabledAction) || undefined}
             onKeyDown={(event: KeyboardEvent<HTMLButtonElement>) => {
-              // A loading menu button keeps its focus and its name, and its keys open nothing.
-              if (!available) {
+              // A loading menu button keeps its focus and its name, and its keys open nothing; Tab
+              // still leaves it.
+              if (!available && OPENING_KEYS.has(event.key)) {
                 event.preventDefault();
               }
             }}
