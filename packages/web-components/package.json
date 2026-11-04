@@ -73,6 +73,10 @@
       "types": "./dist/components/ui-loader.d.ts",
       "default": "./dist/components/ui-loader.js"
     },
+    "./menu": {
+      "types": "./dist/components/ui-menu.d.ts",
+      "default": "./dist/components/ui-menu.js"
+    },
     "./notification": {
       "types": "./dist/components/ui-notification.d.ts",
       "default": "./dist/components/ui-notification.js"
@@ -108,6 +112,10 @@
     "./select-field": {
       "types": "./dist/components/ui-select-field.d.ts",
       "default": "./dist/components/ui-select-field.js"
+    },
+    "./split-button": {
+      "types": "./dist/components/ui-split-button.d.ts",
+      "default": "./dist/components/ui-split-button.js"
     },
     "./switch-field": {
       "types": "./dist/components/ui-switch-field.d.ts",
