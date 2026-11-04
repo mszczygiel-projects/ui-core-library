@@ -41,6 +41,7 @@
 - Components render on the client only: no server rendering or hydration. They still serve pages that search engines index:
   - once rendered, every text and every link of navigation is in the composed tree, as text and as `<a href>`, which a crawler that runs scripts reads through the shadow roots;
   - the content of a component that holds content, such as the panels of Accordion or Tabs, goes through slots, so it is in the HTML of the page for a crawler that runs no script;
+  - a group whose ARIA ties its own parts to its children, such as Tabs with its tabs and panels, renders those parts in its own shadow root and assigns each child to the slot of its panel by hand (`slotAssignment: 'manual'`), since ARIA references do not cross shadow roots and a component writes nothing on a host;
   - a prop holds only short text that names or describes a part, such as `label`, `heading` or `hint`.
 
 ### React
@@ -68,3 +69,4 @@ Two native implementations keep each framework idiomatic: forms, refs and server
 - Sharing CSS between the implementations: a shadow root and BEM classes need different selectors, while the tokens already share the values.
 - Copying an existing component as the start of a new one: it carries over decisions that do not apply and drifts from the conventions; the generator starts each from the same structure.
 - Comparing two separate sets of declarations with a custom checker: the compiler does it for free when both import one type.
+- Roles and ARIA on the hosts of Tabs and Tab: the host belongs to the page ([06](06-component-api.md)), and a tab that renders its own button cannot sit in the list of its group.
