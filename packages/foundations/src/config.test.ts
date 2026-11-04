@@ -131,6 +131,7 @@ describe('the configuration', () => {
         passwordField: { reveal: 'Show password' },
         searchField: { clear: 'Clear search' },
         selectField: { clear: 'Clear selection' },
+        splitButton: { menu: 'More actions', loading: 'Loading' },
       },
       loaderVariant: 'spinner' satisfies LoaderVariant,
     });
