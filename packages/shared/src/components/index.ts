@@ -1,6 +1,7 @@
 import { badge } from './badge.ts';
 import { breadcrumbs } from './breadcrumbs.ts';
 import { button } from './button.ts';
+import { calendar } from './calendar.ts';
 import { checkboxField } from './checkbox-field.ts';
 import { chip } from './chip.ts';
 import { combobox } from './combobox.ts';
@@ -56,4 +57,5 @@ export const specs: readonly ComponentSpec[] = [
   pagination,
   popover,
   tooltip,
+  calendar,
 ];

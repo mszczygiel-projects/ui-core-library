@@ -20,6 +20,7 @@ const meta = {
     disabled: false,
     readOnly: false,
     required: false,
+    hideCalendarButton: false,
   },
   argTypes: {
     label: { control: 'text' },
@@ -38,8 +39,14 @@ const meta = {
     min: { control: 'text' },
     max: { control: 'text' },
     disabledDates: { control: false },
+    hideCalendarButton: { control: 'boolean' },
+    defaultOpen: { control: 'boolean' },
+    firstDayOfWeek: { control: { type: 'number', min: 1, max: 7 } },
+    today: { control: 'text' },
+    openCalendarLabel: { control: 'text' },
     getFormatHintLabel: { control: false },
     getValidationMessageLabel: { control: false },
+    onOpenChange: { control: false },
   },
 } satisfies Meta<typeof DateField>;
 

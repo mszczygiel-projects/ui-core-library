@@ -2,6 +2,7 @@ import {
   getUiCoreConfig,
   type UiCoreConfig,
 } from '@mszczygiel-projects/ui-core-foundations/config';
+import { iconCalendar } from '@mszczygiel-projects/ui-core-icons';
 import {
   type DateConstraints,
   type DateValidationContext,
@@ -27,8 +28,10 @@ import {
   Prop,
   State,
   type VNode,
+  Watch,
 } from '@stencil/core';
 
+import type { CalendarChange } from '../calendar/events.ts';
 import { followConfig } from '../internal/config.ts';
 import { DateMask } from '../internal/date-mask.ts';
 import {
@@ -42,8 +45,12 @@ import {
 import { followAttribute } from '../internal/follow-attribute.ts';
 import type { FormAssociated } from '../internal/form-associated.ts';
 import { restoreLocaleState, saveLocaleState } from '../internal/locale-state.ts';
+import { Popup } from '../internal/popup.ts';
 import { TextControl } from '../internal/text-control.ts';
-import type { DateFieldValueChange } from './events.ts';
+import type { DateFieldOpenChange, DateFieldValueChange } from './events.ts';
+
+/** The elements of a calendar that take the focus, in the order of Tab. */
+const CALENDAR_STOPS = 'ui-icon-button:not([disabled]), .zoom, [role="gridcell"][tabindex="0"]';
 
 // HTMLElement is repeated because the first build runs before Stencil declares the element.
 declare global {
@@ -61,10 +68,19 @@ declare global {
  * The native input owns accessibility and editable text. ElementInternals submits the canonical
  * value and saves the draft with its locale. Parsing and constraint errors use customError.
  *
+ * The button after the input opens a calendar in a modal dialog in the top layer, which makes the
+ * rest of the page inert until it closes, with the focus on the chosen date, else on today. Tab
+ * stays inside the dialog. Picking a date writes its text, as one edit, closes the dialog and
+ * returns the focus to the button; Escape closes it without a change, and a click outside closes
+ * it without reaching the page. The reflected `open` attribute shows whether the calendar is open.
+ *
  * @part base - The field, label and hint.
  * @part control - The input surface, border and focus indicator.
- * @part input-row - The input.
+ * @part input-row - The input and the calendar button.
  * @part input - The native editable input.
+ * @part calendar-button - The button that opens the calendar.
+ * @part panel - The dialog that holds the calendar.
+ * @part calendar - The calendar inside the dialog.
  * @part label - The visible label and its floating background.
  * @part label-text - The visible label text.
  * @part hint - The help or feedback container.
@@ -129,6 +145,21 @@ export class UiDateField implements DateFieldProps, FormAssociated {
   /** ISO dates that cannot be submitted, or a predicate; property only. */
   @Prop({ attribute: null }) disabledDates?: DateConstraints['disabledDates'];
 
+  /** Whether the calendar is open. The attribute follows the calendar. */
+  @Prop({ mutable: true, reflect: true }) open = false;
+
+  /** Hides the button that opens the calendar. */
+  @Prop() hideCalendarButton = false;
+
+  /** The first day of the week in the calendar, from 1 for Monday to 7 for Sunday. */
+  @Prop() firstDayOfWeek?: number;
+
+  /** Today's date, YYYY-MM-DD, which the calendar marks; the clock of the browser by default. */
+  @Prop() today?: string;
+
+  /** The name of the calendar button and its dialog. */
+  @Prop() openCalendarLabel?: string;
+
   /** A complete sentence describing the format, used when hint is absent. */
   @Prop({ attribute: null }) getFormatHintLabel?: (example: string) => string;
 
@@ -137,6 +168,9 @@ export class UiDateField implements DateFieldProps, FormAssociated {
 
   /** One user edit, including partial text, with its canonical value and validation result. */
   @Event({ eventName: 'ui-value-change' }) valueChange!: EventEmitter<DateFieldValueChange>;
+
+  /** The user opened or closed the calendar, with the original event. */
+  @Event({ eventName: 'ui-open-change' }) openChange!: EventEmitter<DateFieldOpenChange>;
 
   @State() private current = '';
 
@@ -155,6 +189,22 @@ export class UiDateField implements DateFieldProps, FormAssociated {
   private stopFollowing: (() => void)[] = [];
 
   private readonly mask = new DateMask();
+
+  /** The calendar opened since the last render, or open from the start, so its cell takes the focus. */
+  private focusCalendar = false;
+
+  /** The calendar closed by a pick or Escape, so its button takes the focus back. */
+  private returnFocus = false;
+
+  private readonly popup = new Popup({
+    host: () => this.host,
+    anchor: () => this.host.shadowRoot?.querySelector<HTMLElement>('.control') ?? null,
+    popup: () => this.panel(),
+    onDismiss: (event) => {
+      this.setOpen(false, event);
+    },
+    modal: true,
+  });
 
   private readonly control = new TextControl({
     host: () => this.host,
@@ -236,6 +286,11 @@ export class UiDateField implements DateFieldProps, FormAssociated {
     this.control.setCustomValidity(message);
   }
 
+  componentWillLoad(): void {
+    // The watcher of open runs on changes only, so a calendar open from the start asks here.
+    this.focusCalendar = this.open;
+  }
+
   connectedCallback(): void {
     const parsed = parseDateText(this.control.value, this.displayLocale);
     const nextLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
@@ -265,6 +320,14 @@ export class UiDateField implements DateFieldProps, FormAssociated {
     this.host.removeEventListener('invalid', this.onInvalid);
     this.control.disconnect();
     this.mask.disconnect();
+    this.popup.hide();
+  }
+
+  @Watch('open')
+  protected openChanged(open: boolean): void {
+    if (open) {
+      this.focusCalendar = true;
+    }
   }
 
   /** Tracks keyboard submission when the owning form changes. */
@@ -281,6 +344,7 @@ export class UiDateField implements DateFieldProps, FormAssociated {
   formResetCallback(): void {
     this.touched = false;
     this.editing = false;
+    this.open = false;
     this.displayLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
     this.control.reset();
   }
@@ -306,6 +370,9 @@ export class UiDateField implements DateFieldProps, FormAssociated {
     } else {
       this.internals.states.delete('disabled');
     }
+    if (!this.canOpen()) {
+      this.open = false;
+    }
   }
 
   componentDidRender(): void {
@@ -318,9 +385,22 @@ export class UiDateField implements DateFieldProps, FormAssociated {
       });
     }
     this.control.rendered();
+    if (this.open) {
+      this.popup.show();
+      if (this.focusCalendar) {
+        this.focusCalendar = false;
+        this.focusCalendarCell();
+      }
+    } else {
+      this.popup.hide();
+      if (this.returnFocus) {
+        this.returnFocus = false;
+        this.calendarButton()?.focus();
+      }
+    }
   }
 
-  render(): VNode {
+  render(): VNode[] {
     const invalid = this.touched && !this.validity.valid;
     const appearance = fieldAppearance({
       variant: this.variant,
@@ -333,7 +413,9 @@ export class UiDateField implements DateFieldProps, FormAssociated {
       (this.getFormatHintLabel ?? this.config.labels.dateField.formatHint)(
         formatDateText('2026-12-31', this.displayLocale),
       );
-    return (
+    const calendarLabel = this.openCalendarLabel ?? this.config.labels.dateField.openCalendar;
+    const parsed = parseDateText(this.control.value, this.displayLocale);
+    return [
       <Field
         classes={appearance.classes}
         placement={appearance.placement}
@@ -366,9 +448,51 @@ export class UiDateField implements DateFieldProps, FormAssociated {
             }}
             onChange={this.onChange}
           />
+          <button
+            part="calendar-button"
+            class="action calendar-button"
+            type="button"
+            hidden={this.hideCalendarButton}
+            disabled={!this.canOpen()}
+            aria-label={calendarLabel}
+            aria-haspopup="dialog"
+            aria-expanded={this.open ? 'true' : 'false'}
+            aria-controls="panel"
+            onClick={(event) => {
+              this.setOpen(!this.open, event);
+            }}
+          >
+            <span class="action-icon" aria-hidden="true" innerHTML={iconCalendar} />
+          </button>
         </div>
-      </Field>
-    );
+      </Field>,
+      <dialog
+        id="panel"
+        part="panel"
+        class="panel"
+        aria-label={calendarLabel}
+        onKeyDown={this.onPanelKeyDown}
+        onCancel={this.onCancel}
+        onClose={this.onClose}
+      >
+        {this.open ? (
+          <ui-calendar
+            part="calendar"
+            value={parsed.value}
+            min={this.min}
+            max={this.max}
+            disabledDates={this.disabledDates}
+            locale={this.displayLocale}
+            firstDayOfWeek={this.firstDayOfWeek}
+            today={this.today}
+            onUi-value-change={this.onPick}
+            onUi-month-change={(event) => {
+              event.stopPropagation();
+            }}
+          />
+        ) : null}
+      </dialog>,
+    ];
   }
 
   private input(): HTMLInputElement | null {
@@ -377,6 +501,57 @@ export class UiDateField implements DateFieldProps, FormAssociated {
 
   private isDisabled(): boolean {
     return this.disabled || this.formDisabled;
+  }
+
+  /** A read-only field keeps its date, so its calendar stays closed as well. */
+  private canOpen(): boolean {
+    return !this.isDisabled() && !this.readOnly;
+  }
+
+  private panel(): HTMLElement | null {
+    return this.host.shadowRoot?.querySelector<HTMLElement>('.panel') ?? null;
+  }
+
+  private calendar(): HTMLUiCalendarElement | null {
+    return this.host.shadowRoot?.querySelector('ui-calendar') ?? null;
+  }
+
+  private calendarButton(): HTMLButtonElement | null {
+    return this.host.shadowRoot?.querySelector('.calendar-button') ?? null;
+  }
+
+  private setOpen(open: boolean, originalEvent: globalThis.Event): void {
+    if ((open && !this.canOpen()) || this.open === open) {
+      return;
+    }
+    this.open = open;
+    this.openChange.emit({ value: open, originalEvent });
+  }
+
+  /**
+   * The calendar renders its days in a frame after it connects, and the custom elements build has
+   * no promise of that render, so the field looks for the cell over a few frames.
+   */
+  private focusCalendarCell(frames = 10): void {
+    const cell = this.calendar()?.shadowRoot?.querySelector<HTMLElement>(
+      '[role="gridcell"][tabindex="0"]',
+    );
+    if (cell !== null && cell !== undefined) {
+      cell.focus();
+    } else if (frames > 0 && this.open) {
+      requestAnimationFrame(() => {
+        this.focusCalendarCell(frames - 1);
+      });
+    }
+  }
+
+  /**
+   * Closes the calendar and returns the focus to its button, once the modal dialog has closed and
+   * the button is no longer inert.
+   */
+  private close(event: globalThis.Event): void {
+    this.returnFocus = true;
+    this.setOpen(false, event);
   }
 
   private constraints() {
@@ -421,6 +596,57 @@ export class UiDateField implements DateFieldProps, FormAssociated {
     const input = event.target;
     if (input instanceof HTMLInputElement && !(event instanceof InputEvent && event.isComposing)) {
       this.notify(input.value, event);
+    }
+  };
+
+  /** The calendar's own event stays inside, and the field reports the pick as an edit. */
+  private readonly onPick = (event: CustomEvent<CalendarChange>): void => {
+    event.stopPropagation();
+    // A fieldset can disable the field while its calendar is open; the pick then changes nothing.
+    if (!this.canOpen()) {
+      return;
+    }
+    this.notify(formatDateText(event.detail.value, this.displayLocale), event.detail.originalEvent);
+    this.close(event.detail.originalEvent);
+  };
+
+  /** Escape that reaches the dialog itself, not the cell, closes it as Escape on a cell does. */
+  private readonly onCancel = (event: globalThis.Event): void => {
+    event.preventDefault();
+    this.close(event);
+  };
+
+  /** The browser may close a modal dialog on its own, such as on a repeated Escape. */
+  private readonly onClose = (event: globalThis.Event): void => {
+    this.setOpen(false, event);
+  };
+
+  /**
+   * Escape that the calendar leaves, in its days, closes the dialog. Tab and Shift+Tab go round
+   * the stops of the calendar, which a modal dialog never lets the focus leave.
+   */
+  private readonly onPanelKeyDown = (event: KeyboardEvent): void => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.close(event);
+      return;
+    }
+    if (event.key !== 'Tab') {
+      return;
+    }
+    const stops = [
+      ...(this.calendar()?.shadowRoot?.querySelectorAll<HTMLElement>(CALENDAR_STOPS) ?? []),
+    ];
+    const first = stops.at(0);
+    const last = stops.at(-1);
+    if (first === undefined || last === undefined) {
+      return;
+    }
+    const path = event.composedPath();
+    const edge = event.shiftKey ? first : last;
+    if (path.includes(edge)) {
+      event.preventDefault();
+      (event.shiftKey ? last : first).focus();
     }
   };
 

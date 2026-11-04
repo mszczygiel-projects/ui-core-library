@@ -1,0 +1,106 @@
+import { type DateConstraints } from './date.ts';
+import type { TextDirection } from './radio-navigation.ts';
+export interface MonthParts {
+    readonly year: number;
+    readonly month: number;
+}
+export type CalendarView = 'days' | 'months' | 'years';
+export type CalendarSelection = 'none' | 'selected' | 'start' | 'end' | 'middle';
+export declare const MONTH_COLUMNS = 3;
+export declare const YEAR_COLUMNS = 4;
+export declare const YEARS_PER_PAGE = 24;
+export declare function parseIsoMonth(text: string): MonthParts | null;
+export declare function formatIsoMonth(parts: MonthParts): string;
+export declare function monthOf(date: string): string;
+export declare function firstDateOf(month: string): string;
+export declare function shiftMonth(month: string, months: number): string | null;
+export declare function isIsoWeekday(value: unknown): value is number;
+export declare function firstDayOfWeek(locale: string): number;
+export declare function weekdayOrder(firstDay: number): readonly number[];
+export declare function monthWeeks(month: string, firstDay: number): readonly (readonly string[])[];
+export declare function yearPage(year: number): readonly number[];
+export declare function isDateDisabled(date: string, constraints: DateConstraints): boolean;
+export declare function isMonthDisabled(month: string, constraints: DateConstraints): boolean;
+export declare function isYearDisabled(year: number, constraints: DateConstraints): boolean;
+export interface DateRange {
+    readonly start: string;
+    readonly end: string;
+}
+export declare function parseIsoRange(value: string): DateRange | null;
+export declare function formatIsoRange(first: string, second: string): string;
+export interface SelectionContext {
+    readonly value: string;
+    readonly range: boolean;
+    readonly anchor?: string;
+}
+export declare function selectionOf(date: string, context: SelectionContext): CalendarSelection;
+export declare function selectedDate(value: string, range: boolean): string | undefined;
+export interface CalendarKeyOptions {
+    readonly view: CalendarView;
+    readonly direction: TextDirection;
+    readonly firstDayOfWeek: number;
+    readonly shiftKey: boolean;
+}
+export declare function nextFocusedDate(key: string, date: string, options: CalendarKeyOptions): string | undefined;
+export declare function monthYearLabel(month: string, locale: string): string;
+export declare function monthLabel(month: string, locale: string): string;
+export declare function yearLabel(year: number, locale: string): string;
+export declare function yearPageLabel(year: number, locale: string): string;
+export declare function dayLabel(date: string, locale: string): string;
+export declare function fullDateLabel(date: string, locale: string): string;
+export interface WeekdayLabel {
+    readonly short: string;
+    readonly long: string;
+}
+export declare function weekdayLabels(locale: string, firstDay: number): readonly WeekdayLabel[];
+export interface CalendarState {
+    readonly view: CalendarView;
+    readonly focused: string;
+    readonly anchor?: string;
+}
+export interface CalendarContext extends SelectionContext {
+    readonly constraints: DateConstraints;
+    readonly locale: string;
+    readonly firstDayOfWeek: number;
+    readonly today?: string;
+}
+export interface CalendarCell {
+    readonly date: string;
+    readonly label: string;
+    readonly name: string;
+    readonly selection: CalendarSelection;
+    readonly current: boolean;
+    readonly disabled: boolean;
+    readonly outside: boolean;
+    readonly focusable: boolean;
+}
+export type CalendarStepLabel = 'previousMonth' | 'nextMonth' | 'previousYear' | 'nextYear' | 'previousYears' | 'nextYears';
+export interface CalendarModel {
+    readonly view: CalendarView;
+    readonly heading: string;
+    readonly zoom: {
+        readonly label: 'chooseMonth' | 'chooseYear';
+        readonly text: string;
+    } | null;
+    readonly previous: {
+        readonly label: CalendarStepLabel;
+        readonly disabled: boolean;
+    };
+    readonly next: {
+        readonly label: CalendarStepLabel;
+        readonly disabled: boolean;
+    };
+    readonly weekdays: readonly WeekdayLabel[];
+    readonly rows: readonly (readonly CalendarCell[])[];
+}
+export declare function initialFocus(value: string, range: boolean, month: string | undefined, today: string | undefined): string | undefined;
+export declare function focusInMonth(focused: string, month: string): string;
+export declare function stepDate(view: CalendarView, focused: string, step: -1 | 1): string | null;
+export declare function calendarModel(state: CalendarState, context: CalendarContext): CalendarModel;
+export interface CalendarPick {
+    readonly state: CalendarState;
+    readonly value?: string;
+}
+export declare function pickCell(state: CalendarState, cell: Pick<CalendarCell, 'date' | 'disabled'>, range: boolean): CalendarPick | undefined;
+export declare function zoomOut(view: CalendarView): CalendarView;
+export declare function zoomIn(view: CalendarView): CalendarView | undefined;

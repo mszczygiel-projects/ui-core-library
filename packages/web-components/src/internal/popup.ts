@@ -15,10 +15,21 @@ export interface PopupOptions {
   readonly host: () => HTMLElement;
   /** The element the popup aligns with and takes its width from. */
   readonly anchor: () => HTMLElement | null;
-  /** The popup, an element with `popover="manual"` in the shadow root of the field. */
+  /**
+   * The popup, an element with `popover="manual"` in the shadow root of the field, or a `dialog`
+   * for a modal popup.
+   */
   readonly popup: () => HTMLElement | null;
-  /** A pointer pressed outside the field and its popup, or the focus left both. */
+  /**
+   * A pointer pressed outside the field and its popup, or the focus left both. A modal popup is
+   * dismissed by a click outside it instead, which the inert page never receives.
+   */
   readonly onDismiss: (event: Event) => void;
+  /**
+   * A modal popup: a `dialog` shown with `showModal()`, which makes the rest of the page inert, so
+   * that nothing outside it takes the focus or a press while it is open.
+   */
+  readonly modal?: boolean;
   /** The side of the anchor on which the popup opens, below it by default. */
   readonly placement?: () => PopupPlacement;
   /**
@@ -58,6 +69,10 @@ export class Popup {
     const anchor = this.options.anchor();
     const popup = this.options.popup();
     if (this.open || anchor === null || popup === null) {
+      return;
+    }
+    if (this.options.modal === true && popup instanceof HTMLDialogElement) {
+      this.showModal(anchor, popup);
       return;
     }
     if (supportsPopover(popup)) {
@@ -106,6 +121,12 @@ export class Popup {
     if (popup === null) {
       return;
     }
+    if (popup instanceof HTMLDialogElement) {
+      if (popup.open) {
+        popup.close();
+      }
+      return;
+    }
     if (supportsPopover(popup)) {
       if (popup.matches(':popover-open')) {
         popup.hidePopover();
@@ -113,6 +134,33 @@ export class Popup {
     } else {
       popup.hidden = true;
     }
+  }
+
+  private showModal(anchor: HTMLElement, popup: HTMLDialogElement): void {
+    if (!popup.open) {
+      popup.showModal();
+    }
+    this.stopUpdating = autoUpdate(anchor, popup, () => {
+      void this.place(anchor, popup);
+    });
+    this.events = new AbortController();
+    // The backdrop of a modal dialog is the dialog itself, so a click on it outside its box is a
+    // click outside the popup.
+    popup.addEventListener(
+      'click',
+      (event) => {
+        const box = popup.getBoundingClientRect();
+        const outside =
+          event.clientX < box.left ||
+          event.clientX > box.right ||
+          event.clientY < box.top ||
+          event.clientY > box.bottom;
+        if (event.target === popup && outside) {
+          this.options.onDismiss(event);
+        }
+      },
+      { signal: this.events.signal },
+    );
   }
 
   private async place(anchor: HTMLElement, popup: HTMLElement): Promise<void> {

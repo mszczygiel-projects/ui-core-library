@@ -41,7 +41,6 @@ const planned: readonly Planned[] = [
   { name: 'Combobox', tag: 'ui-combobox', category: 'Selection' },
   { name: 'Listbox', tag: 'ui-listbox', category: 'Selection' },
   { name: 'Calendar', tag: 'ui-calendar', category: 'Selection' },
-  { name: 'DatePicker', tag: 'ui-date-picker', category: 'Selection' },
   { name: 'Badge', tag: 'ui-badge', category: 'Feedback' },
   { name: 'Chip', tag: 'ui-chip', category: 'Feedback' },
   { name: 'Notification', tag: 'ui-notification', category: 'Feedback' },

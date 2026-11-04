@@ -8,6 +8,7 @@ export {
   type ButtonType,
   type ButtonVariant,
 } from './button/Button.tsx';
+export { Calendar, type CalendarProps } from './calendar/Calendar.tsx';
 export {
   CheckboxField,
   type CheckboxFieldProps,

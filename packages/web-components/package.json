@@ -25,6 +25,10 @@
       "types": "./dist/components/ui-button.d.ts",
       "default": "./dist/components/ui-button.js"
     },
+    "./calendar": {
+      "types": "./dist/components/ui-calendar.d.ts",
+      "default": "./dist/components/ui-calendar.js"
+    },
     "./checkbox-field": {
       "types": "./dist/components/ui-checkbox-field.d.ts",
       "default": "./dist/components/ui-checkbox-field.js"

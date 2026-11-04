@@ -95,7 +95,10 @@ css --calendar-day-line-height
 css --calendar-day-radius
 css --calendar-day-size
 css --calendar-font-family
+css --calendar-header-font-size
+css --calendar-header-font-weight
 css --calendar-header-gap
+css --calendar-header-line-height
 css --calendar-today-border-width
 css --calendar-weekday-font-size
 css --calendar-weekday-font-weight
@@ -289,8 +292,8 @@ css --color-button-secondary-text-active
 css --color-button-secondary-text-default
 css --color-button-secondary-text-disabled
 css --color-button-shadow
+css --color-calendar-day-background-active
 css --color-calendar-day-background-default
-css --color-calendar-day-background-hover
 css --color-calendar-day-background-in-range
 css --color-calendar-day-background-selected
 css --color-calendar-day-border-today
@@ -379,6 +382,8 @@ css --color-control-outline-placeholder-disabled
 css --color-control-outline-text-default
 css --color-control-outline-text-disabled
 css --color-control-outline-text-error
+css --color-date-field-panel-background
+css --color-date-field-panel-border
 css --color-dialog-backdrop
 css --color-dialog-background
 css --color-dialog-border
@@ -831,7 +836,11 @@ css --control-underlined-border-width-disabled
 css --control-underlined-border-width-error
 css --control-underlined-border-width-success
 css --control-underlined-radius
-css --date-picker-gap
+css --date-field-panel-border-width
+css --date-field-panel-offset
+css --date-field-panel-padding
+css --date-field-panel-radius
+css --date-field-panel-shadow
 css --dialog-border-width
 css --dialog-description-font-family
 css --dialog-description-font-size
@@ -1436,8 +1445,8 @@ tailwind --color-button-secondary-text-active
 tailwind --color-button-secondary-text-default
 tailwind --color-button-secondary-text-disabled
 tailwind --color-button-shadow
+tailwind --color-calendar-day-background-active
 tailwind --color-calendar-day-background-default
-tailwind --color-calendar-day-background-hover
 tailwind --color-calendar-day-background-in-range
 tailwind --color-calendar-day-background-selected
 tailwind --color-calendar-day-border-today
@@ -1526,6 +1535,8 @@ tailwind --color-control-outline-placeholder-disabled
 tailwind --color-control-outline-text-default
 tailwind --color-control-outline-text-disabled
 tailwind --color-control-outline-text-error
+tailwind --color-date-field-panel-background
+tailwind --color-date-field-panel-border
 tailwind --color-dialog-backdrop
 tailwind --color-dialog-background
 tailwind --color-dialog-border
@@ -2096,7 +2107,10 @@ ts tokens.components.calendar.day.lineHeight
 ts tokens.components.calendar.day.radius
 ts tokens.components.calendar.day.size
 ts tokens.components.calendar.fontFamily
+ts tokens.components.calendar.header.fontSize
+ts tokens.components.calendar.header.fontWeight
 ts tokens.components.calendar.header.gap
+ts tokens.components.calendar.header.lineHeight
 ts tokens.components.calendar.today.border.width
 ts tokens.components.calendar.weekday.fontSize
 ts tokens.components.calendar.weekday.fontWeight
@@ -2198,8 +2212,8 @@ ts tokens.components.color.button.secondary.text.active
 ts tokens.components.color.button.secondary.text.default
 ts tokens.components.color.button.secondary.text.disabled
 ts tokens.components.color.button.shadow
+ts tokens.components.color.calendar.day.background.active
 ts tokens.components.color.calendar.day.background.default
-ts tokens.components.color.calendar.day.background.hover
 ts tokens.components.color.calendar.day.background.inRange
 ts tokens.components.color.calendar.day.background.selected
 ts tokens.components.color.calendar.day.border.today
@@ -2288,6 +2302,8 @@ ts tokens.components.color.control.outline.placeholder.disabled
 ts tokens.components.color.control.outline.text.default
 ts tokens.components.color.control.outline.text.disabled
 ts tokens.components.color.control.outline.text.error
+ts tokens.components.color.dateField.panel.background
+ts tokens.components.color.dateField.panel.border
 ts tokens.components.color.dialog.backdrop
 ts tokens.components.color.dialog.background
 ts tokens.components.color.dialog.border
@@ -2461,7 +2477,11 @@ ts tokens.components.control.underlined.border.width.disabled
 ts tokens.components.control.underlined.border.width.error
 ts tokens.components.control.underlined.border.width.success
 ts tokens.components.control.underlined.radius
-ts tokens.components.datePicker.gap
+ts tokens.components.dateField.panel.border.width
+ts tokens.components.dateField.panel.offset
+ts tokens.components.dateField.panel.padding
+ts tokens.components.dateField.panel.radius
+ts tokens.components.dateField.panel.shadow
 ts tokens.components.dialog.border.width
 ts tokens.components.dialog.description.fontFamily
 ts tokens.components.dialog.description.fontSize

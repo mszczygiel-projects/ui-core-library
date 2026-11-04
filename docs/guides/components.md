@@ -49,6 +49,12 @@ keyboard and beforeinput results, then synchronize canonical data once. Composit
 commit and avoids a second notification when the browser sends a final input event. Read-only
 controls detach the mask so its history cannot bypass native editing restrictions.
 
+DateField opens a Calendar of its own package in its popup and renders it only while it is
+open, so each opening starts from the value or today. The field stops the events of the calendar
+and reports a pick as its own edit. A web component that nests another cannot wait for its render
+with `componentOnReady()`, which the custom elements build lacks: look for the rendered part over a
+few animation frames instead.
+
 Cover controlled rejection, partial-value echoes, reset cancellation, restored text, fieldset
 exclusion, locale changes during editing and native keyboard submission in tests. Validate the
 current text synchronously, before a form can submit it. Programmatic changes never emit a value

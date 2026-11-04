@@ -1,0 +1,87 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as ReactStories from './Calendar.react.stories.tsx';
+import * as WebComponentStories from './Calendar.wc.stories.tsx';
+
+<Meta title="Components/Inputs/Calendar/Docs" />
+
+# Calendar
+
+<ComponentOverview name="Calendar" />
+
+## Usage
+
+Use Calendar to pick a date or a range of dates by sight, when the day of the week or the days around it matter, such as a booking. To type a known date, such as a birth date, use DateField, which also opens this calendar from its button. Calendar is not a schedule: it shows no events and links to nothing, and it is not a form control on its own.
+
+## Anatomy
+
+The **base** holds the **header** and the **grid**. The **header** holds the **previous** and **next** buttons and the **heading**, a button that opens the months or the years, or plain text over the years. The day grid has a **weekday** header per column, and every day, month or year is a **cell**. There are no slots. React uses `.ui-calendar__<part>`; Figma names the layers the same way and nests the private `.Calendar Cell` set.
+
+## Variants & tone
+
+Calendar has no variant or tone. `range` changes what a pick does, not how the calendar looks until a range is chosen.
+
+<FrameworkCanvas react={ReactStories.Range} webComponents={WebComponentStories.Range} />
+
+## Sizes & density
+
+A cell has the one size of a hit area, `calendar/day/size`, which follows the density. There is no `size` prop.
+
+## States
+
+A cell is default, active on hover and press, chosen (a filled circle), the first or last day of a range (a circle with half of the band), inside a range (the band), today (a ring), outside the month (a quieter text) or disabled (muted text, no pointer). Focus is the focus ring around the cell, on `:focus-visible` only. A month or year cell shows the same states.
+
+<FrameworkCanvas
+  react={ReactStories.WithConstraints}
+  webComponents={WebComponentStories.WithConstraints}
+/>
+
+## Content & labels
+
+Intl names the months, the weekdays and the days in the `locale`, then the configured locale, then the browser's language after hydration, then `en-US`. The buttons take their names from `previousMonthLabel`, `nextMonthLabel`, `previousYearLabel`, `nextYearLabel`, `previousYearsLabel` and `nextYearsLabel`, then from `labels.calendar`. The heading button over the days is named by `getChooseMonthLabel(monthAndYear)` or `labels.calendar.chooseMonth`, and over the months by `getChooseYearLabel(year)` or `labels.calendar.chooseYear`. Translate whole phrases.
+
+<FrameworkCanvas react={ReactStories.WithLocale} webComponents={WebComponentStories.WithLocale} />
+
+## Behaviour
+
+`value` is a `YYYY-MM-DD` date, or with `range` the ISO interval `YYYY-MM-DD/YYYY-MM-DD`, or `''`. A range is picked by its two ends in either order; the first pick shows only that day and reports nothing, and the second reports the whole range. A pick calls `onValueChange(value, details)` in React and dispatches `ui-value-change` in the web component, with `detail.value` and `originalEvent`.
+
+`month`, `YYYY-MM`, is the month the day grid shows. Without it the calendar shows the month of the value, or else the month of today. A move to another month calls `onMonthChange(month, details)` or dispatches `ui-month-change`, so that a page can load what that month needs. A value or month that the parent sets reports nothing.
+
+`min` and `max` are inclusive. `disabledDates` is an array of dates or a predicate, a property only in the web component. A disabled day stays in the keys and cannot be picked. A month or year is disabled only when `min` and `max` rule out all of it, since one excluded day must not hide its month.
+
+The week starts on `firstDayOfWeek`, from 1 for Monday to 7 for Sunday, or where the locale starts it, or on Monday when the browser has no week data. `today` marks a date as today; without it the browser's clock and time zone decide.
+
+React takes `value` and `month` controlled, or `defaultValue` and `defaultMonth` uncontrolled. The web component takes its first value and month from its attributes and holds the current ones in its properties.
+
+## Accessibility
+
+- **Pattern:** the grid of the WAI-ARIA Date Picker Dialog. The grid is named by the heading, which announces a new month politely. A cell is a `gridcell` named by its whole date, with `aria-selected`, `aria-current="date"` for today and `aria-disabled` for a day that cannot be picked.
+- **Keys:** one cell is in the order of the Tab key. The arrows move by a day and a week in the direction of the text, Home and End to the edges of the week, Page Up and Page Down by a month and with Shift by a year. Enter and Space pick. Over the months and years the arrows move by cell, Home and End to the edges of the row, and Page Up and Page Down by a year or a page. Escape goes back one grid; over the days it reaches the page, which can close a popup around the calendar.
+- **Preferences:** logical layout and mirrored chevrons in right-to-left text; the chosen cells keep an outline in forced colours.
+
+## Surfaces & themes
+
+The cells, the band and the today ring follow `color/calendar/*`, which follow the roles of the surface and the theme. The previous and next buttons are ghost IconButtons.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Calendar" />}
+  webComponents={<WebComponentApi tag="ui-calendar" />}
+/>
+
+## Tokens
+
+<ComponentTokens component="calendar" />
+
+## Implementation notes
+
+- Both implementations take the grid, the keys, the picks and the names from `calendar-grid` in shared. Each renders the table, moves the focus and dispatches its own events.
+- The web component reads today from the browser when it connects. React reads it after hydration, so a server and the first render in the browser mark no day as today and, without a value or month, render an empty calendar.
+- Keys can arrive faster than the web component renders, so each key moves from its latest state.

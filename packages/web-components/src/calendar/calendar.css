@@ -1,0 +1,179 @@
+:host {
+  display: inline-block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.base {
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--calendar-header-gap);
+  font-family: var(--calendar-font-family);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--calendar-header-gap);
+}
+
+.heading {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: var(--calendar-day-radius);
+  background: none;
+  color: var(--color-calendar-header-text);
+  font-family: inherit;
+  font-size: var(--calendar-header-font-size);
+  font-weight: var(--calendar-header-font-weight);
+  line-height: var(--calendar-header-line-height);
+}
+
+.zoom {
+  cursor: pointer;
+}
+
+.zoom:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* The chevrons point along the reading direction. */
+.chevron {
+  display: inline-flex;
+}
+
+.chevron:dir(rtl) > svg {
+  transform: scaleX(-1);
+}
+
+.grid {
+  inline-size: calc(var(--calendar-day-size) * 7);
+  border-collapse: collapse;
+  border-spacing: 0;
+  table-layout: fixed;
+}
+
+.weekday {
+  padding: 0;
+  color: var(--color-calendar-weekday-text);
+  font-size: var(--calendar-weekday-font-size);
+  font-weight: var(--calendar-weekday-font-weight);
+  line-height: var(--calendar-weekday-line-height);
+  text-align: center;
+}
+
+.cell {
+  --_background: var(--color-calendar-day-background-default);
+  --_text: var(--color-calendar-day-text-default);
+
+  position: relative;
+  block-size: var(--calendar-day-size);
+  padding: var(--calendar-day-gap);
+  color: var(--_text);
+  font-size: var(--calendar-day-font-size);
+  font-weight: var(--calendar-day-font-weight);
+  line-height: var(--calendar-day-line-height);
+  text-align: center;
+  cursor: pointer;
+}
+
+.cell:focus-visible {
+  outline: none;
+}
+
+.cell-label {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--calendar-day-size);
+  block-size: var(--calendar-day-size);
+  border-radius: var(--calendar-day-radius);
+  background-color: var(--_background);
+  vertical-align: middle;
+}
+
+/* A month or a year fills its column, which is wider than a day. */
+.months .cell-label,
+.years .cell-label {
+  inline-size: 100%;
+}
+
+.current > .cell-label {
+  box-shadow: inset 0 0 0 var(--calendar-today-border-width) var(--color-calendar-day-border-today);
+}
+
+.cell:focus-visible > .cell-label {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+/* Hover and press share the active state. */
+.cell:is(:hover, :active):not(
+    .disabled,
+    .empty,
+    .selection-selected,
+    .selection-start,
+    .selection-end
+  ) {
+  --_background: var(--color-calendar-day-background-active);
+}
+
+.outside {
+  --_text: var(--color-calendar-day-text-outside);
+}
+
+:is(.selection-selected, .selection-start, .selection-end) {
+  --_background: var(--color-calendar-day-background-selected);
+  --_text: var(--color-calendar-day-text-selected);
+}
+
+.selection-middle {
+  --_text: var(--color-calendar-day-text-in-range);
+
+  background-color: var(--color-calendar-day-background-in-range);
+}
+
+/* The band of a range runs from the middle of its first day to the middle of its last. */
+:is(.selection-start, .selection-end)::before {
+  position: absolute;
+  inset-block: var(--calendar-day-gap);
+  inline-size: 50%;
+  background-color: var(--color-calendar-day-background-in-range);
+  content: '';
+}
+
+.selection-start::before {
+  inset-inline-end: 0;
+}
+
+.selection-end::before {
+  inset-inline-start: 0;
+}
+
+.disabled {
+  --_text: var(--color-calendar-day-text-disabled);
+
+  cursor: default;
+}
+
+.empty {
+  cursor: default;
+}
+
+@media (forced-colors: active) {
+  :is(.selection-selected, .selection-start, .selection-end) > .cell-label {
+    outline: var(--calendar-today-border-width) solid Highlight;
+  }
+
+  .disabled {
+    color: GrayText;
+  }
+}

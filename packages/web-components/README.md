@@ -11,6 +11,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Badge          | `ui-badge`            | `./badge`            |
 | Breadcrumbs    | `ui-breadcrumbs`      | `./breadcrumbs`      |
 | Button         | `ui-button`           | `./button`           |
+| Calendar       | `ui-calendar`         | `./calendar`         |
 | CheckboxField  | `ui-checkbox-field`   | `./checkbox-field`   |
 | Chip           | `ui-chip`             | `./chip`             |
 | Combobox       | `ui-combobox`         | `./combobox`         |

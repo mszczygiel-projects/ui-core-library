@@ -29,6 +29,9 @@ const source = (args: DateFieldProps) =>
     disabled: args.disabled,
     readonly: args.readOnly,
     required: args.required,
+    'hide-calendar-button': args.hideCalendarButton,
+    'first-day-of-week': args.firstDayOfWeek,
+    today: args.today,
   });
 
 const meta = {
@@ -45,6 +48,7 @@ const meta = {
     disabled: false,
     readOnly: false,
     required: false,
+    hideCalendarButton: false,
   },
   argTypes: {
     label: { control: 'text' },
@@ -63,6 +67,11 @@ const meta = {
     min: { control: 'text' },
     max: { control: 'text' },
     disabledDates: { control: false },
+    hideCalendarButton: { control: 'boolean' },
+    open: { control: 'boolean' },
+    firstDayOfWeek: { control: { type: 'number', min: 1, max: 7 } },
+    today: { control: 'text' },
+    openCalendarLabel: { control: 'text' },
     getFormatHintLabel: { control: false },
     getValidationMessageLabel: { control: false },
   },

@@ -36,6 +36,8 @@ export interface UiCoreLabels {
     readonly validationMessage: (context: FieldValidationContext) => string;
   };
   readonly dateField: {
+    /** The name of the button that opens the calendar of a date field. */
+    readonly openCalendar: string;
     /** A complete sentence describing the expected display format. */
     readonly formatHint: (example: string) => string;
     /** A complete sentence describing the failed constraint. */
@@ -48,6 +50,24 @@ export interface UiCoreLabels {
   readonly button: {
     /** The description of a button while its action is in progress. */
     readonly loading: string;
+  };
+  readonly calendar: {
+    /** The name of the button that shows the previous month. */
+    readonly previousMonth: string;
+    /** The name of the button that shows the next month. */
+    readonly nextMonth: string;
+    /** The name of the button that shows the previous year in the month grid. */
+    readonly previousYear: string;
+    /** The name of the button that shows the next year in the month grid. */
+    readonly nextYear: string;
+    /** The name of the button that shows the previous page of years. */
+    readonly previousYears: string;
+    /** The name of the button that shows the next page of years. */
+    readonly nextYears: string;
+    /** The name of the heading button that opens the month grid, with the month it shows. */
+    readonly chooseMonth: (monthAndYear: string) => string;
+    /** The name of the heading button that opens the year grid, with the year it shows. */
+    readonly chooseYear: (year: string) => string;
   };
   readonly chip: {
     /** The word that names the dismiss button of a chip, read before the text of the chip. */
@@ -166,6 +186,7 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
     },
   },
   dateField: {
+    openCalendar: 'Choose date',
     formatHint: (example) => `Use the format ${example}.`,
     validationMessage: ({ reason, min, max }) => {
       switch (reason) {
@@ -186,6 +207,16 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   },
   breadcrumbs: { label: 'Breadcrumb' },
   button: { loading: 'Loading' },
+  calendar: {
+    previousMonth: 'Previous month',
+    nextMonth: 'Next month',
+    previousYear: 'Previous year',
+    nextYear: 'Next year',
+    previousYears: 'Previous years',
+    nextYears: 'Next years',
+    chooseMonth: (monthAndYear) => `${monthAndYear}, choose a month`,
+    chooseYear: (year) => `${year}, choose a year`,
+  },
   chip: { dismiss: 'Remove' },
   combobox: { clear: 'Clear', create: (query) => `Create “${query}”` },
   dialog: { close: 'Close' },

@@ -71,10 +71,14 @@ const accessibleNode: BrowserCommand<[string]> = async ({ page }, frameId) => {
   }
 };
 
-/** The first native dialog below a node, shadow roots included. */
+/**
+ * The first open native dialog below a node, shadow roots included. A closed one, such as the
+ * calendar dialog of DateField, is not in the tree at all.
+ */
 function findDialog(node: DomNode): DomNode | undefined {
   for (const child of [...(node.children ?? []), ...(node.shadowRoots ?? [])]) {
-    const found = child.nodeName === 'DIALOG' ? child : findDialog(child);
+    const open = child.nodeName === 'DIALOG' && (child.attributes ?? []).includes('open');
+    const found = open ? child : findDialog(child);
     if (found !== undefined) {
       return found;
     }
