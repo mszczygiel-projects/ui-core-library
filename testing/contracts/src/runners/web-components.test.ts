@@ -1,6 +1,7 @@
 import '@mszczygiel-projects/ui-core-web-components/badge';
 import '@mszczygiel-projects/ui-core-web-components/breadcrumbs';
 import '@mszczygiel-projects/ui-core-web-components/button';
+import '@mszczygiel-projects/ui-core-web-components/calendar';
 import '@mszczygiel-projects/ui-core-web-components/checkbox-field';
 import '@mszczygiel-projects/ui-core-web-components/chip';
 import '@mszczygiel-projects/ui-core-web-components/combobox';
@@ -31,6 +32,7 @@ import { describe } from 'vitest';
 import { mountWebComponentBadge } from '../harness/badge.tsx';
 import { mountWebComponentBreadcrumbs } from '../harness/breadcrumbs.tsx';
 import { mountWebComponentButton } from '../harness/button.tsx';
+import { mountWebComponentCalendar } from '../harness/calendar.tsx';
 import { mountWebComponentCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountWebComponentChip } from '../harness/chip.tsx';
 import { mountWebComponentCombobox } from '../harness/combobox.tsx';
@@ -58,6 +60,7 @@ import { webComponentMount } from '../harness/web-component.ts';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
+import { calendarContract } from '../specs/calendar.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
@@ -196,4 +199,8 @@ describe('Popover, web component', () => {
 
 describe('Tooltip, web component', () => {
   tooltipContract(mountWebComponentTooltip);
+});
+
+describe('Calendar, web component', () => {
+  calendarContract(mountWebComponentCalendar);
 });

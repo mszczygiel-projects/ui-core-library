@@ -1,14 +1,8 @@
 import { resolveLocale } from '@mszczygiel-projects/ui-core-shared/locale';
 import type { ParsedInput } from '@mszczygiel-projects/ui-core-shared/parsed-input';
-import {
-  type RefObject,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from 'react';
+import { type RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 
+import { useBrowserLanguage } from './use-browser.ts';
 import { useUiCoreConfig } from './use-ui-core-config.ts';
 
 interface ParsedFieldOptions<Value extends number | string | null, Error extends string> {
@@ -33,16 +27,12 @@ function acceptedValue<Value>(value: Value | undefined, fallback: Value): Value 
   return value;
 }
 
-const subscribeLanguage = () => () => undefined;
-const browserLanguage = () => navigator.language;
-const serverLanguage = () => undefined;
-
 /** Keeps editable text separate from the canonical entry accepted by the application. */
 export function useParsedField<Value extends number | string | null, Error extends string>(
   options: ParsedFieldOptions<Value, Error>,
 ) {
   const config = useUiCoreConfig();
-  const browserLocale = useSyncExternalStore(subscribeLanguage, browserLanguage, serverLanguage);
+  const browserLocale = useBrowserLanguage();
   const configured = resolveLocale(options.locale, config.locale, browserLocale);
   const [editingLocale, setEditingLocale] = useState<string>();
   const [touched, setTouched] = useState(false);

@@ -12,6 +12,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Badge          | `Badge`          |
 | Breadcrumbs    | `Breadcrumbs`    |
 | Button         | `Button`         |
+| Calendar       | `Calendar`       |
 | CheckboxField  | `CheckboxField`  |
 | Chip           | `Chip`           |
 | Combobox       | `Combobox`       |

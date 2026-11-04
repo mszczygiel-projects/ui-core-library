@@ -6,6 +6,7 @@ import { describe } from 'vitest';
 import { mountReactBadge } from '../harness/badge.tsx';
 import { mountReactBreadcrumbs } from '../harness/breadcrumbs.tsx';
 import { mountReactButton } from '../harness/button.tsx';
+import { mountReactCalendar } from '../harness/calendar.tsx';
 import { mountReactCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountReactChip } from '../harness/chip.tsx';
 import { mountReactCombobox } from '../harness/combobox.tsx';
@@ -33,6 +34,7 @@ import { mountReactTooltip } from '../harness/tooltip.tsx';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
+import { calendarContract } from '../specs/calendar.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
@@ -177,4 +179,8 @@ describe('Popover, React', () => {
 
 describe('Tooltip, React', () => {
   tooltipContract(mountReactTooltip);
+});
+
+describe('Calendar, React', () => {
+  calendarContract(mountReactCalendar);
 });

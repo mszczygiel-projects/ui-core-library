@@ -9,6 +9,7 @@ import { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-proj
 import { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 import { BreadcrumbsNavigate } from "./breadcrumbs/events";
 import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+import { CalendarChange } from "./calendar/events";
 import { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
 import { CheckedChange } from "./checkbox-field/events";
 import { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
@@ -50,6 +51,7 @@ export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-proj
 export { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 export { BreadcrumbsNavigate } from "./breadcrumbs/events";
 export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+export { CalendarChange } from "./calendar/events";
 export { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
 export { CheckedChange } from "./checkbox-field/events";
 export { ChipSize, ChipVariant } from "@mszczygiel-projects/ui-core-shared/chip";
@@ -201,6 +203,91 @@ export namespace Components {
           * @default 'primary'
          */
         "variant": ButtonVariant;
+    }
+    /**
+     * A month of days, with a grid of months and of years behind its heading, to pick a date or a range.
+     * The days form a WAI-ARIA grid labelled by the heading, with one cell in the order of the Tab
+     * key. The arrow keys move by a day and a week in the direction of the text, Home and End to the
+     * edges of the week, and Page Up and Page Down by a month, or a year with Shift. Enter, Space or a
+     * press picks a day. The heading button opens a grid of the months of the year and then a page of
+     * 24 years, and Escape goes back one grid. With `range` a user picks the first and then the last
+     * day, and the value is the ISO interval `start/end`. A disabled day stays in the order of the
+     * keys but cannot be picked, and a month or year that `min` and `max` rule out entirely is
+     * disabled too. The `value` and `month` attributes are the first value and month, and the
+     * properties the current ones. A pick dispatches `ui-value-change`, and every new month in the
+     * day grid `ui-month-change`; a value or month that the page sets dispatches nothing.
+     */
+    interface UiCalendar {
+        /**
+          * Dates a user cannot pick, or a predicate for them. A property only.
+         */
+        "disabledDates"?: readonly string[] | ((iso: string) => boolean);
+        /**
+          * The first day of the week, from 1 for Monday to 7 for Sunday; the locale decides without it.
+         */
+        "firstDayOfWeek"?: number;
+        /**
+          * The name of the heading button over the days, falling back to `labels.calendar.chooseMonth`.
+         */
+        "getChooseMonthLabel"?: (monthAndYear: string) => string;
+        /**
+          * The name of the heading button over the months, falling back to `labels.calendar.chooseYear`.
+         */
+        "getChooseYearLabel"?: (year: string) => string;
+        /**
+          * The language of the names of months and days; falls back to the configured locale.
+         */
+        "locale"?: string;
+        /**
+          * Latest date a user can pick, `YYYY-MM-DD`.
+         */
+        "max"?: string;
+        /**
+          * Earliest date a user can pick, `YYYY-MM-DD`.
+         */
+        "min"?: string;
+        /**
+          * The month the calendar shows, `YYYY-MM`. The attribute is the first month and the property the current one. Without it the calendar shows the month of the value, or else of today.
+         */
+        "month"?: string;
+        /**
+          * The name of the next-month button, falling back to `labels.calendar.nextMonth`.
+         */
+        "nextMonthLabel"?: string;
+        /**
+          * The name of the next-year button, falling back to `labels.calendar.nextYear`.
+         */
+        "nextYearLabel"?: string;
+        /**
+          * The name of the next-years button, falling back to `labels.calendar.nextYears`.
+         */
+        "nextYearsLabel"?: string;
+        /**
+          * The name of the previous-month button, falling back to `labels.calendar.previousMonth`.
+         */
+        "previousMonthLabel"?: string;
+        /**
+          * The name of the previous-year button, falling back to `labels.calendar.previousYear`.
+         */
+        "previousYearLabel"?: string;
+        /**
+          * The name of the previous-years button, falling back to `labels.calendar.previousYears`.
+         */
+        "previousYearsLabel"?: string;
+        /**
+          * Makes the value a range, which a user picks by its first and last day.
+          * @default false
+         */
+        "range": boolean;
+        /**
+          * Today's date, `YYYY-MM-DD`, which the calendar marks; the browser's clock decides without it.
+         */
+        "today"?: string;
+        /**
+          * The chosen date, `YYYY-MM-DD`, or with `range` the ISO interval `YYYY-MM-DD/YYYY-MM-DD`. The attribute is the first value and the property the current one.
+          * @default ''
+         */
+        "value": string;
     }
     /**
      * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
@@ -1693,6 +1780,10 @@ export interface UiBreadcrumbsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiBreadcrumbsElement;
 }
+export interface UiCalendarCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiCalendarElement;
+}
 export interface UiCheckboxFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiCheckboxFieldElement;
@@ -1821,6 +1912,37 @@ declare global {
     var HTMLUiButtonElement: {
         prototype: HTMLUiButtonElement;
         new (): HTMLUiButtonElement;
+    };
+    interface HTMLUiCalendarElementEventMap {
+        "ui-value-change": CalendarChange;
+        "ui-month-change": CalendarChange;
+    }
+    /**
+     * A month of days, with a grid of months and of years behind its heading, to pick a date or a range.
+     * The days form a WAI-ARIA grid labelled by the heading, with one cell in the order of the Tab
+     * key. The arrow keys move by a day and a week in the direction of the text, Home and End to the
+     * edges of the week, and Page Up and Page Down by a month, or a year with Shift. Enter, Space or a
+     * press picks a day. The heading button opens a grid of the months of the year and then a page of
+     * 24 years, and Escape goes back one grid. With `range` a user picks the first and then the last
+     * day, and the value is the ISO interval `start/end`. A disabled day stays in the order of the
+     * keys but cannot be picked, and a month or year that `min` and `max` rule out entirely is
+     * disabled too. The `value` and `month` attributes are the first value and month, and the
+     * properties the current ones. A pick dispatches `ui-value-change`, and every new month in the
+     * day grid `ui-month-change`; a value or month that the page sets dispatches nothing.
+     */
+    interface HTMLUiCalendarElement extends Components.UiCalendar, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiCalendarElementEventMap>(type: K, listener: (this: HTMLUiCalendarElement, ev: UiCalendarCustomEvent<HTMLUiCalendarElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiCalendarElementEventMap>(type: K, listener: (this: HTMLUiCalendarElement, ev: UiCalendarCustomEvent<HTMLUiCalendarElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiCalendarElement: {
+        prototype: HTMLUiCalendarElement;
+        new (): HTMLUiCalendarElement;
     };
     interface HTMLUiCheckboxFieldElementEventMap {
         "ui-checked-change": CheckedChange;
@@ -2416,6 +2538,7 @@ declare global {
         "ui-badge": HTMLUiBadgeElement;
         "ui-breadcrumbs": HTMLUiBreadcrumbsElement;
         "ui-button": HTMLUiButtonElement;
+        "ui-calendar": HTMLUiCalendarElement;
         "ui-checkbox-field": HTMLUiCheckboxFieldElement;
         "ui-chip": HTMLUiChipElement;
         "ui-combobox": HTMLUiComboboxElement;
@@ -2564,6 +2687,99 @@ declare namespace LocalJSX {
           * @default 'primary'
          */
         "variant"?: ButtonVariant;
+    }
+    /**
+     * A month of days, with a grid of months and of years behind its heading, to pick a date or a range.
+     * The days form a WAI-ARIA grid labelled by the heading, with one cell in the order of the Tab
+     * key. The arrow keys move by a day and a week in the direction of the text, Home and End to the
+     * edges of the week, and Page Up and Page Down by a month, or a year with Shift. Enter, Space or a
+     * press picks a day. The heading button opens a grid of the months of the year and then a page of
+     * 24 years, and Escape goes back one grid. With `range` a user picks the first and then the last
+     * day, and the value is the ISO interval `start/end`. A disabled day stays in the order of the
+     * keys but cannot be picked, and a month or year that `min` and `max` rule out entirely is
+     * disabled too. The `value` and `month` attributes are the first value and month, and the
+     * properties the current ones. A pick dispatches `ui-value-change`, and every new month in the
+     * day grid `ui-month-change`; a value or month that the page sets dispatches nothing.
+     */
+    interface UiCalendar {
+        /**
+          * Dates a user cannot pick, or a predicate for them. A property only.
+         */
+        "disabledDates"?: readonly string[] | ((iso: string) => boolean);
+        /**
+          * The first day of the week, from 1 for Monday to 7 for Sunday; the locale decides without it.
+         */
+        "firstDayOfWeek"?: number;
+        /**
+          * The name of the heading button over the days, falling back to `labels.calendar.chooseMonth`.
+         */
+        "getChooseMonthLabel"?: (monthAndYear: string) => string;
+        /**
+          * The name of the heading button over the months, falling back to `labels.calendar.chooseYear`.
+         */
+        "getChooseYearLabel"?: (year: string) => string;
+        /**
+          * The language of the names of months and days; falls back to the configured locale.
+         */
+        "locale"?: string;
+        /**
+          * Latest date a user can pick, `YYYY-MM-DD`.
+         */
+        "max"?: string;
+        /**
+          * Earliest date a user can pick, `YYYY-MM-DD`.
+         */
+        "min"?: string;
+        /**
+          * The month the calendar shows, `YYYY-MM`. The attribute is the first month and the property the current one. Without it the calendar shows the month of the value, or else of today.
+         */
+        "month"?: string;
+        /**
+          * The name of the next-month button, falling back to `labels.calendar.nextMonth`.
+         */
+        "nextMonthLabel"?: string;
+        /**
+          * The name of the next-year button, falling back to `labels.calendar.nextYear`.
+         */
+        "nextYearLabel"?: string;
+        /**
+          * The name of the next-years button, falling back to `labels.calendar.nextYears`.
+         */
+        "nextYearsLabel"?: string;
+        /**
+          * The day grid shows another month after a user moved to it.
+         */
+        "onUi-month-change"?: (event: UiCalendarCustomEvent<CalendarChange>) => void;
+        /**
+          * A user picked a date, or the last day of a range.
+         */
+        "onUi-value-change"?: (event: UiCalendarCustomEvent<CalendarChange>) => void;
+        /**
+          * The name of the previous-month button, falling back to `labels.calendar.previousMonth`.
+         */
+        "previousMonthLabel"?: string;
+        /**
+          * The name of the previous-year button, falling back to `labels.calendar.previousYear`.
+         */
+        "previousYearLabel"?: string;
+        /**
+          * The name of the previous-years button, falling back to `labels.calendar.previousYears`.
+         */
+        "previousYearsLabel"?: string;
+        /**
+          * Makes the value a range, which a user picks by its first and last day.
+          * @default false
+         */
+        "range"?: boolean;
+        /**
+          * Today's date, `YYYY-MM-DD`, which the calendar marks; the browser's clock decides without it.
+         */
+        "today"?: string;
+        /**
+          * The chosen date, `YYYY-MM-DD`, or with `range` the ISO interval `YYYY-MM-DD/YYYY-MM-DD`. The attribute is the first value and the property the current one.
+          * @default ''
+         */
+        "value"?: string;
     }
     /**
      * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
@@ -4259,6 +4475,22 @@ declare namespace LocalJSX {
         "label": string;
         "loadingLabel": string;
     }
+    interface UiCalendarAttributes {
+        "value": string;
+        "range": boolean;
+        "month": string;
+        "min": string;
+        "max": string;
+        "locale": string;
+        "firstDayOfWeek": number;
+        "today": string;
+        "previousMonthLabel": string;
+        "nextMonthLabel": string;
+        "previousYearLabel": string;
+        "nextYearLabel": string;
+        "previousYearsLabel": string;
+        "nextYearsLabel": string;
+    }
     interface UiCheckboxFieldAttributes {
         "label": string;
         "hint": string;
@@ -4565,6 +4797,7 @@ declare namespace LocalJSX {
         "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
         "ui-breadcrumbs": Omit<UiBreadcrumbs, keyof UiBreadcrumbsAttributes> & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes]?: UiBreadcrumbs[K] } & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes as `attr:${K}`]?: UiBreadcrumbsAttributes[K] } & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes as `prop:${K}`]?: UiBreadcrumbs[K] };
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
+        "ui-calendar": Omit<UiCalendar, keyof UiCalendarAttributes> & { [K in keyof UiCalendar & keyof UiCalendarAttributes]?: UiCalendar[K] } & { [K in keyof UiCalendar & keyof UiCalendarAttributes as `attr:${K}`]?: UiCalendarAttributes[K] } & { [K in keyof UiCalendar & keyof UiCalendarAttributes as `prop:${K}`]?: UiCalendar[K] };
         "ui-checkbox-field": Omit<UiCheckboxField, keyof UiCheckboxFieldAttributes> & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes]?: UiCheckboxField[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `attr:${K}`]?: UiCheckboxFieldAttributes[K] } & { [K in keyof UiCheckboxField & keyof UiCheckboxFieldAttributes as `prop:${K}`]?: UiCheckboxField[K] };
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
         "ui-combobox": Omit<UiCombobox, keyof UiComboboxAttributes> & { [K in keyof UiCombobox & keyof UiComboboxAttributes]?: UiCombobox[K] } & { [K in keyof UiCombobox & keyof UiComboboxAttributes as `attr:${K}`]?: UiComboboxAttributes[K] } & { [K in keyof UiCombobox & keyof UiComboboxAttributes as `prop:${K}`]?: UiCombobox[K] };
@@ -4621,6 +4854,20 @@ declare module "@stencil/core" {
              * that activation, and the outer submit event has no submitter.
              */
             "ui-button": LocalJSX.IntrinsicElements["ui-button"] & JSXBase.HTMLAttributes<HTMLUiButtonElement>;
+            /**
+             * A month of days, with a grid of months and of years behind its heading, to pick a date or a range.
+             * The days form a WAI-ARIA grid labelled by the heading, with one cell in the order of the Tab
+             * key. The arrow keys move by a day and a week in the direction of the text, Home and End to the
+             * edges of the week, and Page Up and Page Down by a month, or a year with Shift. Enter, Space or a
+             * press picks a day. The heading button opens a grid of the months of the year and then a page of
+             * 24 years, and Escape goes back one grid. With `range` a user picks the first and then the last
+             * day, and the value is the ISO interval `start/end`. A disabled day stays in the order of the
+             * keys but cannot be picked, and a month or year that `min` and `max` rule out entirely is
+             * disabled too. The `value` and `month` attributes are the first value and month, and the
+             * properties the current ones. A pick dispatches `ui-value-change`, and every new month in the
+             * day grid `ui-month-change`; a value or month that the page sets dispatches nothing.
+             */
+            "ui-calendar": LocalJSX.IntrinsicElements["ui-calendar"] & JSXBase.HTMLAttributes<HTMLUiCalendarElement>;
             /**
              * A checkbox with a label and hint that a user turns on and off, with a mixed state for a partial
              * selection.

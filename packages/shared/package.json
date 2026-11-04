@@ -22,6 +22,10 @@
       "types": "./dist/components/button.d.ts",
       "default": "./dist/components/button.js"
     },
+    "./calendar": {
+      "types": "./dist/components/calendar.d.ts",
+      "default": "./dist/components/calendar.js"
+    },
     "./calendar-grid": {
       "types": "./dist/utils/calendar-grid.d.ts",
       "default": "./dist/utils/calendar-grid.js"
@@ -114,7 +118,6 @@
       "types": "./dist/utils/one-of.d.ts",
       "default": "./dist/utils/one-of.js"
     },
-    "./package.json": "./package.json",
     "./paginate": {
       "types": "./dist/utils/paginate.d.ts",
       "default": "./dist/utils/paginate.js"
@@ -182,7 +185,8 @@
     "./tooltip-group": {
       "types": "./dist/utils/tooltip-group.d.ts",
       "default": "./dist/utils/tooltip-group.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "files": [
     "dist"

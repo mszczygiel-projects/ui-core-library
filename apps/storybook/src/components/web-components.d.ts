@@ -4,6 +4,7 @@ import type {
   BreadcrumbsProps,
 } from '@mszczygiel-projects/ui-core-shared/breadcrumbs';
 import type { ButtonProps } from '@mszczygiel-projects/ui-core-shared/button';
+import type { CalendarProps } from '@mszczygiel-projects/ui-core-shared/calendar';
 import type {
   CheckboxFieldProps,
   CheckedChangeDetail,
@@ -68,6 +69,7 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-calendar': CustomElement<CalendarProps>;
       'ui-tooltip': CustomElement<TooltipProps>;
       'ui-popover': CustomElement<
         PopoverProps & {
