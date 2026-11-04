@@ -63,7 +63,7 @@ The labels come from props, else from `labels.pagination`: the name of the navig
 - `pageCount`, `siblingCount` and `boundaryCount` decide the pages shown: the current page with `siblingCount` pages on each side and `boundaryCount` pages at each end, with an ellipsis for every gap of more than one page.
 - A press on a page, on previous or next, or a number committed in the jump field moves to a page. The web component emits the cancelable `ui-page-change` with `detail.page`, `detail.reason` (`page`, `previous`, `next` or `jump`), `detail.href` and `detail.originalEvent`, and holds the new page in `page` unless the event is canceled. React calls `onPageChange(page, details)`; it holds the page itself with `defaultPage`, or follows `page`.
 - The jump field commits on Enter or when it loses focus. Enter never submits a form around the control. A number out of range goes to the nearest page, and text that holds no number returns to the current page. In React the details of a move from the field carry a cancelable copy of its key or focus event, since a focus event cannot be canceled.
-- With `getPageHref` the pages are links that a crawler can follow, and the browser loads them. The previous and next buttons and the jump field stay buttons and a field: they load the address of their page with `location.assign`. Canceling the change, or calling `details.originalEvent.preventDefault()` in React, keeps the browser on the page, so that client-side routing moves on its own.
+- With `getPageHref` the pages and the previous and next controls are links that a crawler can follow, and the browser loads them. Previous and next carry `rel="prev"` and `rel="next"`, and at either end they are links without an address. The jump field stays a field: it loads the address of its page with `location.assign`. Canceling the change, or calling `details.originalEvent.preventDefault()` in React, keeps the browser on the page, so that client-side routing moves on its own.
 
 <Source
   language="tsx"
@@ -88,7 +88,7 @@ The labels come from props, else from `labels.pagination`: the name of the navig
 
 ## Surfaces & themes
 
-The pages, the ellipsis and the status use the colours of pagination, and the previous and next buttons those of the ghost IconButton, aliases of the action, text and border roles, so they follow Light and Dark and the default, subtle, inverse and primary surfaces.
+The pages, the ellipsis and the status use the colours of pagination, and the previous and next controls those of the ghost IconButton, aliases of the action, text and border roles, so they follow Light and Dark and the default, subtle, inverse and primary surfaces.
 
 ## API
 

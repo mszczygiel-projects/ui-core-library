@@ -35,8 +35,9 @@ declare global {
  * ellipsis where pages are left out. The current page carries `aria-current="page"`. Without
  * `getPageHref` the pages are buttons; with it they are links that a crawler can follow. Every
  * move dispatches the cancelable `ui-page-change` with the new page and its reason. Unless the
- * page cancels it, the element takes the new page; a link follows its address, and in link mode
- * the previous, next and jump controls load the address of their page. The `page` attribute is
+ * page cancels it, the element takes the new page and a link follows its address. In link mode
+ * the previous and next controls are links too, so that a crawler reaches every page, and the
+ * jump field loads the address of its page. The `page` attribute is
  * the first page and the property the current one. The optional status reads such as "Page 5 of
  * 10", and the optional jump field moves to a typed page on Enter or when it loses the focus. In
  * a container narrower than `breakpoint/sm` the pages give way to the status, or to the jump
@@ -44,8 +45,8 @@ declare global {
  * instead of the label.
  *
  * @part base - The navigation landmark, which is the container of the width queries.
- * @part previous - The button that moves to the previous page.
- * @part next - The button that moves to the next page.
+ * @part previous - The button or link that moves to the previous page.
+ * @part next - The button or link that moves to the next page.
  * @part list - The list of the pages.
  * @part item - One entry of the list.
  * @part page - The button or link of a page.
@@ -56,7 +57,11 @@ declare global {
  * @part jump-field - The NumberField that takes the page to move to.
  * @part jump-total - The text after the jump field in a narrow container.
  */
-@Component({ tag: 'ui-pagination', styleUrl: 'pagination.css', shadow: true })
+@Component({
+  tag: 'ui-pagination',
+  styleUrls: ['../internal/action.css', 'pagination.css'],
+  shadow: true,
+})
 export class UiPagination implements PaginationProps {
   @Element() host!: HTMLUiPaginationElement;
 
@@ -166,18 +171,7 @@ export class UiPagination implements PaginationProps {
         class={`base${this.showStatus ? ' with-status' : ''}${this.showJump ? ' with-jump' : ''}`}
         aria-label={this.authorLabel ?? this.label ?? labels.label}
       >
-        <ui-icon-button
-          part="previous"
-          class="previous"
-          variant="ghost"
-          label={this.previousLabel ?? labels.previous}
-          disabled={disabled || current <= 1}
-          onClick={(event: MouseEvent) => {
-            this.move(current - 1, 'previous', event, true);
-          }}
-        >
-          <span slot="icon" class="chevron" innerHTML={iconChevronLeft} />
-        </ui-icon-button>
+        {this.renderStep('previous', current - 1, current <= 1, href)}
         <ol part="list" class="list">
           {paginate(current, count, {
             siblings: this.siblingCount,
@@ -192,18 +186,7 @@ export class UiPagination implements PaginationProps {
             </li>
           ))}
         </ol>
-        <ui-icon-button
-          part="next"
-          class="next"
-          variant="ghost"
-          label={this.nextLabel ?? labels.next}
-          disabled={disabled || current >= count}
-          onClick={(event: MouseEvent) => {
-            this.move(current + 1, 'next', event, true);
-          }}
-        >
-          <span slot="icon" class="chevron" innerHTML={iconChevronRight} />
-        </ui-icon-button>
+        {this.renderStep('next', current + 1, current >= count, href)}
         {/* Without the jump field, a narrow container shows the status in place of the pages. */}
         {(this.showStatus || !this.showJump) && (
           <span part="status" class={`status${this.showStatus ? '' : ' fallback'}`}>
@@ -250,6 +233,58 @@ export class UiPagination implements PaginationProps {
           </span>
         )}
       </nav>
+    );
+  }
+
+  /**
+   * The previous or next control. In link mode it is a link with the address of its page, which a
+   * crawler follows, and at either end a link without an address, as a disabled page is.
+   */
+  private renderStep(
+    step: 'previous' | 'next',
+    page: number,
+    atEnd: boolean,
+    href?: (page: number) => string,
+  ): VNode {
+    const labels = this.config.labels.pagination;
+    const label =
+      step === 'previous'
+        ? (this.previousLabel ?? labels.previous)
+        : (this.nextLabel ?? labels.next);
+    const chevron = step === 'previous' ? iconChevronLeft : iconChevronRight;
+    const onClick = (event: MouseEvent) => {
+      this.move(page, step, event, false);
+    };
+    if (href === undefined) {
+      return (
+        <ui-icon-button
+          part={step}
+          class={step}
+          variant="ghost"
+          label={label}
+          disabled={this.disabled || atEnd}
+          onClick={onClick}
+        >
+          <span slot="icon" class="chevron" innerHTML={chevron} />
+        </ui-icon-button>
+      );
+    }
+    const inactive = this.disabled || atEnd;
+    return (
+      <a
+        part={step}
+        class={`${step} step action ghost${inactive ? ' disabled' : ''}`}
+        href={inactive ? undefined : href(page)}
+        rel={inactive ? undefined : step === 'previous' ? 'prev' : 'next'}
+        role={inactive ? 'link' : undefined}
+        aria-disabled={inactive ? 'true' : undefined}
+        aria-label={label}
+        onClick={inactive ? undefined : onClick}
+      >
+        <span class="step-icon" aria-hidden="true">
+          <span class="chevron" innerHTML={chevron} />
+        </span>
+      </a>
     );
   }
 
@@ -307,7 +342,7 @@ export class UiPagination implements PaginationProps {
 
   /**
    * Moves to a page unless the event is canceled. A link follows its own address; in link mode
-   * a control without one loads the address of its page.
+   * the jump field, which has none, loads the address of its page.
    */
   private move(page: number, reason: PaginationChangeReason, event: Event, load: boolean): void {
     if (this.disabled) {

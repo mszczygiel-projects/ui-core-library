@@ -7,7 +7,13 @@ import type {
   PaginationPageChangeDetails,
   PaginationProps as SharedPaginationProps,
 } from '@mszczygiel-projects/ui-core-shared/pagination';
-import { type ComponentPropsWithRef, useLayoutEffect, useRef, useState } from 'react';
+import {
+  type ComponentPropsWithRef,
+  startTransition,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { IconButton } from '../icon-button/IconButton.tsx';
 import { classNames } from '../internal/class-names.ts';
@@ -55,8 +61,8 @@ function cancelableCopy(event: Event): Event {
  *
  * A navigation landmark holds the previous and next buttons and a list of the pages, with an
  * ellipsis where pages are left out. The current page carries `aria-current="page"`. Without
- * `getPageHref` the pages are buttons; with it they are links that a crawler can follow, and the
- * previous, next and jump controls load the address of their page. It is controlled with `page`
+ * `getPageHref` the pages are buttons; with it the pages and the previous and next controls are
+ * links that a crawler can follow, and the jump field loads the address of its page. It is controlled with `page`
  * or uncontrolled with `defaultPage`. The optional status reads such as "Page 5 of 10", and the
  * optional jump field moves to a typed page on Enter or when it loses the focus. In a container
  * narrower than `breakpoint/sm` the pages give way to the status, or to the jump field when it
@@ -104,7 +110,7 @@ export function Pagination({
 
   /**
    * Moves to a page unless the event is canceled. A link follows its own address; in link mode
-   * a control without one loads the address of its page.
+   * the jump field, which has none, loads the address of its page.
    */
   function move(next: number, reason: PaginationChangeReason, event: Event, load: boolean) {
     if (disabled) {
@@ -116,10 +122,79 @@ export function Pagination({
     if (event.defaultPrevented) {
       return;
     }
-    setUncontrolled(next);
+    if (href !== undefined && !load) {
+      // A link reads its address after the click, and React renders the update of a click before
+      // that. A transition renders later, so previous and next keep the address that was pressed.
+      startTransition(() => {
+        setUncontrolled(next);
+      });
+    } else {
+      setUncontrolled(next);
+    }
     if (load && href !== undefined) {
       window.location.assign(href);
     }
+  }
+
+  /**
+   * The previous or next control. In link mode it is a link with the address of its page, which a
+   * crawler follows, and at either end a link without an address, as a disabled page is.
+   */
+  function renderStep(step: 'previous' | 'next', target: number, atEnd: boolean) {
+    const name =
+      step === 'previous' ? (previousLabel ?? labels.previous) : (nextLabel ?? labels.next);
+    const chevron = (
+      <span
+        className="ui-pagination__chevron"
+        dangerouslySetInnerHTML={{
+          __html: step === 'previous' ? iconChevronLeft : iconChevronRight,
+        }}
+      />
+    );
+    if (getPageHref === undefined) {
+      return (
+        <IconButton
+          className={`ui-pagination__${step}`}
+          variant="ghost"
+          label={name}
+          disabled={disabled || atEnd}
+          icon={chevron}
+          onClick={(event) => {
+            move(target, step, event.nativeEvent, false);
+          }}
+        />
+      );
+    }
+    const inactive = disabled || atEnd;
+    return (
+      <a
+        className={classNames(
+          'ui-icon-button',
+          'ui-action',
+          'ui-action--ghost',
+          'ui-action--medium',
+          'ui-pagination__step',
+          `ui-pagination__${step}`,
+          inactive && 'ui-action--disabled',
+        )}
+        href={inactive ? undefined : getPageHref(target)}
+        rel={inactive ? undefined : step === 'previous' ? 'prev' : 'next'}
+        role={inactive ? 'link' : undefined}
+        aria-disabled={inactive ? 'true' : undefined}
+        aria-label={name}
+        onClick={
+          inactive
+            ? undefined
+            : (event) => {
+                move(target, step, event.nativeEvent, false);
+              }
+        }
+      >
+        <span className="ui-icon-button__icon" aria-hidden="true">
+          {chevron}
+        </span>
+      </a>
+    );
   }
 
   /** Moves to the typed page, kept within the pages, and shows the current page again. */
@@ -149,21 +224,7 @@ export function Pagination({
       aria-label={ariaLabel ?? label ?? labels.label}
       {...rest}
     >
-      <IconButton
-        className="ui-pagination__previous"
-        variant="ghost"
-        label={previousLabel ?? labels.previous}
-        disabled={disabled || current <= 1}
-        icon={
-          <span
-            className="ui-pagination__chevron"
-            dangerouslySetInnerHTML={{ __html: iconChevronLeft }}
-          />
-        }
-        onClick={(event) => {
-          move(current - 1, 'previous', event.nativeEvent, true);
-        }}
-      />
+      {renderStep('previous', current - 1, current <= 1)}
       <ol className="ui-pagination__list">
         {paginate(current, count, { siblings: siblingCount, boundaries: boundaryCount }).map(
           (entry, index) => {
@@ -225,21 +286,7 @@ export function Pagination({
           },
         )}
       </ol>
-      <IconButton
-        className="ui-pagination__next"
-        variant="ghost"
-        label={nextLabel ?? labels.next}
-        disabled={disabled || current >= count}
-        icon={
-          <span
-            className="ui-pagination__chevron"
-            dangerouslySetInnerHTML={{ __html: iconChevronRight }}
-          />
-        }
-        onClick={(event) => {
-          move(current + 1, 'next', event.nativeEvent, true);
-        }}
-      />
+      {renderStep('next', current + 1, current >= count)}
       {/* Without the jump field, a narrow container shows the status in place of the pages. */}
       {(showStatus || !showJump) && (
         <span

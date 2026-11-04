@@ -84,6 +84,32 @@
   --_text: var(--color-pagination-item-foreground-active);
 }
 
+/*
+ * In link mode the previous and next links take the surface of a ghost IconButton: a square of
+ * the stack padding around a box as tall as the line of a button.
+ */
+.step {
+  padding-inline: var(--_padding-stack);
+  text-decoration: none;
+}
+
+.step-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--_line-height) * var(--_font-size));
+  block-size: calc(var(--_line-height) * var(--_font-size));
+  font-size: var(--_icon-size);
+  pointer-events: none;
+}
+
+.step-icon > .chevron {
+  display: inline-flex;
+  inline-size: var(--_icon-size);
+  block-size: var(--_icon-size);
+}
+
 /* The chevrons point along the reading direction. */
 .chevron:dir(rtl) > svg {
   transform: scaleX(-1);
