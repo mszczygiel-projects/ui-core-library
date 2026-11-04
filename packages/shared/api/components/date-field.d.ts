@@ -5,7 +5,7 @@ export declare const dateField: {
     readonly tag: "ui-date-field";
     readonly category: "Inputs";
     readonly status: "in-progress";
-    readonly figma: "3018:39";
+    readonly figma: "3190:372";
     readonly design: {
         readonly nested: "TextField";
         readonly flags: readonly ["open"];
