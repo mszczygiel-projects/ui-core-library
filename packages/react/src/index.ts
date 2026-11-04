@@ -65,6 +65,18 @@ export {
   type ListboxValueChangeDetails,
 } from './listbox/Listbox.tsx';
 export { Loader, type LoaderProps, type LoaderSize } from './loader/Loader.tsx';
+export {
+  Menu,
+  type MenuActionDetails,
+  type MenuAlign,
+  type MenuGroup,
+  type MenuItem,
+  type MenuItems,
+  type MenuOpenChangeDetails,
+  type MenuPlacement,
+  type MenuProps,
+  type MenuSize,
+} from './menu/Menu.tsx';
 export { Notification, type NotificationProps } from './notification/Notification.tsx';
 export {
   NumberField,
@@ -96,6 +108,12 @@ export {
   type SelectFieldOpenChangeDetails,
   type SelectFieldProps,
 } from './select-field/SelectField.tsx';
+export {
+  SplitButton,
+  type SplitButtonActionDetails,
+  type SplitButtonOpenChangeDetails,
+  type SplitButtonProps,
+} from './split-button/SplitButton.tsx';
 export {
   SwitchField,
   type SwitchFieldLabelPosition,

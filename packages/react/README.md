@@ -24,6 +24,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | LinkButton     | `LinkButton`     |
 | Listbox        | `Listbox`        |
 | Loader         | `Loader`         |
+| Menu           | `Menu`           |
 | Notification   | `Notification`   |
 | NumberField    | `NumberField`    |
 | Pagination     | `Pagination`     |
@@ -33,6 +34,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | RadioGroup     | `RadioGroup`     |
 | SearchField    | `SearchField`    |
 | SelectField    | `SelectField`    |
+| SplitButton    | `SplitButton`    |
 | SwitchField    | `SwitchField`    |
 | TextField      | `TextField`      |
 | TextareaField  | `TextareaField`  |
