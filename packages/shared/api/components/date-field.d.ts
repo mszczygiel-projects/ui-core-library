@@ -9,7 +9,7 @@ export declare const dateField: {
     readonly design: {
         readonly nested: "TextField";
         readonly flags: readonly ["open"];
-        readonly booleans: readonly ["hideCalendarButton"];
+        readonly booleans: readonly [];
         readonly previews: {};
         readonly codeOnly: readonly ["locale", "min", "max", "disabledDates", "firstDayOfWeek", "today", "openCalendarLabel", "readOnly", "required", "name", "autoComplete", "getFormatHintLabel", "getValidationMessageLabel"];
     };

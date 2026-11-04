@@ -25,7 +25,8 @@ const label = field.getString('label');
 const placeholder = field.getString('placeholder');
 // Figma display text cannot determine a canonical value or its locale.
 const hint = field.getBoolean('showHint') ? field.getString('hint') : undefined;
-const hideCalendarButton = instance.getBoolean('hideCalendarButton');
+// The trailing icon of the field is the calendar button, which a designer hides there.
+const hideCalendarButton = !field.getBoolean('showTrailingIcon');
 const escape = (text: string) =>
   text
     .replaceAll('&', '&amp;')

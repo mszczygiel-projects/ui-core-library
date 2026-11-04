@@ -7,7 +7,7 @@ export const calendar = defineComponent({
   tag: 'ui-calendar',
   category: 'Inputs',
   status: 'in-progress',
-  figma: '2107:46',
+  figma: '3187:577',
   design: {
     flags: ['range'],
     booleans: [],

@@ -13,7 +13,7 @@ export const dateField = defineComponent({
   design: {
     nested: 'TextField',
     flags: ['open'],
-    booleans: ['hideCalendarButton'],
+    booleans: [],
     previews: {},
     codeOnly: [
       'locale',

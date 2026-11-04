@@ -25,7 +25,8 @@ const label = field.getString('label');
 const placeholder = field.getString('placeholder');
 // Figma display text cannot determine a canonical value or its locale.
 const hint = field.getBoolean('showHint') ? field.getString('hint') : undefined;
-const hideCalendarButton = instance.getBoolean('hideCalendarButton');
+// The trailing icon of the field is the calendar button, which a designer hides there.
+const hideCalendarButton = !field.getBoolean('showTrailingIcon');
 export default {
   example: figma.code`<DateField${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` labelPlacement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label={${JSON.stringify(label)}}` : ''}${placeholder ? figma.code` placeholder={${JSON.stringify(placeholder)}}` : ''}${hint ? figma.code` hint={${JSON.stringify(hint)}}` : ''}${hideCalendarButton ? ' hideCalendarButton' : ''}${disabled ? ' disabled' : ''} />`,
   imports: ['import { DateField } from "@mszczygiel-projects/ui-core-react"'],

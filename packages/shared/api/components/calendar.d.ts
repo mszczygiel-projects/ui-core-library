@@ -4,7 +4,7 @@ export declare const calendar: {
     readonly tag: "ui-calendar";
     readonly category: "Inputs";
     readonly status: "in-progress";
-    readonly figma: "2107:46";
+    readonly figma: "3187:577";
     readonly design: {
         readonly flags: readonly ["range"];
         readonly booleans: readonly [];
