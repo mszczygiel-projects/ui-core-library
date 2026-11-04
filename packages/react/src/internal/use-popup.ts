@@ -23,7 +23,8 @@ const useBrowserLayoutEffect = typeof document === 'undefined' ? useEffect : use
  * starts at the start edge of the field and is at least as wide; a `centred` popup beside a
  * trigger is centred on it, and its `arrow` points at the middle of the trigger. A browser without
  * the Popover API shows it in fixed position instead. A press of the pointer outside `root` and
- * the popup, or the focus leaving `root`, calls `onDismiss`.
+ * the popup, or the focus leaving `root`, calls `onDismiss`. A `modal` popup is a `dialog` shown
+ * with `showModal()`, which makes the rest of the page inert; a click outside it calls `onDismiss`.
  */
 export function usePopup({
   open,
@@ -34,6 +35,7 @@ export function usePopup({
   placement = 'bottom',
   centred = false,
   arrow: arrowRef,
+  modal = false,
 }: {
   readonly open: boolean;
   readonly root: RefObject<HTMLElement | null>;
@@ -43,6 +45,7 @@ export function usePopup({
   readonly placement?: PopupPlacement;
   readonly centred?: boolean;
   readonly arrow?: RefObject<HTMLElement | null>;
+  readonly modal?: boolean;
 }): void {
   const dismiss = useRef(onDismiss);
   useBrowserLayoutEffect(() => {
@@ -53,6 +56,42 @@ export function usePopup({
     const reference = anchor.current;
     const floating = popup.current;
     const container = root.current;
+    if (modal && floating instanceof HTMLDialogElement) {
+      if (!open || reference === null) {
+        return;
+      }
+      if (!floating.open) {
+        floating.showModal();
+      }
+      const stopModal = autoUpdate(reference, floating, () => {
+        void placePopup(reference, floating, { placement, centred, arrow: null });
+      });
+      const modalEvents = new AbortController();
+      // The backdrop of a modal dialog is the dialog itself, so a click on it outside its box is a
+      // click outside the popup.
+      floating.addEventListener(
+        'click',
+        (event) => {
+          const box = floating.getBoundingClientRect();
+          const outside =
+            event.clientX < box.left ||
+            event.clientX > box.right ||
+            event.clientY < box.top ||
+            event.clientY > box.bottom;
+          if (event.target === floating && outside) {
+            dismiss.current(event);
+          }
+        },
+        { signal: modalEvents.signal },
+      );
+      return () => {
+        stopModal();
+        modalEvents.abort();
+        if (floating.open) {
+          floating.close();
+        }
+      };
+    }
     // Without the Popover API, nothing but `hidden` keeps a closed popup out of sight.
     const native = floating !== null && typeof floating.showPopover === 'function';
     if (floating !== null && !native) {
@@ -104,7 +143,7 @@ export function usePopup({
         floating.hidePopover();
       }
     };
-  }, [open, root, anchor, popup, placement, centred, arrowRef]);
+  }, [open, root, anchor, popup, placement, centred, arrowRef, modal]);
 }
 
 /** The physical side of a logical placement, in the direction of the anchor's text. */

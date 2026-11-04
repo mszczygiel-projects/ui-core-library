@@ -14,7 +14,6 @@ import type {
 import {
   type ComponentPropsWithRef,
   type KeyboardEvent,
-  useEffect,
   useId,
   useLayoutEffect,
   useRef,
@@ -31,6 +30,7 @@ import {
 } from '../internal/field.tsx';
 import { setRef } from '../internal/set-ref.ts';
 import { useDateMask } from '../internal/use-date-mask.ts';
+import { useFormState } from '../internal/use-form-state.ts';
 import { useParsedField } from '../internal/use-parsed-field.ts';
 import { usePopup } from '../internal/use-popup.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
@@ -75,10 +75,11 @@ export interface DateFieldProps
 /**
  * A masked date input with a locale-aware display and an ISO calendar-date value.
  *
- * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
- * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
- * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
- * change.
+ * The button after the input opens a calendar in a modal dialog in the top layer, which makes the
+ * rest of the page inert until it closes, with the focus on the chosen date, else on today. Tab
+ * stays inside the dialog. Picking a date writes its text, as one edit, closes the dialog and
+ * returns the focus to the button; Escape closes it without a change, and a click outside closes
+ * it without reaching the page.
  */
 export function DateField({
   variant,
@@ -160,11 +161,15 @@ export function DateField({
 
   const rootRef = useRef<HTMLDivElement | null>(null);
   const controlRef = useRef<HTMLDivElement | null>(null);
-  const panelRef = useRef<HTMLDivElement | null>(null);
+  const panelRef = useRef<HTMLDialogElement | null>(null);
   const buttonRef = useRef<HTMLButtonElement | null>(null);
   const [uncontrolledOpen, setUncontrolledOpen] = useState(defaultOpen);
-  // A read-only field keeps its date, so its calendar stays closed as well.
-  const canOpen = disabled !== true && readOnly !== true;
+  const formDisabled = useFormState(inputRef, () => {
+    setUncontrolledOpen(false);
+  });
+  // A read-only field keeps its date, so its calendar stays closed as well, and so does a field
+  // that a disabled fieldset disables.
+  const canOpen = disabled !== true && readOnly !== true && !formDisabled;
   const isOpen = (open ?? uncontrolledOpen) && canOpen;
   const calendarLabel = openCalendarLabel ?? labels.dateField.openCalendar;
   const panelId = `${generatedId}-panel`;
@@ -177,9 +182,12 @@ export function DateField({
     onOpenChange?.(next, { originalEvent });
   };
 
+  // A pick or Escape returns the focus to the button, once the modal dialog has closed and the
+  // button is no longer inert.
+  const returnFocusRef = useRef(false);
   const close = (originalEvent: Event) => {
+    returnFocusRef.current = true;
     setOpen(false, originalEvent);
-    buttonRef.current?.focus();
   };
 
   usePopup({
@@ -190,34 +198,35 @@ export function DateField({
     onDismiss: (event) => {
       setOpen(false, event);
     },
+    modal: true,
   });
 
-  // The calendar takes the focus when it opens, after the popup is in the top layer.
-  const wasOpenRef = useRef(isOpen);
+  // The calendar takes the focus when it opens, the first render included, after the popup is in
+  // the top layer. A calendar that hydrates without today draws its days a little later.
   useLayoutEffect(() => {
-    if (isOpen && !wasOpenRef.current) {
-      panelRef.current?.querySelector<HTMLElement>('[role="gridcell"][tabindex="0"]')?.focus();
-    }
-    wasOpenRef.current = isOpen;
-  }, [isOpen]);
-
-  useEffect(() => {
-    const owner = inputRef.current?.form;
-    if (owner === null || owner === undefined) {
+    if (!isOpen) {
+      if (returnFocusRef.current) {
+        returnFocusRef.current = false;
+        buttonRef.current?.focus();
+      }
       return;
     }
-    const events = new AbortController();
-    owner.addEventListener(
-      'reset',
-      () => {
-        setUncontrolledOpen(false);
-      },
-      { signal: events.signal },
-    );
-    return () => {
-      events.abort();
+    let frames = 10;
+    let frame = 0;
+    const focusCell = () => {
+      const cell = panelRef.current?.querySelector<HTMLElement>('[role="gridcell"][tabindex="0"]');
+      if (cell !== null && cell !== undefined) {
+        cell.focus();
+      } else if (frames > 0) {
+        frames -= 1;
+        frame = requestAnimationFrame(focusCell);
+      }
     };
-  }, [form]);
+    focusCell();
+    return () => {
+      cancelAnimationFrame(frame);
+    };
+  }, [isOpen]);
 
   /**
    * Escape that the calendar leaves, in its days, closes the dialog. Tab and Shift+Tab go round
@@ -277,15 +286,21 @@ export function DateField({
       controlRef={controlRef}
       popup={
         isOpen ? (
-          <div
+          <dialog
             ref={panelRef}
             id={panelId}
             className={fieldPart('date-field', 'panel')}
-            role="dialog"
-            aria-modal="true"
             aria-label={calendarLabel}
-            popover="manual"
             dir={dir}
+            onCancel={(event) => {
+              // Escape that reaches the dialog itself, not a cell, closes it as Escape on a cell.
+              event.preventDefault();
+              close(event.nativeEvent);
+            }}
+            onClose={(event) => {
+              // The browser may close a modal dialog on its own, such as on a repeated Escape.
+              setOpen(false, event.nativeEvent);
+            }}
           >
             <Calendar
               className={fieldPart('date-field', 'calendar')}
@@ -298,11 +313,16 @@ export function DateField({
               today={today}
               onKeyDown={onCalendarKeyDown}
               onValueChange={(picked, details) => {
+                // A fieldset can disable the field while its calendar is open; the pick then
+                // changes nothing.
+                if (inputRef.current?.matches(':disabled') === true) {
+                  return;
+                }
                 notify(formatDateText(picked, field.locale), details.originalEvent);
                 close(details.originalEvent);
               }}
             />
-          </div>
+          </dialog>
         ) : null
       }
     >

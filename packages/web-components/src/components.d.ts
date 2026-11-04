@@ -509,10 +509,11 @@ export namespace Components {
      * A masked date input with a locale-aware display and an ISO calendar-date value.
      * The native input owns accessibility and editable text. ElementInternals submits the canonical
      * value and saves the draft with its locale. Parsing and constraint errors use customError.
-     * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
-     * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
-     * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
-     * change. The reflected `open` attribute shows whether the calendar is open.
+     * The button after the input opens a calendar in a modal dialog in the top layer, which makes the
+     * rest of the page inert until it closes, with the focus on the chosen date, else on today. Tab
+     * stays inside the dialog. Picking a date writes its text, as one edit, closes the dialog and
+     * returns the focus to the button; Escape closes it without a change, and a click outside closes
+     * it without reaching the page. The reflected `open` attribute shows whether the calendar is open.
      */
     interface UiDateField {
         /**
@@ -2065,10 +2066,11 @@ declare global {
      * A masked date input with a locale-aware display and an ISO calendar-date value.
      * The native input owns accessibility and editable text. ElementInternals submits the canonical
      * value and saves the draft with its locale. Parsing and constraint errors use customError.
-     * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
-     * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
-     * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
-     * change. The reflected `open` attribute shows whether the calendar is open.
+     * The button after the input opens a calendar in a modal dialog in the top layer, which makes the
+     * rest of the page inert until it closes, with the focus on the chosen date, else on today. Tab
+     * stays inside the dialog. Picking a date writes its text, as one edit, closes the dialog and
+     * returns the focus to the button; Escape closes it without a change, and a click outside closes
+     * it without reaching the page. The reflected `open` attribute shows whether the calendar is open.
      */
     interface HTMLUiDateFieldElement extends Components.UiDateField, HTMLStencilElement {
         addEventListener<K extends keyof HTMLUiDateFieldElementEventMap>(type: K, listener: (this: HTMLUiDateFieldElement, ev: UiDateFieldCustomEvent<HTMLUiDateFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
@@ -3076,10 +3078,11 @@ declare namespace LocalJSX {
      * A masked date input with a locale-aware display and an ISO calendar-date value.
      * The native input owns accessibility and editable text. ElementInternals submits the canonical
      * value and saves the draft with its locale. Parsing and constraint errors use customError.
-     * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
-     * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
-     * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
-     * change. The reflected `open` attribute shows whether the calendar is open.
+     * The button after the input opens a calendar in a modal dialog in the top layer, which makes the
+     * rest of the page inert until it closes, with the focus on the chosen date, else on today. Tab
+     * stays inside the dialog. Picking a date writes its text, as one edit, closes the dialog and
+     * returns the focus to the button; Escape closes it without a change, and a click outside closes
+     * it without reaching the page. The reflected `open` attribute shows whether the calendar is open.
      */
     interface UiDateField {
         /**
@@ -4973,10 +4976,11 @@ declare module "@stencil/core" {
              * A masked date input with a locale-aware display and an ISO calendar-date value.
              * The native input owns accessibility and editable text. ElementInternals submits the canonical
              * value and saves the draft with its locale. Parsing and constraint errors use customError.
-             * The button after the input opens a calendar in a modal dialog in the top layer, with the focus
-             * on the chosen date, else on today. Tab stays inside the dialog. Picking a date writes its text,
-             * as one edit, closes the dialog and returns the focus to the button; Escape closes it without a
-             * change. The reflected `open` attribute shows whether the calendar is open.
+             * The button after the input opens a calendar in a modal dialog in the top layer, which makes the
+             * rest of the page inert until it closes, with the focus on the chosen date, else on today. Tab
+             * stays inside the dialog. Picking a date writes its text, as one edit, closes the dialog and
+             * returns the focus to the button; Escape closes it without a change, and a click outside closes
+             * it without reaching the page. The reflected `open` attribute shows whether the calendar is open.
              */
             "ui-date-field": LocalJSX.IntrinsicElements["ui-date-field"] & JSXBase.HTMLAttributes<HTMLUiDateFieldElement>;
             /**

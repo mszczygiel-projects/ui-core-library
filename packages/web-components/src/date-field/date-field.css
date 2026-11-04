@@ -1,6 +1,6 @@
 /* The shared field anatomy supplies this component's surface, typography and interactions. */
 
-/* The dialog of the calendar, in the top layer, placed by script below or above the field. */
+/* The modal dialog of the calendar, in the top layer, placed by script below or above the field. */
 .panel {
   --_offset: var(--date-field-panel-offset);
   --_anchor-inline-size: auto;
@@ -9,6 +9,7 @@
   position: fixed;
   inset: auto;
   box-sizing: border-box;
+  max-inline-size: none;
   max-block-size: var(--_available-block-size);
   margin: 0;
   padding: var(--date-field-panel-padding);
@@ -20,8 +21,9 @@
   color: inherit;
 }
 
-.panel[hidden] {
-  display: none;
+/* The page stays visible behind the modal dialog, which only makes it inert. */
+.panel::backdrop {
+  background: transparent;
 }
 
 @media (forced-colors: active) {

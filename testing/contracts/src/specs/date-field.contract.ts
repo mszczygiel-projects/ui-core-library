@@ -489,19 +489,48 @@ export function dateFieldContract(adapter: Mount<DateFieldContractProps>): void 
     await expect.element(dialog(field)).toBeVisible();
   });
 
-  it('closes when a pointer presses outside the field', async () => {
+  it('keeps the page inert while open, and closes on a press outside without reaching it', async () => {
     const opened = vi.fn<OpenChange>();
     const field = await mount({ onOpenChange: opened });
-    await openCalendar(field);
-    const outside = document.createElement('p');
+    const outside = document.createElement('button');
     outside.textContent = 'Outside';
     outside.style.cssText = 'position: fixed; inset-block-end: 0; inset-inline-end: 0; margin: 0;';
+    const pressed = vi.fn();
+    outside.addEventListener('click', pressed);
     document.body.append(outside);
     fixtures.push(outside);
-    await userEvent.click(outside);
+    await openCalendar(field);
+    expect(outside.matches(':modal, :modal *')).toBe(false);
+    outside.focus();
+    expect(deepActiveElement()).not.toBe(outside);
+    await userEvent.click(outside, { force: true });
     await field.update({});
     await expect.element(dialog(field)).not.toBeInTheDocument();
+    expect(pressed).not.toHaveBeenCalled();
     expect(opened.mock.calls.map(([open]) => open)).toEqual([true, false]);
+  });
+
+  it('moves the focus into a calendar that is open from the start', async () => {
+    const field = await mount({ defaultValue: '2026-07-08', today: '2026-07-19', open: true });
+    await expect.element(dialog(field)).toBeVisible();
+    await expect.poll(focusedDate).toBe('2026-07-08');
+  });
+
+  it('closes the calendar when a fieldset disables the field', async () => {
+    const changed = vi.fn<NonNullable<DateFieldContractProps['onValueChange']>>();
+    const fieldset = document.createElement('fieldset');
+    document.body.append(fieldset);
+    fixtures.push(fieldset);
+    const field = await mount(
+      { defaultValue: '2026-07-08', onValueChange: changed },
+      { parent: fieldset },
+    );
+    await openCalendar(field);
+    fieldset.disabled = true;
+    await field.update({});
+    await expect.element(dialog(field)).not.toBeInTheDocument();
+    expect(calendarButton(field).matches(':disabled')).toBe(true);
+    expect(changed).not.toHaveBeenCalled();
   });
 
   it('keeps the calendar of a read-only or disabled field closed, and hides the button on request', async () => {
