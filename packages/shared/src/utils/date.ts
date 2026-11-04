@@ -140,6 +140,14 @@ export function addMonths(date: string, months: number): string {
   });
 }
 
+/**
+ * The number of days from 1970-01-01 to `date`, negative before it. Multiplied by 86 400 000, it
+ * is the instant of the start of the date in UTC, which Intl can format without a `Date`.
+ */
+export function epochDay(date: string): number {
+  return toDayNumber(partsOf(date));
+}
+
 /** The ISO weekday of a date: 1 for Monday to 7 for Sunday. */
 export function isoWeekday(date: string): number {
   // 1970-01-01, day number 0, was a Thursday.
