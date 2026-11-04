@@ -32,6 +32,11 @@ import type {
   ListboxValueChangeDetail,
 } from '@mszczygiel-projects/ui-core-shared/listbox';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
+import type {
+  MenuActionDetail,
+  MenuOpenChangeDetail,
+  MenuProps,
+} from '@mszczygiel-projects/ui-core-shared/menu';
 import type { NotificationProps } from '@mszczygiel-projects/ui-core-shared/notification';
 import type { NumberFieldProps } from '@mszczygiel-projects/ui-core-shared/number-field';
 import type {
@@ -47,6 +52,7 @@ import type { RadioFieldProps } from '@mszczygiel-projects/ui-core-shared/radio-
 import type { RadioGroupProps } from '@mszczygiel-projects/ui-core-shared/radio-group';
 import type { SearchFieldProps } from '@mszczygiel-projects/ui-core-shared/search-field';
 import type { SelectFieldProps } from '@mszczygiel-projects/ui-core-shared/select-field';
+import type { SplitButtonProps } from '@mszczygiel-projects/ui-core-shared/split-button';
 import type { SwitchFieldProps } from '@mszczygiel-projects/ui-core-shared/switch-field';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import type { TextareaFieldProps } from '@mszczygiel-projects/ui-core-shared/textarea-field';
@@ -69,6 +75,18 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-split-button': CustomElement<
+        SplitButtonProps<string> & {
+          readonly 'onui-open-change'?: (event: CustomEvent<MenuOpenChangeDetail<Event>>) => void;
+          readonly 'onui-action'?: (event: CustomEvent<MenuActionDetail<Event>>) => void;
+        }
+      >;
+      'ui-menu': CustomElement<
+        MenuProps<string> & {
+          readonly 'onui-open-change'?: (event: CustomEvent<MenuOpenChangeDetail<Event>>) => void;
+          readonly 'onui-action'?: (event: CustomEvent<MenuActionDetail<Event>>) => void;
+        }
+      >;
       'ui-calendar': CustomElement<CalendarProps>;
       'ui-tooltip': CustomElement<TooltipProps>;
       'ui-popover': CustomElement<

@@ -10,6 +10,9 @@ import {
 } from '@floating-ui/dom';
 import type { PopupPlacement } from '@mszczygiel-projects/ui-core-shared/popover';
 
+/** The edge of its trigger with which a popup lines up, in the direction of the text. */
+export type PopupAlign = 'start' | 'end';
+
 /** What a field gives the controller of its popup. */
 export interface PopupOptions {
   readonly host: () => HTMLElement;
@@ -37,6 +40,11 @@ export interface PopupOptions {
    * start edge of the field and is at least as wide.
    */
   readonly centred?: boolean;
+  /**
+   * A popup beside a trigger, lined up with its start or end edge, such as a menu, instead of the
+   * popup of a field.
+   */
+  readonly align?: () => PopupAlign;
   /** An arrow inside the popup that points at the middle of the anchor. */
   readonly arrow?: () => HTMLElement | null;
 }
@@ -167,6 +175,7 @@ export class Popup {
     await placePopup(anchor, popup, {
       placement: this.options.placement?.() ?? 'bottom',
       centred: this.options.centred === true,
+      align: this.options.align?.(),
       arrow: this.options.arrow?.() ?? null,
     });
   }
@@ -177,6 +186,7 @@ function physicalPlacement(
   anchor: HTMLElement,
   placement: PopupPlacement,
   centred: boolean,
+  align: PopupAlign | undefined,
 ): Placement {
   const rtl = getComputedStyle(anchor).direction === 'rtl';
   const side =
@@ -190,7 +200,7 @@ function physicalPlacement(
           : 'right'
         : placement;
   // Floating UI aligns a start in the direction of the text on its own.
-  return centred ? side : `${side}-start`;
+  return centred ? side : `${side}-${align ?? 'start'}`;
 }
 
 /** A length token in CSS pixels; a rem resolves against the font size of the root. */
@@ -214,8 +224,14 @@ export async function placePopup(
   {
     placement,
     centred,
+    align,
     arrow: arrowElement,
-  }: { placement: PopupPlacement; centred: boolean; arrow: HTMLElement | null },
+  }: {
+    placement: PopupPlacement;
+    centred: boolean;
+    align?: PopupAlign;
+    arrow: HTMLElement | null;
+  },
 ): Promise<void> {
   // The offset and the arrow are tokens, which the popup holds as private properties.
   const style = getComputedStyle(popup);
@@ -223,13 +239,14 @@ export async function placePopup(
   const arrowSize = arrowElement === null ? 0 : pixels(style.getPropertyValue('--_arrow-size'));
   const result = await computePosition(anchor, popup, {
     strategy: 'fixed',
-    placement: physicalPlacement(anchor, placement, centred),
+    placement: physicalPlacement(anchor, placement, centred, align),
     middleware: [
       // The arrow is a square turned by 45°, so half its diagonal stands out of the popup.
       offset(gap + (arrowSize * Math.SQRT2) / 2),
       flip({ padding: gap }),
-      // A list stays aligned with its field; a centred popup keeps its distance from the edge.
-      shift({ padding: centred ? gap : 0 }),
+      // A list stays aligned with its field; a popup beside a trigger keeps its distance from the
+      // edge of the window.
+      shift({ padding: centred || align !== undefined ? gap : 0 }),
       size({
         padding: gap,
         apply({ availableHeight, rects }) {

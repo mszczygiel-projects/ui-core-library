@@ -1,0 +1,99 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './SplitButton.wc.stories.tsx';
+import * as ReactStories from './SplitButton.react.stories.tsx';
+
+<Meta title="Components/Actions/SplitButton/Docs" />
+
+# SplitButton
+
+<ComponentOverview name="SplitButton" />
+
+## Usage
+
+Use SplitButton for one main action that most users take, with a few related ones beside it: “Save” with “Save as draft” and “Save as template”. The main half runs the main action; the menu button opens the related ones.
+
+Use Button when there is one action, and Menu with its own button when no action is the obvious default. Do not hide a destructive action behind the main half.
+
+## Anatomy
+
+The **base** groups two sibling buttons. The **action** is the main native button, with the **wrapper**, **content**, **leading-icon**, **label**, **trailing-icon** and **loader** of Button. The **divider** separates it from the **toggle** without taking room: it lies over the start edge of the toggle, centred, at the height of `button/divider/height`. The **toggle** is the native menu button with its **toggle-icon**, which opens a Menu at its end edge. The web component exposes these as parts; React uses the matching `.ui-split-button__<part>` classes. In Figma the set holds a Button instance named `action`, the divider, an IconButton instance named `toggle` and, when open, a Menu instance.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+SplitButton takes the variants of Button: `primary`, the default, `secondary`, `outline`, `ghost` and `danger`. Both halves share the variant, and the divider takes the divider colour of that variant.
+
+## Sizes & density
+
+`small`, `medium`, the default, and `large` size both halves as Button, and the menu with them. Density changes them without changing the prop. The menu button is as tall as the main action and has the padding of its block on every side.
+
+## States
+
+Each half shows the hover, press and focus states of Button on its own. `disabled`, or a disabled fieldset, blocks both halves and closes the menu. `loading` blocks both and keeps their focus and names, as in Button. Without an enabled action in `options`, only the menu button is disabled. When the menu is open, the menu button carries `aria-expanded="true"`.
+
+## Content & labels
+
+<FrameworkCanvas react={ReactStories.WithIcons} webComponents={WebComponentStories.WithIcons} />
+
+The default slot or `children` names the main action, and `label` can replace that name, as in Button. `menuLabel` names the menu button and its menu; without it, SplitButton uses `labels.splitButton.menu`, “More actions” in English. While loading, `loadingLabel` describes the state, falling back to `labels.splitButton.loading`.
+
+<Source
+  language="ts"
+  code={`configureUiCore({ labels: { splitButton: { menu: 'Więcej akcji', loading: 'Zapisywanie' } } });`}
+/>
+
+<FrameworkCanvas react={ReactStories.Groups} webComponents={WebComponentStories.Groups} />
+
+`options` lists the related actions as in Menu: a `value`, a `label`, an optional `icon` and `disabled`, or groups that a rule separates.
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.Playground} webComponents={WebComponentStories.Playground} />
+
+- The main half is the native button of Button: pointer, Enter and Space produce `click` / `onClick`, and `type`, `name` and `value` take part in the form as in Button.
+- The native `click` is the main action alone. A press on the menu button or on an action of the menu stays inside the component, so a `click` listener of the page never runs for it.
+- The menu button opens the menu with a press, Arrow Down or Arrow Up, and the menu behaves as Menu. A pick dispatches `ui-action` in the web component and calls `onAction(value, details)` in React; the menu closes and the focus returns to the menu button.
+- The web component dispatches the cancelable `ui-open-change` before the menu opens or closes; React reports `onOpenChange(open, details)` and follows `open` when the page controls it.
+
+## Accessibility
+
+- **Pattern.** A group of two buttons: the main one follows the [WAI-ARIA button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/button/), the other the [menu button pattern](https://www.w3.org/WAI/ARIA/apg/patterns/menu-button/), with `aria-haspopup="menu"` and `aria-expanded`.
+- **Keys.** Tab moves to the main action and then to the menu button. The keys of the menu are those of Menu.
+- **Names.** The two buttons have their own names: the action name, and `menuLabel` or its label. The menu takes the name of its button.
+- **Preferences.** The rings, the borders and the divider stay visible in forced colours.
+
+## Surfaces & themes
+
+Colours follow the theme and the surface through the tokens of Button, and the divider through `color/button/<variant>/divider/*`, which takes the text colour of the variant by default and the border colour for `outline`. Its height is `button/divider/height`, the small icon size, which follows the density but not the size, and its width the border width of Button.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="SplitButton" />}
+  webComponents={<WebComponentApi tag="ui-split-button" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { SplitButton } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/split-button';`}
+/>
+
+## Tokens
+
+SplitButton reads the tokens of Button and Menu, and the divider tokens of each variant.
+
+<ComponentTokens component="button" />
+
+## Implementation notes
+
+- The web component is form-associated as Button is, with an internal form that runs the action of the main button after the click dispatch. A listener on the group stops every click that did not start on the main button, so that the host's `click` stays the main action. It holds a `ui-menu` whose trigger is the menu button.
+- React renders a span with the role `group`, a Button for the main action and a Menu whose trigger is the native menu button. `className`, `style` and `data-*` go to the group; other attributes and `ref` reach the main native button, and `onClick` runs only for it.
+- The Figma set has the variant properties `variant`, `size` and `open`, with the rest state alone: the states of each half are those of Button. `disabled`, `loading`, the form props, the names and `options` live only in code.

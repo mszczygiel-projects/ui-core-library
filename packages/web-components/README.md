@@ -23,6 +23,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | LinkButton     | `ui-link-button`      | `./link-button`      |
 | Listbox        | `ui-listbox`          | `./listbox`          |
 | Loader         | `ui-loader`           | `./loader`           |
+| Menu           | `ui-menu`             | `./menu`             |
 | Notification   | `ui-notification`     | `./notification`     |
 | NumberField    | `ui-number-field`     | `./number-field`     |
 | Pagination     | `ui-pagination`       | `./pagination`       |
@@ -32,6 +33,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | RadioGroup     | `ui-radio-group`      | `./radio-group`      |
 | SearchField    | `ui-search-field`     | `./search-field`     |
 | SelectField    | `ui-select-field`     | `./select-field`     |
+| SplitButton    | `ui-split-button`     | `./split-button`     |
 | SwitchField    | `ui-switch-field`     | `./switch-field`     |
 | TextField      | `ui-text-field`       | `./text-field`       |
 | TextareaField  | `ui-textarea-field`   | `./textarea-field`   |

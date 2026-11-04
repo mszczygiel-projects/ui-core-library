@@ -4,6 +4,7 @@
 calendar
 check
 checkmark
+chevron-down
 chevron-left
 chevron-right
 close

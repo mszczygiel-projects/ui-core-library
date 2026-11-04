@@ -102,6 +102,14 @@
       "types": "./dist/utils/locale.d.ts",
       "default": "./dist/utils/locale.js"
     },
+    "./menu": {
+      "types": "./dist/components/menu.d.ts",
+      "default": "./dist/components/menu.js"
+    },
+    "./menu-navigation": {
+      "types": "./dist/utils/menu-navigation.d.ts",
+      "default": "./dist/utils/menu-navigation.js"
+    },
     "./notification": {
       "types": "./dist/components/notification.d.ts",
       "default": "./dist/components/notification.js"
@@ -161,6 +169,10 @@
     "./select-field": {
       "types": "./dist/components/select-field.d.ts",
       "default": "./dist/components/select-field.js"
+    },
+    "./split-button": {
+      "types": "./dist/components/split-button.d.ts",
+      "default": "./dist/components/split-button.js"
     },
     "./switch-field": {
       "types": "./dist/components/switch-field.d.ts",

@@ -31,6 +31,9 @@ import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-p
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
+import { WebMenuItems } from "./menu/menu";
+import { MenuAlign, MenuItems, MenuPlacement, MenuSize } from "@mszczygiel-projects/ui-core-shared/menu";
+import { MenuAction, MenuOpenChange } from "./menu/events";
 import { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
 import { NotificationDismiss } from "./notification/events";
 import { NumberFieldControls } from "@mszczygiel-projects/ui-core-shared/number-field";
@@ -44,6 +47,7 @@ import { PopoverOpenChange } from "./popover/events";
 import { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
 import { RadioGroupValueChange } from "./radio-group/events";
 import { SearchFieldClear } from "./search-field/events";
+import { SplitButtonAction, SplitButtonOpenChange } from "./split-button/events";
 import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 import { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
@@ -73,6 +77,9 @@ export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-p
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
+export { WebMenuItems } from "./menu/menu";
+export { MenuAlign, MenuItems, MenuPlacement, MenuSize } from "@mszczygiel-projects/ui-core-shared/menu";
+export { MenuAction, MenuOpenChange } from "./menu/events";
 export { NotificationTone, NotificationVariant } from "@mszczygiel-projects/ui-core-shared/notification";
 export { NotificationDismiss } from "./notification/events";
 export { NumberFieldControls } from "@mszczygiel-projects/ui-core-shared/number-field";
@@ -86,6 +93,7 @@ export { PopoverOpenChange } from "./popover/events";
 export { RadioGroupOrientation } from "@mszczygiel-projects/ui-core-shared/radio-group";
 export { RadioGroupValueChange } from "./radio-group/events";
 export { SearchFieldClear } from "./search-field/events";
+export { SplitButtonAction, SplitButtonOpenChange } from "./split-button/events";
 export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
@@ -974,6 +982,51 @@ export namespace Components {
         "size": LoaderSize;
     }
     /**
+     * A list of actions that a button opens beside it, in groups separated by a rule, for a user to
+     * pick one.
+     * The element of the `trigger` slot, a button, opens and closes the menu, and carries
+     * `aria-expanded` and `aria-haspopup="menu"`; Arrow Down and Arrow Up on it open the menu on the
+     * first or the last action. The menu is in the top layer, on the side that `placement` asks for and
+     * lined up with the edge of the trigger that `align` names, or on the opposite side when the window
+     * has no room. It takes the focus and highlights an action, which the arrows, Home, End and typed
+     * letters move. Enter, Space or a press picks the highlighted action, which dispatches
+     * `ui-action`, closes the menu and returns the focus to the trigger. Escape closes it the same way;
+     * Tab, a press outside and the focus leaving close it too. Each request to open or close
+     * dispatches the cancelable `ui-open-change` first, and the reflected `open` attribute follows the
+     * menu.
+     */
+    interface UiMenu {
+        /**
+          * The edge of the trigger with which the menu lines up.
+          * @default 'start'
+         */
+        "align": MenuAlign;
+        /**
+          * The accessible name of the menu, in place of the name of its trigger.
+         */
+        "label"?: string;
+        /**
+          * Whether the menu is open. The attribute supplies the initial state and follows the menu.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The actions, alone or in groups that a rule separates. An icon is the SVG string of an icon of the icon package.
+          * @default []
+         */
+        "options": WebMenuItems;
+        /**
+          * The side of the trigger on which the menu opens.
+          * @default 'bottom'
+         */
+        "placement": MenuPlacement;
+        /**
+          * The size of the items, which follows the density.
+          * @default 'medium'
+         */
+        "size": MenuSize;
+    }
+    /**
      * Tells the user about the state of the page or the result of an action, in one of the feedback
      * tones.
      * The heading gives the message in one line, and the content describes it further; links in it
@@ -1566,6 +1619,73 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
     /**
+     * Triggers a main action, with a button beside it that opens a menu of related actions.
+     * The main action is a native button inside the shadow root, which takes part in the outer form
+     * through ElementInternals as Button does. The native click of the host is the main action alone:
+     * a press on the menu button or on an action of the menu stays inside the component. The menu
+     * button carries `aria-haspopup="menu"` and `aria-expanded`, and opens a Menu at its end edge,
+     * which reports a pick as `ui-action`. Disabled and loading states block both halves; without an
+     * enabled action, the menu button is disabled.
+     */
+    interface UiSplitButton {
+        /**
+          * Disables both halves and removes them from keyboard navigation.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * An accessible name of the main action replacing its visible content. An author's `aria-label` wins.
+         */
+        "label"?: string;
+        /**
+          * Blocks both halves while keeping focus, width and the accessible names.
+          * @default false
+         */
+        "loading": boolean;
+        /**
+          * The description of the loading state, falling back to `labels.splitButton.loading`.
+         */
+        "loadingLabel"?: string;
+        /**
+          * The name of the menu button and its menu, falling back to `labels.splitButton.menu`.
+         */
+        "menuLabel"?: string;
+        /**
+          * The name of the form entry, submitted only when the main button submits.
+         */
+        "name"?: string;
+        /**
+          * Whether the menu is open. The attribute supplies the initial state and follows the menu.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The related actions of the menu, alone or in groups that a rule separates. An icon is the SVG string of an icon of the icon package.
+          * @default []
+         */
+        "options": MenuItems<string>;
+        /**
+          * The size of both halves and of the menu, which follows the density.
+          * @default 'medium'
+         */
+        "size": ButtonSize;
+        /**
+          * The native form action of the main button; an ordinary action does not submit.
+          * @default 'button'
+         */
+        "type": ButtonType;
+        /**
+          * The value submitted with the name; it identifies the action and is not edited.
+          * @default ''
+         */
+        "value": string;
+        /**
+          * The visual emphasis of both halves.
+          * @default 'primary'
+         */
+        "variant": ButtonVariant;
+    }
+    /**
      * A switch with a label and hint that turns a setting on or off at once.
      * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
      * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
@@ -1843,6 +1963,10 @@ export interface UiListboxCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiListboxElement;
 }
+export interface UiMenuCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiMenuElement;
+}
 export interface UiNotificationCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiNotificationElement;
@@ -1874,6 +1998,10 @@ export interface UiSearchFieldCustomEvent<T> extends CustomEvent<T> {
 export interface UiSelectFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiSelectFieldElement;
+}
+export interface UiSplitButtonCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiSplitButtonElement;
 }
 export interface UiSwitchFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2241,6 +2369,38 @@ declare global {
         prototype: HTMLUiLoaderElement;
         new (): HTMLUiLoaderElement;
     };
+    interface HTMLUiMenuElementEventMap {
+        "ui-open-change": MenuOpenChange;
+        "ui-action": MenuAction;
+    }
+    /**
+     * A list of actions that a button opens beside it, in groups separated by a rule, for a user to
+     * pick one.
+     * The element of the `trigger` slot, a button, opens and closes the menu, and carries
+     * `aria-expanded` and `aria-haspopup="menu"`; Arrow Down and Arrow Up on it open the menu on the
+     * first or the last action. The menu is in the top layer, on the side that `placement` asks for and
+     * lined up with the edge of the trigger that `align` names, or on the opposite side when the window
+     * has no room. It takes the focus and highlights an action, which the arrows, Home, End and typed
+     * letters move. Enter, Space or a press picks the highlighted action, which dispatches
+     * `ui-action`, closes the menu and returns the focus to the trigger. Escape closes it the same way;
+     * Tab, a press outside and the focus leaving close it too. Each request to open or close
+     * dispatches the cancelable `ui-open-change` first, and the reflected `open` attribute follows the
+     * menu.
+     */
+    interface HTMLUiMenuElement extends Components.UiMenu, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiMenuElementEventMap>(type: K, listener: (this: HTMLUiMenuElement, ev: UiMenuCustomEvent<HTMLUiMenuElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiMenuElementEventMap>(type: K, listener: (this: HTMLUiMenuElement, ev: UiMenuCustomEvent<HTMLUiMenuElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiMenuElement: {
+        prototype: HTMLUiMenuElement;
+        new (): HTMLUiMenuElement;
+    };
     interface HTMLUiNotificationElementEventMap {
         "ui-dismiss": NotificationDismiss;
     }
@@ -2476,6 +2636,33 @@ declare global {
         prototype: HTMLUiSelectFieldElement;
         new (): HTMLUiSelectFieldElement;
     };
+    interface HTMLUiSplitButtonElementEventMap {
+        "ui-open-change": SplitButtonOpenChange;
+        "ui-action": SplitButtonAction;
+    }
+    /**
+     * Triggers a main action, with a button beside it that opens a menu of related actions.
+     * The main action is a native button inside the shadow root, which takes part in the outer form
+     * through ElementInternals as Button does. The native click of the host is the main action alone:
+     * a press on the menu button or on an action of the menu stays inside the component. The menu
+     * button carries `aria-haspopup="menu"` and `aria-expanded`, and opens a Menu at its end edge,
+     * which reports a pick as `ui-action`. Disabled and loading states block both halves; without an
+     * enabled action, the menu button is disabled.
+     */
+    interface HTMLUiSplitButtonElement extends Components.UiSplitButton, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiSplitButtonElementEventMap>(type: K, listener: (this: HTMLUiSplitButtonElement, ev: UiSplitButtonCustomEvent<HTMLUiSplitButtonElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiSplitButtonElementEventMap>(type: K, listener: (this: HTMLUiSplitButtonElement, ev: UiSplitButtonCustomEvent<HTMLUiSplitButtonElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiSplitButtonElement: {
+        prototype: HTMLUiSplitButtonElement;
+        new (): HTMLUiSplitButtonElement;
+    };
     interface HTMLUiSwitchFieldElementEventMap {
         "ui-checked-change": CheckedChange;
     }
@@ -2583,6 +2770,7 @@ declare global {
         "ui-link-button": HTMLUiLinkButtonElement;
         "ui-listbox": HTMLUiListboxElement;
         "ui-loader": HTMLUiLoaderElement;
+        "ui-menu": HTMLUiMenuElement;
         "ui-notification": HTMLUiNotificationElement;
         "ui-number-field": HTMLUiNumberFieldElement;
         "ui-pagination": HTMLUiPaginationElement;
@@ -2592,6 +2780,7 @@ declare global {
         "ui-radio-group": HTMLUiRadioGroupElement;
         "ui-search-field": HTMLUiSearchFieldElement;
         "ui-select-field": HTMLUiSelectFieldElement;
+        "ui-split-button": HTMLUiSplitButtonElement;
         "ui-switch-field": HTMLUiSwitchFieldElement;
         "ui-text-field": HTMLUiTextFieldElement;
         "ui-textarea-field": HTMLUiTextareaFieldElement;
@@ -3587,6 +3776,59 @@ declare namespace LocalJSX {
         "size"?: LoaderSize;
     }
     /**
+     * A list of actions that a button opens beside it, in groups separated by a rule, for a user to
+     * pick one.
+     * The element of the `trigger` slot, a button, opens and closes the menu, and carries
+     * `aria-expanded` and `aria-haspopup="menu"`; Arrow Down and Arrow Up on it open the menu on the
+     * first or the last action. The menu is in the top layer, on the side that `placement` asks for and
+     * lined up with the edge of the trigger that `align` names, or on the opposite side when the window
+     * has no room. It takes the focus and highlights an action, which the arrows, Home, End and typed
+     * letters move. Enter, Space or a press picks the highlighted action, which dispatches
+     * `ui-action`, closes the menu and returns the focus to the trigger. Escape closes it the same way;
+     * Tab, a press outside and the focus leaving close it too. Each request to open or close
+     * dispatches the cancelable `ui-open-change` first, and the reflected `open` attribute follows the
+     * menu.
+     */
+    interface UiMenu {
+        /**
+          * The edge of the trigger with which the menu lines up.
+          * @default 'start'
+         */
+        "align"?: MenuAlign;
+        /**
+          * The accessible name of the menu, in place of the name of its trigger.
+         */
+        "label"?: string;
+        /**
+          * The user picked an action.
+         */
+        "onUi-action"?: (event: UiMenuCustomEvent<MenuAction>) => void;
+        /**
+          * The user asked to open or close the menu; canceling it keeps the menu as it is.
+         */
+        "onUi-open-change"?: (event: UiMenuCustomEvent<MenuOpenChange>) => void;
+        /**
+          * Whether the menu is open. The attribute supplies the initial state and follows the menu.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The actions, alone or in groups that a rule separates. An icon is the SVG string of an icon of the icon package.
+          * @default []
+         */
+        "options"?: WebMenuItems;
+        /**
+          * The side of the trigger on which the menu opens.
+          * @default 'bottom'
+         */
+        "placement"?: MenuPlacement;
+        /**
+          * The size of the items, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: MenuSize;
+    }
+    /**
      * Tells the user about the state of the page or the result of an action, in one of the feedback
      * tones.
      * The heading gives the message in one line, and the content describes it further; links in it
@@ -4255,6 +4497,85 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
     /**
+     * Triggers a main action, with a button beside it that opens a menu of related actions.
+     * The main action is a native button inside the shadow root, which takes part in the outer form
+     * through ElementInternals as Button does. The native click of the host is the main action alone:
+     * a press on the menu button or on an action of the menu stays inside the component. The menu
+     * button carries `aria-haspopup="menu"` and `aria-expanded`, and opens a Menu at its end edge,
+     * which reports a pick as `ui-action`. Disabled and loading states block both halves; without an
+     * enabled action, the menu button is disabled.
+     */
+    interface UiSplitButton {
+        /**
+          * Disables both halves and removes them from keyboard navigation.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * An accessible name of the main action replacing its visible content. An author's `aria-label` wins.
+         */
+        "label"?: string;
+        /**
+          * Blocks both halves while keeping focus, width and the accessible names.
+          * @default false
+         */
+        "loading"?: boolean;
+        /**
+          * The description of the loading state, falling back to `labels.splitButton.loading`.
+         */
+        "loadingLabel"?: string;
+        /**
+          * The name of the menu button and its menu, falling back to `labels.splitButton.menu`.
+         */
+        "menuLabel"?: string;
+        /**
+          * The name of the form entry, submitted only when the main button submits.
+         */
+        "name"?: string;
+        /**
+          * The user picked an action of the menu.
+         */
+        "onUi-action"?: (event: UiSplitButtonCustomEvent<SplitButtonAction>) => void;
+        /**
+          * The user asked to open or close the menu; canceling it keeps the menu as it is.
+         */
+        "onUi-open-change"?: (event: UiSplitButtonCustomEvent<SplitButtonOpenChange>) => void;
+        /**
+          * Whether the menu is open. The attribute supplies the initial state and follows the menu.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The related actions of the menu, alone or in groups that a rule separates. An icon is the SVG string of an icon of the icon package.
+          * @default []
+         */
+        "options"?: MenuItems<string>;
+        /**
+          * The size of both halves and of the menu, which follows the density.
+          * @default 'medium'
+         */
+        "size"?: ButtonSize;
+        /**
+          * The native form action of the main button; an ordinary action does not submit.
+          * @default 'button'
+         */
+        "type"?: ButtonType;
+        /**
+          * The value submitted with the name; it identifies the action and is not edited.
+          * @default ''
+         */
+        "value"?: string;
+        /**
+          * The visual emphasis of both halves.
+          * @default 'primary'
+         */
+        "variant"?: ButtonVariant;
+    }
+    /**
      * A switch with a label and hint that turns a setting on or off at once.
      * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the
      * host with the outer form. The `checked` attribute supplies the initial and reset state, and the
@@ -4691,6 +5012,13 @@ declare namespace LocalJSX {
         "size": LoaderSize;
         "label": string;
     }
+    interface UiMenuAttributes {
+        "open": boolean;
+        "size": MenuSize;
+        "placement": MenuPlacement;
+        "align": MenuAlign;
+        "label": string;
+    }
     interface UiNotificationAttributes {
         "tone": NotificationTone;
         "variant": NotificationVariant;
@@ -4810,6 +5138,19 @@ declare namespace LocalJSX {
         "clearLabel": string;
         "emptyLabel": string;
     }
+    interface UiSplitButtonAttributes {
+        "variant": ButtonVariant;
+        "size": ButtonSize;
+        "disabled": boolean;
+        "loading": boolean;
+        "type": ButtonType;
+        "name": string;
+        "value": string;
+        "label": string;
+        "loadingLabel": string;
+        "open": boolean;
+        "menuLabel": string;
+    }
     interface UiSwitchFieldAttributes {
         "label": string;
         "hint": string;
@@ -4878,6 +5219,7 @@ declare namespace LocalJSX {
         "ui-link-button": Omit<UiLinkButton, keyof UiLinkButtonAttributes> & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes]?: UiLinkButton[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `attr:${K}`]?: UiLinkButtonAttributes[K] } & { [K in keyof UiLinkButton & keyof UiLinkButtonAttributes as `prop:${K}`]?: UiLinkButton[K] };
         "ui-listbox": Omit<UiListbox, keyof UiListboxAttributes> & { [K in keyof UiListbox & keyof UiListboxAttributes]?: UiListbox[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `attr:${K}`]?: UiListboxAttributes[K] } & { [K in keyof UiListbox & keyof UiListboxAttributes as `prop:${K}`]?: UiListbox[K] };
         "ui-loader": Omit<UiLoader, keyof UiLoaderAttributes> & { [K in keyof UiLoader & keyof UiLoaderAttributes]?: UiLoader[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `attr:${K}`]?: UiLoaderAttributes[K] } & { [K in keyof UiLoader & keyof UiLoaderAttributes as `prop:${K}`]?: UiLoader[K] };
+        "ui-menu": Omit<UiMenu, keyof UiMenuAttributes> & { [K in keyof UiMenu & keyof UiMenuAttributes]?: UiMenu[K] } & { [K in keyof UiMenu & keyof UiMenuAttributes as `attr:${K}`]?: UiMenuAttributes[K] } & { [K in keyof UiMenu & keyof UiMenuAttributes as `prop:${K}`]?: UiMenu[K] };
         "ui-notification": Omit<UiNotification, keyof UiNotificationAttributes> & { [K in keyof UiNotification & keyof UiNotificationAttributes]?: UiNotification[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `attr:${K}`]?: UiNotificationAttributes[K] } & { [K in keyof UiNotification & keyof UiNotificationAttributes as `prop:${K}`]?: UiNotification[K] };
         "ui-number-field": Omit<UiNumberField, keyof UiNumberFieldAttributes> & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes]?: UiNumberField[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `attr:${K}`]?: UiNumberFieldAttributes[K] } & { [K in keyof UiNumberField & keyof UiNumberFieldAttributes as `prop:${K}`]?: UiNumberField[K] };
         "ui-pagination": Omit<UiPagination, keyof UiPaginationAttributes> & { [K in keyof UiPagination & keyof UiPaginationAttributes]?: UiPagination[K] } & { [K in keyof UiPagination & keyof UiPaginationAttributes as `attr:${K}`]?: UiPaginationAttributes[K] } & { [K in keyof UiPagination & keyof UiPaginationAttributes as `prop:${K}`]?: UiPagination[K] };
@@ -4887,6 +5229,7 @@ declare namespace LocalJSX {
         "ui-radio-group": Omit<UiRadioGroup, keyof UiRadioGroupAttributes> & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes]?: UiRadioGroup[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `attr:${K}`]?: UiRadioGroupAttributes[K] } & { [K in keyof UiRadioGroup & keyof UiRadioGroupAttributes as `prop:${K}`]?: UiRadioGroup[K] };
         "ui-search-field": Omit<UiSearchField, keyof UiSearchFieldAttributes> & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes]?: UiSearchField[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `attr:${K}`]?: UiSearchFieldAttributes[K] } & { [K in keyof UiSearchField & keyof UiSearchFieldAttributes as `prop:${K}`]?: UiSearchField[K] };
         "ui-select-field": Omit<UiSelectField, keyof UiSelectFieldAttributes> & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes]?: UiSelectField[K] } & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes as `attr:${K}`]?: UiSelectFieldAttributes[K] } & { [K in keyof UiSelectField & keyof UiSelectFieldAttributes as `prop:${K}`]?: UiSelectField[K] };
+        "ui-split-button": Omit<UiSplitButton, keyof UiSplitButtonAttributes> & { [K in keyof UiSplitButton & keyof UiSplitButtonAttributes]?: UiSplitButton[K] } & { [K in keyof UiSplitButton & keyof UiSplitButtonAttributes as `attr:${K}`]?: UiSplitButtonAttributes[K] } & { [K in keyof UiSplitButton & keyof UiSplitButtonAttributes as `prop:${K}`]?: UiSplitButton[K] };
         "ui-switch-field": Omit<UiSwitchField, keyof UiSwitchFieldAttributes> & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes]?: UiSwitchField[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `attr:${K}`]?: UiSwitchFieldAttributes[K] } & { [K in keyof UiSwitchField & keyof UiSwitchFieldAttributes as `prop:${K}`]?: UiSwitchField[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
         "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
@@ -5059,6 +5402,21 @@ declare module "@stencil/core" {
              */
             "ui-loader": LocalJSX.IntrinsicElements["ui-loader"] & JSXBase.HTMLAttributes<HTMLUiLoaderElement>;
             /**
+             * A list of actions that a button opens beside it, in groups separated by a rule, for a user to
+             * pick one.
+             * The element of the `trigger` slot, a button, opens and closes the menu, and carries
+             * `aria-expanded` and `aria-haspopup="menu"`; Arrow Down and Arrow Up on it open the menu on the
+             * first or the last action. The menu is in the top layer, on the side that `placement` asks for and
+             * lined up with the edge of the trigger that `align` names, or on the opposite side when the window
+             * has no room. It takes the focus and highlights an action, which the arrows, Home, End and typed
+             * letters move. Enter, Space or a press picks the highlighted action, which dispatches
+             * `ui-action`, closes the menu and returns the focus to the trigger. Escape closes it the same way;
+             * Tab, a press outside and the focus leaving close it too. Each request to open or close
+             * dispatches the cancelable `ui-open-change` first, and the reflected `open` attribute follows the
+             * menu.
+             */
+            "ui-menu": LocalJSX.IntrinsicElements["ui-menu"] & JSXBase.HTMLAttributes<HTMLUiMenuElement>;
+            /**
              * Tells the user about the state of the page or the result of an action, in one of the feedback
              * tones.
              * The heading gives the message in one line, and the content describes it further; links in it
@@ -5157,6 +5515,16 @@ declare module "@stencil/core" {
              * field when it has no visible label.
              */
             "ui-select-field": LocalJSX.IntrinsicElements["ui-select-field"] & JSXBase.HTMLAttributes<HTMLUiSelectFieldElement>;
+            /**
+             * Triggers a main action, with a button beside it that opens a menu of related actions.
+             * The main action is a native button inside the shadow root, which takes part in the outer form
+             * through ElementInternals as Button does. The native click of the host is the main action alone:
+             * a press on the menu button or on an action of the menu stays inside the component. The menu
+             * button carries `aria-haspopup="menu"` and `aria-expanded`, and opens a Menu at its end edge,
+             * which reports a pick as `ui-action`. Disabled and loading states block both halves; without an
+             * enabled action, the menu button is disabled.
+             */
+            "ui-split-button": LocalJSX.IntrinsicElements["ui-split-button"] & JSXBase.HTMLAttributes<HTMLUiSplitButtonElement>;
             /**
              * A switch with a label and hint that turns a setting on or off at once.
              * Its inner checkbox has the role `switch` and owns accessibility; ElementInternals associates the

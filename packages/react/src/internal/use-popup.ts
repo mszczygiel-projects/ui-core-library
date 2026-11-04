@@ -13,6 +13,9 @@ import {
 import type { PopupPlacement } from '@mszczygiel-projects/ui-core-shared/popover';
 import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
+/** The edge of its trigger with which a popup lines up, in the direction of the text. */
+export type PopupAlign = 'start' | 'end';
+
 /** The layout effect of the browser, which a server render skips without a warning. */
 const useBrowserLayoutEffect = typeof document === 'undefined' ? useEffect : useLayoutEffect;
 
@@ -21,7 +24,8 @@ const useBrowserLayoutEffect = typeof document === 'undefined' ? useEffect : use
  * on the side of its anchor that `placement` asks for, below it by default, or the opposite one
  * when the window has no room, and no taller than the room in the window. The popup of a field
  * starts at the start edge of the field and is at least as wide; a `centred` popup beside a
- * trigger is centred on it, and its `arrow` points at the middle of the trigger. A browser without
+ * trigger is centred on it, and its `arrow` points at the middle of the trigger; an `align`ed popup
+ * beside a trigger, such as a menu, lines up with its start or end edge. A browser without
  * the Popover API shows it in fixed position instead. A press of the pointer outside `root` and
  * the popup, or the focus leaving `root`, calls `onDismiss`. A `modal` popup is a `dialog` shown
  * with `showModal()`, which makes the rest of the page inert; a click outside it calls `onDismiss`.
@@ -34,6 +38,7 @@ export function usePopup({
   onDismiss,
   placement = 'bottom',
   centred = false,
+  align,
   arrow: arrowRef,
   modal = false,
 }: {
@@ -44,6 +49,7 @@ export function usePopup({
   readonly onDismiss: (event: Event) => void;
   readonly placement?: PopupPlacement;
   readonly centred?: boolean;
+  readonly align?: PopupAlign;
   readonly arrow?: RefObject<HTMLElement | null>;
   readonly modal?: boolean;
 }): void {
@@ -107,6 +113,7 @@ export function usePopup({
       void placePopup(reference, floating, {
         placement,
         centred,
+        align,
         arrow: arrowRef?.current ?? null,
       });
     });
@@ -143,7 +150,7 @@ export function usePopup({
         floating.hidePopover();
       }
     };
-  }, [open, root, anchor, popup, placement, centred, arrowRef, modal]);
+  }, [open, root, anchor, popup, placement, centred, align, arrowRef, modal]);
 }
 
 /** The physical side of a logical placement, in the direction of the anchor's text. */
@@ -151,6 +158,7 @@ function physicalPlacement(
   anchor: HTMLElement,
   placement: PopupPlacement,
   centred: boolean,
+  align: PopupAlign | undefined,
 ): Placement {
   const rtl = getComputedStyle(anchor).direction === 'rtl';
   const side =
@@ -164,7 +172,7 @@ function physicalPlacement(
           : 'right'
         : placement;
   // Floating UI aligns a start in the direction of the text on its own.
-  return centred ? side : `${side}-start`;
+  return centred ? side : `${side}-${align ?? 'start'}`;
 }
 
 /** A length token in CSS pixels; a rem resolves against the font size of the root. */
@@ -188,8 +196,14 @@ export async function placePopup(
   {
     placement,
     centred,
+    align,
     arrow: arrowElement,
-  }: { placement: PopupPlacement; centred: boolean; arrow: HTMLElement | null },
+  }: {
+    placement: PopupPlacement;
+    centred: boolean;
+    align?: PopupAlign;
+    arrow: HTMLElement | null;
+  },
 ): Promise<void> {
   // The offset and the arrow are tokens, which the popup holds as private properties.
   const style = getComputedStyle(popup);
@@ -197,13 +211,14 @@ export async function placePopup(
   const arrowSize = arrowElement === null ? 0 : pixels(style.getPropertyValue('--_arrow-size'));
   const result = await computePosition(anchor, popup, {
     strategy: 'fixed',
-    placement: physicalPlacement(anchor, placement, centred),
+    placement: physicalPlacement(anchor, placement, centred, align),
     middleware: [
       // The arrow is a square turned by 45°, so half its diagonal stands out of the popup.
       offset(gap + (arrowSize * Math.SQRT2) / 2),
       flip({ padding: gap }),
-      // A list stays aligned with its field; a centred popup keeps its distance from the edge.
-      shift({ padding: centred ? gap : 0 }),
+      // A list stays aligned with its field; a popup beside a trigger keeps its distance from the
+      // edge of the window.
+      shift({ padding: centred || align !== undefined ? gap : 0 }),
       size({
         padding: gap,
         apply({ availableHeight, rects }) {

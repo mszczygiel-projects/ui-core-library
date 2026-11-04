@@ -1,0 +1,106 @@
+/*
+ * The two halves of a split button on the surface of an action: the main action, a rule and the
+ * square button that opens the menu. The halves meet without a border between them, and the rule
+ * takes the colour of the variant and its own height, centred over the start of the menu button.
+ */
+
+.ui-split-button {
+  display: inline-flex;
+  align-items: stretch;
+}
+
+.ui-split-button--primary {
+  --_divider: var(--color-button-primary-divider-default);
+}
+
+.ui-split-button--secondary {
+  --_divider: var(--color-button-secondary-divider-default);
+}
+
+.ui-split-button--outline {
+  --_divider: var(--color-button-outline-divider-default);
+}
+
+.ui-split-button--ghost {
+  --_divider: var(--color-button-ghost-divider-default);
+}
+
+.ui-split-button--danger {
+  --_divider: var(--color-button-danger-divider-default);
+}
+
+.ui-split-button--primary.ui-split-button--disabled {
+  --_divider: var(--color-button-primary-divider-disabled);
+}
+
+.ui-split-button--secondary.ui-split-button--disabled {
+  --_divider: var(--color-button-secondary-divider-disabled);
+}
+
+.ui-split-button--outline.ui-split-button--disabled {
+  --_divider: var(--color-button-outline-divider-disabled);
+}
+
+.ui-split-button--ghost.ui-split-button--disabled {
+  --_divider: var(--color-button-ghost-divider-disabled);
+}
+
+.ui-split-button--danger.ui-split-button--disabled {
+  --_divider: var(--color-button-danger-divider-disabled);
+}
+
+.ui-split-button__action.ui-action {
+  border-inline-end-width: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+/* A square: the stack padding on every side around a box as tall as the line of a button. */
+.ui-split-button__toggle.ui-action {
+  padding-inline: var(--_padding-stack);
+  border-inline-start-width: 0;
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+/* The focus ring of a half stays above the other half. */
+.ui-split-button .ui-action:focus-visible {
+  z-index: 1;
+}
+
+/* The rule takes no room: it lies over the start edge of the menu button, as in the design. */
+.ui-split-button__divider {
+  position: relative;
+  z-index: 2;
+  flex: none;
+  align-self: center;
+  inline-size: var(--button-border-width);
+  block-size: var(--button-divider-height);
+  margin-inline-end: calc(-1 * var(--button-border-width));
+  background: var(--_divider);
+}
+
+.ui-split-button__menu {
+  display: inline-flex;
+}
+
+.ui-split-button__toggle-icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: calc(var(--_line-height) * var(--_font-size));
+  block-size: calc(var(--_line-height) * var(--_font-size));
+  font-size: var(--_icon-size);
+  pointer-events: none;
+}
+
+@media (forced-colors: active) {
+  .ui-split-button__divider {
+    background: ButtonText;
+  }
+
+  .ui-split-button--disabled .ui-split-button__divider {
+    background: GrayText;
+  }
+}

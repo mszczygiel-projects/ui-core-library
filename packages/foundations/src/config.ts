@@ -141,6 +141,12 @@ export interface UiCoreLabels {
     /** The name of the button that clears the chosen option. */
     readonly clear: string;
   };
+  readonly splitButton: {
+    /** The name of the button that opens the menu of a split button, and of the menu. */
+    readonly menu: string;
+    /** The description of a split button while its main action is in progress. */
+    readonly loading: string;
+  };
 }
 
 /** The configuration as components read it: always complete. */
@@ -242,6 +248,7 @@ export const defaultLabels: UiCoreLabels = freezeLabels({
   passwordField: { reveal: 'Show password' },
   searchField: { clear: 'Clear search' },
   selectField: { clear: 'Clear selection' },
+  splitButton: { menu: 'More actions', loading: 'Loading' },
 });
 
 const DEFAULT_CONFIG: UiCoreConfig = Object.freeze({
