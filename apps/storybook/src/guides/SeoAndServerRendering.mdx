@@ -8,10 +8,27 @@ A search engine indexes what it finds in the HTML of a page and, when it runs sc
 
 ## What a crawler sees
 
-| Package        | HTML from the server                                                           | After the scripts run                |
-| -------------- | ------------------------------------------------------------------------------ | ------------------------------------ |
-| React          | every text, link and heading, when the page renders on a server                | the same, after hydration            |
-| Web components | the content of the slots, such as the text of a Button or the body of a Dialog | everything, through the shadow roots |
+<table>
+  <thead>
+    <tr>
+      <th>Package</th>
+      <th>HTML from the server</th>
+      <th>After the scripts run</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>React</td>
+      <td>every text, link and heading, when the page renders on a server</td>
+      <td>the same, after hydration</td>
+    </tr>
+    <tr>
+      <td>Web components</td>
+      <td>the content of the slots, such as the text of a Button or the body of a Dialog</td>
+      <td>everything, through the shadow roots</td>
+    </tr>
+  </tbody>
+</table>
 
 - **React renders on the server.** Each component renders without browser state and hydrates without a warning, so a page rendered by Next.js or another server holds its texts, its `nav` landmarks, its lists of links and its headings before any script runs.
 - **Web components render in the browser only.** A crawler that runs scripts, such as Googlebot, reads the shadow roots as one tree: the texts of props, such as `label` or `heading`, and the links of LinkButton, Breadcrumbs and Pagination. A crawler that runs no script reads only the light DOM, which is the content of the slots.
