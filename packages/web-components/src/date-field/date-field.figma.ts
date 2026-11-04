@@ -4,7 +4,8 @@
 import figma from 'figma';
 const instance = figma.selectedInstance;
 // Each variant holds an exposed TextField, named field, whose properties designers set. Its icon
-// properties hold the button of this component and never become props.
+// properties hold the calendar button of this component and never become props; the open variant
+// previews the calendar.
 const nested = instance.findInstance('field');
 const field = nested.type === 'INSTANCE' ? nested : instance;
 const variant = field.getEnum('variant', {
@@ -24,6 +25,7 @@ const label = field.getString('label');
 const placeholder = field.getString('placeholder');
 // Figma display text cannot determine a canonical value or its locale.
 const hint = field.getBoolean('showHint') ? field.getString('hint') : undefined;
+const hideCalendarButton = instance.getBoolean('hideCalendarButton');
 const escape = (text: string) =>
   text
     .replaceAll('&', '&amp;')
@@ -31,7 +33,7 @@ const escape = (text: string) =>
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
 export default {
-  example: figma.code`<ui-date-field${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` label-placement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label="${escape(label)}"` : ''}${placeholder ? figma.code` placeholder="${escape(placeholder)}"` : ''}${hint ? figma.code` hint="${escape(hint)}"` : ''}${disabled ? ' disabled' : ''}></ui-date-field>`,
+  example: figma.code`<ui-date-field${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` label-placement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label="${escape(label)}"` : ''}${placeholder ? figma.code` placeholder="${escape(placeholder)}"` : ''}${hint ? figma.code` hint="${escape(hint)}"` : ''}${hideCalendarButton ? ' hide-calendar-button' : ''}${disabled ? ' disabled' : ''}></ui-date-field>`,
   imports: ["import '@mszczygiel-projects/ui-core-web-components/date-field'"],
   id: 'ui-date-field',
   metadata: { nestable: true },
