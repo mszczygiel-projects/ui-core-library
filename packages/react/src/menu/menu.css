@@ -118,6 +118,13 @@
   pointer-events: none;
 }
 
+/* The page passes its icon as a node, often wrapped in its own element, which takes the box. */
+.ui-menu__item-icon > * {
+  display: inline-flex;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 .ui-menu__item-label {
   flex: 1;
   min-inline-size: 0;
