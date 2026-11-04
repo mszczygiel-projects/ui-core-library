@@ -37,6 +37,8 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | SelectField    | `ui-select-field`     | `./select-field`     |
 | SplitButton    | `ui-split-button`     | `./split-button`     |
 | SwitchField    | `ui-switch-field`     | `./switch-field`     |
+| Tab            | `ui-tab`              | `./tab`              |
+| Tabs           | `ui-tabs`             | `./tabs`             |
 | TextField      | `ui-text-field`       | `./text-field`       |
 | TextareaField  | `ui-textarea-field`   | `./textarea-field`   |
 | Tooltip        | `ui-tooltip`          | `./tooltip`          |
