@@ -9,6 +9,7 @@ import { Component, Element, h, Prop, State, type VNode } from '@stencil/core';
 
 import { cancelInactiveClick } from '../internal/action.ts';
 import { followAttribute } from '../internal/follow-attribute.ts';
+import { followForwardedAria, forwardDescription } from '../internal/forward-aria.ts';
 import { hasAssignedContent } from '../internal/slots.ts';
 
 const { options } = linkButton;
@@ -64,6 +65,9 @@ export class UiLinkButton implements LinkButtonProps {
   /** The `aria-label` that the page wrote on the host. */
   @State() private authorLabel: string | null = null;
 
+  /** Renders again when a Tooltip changes the elements that describe the host. */
+  @State() private describedBy = 0;
+
   @State() private hasLeadingIcon = false;
 
   @State() private hasTrailingIcon = false;
@@ -87,6 +91,10 @@ export class UiLinkButton implements LinkButtonProps {
       followAttribute(this.host, 'aria-label', (value) => {
         this.authorLabel = value;
       }),
+      // A link opens no popup, so it takes only the description of a tooltip.
+      followForwardedAria(this.host, () => {
+        this.describedBy += 1;
+      }),
     ];
   }
 
@@ -95,6 +103,11 @@ export class UiLinkButton implements LinkButtonProps {
       stop();
     }
     this.stopFollowing = [];
+  }
+
+  componentDidRender(): void {
+    const root = this.host.shadowRoot;
+    forwardDescription(this.host, root?.querySelector('a'), []);
   }
 
   render(): VNode {

@@ -1,0 +1,34 @@
+.ui-popover {
+  display: inline-flex;
+}
+
+/* The panel reads the tokens of popover, and the floating surface draws its arrow. */
+.ui-popover__panel {
+  --_offset: var(--popover-offset);
+  --_arrow-size: var(--popover-arrow-size);
+  --_border-width: var(--popover-border-width);
+  --_border-color: var(--color-popover-border);
+  --_padding-block: var(--popover-padding);
+
+  padding: var(--popover-padding);
+  border: var(--_border-width) solid var(--_border-color);
+  border-radius: var(--popover-radius);
+  background: var(--color-popover-background);
+  box-shadow: var(--popover-shadow);
+  color: inherit;
+}
+
+.ui-popover__panel:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+@media (forced-colors: active) {
+  .ui-popover__panel {
+    --_border-color: CanvasText;
+  }
+
+  .ui-popover__panel:focus-visible {
+    outline-color: Highlight;
+  }
+}

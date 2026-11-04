@@ -1,0 +1,67 @@
+/*
+ * A popup beside its trigger, in the top layer: the panel of Popover and the bubble of Tooltip.
+ * A component sets --_offset, --_arrow-size, --_border-width, --_border-color and
+ * --_padding-block from its tokens. The script places the popup, writes the side it opened on into data-side and places
+ * the arrow on the facing edge.
+ */
+.ui-floating {
+  --_border-width: 0px;
+  --_border-color: transparent;
+  --_arrow-size: 0px;
+  --_padding-block: 0px;
+  --_available-block-size: none;
+
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  margin: 0;
+  overflow: visible;
+}
+
+/*
+ * The script writes the room in the window into --_available-block-size. The body fills it less
+ * the padding and the border of the popup, and scrolls, so that the arrow outside it stays
+ * visible. Before the script runs, the calculation with none is invalid, and the body has no limit.
+ */
+.ui-floating__body {
+  display: block;
+  max-block-size: calc(
+    var(--_available-block-size) - 2 * (var(--_padding-block) + var(--_border-width))
+  );
+  overflow: auto;
+}
+
+.ui-floating[hidden] {
+  display: none;
+}
+
+/*
+ * The arrow is a square turned by 45°, in the colours of the popup. Its clip keeps the half that
+ * stands out of the popup, with the two edges of the border that face the trigger.
+ */
+.ui-floating__arrow {
+  position: absolute;
+  box-sizing: border-box;
+  inline-size: var(--_arrow-size);
+  block-size: var(--_arrow-size);
+  border: var(--_border-width) solid var(--_border-color);
+  background: inherit;
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.ui-floating[data-side='bottom'] > .ui-floating__arrow {
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+}
+
+.ui-floating[data-side='top'] > .ui-floating__arrow {
+  clip-path: polygon(100% 0, 100% 100%, 0 100%);
+}
+
+.ui-floating[data-side='right'] > .ui-floating__arrow {
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+}
+
+.ui-floating[data-side='left'] > .ui-floating__arrow {
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+}

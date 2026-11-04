@@ -38,6 +38,10 @@ import type {
   PaginationProps,
 } from '@mszczygiel-projects/ui-core-shared/pagination';
 import type { PasswordFieldProps } from '@mszczygiel-projects/ui-core-shared/password-field';
+import type {
+  PopoverOpenChangeDetail,
+  PopoverProps,
+} from '@mszczygiel-projects/ui-core-shared/popover';
 import type { RadioFieldProps } from '@mszczygiel-projects/ui-core-shared/radio-field';
 import type { RadioGroupProps } from '@mszczygiel-projects/ui-core-shared/radio-group';
 import type { SearchFieldProps } from '@mszczygiel-projects/ui-core-shared/search-field';
@@ -45,6 +49,7 @@ import type { SelectFieldProps } from '@mszczygiel-projects/ui-core-shared/selec
 import type { SwitchFieldProps } from '@mszczygiel-projects/ui-core-shared/switch-field';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import type { TextareaFieldProps } from '@mszczygiel-projects/ui-core-shared/textarea-field';
+import type { TooltipProps } from '@mszczygiel-projects/ui-core-shared/tooltip';
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 
 /**
@@ -63,6 +68,14 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-tooltip': CustomElement<TooltipProps>;
+      'ui-popover': CustomElement<
+        PopoverProps & {
+          readonly 'onui-open-change'?: (
+            event: CustomEvent<PopoverOpenChangeDetail<Event>>,
+          ) => void;
+        }
+      >;
       'ui-pagination': CustomElement<
         PaginationProps & {
           readonly page?: number;

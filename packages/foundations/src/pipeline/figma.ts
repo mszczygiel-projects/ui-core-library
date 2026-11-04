@@ -133,6 +133,8 @@ const NUMBER_RULES: readonly (readonly [
   [(s) => s.startsWith('font-weight'), ['FONT_WEIGHT']],
   [(s) => s === 'letter-spacing', ['LETTER_SPACING']],
   [(s) => s === 'radius', ['CORNER_RADIUS']],
+  // A delay is a time, which no field of Figma takes.
+  [(s) => s.endsWith('delay'), []],
   // A width under `border` or `stroke` is the width of a line, not of an element.
   [(s) => s === 'border' || s === 'stroke', ['STROKE_FLOAT']],
   [(s) => ['gap', 'inset', 'margin', 'offset'].includes(s) || s.startsWith('padding'), ['GAP']],

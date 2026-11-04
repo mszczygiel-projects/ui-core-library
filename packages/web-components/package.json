@@ -85,6 +85,10 @@
       "types": "./dist/components/ui-password-field.d.ts",
       "default": "./dist/components/ui-password-field.js"
     },
+    "./popover": {
+      "types": "./dist/components/ui-popover.d.ts",
+      "default": "./dist/components/ui-popover.js"
+    },
     "./radio-field": {
       "types": "./dist/components/ui-radio-field.d.ts",
       "default": "./dist/components/ui-radio-field.js"
@@ -112,6 +116,10 @@
     "./textarea-field": {
       "types": "./dist/components/ui-textarea-field.d.ts",
       "default": "./dist/components/ui-textarea-field.js"
+    },
+    "./tooltip": {
+      "types": "./dist/components/ui-tooltip.d.ts",
+      "default": "./dist/components/ui-tooltip.js"
     },
     "./custom-elements.json": "./dist/custom-elements.json",
     "./package.json": "./package.json"

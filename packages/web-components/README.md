@@ -26,6 +26,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | NumberField    | `ui-number-field`     | `./number-field`     |
 | Pagination     | `ui-pagination`       | `./pagination`       |
 | PasswordField  | `ui-password-field`   | `./password-field`   |
+| Popover        | `ui-popover`          | `./popover`          |
 | RadioField     | `ui-radio-field`      | `./radio-field`      |
 | RadioGroup     | `ui-radio-group`      | `./radio-group`      |
 | SearchField    | `ui-search-field`     | `./search-field`     |
@@ -33,5 +34,6 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | SwitchField    | `ui-switch-field`     | `./switch-field`     |
 | TextField      | `ui-text-field`       | `./text-field`       |
 | TextareaField  | `ui-textarea-field`   | `./textarea-field`   |
+| Tooltip        | `ui-tooltip`          | `./tooltip`          |
 
 The components read the tokens of `@mszczygiel-projects/ui-core-foundations`, which a page loads once. `custom-elements.json` describes their API. The Storybook site documents each component.

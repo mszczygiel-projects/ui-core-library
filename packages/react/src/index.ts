@@ -77,6 +77,7 @@ export {
   type PasswordFieldProps,
   type PasswordFieldRevealedChangeDetails,
 } from './password-field/PasswordField.tsx';
+export { Popover, type PopoverProps } from './popover/Popover.tsx';
 export { RadioField, type RadioFieldProps } from './radio-field/RadioField.tsx';
 export {
   RadioGroup,
@@ -114,3 +115,4 @@ export {
   type TextareaFieldProps,
   type TextareaFieldResize,
 } from './textarea-field/TextareaField.tsx';
+export { Tooltip, type TooltipProps } from './tooltip/Tooltip.tsx';

@@ -9,6 +9,7 @@ import { type Mount, type Mounted, type MountOptions } from '../harness/types.ts
 import { pseudoLabels } from '../pseudo.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 import { actionFormContract, actionSurfaceContract, formFixtures } from './action.contract.ts';
+import { popupTriggerContract } from './popup-trigger.contract.ts';
 
 /** The props of the specification, plus the icon as a flag, which each harness renders. */
 export interface IconButtonContractProps extends IconButtonProps {
@@ -35,6 +36,8 @@ export function iconButtonContract(adapter: Mount<IconButtonContractProps>): voi
       await button.unmount();
     }
   });
+
+  popupTriggerContract(() => mount(), { role: 'button', popup: true });
 
   it('uses the documented defaults and falls back after invalid runtime settings', async () => {
     const defaults = await mount();
