@@ -8,6 +8,8 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 
 | Component      | Tag                   | Subpath              |
 | -------------- | --------------------- | -------------------- |
+| Accordion      | `ui-accordion`        | `./accordion`        |
+| AccordionItem  | `ui-accordion-item`   | `./accordion-item`   |
 | Badge          | `ui-badge`            | `./badge`            |
 | Breadcrumbs    | `ui-breadcrumbs`      | `./breadcrumbs`      |
 | Button         | `ui-button`           | `./button`           |

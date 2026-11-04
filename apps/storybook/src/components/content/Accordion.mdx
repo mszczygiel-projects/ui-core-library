@@ -1,0 +1,100 @@
+import { Meta, Source } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './Accordion.wc.stories.tsx';
+import * as ReactStories from './Accordion.react.stories.tsx';
+
+<Meta title="Components/Content/Accordion/Docs" />
+
+# Accordion
+
+<ComponentOverview name="Accordion" />
+
+## Usage
+
+Use Accordion for sections that a reader scans by their headings and opens one by one, such as the questions of a help page or the details of a product. Each section is an AccordionItem. Keep content that every reader needs in the page itself, and use Tabs for views that replace one another.
+
+## Anatomy
+
+The **base** holds the sections. Each AccordionItem has a **heading** that holds the **trigger**, a button with the **label** and the **icon**, and a **panel** with the content. The web component exposes these parts; React uses `.ui-accordion__base` and `.ui-accordion-item__<part>` classes. Figma names the layers the same.
+
+## Variants & tone
+
+Accordion has one appearance: a line separates each section from the one before it, with no line above the first or below the last.
+
+## Sizes & density
+
+Accordion has one size, which follows the surrounding density through its tokens.
+
+## States
+
+<FrameworkCanvas
+  react={ReactStories.WithDisabledItem}
+  webComponents={WebComponentStories.WithDisabledItem}
+/>
+
+A section is open or closed. Its heading shows hover and press with a tint, and keyboard focus with the focus ring. A disabled section keeps its state and leaves the keys of the group.
+
+## Content & labels
+
+Give each section a short `label`, which is its heading, in the language of the page. The content goes into the section as children or into its slot, so it is in the HTML of the page. Accordion renders no text of its own.
+
+## Behaviour
+
+<FrameworkCanvas react={ReactStories.Multiple} webComponents={WebComponentStories.Multiple} />
+
+- A press on a heading opens or closes its section. Without `multiple`, a section that the user opens closes the others; with it, each stays as the user leaves it. All sections may be closed.
+- Each section reports a request to open or close: `ui-open-change` in the web component, which a page may cancel, and `onOpenChange(open, details)` in React. A section that the group closes reports nothing in the web component, and `onOpenChange(false, { reason: 'group' })` in React, so that a controlled section can follow.
+- Setting `open` on a section opens it without closing the others.
+- The content of a closed section stays in the page, hidden until find in page reaches it. Find in page and a link to a text fragment open the section, with the reason `find`.
+
+<Source
+  language="tsx"
+  code={`<Accordion>
+  <AccordionItem label="How long does shipping take?" defaultOpen>
+    Orders ship within two working days.
+  </AccordionItem>
+  <AccordionItem label="Can I return an order?">Return any order within thirty days.</AccordionItem>
+</Accordion>;`}
+/>
+
+## Accessibility
+
+- **Pattern.** The [accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/): each heading is an HTML heading, an `h3` by default, that holds a button with `aria-expanded` and `aria-controls`, and the open panel is a region named by its heading.
+- **Keys.** Tab moves through the headings and the content of the open sections. Enter and Space open and close the section of the focused heading. Arrow Down and Arrow Up move to the next and previous enabled heading, around the ends; Home and End move to the first and last. The arrows are the same in right-to-left text, since the headings stack vertically.
+- **Outline.** Set `headingLevel` on each section so that its heading fits into the outline of the page.
+- **Preferences.** With reduced motion the chevron turns over at once. Forced colours keep the lines and the focus ring.
+
+## Surfaces & themes
+
+Accordion has no background of its own, so it sits on any surface. Its text, icon, lines and tint follow Light and Dark and the default, subtle, inverse and primary surfaces.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Accordion" />}
+  webComponents={<WebComponentApi tag="ui-accordion" />}
+/>
+
+<Source
+  language="ts"
+  code={`import { Accordion, AccordionItem } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-web-components/accordion';
+import '@mszczygiel-projects/ui-core-web-components/accordion-item';`}
+/>
+
+React's ref, className, style and other attributes reach the root element.
+
+## Tokens
+
+<ComponentTokens component="accordion" />
+
+## Implementation notes
+
+- React renders each section on the server with its content in the HTML. Since React writes `hidden` as a boolean, a closed panel is `hidden` in the server HTML and becomes `hidden="until-found"` once it hydrates.
+- The web component keeps the content in the slot of each `ui-accordion-item`, so a crawler that runs no script reads it. Each section finds its group as its parent element.
+- In React the group closes the others once the opened section has rendered open, so a controlled parent that keeps a section closed keeps the others open, as a canceled request does in the web component.

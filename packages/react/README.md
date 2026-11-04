@@ -9,6 +9,8 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 
 | Component      | Export           |
 | -------------- | ---------------- |
+| Accordion      | `Accordion`      |
+| AccordionItem  | `AccordionItem`  |
 | Badge          | `Badge`          |
 | Breadcrumbs    | `Breadcrumbs`    |
 | Button         | `Button`         |

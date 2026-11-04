@@ -81,6 +81,7 @@ An item before the last one without an address is left out, since every item but
 
 - The content of a closed Dialog, Drawer or Popover and the text of a Tooltip are in the page but not shown. A search engine may index them with less weight, so keep the content that a page is about in the page itself.
 - The title of a Dialog is an `h2`. A page that renders closed dialogs on the server adds their titles to its outline.
+- The content of a closed section of Accordion stays in the page. In React it is in the server HTML, and in the web component it is in the slot of each `ui-accordion-item`. After hydration or definition the closed panel is `hidden="until-found"`, so find in page and a link to a text fragment, such as a result of a search engine that points into a closed answer, open the section. A browser without `until-found` hides the panel plainly. The heading of each section is an `h3` unless `headingLevel` fits it into the outline of the page.
 - A Notification with `announce` renders its content hidden on the server and shows it after hydration, since a live region announces only a change. Leave `announce` off for a message that is part of the page when it loads.
 
 ## Before the web components load
@@ -93,6 +94,8 @@ ui-drawer:not(:defined) {
   display: none;
 }
 ```
+
+An Accordion needs no such rule: before definition its sections show their content as text in the order of the page.
 
 Do not hide `ui-popover` or `ui-tooltip` this way: their slots hold the trigger, which must stay visible.
 

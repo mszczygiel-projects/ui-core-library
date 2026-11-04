@@ -1,3 +1,5 @@
+import '@mszczygiel-projects/ui-core-web-components/accordion';
+import '@mszczygiel-projects/ui-core-web-components/accordion-item';
 import '@mszczygiel-projects/ui-core-web-components/badge';
 import '@mszczygiel-projects/ui-core-web-components/breadcrumbs';
 import '@mszczygiel-projects/ui-core-web-components/button';
@@ -31,6 +33,8 @@ import '@mszczygiel-projects/ui-core-web-components/tooltip';
 
 import { describe } from 'vitest';
 
+import { mountWebComponentAccordion } from '../harness/accordion.tsx';
+import { mountWebComponentAccordionItem } from '../harness/accordion-item.tsx';
 import { mountWebComponentBadge } from '../harness/badge.tsx';
 import { mountWebComponentBreadcrumbs } from '../harness/breadcrumbs.tsx';
 import { mountWebComponentButton } from '../harness/button.tsx';
@@ -61,6 +65,8 @@ import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { mountWebComponentTextareaField } from '../harness/textarea-field.tsx';
 import { mountWebComponentTooltip } from '../harness/tooltip.tsx';
 import { webComponentMount } from '../harness/web-component.ts';
+import { accordionContract } from '../specs/accordion.contract.ts';
+import { accordionItemContract } from '../specs/accordion-item.contract.ts';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
@@ -217,4 +223,12 @@ describe('Menu, web component', () => {
 
 describe('SplitButton, web component', () => {
   splitButtonContract(mountWebComponentSplitButton);
+});
+
+describe('Accordion, web component', () => {
+  accordionContract(mountWebComponentAccordion);
+});
+
+describe('AccordionItem, web component', () => {
+  accordionItemContract(mountWebComponentAccordionItem);
 });

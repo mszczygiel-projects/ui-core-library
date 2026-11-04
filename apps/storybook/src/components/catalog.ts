@@ -21,6 +21,7 @@ export const categories: readonly ComponentCategory[] = [
   'Selection',
   'Feedback',
   'Navigation',
+  'Content',
   'Overlays',
 ];
 

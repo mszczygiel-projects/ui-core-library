@@ -45,7 +45,7 @@
 
   A section that does not apply says so.
 
-- Categories: Actions, Inputs, Selection, Feedback, Navigation and Overlays. A status page lists every component from the specifications in `shared`.
+- Categories: Actions, Inputs, Selection, Feedback, Navigation, Content and Overlays. Content holds the components that arrange content on a page, such as Accordion. A status page lists every component from the specifications in `shared`.
 - **Stories**: `Playground`, `Variants` (when the component has a `variant`), `OnSurfaces` and `With<Content>` as needed. Both frameworks use the same names.
 - **JSDoc** covers the whole public API. The one-sentence summary is the same in JSDoc, on the page and in the Figma description.
 

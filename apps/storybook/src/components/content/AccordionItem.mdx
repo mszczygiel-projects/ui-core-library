@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as WebComponentStories from './AccordionItem.wc.stories.tsx';
+import * as ReactStories from './AccordionItem.react.stories.tsx';
+
+<Meta title="Components/Content/AccordionItem/Docs" />
+
+# AccordionItem
+
+<ComponentOverview name="AccordionItem" />
+
+## Usage
+
+Use AccordionItem only as a section of an Accordion, which gives it the keys between headings and closes the others when it opens.
+
+## Anatomy
+
+The **base** holds the **heading**, an HTML heading with the **trigger**, a button with the **label** and the **icon**, and the **panel**, a region that holds the content. The web component exposes these parts; React uses `.ui-accordion-item__<part>` classes. Figma names the layers the same.
+
+## Variants & tone
+
+AccordionItem has one appearance. The icon is a chevron that turns over when the section opens.
+
+## Sizes & density
+
+AccordionItem has one size, which follows the surrounding density through its tokens.
+
+## States
+
+<FrameworkCanvas react={ReactStories.Open} webComponents={WebComponentStories.Open} />
+
+`open` shows the content. `disabled` keeps the section as it is and removes its heading from keyboard navigation.
+
+<FrameworkCanvas react={ReactStories.Disabled} webComponents={WebComponentStories.Disabled} />
+
+## Content & labels
+
+`label` is the text of the heading. The content goes into the section as children or into its default slot, and stays in the page while the section is closed.
+
+## Behaviour
+
+A press on the heading opens and closes the section, and so do Enter and Space. The web component dispatches the cancelable `ui-open-change` with `detail.value` and `detail.reason`; its `open` attribute supplies the initial state and follows the section. React offers `defaultOpen`, or `open` with `onOpenChange(open, details)`. Find in page opens a closed section with the reason `find`, whatever the page answers.
+
+## Accessibility
+
+A section of the [accordion](https://www.w3.org/WAI/ARIA/apg/patterns/accordion/) pattern: a heading of `headingLevel`, from 2 to 6 and an `h3` by default, that holds a button with `aria-expanded` and `aria-controls`, and a region named by the heading. Accordion handles the arrow keys, Home and End.
+
+## Surfaces & themes
+
+The section follows Light and Dark and the default, subtle, inverse and primary surfaces.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="AccordionItem" />}
+  webComponents={<WebComponentApi tag="ui-accordion-item" />}
+/>
+
+React's ref, className, style and other attributes reach the root element.
+
+## Tokens
+
+<ComponentTokens component="accordion" />
+
+## Implementation notes
+
+See Accordion.

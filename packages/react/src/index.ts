@@ -1,4 +1,12 @@
 /** Every React component of the library. Their styles are in `styles.css`, imported once. */
+export { Accordion, type AccordionProps } from './accordion/Accordion.tsx';
+export {
+  type AccordionHeadingLevel,
+  AccordionItem,
+  type AccordionItemOpenChangeDetails,
+  type AccordionItemOpenChangeReason,
+  type AccordionItemProps,
+} from './accordion-item/AccordionItem.tsx';
 export { Badge, type BadgeProps } from './badge/Badge.tsx';
 export { Breadcrumbs, type BreadcrumbsProps } from './breadcrumbs/Breadcrumbs.tsx';
 export {

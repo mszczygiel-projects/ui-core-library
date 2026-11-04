@@ -1,4 +1,4 @@
-export type ComponentCategory = 'Actions' | 'Inputs' | 'Selection' | 'Feedback' | 'Navigation' | 'Overlays';
+export type ComponentCategory = 'Actions' | 'Inputs' | 'Selection' | 'Feedback' | 'Navigation' | 'Content' | 'Overlays';
 export type ComponentStatus = 'planned' | 'in-progress' | 'done';
 export interface OptionsSpec<Option extends string = string> {
     readonly options: readonly Option[];
