@@ -43,6 +43,7 @@
   | `@starting-style`       | the panels and the backdrop of Dialog and Drawer                                   | the modal opens without its transition                                                                                     |
   | `:dir()`                | the direction a side Drawer slides in from                                         | the panel slides in from the physical side of its left-to-right placement; it still rests at the logical edge              |
   | ARIA element reflection | `ariaDescribedByElements` from Tooltip to its trigger, which crosses a shadow root | the trigger has no description; the bubble still shows its text                                                            |
+  | `hidden="until-found"`  | the closed panel of AccordionItem, which find in page and a text fragment open     | the panel is plainly hidden: find in page skips its content, which stays in the page and in the server HTML                |
 
   Each use in CSS carries a `stylelint-disable-next-line plugin/use-baseline` comment that names its fallback, and each use in script a comment that names it.
 
