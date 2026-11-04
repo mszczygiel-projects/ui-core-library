@@ -32,11 +32,11 @@ describe('Calendar', () => {
     const root = hydrateRoot(container, <Calendar locale="en-US" />, {
       onRecoverableError: recoverable,
     });
-    await nextFrame();
-    await nextFrame();
+    // Hydration and the render with the clock that follows it take an unknown number of frames
+    // on a slow machine.
+    await expect.poll(() => container.querySelector('[aria-current="date"]')).not.toBeNull();
     expect(recoverable).not.toHaveBeenCalled();
     expect(errors).not.toHaveBeenCalled();
-    expect(container.querySelector('[aria-current="date"]')).not.toBeNull();
     root.unmount();
     container.remove();
     errors.mockRestore();
