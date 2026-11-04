@@ -28,6 +28,8 @@ import { searchField } from './search-field.ts';
 import { selectField } from './select-field.ts';
 import { splitButton } from './split-button.ts';
 import { switchField } from './switch-field.ts';
+import { tab } from './tab.ts';
+import { tabs } from './tabs.ts';
 import { textField } from './text-field.ts';
 import { textareaField } from './textarea-field.ts';
 import { tooltip } from './tooltip.ts';
@@ -66,4 +68,6 @@ export const specs: readonly ComponentSpec[] = [
   splitButton,
   accordion,
   accordionItem,
+  tabs,
+  tab,
 ];

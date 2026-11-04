@@ -190,6 +190,18 @@
       "types": "./dist/components/switch-field.d.ts",
       "default": "./dist/components/switch-field.js"
     },
+    "./tab": {
+      "types": "./dist/components/tab.d.ts",
+      "default": "./dist/components/tab.js"
+    },
+    "./tabs": {
+      "types": "./dist/components/tabs.d.ts",
+      "default": "./dist/components/tabs.js"
+    },
+    "./tabs-navigation": {
+      "types": "./dist/utils/tabs-navigation.d.ts",
+      "default": "./dist/utils/tabs-navigation.js"
+    },
     "./text": {
       "types": "./dist/utils/text.d.ts",
       "default": "./dist/utils/text.js"
