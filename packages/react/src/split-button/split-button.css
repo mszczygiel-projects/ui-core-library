@@ -1,7 +1,7 @@
 /*
  * The two halves of a split button on the surface of an action: the main action, a rule and the
  * square button that opens the menu. The halves meet without a border between them, and the rule
- * takes the colour of the variant.
+ * takes the colour of the variant and its own height, centred over the start of the menu button.
  */
 
 .ui-split-button {
@@ -68,9 +68,15 @@
   z-index: 1;
 }
 
+/* The rule takes no room: it lies over the start edge of the menu button, as in the design. */
 .ui-split-button__divider {
+  position: relative;
+  z-index: 2;
   flex: none;
+  align-self: center;
   inline-size: var(--button-border-width);
+  block-size: var(--button-divider-height);
+  margin-inline-end: calc(-1 * var(--button-border-width));
   background: var(--_divider);
 }
 

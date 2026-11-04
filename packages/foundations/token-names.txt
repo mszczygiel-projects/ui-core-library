@@ -62,6 +62,7 @@ css --breakpoint-md
 css --breakpoint-sm
 css --breakpoint-xl
 css --button-border-width
+css --button-divider-height
 css --button-font-family
 css --button-font-size
 css --button-font-weight
@@ -2126,6 +2127,7 @@ ts tokens.components.breadcrumbs.small.icon.size
 ts tokens.components.breadcrumbs.small.lineHeight
 ts tokens.components.breadcrumbs.small.separator.size
 ts tokens.components.button.border.width
+ts tokens.components.button.divider.height
 ts tokens.components.button.fontFamily
 ts tokens.components.button.fontSize
 ts tokens.components.button.fontWeight

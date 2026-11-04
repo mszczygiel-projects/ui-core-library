@@ -323,6 +323,28 @@ export function splitButtonContract(adapter: Mount<SplitButtonContractProps>): v
     }
   });
 
+  for (const dir of ['ltr', 'rtl'] as const) {
+    it(`centres a divider of its own height over the start of the menu button, in ${dir}`, async () => {
+      const component = await mount({ size: 'large' }, { dir });
+      const divider = component.part('divider').getBoundingClientRect();
+      const action = component.part('action').getBoundingClientRect();
+      const toggle = component.part('toggle').getBoundingClientRect();
+      const probe = document.createElement('span');
+      probe.style.display = 'block';
+      probe.style.blockSize = tokenValue('--button-divider-height');
+      document.body.append(probe);
+      const height = probe.getBoundingClientRect().height;
+      probe.remove();
+      expect(divider.height).toBeCloseTo(height, 1);
+      expect(divider.height).toBeLessThan(toggle.height);
+      // The halves touch, and the divider lies over the edge where they meet.
+      const seam = dir === 'ltr' ? action.right : action.left;
+      expect(dir === 'ltr' ? toggle.left : toggle.right).toBeCloseTo(seam, 1);
+      expect(dir === 'ltr' ? divider.left : divider.right).toBeCloseTo(seam, 1);
+      expect(divider.top + divider.height / 2).toBeCloseTo(toggle.top + toggle.height / 2, 1);
+    });
+  }
+
   it('joins the halves with square inner corners and gives the menu button its own colours', async () => {
     const component = await mount({ variant: 'secondary' });
     // A preceding case can leave the pointer over the newly mounted halves.

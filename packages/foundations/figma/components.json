@@ -6844,6 +6844,25 @@
         }
       }
     },
+    "divider": {
+      "height": {
+        "$value": "{Sizes.icon.sm}",
+        "$type": "size",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1057:2",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "WIDTH_HEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--button-divider-height)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      }
+    },
     "icon": {
       "size": {
         "$value": "{Sizes.icon.sm}",

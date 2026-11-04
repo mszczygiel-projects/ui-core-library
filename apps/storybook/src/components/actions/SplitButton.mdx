@@ -21,7 +21,7 @@ Use Button when there is one action, and Menu with its own button when no action
 
 ## Anatomy
 
-The **base** groups two sibling buttons. The **action** is the main native button, with the **wrapper**, **content**, **leading-icon**, **label**, **trailing-icon** and **loader** of Button. The **divider** separates it from the **toggle**, the native menu button with its **toggle-icon**, which opens a Menu at its end edge. The web component exposes these as parts; React uses the matching `.ui-split-button__<part>` classes. In Figma the set holds a Button instance named `action`, the divider, an IconButton instance named `toggle` and, when open, a Menu instance.
+The **base** groups two sibling buttons. The **action** is the main native button, with the **wrapper**, **content**, **leading-icon**, **label**, **trailing-icon** and **loader** of Button. The **divider** separates it from the **toggle** without taking room: it lies over the start edge of the toggle, centred, at the height of `button/divider/height`. The **toggle** is the native menu button with its **toggle-icon**, which opens a Menu at its end edge. The web component exposes these as parts; React uses the matching `.ui-split-button__<part>` classes. In Figma the set holds a Button instance named `action`, the divider, an IconButton instance named `toggle` and, when open, a Menu instance.
 
 ## Variants & tone
 
@@ -70,7 +70,7 @@ The default slot or `children` names the main action, and `label` can replace th
 
 ## Surfaces & themes
 
-Colours follow the theme and the surface through the tokens of Button, and the divider through `color/button/<variant>/divider/*`, which takes the text colour of the variant by default and the border colour for `outline`.
+Colours follow the theme and the surface through the tokens of Button, and the divider through `color/button/<variant>/divider/*`, which takes the text colour of the variant by default and the border colour for `outline`. Its height is `button/divider/height`, the small icon size, which follows the density but not the size, and its width the border width of Button.
 
 ## API
 
