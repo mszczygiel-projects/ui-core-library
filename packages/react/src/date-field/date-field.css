@@ -2,7 +2,7 @@
 
 /* The dialog of the calendar, in the top layer, placed by script below or above the field. */
 .ui-date-field__panel {
-  --_offset: var(--popover-offset);
+  --_offset: var(--date-field-panel-offset);
   --_anchor-inline-size: auto;
   --_available-block-size: none;
 
@@ -11,12 +11,12 @@
   box-sizing: border-box;
   max-block-size: var(--_available-block-size);
   margin: 0;
-  padding: var(--popover-padding);
+  padding: var(--date-field-panel-padding);
   overflow: auto;
-  border: var(--popover-border-width) solid var(--color-popover-border);
-  border-radius: var(--popover-radius);
-  background: var(--color-popover-background);
-  box-shadow: var(--popover-shadow);
+  border: var(--date-field-panel-border-width) solid var(--color-date-field-panel-border);
+  border-radius: var(--date-field-panel-radius);
+  background: var(--color-date-field-panel-background);
+  box-shadow: var(--date-field-panel-shadow);
   color: inherit;
 }
 

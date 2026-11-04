@@ -3756,7 +3756,7 @@
               }
             }
           },
-          "hover": {
+          "active": {
             "$value": "{Surfaces.color.background.subtle}",
             "$type": "color",
             "$extensions": {
@@ -3768,7 +3768,7 @@
                   "SHAPE_FILL"
                 ],
                 "codeSyntax": {
-                  "WEB": "var(--color-calendar-day-background-hover)"
+                  "WEB": "var(--color-calendar-day-background-active)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -5243,6 +5243,45 @@
               "WEB": "var(--color-tooltip-text)"
             },
             "hiddenFromPublishing": false
+          }
+        }
+      }
+    },
+    "date-field": {
+      "panel": {
+        "background": {
+          "$value": "{Surfaces.color.background.default}",
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1050:7",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "FRAME_FILL",
+                "SHAPE_FILL"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-date-field-panel-background)"
+              },
+              "hiddenFromPublishing": false
+            }
+          }
+        },
+        "border": {
+          "$value": "{Surfaces.color.border.subtle}",
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1050:8",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "STROKE_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-date-field-panel-border)"
+              },
+              "hiddenFromPublishing": false
+            }
           }
         }
       }
@@ -8618,6 +8657,57 @@
             "hiddenFromPublishing": false
           }
         }
+      },
+      "font-size": {
+        "$value": "{Sizes.typography.body.small.font-size}",
+        "$type": "fontSize",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:9",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--calendar-header-font-size)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "font-weight": {
+        "$value": "{Themes.typography.body.font-weight-strong}",
+        "$type": "fontWeight",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:10",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "FONT_WEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--calendar-header-font-weight)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "line-height": {
+        "$value": "{Sizes.typography.body.small.line-height}",
+        "$type": "lineHeight",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:11",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "LINE_HEIGHT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--calendar-header-line-height)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
       }
     },
     "today": {
@@ -8653,25 +8743,6 @@
           ],
           "codeSyntax": {
             "WEB": "var(--calendar-font-family)"
-          },
-          "hiddenFromPublishing": false
-        }
-      }
-    }
-  },
-  "date-picker": {
-    "gap": {
-      "$value": "{Sizes.gap.xs}",
-      "$type": "spacing",
-      "$extensions": {
-        "com.figma": {
-          "variableId": "VariableID:630:130",
-          "collectionId": "VariableCollectionId:600:2",
-          "scopes": [
-            "GAP"
-          ],
-          "codeSyntax": {
-            "WEB": "var(--date-picker-gap)"
           },
           "hiddenFromPublishing": false
         }
@@ -11052,6 +11123,95 @@
             "WEB": "var(--tooltip-show-delay)"
           },
           "hiddenFromPublishing": false
+        }
+      }
+    }
+  },
+  "date-field": {
+    "panel": {
+      "padding": {
+        "$value": "{Sizes.padding.inline.lg}",
+        "$type": "spacing",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:2",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--date-field-panel-padding)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "radius": {
+        "$value": "{Themes.radius.lg}",
+        "$type": "borderRadius",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:3",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "CORNER_RADIUS"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--date-field-panel-radius)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "border": {
+        "width": {
+          "$value": "{Themes.stroke.border}",
+          "$type": "strokeWidth",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1050:4",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "STROKE_FLOAT"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--date-field-panel-border-width)"
+              },
+              "hiddenFromPublishing": false
+            }
+          }
+        }
+      },
+      "offset": {
+        "$value": "{Sizes.gap.xs}",
+        "$type": "spacing",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:5",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "GAP"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--date-field-panel-offset)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "shadow": {
+        "$value": "{Themes.shadow.elevation.2}",
+        "$type": "string",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1050:6",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [],
+            "codeSyntax": {
+              "WEB": "var(--date-field-panel-shadow)"
+            },
+            "hiddenFromPublishing": false
+          }
         }
       }
     }

@@ -28,9 +28,9 @@
   background: none;
   color: var(--color-calendar-header-text);
   font-family: inherit;
-  font-size: var(--calendar-day-font-size);
-  font-weight: var(--calendar-weekday-font-weight);
-  line-height: var(--calendar-day-line-height);
+  font-size: var(--calendar-header-font-size);
+  font-weight: var(--calendar-header-font-weight);
+  line-height: var(--calendar-header-line-height);
 }
 
 .zoom {
@@ -123,7 +123,7 @@
     .selection-start,
     .selection-end
   ) {
-  --_background: var(--color-calendar-day-background-hover);
+  --_background: var(--color-calendar-day-background-active);
 }
 
 .outside {

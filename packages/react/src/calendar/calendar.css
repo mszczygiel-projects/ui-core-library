@@ -20,9 +20,9 @@
   background: none;
   color: var(--color-calendar-header-text);
   font-family: inherit;
-  font-size: var(--calendar-day-font-size);
-  font-weight: var(--calendar-weekday-font-weight);
-  line-height: var(--calendar-day-line-height);
+  font-size: var(--calendar-header-font-size);
+  font-weight: var(--calendar-header-font-weight);
+  line-height: var(--calendar-header-line-height);
 }
 
 .ui-calendar__heading--zoom {
@@ -114,7 +114,7 @@
     .ui-calendar__cell--start,
     .ui-calendar__cell--end
   ) {
-  --_background: var(--color-calendar-day-background-hover);
+  --_background: var(--color-calendar-day-background-active);
 }
 
 .ui-calendar__cell--outside {
