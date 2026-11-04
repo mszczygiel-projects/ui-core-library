@@ -37,7 +37,8 @@ export interface PaginationProps
    * event to keep the page, and in link mode to keep the browser from loading the address, as a
    * page with client-side routing does. A move from the jump field passes a cancelable copy of
    * its key or focus event, since the field has already handled the key and a focus event cannot
-   * be canceled.
+   * be canceled. A press on a link calls it inside a transition, so the state it sets renders
+   * after the browser has read the address of the link.
    */
   onPageChange?: (page: number, details: PaginationPageChangeDetails<Event>) => void;
 }
@@ -118,20 +119,23 @@ export function Pagination({
       return;
     }
     const href = getPageHref?.(next);
-    onPageChange?.(next, { reason, ...(href === undefined ? {} : { href }), originalEvent: event });
-    if (event.defaultPrevented) {
-      return;
-    }
-    if (href !== undefined && !load) {
-      // A link reads its address after the click, and React renders the update of a click before
-      // that. A transition renders later, so previous and next keep the address that was pressed.
-      startTransition(() => {
+    const details = { reason, ...(href === undefined ? {} : { href }), originalEvent: event };
+    // A link reads its address after the click, and React renders the updates of a click before
+    // that, the parent's among them. In a transition they render later, so the pressed link keeps
+    // its address. The callback still runs at once, so it can cancel the event.
+    const following = href !== undefined && !load;
+    const update = () => {
+      onPageChange?.(next, details);
+      if (!event.defaultPrevented) {
         setUncontrolled(next);
-      });
+      }
+    };
+    if (following) {
+      startTransition(update);
     } else {
-      setUncontrolled(next);
+      update();
     }
-    if (load && href !== undefined) {
+    if (load && href !== undefined && !event.defaultPrevented) {
       window.location.assign(href);
     }
   }
