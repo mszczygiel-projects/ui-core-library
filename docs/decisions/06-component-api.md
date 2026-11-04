@@ -41,7 +41,8 @@
 - **Attributes**: React passes `className`, `style` and `data-*` to the root, and `id`, `aria-*` and native attributes to the native control.
 - **The host belongs to the page**: a web component reflects only `name`, `disabled`, `readonly` and `open`. It never writes `role`, `aria-*`, `class`, `style` or `tabindex` on its host.
 - **Native attributes of the host**: a web component never declares a prop that `HTMLElement` already owns, such as `inputMode`, `enterKeyHint` or `spellcheck`. It passes the native attribute of its host to its inner control, and an author's `aria-label` too. Button and IconButton also pass `aria-expanded` and `aria-haspopup`, and all three actions pass the elements of `ariaDescribedByElements`, so that a popup can announce and describe its trigger. A link opens no popup, so LinkButton passes only the description.
-- **The trigger of a popup**: Popover and Tooltip write the relationship on the element of their trigger, which the page gives them: `aria-expanded` and `aria-haspopup` for Popover, `ariaDescribedByElements` for Tooltip. They never write anything else on it, nor on their own host.
+- **The trigger of a popup**: Popover, Menu and Tooltip write the relationship on the element of their trigger, which the page gives them: `aria-expanded` and `aria-haspopup` for Popover and Menu, `ariaDescribedByElements` for Tooltip. They never write anything else on it, nor on their own host.
+- **One native click per action**: the native `click` of a component is its main action. A component with more than one action, such as SplitButton, keeps the presses of its other buttons inside it and reports their actions as `ui-action` and `onAction`; in React `onClick` goes to the main native button.
 - **Exceptions**: an exception to these rules is written in the component's specification with its reason.
 
 ### Forms
@@ -64,7 +65,7 @@
 - Labels, hints and errors render in the same root as the control and link to it.
 - Focus shows only on `:focus-visible`, as an outline drawn with the focus-ring tokens.
 - No interactive element is nested in another. Targets are at least 24 × 24 px.
-- A Popover opens from an element that acts as a button, never from text, an icon or a link. A Tooltip shows on hover after a delay and on keyboard focus at once, stays while the pointer moves onto it, and closes on Escape before anything around it (WCAG 1.4.13). It holds plain text that nothing else needs to reach, since touch never shows it.
+- A Popover or a Menu opens from an element that acts as a button, never from text, an icon or a link. A Menu holds actions, never a value the page keeps: that is a Listbox or a SelectField. A SplitButton is a group of two sibling buttons, never a button inside another. A Tooltip shows on hover after a delay and on keyboard focus at once, stays while the pointer moves onto it, and closes on Escape before anything around it (WCAG 1.4.13). It holds plain text that nothing else needs to reach, since touch never shows it.
 - A component that operates the controls of its parts from its own keys, such as Combobox and the remove buttons of its chips, takes them out of the order of the Tab key with a prop of the part, such as `skipDismissInTabOrder` of Chip, so that Tab leaves it in one press.
 - Components respect `prefers-reduced-motion` and `forced-colors`.
 

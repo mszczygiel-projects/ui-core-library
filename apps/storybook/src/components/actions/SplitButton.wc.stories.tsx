@@ -1,0 +1,197 @@
+import '@mszczygiel-projects/ui-core-web-components/split-button';
+
+import { iconDelete } from '@mszczygiel-projects/ui-core-icons';
+import {
+  type ButtonSize,
+  type ButtonType,
+  type ButtonVariant,
+} from '@mszczygiel-projects/ui-core-shared/button';
+import type { MenuItems } from '@mszczygiel-projects/ui-core-shared/menu';
+import { splitButton } from '@mszczygiel-projects/ui-core-shared/split-button';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
+
+import { onSurfaces } from '../decorators.tsx';
+import { htmlOf, textOf } from '../html.ts';
+import { type IconName, iconOptions, svgMap } from '../icons.ts';
+
+interface SplitButtonArgs {
+  readonly children: string;
+  readonly variant: ButtonVariant;
+  readonly size: ButtonSize;
+  readonly disabled: boolean;
+  readonly loading: boolean;
+  readonly type: ButtonType;
+  readonly name?: string;
+  readonly value?: string;
+  readonly label?: string;
+  readonly loadingLabel?: string;
+  readonly menuLabel?: string;
+  readonly leadingIcon?: IconName;
+  readonly trailingIcon?: IconName;
+}
+
+const { options } = splitButton;
+
+const ACTIONS: MenuItems<string> = [
+  { value: 'draft', label: 'Save as draft' },
+  { value: 'template', label: 'Save as template' },
+  { value: 'schedule', label: 'Schedule', disabled: true },
+];
+
+const GROUPS: MenuItems<string> = [
+  {
+    options: [
+      { value: 'draft', label: 'Save as draft' },
+      { value: 'template', label: 'Save as template' },
+    ],
+  },
+  { options: [{ value: 'discard', label: 'Discard changes', icon: iconDelete }] },
+];
+
+type IconSlot = 'leading-icon' | 'trailing-icon';
+
+/** The icon of a slot, its SVG string inserted unescaped: only the icons package supplies it. */
+function Icon({ slot, name }: { readonly slot: IconSlot; readonly name: IconName | undefined }) {
+  return name === undefined ? null : (
+    <span slot={slot} dangerouslySetInnerHTML={{ __html: svgMap[name] }} />
+  );
+}
+
+function UiSplitButton({
+  items = ACTIONS,
+  onLast,
+  ...args
+}: SplitButtonArgs & {
+  readonly items?: MenuItems<string>;
+  readonly onLast?: (action: string) => void;
+}) {
+  return (
+    <ui-split-button
+      variant={args.variant}
+      size={args.size}
+      disabled={args.disabled}
+      loading={args.loading}
+      type={args.type}
+      name={args.name}
+      value={args.value ?? ''}
+      label={args.label === '' ? undefined : args.label}
+      loadingLabel={args.loadingLabel === '' ? undefined : args.loadingLabel}
+      menuLabel={args.menuLabel === '' ? undefined : args.menuLabel}
+      options={items}
+      onClick={() => {
+        onLast?.('save');
+      }}
+      onui-action={(event) => {
+        onLast?.(event.detail.value);
+      }}
+    >
+      <Icon slot="leading-icon" name={args.leadingIcon} />
+      {args.children}
+      <Icon slot="trailing-icon" name={args.trailingIcon} />
+    </ui-split-button>
+  );
+}
+
+const iconSource = (slot: IconSlot, name: IconName | undefined) =>
+  name === undefined ? '' : `<span slot="${slot}">${svgMap[name]}</span>`;
+
+const source = (args: SplitButtonArgs) =>
+  `${htmlOf(
+    'ui-split-button',
+    {
+      variant: args.variant === options.variant.default ? undefined : args.variant,
+      size: args.size === options.size.default ? undefined : args.size,
+      type: args.type === options.type.default ? undefined : args.type,
+      disabled: args.disabled,
+      loading: args.loading,
+      name: args.name,
+      value: args.value,
+      label: args.label,
+      'loading-label': args.loadingLabel,
+      'menu-label': args.menuLabel,
+    },
+    `${iconSource('leading-icon', args.leadingIcon)}${textOf(args.children)}${iconSource('trailing-icon', args.trailingIcon)}`,
+  )}\n<script>\n  document.querySelector('ui-split-button').options = [\n    { value: 'draft', label: 'Save as draft' },\n    { value: 'template', label: 'Save as template' },\n  ];\n</script>`;
+
+const meta = {
+  title: 'Components/Actions/SplitButton/Web Component',
+  tags: ['!manifest'],
+  args: {
+    children: 'Save',
+    variant: options.variant.default,
+    size: options.size.default,
+    disabled: false,
+    loading: false,
+    type: options.type.default,
+  },
+  argTypes: {
+    children: { control: 'text' },
+    variant: { control: 'select', options: options.variant.options },
+    size: { control: 'inline-radio', options: options.size.options },
+    disabled: { control: 'boolean' },
+    loading: { control: 'boolean' },
+    type: { control: 'inline-radio', options: options.type.options },
+    name: { control: 'text' },
+    value: { control: 'text' },
+    label: { control: 'text' },
+    loadingLabel: { control: 'text' },
+    menuLabel: { control: 'text' },
+    leadingIcon: { control: 'select', options: iconOptions },
+    trailingIcon: { control: 'select', options: iconOptions },
+  },
+  render: (args) => <UiSplitButton {...args} />,
+  parameters: {
+    docs: {
+      source: {
+        language: 'html',
+        transform: (_code: string, { args }: { args: SplitButtonArgs }) => source(args),
+      },
+    },
+  },
+} satisfies Meta<SplitButtonArgs>;
+
+export default meta;
+
+type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: function Render(args) {
+    const [last, setLast] = useState('none');
+    return (
+      <div className="sb-row">
+        <UiSplitButton {...args} onLast={setLast} />
+        <span>Last action: {last}</span>
+      </div>
+    );
+  },
+};
+
+export const Variants: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      {options.variant.options.map((variant) => (
+        <UiSplitButton key={variant} {...args} variant={variant} children={variant} />
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: options.variant.options
+          .map((variant) => source({ ...meta.args, variant, children: variant }))
+          .join('\n'),
+      },
+    },
+  },
+};
+
+export const WithIcons: Story = {
+  args: { leadingIcon: 'iconCheck' },
+};
+
+export const Groups: Story = {
+  render: (args) => <UiSplitButton {...args} items={GROUPS} />,
+};
+
+export const OnSurfaces: Story = { decorators: [onSurfaces], ...Variants };
