@@ -59,6 +59,8 @@ const preview: Preview = {
             ['*', ['Docs', 'React', 'Web Component']],
             'Navigation',
             ['*', ['Docs', 'React', 'Web Component']],
+            'Content',
+            ['*', ['Docs', 'React', 'Web Component']],
             'Overlays',
             ['*', ['Docs', 'React', 'Web Component']],
           ],

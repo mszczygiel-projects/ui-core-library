@@ -6,7 +6,7 @@
 
 /** The sections of the library, in the order of the documentation site. */
 export type ComponentCategory =
-  'Actions' | 'Inputs' | 'Selection' | 'Feedback' | 'Navigation' | 'Overlays';
+  'Actions' | 'Inputs' | 'Selection' | 'Feedback' | 'Navigation' | 'Content' | 'Overlays';
 
 /** Whether a component is planned, being built or meets the Definition of Done. */
 export type ComponentStatus = 'planned' | 'in-progress' | 'done';
