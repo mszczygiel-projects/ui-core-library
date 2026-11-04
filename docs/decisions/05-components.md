@@ -38,7 +38,10 @@
 - Stencil compiles the components with its own TypeScript, and `tsc` checks them with the repository's. Relative imports keep their `.ts` extension, which `rewriteRelativeImportExtensions` rewrites.
 - `src/components.d.ts`, which Stencil writes, is committed, since the first build reads it.
 - Stencil types an element from its props alone, so a component adds the rest of its public API, such as the form API, to the type of its element. A script finishes the build: it writes the root module, gives the declarations the extensions that Node.js resolves and links each component's declarations to its source.
-- Components render on the client only: no server rendering or hydration.
+- Components render on the client only: no server rendering or hydration. They still serve pages that search engines index:
+  - once rendered, every text and every link of navigation is in the composed tree, as text and as `<a href>`, which a crawler that runs scripts reads through the shadow roots;
+  - the content of a component that holds content, such as the panels of Accordion or Tabs, goes through slots, so it is in the HTML of the page for a crawler that runs no script;
+  - a prop holds only short text that names or describes a part, such as `label`, `heading` or `hint`.
 
 ### React
 
@@ -61,6 +64,7 @@ Two native implementations keep each framework idiomatic: forms, refs and server
 ## Rejected
 
 - React wrappers around the web components: weaker server rendering, controlled inputs and forms in React.
+- Server rendering of the web components through Stencil's hydrate script and Declarative Shadow DOM: a second build output and its hydration tests for every component, while the slots already put content in the HTML and React renders on the server.
 - Sharing CSS between the implementations: a shadow root and BEM classes need different selectors, while the tokens already share the values.
 - Copying an existing component as the start of a new one: it carries over decisions that do not apply and drifts from the conventions; the generator starts each from the same structure.
 - Comparing two separate sets of declarations with a custom checker: the compiler does it for free when both import one type.
