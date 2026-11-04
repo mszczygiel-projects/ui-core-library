@@ -1,5 +1,6 @@
-.ui-tabs--vertical > .ui-tabs__panel {
-  flex: 1;
+.ui-tabs__panels > .ui-tabs__panel {
+  grid-area: 1 / 1;
+  align-self: start;
   min-inline-size: 0;
 }
 

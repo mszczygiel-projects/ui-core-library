@@ -79,6 +79,7 @@ export function Tabs({
     label: props.label,
     icon: props.icon,
     disabled: props.disabled === true,
+    panelId: props.id,
   }));
   const [uncontrolledValue, setUncontrolledValue] = useState(defaultValue);
   // The browser shows the panel of a match before the page answers, so a controlled Tabs that keeps
@@ -92,11 +93,13 @@ export function Tabs({
   const selected = selectedTabValue(found ?? value ?? uncontrolledValue, items);
   const layout = oneOf(orientation, orientationOption.options, orientationOption.default);
   const look = oneOf(variant, variantOption.options, variantOption.default);
+  // A Tab may name its own panel, and its tab then points there.
+  const panelIdOf = (index: number) => items[index]?.panelId ?? `${id}-panel-${String(index)}`;
   const idsOf = (tabValue: string) => {
     const index = items.findIndex((item) => item.value === tabValue);
     return index === -1
       ? undefined
-      : { tab: `${id}-tab-${String(index)}`, panel: `${id}-panel-${String(index)}` };
+      : { tab: `${id}-tab-${String(index)}`, panel: panelIdOf(index) };
   };
 
   const select = (next: string, reason: TabsValueChangeReason, originalEvent: Event) => {
@@ -169,7 +172,7 @@ export function Tabs({
               id={`${id}-tab-${String(index)}`}
               className={classNames('ui-tabs__tab', isSelected && 'ui-tabs__tab--selected')}
               aria-selected={isSelected}
-              aria-controls={`${id}-panel-${String(index)}`}
+              aria-controls={panelIdOf(index)}
               tabIndex={isSelected ? 0 : -1}
               disabled={item.disabled}
               onClick={(event) => {
@@ -186,7 +189,9 @@ export function Tabs({
           );
         })}
       </div>
-      <TabsContext value={context}>{children}</TabsContext>
+      <div className="ui-tabs__panels">
+        <TabsContext value={context}>{children}</TabsContext>
+      </div>
     </div>
   );
 }

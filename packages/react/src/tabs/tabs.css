@@ -26,6 +26,7 @@
 }
 
 .ui-tabs--segmented > .ui-tabs__list {
+  box-sizing: border-box;
   inline-size: fit-content;
   max-inline-size: 100%;
   padding: var(--tabs-segmented-padding);
@@ -43,15 +44,19 @@
   background-clip: content-box;
 }
 
+/* A horizontal list of either look scrolls when its tabs do not fit. */
+.ui-tabs--horizontal > .ui-tabs__list {
+  overflow-x: auto;
+}
+
 /*
- * A horizontal list scrolls when its tabs do not fit. A scroller clips what is drawn outside its
- * box, so room for the focus ring surrounds the tabs and a negative margin of the same size keeps
- * them where they would be.
+ * A scroller clips what is drawn outside its box, so room for the focus ring surrounds the tabs and
+ * a negative margin of the same size keeps them where they would be. The frame of the segmented
+ * look holds its own room instead.
  */
 .ui-tabs--horizontal.ui-tabs--underline > .ui-tabs__list {
   margin: calc(var(--_ring-space) * -1);
   padding: var(--_ring-space);
-  overflow-x: auto;
   background-position: bottom;
   background-size: 100% var(--tabs-track-width);
 }
@@ -125,6 +130,11 @@
   white-space: normal;
 }
 
+/* The segmented frame clips its tabs when it scrolls, so the ring fits inside its padding. */
+.ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab:focus-visible {
+  outline-offset: calc(var(--tabs-segmented-padding) - var(--ring-width));
+}
+
 /* The indicator of the selected tab covers the track. */
 .ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected::after {
   position: absolute;
@@ -149,6 +159,8 @@
 }
 
 .ui-tabs__tab-icon {
+  /* An icon is 1em, so it takes the icon size of the tab, whatever wraps it. */
+  font-size: var(--tabs-icon-size);
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -159,6 +171,40 @@
 
 .ui-tabs__tab-icon svg {
   display: block;
-  inline-size: 100%;
-  block-size: 100%;
+}
+
+/*
+ * Every panel takes the same cell. A panel hidden until found keeps its box, so in a row or a column
+ * of their own the hidden panels would push the shown one away.
+ */
+.ui-tabs__panels {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.ui-tabs--vertical > .ui-tabs__panels {
+  flex: 1;
+}
+
+@media (forced-colors: active) {
+  /* Forced colours replace the fill and the indicator, so a system colour marks the selected tab. */
+  .ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected::after {
+    background: Highlight;
+  }
+
+  .ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab.ui-tabs__tab--selected::after {
+    position: absolute;
+    inset: 0;
+    border: var(--tabs-indicator-width) solid Highlight;
+    border-radius: inherit;
+    content: '';
+  }
+
+  .ui-tabs--underline > .ui-tabs__list > .ui-tabs__tab--selected:disabled::after {
+    background: GrayText;
+  }
+
+  .ui-tabs--segmented > .ui-tabs__list > .ui-tabs__tab.ui-tabs__tab--selected:disabled::after {
+    border-color: GrayText;
+  }
 }

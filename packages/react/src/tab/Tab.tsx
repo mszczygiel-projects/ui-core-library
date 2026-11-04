@@ -34,6 +34,7 @@ const useBrowserLayoutEffect = typeof document === 'undefined' ? useEffect : use
  */
 export function Tab({
   value,
+  id,
   label: _label,
   icon: _icon,
   disabled: _disabled,
@@ -74,7 +75,7 @@ export function Tab({
         panelRef.current = node;
         return setRef(ref, node);
       }}
-      id={ids?.panel}
+      id={ids?.panel ?? id}
       className={classNames('ui-tabs__panel', className)}
       role={ids === undefined ? undefined : 'tabpanel'}
       aria-labelledby={ids?.tab}

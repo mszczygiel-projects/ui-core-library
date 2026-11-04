@@ -1,7 +1,7 @@
 import type { TabProps } from '@mszczygiel-projects/ui-core-shared/tab';
 import type { TabsProps, TabsValueChangeDetails } from '@mszczygiel-projects/ui-core-shared/tabs';
 import { expect, it, vi } from 'vitest';
-import { userEvent } from 'vitest/browser';
+import { commands, userEvent } from 'vitest/browser';
 
 import type { Mount, Mounted } from '../harness/types.ts';
 import { tokenNumber, tokenValue } from '../tokens.ts';
@@ -217,6 +217,12 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
     expect(icon?.getAttribute('aria-hidden')).toBe('true');
     expect(icon?.querySelector('svg')).not.toBeNull();
     expect(icon?.getBoundingClientRect().width).toBe(tokenNumber('--tabs-icon-size'));
+    // React wraps the SVG in an element of its own, which must not change its size.
+    const svg = icon?.querySelector('svg')?.getBoundingClientRect();
+    expect([svg?.width, svg?.height]).toEqual([
+      tokenNumber('--tabs-icon-size'),
+      tokenNumber('--tabs-icon-size'),
+    ]);
     const tree = await component.accessibleTree();
     expect(tree.find((node) => node.role === 'tab')?.name).toBe('Overview');
     await component.unmount();
@@ -277,15 +283,61 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
     await component.unmount();
   });
 
-  it('scrolls a horizontal list that does not fit, inside its own box', async () => {
-    const parent = document.createElement('div');
-    parent.style.inlineSize = '160px';
-    document.body.append(parent);
-    const component = await mount({ tabs: TABS }, { parent });
-    const [list] = parts(component, 'list');
-    expect(list?.scrollWidth).toBeGreaterThan(list?.clientWidth ?? 0);
-    expect(component.element.getBoundingClientRect().width).toBeLessThanOrEqual(160);
-    await component.unmount();
-    parent.remove();
-  });
+  for (const variant of ['underline', 'segmented'] as const) {
+    it(`scrolls a horizontal ${variant} list that does not fit, inside its own box`, async () => {
+      const parent = document.createElement('div');
+      parent.style.inlineSize = '160px';
+      document.body.append(parent);
+      const component = await mount({ tabs: TABS, variant }, { parent });
+      const [list] = parts(component, 'list');
+      expect(list?.scrollWidth).toBeGreaterThan(list?.clientWidth ?? 0);
+      // The underline list reaches past its box by the room of the focus ring, and no further.
+      const room =
+        variant === 'underline' ? tokenNumber('--ring-width') + tokenNumber('--ring-offset') : 0;
+      expect(list?.getBoundingClientRect().right).toBeLessThanOrEqual(
+        parent.getBoundingClientRect().right + room,
+      );
+      expect(component.element.getBoundingClientRect().width).toBeLessThanOrEqual(160);
+      await component.unmount();
+      parent.remove();
+    });
+  }
+
+  for (const orientation of ['horizontal', 'vertical'] as const) {
+    it(`shows every ${orientation} panel in the same place`, async () => {
+      const component = await mount({ tabs: TABS, orientation });
+      const shown = () => {
+        const panel = parts(component, 'panel').find((candidate) => !candidate.hidden);
+        const box = panel?.getBoundingClientRect();
+        return [box?.left, box?.top];
+      };
+      const first = shown();
+      for (const tab of parts(component, 'tab').slice(1)) {
+        tab.click();
+        await expect.poll(() => tab.getAttribute('aria-selected')).toBe('true');
+        expect(shown()).toEqual(first);
+      }
+      await component.unmount();
+    });
+  }
+
+  for (const variant of ['underline', 'segmented'] as const) {
+    it(`marks the selected ${variant} tab in forced colours`, async () => {
+      await commands.emulateMedia({ forcedColors: 'active' });
+      const component = await mount({ tabs: TABS, variant });
+      const [first, second] = parts(component, 'tab');
+      const mark = getComputedStyle(first ?? document.body, '::after');
+      if (variant === 'underline') {
+        expect(mark.backgroundColor).toBe(resolvedColor('Highlight'));
+        expect(parseFloat(mark.height)).toBe(tokenNumber('--tabs-indicator-width'));
+      } else {
+        expect(mark.borderTopStyle).toBe('solid');
+        expect(mark.borderTopColor).toBe(resolvedColor('Highlight'));
+        expect(parseFloat(mark.borderTopWidth)).toBe(tokenNumber('--tabs-indicator-width'));
+      }
+      expect(getComputedStyle(second ?? document.body, '::after').content).toBe('none');
+      await commands.emulateMedia({ forcedColors: null });
+      await component.unmount();
+    });
+  }
 }

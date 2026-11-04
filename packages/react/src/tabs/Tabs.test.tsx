@@ -32,6 +32,24 @@ function three(props: Parameters<typeof Tabs>[0] = {}) {
 }
 
 describe('Tabs', () => {
+  it('points a tab at the id its Tab gives the panel', async () => {
+    const screen = await render(
+      <Tabs label="Product">
+        <Tab value="one" label="One">
+          First panel
+        </Tab>
+        <Tab id="details" value="two" label="Two">
+          Second panel
+        </Tab>
+      </Tabs>,
+    );
+    const tabs = screen.container.querySelectorAll('[role="tab"]');
+    expect(tabs[1]?.getAttribute('aria-controls')).toBe('details');
+    expect(document.getElementById('details')?.getAttribute('aria-labelledby')).toBe(tabs[1]?.id);
+    const first = document.getElementById(tabs[0]?.getAttribute('aria-controls') ?? '');
+    expect(first?.textContent).toBe('First panel');
+  });
+
   it('passes its ref and the attributes of the page to its root element', async () => {
     const ref = createRef<HTMLDivElement>();
     await render(three({ ref, 'data-testid': 'tabs' } as Parameters<typeof Tabs>[0]));

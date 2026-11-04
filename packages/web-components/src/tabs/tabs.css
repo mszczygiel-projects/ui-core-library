@@ -34,6 +34,7 @@
 }
 
 .segmented .list {
+  box-sizing: border-box;
   inline-size: fit-content;
   max-inline-size: 100%;
   padding: var(--tabs-segmented-padding);
@@ -51,15 +52,19 @@
   background-clip: content-box;
 }
 
+/* A horizontal list of either look scrolls when its tabs do not fit. */
+.horizontal .list {
+  overflow-x: auto;
+}
+
 /*
- * A horizontal list scrolls when its tabs do not fit. A scroller clips what is drawn outside its
- * box, so room for the focus ring surrounds the tabs and a negative margin of the same size keeps
- * them where they would be.
+ * A scroller clips what is drawn outside its box, so room for the focus ring surrounds the tabs and
+ * a negative margin of the same size keeps them where they would be. The frame of the segmented
+ * look holds its own room instead.
  */
 .horizontal.underline .list {
   margin: calc(var(--_ring-space) * -1);
   padding: var(--_ring-space);
-  overflow-x: auto;
   background-position: bottom;
   background-size: 100% var(--tabs-track-width);
 }
@@ -133,6 +138,11 @@
   --_background: var(--color-tabs-segmented-tab-background-disabled);
 }
 
+/* The segmented frame clips its tabs when it scrolls, so the ring fits inside its padding. */
+.segmented .tab:focus-visible {
+  outline-offset: calc(var(--tabs-segmented-padding) - var(--ring-width));
+}
+
 /* The indicator of the selected tab covers the track. */
 .underline .tab.selected::after {
   position: absolute;
@@ -157,6 +167,8 @@
 }
 
 .icon {
+  /* An icon is 1em, so it takes the icon size of the tab, whatever wraps it. */
+  font-size: var(--tabs-icon-size);
   display: inline-flex;
   flex: none;
   align-items: center;
@@ -167,16 +179,51 @@
 
 .icon svg {
   display: block;
-  inline-size: 100%;
-  block-size: 100%;
 }
 
-.vertical .panel {
+/*
+ * Every panel takes the same cell. A panel hidden until found keeps its box, so in a row or a column
+ * of their own the hidden panels would push the shown one away.
+ */
+.panels {
+  display: grid;
+  min-inline-size: 0;
+}
+
+.vertical .panels {
   flex: 1;
+}
+
+.panel {
+  grid-area: 1 / 1;
+  align-self: start;
   min-inline-size: 0;
 }
 
 .panel:focus-visible {
   outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
   outline-offset: var(--ring-offset);
+}
+
+@media (forced-colors: active) {
+  /* Forced colours replace the fill and the indicator, so a system colour marks the selected tab. */
+  .underline .tab.selected::after {
+    background: Highlight;
+  }
+
+  .segmented .tab.selected::after {
+    position: absolute;
+    inset: 0;
+    border: var(--tabs-indicator-width) solid Highlight;
+    border-radius: inherit;
+    content: '';
+  }
+
+  .underline .tab.selected:disabled::after {
+    background: GrayText;
+  }
+
+  .segmented .tab.selected:disabled::after {
+    border-color: GrayText;
+  }
 }

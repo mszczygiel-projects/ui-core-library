@@ -168,19 +168,21 @@ export class UiTabs implements TabsProps {
             );
           })}
         </div>
-        {this.entries.map((entry, index) => (
-          // A panel hidden until found keeps its box, so only the shown one takes the Tab key.
-          <div
-            id={`panel-${String(index)}`}
-            part="panel"
-            class="panel"
-            role="tabpanel"
-            aria-labelledby={`tab-${String(index)}`}
-            tabIndex={entry.value() === selected ? 0 : -1}
-          >
-            <slot />
-          </div>
-        ))}
+        <div class="panels">
+          {this.entries.map((entry, index) => (
+            // A panel hidden until found keeps its box, so only the shown one takes the Tab key.
+            <div
+              id={`panel-${String(index)}`}
+              part="panel"
+              class="panel"
+              role="tabpanel"
+              aria-labelledby={`tab-${String(index)}`}
+              tabIndex={entry.value() === selected ? 0 : -1}
+            >
+              <slot />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }

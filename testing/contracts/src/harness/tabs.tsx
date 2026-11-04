@@ -8,7 +8,7 @@ import { webComponentMount } from './web-component.ts';
 
 /** A decorative icon as the icon package supplies one: an SVG string. */
 const ICON =
-  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8"/></svg>';
+  '<svg width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8"/></svg>';
 
 /** Sets props as properties, the tabs as ui-tab children and the callback as a listener. */
 export const mountWebComponentTabs = webComponentMount<TabsContractProps>(
