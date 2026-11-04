@@ -1,0 +1,9 @@
+.ui-tabs--vertical > .ui-tabs__panel {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.ui-tabs__panel:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}

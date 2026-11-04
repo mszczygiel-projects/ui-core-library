@@ -127,6 +127,15 @@ export {
   type SwitchFieldLabelPosition,
   type SwitchFieldProps,
 } from './switch-field/SwitchField.tsx';
+export { Tab, type TabProps } from './tab/Tab.tsx';
+export {
+  Tabs,
+  type TabsOrientation,
+  type TabsProps,
+  type TabsValueChangeDetails,
+  type TabsValueChangeReason,
+  type TabsVariant,
+} from './tabs/Tabs.tsx';
 export {
   TextField,
   type TextFieldLabelPlacement,
