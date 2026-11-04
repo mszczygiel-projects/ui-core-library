@@ -5,6 +5,8 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { AccordionHeadingLevel } from "@mszczygiel-projects/ui-core-shared/accordion-item";
+import { AccordionItemOpenChange } from "./accordion-item/events";
 import { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 import { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 import { BreadcrumbsNavigate } from "./breadcrumbs/events";
@@ -51,6 +53,8 @@ import { SplitButtonAction, SplitButtonOpenChange } from "./split-button/events"
 import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/switch-field";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 import { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
+export { AccordionHeadingLevel } from "@mszczygiel-projects/ui-core-shared/accordion-item";
+export { AccordionItemOpenChange } from "./accordion-item/events";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 export { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 export { BreadcrumbsNavigate } from "./breadcrumbs/events";
@@ -98,6 +102,49 @@ export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/sw
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
 export { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export namespace Components {
+    /**
+     * A stack of sections whose headings show and hide their content.
+     * Its children are `ui-accordion-item` elements. Without `multiple`, a section that the user opens
+     * closes the others; setting `open` on a section is left as it is. A line separates the sections.
+     */
+    interface UiAccordion {
+        /**
+          * Lets several sections stay open at once. Without it, opening a section closes the others.
+          * @default false
+         */
+        "multiple": boolean;
+    }
+    /**
+     * One section of an Accordion: a heading that shows and hides its content.
+     * The heading is an HTML heading of `headingLevel` that holds a button, which carries
+     * `aria-expanded` and controls the panel, a region named by the heading. A press on the button
+     * dispatches the cancelable `ui-open-change`, and the reflected `open` attribute follows the
+     * section. The content of a closed section stays in the page as `hidden="until-found"`, so find in
+     * page and a link to a text fragment open it. Arrow Down and Arrow Up move the focus between the
+     * headings of the Accordion, Home and End to the first and last.
+     */
+    interface UiAccordionItem {
+        /**
+          * Keeps the section as it is and removes its heading from keyboard navigation.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * The level of the heading, from 2 to 6, which follows the outline of the page.
+          * @default 3
+         */
+        "headingLevel": AccordionHeadingLevel;
+        /**
+          * The text of the heading, which names the section and its content.
+          * @default ''
+         */
+        "label": string;
+        /**
+          * Whether the content shows. The attribute supplies the initial state and follows the section.
+          * @default false
+         */
+        "open": boolean;
+    }
     /**
      * Marks a status, a category or a count with a short label, an icon or both.
      * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
@@ -1923,6 +1970,10 @@ export namespace Components {
         "showArrow": boolean;
     }
 }
+export interface UiAccordionItemCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiAccordionItemElement;
+}
 export interface UiBreadcrumbsCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiBreadcrumbsElement;
@@ -2016,6 +2067,43 @@ export interface UiTextareaFieldCustomEvent<T> extends CustomEvent<T> {
     target: HTMLUiTextareaFieldElement;
 }
 declare global {
+    /**
+     * A stack of sections whose headings show and hide their content.
+     * Its children are `ui-accordion-item` elements. Without `multiple`, a section that the user opens
+     * closes the others; setting `open` on a section is left as it is. A line separates the sections.
+     */
+    interface HTMLUiAccordionElement extends Components.UiAccordion, HTMLStencilElement {
+    }
+    var HTMLUiAccordionElement: {
+        prototype: HTMLUiAccordionElement;
+        new (): HTMLUiAccordionElement;
+    };
+    interface HTMLUiAccordionItemElementEventMap {
+        "ui-open-change": AccordionItemOpenChange;
+    }
+    /**
+     * One section of an Accordion: a heading that shows and hides its content.
+     * The heading is an HTML heading of `headingLevel` that holds a button, which carries
+     * `aria-expanded` and controls the panel, a region named by the heading. A press on the button
+     * dispatches the cancelable `ui-open-change`, and the reflected `open` attribute follows the
+     * section. The content of a closed section stays in the page as `hidden="until-found"`, so find in
+     * page and a link to a text fragment open it. Arrow Down and Arrow Up move the focus between the
+     * headings of the Accordion, Home and End to the first and last.
+     */
+    interface HTMLUiAccordionItemElement extends Components.UiAccordionItem, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiAccordionItemElementEventMap>(type: K, listener: (this: HTMLUiAccordionItemElement, ev: UiAccordionItemCustomEvent<HTMLUiAccordionItemElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiAccordionItemElementEventMap>(type: K, listener: (this: HTMLUiAccordionItemElement, ev: UiAccordionItemCustomEvent<HTMLUiAccordionItemElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiAccordionItemElement: {
+        prototype: HTMLUiAccordionItemElement;
+        new (): HTMLUiAccordionItemElement;
+    };
     /**
      * Marks a status, a category or a count with a short label, an icon or both.
      * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
@@ -2755,6 +2843,8 @@ declare global {
         new (): HTMLUiTooltipElement;
     };
     interface HTMLElementTagNameMap {
+        "ui-accordion": HTMLUiAccordionElement;
+        "ui-accordion-item": HTMLUiAccordionItemElement;
         "ui-badge": HTMLUiBadgeElement;
         "ui-breadcrumbs": HTMLUiBreadcrumbsElement;
         "ui-button": HTMLUiButtonElement;
@@ -2788,6 +2878,53 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    /**
+     * A stack of sections whose headings show and hide their content.
+     * Its children are `ui-accordion-item` elements. Without `multiple`, a section that the user opens
+     * closes the others; setting `open` on a section is left as it is. A line separates the sections.
+     */
+    interface UiAccordion {
+        /**
+          * Lets several sections stay open at once. Without it, opening a section closes the others.
+          * @default false
+         */
+        "multiple"?: boolean;
+    }
+    /**
+     * One section of an Accordion: a heading that shows and hides its content.
+     * The heading is an HTML heading of `headingLevel` that holds a button, which carries
+     * `aria-expanded` and controls the panel, a region named by the heading. A press on the button
+     * dispatches the cancelable `ui-open-change`, and the reflected `open` attribute follows the
+     * section. The content of a closed section stays in the page as `hidden="until-found"`, so find in
+     * page and a link to a text fragment open it. Arrow Down and Arrow Up move the focus between the
+     * headings of the Accordion, Home and End to the first and last.
+     */
+    interface UiAccordionItem {
+        /**
+          * Keeps the section as it is and removes its heading from keyboard navigation.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The level of the heading, from 2 to 6, which follows the outline of the page.
+          * @default 3
+         */
+        "headingLevel"?: AccordionHeadingLevel;
+        /**
+          * The text of the heading, which names the section and its content.
+          * @default ''
+         */
+        "label"?: string;
+        /**
+          * The user asked to open or close the section. Canceling a press keeps the section as it is; find in page reveals the content whatever the page answers.
+         */
+        "onUi-open-change"?: (event: UiAccordionItemCustomEvent<AccordionItemOpenChange>) => void;
+        /**
+          * Whether the content shows. The attribute supplies the initial state and follows the section.
+          * @default false
+         */
+        "open"?: boolean;
+    }
     /**
      * Marks a status, a category or a count with a short label, an icon or both.
      * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
@@ -4837,6 +4974,15 @@ declare namespace LocalJSX {
         "showArrow"?: boolean;
     }
 
+    interface UiAccordionAttributes {
+        "multiple": boolean;
+    }
+    interface UiAccordionItemAttributes {
+        "label": string;
+        "open": boolean;
+        "disabled": boolean;
+        "headingLevel": AccordionHeadingLevel;
+    }
     interface UiBadgeAttributes {
         "tone": BadgeTone;
         "variant": BadgeVariant;
@@ -5204,6 +5350,8 @@ declare namespace LocalJSX {
     }
 
     interface IntrinsicElements {
+        "ui-accordion": Omit<UiAccordion, keyof UiAccordionAttributes> & { [K in keyof UiAccordion & keyof UiAccordionAttributes]?: UiAccordion[K] } & { [K in keyof UiAccordion & keyof UiAccordionAttributes as `attr:${K}`]?: UiAccordionAttributes[K] } & { [K in keyof UiAccordion & keyof UiAccordionAttributes as `prop:${K}`]?: UiAccordion[K] };
+        "ui-accordion-item": Omit<UiAccordionItem, keyof UiAccordionItemAttributes> & { [K in keyof UiAccordionItem & keyof UiAccordionItemAttributes]?: UiAccordionItem[K] } & { [K in keyof UiAccordionItem & keyof UiAccordionItemAttributes as `attr:${K}`]?: UiAccordionItemAttributes[K] } & { [K in keyof UiAccordionItem & keyof UiAccordionItemAttributes as `prop:${K}`]?: UiAccordionItem[K] };
         "ui-badge": Omit<UiBadge, keyof UiBadgeAttributes> & { [K in keyof UiBadge & keyof UiBadgeAttributes]?: UiBadge[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `attr:${K}`]?: UiBadgeAttributes[K] } & { [K in keyof UiBadge & keyof UiBadgeAttributes as `prop:${K}`]?: UiBadge[K] };
         "ui-breadcrumbs": Omit<UiBreadcrumbs, keyof UiBreadcrumbsAttributes> & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes]?: UiBreadcrumbs[K] } & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes as `attr:${K}`]?: UiBreadcrumbsAttributes[K] } & { [K in keyof UiBreadcrumbs & keyof UiBreadcrumbsAttributes as `prop:${K}`]?: UiBreadcrumbs[K] };
         "ui-button": Omit<UiButton, keyof UiButtonAttributes> & { [K in keyof UiButton & keyof UiButtonAttributes]?: UiButton[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `attr:${K}`]?: UiButtonAttributes[K] } & { [K in keyof UiButton & keyof UiButtonAttributes as `prop:${K}`]?: UiButton[K] };
@@ -5240,6 +5388,22 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            /**
+             * A stack of sections whose headings show and hide their content.
+             * Its children are `ui-accordion-item` elements. Without `multiple`, a section that the user opens
+             * closes the others; setting `open` on a section is left as it is. A line separates the sections.
+             */
+            "ui-accordion": LocalJSX.IntrinsicElements["ui-accordion"] & JSXBase.HTMLAttributes<HTMLUiAccordionElement>;
+            /**
+             * One section of an Accordion: a heading that shows and hides its content.
+             * The heading is an HTML heading of `headingLevel` that holds a button, which carries
+             * `aria-expanded` and controls the panel, a region named by the heading. A press on the button
+             * dispatches the cancelable `ui-open-change`, and the reflected `open` attribute follows the
+             * section. The content of a closed section stays in the page as `hidden="until-found"`, so find in
+             * page and a link to a text fragment open it. Arrow Down and Arrow Up move the focus between the
+             * headings of the Accordion, Home and End to the first and last.
+             */
+            "ui-accordion-item": LocalJSX.IntrinsicElements["ui-accordion-item"] & JSXBase.HTMLAttributes<HTMLUiAccordionItemElement>;
             /**
              * Marks a status, a category or a count with a short label, an icon or both.
              * The badge is not interactive. Its text names it; a badge with only an icon becomes an image

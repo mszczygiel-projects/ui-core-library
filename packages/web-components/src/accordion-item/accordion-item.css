@@ -1,0 +1,105 @@
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+/* A line separates a section from the one before it, so none sits above the first or below the last. */
+:host(:not(:first-child)) {
+  border-block-start: var(--accordion-border-width) solid var(--color-accordion-border);
+}
+
+.base {
+  --_text: var(--color-accordion-trigger-text-default);
+  --_icon: var(--color-accordion-icon-default);
+  --_background: var(--color-accordion-trigger-background-default);
+
+  font-family: var(--accordion-font-family);
+  font-size: var(--accordion-font-size);
+  line-height: var(--accordion-line-height);
+  letter-spacing: var(--accordion-letter-spacing);
+}
+
+.heading {
+  margin: 0;
+  font: inherit;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  gap: var(--accordion-trigger-gap);
+  inline-size: 100%;
+  margin: 0;
+  padding-block: var(--accordion-trigger-padding-stack);
+  padding-inline: var(--accordion-trigger-padding-inline);
+  border: none;
+  border-radius: var(--accordion-trigger-radius);
+  background: var(--_background);
+  color: var(--_text);
+  font: inherit;
+  font-weight: var(--accordion-font-weight);
+  text-align: start;
+  cursor: pointer;
+}
+
+.trigger:disabled {
+  --_text: var(--color-accordion-trigger-text-disabled);
+  --_icon: var(--color-accordion-icon-disabled);
+
+  cursor: default;
+}
+
+.trigger:focus-visible {
+  outline: var(--ring-width) var(--ring-style) var(--color-ring-default);
+  outline-offset: var(--ring-offset);
+}
+
+.trigger:hover:not(:disabled) {
+  --_background: var(--color-accordion-trigger-background-hover);
+}
+
+.trigger:active:not(:disabled) {
+  --_background: var(--color-accordion-trigger-background-active);
+}
+
+.label {
+  flex: 1;
+  min-inline-size: 0;
+}
+
+.icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: var(--accordion-icon-size);
+  block-size: var(--accordion-icon-size);
+  color: var(--_icon);
+}
+
+.icon svg {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
+.open .icon {
+  rotate: 180deg;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .icon {
+    transition: rotate var(--duration-200) var(--ease-out);
+  }
+}
+
+/* The padding sits inside the panel, since a panel hidden until found keeps its own box. */
+.body {
+  padding-block-end: var(--accordion-panel-padding-stack);
+  padding-inline: var(--accordion-panel-padding-inline);
+  color: var(--color-accordion-panel-text);
+  font-weight: var(--accordion-panel-font-weight);
+}

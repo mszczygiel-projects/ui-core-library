@@ -1,3 +1,5 @@
+import { accordion } from './accordion.ts';
+import { accordionItem } from './accordion-item.ts';
 import { badge } from './badge.ts';
 import { breadcrumbs } from './breadcrumbs.ts';
 import { button } from './button.ts';
@@ -62,4 +64,6 @@ export const specs: readonly ComponentSpec[] = [
   calendar,
   menu,
   splitButton,
+  accordion,
+  accordionItem,
 ];

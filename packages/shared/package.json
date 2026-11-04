@@ -6,6 +6,18 @@
   "type": "module",
   "sideEffects": false,
   "exports": {
+    "./accordion": {
+      "types": "./dist/components/accordion.d.ts",
+      "default": "./dist/components/accordion.js"
+    },
+    "./accordion-item": {
+      "types": "./dist/components/accordion-item.d.ts",
+      "default": "./dist/components/accordion-item.js"
+    },
+    "./accordion-navigation": {
+      "types": "./dist/utils/accordion-navigation.d.ts",
+      "default": "./dist/utils/accordion-navigation.js"
+    },
     "./badge": {
       "types": "./dist/components/badge.d.ts",
       "default": "./dist/components/badge.js"

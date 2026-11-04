@@ -1,3 +1,5 @@
+import type { AccordionProps } from '@mszczygiel-projects/ui-core-shared/accordion';
+import type { AccordionItemProps } from '@mszczygiel-projects/ui-core-shared/accordion-item';
 import type { BadgeProps } from '@mszczygiel-projects/ui-core-shared/badge';
 import type {
   BreadcrumbsNavigateDetail,
@@ -75,6 +77,8 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-accordion-item': CustomElement<AccordionItemProps>;
+      'ui-accordion': CustomElement<AccordionProps>;
       'ui-split-button': CustomElement<
         SplitButtonProps<string> & {
           readonly 'onui-open-change'?: (event: CustomEvent<MenuOpenChangeDetail<Event>>) => void;

@@ -3,6 +3,8 @@ import '@mszczygiel-projects/ui-core-web-components/drawer';
 import { Loader } from '@mszczygiel-projects/ui-core-react';
 import { describe } from 'vitest';
 
+import { mountReactAccordion } from '../harness/accordion.tsx';
+import { mountReactAccordionItem } from '../harness/accordion-item.tsx';
 import { mountReactBadge } from '../harness/badge.tsx';
 import { mountReactBreadcrumbs } from '../harness/breadcrumbs.tsx';
 import { mountReactButton } from '../harness/button.tsx';
@@ -33,6 +35,8 @@ import { mountReactSwitchField } from '../harness/switch-field.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
 import { mountReactTooltip } from '../harness/tooltip.tsx';
+import { accordionContract } from '../specs/accordion.contract.ts';
+import { accordionItemContract } from '../specs/accordion-item.contract.ts';
 import { badgeContract } from '../specs/badge.contract.ts';
 import { breadcrumbsContract } from '../specs/breadcrumbs.contract.ts';
 import { buttonContract } from '../specs/button.contract.ts';
@@ -195,4 +199,12 @@ describe('Menu, React', () => {
 
 describe('SplitButton, React', () => {
   splitButtonContract(mountReactSplitButton);
+});
+
+describe('Accordion, React', () => {
+  accordionContract(mountReactAccordion);
+});
+
+describe('AccordionItem, React', () => {
+  accordionItemContract(mountReactAccordionItem);
 });
