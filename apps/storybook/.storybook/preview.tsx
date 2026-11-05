@@ -4,6 +4,7 @@ import type { Preview } from '@storybook/react-vite';
 
 import { contextGlobals, withContext } from '../src/context.tsx';
 import { manifest } from '../src/manifest.ts';
+import { visualModes } from '../src/tokens.ts';
 
 /**
  * Storybook reads `storySort` from the text of this file when it builds the index, before any
@@ -17,6 +18,8 @@ const preview: Preview = {
     layout: 'fullscreen',
     // Violations fail every browser story in the quality gate.
     a11y: { test: 'error' },
+    // Chromatic takes a snapshot of every story in each of these modes.
+    chromatic: { modes: visualModes(manifest.modes) },
     viewport: {
       options: {
         mobile: { name: 'Mobile', styles: { width: '390px', height: '844px' }, type: 'mobile' },

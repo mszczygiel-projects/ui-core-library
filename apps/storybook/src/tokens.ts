@@ -82,3 +82,24 @@ export function contextLabel(context: Context): string {
   const modes = Object.values(context);
   return modes.length === 0 ? 'Value' : modes.map(modeLabel).join(' · ');
 }
+
+/**
+ * The modes of the visual tests: every story in every theme, and in every brand when there is
+ * more than one. Surfaces have their own stories, and density only changes sizes.
+ */
+export function visualModes(modes: {
+  readonly brand: readonly string[];
+  readonly theme: readonly string[];
+}): Record<string, Record<string, string>> {
+  const result: Record<string, Record<string, string>> = {};
+  for (const theme of modes.theme) {
+    if (modes.brand.length > 1) {
+      for (const brand of modes.brand) {
+        result[`${brand} ${theme}`] = { brand, theme };
+      }
+    } else {
+      result[theme] = { theme };
+    }
+  }
+  return result;
+}

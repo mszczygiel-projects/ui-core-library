@@ -49,6 +49,7 @@ A project arrives with its first need. Nx project names are the folder names.
 ### Workflow
 
 - `pnpm verify` is the quality gate, and every commit passes it. GitHub Actions runs it on every pull request and on `main`.
+- Chromatic runs the visual tests on `main` and on pull requests labelled `visual` ([08](08-testing.md)).
 - Lefthook scans staged files for secrets, checks formatting, keeps commit messages in Conventional Commits and rejects pushes to `main`.
 - Pull requests are squashed. The title follows Conventional Commits and is checked in CI, because it becomes the commit on `main`.
 
