@@ -12,12 +12,13 @@ on:
         required: false
         default: ''
       dry-run:
-        description: 'Preview the release without committing, tagging or publishing.'
+        description: 'Preview the release without tagging or publishing.'
         type: boolean
         default: true
 
 permissions:
-  # The release commit and tag on main, and the GitHub Release.
+  # The release tag and the GitHub Release. The versions are set on the runner only, so nothing
+  # is pushed to main, which accepts changes only through pull requests.
   contents: write
   # The provenance of the published packages.
   id-token: write
@@ -63,7 +64,7 @@ jobs:
           echo "version=$(node -p "require('./packages/foundations/package.json').version")" >> "$GITHUB_OUTPUT"
           echo "first=$first" >> "$GITHUB_OUTPUT"
 
-      - name: Changelog, commit, tag and GitHub Release
+      - name: Tag and GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
           DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}

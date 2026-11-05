@@ -60,6 +60,7 @@ A project arrives with its first need. Nx project names are the folder names.
 - Packages go to npmjs.com as public packages with provenance, which links each tarball to the workflow run that built it. The token in the secret `NPM_TOKEN` publishes them until the packages exist on npm. After that, trusted publishing through the workflow's identity replaces it.
 - The version comes from the Conventional Commits since the last tag. The first release names `1.0.0` explicitly, because without an earlier tag Nx starts at 0.0.1.
 - The packages carry the licence `UNLICENSED` until a licence is chosen. They are public to read and install, but give no rights to reuse.
+- A release changes nothing on `main`: the versions are set on the runner, the tag marks the released commit, and the changelog is the notes of the GitHub Release. The `package.json` files of the repository keep `0.0.0`, and the next version starts from the last tag.
 - Semantic versioning applies from 1.0.0, and the changelog starts there. Token names, icon names and component APIs are public API.
 
 ### Agent tooling

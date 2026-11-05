@@ -6,7 +6,7 @@ Every published package is released at one version, with one tag such as `v1.0.0
 
 1. Runs `pnpm verify` on `main`.
 2. `nx release version` sets the version in every published package and in their internal dependencies.
-3. `nx release changelog` writes `CHANGELOG.md` from the Conventional Commits, commits it with the versions as `chore(release): publish <version>`, tags the commit, pushes both to `main` and creates the GitHub Release.
+3. `nx release changelog` tags the current commit of `main`, pushes the tag and creates the GitHub Release, whose notes are the changelog written from the Conventional Commits.
 4. `nx release publish` publishes the packages to npmjs.com with provenance.
 
 A dry run, the default, does steps 1 and 2 on the runner only, prints the changelog and packs every package without publishing. It changes nothing in the repository or on npm.
@@ -23,10 +23,10 @@ A dry run, the default, does steps 1 and 2 on the runner only, prints the change
 ## Requirements
 
 - The secret `NPM_TOKEN` holds an npm token that can publish to the scope `@mszczygiel-projects`.
-- The workflow pushes the release commit and the tag to `main`. A branch protection rule on `main` has to let `github-actions[bot]` push.
+- The workflow pushes only the tag. The versions in the `package.json` files of the repository stay `0.0.0`, and the next release reads the current version from the last tag. So the ruleset on `main`, which accepts changes only through pull requests, needs no exception.
 
 ## When it fails
 
-- **Before publishing:** nothing is pushed until the changelog step, so fix the cause and run the workflow again.
-- **After the tag, before publishing:** the release commit and the tag are on `main`, but nothing is on npm. Delete the GitHub Release and the tag, revert the release commit in a pull request, fix the cause and release again.
+- **Before the tag:** nothing has left the runner, so fix the cause and run the workflow again.
+- **After the tag, before publishing:** the tag and the GitHub Release exist, but nothing is on npm. Delete both, fix the cause and release again.
 - **A published version is wrong:** npm never accepts the same version twice. Fix it in a new patch release, and deprecate the wrong one with `npm deprecate`.

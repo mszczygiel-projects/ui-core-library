@@ -88,18 +88,19 @@
       "conventionalCommits": true,
       "preserveLocalDependencyProtocols": true,
       "git": {
-        "stageChanges": true
+        "commit": false,
+        "tag": false,
+        "stageChanges": false
       }
     },
     "changelog": {
       "workspaceChangelog": {
-        "file": "{workspaceRoot}/CHANGELOG.md",
+        "file": false,
         "createRelease": "github"
       },
       "projectChangelogs": false,
       "git": {
-        "commit": true,
-        "commitMessage": "chore(release): publish {version}",
+        "commit": false,
         "tag": true,
         "push": true
       }
