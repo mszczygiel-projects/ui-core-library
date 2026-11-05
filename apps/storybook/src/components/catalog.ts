@@ -57,6 +57,7 @@ export interface CatalogEntry {
   readonly name: string;
   readonly tag: string;
   readonly category: ComponentCategory;
+  readonly partOf?: string;
   readonly status: ComponentSpec['status'];
   readonly figma: string | null;
 }
@@ -78,7 +79,11 @@ export function specOf(name: string): ComponentSpec {
   return spec;
 }
 
-/** The id of the documentation page of a component, as Storybook derives it from its title. */
-export function pageOf(spec: Pick<ComponentSpec, 'name' | 'category'>): string {
-  return `components-${spec.category.toLowerCase()}-${spec.name.toLowerCase()}-docs--docs`;
+/**
+ * The id of the documentation page of a component, as Storybook derives it from its title. A part
+ * is documented on the page of the component it belongs to.
+ */
+export function pageOf(spec: Pick<ComponentSpec, 'name' | 'category' | 'partOf'>): string {
+  const name = spec.partOf ?? spec.name;
+  return `components-${spec.category.toLowerCase()}-${name.toLowerCase()}-docs--docs`;
 }

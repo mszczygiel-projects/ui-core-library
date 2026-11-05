@@ -19,7 +19,7 @@ Use Tabs for a few views of one subject that replace one another in the same pla
 
 ## Anatomy
 
-The **base** holds the **list** of tabs and the **panels**. Each **tab** has an optional **tab-icon** and a **tab-label**. The web component exposes these parts on `ui-tabs`; React uses `.ui-tabs__base` and `.ui-tabs__<part>` classes. Figma names the layers the same, and holds the tab as the component set Tab.
+The **base** holds the **list** of tabs and the **panels**. Each **tab** has an optional **tab-icon** and a **tab-label**. The web component exposes these parts on `ui-tabs`; React uses `.ui-tabs__base` and `.ui-tabs__<part>` classes. A Tab holds the content of its panel; Tabs renders its tab and its panel, so the parts belong to Tabs. Figma names the layers the same, and holds the tab as the component set Tab, under the set Tabs, in each variant, orientation and state of Tabs.
 
 ## Variants & tone
 
@@ -43,13 +43,13 @@ Tabs has one size, which follows the surrounding density through its tokens.
   webComponents={WebComponentStories.WithDisabledTab}
 />
 
-A tab is selected or not. It shows hover and press with a tint, and keyboard focus with the focus ring. A disabled tab cannot be selected and leaves the arrow keys; when the page selects it anyway, it keeps its disabled colours.
+A tab is selected or not: the selected one is the `value` of Tabs. `disabled` on a Tab keeps it from being selected. It shows hover and press with a tint, and keyboard focus with the focus ring. A disabled tab cannot be selected and leaves the arrow keys; when the page selects it anyway, it keeps its disabled colours.
 
 ## Content & labels
 
 <FrameworkCanvas react={ReactStories.WithIcons} webComponents={WebComponentStories.WithIcons} />
 
-Give each tab a short `label` of one or two words, in the language of the page; it names the tab and its panel. An `icon` before the label is decorative, so every tab keeps its label. The content of each panel goes into its Tab as children or into its slot, so it is in the HTML of the page. Give the list a `label` when no heading before the tabs names them. Tabs renders no text of its own.
+Give each tab a short `label` of one or two words, in the language of the page; it names the tab and its panel. An `icon` before the label is decorative, so every tab keeps its label: an SVG string of the icon package in the web component, a React node in React. The content of each panel goes into its Tab as children or into its slot, so it is in the HTML of the page. Give the list a `label` when no heading before the tabs names them. Tabs renders no text of its own.
 
 ## Behaviour
 
@@ -59,6 +59,7 @@ Give each tab a short `label` of one or two words, in the language of the page; 
 - Each tab the user selects is reported: `ui-value-change` in the web component, which cannot be canceled, and `onValueChange(value, details)` in React, where a controlled Tabs keeps its tab until `value` changes. Setting `value` reports nothing.
 - The panels of the other tabs stay in the page, hidden until find in page reaches them. Find in page and a link to a text fragment select the tab of a match, with the reason `find`.
 - A horizontal list that does not fit scrolls sideways within its own box.
+- Tabs renders a tab again when its `label`, `icon` or `disabled` changes. Outside Tabs, a Tab shows its content as a plain block, without a role.
 
 <Source
   language="tsx"
@@ -95,6 +96,16 @@ import '@mszczygiel-projects/ui-core-web-components/tab';`}
 />
 
 React's ref, className, style and other attributes reach the root element.
+
+### Tab
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="Tab" />}
+  webComponents={<WebComponentApi tag="ui-tab" />}
+/>
+
+React's ref, className, style and other attributes of a Tab reach its panel.
 
 ## Tokens
 
