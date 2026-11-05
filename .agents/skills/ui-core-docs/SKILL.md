@@ -27,6 +27,7 @@ description: Use when documenting a component of UI Core Library - its MDX page 
 
   A section that does not apply says why.
 
+- A part, whose specification has `partOf` (RadioField, AccordionItem, Tab), has no page and no stories. The page of its component describes it in its sections, shows its states in its own stories, and adds after its API a `### <Part>` heading with `FrameworkTabs`, `ReactApi` and `WebComponentApi` of the part. `stories.test.ts` checks both.
 - The page shows only the `Variants` story, with `FrameworkCanvas`, for a component with a `variant`.
 - Accessibility names the WAI-ARIA pattern, or says that none applies, and lists the keys.
 - The manifest of Stencil does not list the form API of a control, such as `validity` or `checkValidity()`. The page describes it in prose.

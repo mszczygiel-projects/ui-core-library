@@ -1,11 +1,13 @@
 # The component pages in Figma
 
-Every component has one page in [Core] UI Library, named like the component in code, in the order of the categories of the library, with a page `---` between categories. The page holds no documentation: Storybook documents the component.
+Every component apart from a part has one page in [Core] UI Library, named like the component in code, in the order of the categories of the library, with a page `---` between categories. The page holds no documentation: Storybook documents the component.
 
 - **On the left, the legend** `Legend · generated`: the eyebrow "Component", the name of the component set, its description, which is the summary sentence of the JSDoc, a divider, and one instance of each value of the first variant property of the set, under a label with the value.
 - **On the right, the card** that holds the component set, the implementation that designers use. The builder never touches the set; it places the legend to its left.
 
 The legend is a page, not a component, and its look is the owner's. Its card, gaps and divider bind roles of the Foundations; its texts and labels carry the fonts, sizes and colours of the owner's design as raw values, since the Foundations have no styles for them, so a fork does not restyle them. It uses no component apart from the instances of the set. It is locked; rebuild it, never edit it. When the owner changes the look, read the edited legend, change the builder to match, and prove it with a test build compared node by node before the legend is rebuilt. A component step runs the builder after the last change to the set, and before a page is rebuilt from it, the old hand-made legend of the page goes.
+
+A part, whose specification has `partOf`, has no page and no legend. Its card sits on the page of its component, under the card of that component and aligned with it, as the private sets do; the builder runs with the `SET_ID` of the component.
 
 ## How to run it
 
