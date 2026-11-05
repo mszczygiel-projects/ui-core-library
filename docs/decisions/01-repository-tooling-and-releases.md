@@ -56,7 +56,7 @@ A project arrives with its first need. Nx project names are the folder names.
 
 - Every published package has the same version and is released together with `nx release` under one tag, such as `v1.0.0`. Internal dependencies use `workspace:^`.
 - Nothing is published before 1.0.0. That release comes once every planned component is done. There are no pre-releases.
-- Publishing runs in CI to GitHub Packages, from a workflow that only the owner starts.
+- Publishing runs in CI to GitHub Packages, from a workflow started by hand, never by a push or a merge.
 - Semantic versioning applies from 1.0.0, and the changelog starts there. Token names, icon names and component APIs are public API.
 
 ### Agent tooling

@@ -23,7 +23,7 @@ When they disagree, report the conflict and propose a resolution instead of choo
 
 ## Language
 
-- Talk to the owner in Polish, write proposals in Polish, and explain technical terms plainly.
+- Explain technical terms plainly.
 - Everything in the repository is in English: code, comments, documentation, commit messages and pull requests.
 
 ## Way of working

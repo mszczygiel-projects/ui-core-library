@@ -4,9 +4,9 @@ The tokens come from the variables of [Core] Foundations. [Decision 02](../decis
 
 ## Changing tokens
 
-1. Read the live variables and compare them with `packages/foundations/figma/`. If they differ, ask the owner for a fresh export before planning.
+1. Read the live variables and compare them with `packages/foundations/figma/`. If they differ, export the collections again, as [the Figma guide](figma.md#exporting-variables) describes, before planning.
 2. Change the variables and their metadata in Figma, within the approved step. `pnpm nx run foundations:figma-metadata --output <file outside the repository>` lists the metadata every variable should carry.
-3. The owner publishes the library and exports the changed collections, as [the Figma guide](figma.md#exporting-variables) describes.
+3. Publish the library and export the changed collections, as [the Figma guide](figma.md#exporting-variables) describes.
 4. Run `pnpm nx run foundations:build` and fix every error in Figma, never in the exports or the pipeline.
 5. Run `pnpm nx run foundations:test`. When names changed on purpose, run `pnpm tokens:snapshot` and commit `token-names.txt` with the exports.
 6. Give a new role a place in `apps/storybook/src/foundations/pages.json`, and check the Foundations pages in Storybook.

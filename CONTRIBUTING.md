@@ -17,9 +17,9 @@ The library grows in steps. A step is one infrastructure change or one component
    - the labels;
    - the regressions its contract will cover.
 
-   The owner reads proposals in Polish. Everything in the repository is in English.
+   A proposal may be written in any language the team reads. Everything in the repository is in English.
 
-2. **Approval.** It covers the agreed API, appearance, behaviour and effects on shared tokens and components, and the corrections needed to reach that result. A new decision, an extra effect on other components or an exception to a rule goes back to the owner. Present only the difference, and continue with independent work meanwhile.
+2. **Approval.** Approve the proposal before the work starts; when an agent prepared it, your approval is what lets it continue. Approval covers the agreed API, appearance, behaviour and effects on shared tokens and components, and the corrections needed to reach that result. A new decision, an extra effect on other components or an exception to a rule needs its own approval. Present only the difference, and continue with independent work meanwhile.
 3. **Branch.** Create `step/<n>-<slug>` from an up-to-date `main`. Never commit on `main`.
 4. **Implementation.**
    - Make small commits in Conventional Commits, each message saying why.
@@ -32,7 +32,7 @@ The library grows in steps. A step is one infrastructure change or one component
    - how to check it;
    - the open points.
 
-   The owner reviews and squashes. Review comments get new commits on the same branch.
+   Review the pull request and squash it into `main`. Review comments get new commits on the same branch.
 
 Figma is written only within an approved step, by the protocol in [decision 10](docs/decisions/10-figma.md) and [the Figma guide](docs/guides/figma.md).
 
@@ -60,12 +60,12 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 
 - [ ] Every value comes from Components tokens with the standard states, compared with the roles before they were created.
 - [ ] Stylelint passes, and the contract compares the computed appearance of both implementations.
-- [ ] The owner has compared the component with Figma.
+- [ ] You have compared the component with Figma.
 
 **Accessibility**
 
 - [ ] Every story passes axe in Light and Dark.
-- [ ] The owner has checked the component with VoiceOver when it brings a new interaction pattern.
+- [ ] You have checked the component with VoiceOver when it brings a new interaction pattern.
 
 **Documentation** ([09](docs/decisions/09-documentation.md))
 
@@ -76,7 +76,7 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 **Figma** ([10](docs/decisions/10-figma.md))
 
 - [ ] The `design` field of the specification matches the component set: its boolean variants, the props only code has and the design-only properties.
-- [ ] The guidelines are rebuilt, and the owner has uploaded them.
+- [ ] The guidelines are rebuilt, and you have uploaded them.
 - [ ] The component set has the names, properties and part layers of the code, and binds only Components variables, Foundations styles and the focus-ring roles.
 - [ ] The Code Connect templates of both frameworks pass `pnpm figma:check`.
 
@@ -86,5 +86,5 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 
 Before 1.0.0, for all components at once:
 
-- [ ] The owner has accepted the visual baselines.
+- [ ] You have accepted the visual baselines.
 - [ ] The Figma components link to their hosted pages.

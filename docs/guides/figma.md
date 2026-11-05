@@ -2,7 +2,7 @@
 
 The library is designed in three files: [Core] Foundations holds the variables and styles, [Core] Icons the icons and [Core] UI Library the components. [Decision 10](../decisions/10-figma.md) holds the rules, and the skill `ui-core-figma` the Plugin API protocol that agents follow.
 
-Agents write to these files only within an approved step: they read the state, list the changes, write them and compare a control read with the plan. The tasks below are the owner's.
+Write to these files only within an approved step: read the state, list the changes, write them and compare a control read with the plan. An agent follows the same protocol and writes only in a step you approved. The tasks below are yours, since the Plugin API cannot publish a library, run another plugin or upload guidelines.
 
 ## Publishing the libraries
 
@@ -22,11 +22,11 @@ Publish only the libraries that changed.
 
 ## Exporting icons
 
-An agent exports every icon component of [Core] Icons with `exportAsync` and replaces the files in `packages/icons/figma/`, within an approved step. Continue with [the icons guide](icons.md#changing-icons).
+Within an approved step, export every icon component of [Core] Icons with `exportAsync` through the Plugin API, with Figma's default settings, and replace the files in `packages/icons/figma/` unchanged. An agent runs the export through the Figma MCP server, as the skill `ui-core-figma` describes. Continue with [the icons guide](icons.md#changing-icons).
 
 ## Publishing Code Connect
 
-Code Connect shows the code of a component in Dev Mode. The owner publishes it; agents publish only in a step approved for publishing.
+Code Connect shows the code of a component in Dev Mode. Publish it yourself; an agent publishes only in a step you approved for publishing.
 
 1. Create a Figma personal access token with write access to Code Connect and read access to file content, and put it in `.env` as `FIGMA_ACCESS_TOKEN`, as `.env.example` shows. `.env` is never committed.
 2. Check what would be published, without publishing:

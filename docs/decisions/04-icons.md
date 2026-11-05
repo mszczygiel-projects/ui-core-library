@@ -4,7 +4,7 @@
 
 ### Source and names
 
-- [Core] Icons is the source of truth. In a step approved for it, the agent exports every icon component with `exportAsync` and Figma's default settings. The exports are committed byte for byte in `packages/icons/figma/`, and CI never reads Figma.
+- [Core] Icons is the source of truth. In a step approved for it, every icon component is exported with `exportAsync` of the Plugin API and Figma's default settings. The exports are committed byte for byte in `packages/icons/figma/`, and CI never reads Figma.
 - One name in three places: `icon/chevron-down` in Figma, `chevron-down.svg` on disk and `iconChevronDown` in code. Names are kebab case, and a badly named file stops the build instead of being renamed.
 - `icon-names.txt` is the snapshot of the export names, which are public API from 1.0.0.
 

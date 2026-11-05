@@ -11,7 +11,7 @@
 | Contracts     | `testing/contracts`          | one behaviour contract per component, run unchanged against both implementations                   |
 | Story tests   | `apps/storybook`             | every story in Light and Dark, with axe violations as errors                                       |
 | Visual tests  | Chromatic, before 1.0.0      | regressions of each story against its own baseline                                                 |
-| Manual review | the owner                    | VoiceOver for each new interaction pattern, and the look against Figma                             |
+| Manual review | by hand, in each step        | VoiceOver for each new interaction pattern, and the look against Figma                             |
 
 ### Contracts
 
