@@ -1,0 +1,69 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Guides/Configuration" />
+
+# Configuration
+
+A few texts come from the components themselves rather than from your props: the name of the close button of a dialog, the status of a pagination, the message of an empty list. They are English by default. `configureUiCore` translates them, sets the locale of dates and numbers and chooses the look of loaders, for every component on the page.
+
+## Configure once
+
+Call it once, before your application renders, from the package of the tokens:
+
+```ts
+import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations/config';
+
+configureUiCore({
+  locale: 'pl-PL',
+  labels: {
+    dialog: { close: 'Zamknij' },
+    pagination: {
+      previous: 'Poprzednia strona',
+      next: 'Następna strona',
+      page: (page) => `Strona ${page}`,
+      status: (page, pageCount) => `Strona ${page} z ${pageCount}`,
+    },
+  },
+});
+```
+
+- One configuration serves the web components and the React components, and every copy of the packages on the page.
+- Give only what you change. A label you leave out stays English, and each call merges into what earlier calls set.
+- Components already on the page follow a change at once, so a language switch needs no reload.
+- `resetUiCoreConfig()` restores the English labels, the default loader and the automatic locale. `getUiCoreConfig()` returns the configuration as the components read it.
+
+## Labels
+
+`labels` holds one group per component, named in camel case, such as `dialog`, `fileInputField` or `pagination`. A text that holds a value is a function of that value, so that you translate a whole sentence and choose its word order and grammar:
+
+```ts
+configureUiCore({
+  labels: {
+    fileInputField: { remove: (fileName) => `Usuń plik ${fileName}` },
+    pagination: { total: (pageCount) => `z ${pageCount}` },
+  },
+});
+```
+
+The **Content & labels** section of each component page names its labels, and the type `UiCoreLabels` lists all of them for your editor. A prop of a component, such as `closeLabel`, wins over the configuration for that one component.
+
+## Locale
+
+Dates and numbers, such as those of DateField, NumberField and Calendar, follow the first locale that is set:
+
+1. the `locale` prop of the component;
+2. the `locale` of the configuration;
+3. the language of the browser, once the page has hydrated;
+4. `en-US`.
+
+The locale changes formats only. The labels stay as you configured them, so translate them as well.
+
+## Loaders
+
+`loaderVariant` chooses the look of every loader: the Loader component and the loading state of buttons and lists. This version draws one look, `spinner`, the default.
+
+## Server rendering
+
+On the server, configure before the first render, with the same values the browser uses, so that the server and the first render in the browser produce the same text and hydration finds no difference.
+
+The configuration is global to the server process and shared by every request. Set the defaults of the application at startup. A page that serves several languages at once passes the language in the `locale` prop, and its texts in the label props of the components.
