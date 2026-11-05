@@ -9,6 +9,7 @@ import {
   tokensWithPrefix,
   toolbarItems,
   valueIn,
+  visualModes,
 } from './tokens.ts';
 
 const textPrimary: ManifestToken = {
@@ -111,5 +112,20 @@ describe('contextLabel', () => {
   it('names the modes of a context, or the value when there are none', () => {
     expect(contextLabel({ theme: 'dark', surface: 'inverse' })).toBe('Dark · Inverse');
     expect(contextLabel({})).toBe('Value');
+  });
+});
+
+describe('visualModes', () => {
+  it('takes a snapshot of every story in each theme', () => {
+    expect(visualModes({ brand: [], theme: ['light', 'dark'] })).toEqual({
+      light: { theme: 'light' },
+      dark: { theme: 'dark' },
+    });
+  });
+
+  it('adds the brand when there is more than one', () => {
+    expect(Object.keys(visualModes({ brand: ['base', 'club'], theme: ['light', 'dark'] }))).toEqual(
+      ['base light', 'club light', 'base dark', 'club dark'],
+    );
   });
 });
