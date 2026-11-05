@@ -9,7 +9,7 @@ export const fileInputField = defineComponent({
   name: 'FileInputField',
   tag: 'ui-file-input-field',
   category: 'Inputs',
-  status: 'in-progress',
+  status: 'done',
   figma: '2409:3222',
   design: {
     flags: ['disabled'],

@@ -3,7 +3,7 @@ export declare const tabs: {
     readonly name: "Tabs";
     readonly tag: "ui-tabs";
     readonly category: "Content";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3226:82";
     readonly design: {
         readonly flags: readonly [];

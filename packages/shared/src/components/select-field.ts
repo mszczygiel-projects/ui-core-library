@@ -9,7 +9,7 @@ export const selectField = defineComponent({
   name: 'SelectField',
   tag: 'ui-select-field',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '1370:179',
   design: {
     flags: ['open'],

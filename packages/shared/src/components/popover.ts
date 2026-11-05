@@ -8,7 +8,7 @@ export const popover = defineComponent({
   name: 'Popover',
   tag: 'ui-popover',
   category: 'Overlays',
-  status: 'in-progress',
+  status: 'done',
   figma: '2090:2086',
   design: {
     flags: ['open', 'showArrow'],

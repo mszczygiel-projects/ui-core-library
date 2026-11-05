@@ -4,7 +4,7 @@ export declare const drawer: {
     readonly name: "Drawer";
     readonly tag: "ui-drawer";
     readonly category: "Overlays";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2381:2696";
     readonly design: {
         readonly flags: readonly ["hideCloseButton"];

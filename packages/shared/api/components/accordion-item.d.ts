@@ -2,7 +2,7 @@ export declare const accordionItem: {
     readonly name: "AccordionItem";
     readonly tag: "ui-accordion-item";
     readonly category: "Content";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3215:68";
     readonly partOf: "Accordion";
     readonly design: {

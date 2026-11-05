@@ -5,7 +5,7 @@ export const accordionItem = defineComponent({
   name: 'AccordionItem',
   tag: 'ui-accordion-item',
   category: 'Content',
-  status: 'in-progress',
+  status: 'done',
   figma: '3215:68',
   partOf: 'Accordion',
   design: {

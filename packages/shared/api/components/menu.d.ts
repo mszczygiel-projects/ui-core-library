@@ -5,7 +5,7 @@ export declare const menu: {
     readonly name: "Menu";
     readonly tag: "ui-menu";
     readonly category: "Overlays";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3202:130";
     readonly design: {
         readonly flags: readonly [];

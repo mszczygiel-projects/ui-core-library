@@ -6,7 +6,7 @@ export const tab = defineComponent({
   name: 'Tab',
   tag: 'ui-tab',
   category: 'Content',
-  status: 'in-progress',
+  status: 'done',
   figma: '3225:158',
   partOf: 'Tabs',
   design: {

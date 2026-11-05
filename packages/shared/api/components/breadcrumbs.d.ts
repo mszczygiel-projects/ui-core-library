@@ -3,7 +3,7 @@ export declare const breadcrumbs: {
     readonly name: "Breadcrumbs";
     readonly tag: "ui-breadcrumbs";
     readonly category: "Navigation";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2334:2878";
     readonly design: {
         readonly flags: readonly [];

@@ -8,7 +8,7 @@ export const dateField = defineComponent({
   name: 'DateField',
   tag: 'ui-date-field',
   category: 'Inputs',
-  status: 'in-progress',
+  status: 'done',
   figma: '3190:372',
   design: {
     nested: 'TextField',

@@ -2,7 +2,7 @@ export declare const pagination: {
     readonly name: "Pagination";
     readonly tag: "ui-pagination";
     readonly category: "Navigation";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2157:126";
     readonly design: {
         readonly flags: readonly ["disabled"];

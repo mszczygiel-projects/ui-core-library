@@ -5,7 +5,7 @@ export const accordion = defineComponent({
   name: 'Accordion',
   tag: 'ui-accordion',
   category: 'Content',
-  status: 'in-progress',
+  status: 'done',
   figma: '3215:70',
   design: { flags: [], booleans: [], codeOnly: ['multiple'], previews: {} },
   summary: 'A stack of sections whose headings show and hide their content.',

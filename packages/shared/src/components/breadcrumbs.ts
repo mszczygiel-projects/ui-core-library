@@ -5,7 +5,7 @@ export const breadcrumbs = defineComponent({
   name: 'Breadcrumbs',
   tag: 'ui-breadcrumbs',
   category: 'Navigation',
-  status: 'in-progress',
+  status: 'done',
   figma: '2334:2878',
   design: {
     flags: [],

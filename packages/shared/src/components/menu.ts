@@ -10,7 +10,7 @@ export const menu = defineComponent({
   name: 'Menu',
   tag: 'ui-menu',
   category: 'Overlays',
-  status: 'in-progress',
+  status: 'done',
   figma: '3202:130',
   design: {
     flags: [],
