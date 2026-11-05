@@ -56,7 +56,10 @@ A project arrives with its first need. Nx project names are the folder names.
 
 - Every published package has the same version and is released together with `nx release` under one tag, such as `v1.0.0`. Internal dependencies use `workspace:^`.
 - Nothing is published before 1.0.0. That release comes once every planned component is done. There are no pre-releases.
-- Publishing runs in CI to GitHub Packages, from a workflow started by hand, never by a push or a merge.
+- `release.yml` publishes, and only when started by hand, never by a push or a merge. It runs on `main`, runs `pnpm verify` first and is a dry run unless that option is turned off. The [release guide](../guides/releases.md) holds the steps.
+- Packages go to npmjs.com as public packages with provenance, which links each tarball to the workflow run that built it. The token in the secret `NPM_TOKEN` publishes them until the packages exist on npm. After that, trusted publishing through the workflow's identity replaces it.
+- The version comes from the Conventional Commits since the last tag. The first release names `1.0.0` explicitly, because without an earlier tag Nx starts at 0.0.1.
+- The packages carry the licence `UNLICENSED` until a licence is chosen. They are public to read and install, but give no rights to reuse.
 - Semantic versioning applies from 1.0.0, and the changelog starts there. Token names, icon names and component APIs are public API.
 
 ### Agent tooling
