@@ -8,6 +8,7 @@ How to do things in this repository. Each guide covers one area. [CONTRIBUTING.m
 | [Tokens](tokens.md)                | change design tokens and their names                                           |
 | [Icons](icons.md)                  | change icons and the icons that components require                             |
 | [Components](components.md)        | change a component in its specification, both implementations and its contract |
+| [Parsed fields](parsed-fields.md)  | change NumberField or DateField, which parse what a user types                 |
 | [Documentation site](storybook.md) | change the Storybook pages, stories and guides                                 |
 | [Figma](figma.md)                  | work with the Figma files: exports, publishing, Code Connect and guidelines    |
 | [Releases](releases.md)            | release and publish the packages                                               |
