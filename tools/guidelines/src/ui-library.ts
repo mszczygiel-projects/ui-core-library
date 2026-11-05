@@ -1,6 +1,7 @@
 import type { ComponentSpec } from '@mszczygiel-projects/ui-core-shared/component';
 import { specs } from '@mszczygiel-projects/ui-core-shared/components';
 
+import { documentationUrl } from './links.ts';
 import { code, file, table } from './markdown.ts';
 import { sectionsOf } from './mdx.ts';
 
@@ -85,6 +86,7 @@ export function componentGuideline({ spec, page }: DocumentedComponent): string 
   return file(
     `# ${spec.name}`,
     spec.summary,
+    `Documentation: ${documentationUrl(page)}`,
     `Use the component set ${code(spec.name)} of [Core] UI Library. Its variant properties have the names and values below and no others: never invent a property, a value or a variant, and never detach an instance to restyle it.`,
     properties === undefined ? undefined : `## Properties\n\n${properties}`,
     design.nested === undefined

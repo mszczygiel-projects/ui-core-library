@@ -13,30 +13,28 @@ UI Core Library gives a web application design tokens, icons and components. Eve
 
 ## Install
 
-The packages are published to npmjs.com:
+The packages are published to npmjs.com. Install the tokens, and the components of your framework:
 
 ```sh
-pnpm add @mszczygiel-projects/ui-core-foundations @mszczygiel-projects/ui-core-icons
+# React 19
+pnpm add @mszczygiel-projects/ui-core-foundations @mszczygiel-projects/ui-core-react
+
+# any other framework, or none
+pnpm add @mszczygiel-projects/ui-core-foundations @mszczygiel-projects/ui-core-web-components
 ```
 
-All packages share one version. Install the same version of each.
+Both component packages depend on the icons package. Add it yourself only to render icons of your own. All packages share one version: install the same version of each.
 
 ## Load the tokens
 
-Import the tokens and the text styles once:
+Import the tokens and the text styles once, in the stylesheet of your application:
 
 ```css
 @import '@mszczygiel-projects/ui-core-foundations/tokens.css';
 @import '@mszczygiel-projects/ui-core-foundations/typography.css';
 ```
 
-With Tailwind 4, import `tailwind.css` after Tailwind instead of `tokens.css`. Its utilities then read the same tokens.
-
-The tokens live in the cascade layer `ui-core-tokens`, which comes after Tailwind's layers. Your styles outside any layer win over them wherever you import them. To override a token from a layer of your own, put that layer after `ui-core-tokens`:
-
-```css
-@layer theme, base, components, utilities, ui-core-tokens, app;
-```
+With Tailwind 4, import `tailwind.css` after Tailwind instead of `tokens.css`. Its utilities then read the same tokens:
 
 ```css
 @import 'tailwindcss';
@@ -44,7 +42,66 @@ The tokens live in the cascade layer `ui-core-tokens`, which comes after Tailwin
 @import '@mszczygiel-projects/ui-core-foundations/typography.css';
 ```
 
+The tokens live in the cascade layer `ui-core-tokens`, which comes after Tailwind's layers. Your styles outside any layer win over them wherever you import them. To override a token from a layer of your own, put that layer after `ui-core-tokens`:
+
+```css
+@layer theme, base, components, utilities, ui-core-tokens, app;
+```
+
 Style your own elements with roles, such as `var(--color-text-primary)`, and text with the classes, such as `ui-text-body`. [Foundations](?path=/docs/foundations-overview--docs) lists them.
+
+## Render a component
+
+### React
+
+Import the components from the root of the package, and their styles once:
+
+```tsx
+import { useState } from 'react';
+import { Button, TextField } from '@mszczygiel-projects/ui-core-react';
+import '@mszczygiel-projects/ui-core-react/styles.css';
+
+export function Profile() {
+  const [name, setName] = useState('');
+  return (
+    <form>
+      <TextField label="Name" name="name" value={name} onValueChange={setName} />
+      <Button type="submit">Save</Button>
+    </form>
+  );
+}
+```
+
+The components render on the server and hydrate, as in Next.js. A field is controlled with `value` and its `on…Change` callback, or uncontrolled with `defaultValue`, and it submits with its form like a native input.
+
+### Web components
+
+Import the module of each component you use. It defines the tag:
+
+```ts
+import '@mszczygiel-projects/ui-core-web-components/button';
+import '@mszczygiel-projects/ui-core-web-components/text-field';
+```
+
+```html
+<form>
+  <ui-text-field label="Name" name="name"></ui-text-field>
+  <ui-button type="submit">Save</ui-button>
+</form>
+```
+
+```ts
+const field = document.querySelector('ui-text-field');
+field.addEventListener('ui-value-change', (event) => {
+  console.log(event.detail.value);
+});
+```
+
+The web components carry their own styles. A field takes part in its form like a native input: it submits, resets and validates. An event is `ui-<name>`, with its data in `detail`; React takes the same event as the callback `on<Name>`. The root of the package defines every tag at once.
+
+In TypeScript, importing the module of a component adds its element to the types of the DOM: `document.querySelector('ui-text-field')` returns a typed element, and `addEventListener('ui-value-change', …)` a typed `detail`. The package declares no JSX types for other frameworks, such as Vue or Solid. Declare the tags you use in the way of your framework, or generate the declarations from `custom-elements.json`, which describes the props, events, slots and parts of every component.
+
+Each component page lists its props, events and slots under **API**, for the framework the toolbar chooses.
 
 ## Set the context
 
@@ -69,6 +126,10 @@ element.innerHTML = `<span aria-hidden="true">${iconClose}</span>`;
 ```
 
 An icon is `1em` square and painted in `currentColor`, so it follows the font size and colour of its parent. Import only the icons you render; a bundler leaves out the rest.
+
+## Configure the components
+
+The components render a few texts of their own, such as the name of a close button, in English. [Configuration](?path=/docs/guides-configuration--docs) translates them, sets the locale of dates and numbers and chooses the look of loaders.
 
 ## Your own brand and icons
 

@@ -1,13 +1,15 @@
 /**
  * Writes the guidelines of the three Figma libraries into dist/<library>/, where the owner uploads
- * them with Library › Manage guidelines in each file.
+ * them with Library › Manage guidelines in each file, and the documentation links of the component
+ * sets into dist/documentation-links.json, which an agent writes into [Core] UI Library.
  *
  * Usage: node src/cli.ts
  */
 import { mkdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
-import { buildGuidelines, LIBRARY_LIMIT, sizeOf } from './build.ts';
+import { buildGuidelines, documentedComponents, LIBRARY_LIMIT, sizeOf } from './build.ts';
+import { documentationLinks } from './links.ts';
 
 const dist = join(import.meta.dirname, '..', 'dist');
 rmSync(dist, { recursive: true, force: true });
@@ -27,3 +29,7 @@ for (const [library, files] of Object.entries(guidelines)) {
     `✓ ${library}: ${String(Object.keys(files).length)} files, ${String(Math.round(size / 1024))} KB`,
   );
 }
+
+const links = documentationLinks(documentedComponents());
+writeFileSync(join(dist, 'documentation-links.json'), `${JSON.stringify(links, null, 2)}\n`);
+console.log(`✓ documentation links: ${String(Object.keys(links).length)} component sets`);

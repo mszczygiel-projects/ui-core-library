@@ -79,6 +79,7 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 - [ ] The guidelines are rebuilt, and you have uploaded them.
 - [ ] The component set has the names, properties and part layers of the code, and binds only Components variables, Foundations styles and the focus-ring roles.
 - [ ] The Code Connect templates of both frameworks pass `pnpm figma:check`.
+- [ ] The component set links to its page on the documentation site.
 
 **Done**
 
@@ -87,4 +88,3 @@ Copy this list into the pull request of a component and tick each item. Mark an 
 Before 1.0.0, for all components at once:
 
 - [ ] You have accepted the visual baselines.
-- [ ] The Figma components link to their hosted pages.

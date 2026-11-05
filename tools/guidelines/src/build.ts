@@ -8,6 +8,7 @@ import { specs } from '@mszczygiel-projects/ui-core-shared/components';
 
 import { foundationsGuidelines } from './foundations.ts';
 import { iconGuidelines } from './icons.ts';
+import type { DocumentedComponent } from './ui-library.ts';
 import { componentFile, componentGuideline, libraryOverview } from './ui-library.ts';
 
 /** The libraries of Figma, each with the files of its guidelines. */
@@ -34,9 +35,14 @@ export function iconNames(): string[] {
     .filter(Boolean);
 }
 
+/** Every component with the MDX of its documentation page. */
+export function documentedComponents(): DocumentedComponent[] {
+  return specs.map((spec) => ({ spec, page: pageOf(spec) }));
+}
+
 /** Every file of guidelines, by library. */
 export function buildGuidelines(
-  components = specs.map((spec) => ({ spec, page: pageOf(spec) })),
+  components = documentedComponents(),
   manifest: TokenManifest = manifestJson,
   icons = iconNames(),
 ): Guidelines {

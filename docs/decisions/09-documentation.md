@@ -21,6 +21,7 @@
 ### Storybook
 
 - One site on React and Vite, in `apps/storybook`, renders both frameworks. It imports the built packages through their exports.
+- `storybook.yml` publishes the site from `main` to GitHub Pages, at https://mszczygiel-projects.github.io/ui-core-library/. Every push to `main` replaces it, so it documents the code on `main`, not a release.
 - **Addons**: `addon-docs` for MDX pages, `addon-a11y` with axe as errors, `addon-vitest` for story tests, and `addon-mcp` for agents on port 6006. Telemetry and onboarding are off.
 - **Toolbars**: theme, surface, density, language, direction and framework. Their items come from `tokens.json`.
 - **Foundations pages** are built from `tokens.json` and the map `apps/storybook/src/foundations/pages.json`, which the Figma documentation pages share.

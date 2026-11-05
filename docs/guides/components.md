@@ -27,38 +27,7 @@ Then follow the order of the skill `ui-core-component` and the Definition of Don
 
 ## Fields with parsed values
 
-NumberField and DateField keep display text separate from the canonical value. Put locale parsing,
-calendar arithmetic, numeric stepping and constraint validation in `shared`; keep input events,
-selection, masks and form integration in each rendering package. `configureUiCore({ locale })`
-provides the application default. Server rendering and the first hydration render use the same
-explicit configuration; the browser language is adopted afterwards.
-
-React uses `useParsedField` for draft text and a named hidden input for canonical form data. Its
-visible input owns focus and validity; `ref.current.value` is display text. A controlled parent's
-accepted value owns the hidden entry. Web components use `TextControl` with serialization and state
-callbacks so `ElementInternals` stores canonical data and restores the draft with its locale.
-
-DateField attaches IMask directly to the input. `prepareDateText` changes ISO ordering without
-correcting calendar parts; `parseDateText` and `validateDate` decide validity. The pinned IMask
-package has a declaration-only pnpm patch adding `.js` to relative type imports for NodeNext;
-without it, the upstream declarations lose their types under the repository's module resolution.
-Recheck the patch when updating IMask. No runtime file is patched.
-
-IMask handles undo/redo without emitting native input events. The package adapters observe its
-keyboard and beforeinput results, then synchronize canonical data once. Composition waits until
-commit and avoids a second notification when the browser sends a final input event. Read-only
-controls detach the mask so its history cannot bypass native editing restrictions.
-
-DateField opens a Calendar of its own package in its popup and renders it only while it is
-open, so each opening starts from the value or today. The field stops the events of the calendar
-and reports a pick as its own edit. A web component that nests another cannot wait for its render
-with `componentOnReady()`, which the custom elements build lacks: look for the rendered part over a
-few animation frames instead.
-
-Cover controlled rejection, partial-value echoes, reset cancellation, restored text, fieldset
-exclusion, locale changes during editing and native keyboard submission in tests. Validate the
-current text synchronously, before a form can submit it. Programmatic changes never emit a value
-event.
+NumberField and DateField keep the text a user types apart from the value they submit. Before changing either, read [the parsed fields guide](parsed-fields.md).
 
 ## Troubleshooting
 

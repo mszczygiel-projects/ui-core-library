@@ -1,6 +1,6 @@
 # Figma
 
-The library is designed in three files: [Core] Foundations holds the variables and styles, [Core] Icons the icons and [Core] UI Library the components. [Decision 10](../decisions/10-figma.md) holds the rules, and the skill `ui-core-figma` the Plugin API protocol that agents follow.
+The library is designed in three files: [[Core] Foundations](https://www.figma.com/design/Xxn0guDvAfyIqEKB6kADE9) holds the variables and styles, [[Core] Icons](https://www.figma.com/design/lRdwn99eZTt6gCFeqc2Seh) the icons and [[Core] UI Library](https://www.figma.com/design/BzqkruN7r8mwWfFReznc83) the components. [Decision 10](../decisions/10-figma.md) holds the rules, and the skill `ui-core-figma` the Plugin API protocol that agents follow.
 
 Write to these files only within an approved step: read the state, list the changes, write them and compare a control read with the plan. An agent follows the same protocol and writes only in a step you approved. The tasks below are yours, since the Plugin API cannot publish a library, run another plugin or upload guidelines.
 
@@ -47,6 +47,16 @@ Code Connect shows the code of a component in Dev Mode. Publish it yourself; an 
 4. In [Core] UI Library, select an instance in Dev Mode and check its snippet.
 
 Figma shows one framework at a time, React by default. A team admin switches it in Admin › Settings › Resources › Code Connect; the connections of the other framework stay stored. `pnpm figma:react unpublish` removes the published React templates.
+
+## Documentation links
+
+Every component set links to its page on the hosted documentation site, which Dev Mode and the assets panel show.
+
+1. Run `pnpm guidelines:build`. It writes `tools/guidelines/dist/documentation-links.json`: the link of each component set, by node.
+2. Within an approved step, write the links into [Core] UI Library through the Plugin API (`node.documentationLinks = [{ uri }]`) and read them back. An agent does it as the skill `ui-core-figma` describes.
+3. Publish [Core] UI Library.
+
+A new component set, a renamed page or a moved component needs this again.
 
 ## Updating the guidelines
 
