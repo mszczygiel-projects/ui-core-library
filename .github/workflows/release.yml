@@ -1,0 +1,78 @@
+# Releases every published package at one version: started by hand, never by a push or a merge.
+# A dry run, the default, shows the version, the changelog and the packages without changing
+# anything outside the runner.
+# Actions are pinned to full commit SHAs, with the release named in a comment.
+name: Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'The version, such as 1.0.0. Empty: derived from the Conventional Commits since the last release.'
+        required: false
+        default: ''
+      dry-run:
+        description: 'Preview the release without tagging or publishing.'
+        type: boolean
+        default: true
+
+permissions:
+  # The release tag and the GitHub Release. The versions are set on the runner only, so nothing
+  # is pushed to main, which accepts changes only through pull requests.
+  contents: write
+  # The provenance of the published packages.
+  id-token: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  LEFTHOOK: '0'
+  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+
+jobs:
+  release:
+    name: Release
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # The changelog reads every commit since the last release tag.
+          fetch-depth: 0
+      - uses: ./.github/actions/setup-workspace
+      - name: Install Chromium
+        run: pnpm --filter @mszczygiel-projects/ui-core-storybook exec playwright install --with-deps chromium
+      - run: pnpm verify
+
+      - name: Configure Git and npm
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          echo '//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}' > "$HOME/.npmrc"
+
+      - name: Version
+        id: version
+        env:
+          VERSION: ${{ inputs.version }}
+        run: |
+          # Without a release tag, the versions on disk are the starting point.
+          first=$([ -z "$(git tag --list 'v*')" ] && echo '--first-release' || true)
+          pnpm nx release version $VERSION $first
+          echo "version=$(node -p "require('./packages/foundations/package.json').version")" >> "$GITHUB_OUTPUT"
+          echo "first=$first" >> "$GITHUB_OUTPUT"
+
+      - name: Tag and GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}
+        run: pnpm nx release changelog ${{ steps.version.outputs.version }} ${{ steps.version.outputs.first }} $DRY_RUN
+
+      - name: Publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: 'true'
+          DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}
+        run: pnpm nx release publish ${{ steps.version.outputs.first }} $DRY_RUN

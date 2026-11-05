@@ -10,3 +10,4 @@ How to do things in this repository. Each guide covers one area. [CONTRIBUTING.m
 | [Components](components.md)        | change a component in its specification, both implementations and its contract |
 | [Documentation site](storybook.md) | change the Storybook pages, stories and guides                                 |
 | [Figma](figma.md)                  | work with the Figma files: exports, publishing, Code Connect and guidelines    |
+| [Releases](releases.md)            | release and publish the packages                                               |

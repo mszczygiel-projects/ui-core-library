@@ -34,7 +34,7 @@
 
 ### Web components
 
-- Stencil 4, the current stable line. Stencil 5 replaces it once it is stable, before 1.0.0.
+- Stencil 4, the current stable line. Stencil 5 replaces it once it is stable, in a release after 1.0.0.
 - `dist-custom-elements` writes one module per component, which defines its tag. The root defines them all, and `custom-elements.json` describes them.
 - The other packages of the library stay imports. Stencil's runtime is built into the package, because the shared runtime of `@stencil/core` ignores the build options and would add a `hydrated` class to every host.
 - Stencil compiles the components with its own TypeScript, and `tsc` checks them with the repository's. Relative imports keep their `.ts` extension, which `rewriteRelativeImportExtensions` rewrites.
