@@ -10,7 +10,7 @@
 | Package tests | each component package       | what only one framework does: React refs, server rendering and hydration, web component attributes |
 | Contracts     | `testing/contracts`          | one behaviour contract per component, run unchanged against both implementations                   |
 | Story tests   | `apps/storybook`             | every story in Light and Dark, with axe violations as errors                                       |
-| Visual tests  | Chromatic, before 1.0.0      | regressions of each story against its own baseline                                                 |
+| Visual tests  | Chromatic                    | regressions of each story against its own baseline, in Light and Dark                              |
 | Manual review | by hand, in each step        | VoiceOver for each new interaction pattern, and the look against Figma                             |
 
 ### Contracts
@@ -33,6 +33,7 @@
 - Type agreement between the implementations needs no test: both import the specification's types ([05](05-components.md)). One test checks that both frameworks export exactly the stories that the specification names.
 - A new check fails once on a deliberate defect before it is trusted.
 - Coverage is reported, not enforced.
+- Chromatic runs on every push to `main`, whose commits become the new baselines, and on a pull request labelled `visual`. Every story of both frameworks is a snapshot in each theme, and the tokens that the preview imports make every build a full one, so running it on every pull request would exceed the free plan.
 - `pnpm verify` runs everything except the visual tests and the manual review.
 
 ## Why

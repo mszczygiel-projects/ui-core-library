@@ -1,0 +1,43 @@
+# The visual tests: Chromatic compares every story with its accepted baseline. They run on main,
+# whose squash commits become the new baselines, and on a pull request labelled `visual`, since
+# each build takes a snapshot of every story in every theme.
+# Actions are pinned to full commit SHAs, with the release named in a comment.
+name: Chromatic
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, labeled]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: chromatic-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LEFTHOOK: '0'
+  COREPACK_ENABLE_DOWNLOAD_PROMPT: '0'
+
+jobs:
+  visual:
+    name: Visual tests
+    if: github.event_name == 'push' || contains(github.event.pull_request.labels.*.name, 'visual')
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Chromatic finds the baselines in the history, on the branch itself rather than on the
+          # merge commit of a pull request.
+          fetch-depth: 0
+          ref: ${{ github.head_ref || github.ref }}
+      - uses: ./.github/actions/setup-workspace
+      - run: pnpm nx run storybook:build
+      - name: Publish to Chromatic
+        working-directory: apps/storybook
+        run: pnpm exec chromatic --config-file chromatic.config.json
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
