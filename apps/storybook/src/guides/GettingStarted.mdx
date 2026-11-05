@@ -97,7 +97,9 @@ field.addEventListener('ui-value-change', (event) => {
 });
 ```
 
-The web components carry their own styles. A field takes part in its form like a native input: it submits, resets and validates. An event is `ui-<name>`, with its data in `detail`; React takes the same event as the callback `on<Name>`. The root of the package defines every tag at once, and `custom-elements.json` describes the API for editors and frameworks.
+The web components carry their own styles. A field takes part in its form like a native input: it submits, resets and validates. An event is `ui-<name>`, with its data in `detail`; React takes the same event as the callback `on<Name>`. The root of the package defines every tag at once.
+
+In TypeScript, importing the module of a component adds its element to the types of the DOM: `document.querySelector('ui-text-field')` returns a typed element, and `addEventListener('ui-value-change', …)` a typed `detail`. The package declares no JSX types for other frameworks, such as Vue or Solid. Declare the tags you use in the way of your framework, or generate the declarations from `custom-elements.json`, which describes the props, events, slots and parts of every component.
 
 Each component page lists its props, events and slots under **API**, for the framework the toolbar chooses.
 
