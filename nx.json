@@ -86,14 +86,23 @@
     },
     "version": {
       "conventionalCommits": true,
-      "preserveLocalDependencyProtocols": true
+      "preserveLocalDependencyProtocols": true,
+      "git": {
+        "stageChanges": true
+      }
     },
     "changelog": {
       "workspaceChangelog": {
         "file": "{workspaceRoot}/CHANGELOG.md",
         "createRelease": "github"
       },
-      "projectChangelogs": false
+      "projectChangelogs": false,
+      "git": {
+        "commit": true,
+        "commitMessage": "chore(release): publish {version}",
+        "tag": true,
+        "push": true
+      }
     }
   }
 }

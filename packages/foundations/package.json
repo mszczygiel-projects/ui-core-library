@@ -37,8 +37,9 @@
     "directory": "packages/foundations"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true
   },
   "devDependencies": {
     "@vitest/browser-playwright": "catalog:",

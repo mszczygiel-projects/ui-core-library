@@ -162,8 +162,9 @@
     "directory": "packages/web-components"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com",
-    "access": "restricted"
+    "registry": "https://registry.npmjs.org/",
+    "access": "public",
+    "provenance": true
   },
   "dependencies": {
     "@floating-ui/dom": "catalog:",
