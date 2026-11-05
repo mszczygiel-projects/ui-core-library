@@ -14,7 +14,7 @@ A consumer brands the library on three tiers. The first one is enough to brand e
 
 ## Brand values
 
-The brand values are roles of the Themes collection that hold no colour, such as `--font-heading`, `--shape-radius-md` or `--text-uppercase-button`. They are declared once on `:root`. Override them after the tokens, and every role and component follows:
+The brand values are roles of the Themes collection that hold no colour, such as `--font-heading`, `--shape-radius-md` or `--text-uppercase-button`. They are declared once on `:root`, in the cascade layer `ui-core-tokens`. Override them outside any layer, and every role and component follows:
 
 ```css
 :root {
