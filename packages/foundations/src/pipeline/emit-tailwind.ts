@@ -57,11 +57,18 @@ function isPresent<T>(value: T | null): value is T {
 
 /**
  * tailwind.css: a Tailwind 4 theme over tokens.css. `@theme inline` makes the utilities read the
- * custom properties: roles follow their context, while primitives remain fixed. Tailwind's
- * default colours are reset first, so only the library's palette remains.
+ * custom properties: roles follow their context, while primitives remain fixed. `reference` keeps
+ * Tailwind from declaring each token again as `var()` of itself, which would empty every token
+ * that a page puts in a layer before Tailwind's `theme`. Tailwind's default colours are reset
+ * first, so only the library's palette remains.
  */
 export function emitTailwindCss(tokens: readonly Token[]): string {
-  const lines = [`/* ${GENERATED_NOTICE} */\n\n`, '@import "./tokens.css";', '', '@theme inline {'];
+  const lines = [
+    `/* ${GENERATED_NOTICE} */\n\n`,
+    '@import "./tokens.css";',
+    '',
+    '@theme inline reference {',
+  ];
   lines.push('  --color-*: initial;');
 
   lines.push(

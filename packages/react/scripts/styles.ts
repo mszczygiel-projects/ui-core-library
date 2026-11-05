@@ -9,7 +9,7 @@ export interface Stylesheet {
   readonly css: string;
 }
 
-export const LAYER_ORDER = '@layer theme, base, components, utilities;';
+export const LAYER_ORDER = '@layer theme, base, components, utilities, ui-core-tokens;';
 
 export function assembleStyles(sheets: readonly Stylesheet[]): string {
   const parts = [...sheets]

@@ -40,6 +40,11 @@
     "registry": "https://npm.pkg.github.com",
     "access": "restricted"
   },
+  "devDependencies": {
+    "@vitest/browser-playwright": "catalog:",
+    "playwright": "catalog:",
+    "tailwindcss": "catalog:"
+  },
   "nx": {
     "name": "foundations",
     "tags": [
@@ -107,6 +112,12 @@
           "production"
         ],
         "cache": true
+      },
+      "test": {
+        "dependsOn": [
+          "generate",
+          "^build"
+        ]
       }
     }
   }

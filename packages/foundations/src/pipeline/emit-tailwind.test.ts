@@ -48,7 +48,9 @@ describe('emitTailwindCss', () => {
   ]);
 
   it('builds an inline theme over tokens.css, without the default palette', () => {
-    expect(output).toContain('@import "./tokens.css";\n\n@theme inline {\n  --color-*: initial;');
+    expect(output).toContain(
+      '@import "./tokens.css";\n\n@theme inline reference {\n  --color-*: initial;',
+    );
     expect(output.trimEnd().endsWith('}')).toBe(true);
   });
 

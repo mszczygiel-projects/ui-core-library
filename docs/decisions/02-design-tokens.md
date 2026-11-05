@@ -43,8 +43,9 @@ The variables of [Core] Foundations live in these collections:
 ### Pipeline
 
 - **Input**: the Figma exports in `packages/foundations/figma/`, committed byte for byte. Nobody edits them by hand.
-- **Outputs**: `tokens.css`, `tailwind.css` (Tailwind 4 `@theme inline`), `typography.css`, `tokens.json` (the manifest) and the typed references of `tokens.ts`. They are built and never committed.
+- **Outputs**: `tokens.css`, `tailwind.css` (Tailwind 4 `@theme inline reference`, so Tailwind declares no token again), `typography.css`, `tokens.json` (the manifest) and the typed references of `tokens.ts`. They are built and never committed.
 - **CSS scopes**: Themes modes map to `[data-theme]`, and Dark is also mirrored onto `prefers-color-scheme`. Surfaces map to `[data-surface]`. Densities map to `[data-density]`, with the Desktop values in a media query from `breakpoint/lg` (1024 px).
+- **Cascade layers**: every stylesheet of the library declares the order `theme, base, components, utilities, ui-core-tokens`, which extends Tailwind's, and `tokens.css` puts every token in `ui-core-tokens`. The tokens come after Tailwind's `theme`, whose defaults share names with them, such as `--font-mono`, in whichever order a page imports the files.
 - **Typography classes**: one per typography group, `ui-text-<group>`, in the layer `components.ui-core`.
 - **Line heights**: an aliased line height keeps its designed length when the paired font sizes differ.
 - **Errors**:
@@ -60,3 +61,5 @@ A component token that skips a layer stops following the theme, the surface or t
 
 - Hand-written tokens: Figma would drift from code.
 - Hidden primitives: designers need fixed values too, and scopes guide them.
+- Tokens outside any layer: an override imported before them lost without a warning, and an override in a layer of the page could never win.
+- Tokens in a sublayer of Tailwind's `theme`, or in a layer before it: Tailwind's own declarations in `theme` win over them, so its defaults replace tokens of the same name.

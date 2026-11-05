@@ -18,7 +18,7 @@
   - States that authors may style are custom states, `:state(<name>)`.
 - **React**:
   - BEM classes with the `ui-` prefix, such as `ui-text-field__label` and `ui-text-field--small`. Their elements are the parts of the web component.
-  - Rules live in the layer `components.ui-core`, so they beat Tailwind's preflight and lose to its utilities.
+  - Rules live in the layer `components.ui-core`, so they beat Tailwind's preflight and lose to its utilities. The stylesheet declares the order of the layers of the tokens ([02](02-design-tokens.md)).
   - The package ships one `styles.css`, and no module imports CSS.
 
 ### Families of components

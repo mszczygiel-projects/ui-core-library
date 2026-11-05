@@ -17,6 +17,7 @@
 
 - Tokens that no mode changes, primitives and brand values, are declared once on `:root`. Overriding them there reaches every role and component.
 - A token that changes with a mode is overridden on a selector that matches the components. It keeps following the theme and surface when its value points at a role.
+- The tokens live in the cascade layer `ui-core-tokens` ([02](02-design-tokens.md)). An override outside any layer wins wherever it is imported. An override in a layer of the page wins when that layer comes after `ui-core-tokens` in the order of the layers.
 - Component tokens are the only styling API ([07](07-styles.md)).
 
 ### The consumer's build

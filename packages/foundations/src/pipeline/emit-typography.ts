@@ -1,4 +1,4 @@
-import { GENERATED_NOTICE } from './emit-css.ts';
+import { GENERATED_NOTICE, LAYER_ORDER } from './emit-css.ts';
 import { type Token, tokenId } from './model.ts';
 import { cssVarName, normalizedPath } from './names.ts';
 
@@ -138,7 +138,7 @@ export function emitTypographyCss(styles: readonly TextStyle[]): string {
   });
   return [
     `/* ${GENERATED_NOTICE} */\n`,
-    '@layer theme, base, components, utilities;\n',
+    `${LAYER_ORDER}\n`,
     '@layer components.ui-core {',
     rules.join('\n\n'),
     '}\n',

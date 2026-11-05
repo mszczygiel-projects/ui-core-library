@@ -27,7 +27,7 @@ All packages share one version. Install the same version of each.
 
 ## Load the tokens
 
-Import the tokens and the text styles once, before your own styles:
+Import the tokens and the text styles once:
 
 ```css
 @import '@mszczygiel-projects/ui-core-foundations/tokens.css';
@@ -35,6 +35,12 @@ Import the tokens and the text styles once, before your own styles:
 ```
 
 With Tailwind 4, import `tailwind.css` after Tailwind instead of `tokens.css`. Its utilities then read the same tokens.
+
+The tokens live in the cascade layer `ui-core-tokens`, which comes after Tailwind's layers. Your styles outside any layer win over them wherever you import them. To override a token from a layer of your own, put that layer after `ui-core-tokens`:
+
+```css
+@layer theme, base, components, utilities, ui-core-tokens, app;
+```
 
 ```css
 @import 'tailwindcss';
