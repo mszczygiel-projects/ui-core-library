@@ -4,7 +4,7 @@ export declare const splitButton: {
     readonly name: "SplitButton";
     readonly tag: "ui-split-button";
     readonly category: "Actions";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3203:984";
     readonly design: {
         readonly flags: readonly ["open"];

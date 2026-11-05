@@ -81,6 +81,16 @@ export const InForm: Story = {
   ),
 };
 
+export const WithDisabledOption: Story = {
+  render: (args) => (
+    <RadioGroup {...args}>
+      {DELIVERY.map((option) => (
+        <RadioField key={option.value} {...option} disabled={option.value === 'pickup'} />
+      ))}
+    </RadioGroup>
+  ),
+};
+
 export const OnSurfaces: Story = {
   decorators: [onSurfaces],
   render: (args) => (

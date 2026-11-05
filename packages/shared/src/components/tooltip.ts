@@ -6,7 +6,7 @@ export const tooltip = defineComponent({
   name: 'Tooltip',
   tag: 'ui-tooltip',
   category: 'Overlays',
-  status: 'in-progress',
+  status: 'done',
   figma: '3168:47',
   design: { flags: ['showArrow'], booleans: [], codeOnly: ['placement'], previews: {} },
   summary:

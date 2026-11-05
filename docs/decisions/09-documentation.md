@@ -28,7 +28,7 @@
 
 ### Component pages and stories
 
-- One MDX page per component, `Components/<Category>/<Name>`. Its sections, in order:
+- One MDX page per component, `Components/<Category>/<Name>`, apart from parts. Its sections, in order:
   1. Overview
   2. Usage
   3. Anatomy
@@ -45,6 +45,8 @@
 
   A section that does not apply says so.
 
+- **Parts** have no page and no stories of their own. The page of the component they belong to describes them in its sections, holds their API tables after its own under a heading with their name, and shows their states in its stories. The status page links a part to that page, and its guidelines for Figma join those of that component.
+
 - Categories: Actions, Inputs, Selection, Feedback, Navigation, Content and Overlays. Content holds the components that arrange content on a page, such as Accordion. A status page lists every component from the specifications in `shared`.
 - **Stories**: `Playground`, `Variants` (when the component has a `variant`), `OnSurfaces` and `With<Content>` as needed. Both frameworks use the same names.
 - **JSDoc** covers the whole public API. The one-sentence summary is the same in JSDoc, on the page and in the Figma description.
@@ -54,6 +56,8 @@
 Mixing the reasons for decisions into the guides made both hard to read. A consumer needs a path through the library, a developer needs a way of working, and decisions need one place to be looked up.
 
 ## Rejected
+
+- A page and stories for each part: they rendered the part inside its parent anyway, repeated its page and suggested a component that works alone.
 
 - Immutable decision records amended by later records: the current rule has to be pieced together from several files.
 - Consumer guides as Markdown in the repository: they would duplicate Storybook.

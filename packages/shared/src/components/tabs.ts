@@ -5,7 +5,7 @@ export const tabs = defineComponent({
   name: 'Tabs',
   tag: 'ui-tabs',
   category: 'Content',
-  status: 'in-progress',
+  status: 'done',
   figma: '3226:82',
   design: { flags: [], booleans: [], codeOnly: ['value', 'label'], previews: {} },
   summary: 'A list of tabs, each of which shows its own panel of content in place of the others.',

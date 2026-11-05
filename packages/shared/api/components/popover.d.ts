@@ -4,7 +4,7 @@ export declare const popover: {
     readonly name: "Popover";
     readonly tag: "ui-popover";
     readonly category: "Overlays";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2090:2086";
     readonly design: {
         readonly flags: readonly ["open", "showArrow"];

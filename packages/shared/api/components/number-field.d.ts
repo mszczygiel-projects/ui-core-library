@@ -5,7 +5,7 @@ export declare const numberField: {
     readonly name: "NumberField";
     readonly tag: "ui-number-field";
     readonly category: "Inputs";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2193:2228";
     readonly design: {
         readonly nested: "TextField";

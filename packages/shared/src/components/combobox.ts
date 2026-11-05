@@ -9,7 +9,7 @@ export const combobox = defineComponent({
   name: 'Combobox',
   tag: 'ui-combobox',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '2273:665',
   design: {
     flags: ['open', 'multiple'],

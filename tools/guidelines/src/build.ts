@@ -18,10 +18,11 @@ export const LIBRARY_LIMIT = 200 * 1024;
 
 const root = join(import.meta.dirname, '..', '..', '..');
 
-/** The MDX page of a component in the documentation site. */
+/** The MDX page of a component in the documentation site; a part has the page of its component. */
 export function pageOf(spec: ComponentSpec): string {
+  const name = spec.partOf ?? spec.name;
   return readFileSync(
-    join(root, 'apps/storybook/src/components', spec.category.toLowerCase(), `${spec.name}.mdx`),
+    join(root, 'apps/storybook/src/components', spec.category.toLowerCase(), `${name}.mdx`),
     'utf8',
   );
 }
@@ -44,7 +45,7 @@ export function buildGuidelines(
       'overview.md': libraryOverview(components),
       ...Object.fromEntries(
         components
-          .filter(({ spec }) => spec.status === 'done')
+          .filter(({ spec }) => spec.status === 'done' && spec.partOf === undefined)
           .map((component) => [componentFile(component.spec), componentGuideline(component)]),
       ),
     },

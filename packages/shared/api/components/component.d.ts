@@ -24,6 +24,7 @@ export interface ComponentSpec {
     readonly category: ComponentCategory;
     readonly status: ComponentStatus;
     readonly figma: string | null;
+    readonly partOf?: string;
     readonly design: DesignSpec;
     readonly summary: string;
     readonly options: Readonly<Record<string, OptionsSpec>>;

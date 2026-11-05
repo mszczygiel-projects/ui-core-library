@@ -5,7 +5,7 @@ export declare const fileInputField: {
     readonly name: "FileInputField";
     readonly tag: "ui-file-input-field";
     readonly category: "Inputs";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2409:3222";
     readonly design: {
         readonly flags: readonly ["disabled"];

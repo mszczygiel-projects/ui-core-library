@@ -2,8 +2,9 @@ export declare const tab: {
     readonly name: "Tab";
     readonly tag: "ui-tab";
     readonly category: "Content";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3225:158";
+    readonly partOf: "Tabs";
     readonly design: {
         readonly flags: readonly ["disabled"];
         readonly booleans: readonly [];
@@ -42,7 +43,7 @@ export declare const tab: {
     readonly parts: readonly [];
     readonly slots: readonly [];
     readonly events: readonly [];
-    readonly stories: readonly ["Playground", "OnSurfaces"];
+    readonly stories: readonly [];
     readonly exceptions: readonly [{
         readonly items: readonly ["parts"];
         readonly reason: "Tab only holds the content of its panel. Tabs renders its tab and its panel, so the parts belong to Tabs.";

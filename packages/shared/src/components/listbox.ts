@@ -6,7 +6,7 @@ export const listbox = defineComponent({
   name: 'Listbox',
   tag: 'ui-listbox',
   category: 'Selection',
-  status: 'in-progress',
+  status: 'done',
   figma: '3031:560',
   design: {
     flags: ['multiple', 'disabled'],

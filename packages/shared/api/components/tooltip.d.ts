@@ -3,7 +3,7 @@ export declare const tooltip: {
     readonly name: "Tooltip";
     readonly tag: "ui-tooltip";
     readonly category: "Overlays";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3168:47";
     readonly design: {
         readonly flags: readonly ["showArrow"];

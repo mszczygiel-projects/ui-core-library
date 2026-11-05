@@ -5,7 +5,7 @@ export declare const combobox: {
     readonly name: "Combobox";
     readonly tag: "ui-combobox";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2273:665";
     readonly design: {
         readonly flags: readonly ["open", "multiple"];

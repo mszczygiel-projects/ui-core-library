@@ -5,7 +5,7 @@ export const pagination = defineComponent({
   name: 'Pagination',
   tag: 'ui-pagination',
   category: 'Navigation',
-  status: 'in-progress',
+  status: 'done',
   figma: '2157:126',
   design: {
     flags: ['disabled'],

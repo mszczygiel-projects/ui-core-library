@@ -145,6 +145,22 @@ export const InForm: Story = {
   ),
 };
 
+export const WithDisabledOption: Story = {
+  render: (args) => (
+    <UiRadioGroup {...args}>
+      {DELIVERY.map((option) => (
+        <ui-radio-field
+          key={option.value}
+          value={option.value}
+          label={option.label}
+          hint={'hint' in option ? option.hint : undefined}
+          disabled={option.value === 'pickup'}
+        />
+      ))}
+    </UiRadioGroup>
+  ),
+};
+
 export const OnSurfaces: Story = {
   decorators: [onSurfaces],
   render: (args) => (

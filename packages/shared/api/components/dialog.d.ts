@@ -3,7 +3,7 @@ export declare const dialog: {
     readonly name: "Dialog";
     readonly tag: "ui-dialog";
     readonly category: "Overlays";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "2216:3109";
     readonly design: {
         readonly flags: readonly ["hideCloseButton"];

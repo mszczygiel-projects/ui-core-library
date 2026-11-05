@@ -6,7 +6,7 @@ export const drawer = defineComponent({
   name: 'Drawer',
   tag: 'ui-drawer',
   category: 'Overlays',
-  status: 'in-progress',
+  status: 'done',
   figma: '2381:2696',
   design: {
     flags: ['hideCloseButton'],

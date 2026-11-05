@@ -12,7 +12,7 @@ export const numberField = defineComponent({
   name: 'NumberField',
   tag: 'ui-number-field',
   category: 'Inputs',
-  status: 'in-progress',
+  status: 'done',
   figma: '2193:2228',
   design: {
     nested: 'TextField',

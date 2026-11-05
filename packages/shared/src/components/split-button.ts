@@ -14,7 +14,7 @@ export const splitButton = defineComponent({
   name: 'SplitButton',
   tag: 'ui-split-button',
   category: 'Actions',
-  status: 'in-progress',
+  status: 'done',
   figma: '3203:984',
   design: {
     flags: ['open'],

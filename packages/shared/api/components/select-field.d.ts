@@ -4,7 +4,7 @@ export declare const selectField: {
     readonly name: "SelectField";
     readonly tag: "ui-select-field";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "1370:179";
     readonly design: {
         readonly flags: readonly ["open"];

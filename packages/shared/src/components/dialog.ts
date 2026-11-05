@@ -5,7 +5,7 @@ export const dialog = defineComponent({
   name: 'Dialog',
   tag: 'ui-dialog',
   category: 'Overlays',
-  status: 'in-progress',
+  status: 'done',
   figma: '2216:3109',
   design: {
     flags: ['hideCloseButton'],

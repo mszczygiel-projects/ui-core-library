@@ -2,8 +2,9 @@ export declare const accordionItem: {
     readonly name: "AccordionItem";
     readonly tag: "ui-accordion-item";
     readonly category: "Content";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3215:68";
+    readonly partOf: "Accordion";
     readonly design: {
         readonly flags: readonly ["open", "disabled"];
         readonly booleans: readonly [];
@@ -22,7 +23,7 @@ export declare const accordionItem: {
     readonly parts: readonly ["base", "heading", "trigger", "label", "icon", "panel"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-open-change"];
-    readonly stories: readonly ["Playground", "Open", "Disabled", "OnSurfaces"];
+    readonly stories: readonly [];
     readonly exceptions: readonly [{
         readonly items: readonly ["defaultOpen"];
         readonly reason: "React uses defaultOpen for an uncontrolled initial state. The web component uses its open attribute for that, and its property for the current state.";

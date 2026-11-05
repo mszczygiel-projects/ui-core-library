@@ -18,7 +18,7 @@ export const radioGroup = defineComponent({
   parts: ['base', 'label', 'label-text', 'options', 'hint', 'hint-text'],
   slots: [],
   events: ['ui-value-change'],
-  stories: ['Playground', 'Horizontal', 'InForm', 'OnSurfaces'],
+  stories: ['Playground', 'Horizontal', 'InForm', 'WithDisabledOption', 'OnSurfaces'],
   exceptions: [
     {
       items: ['state'],

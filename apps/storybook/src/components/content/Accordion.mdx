@@ -19,11 +19,11 @@ Use Accordion for sections that a reader scans by their headings and opens one b
 
 ## Anatomy
 
-The **base** holds the sections. Each AccordionItem has a **heading** that holds the **trigger**, a button with the **label** and the **icon**, and a **panel** with the content. The web component exposes these parts; React uses `.ui-accordion__base` and `.ui-accordion-item__<part>` classes. Figma names the layers the same.
+The **base** holds the sections. Each AccordionItem has a **heading** that holds the **trigger**, a button with the **label** and the **icon**, and a **panel** with the content. The web component exposes these parts; React uses `.ui-accordion__base` and `.ui-accordion-item__<part>` classes on `ui-accordion-item` and AccordionItem. Figma names the layers the same, and holds the section as the component set AccordionItem, under the set Accordion.
 
 ## Variants & tone
 
-Accordion has one appearance: a line separates each section from the one before it, with no line above the first or below the last.
+Accordion has one appearance: a line separates each section from the one before it, with no line above the first or below the last. The icon of each heading is a chevron that turns over when the section opens.
 
 ## Sizes & density
 
@@ -36,7 +36,7 @@ Accordion has one size, which follows the surrounding density through its tokens
   webComponents={WebComponentStories.WithDisabledItem}
 />
 
-A section is open or closed. Its heading shows hover and press with a tint, and keyboard focus with the focus ring. A disabled section keeps its state and leaves the keys of the group.
+A section is open or closed: `open` on an AccordionItem shows its content, and `disabled` keeps it as it is. Its heading shows hover and press with a tint, and keyboard focus with the focus ring. A disabled section keeps its state and leaves the keys of the group.
 
 ## Content & labels
 
@@ -48,6 +48,7 @@ Give each section a short `label`, which is its heading, in the language of the 
 
 - A press on a heading opens or closes its section. Without `multiple`, a section that the user opens closes the others; with it, each stays as the user leaves it. All sections may be closed.
 - Each section reports a request to open or close: `ui-open-change` in the web component, which a page may cancel, and `onOpenChange(open, details)` in React. A section that the group closes reports nothing in the web component, and `onOpenChange(false, { reason: 'group' })` in React, so that a controlled section can follow.
+- The web component takes the initial state of a section from its `open` attribute, and its property follows the section. React offers `defaultOpen`, or `open` with `onOpenChange(open, details)`.
 - Setting `open` on a section opens it without closing the others.
 - The content of a closed section stays in the page, hidden until find in page reaches it. Find in page and a link to a text fragment open the section, with the reason `find`.
 
@@ -88,6 +89,16 @@ import '@mszczygiel-projects/ui-core-web-components/accordion-item';`}
 />
 
 React's ref, className, style and other attributes reach the root element.
+
+### AccordionItem
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="AccordionItem" />}
+  webComponents={<WebComponentApi tag="ui-accordion-item" />}
+/>
+
+React's ref, className, style and other attributes reach the root element of the section.
 
 ## Tokens
 

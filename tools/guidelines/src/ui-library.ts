@@ -23,16 +23,11 @@ export interface DocumentedComponent {
 
 const kebab = (name: string) => name.replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
 
-/** The file of guidelines for one component, for [Core] UI Library. */
-export function componentGuideline({ spec, page }: DocumentedComponent): string {
-  const sections = sectionsOf(page);
-  const missing = GUIDELINE_SECTIONS.filter((section) => !sections.has(section));
-  if (missing.length > 0) {
-    throw new Error(`The page of ${spec.name} lacks the sections ${missing.join(', ')}`);
-  }
+/** The rows of the properties of the component set of a component. */
+function propertiesOf(spec: ComponentSpec): string[][] {
   const { design } = spec;
   const nested = specs.find((candidate) => candidate.name === design.nested);
-  const properties = [
+  return [
     ...Object.entries(spec.options)
       .filter(([name]) => !design.codeOnly.includes(name))
       .map(([name, { options, default: fallback }]) => [
@@ -57,23 +52,52 @@ export function componentGuideline({ spec, page }: DocumentedComponent): string 
       `Design only. ${note}`,
     ]),
   ];
+}
+
+const propertiesTable = (properties: readonly (readonly string[])[]) =>
+  properties.length === 0
+    ? undefined
+    : table(['Property', 'Values', 'Default', 'Notes'], properties);
+
+/** The guidelines of a part, which the file of the component it belongs to holds. */
+function partGuideline(part: ComponentSpec, parent: ComponentSpec): string {
+  const properties = propertiesTable(propertiesOf(part));
+  return file(
+    `## Part: ${code(part.name)}`,
+    part.summary,
+    `Use the component set ${code(part.name)} only inside ${code(parent.name)}, as its component set holds it. Its variant properties have the names and values below and no others.`,
+    properties === undefined ? undefined : `### Properties of ${code(part.name)}\n\n${properties}`,
+  ).trimEnd();
+}
+
+/**
+ * The file of guidelines for one component, for [Core] UI Library, with the guidelines of its
+ * parts at the end.
+ */
+export function componentGuideline({ spec, page }: DocumentedComponent): string {
+  const sections = sectionsOf(page);
+  const missing = GUIDELINE_SECTIONS.filter((section) => !sections.has(section));
+  if (missing.length > 0) {
+    throw new Error(`The page of ${spec.name} lacks the sections ${missing.join(', ')}`);
+  }
+  const { design } = spec;
+  const properties = propertiesTable(propertiesOf(spec));
   return file(
     `# ${spec.name}`,
     spec.summary,
     `Use the component set ${code(spec.name)} of [Core] UI Library. Its variant properties have the names and values below and no others: never invent a property, a value or a variant, and never detach an instance to restyle it.`,
-    properties.length === 0
-      ? undefined
-      : `## Properties\n\n${table(['Property', 'Values', 'Default', 'Notes'], properties)}`,
+    properties === undefined ? undefined : `## Properties\n\n${properties}`,
     design.nested === undefined
       ? 'Its text properties hold the text the component shows, its `show…` booleans show or hide an optional part, and its icon properties swap in an instance of [Core] Icons.'
       : `The component holds an exposed instance of ${code(design.nested)}, the layer \`field\`. Set the shared properties, the texts and the hint on that instance. Leave its icon properties as supplied by the component.`,
     ...GUIDELINE_SECTIONS.map((section) => `## ${section}\n\n${sections.get(section) ?? ''}`),
+    ...specs.filter((part) => part.partOf === spec.name).map((part) => partGuideline(part, spec)),
   );
 }
 
-/** The file name of the guidelines of a component. */
-export function componentFile(spec: Pick<ComponentSpec, 'name'>): string {
-  return `components/${kebab(spec.name)}.md`;
+/** The file name of the guidelines of a component, which for a part is that of its component. */
+export function componentFile(spec: Pick<ComponentSpec, 'name' | 'partOf'>): string {
+  return `components/${kebab(spec.partOf ?? spec.name)}.md`;
 }
 
 /** The overview of [Core] UI Library: what it holds and the rules for every component. */

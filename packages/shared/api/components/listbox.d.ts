@@ -4,7 +4,7 @@ export declare const listbox: {
     readonly name: "Listbox";
     readonly tag: "ui-listbox";
     readonly category: "Selection";
-    readonly status: "in-progress";
+    readonly status: "done";
     readonly figma: "3031:560";
     readonly design: {
         readonly flags: readonly ["multiple", "disabled"];

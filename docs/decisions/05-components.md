@@ -11,8 +11,10 @@
   - the label keys and the summary sentence;
   - the names of its parts, slots, events and stories;
   - its category and status (`planned`, `in-progress` or `done`);
+  - for a part of another component, such as Tab of Tabs, the name of that component in `partOf`;
   - the node of its Figma component set, and how that set exposes the props: boolean variants, boolean properties, props only code has, properties that only preview a design, and the component set whose instance it nests;
   - the exceptions to the conventions, with their reasons.
+- **Parts**: a component that works only inside another, such as RadioField in RadioGroup, AccordionItem in Accordion or Tab in Tabs, stays a public component with its own specification, implementations, contract and Code Connect, since authors write it. Its `partOf` names the component it belongs to, in the same category, and it has no stories: its parent documents it ([09](09-documentation.md)).
 - Both implementations, the contracts, the stories and the status page import these types and values. The props of React extend the shared interface, and each web component checks that it declares every prop of it, so a prop that the specification adds, renames or retypes is a type error until the web component follows. A new allowed value reaches both APIs and the controls of the stories at once, and the contract checks how each implementation renders it.
 - **Pure functions**, in `src/utils/`, for example the fallback of an invalid enum value (`one-of`), dates, numbers, pagination and text matching. A module arrives with its first consumer.
 - **One generator** creates a component: `pnpm component:new` in `tools/generators` writes the specification, both implementations with their tests, the contract, the stories, the page and the Code Connect templates, and registers them. The skeleton passes the quality gate as it is and marks with `TODO(component)` what the component decides; a `done` component may keep no marker.

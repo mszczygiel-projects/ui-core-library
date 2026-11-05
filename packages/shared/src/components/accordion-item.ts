@@ -5,8 +5,9 @@ export const accordionItem = defineComponent({
   name: 'AccordionItem',
   tag: 'ui-accordion-item',
   category: 'Content',
-  status: 'in-progress',
+  status: 'done',
   figma: '3215:68',
+  partOf: 'Accordion',
   design: {
     flags: ['open', 'disabled'],
     booleans: [],
@@ -25,7 +26,7 @@ export const accordionItem = defineComponent({
   parts: ['base', 'heading', 'trigger', 'label', 'icon', 'panel'],
   slots: [],
   events: ['ui-open-change'],
-  stories: ['Playground', 'Open', 'Disabled', 'OnSurfaces'],
+  stories: [],
   exceptions: [
     {
       items: ['defaultOpen'],

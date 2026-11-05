@@ -27,7 +27,7 @@
 - **Composite actions**: SplitButton shows only the rest state of each `variant` and `size`, closed and `open`: it holds a Button instance named `action` and an IconButton instance named `toggle`, which carry every other state, and between them a `divider` with absolute positioning, so that the halves touch, and a height bound to `button/divider/height`. Its menu is an instance of Menu, whose items are the private `.MenuItem`, with the design-only `highlighted`, and `.MenuSeparator`.
 - **Boolean properties**: a boolean prop that shows or hides a part, such as `dismissible` of Chip, may be a boolean property instead of a variant, with the name of the prop.
 - **Bindings**: only the Components layer and the Foundations styles. The one exception is the focus-ring roles for the keyboard outline.
-- **Page**: each component page holds a generated legend and the component set.
+- **Page**: each component page holds a generated legend and the component set. A part, such as Tab, has no page: its component set, which stays public, sits under the card of the component it belongs to, without a legend, as the private sets do.
 
 ### Code Connect
 
