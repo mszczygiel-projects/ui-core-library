@@ -12,6 +12,10 @@ Storybook documents the library for its consumers. [Decision 09](../decisions/09
 - A code sample with blank lines goes into a file next to the page, such as `Combobox.remote-filtering.example.tsx`, which the page imports with `?raw` and shows with `<Source code={…} />`. Prettier strips the indentation of the lines after a blank line in a template string of an MDX page, and the file is checked by TypeScript and ESLint.
 - The sections Usage, Variants & tone, Sizes & density and States of a component page also become its Figma guidelines.
 
+## The hosted site
+
+`storybook.yml` publishes the site to https://mszczygiel-projects.github.io/ui-core-library/ after every push to `main`, and you can run it by hand from Actions. A component page keeps its address as long as its `<Meta title>` stays the same: the Figma component sets link to it, so a renamed page needs new links in Figma ([the Figma guide](figma.md#documentation-links)).
+
 ## Visual tests
 
 Chromatic compares a snapshot of every story, in Light and Dark, with its accepted baseline.

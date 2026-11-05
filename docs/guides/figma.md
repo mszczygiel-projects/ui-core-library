@@ -48,6 +48,16 @@ Code Connect shows the code of a component in Dev Mode. Publish it yourself; an 
 
 Figma shows one framework at a time, React by default. A team admin switches it in Admin › Settings › Resources › Code Connect; the connections of the other framework stay stored. `pnpm figma:react unpublish` removes the published React templates.
 
+## Documentation links
+
+Every component set links to its page on the hosted documentation site, which Dev Mode and the assets panel show.
+
+1. Run `pnpm guidelines:build`. It writes `tools/guidelines/dist/documentation-links.json`: the link of each component set, by node.
+2. Within an approved step, write the links into [Core] UI Library through the Plugin API (`node.documentationLinks = [{ uri }]`) and read them back. An agent does it as the skill `ui-core-figma` describes.
+3. Publish [Core] UI Library.
+
+A new component set, a renamed page or a moved component needs this again.
+
 ## Updating the guidelines
 
 The libraries carry guidelines that Figma's agent reads whenever a prompt runs with the library enabled. They come from the specifications, the component pages, the tokens and the icons, so a change to any of them can change the guidelines.

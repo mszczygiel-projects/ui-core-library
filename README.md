@@ -23,7 +23,7 @@ pnpm --filter @mszczygiel-projects/ui-core-storybook exec playwright install chr
 pnpm nx run storybook:storybook
 ```
 
-The documentation site opens at `http://localhost:6006`. [The setup guide](docs/guides/setup.md) covers the rest.
+The documentation site opens at `http://localhost:6006`. The site of `main` is hosted at https://mszczygiel-projects.github.io/ui-core-library/. [The setup guide](docs/guides/setup.md) covers the rest.
 
 ## Where to read
 

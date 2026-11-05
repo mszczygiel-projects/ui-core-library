@@ -35,6 +35,7 @@ Fill in `packages/shared/src/components/<name>.ts` first: the specification and 
 - Follow the write protocol (skill `ui-core-figma`).
 - The owner publishes and exports. Then run `pnpm nx run foundations:build` and `pnpm tokens:snapshot` for intended new names (skill `ui-core-tokens`).
 - The description of the component set is the summary of the specification.
+- Once the page exists, write the link of the component set from `tools/guidelines/dist/documentation-links.json` and read it back.
 
 ## 5. Code
 
