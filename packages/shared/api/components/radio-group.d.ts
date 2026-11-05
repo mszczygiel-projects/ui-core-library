@@ -27,7 +27,7 @@ export declare const radioGroup: {
     readonly parts: readonly ["base", "label", "label-text", "options", "hint", "hint-text"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change"];
-    readonly stories: readonly ["Playground", "Horizontal", "InForm", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Horizontal", "InForm", "WithDisabledOption", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["state"];
         readonly reason: "A choice has no success state: a chosen option already confirms the choice. The state of the choice controls is default or error.";

@@ -8,6 +8,7 @@ export const tab = defineComponent({
   category: 'Content',
   status: 'in-progress',
   figma: '3225:158',
+  partOf: 'Tabs',
   design: {
     flags: ['disabled'],
     booleans: [],
@@ -44,7 +45,7 @@ export const tab = defineComponent({
   parts: [],
   slots: [],
   events: [],
-  stories: ['Playground', 'OnSurfaces'],
+  stories: [],
   exceptions: [
     {
       items: ['parts'],

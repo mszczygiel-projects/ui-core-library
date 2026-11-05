@@ -55,6 +55,11 @@ export interface ComponentSpec {
   readonly status: ComponentStatus;
   /** The node of the component set in [Core] UI Library, or null before it exists. */
   readonly figma: string | null;
+  /**
+   * The component this one works inside of, such as Tabs for Tab. A part has no page and no stories
+   * of its own: the page of that component documents it.
+   */
+  readonly partOf?: string;
   /** How the component set exposes the props. */
   readonly design: DesignSpec;
   /** One sentence, the same in JSDoc, on the documentation page and in Figma. */

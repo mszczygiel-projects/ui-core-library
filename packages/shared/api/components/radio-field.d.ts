@@ -5,6 +5,7 @@ export declare const radioField: {
     readonly category: "Selection";
     readonly status: "done";
     readonly figma: "1217:1382";
+    readonly partOf: "RadioGroup";
     readonly design: {
         readonly flags: readonly ["disabled"];
         readonly booleans: readonly [];
@@ -33,7 +34,7 @@ export declare const radioField: {
     readonly parts: readonly ["base", "label", "control", "input", "label-text", "hint", "hint-text"];
     readonly slots: readonly [];
     readonly events: readonly [];
-    readonly stories: readonly ["Playground", "WithHint", "Disabled"];
+    readonly stories: readonly [];
     readonly exceptions: readonly [{
         readonly items: readonly ["checked", "name", "required", "state"];
         readonly reason: "An option belongs to a RadioGroup, which holds the chosen value, the form entry, the validation and the state. Outside a group, an option has no state and submits nothing.";

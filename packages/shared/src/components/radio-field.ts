@@ -8,6 +8,7 @@ export const radioField = defineComponent({
   category: 'Selection',
   status: 'done',
   figma: '1217:1382',
+  partOf: 'RadioGroup',
   design: {
     flags: ['disabled'],
     booleans: [],
@@ -36,7 +37,7 @@ export const radioField = defineComponent({
   parts: ['base', 'label', 'control', 'input', 'label-text', 'hint', 'hint-text'],
   slots: [],
   events: [],
-  stories: ['Playground', 'WithHint', 'Disabled'],
+  stories: [],
   exceptions: [
     {
       items: ['checked', 'name', 'required', 'state'],
