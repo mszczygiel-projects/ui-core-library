@@ -1,6 +1,6 @@
 # Figma
 
-The library is designed in three files: [Core] Foundations holds the variables and styles, [Core] Icons the icons and [Core] UI Library the components. [Decision 10](../decisions/10-figma.md) holds the rules, and the skill `ui-core-figma` the Plugin API protocol that agents follow.
+The library is designed in three files: [[Core] Foundations](https://www.figma.com/design/Xxn0guDvAfyIqEKB6kADE9) holds the variables and styles, [[Core] Icons](https://www.figma.com/design/lRdwn99eZTt6gCFeqc2Seh) the icons and [[Core] UI Library](https://www.figma.com/design/BzqkruN7r8mwWfFReznc83) the components. [Decision 10](../decisions/10-figma.md) holds the rules, and the skill `ui-core-figma` the Plugin API protocol that agents follow.
 
 Write to these files only within an approved step: read the state, list the changes, write them and compare a control read with the plan. An agent follows the same protocol and writes only in a step you approved. The tasks below are yours, since the Plugin API cannot publish a library, run another plugin or upload guidelines.
 

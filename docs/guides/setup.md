@@ -20,6 +20,21 @@ pnpm nx run storybook:storybook
 - Storybook builds the packages it reads, then serves the site at `http://localhost:6006`, with its MCP server for agents at `/mcp`. Leave it running and work in another terminal.
 - In a new shell, select Node 24 again before running anything.
 
+## Where things are
+
+| Path                                 | What you change there                                                         |
+| ------------------------------------ | ----------------------------------------------------------------------------- |
+| `packages/foundations`               | the token pipeline, its CLI and `configureUiCore`; the tokens come from Figma |
+| `packages/icons`                     | the icon pipeline and its CLI; the icons come from Figma                      |
+| `packages/shared/src/components`     | the specification of each component, which both implementations import        |
+| `packages/web-components/src/<name>` | a Stencil web component                                                       |
+| `packages/react/src/<name>`          | a React component                                                             |
+| `testing/contracts/src/specs`        | the behaviour contract of each component, run against both implementations    |
+| `apps/storybook/src`                 | the documentation site: guides, Foundations pages, component pages, stories   |
+| `tools`                              | lint rules, the Figma guidelines and the component generator                  |
+
+[Decision 01](../decisions/01-repository-tooling-and-releases.md) holds the boundaries between them. The hosted site at https://mszczygiel-projects.github.io/ui-core-library/ shows `main`, and Chromatic its visual tests.
+
 ## Commands
 
 | Command                                         | What it does                                                                   |
