@@ -11,8 +11,14 @@
   "include": [
     "src/**/*.test.ts",
     "src/**/*.fixture.ts",
+    "src/**/*.browser.ts",
     "scripts/**/*.test.ts",
     "vitest.config.ts"
   ],
-  "references": [{ "path": "./tsconfig.lib.json" }]
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    }
+  ],
+  "exclude": ["src/**/*.browser.test.ts"]
 }

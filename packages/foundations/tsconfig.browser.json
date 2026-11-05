@@ -1,0 +1,18 @@
+{
+  "extends": "../../tsconfig.node.json",
+  "compilerOptions": {
+    "lib": ["es2024", "dom", "dom.iterable"],
+    "outDir": "out-tsc/browser",
+    "tsBuildInfoFile": "out-tsc/browser/tsconfig.browser.tsbuildinfo",
+    "emitDeclarationOnly": true,
+    "rewriteRelativeImportExtensions": false,
+    "allowImportingTsExtensions": true,
+    "erasableSyntaxOnly": true
+  },
+  "include": ["src/**/*.browser.test.ts"],
+  "references": [
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
+}

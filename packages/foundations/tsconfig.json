@@ -11,6 +11,9 @@
     },
     {
       "path": "./tsconfig.scripts.json"
+    },
+    {
+      "path": "./tsconfig.browser.json"
     }
   ]
 }
