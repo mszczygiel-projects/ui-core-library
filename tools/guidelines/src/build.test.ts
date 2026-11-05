@@ -14,7 +14,14 @@ describe('the guidelines of the Figma libraries', () => {
   it.each(specs.filter((spec) => spec.status === 'done').map((spec) => [spec.name, spec] as const))(
     'list exactly the properties of the component set of %s, with their values',
     (_name, spec) => {
-      const text = guidelines['ui-library'][componentFile(spec)] ?? '';
+      // A file holds its component first and then each of its parts.
+      const [own = '', ...parts] = (guidelines['ui-library'][componentFile(spec)] ?? '').split(
+        /^## Part: /m,
+      );
+      const text =
+        spec.partOf === undefined
+          ? own
+          : (parts.find((part) => part.startsWith(`\`${spec.name}\``)) ?? '');
       const rows = [...text.matchAll(/^\| `(\w+)` \| (.+?) \| `(\w+)` \|/gm)].map(
         ([, name, values, fallback]) => [name, values, fallback],
       );
