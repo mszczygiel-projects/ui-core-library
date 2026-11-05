@@ -9,7 +9,7 @@
 
 <p align="center">
   <a href="https://mszczygiel-projects.github.io/ui-core-library/"><b>Documentation</b></a> ·
-  <a href="https://www.chromatic.com/library?appId=6aec504fcea7cbc4ea05bbb1">Chromatic</a> ·
+  <a href="https://www.chromatic.com/builds?appId=6aec504fcea7cbc4ea05bbb1">Chromatic</a> ·
   <a href="https://www.figma.com/design/BzqkruN7r8mwWfFReznc83">Figma: UI Library</a> ·
   <a href="https://www.figma.com/design/Xxn0guDvAfyIqEKB6kADE9">Figma: Foundations</a> ·
   <a href="https://www.figma.com/design/lRdwn99eZTt6gCFeqc2Seh">Figma: Icons</a>
@@ -29,8 +29,6 @@
 | `@mszczygiel-projects/ui-core-web-components` | web components, written with Stencil                           |
 | `@mszczygiel-projects/ui-core-react`          | React components                                               |
 | `@mszczygiel-projects/ui-core-shared`         | what both component packages share                             |
-
-The library is in development, and nothing is published before 1.0.0.
 
 ## Use the library
 
