@@ -27,7 +27,10 @@ export function ComponentStatus() {
           </thead>
           <tbody>
             {catalog
-              .filter((component) => component.category === category)
+              // A part is listed with nothing of its own: its component stands for it.
+              .filter(
+                (component) => component.category === category && component.partOf === undefined,
+              )
               .map((component) => (
                 <tr key={component.name}>
                   <th scope="row">
