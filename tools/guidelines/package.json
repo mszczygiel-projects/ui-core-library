@@ -28,6 +28,7 @@
           "default",
           "^production",
           "{workspaceRoot}/apps/storybook/src/components/**/*.mdx",
+          "{workspaceRoot}/apps/storybook/src/guides/your-design-system-in-figma.md",
           "{workspaceRoot}/packages/icons/icon-names.txt"
         ],
         "outputs": [

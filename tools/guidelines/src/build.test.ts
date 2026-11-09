@@ -1,7 +1,14 @@
 import { specs } from '@mszczygiel-projects/ui-core-shared/components';
 import { describe, expect, it } from 'vitest';
 
-import { buildGuidelines, LIBRARY_LIMIT, pageOf, sizeOf } from './build.ts';
+import {
+  buildGuidelines,
+  DESIGN_SYSTEM_FILE,
+  designSystemGuide,
+  LIBRARY_LIMIT,
+  pageOf,
+  sizeOf,
+} from './build.ts';
 import { componentFile, componentGuideline } from './ui-library.ts';
 
 const guidelines = buildGuidelines();
@@ -43,6 +50,13 @@ describe('the guidelines of the Figma libraries', () => {
         expect(text).not.toMatch(new RegExp(`^\\| \`${name}\``, 'm'));
       }
       expect(guidelines['ui-library']['overview.md']).toContain(componentFile(spec));
+    },
+  );
+
+  it.each(['foundations', 'ui-library'] as const)(
+    'carry the design system guide unchanged in %s',
+    (library) => {
+      expect(guidelines[library][DESIGN_SYSTEM_FILE]).toBe(designSystemGuide());
     },
   );
 

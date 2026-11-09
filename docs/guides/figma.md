@@ -12,7 +12,7 @@ After a change, publish the libraries in the order their dependencies run, and a
 2. [Core] Icons, which binds the variables of Foundations.
 3. [Core] UI Library, which binds both.
 
-Publish only the libraries that changed.
+Publish only the libraries that changed. A design system built on the library has its own guide, in `apps/storybook/src/guides/your-design-system-in-figma.md`.
 
 ## Exporting variables
 
