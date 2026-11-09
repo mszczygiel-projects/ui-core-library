@@ -55,7 +55,7 @@ Point `control/radius`, `chip/radius` or the radius of another component at a ro
 
 ### Placeholder and field icon colours
 
-`color/control/filled/placeholder/default` and `color/control/filled/icon/default` both read `color/text/placeholder`, so they change together. Set `color/text/placeholder` in Themes, or for one surface `color/on-subtle/text/placeholder` or `color/on-brand-primary/text/placeholder`. Keep a contrast of at least 4.5:1 against the background of the field.
+The placeholder of a field reads `color/text/placeholder` and its icon reads `color/icon/muted`, so each changes on its own. Set them in Themes, or for one surface `color/on-subtle/text/placeholder` and `color/on-subtle/icon/muted`, and the same under `on-inverse` and `on-brand-primary`. Keep a contrast of at least 4.5:1 for the placeholder and 3:1 for the icon against the background of the field.
 
 ### A font without some weights
 
@@ -92,7 +92,7 @@ An agent working through the Plugin API follows the same rules, and at the end c
 2. Bind the colour of each icon to `color/icon/default` of your Foundations, never to a variable local to the icon file.
 3. Connect the library with Swap library.
 
-Core components colour an icon through the stroke of its vector, since [Core] Icons are drawn with 1.5-wide strokes. Draw your icons the same way. In a set drawn with fills, the colour of the component does not reach the icon in Figma: it keeps `color/icon/default`. In code both kinds take the colour of the component. Prefer a set with strokes.
+Draw every icon with fills, as [Core] Icons are: Core components set the colour of an icon on the fill of its vector. If your set uses strokes, use Outline stroke before publishing. A stroke does not take the colour of the component in Figma, and the build warns about it.
 
 ## Before handoff
 
