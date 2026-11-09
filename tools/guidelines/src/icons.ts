@@ -21,7 +21,7 @@ export function iconGuidelines(exportNames: readonly string[]): string {
 
 ## Drawing a new icon
 
-A new icon is a component ${code('icon/<name>')} in kebab case, drawn on a 24 by 24 grid with one colour and strokes 1.5 wide.`,
+A new icon is a component ${code('icon/<name>')} in kebab case, drawn on a 24 by 24 grid in one colour, with fills and no strokes.`,
     `## Icons\n\n${exportNames.map((name) => `- ${code(componentOf(name))}`).join('\n')}`,
   );
 }

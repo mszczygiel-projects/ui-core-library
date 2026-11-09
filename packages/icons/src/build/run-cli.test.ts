@@ -6,8 +6,10 @@ import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import { HELP, runCli } from './run-cli.ts';
 
-const STROKED = (d: string, width = '1.5') =>
-  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="${d}" stroke="#000" stroke-width="${width}"/></svg>`;
+const FILLED = (d: string): string =>
+  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="${d}" fill="#000"/></svg>`;
+const STROKED = (d: string): string =>
+  `<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="${d}" stroke="#000"/></svg>`;
 
 describe('runCli', () => {
   let root: string;
@@ -35,7 +37,7 @@ describe('runCli', () => {
     mkdirSync(packageDir);
     writeFileSync(join(packageDir, 'package.json'), '{"version":"1.2.3"}');
     writeFileSync(join(packageDir, 'required-icons.txt'), 'close\n');
-    writeFileSync(join(input, 'close.svg'), STROKED('M6 6l12 12M18 6L6 18'));
+    writeFileSync(join(input, 'close.svg'), FILLED('M6 6l12 12M18 6L6 18'));
   });
 
   afterEach(() => {
@@ -43,11 +45,11 @@ describe('runCli', () => {
   });
 
   it('writes a package with the version of the library', () => {
-    writeFileSync(join(input, 'star.svg'), STROKED('M12 3l3 6h6', '2'));
+    writeFileSync(join(input, 'star.svg'), STROKED('M12 3l3 6h6'));
     const { code, out, err } = run('build', '--input', input, '--output', output);
     expect(code).toBe(0);
     expect(out).toContain('2 icons');
-    expect(err).toMatch(/⚠ star\.svg draws strokes 2 wide/);
+    expect(err).toMatch(/⚠ star\.svg draws with strokes/);
     const manifest = JSON.parse(readFileSync(join(output, 'package.json'), 'utf8')) as {
       version: string;
     };

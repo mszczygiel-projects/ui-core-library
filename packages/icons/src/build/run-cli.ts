@@ -18,7 +18,7 @@ Options:
 The package has the name and exports of @mszczygiel-projects/ui-core-icons, so the components
 render your icons once your package manager points that name at it (pnpm.overrides, overrides
 or resolutions). Every icon the components render must be in the set. An icon may hold only
-plain shapes; one drawn off the 24 grid, in several colours or with other strokes is built with
+plain shapes; one drawn off the 24 grid, in several colours or with strokes is built with
 a warning.
 `;
 

@@ -6,7 +6,7 @@
 import { type Config, type CustomPlugin, optimize, type XastElement } from 'svgo';
 
 /** The rules of an icon's design. The library's build treats every violation as an error. */
-export type Rule = 'view-box' | 'colour' | 'stroke-width';
+export type Rule = 'view-box' | 'colour' | 'stroke';
 
 export interface Violation {
   readonly rule: Rule;
@@ -20,7 +20,6 @@ export interface Findings {
 }
 
 export const VIEW_BOX = '0 0 24 24';
-export const STROKE_WIDTH = 1.5;
 
 const SHAPES = new Set(['path', 'circle', 'ellipse', 'line', 'polyline', 'polygon', 'rect']);
 
@@ -47,77 +46,12 @@ const NO_PAINT = new Set(['none', 'currentcolor', 'transparent', 'inherit']);
 const OPACITY_ATTRIBUTES = new Set(['opacity', 'fill-opacity', 'stroke-opacity']);
 
 const NUMBER = String.raw`[+-]?(?:\d+\.?\d*|\.\d+)(?:e[+-]?\d+)?`;
-const LENGTH = new RegExp(String.raw`^\s*(${NUMBER})(?:px)?\s*$`, 'i');
 const OPACITY = new RegExp(String.raw`^\s*(${NUMBER})(%?)\s*$`, 'i');
-
-/** A length in user units, such as 1.5 or 1.5px; undefined for any other unit. */
-function userUnits(value: string): number | undefined {
-  const number = LENGTH.exec(value)?.[1];
-  return number === undefined ? undefined : Number(number);
-}
 
 /** An opacity from 0 to 1, such as 0.4 for 0.4 or 40%; undefined when it cannot be read. */
 function opacity(value: string): number | undefined {
   const [, number, percent] = OPACITY.exec(value) ?? [];
   return number === undefined ? undefined : Number(number) / (percent === '%' ? 100 : 1);
-}
-
-/** The linear part [a, b, c, d] of a transform: what it does to lengths, without moving. */
-type Linear = readonly [number, number, number, number];
-
-const TRANSFORM_LIST =
-  /^[\s,]*(?:(?:matrix|translate|scale|rotate|skewX|skewY)\s*\([^()]*\)[\s,]*)*$/;
-const TRANSFORM = /(matrix|translate|scale|rotate|skewX|skewY)\s*\(([^()]*)\)/g;
-
-function linearPart(kind: string, args: readonly number[]): Linear | undefined {
-  const [first = 0, second = 0, third = 0, fourth = 0] = args;
-  const angle = (first * Math.PI) / 180;
-  switch (kind) {
-    case 'matrix':
-      return args.length === 6 ? [first, second, third, fourth] : undefined;
-    case 'translate':
-      return args.length === 1 || args.length === 2 ? [1, 0, 0, 1] : undefined;
-    case 'scale':
-      return args.length === 1 || args.length === 2
-        ? [first, 0, 0, args.length === 2 ? second : first]
-        : undefined;
-    case 'rotate':
-      return args.length === 1 || args.length === 3
-        ? [Math.cos(angle), Math.sin(angle), -Math.sin(angle), Math.cos(angle)]
-        : undefined;
-    case 'skewX':
-      return args.length === 1 ? [1, 0, Math.tan(angle), 1] : undefined;
-    case 'skewY':
-      return args.length === 1 ? [1, Math.tan(angle), 0, 1] : undefined;
-    default:
-      return undefined;
-  }
-}
-
-/**
- * Whether a transform keeps lengths, as moving, rotating and mirroring do, and so leaves the drawn
- * width of a stroke alone. A transform that cannot be read counts as one that does not.
- */
-function keepsLengths(transform: string): boolean {
-  if (!TRANSFORM_LIST.test(transform)) {
-    return false;
-  }
-  let [a, b, c, d] = [1, 0, 0, 1];
-  for (const [, kind = '', list = ''] of transform.matchAll(TRANSFORM)) {
-    const args = list
-      .split(/[\s,]+/)
-      .filter(Boolean)
-      .map(Number);
-    const step = args.some((arg) => Number.isNaN(arg)) ? undefined : linearPart(kind, args);
-    if (step === undefined) {
-      return false;
-    }
-    const [e, f, g, h] = step;
-    [a, b, c, d] = [a * e + c * f, b * e + d * f, a * g + c * h, b * g + d * h];
-  }
-  // Exported matrices are rounded, so a rotation by 45 degrees is only nearly one.
-  const near = (x: number, y: number): boolean => Math.abs(x - y) < 1e-3;
-  return near(a * a + b * b, 1) && near(c * c + d * d, 1) && near(a * c + b * d, 0);
 }
 
 interface Facts {
@@ -127,21 +61,13 @@ interface Facts {
   readonly disallowed: Set<string>;
   readonly colours: Set<string>;
   readonly transparency: Set<string>;
-  /** The widths of strokes that are not drawn 1.5 wide, as written. */
-  readonly strokeWidths: Set<string>;
-  /** The transforms that scale a stroke. */
-  readonly scaling: Set<string>;
-}
-
-interface Inherited {
-  readonly stroke: string | undefined;
-  readonly strokeWidth: string | undefined;
-  readonly scaling: string | undefined;
+  /** Whether a shape is drawn with a stroke, its own or one inherited from a group. */
+  stroked: boolean;
 }
 
 /** Collects what the rules need, without changing the tree. */
 function inspectionPlugin(facts: Facts): CustomPlugin {
-  const inherited: Inherited[] = [];
+  const inherited: (string | undefined)[] = [];
   return {
     name: 'inspectIcon',
     fn: () => ({
@@ -171,25 +97,10 @@ function inspectionPlugin(facts: Facts): CustomPlugin {
               }
             }
           }
-          const parent = inherited.at(-1);
-          const transform = node.attributes['transform'];
-          const own: Inherited = {
-            stroke: node.attributes['stroke'] ?? parent?.stroke,
-            strokeWidth: node.attributes['stroke-width'] ?? parent?.strokeWidth,
-            scaling:
-              (transform !== undefined && !keepsLengths(transform) ? transform : undefined) ??
-              parent?.scaling,
-          };
-          inherited.push(own);
-          if (SHAPES.has(node.name) && own.stroke !== undefined && own.stroke !== 'none') {
-            // An SVG stroke is 1 wide unless something says otherwise.
-            const width = own.strokeWidth ?? '1';
-            if (userUnits(width) !== STROKE_WIDTH) {
-              facts.strokeWidths.add(width);
-            }
-            if (own.scaling !== undefined) {
-              facts.scaling.add(own.scaling);
-            }
+          const stroke = node.attributes['stroke'] ?? inherited.at(-1);
+          inherited.push(stroke);
+          if (SHAPES.has(node.name) && stroke !== undefined && stroke !== 'none') {
+            facts.stroked = true;
           }
         },
         exit: () => {
@@ -212,8 +123,7 @@ export function checkIcon(name: string, svg: string): Findings {
     disallowed: new Set(),
     colours: new Set(),
     transparency: new Set(),
-    strokeWidths: new Set(),
-    scaling: new Set(),
+    stroked: false,
   };
   try {
     // convertColors writes every colour one way first, so #174BA0 and rgb(23, 75, 160) are one.
@@ -257,16 +167,10 @@ export function checkIcon(name: string, svg: string): Findings {
       message: `${name}.svg paints with ${[...facts.transparency].join(', ')}; an icon has one solid colour, which becomes currentColor`,
     });
   }
-  if (facts.strokeWidths.size > 0) {
+  if (facts.stroked) {
     violations.push({
-      rule: 'stroke-width',
-      message: `${name}.svg draws strokes ${[...facts.strokeWidths].join(', ')} wide; icons draw them ${String(STROKE_WIDTH)} wide`,
-    });
-  }
-  if (facts.scaling.size > 0) {
-    violations.push({
-      rule: 'stroke-width',
-      message: `${name}.svg scales strokes with ${[...facts.scaling].map((transform) => `transform="${transform}"`).join(', ')}, which changes their drawn width; icons draw them ${String(STROKE_WIDTH)} wide`,
+      rule: 'stroke',
+      message: `${name}.svg draws with strokes; icons are drawn with fills, which is where a component sets their colour`,
     });
   }
   return { errors, violations };

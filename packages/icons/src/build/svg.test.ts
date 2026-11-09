@@ -2,29 +2,22 @@ import { describe, expect, it } from 'vitest';
 
 import { checkIcon, normalizeIcon } from './svg.ts';
 
-/** An icon as Figma exports it: a 24 by 24 frame, one stroked path, the colour of its variable. */
+/** An icon as Figma exports it: a 24 by 24 frame, one filled path, the colour of its variable. */
 function exported(path: string, root = 'width="24" height="24" viewBox="0 0 24 24"'): string {
   return `<svg ${root} fill="none" xmlns="http://www.w3.org/2000/svg">\n${path}\n</svg>\n`;
 }
 
-const close = exported(
-  '<path d="M6 6L18 18M6 18L9.75 14.25M18 6L14.25 9.75" stroke="#174BA0" stroke-width="1.5" stroke-linecap="round"/>',
-);
+const close = exported('<path d="M6 6L18 18L17 19L5 7Z" fill="#174BA0"/>');
 
 describe('checkIcon', () => {
   it('accepts an icon drawn by the rules', () => {
     expect(checkIcon('close', close)).toEqual({ errors: [], violations: [] });
   });
 
-  it('accepts an icon whose stroke Figma outlined into a fill', () => {
-    const outlined = exported('<path d="M3 3H21V4.5H3Z" fill="#174BA0"/>');
-    expect(checkIcon('menu', outlined)).toEqual({ errors: [], violations: [] });
-  });
-
   it('accepts the geometry and paint of every plain shape', () => {
     const shapes = exported(
       [
-        '<g transform="translate(1 1)" stroke="#174BA0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">',
+        '<g transform="translate(1 1)" fill="#174BA0">',
         '<circle cx="12" cy="12" r="9"/><ellipse cx="12" cy="12" rx="4" ry="2"/>',
         '<line x1="3" y1="3" x2="21" y2="21"/><polyline points="3 9 12 15 21 9"/>',
         '<polygon points="3 3 21 3 12 21"/><rect x="3" y="3" width="18" height="18" rx="2"/>',
@@ -107,9 +100,7 @@ describe('checkIcon', () => {
   });
 
   it('reports an icon painted in more than one colour', () => {
-    const twoTone = exported(
-      '<path d="M0 0" stroke="#174BA0" stroke-width="1.5"/><path d="M1 1" fill="#FF0000"/>',
-    );
+    const twoTone = exported('<path d="M0 0" fill="#174BA0"/><path d="M1 1" fill="#FF0000"/>');
     expect(checkIcon('two-tone', twoTone).violations).toEqual([
       {
         rule: 'colour',
@@ -121,7 +112,7 @@ describe('checkIcon', () => {
 
   it('compares colours, not the way they are written', () => {
     const blue = exported(
-      '<path d="M0 0" stroke="#174BA0" stroke-width="1.5"/><path d="M1 1" fill="rgb(23, 75, 160)"/>',
+      '<path d="M0 0" fill="#174BA0"/><path d="M1 1" fill="rgb(23, 75, 160)"/>',
     );
     expect(checkIcon('blue', blue)).toEqual({ errors: [], violations: [] });
     const red = exported(
@@ -133,7 +124,7 @@ describe('checkIcon', () => {
   it('reports transparency, which paints a second tone', () => {
     const faded = exported(
       [
-        '<path d="M0 0" stroke="#174BA0" stroke-width="1.5" stroke-opacity="1"/>',
+        '<path d="M0 0" fill="#174BA0" fill-opacity="1"/>',
         '<path d="M1 1" fill="#174BA0" fill-opacity="40%"/>',
         '<g opacity="0.5"><path d="M2 2" fill="#174BA0"/></g>',
       ].join(''),
@@ -147,68 +138,30 @@ describe('checkIcon', () => {
     ]);
   });
 
-  it('reports strokes of another width, including the width SVG gives a stroke by default', () => {
-    const thick = exported('<path d="M0 0" stroke="#174BA0" stroke-width="2"/>');
-    expect(checkIcon('thick', thick).violations).toEqual([
+  it('reports a stroke, on the shape or inherited from a group', () => {
+    const violations = [
       {
-        rule: 'stroke-width',
-        message: 'thick.svg draws strokes 2 wide; icons draw them 1.5 wide',
-      },
-    ]);
-    const unset = exported('<path d="M0 0" stroke="#174BA0"/>');
-    expect(checkIcon('unset', unset).violations).toEqual([
-      {
-        rule: 'stroke-width',
-        message: 'unset.svg draws strokes 1 wide; icons draw them 1.5 wide',
-      },
-    ]);
-  });
-
-  it('compares stroke widths as numbers', () => {
-    const written = exported(
-      '<path d="M0 0" stroke="#174BA0" stroke-width="1.50"/><path d="M1 1" stroke="#174BA0" stroke-width="1.5px"/>',
-    );
-    expect(checkIcon('written', written)).toEqual({ errors: [], violations: [] });
-  });
-
-  it('reads a stroke and its width inherited from a group', () => {
-    const grouped = exported('<g stroke="#174BA0" stroke-width="1.5"><path d="M0 0"/></g>');
-    expect(checkIcon('grouped', grouped)).toEqual({ errors: [], violations: [] });
-  });
-
-  it('reports a transform that scales a stroke, on the shape or its group', () => {
-    const scaled = exported(
-      [
-        '<g transform="scale(2)"><path d="M0 0" stroke="#174BA0" stroke-width="1.5"/></g>',
-        '<path d="M1 1" stroke="#174BA0" stroke-width="1.5" transform="skewX(10)"/>',
-        '<g transform="scale(3)"><path d="M2 2" fill="#174BA0"/></g>',
-      ].join(''),
-    );
-    expect(checkIcon('scaled', scaled).violations).toEqual([
-      {
-        rule: 'stroke-width',
+        rule: 'stroke',
         message:
-          'scaled.svg scales strokes with transform="scale(2)", transform="skewX(10)", which changes their drawn width; icons draw them 1.5 wide',
+          'lined.svg draws with strokes; icons are drawn with fills, which is where a component sets their colour',
       },
-    ]);
+    ];
+    const lined = exported('<path d="M0 0" stroke="#174BA0" stroke-width="1.5"/>');
+    expect(checkIcon('lined', lined).violations).toEqual(violations);
+    const grouped = exported('<g stroke="#174BA0"><path d="M0 0"/></g>');
+    expect(checkIcon('lined', grouped).violations).toEqual(violations);
   });
 
-  it('accepts a transform that moves, rotates or mirrors a stroke', () => {
-    const turned = exported(
-      [
-        '<g transform="translate(2, 1) rotate(45 12 12)"><path d="M0 0" stroke="#174BA0" stroke-width="1.5"/></g>',
-        '<path d="M1 1" stroke="#174BA0" stroke-width="1.5" transform="matrix(-1 0 0 1 24 0)"/>',
-        '<path d="M2 2" stroke="#174BA0" stroke-width="1.5" transform="matrix(0.707107 0.707107 -0.707107 0.707107 0 0)"/>',
-      ].join(''),
-    );
-    expect(checkIcon('turned', turned)).toEqual({ errors: [], violations: [] });
+  it('accepts a stroke of none', () => {
+    const none = exported('<path d="M0 0" fill="#174BA0" stroke="none"/>');
+    expect(checkIcon('none', none)).toEqual({ errors: [], violations: [] });
   });
 });
 
 describe('normalizeIcon', () => {
   it('sizes the icon by the text around it and paints it in currentColor', () => {
     expect(normalizeIcon(close)).toBe(
-      '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="m6 6 12 12M6 18l3.75-3.75M18 6l-3.75 3.75"/></svg>',
+      '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="m6 6 12 12-1 1L5 7Z"/></svg>',
     );
   });
 

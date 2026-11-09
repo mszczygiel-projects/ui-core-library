@@ -32,7 +32,7 @@ export interface BuildResult {
 export interface BuildOptions {
   /**
    * The library's own build is strict: a broken design rule stops it. A consumer's set may draw
-   * on another grid or with other strokes, so there a broken rule is only a warning.
+   * on another grid or with strokes, so there a broken rule is only a warning.
    */
   readonly strict: boolean;
 }
