@@ -17,6 +17,9 @@ export type Guidelines = Record<'ui-library' | 'foundations' | 'icons', Record<s
 /** Figma accepts at most this many bytes of guidelines per library. */
 export const LIBRARY_LIMIT = 200 * 1024;
 
+/** The name of the guide in the guidelines of the libraries that need it. */
+export const DESIGN_SYSTEM_FILE = 'your-design-system.md';
+
 const root = join(import.meta.dirname, '..', '..', '..');
 
 /** The MDX page of a component in the documentation site; a part has the page of its component. */
@@ -35,6 +38,14 @@ export function iconNames(): string[] {
     .filter(Boolean);
 }
 
+/** The guide to building a design system on the library, shared with the documentation site. */
+export function designSystemGuide(): string {
+  return readFileSync(
+    join(root, 'apps/storybook/src/guides/your-design-system-in-figma.md'),
+    'utf8',
+  );
+}
+
 /** Every component with the MDX of its documentation page. */
 export function documentedComponents(): DocumentedComponent[] {
   return specs.map((spec) => ({ spec, page: pageOf(spec) }));
@@ -45,17 +56,19 @@ export function buildGuidelines(
   components = documentedComponents(),
   manifest: TokenManifest = manifestJson,
   icons = iconNames(),
+  guide = designSystemGuide(),
 ): Guidelines {
   return {
     'ui-library': {
       'overview.md': libraryOverview(components),
+      [DESIGN_SYSTEM_FILE]: guide,
       ...Object.fromEntries(
         components
           .filter(({ spec }) => spec.status === 'done' && spec.partOf === undefined)
           .map((component) => [componentFile(component.spec), componentGuideline(component)]),
       ),
     },
-    foundations: foundationsGuidelines(manifest),
+    foundations: { ...foundationsGuidelines(manifest), [DESIGN_SYSTEM_FILE]: guide },
     icons: { 'overview.md': iconGuidelines(icons) },
   };
 }

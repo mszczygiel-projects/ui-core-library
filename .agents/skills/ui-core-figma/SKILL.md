@@ -5,7 +5,7 @@ description: Use when reading or changing the Figma files of UI Core Library thr
 
 # Working in Figma
 
-`docs/decisions/10-figma.md` decides when and how Figma may change, and `docs/guides/figma.md` holds the owner's tasks: publishing, exports, Code Connect and guidelines. This is the Plugin API checklist.
+`docs/decisions/10-figma.md` decides when and how Figma may change, and `docs/guides/figma.md` holds the owner's tasks: publishing, exports, Code Connect and guidelines. This is the Plugin API checklist. For a file that builds its own design system on the library, follow `apps/storybook/src/guides/your-design-system-in-figma.md`.
 
 ## Before a call
 
@@ -121,7 +121,7 @@ return { ...changed, missing };
 
 ## Icons
 
-- Every icon of [Core] Icons is a component `icon/<kebab-name>`: a 24 by 24 frame with one vector, stroked 1.5 wide in the colour of `color/icon/default`.
+- Every icon of [Core] Icons is a component `icon/<kebab-name>`: a 24 by 24 frame with one vector, drawn with a fill in the colour of `color/icon/default`, never a stroke. A component sets the colour of an icon on the fill of that vector.
 - Export with `exportAsync({ format: 'SVG_STRING' })` and the default settings, a few icons per call to stay under the 20 KB return limit, and write each string to `packages/icons/figma/<name>.svg` unchanged. Compare each file's length with the length the export reported.
 - The export fails on a component without visible layers, and a vector placed outside its frame widens the viewBox. Read `x`, `y`, `width` and `height` of the vector against a sound icon before writing a fix.
 - `pnpm nx run icons:generate` is the check after every export: it names the file and the rule an icon breaks.

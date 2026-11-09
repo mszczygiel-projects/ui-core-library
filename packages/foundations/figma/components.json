@@ -324,7 +324,7 @@
             }
           },
           "default": {
-            "$value": "{Surfaces.color.text.placeholder}",
+            "$value": "{Surfaces.color.icon.muted}",
             "$type": "color",
             "$extensions": {
               "com.figma": {
@@ -726,7 +726,7 @@
         },
         "icon": {
           "default": {
-            "$value": "{Surfaces.color.text.placeholder}",
+            "$value": "{Surfaces.color.icon.muted}",
             "$type": "color",
             "$extensions": {
               "com.figma": {

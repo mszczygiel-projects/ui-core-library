@@ -47,7 +47,7 @@ ${table(
     ['Sizes', 'Mobile, Desktop, Mobile Compact, Desktop Compact', 'the screen and the density'],
   ],
 )}`,
-      'Read colors.md, typography.md and spacing.md for the variables of each kind.',
+      'Read colors.md, typography.md and spacing.md for the variables of each kind, and your-design-system.md when working in a copy of this library.',
     ),
     'colors.md': file(
       '# Colours',

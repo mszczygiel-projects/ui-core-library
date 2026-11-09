@@ -12,7 +12,7 @@
 
 - The package exports one constant per icon, holding its normalized `<svg>`, from one module without side effects. Bundlers keep only the icons that are imported, and the package depends on no framework.
 - **Allowed content**: only `svg`, `g` and basic shapes, with geometry, colour paint and `transform`. Scripts, handlers, links, images, ids, styles and titles stop every build.
-- **Design rules**: viewBox `0 0 24 24`, one solid colour and strokes 1.5 wide. They are errors in the library's build.
+- **Design rules**: viewBox `0 0 24 24`, one solid colour, and every shape drawn with a fill, never a stroke. They are errors in the library's build.
 - **Normalization**: svgo minifies every icon, paints it in `currentColor` and sizes it `1em`. The module is generated, never committed.
 
 ### Using icons in components
@@ -32,6 +32,8 @@
 ## Why
 
 One string per icon works in both frameworks without svgr or an icon component. Checking at build time stops unsafe or broken SVG before it reaches a component.
+
+A fill gives one convention for colour: a component in Figma binds the colour to the fill of the vector, so any set of icons drawn with fills takes it, whichever library it comes from. A fill also scales with the icon in Figma, as it does in code; a stroke keeps its weight in Figma.
 
 ## Rejected
 

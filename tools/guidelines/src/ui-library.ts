@@ -121,5 +121,6 @@ export function libraryOverview(components: readonly DocumentedComponent[]): str
 - Put icons only in the icon slots of a component, as instances of [Core] Icons.
 - WRONG: a detached instance, a fill or a stroke that overrides a component, a hex colour, a hand-drawn spinner.
 - CORRECT: an instance with the listed property values on a frame with the right surface and density modes.`,
+    'Read your-design-system.md when working in a file that builds its own design system on this library.',
   );
 }

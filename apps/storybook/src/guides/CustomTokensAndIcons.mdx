@@ -10,7 +10,7 @@ The components read only design tokens and render only the icons of the icons pa
 
 Start here when a few brand values on `:root` are not enough: when roles should take other steps of a ramp, the typography scale should change, or the density should differ. [Theming & branding](?path=/docs/foundations-theming-branding--docs) covers the brand values.
 
-1. Duplicate the [Core] Foundations Figma file and change its variables. Keep the names of the collections, the modes and the variables; the components read them.
+1. Duplicate the [Core] Foundations Figma file and change its variables. Keep the names of the collections and of the variables outside Primitives, which the components read, and follow the convention for the names of the modes, which the build reads. [Your design system in Figma](?path=/docs/guides-your-design-system-in-figma--docs) covers the work in Figma.
 2. Export the variables with the Luckino plugin, with their Figma metadata, into one folder: `primitives.json`, `themes.json`, `surfaces.json`, `sizes.json` and `components.json`.
 3. Build them:
 
@@ -48,4 +48,4 @@ Several brands live in one file as modes of Themes: `Club Light` and `Club Dark`
 
    npm uses `overrides` and Yarn `resolutions` with the same entry.
 
-The set must hold every icon the components render; the package lists them in `required-icons.txt`, and the build names any that are missing. An icon may hold only plain shapes: paths, lines, circles and the like, painted in colours. Scripts, links, images, styles and ids stop the build. An icon drawn off the 24 × 24 grid, in more than one colour or with strokes other than 1.5 wide is built with a warning, since the components size and colour it themselves. Every icon is minified, painted in `currentColor` and sized `1em`.
+The set must hold every icon the components render; the package lists them in `required-icons.txt`, and the build names any that are missing. An icon may hold only plain shapes: paths, lines, circles and the like, painted in colours. Scripts, links, images, styles and ids stop the build. An icon drawn off the 24 × 24 grid, in more than one colour or with strokes is built with a warning, since the components size and colour it themselves. Every icon is minified, painted in `currentColor` and sized `1em`.

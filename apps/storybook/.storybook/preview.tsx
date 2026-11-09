@@ -38,6 +38,7 @@ const preview: Preview = {
             'Getting started',
             'Configuration',
             'Custom tokens and icons',
+            'Your design system in Figma',
             'SEO and server rendering',
           ],
           'Foundations',
