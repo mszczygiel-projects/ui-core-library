@@ -10,7 +10,7 @@ IMPORTANT: Change the look through variables and modes, never on an instance. An
 - **Components: no copy.** Enable [Core] UI Library in your files and use it as it is, so that its fixes and new components reach you. Build a component only your product needs in a library of your own, from Core components and the variables of your Foundations.
 - **Icons: optional.** Use [Core] Icons, or publish a library of your own, as described under "Your own icons".
 
-Keep the names of the collections and variables in your copy. Add variables, and never rename them: Swap library and the code build both match by name. Name the modes of Themes as the build reads them: `Light` and `Dark` for the base brand, `<Brand> Light` and `<Brand> Dark` for a further brand.
+Keep the names of the collections, and of the variables in Themes, Surfaces, Sizes and Components: Swap library and the components match them by name. Primitives are yours to rename and extend, such as `brand/primary` to `brand/red`, because components never read them. Name the modes of Themes as the build reads them: `Light` and `Dark` for the base brand, `<Brand> Light` and `<Brand> Dark` for a further brand.
 
 ## Connect your Foundations
 
@@ -28,7 +28,7 @@ When [Core] Foundations gains a variable, add it to your copy under the same nam
 
 Make a change on the first of these tiers that does what you want without affecting anything else.
 
-1. **Primitives.** The colour ramps from 50 to 1000. Replace the steps of `brand/primary`, `brand/secondary` and `brand/tertiary` with your colours, keeping every ramp evenly stepped from light to dark. Add further ramps for further brands.
+1. **Primitives.** The colour ramps from 50 to 1000. Give the ramps your colours, keeping each one evenly stepped from light to dark. Name them as you like, such as `brand/red` instead of `brand/primary`, and add one for each further brand.
 2. **Themes.** One mode for each brand and scheme. Point each role at a step of a ramp, and set the brand values: `font/heading`, `font/body`, `radius/*` and `text-uppercase/*`. A role has a value for every mode, so this is the place for anything that differs per theme.
 3. **Surfaces.** The modes Default, Subtle, Inverse and Primary say what a frame stands on. Set the mode on a frame, and everything inside follows. Their values live in Themes, as `color/on-subtle/*`, `color/on-inverse/*` and `color/on-brand-primary/*`.
 4. **Components.** The variables of one component, for a change to that component alone. The collection has a single mode, so a variable that must differ per theme points at a role of Themes or Surfaces. Never point it at a primitive: it would stop following the theme and the surface.
@@ -100,6 +100,6 @@ Core components colour an icon through the stroke of its vector, since [Core] Ic
 - Every screen looks right in every mode of Themes, and on every surface it uses.
 - Text and placeholders keep a contrast of at least 4.5:1 in every mode.
 - Instances follow the rules above. Any exception, such as a dashed stroke, is written down.
-- No variable was renamed, and no variable of Components points at a primitive.
+- No variable outside Primitives was renamed, and no variable of Components points at a primitive.
 - Libraries are published in order: Foundations, icons, your components.
 - Developers build the tokens from an export of your Foundations, as "Custom tokens and icons" in the documentation describes.
