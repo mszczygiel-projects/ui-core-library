@@ -1851,6 +1851,36 @@
             ]
           }
         }
+      },
+      "muted": {
+        "$value": {
+          "Default": "{Themes.color.icon.muted}",
+          "Subtle": "{Themes.color.on-subtle.icon.muted}",
+          "Inverse": "{Themes.color.on-inverse.icon.muted}",
+          "Primary": "{Themes.color.on-brand-primary.icon.muted}"
+        },
+        "$type": "color",
+        "$description": "Quiet colour of icons that accompany other content, such as the icon of a field.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1093:6",
+            "collectionId": "VariableCollectionId:1:953",
+            "scopes": [
+              "SHAPE_FILL",
+              "STROKE_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-icon-muted)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Default",
+              "Subtle",
+              "Inverse",
+              "Primary"
+            ]
+          }
+        }
       }
     },
     "disabled": {

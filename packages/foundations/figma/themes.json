@@ -1380,6 +1380,29 @@
             ]
           }
         }
+      },
+      "muted": {
+        "$value": {
+          "Light": "{Primitives Colors.gray.700}",
+          "Dark": "{Primitives Colors.gray.300}"
+        },
+        "$type": "color",
+        "$description": "Quiet colour of icons that accompany other content, such as the icon of a field.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1093:2",
+            "collectionId": "VariableCollectionId:1:238",
+            "scopes": [],
+            "codeSyntax": {
+              "WEB": "var(--color-icon-muted)"
+            },
+            "hiddenFromPublishing": false,
+            "modes": [
+              "Light",
+              "Dark"
+            ]
+          }
+        }
       }
     },
     "disabled": {
@@ -2137,6 +2160,28 @@
               "scopes": [],
               "codeSyntax": {
                 "WEB": "var(--color-on-subtle-icon-default)"
+              },
+              "hiddenFromPublishing": true,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
+        },
+        "muted": {
+          "$value": {
+            "Light": "{Themes.color.icon.muted}",
+            "Dark": "{Themes.color.icon.muted}"
+          },
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:3",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-on-subtle-icon-muted)"
               },
               "hiddenFromPublishing": true,
               "modes": [
@@ -3587,6 +3632,28 @@
               ]
             }
           }
+        },
+        "muted": {
+          "$value": {
+            "Light": "{Themes.color.on-inverse.text.secondary}",
+            "Dark": "{Themes.color.on-inverse.text.secondary}"
+          },
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:4",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-on-inverse-icon-muted)"
+              },
+              "hiddenFromPublishing": true,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
         }
       },
       "border": {
@@ -5021,6 +5088,28 @@
               "scopes": [],
               "codeSyntax": {
                 "WEB": "var(--color-on-brand-primary-icon-default)"
+              },
+              "hiddenFromPublishing": true,
+              "modes": [
+                "Light",
+                "Dark"
+              ]
+            }
+          }
+        },
+        "muted": {
+          "$value": {
+            "Light": "{Primitives Colors.gray.300}",
+            "Dark": "{Themes.color.icon.muted}"
+          },
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:5",
+              "collectionId": "VariableCollectionId:1:238",
+              "scopes": [],
+              "codeSyntax": {
+                "WEB": "var(--color-on-brand-primary-icon-muted)"
               },
               "hiddenFromPublishing": true,
               "modes": [

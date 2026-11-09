@@ -481,6 +481,7 @@ css --color-green-800
 css --color-green-900
 css --color-green-950
 css --color-icon-default
+css --color-icon-muted
 css --color-link-default
 css --color-link-hover
 css --color-listbox-background
@@ -580,6 +581,7 @@ css --color-on-brand-primary-feedback-warning-on-base
 css --color-on-brand-primary-feedback-warning-on-subtle
 css --color-on-brand-primary-feedback-warning-subtle
 css --color-on-brand-primary-icon-default
+css --color-on-brand-primary-icon-muted
 css --color-on-brand-primary-link-default
 css --color-on-brand-primary-link-hover
 css --color-on-brand-primary-ring-default
@@ -643,6 +645,7 @@ css --color-on-inverse-feedback-warning-on-base
 css --color-on-inverse-feedback-warning-on-subtle
 css --color-on-inverse-feedback-warning-subtle
 css --color-on-inverse-icon-default
+css --color-on-inverse-icon-muted
 css --color-on-inverse-link-default
 css --color-on-inverse-link-hover
 css --color-on-inverse-ring-default
@@ -706,6 +709,7 @@ css --color-on-subtle-feedback-warning-on-base
 css --color-on-subtle-feedback-warning-on-subtle
 css --color-on-subtle-feedback-warning-subtle
 css --color-on-subtle-icon-default
+css --color-on-subtle-icon-muted
 css --color-on-subtle-link-default
 css --color-on-subtle-link-hover
 css --color-on-subtle-ring-default
@@ -1022,9 +1026,14 @@ css --inset-shadow-sm
 css --inset-shadow-xs
 css --layout-container-max-width
 css --layout-container-padding-inline
+css --layout-gap-inline-2xl
+css --layout-gap-inline-3xl
 css --layout-gap-inline-lg
 css --layout-gap-inline-md
 css --layout-gap-inline-sm
+css --layout-gap-inline-xl
+css --layout-gap-stack-2xl
+css --layout-gap-stack-3xl
 css --layout-gap-stack-lg
 css --layout-gap-stack-md
 css --layout-gap-stack-sm
@@ -1708,6 +1717,7 @@ tailwind --color-green-800
 tailwind --color-green-900
 tailwind --color-green-950
 tailwind --color-icon-default
+tailwind --color-icon-muted
 tailwind --color-link-default
 tailwind --color-link-hover
 tailwind --color-listbox-background
@@ -1807,6 +1817,7 @@ tailwind --color-on-brand-primary-feedback-warning-on-base
 tailwind --color-on-brand-primary-feedback-warning-on-subtle
 tailwind --color-on-brand-primary-feedback-warning-subtle
 tailwind --color-on-brand-primary-icon-default
+tailwind --color-on-brand-primary-icon-muted
 tailwind --color-on-brand-primary-link-default
 tailwind --color-on-brand-primary-link-hover
 tailwind --color-on-brand-primary-ring-default
@@ -1870,6 +1881,7 @@ tailwind --color-on-inverse-feedback-warning-on-base
 tailwind --color-on-inverse-feedback-warning-on-subtle
 tailwind --color-on-inverse-feedback-warning-subtle
 tailwind --color-on-inverse-icon-default
+tailwind --color-on-inverse-icon-muted
 tailwind --color-on-inverse-link-default
 tailwind --color-on-inverse-link-hover
 tailwind --color-on-inverse-ring-default
@@ -1933,6 +1945,7 @@ tailwind --color-on-subtle-feedback-warning-on-base
 tailwind --color-on-subtle-feedback-warning-on-subtle
 tailwind --color-on-subtle-feedback-warning-subtle
 tailwind --color-on-subtle-icon-default
+tailwind --color-on-subtle-icon-muted
 tailwind --color-on-subtle-link-default
 tailwind --color-on-subtle-link-hover
 tailwind --color-on-subtle-ring-default
@@ -2880,9 +2893,14 @@ ts tokens.sizes.icon.sm
 ts tokens.sizes.icon.xs
 ts tokens.sizes.layout.container.maxWidth
 ts tokens.sizes.layout.container.paddingInline
+ts tokens.sizes.layout.gap.inline.2xl
+ts tokens.sizes.layout.gap.inline.3xl
 ts tokens.sizes.layout.gap.inline.lg
 ts tokens.sizes.layout.gap.inline.md
 ts tokens.sizes.layout.gap.inline.sm
+ts tokens.sizes.layout.gap.inline.xl
+ts tokens.sizes.layout.gap.stack.2xl
+ts tokens.sizes.layout.gap.stack.3xl
 ts tokens.sizes.layout.gap.stack.lg
 ts tokens.sizes.layout.gap.stack.md
 ts tokens.sizes.layout.gap.stack.sm
@@ -2997,6 +3015,7 @@ ts tokens.surfaces.color.feedback.warning.onBase
 ts tokens.surfaces.color.feedback.warning.onSubtle
 ts tokens.surfaces.color.feedback.warning.subtle
 ts tokens.surfaces.color.icon.default
+ts tokens.surfaces.color.icon.muted
 ts tokens.surfaces.color.link.default
 ts tokens.surfaces.color.link.hover
 ts tokens.surfaces.color.ring.default
@@ -3060,6 +3079,7 @@ ts tokens.themes.color.onBrandPrimary.feedback.warning.onBase
 ts tokens.themes.color.onBrandPrimary.feedback.warning.onSubtle
 ts tokens.themes.color.onBrandPrimary.feedback.warning.subtle
 ts tokens.themes.color.onBrandPrimary.icon.default
+ts tokens.themes.color.onBrandPrimary.icon.muted
 ts tokens.themes.color.onBrandPrimary.link.default
 ts tokens.themes.color.onBrandPrimary.link.hover
 ts tokens.themes.color.onBrandPrimary.ring.default
@@ -3123,6 +3143,7 @@ ts tokens.themes.color.onInverse.feedback.warning.onBase
 ts tokens.themes.color.onInverse.feedback.warning.onSubtle
 ts tokens.themes.color.onInverse.feedback.warning.subtle
 ts tokens.themes.color.onInverse.icon.default
+ts tokens.themes.color.onInverse.icon.muted
 ts tokens.themes.color.onInverse.link.default
 ts tokens.themes.color.onInverse.link.hover
 ts tokens.themes.color.onInverse.ring.default
@@ -3186,6 +3207,7 @@ ts tokens.themes.color.onSubtle.feedback.warning.onBase
 ts tokens.themes.color.onSubtle.feedback.warning.onSubtle
 ts tokens.themes.color.onSubtle.feedback.warning.subtle
 ts tokens.themes.color.onSubtle.icon.default
+ts tokens.themes.color.onSubtle.icon.muted
 ts tokens.themes.color.onSubtle.link.default
 ts tokens.themes.color.onSubtle.link.hover
 ts tokens.themes.color.onSubtle.ring.default

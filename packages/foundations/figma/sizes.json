@@ -1375,6 +1375,93 @@
               ]
             }
           }
+        },
+        "xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.4}",
+            "Desktop": "{Primitives Sizes.spacing.4}",
+            "Mobile Compact": "{Primitives Sizes.spacing.4}",
+            "Desktop Compact": "{Primitives Sizes.spacing.4}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal gap between items in a row, step xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:7",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-inline-xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "2xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.6}",
+            "Desktop": "{Primitives Sizes.spacing.6}",
+            "Mobile Compact": "{Primitives Sizes.spacing.6}",
+            "Desktop Compact": "{Primitives Sizes.spacing.6}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal gap between items in a row, step 2xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:8",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-inline-2xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "3xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.8}",
+            "Desktop": "{Primitives Sizes.spacing.8}",
+            "Mobile Compact": "{Primitives Sizes.spacing.8}",
+            "Desktop Compact": "{Primitives Sizes.spacing.8}"
+          },
+          "$type": "spacing",
+          "$description": "Horizontal gap between items in a row, step 3xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:9",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-inline-3xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
         }
       },
       "stack": {
@@ -1483,6 +1570,64 @@
               ],
               "codeSyntax": {
                 "WEB": "var(--layout-gap-stack-xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "2xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.6}",
+            "Desktop": "{Primitives Sizes.spacing.6}",
+            "Mobile Compact": "{Primitives Sizes.spacing.6}",
+            "Desktop Compact": "{Primitives Sizes.spacing.6}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical gap between stacked items, step 2xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:10",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-stack-2xl)"
+              },
+              "hiddenFromPublishing": false,
+              "modes": [
+                "Mobile",
+                "Desktop",
+                "Mobile Compact",
+                "Desktop Compact"
+              ]
+            }
+          }
+        },
+        "3xl": {
+          "$value": {
+            "Mobile": "{Primitives Sizes.spacing.8}",
+            "Desktop": "{Primitives Sizes.spacing.8}",
+            "Mobile Compact": "{Primitives Sizes.spacing.8}",
+            "Desktop Compact": "{Primitives Sizes.spacing.8}"
+          },
+          "$type": "spacing",
+          "$description": "Vertical gap between stacked items, step 3xl.",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1093:11",
+              "collectionId": "VariableCollectionId:1:1108",
+              "scopes": [
+                "GAP"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--layout-gap-stack-3xl)"
               },
               "hiddenFromPublishing": false,
               "modes": [
