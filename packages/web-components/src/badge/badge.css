@@ -63,6 +63,12 @@
   font-size: var(--_icon-size);
 }
 
+/* A wrapper around an icon would otherwise take the height of a text line and lift the icon. The
+   author's own display wins over a slotted rule. */
+::slotted(*) {
+  display: inline-flex;
+}
+
 .adornment[hidden],
 .label[hidden] {
   display: none;

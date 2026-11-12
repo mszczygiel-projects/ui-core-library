@@ -56,6 +56,12 @@
   font-size: var(--_icon-size);
 }
 
+/* A wrapper around an icon would otherwise take the height of a text line and lift the icon.
+   Without specificity, the author's own display wins. */
+:where(.ui-badge__leading, .ui-badge__trailing) > * {
+  display: inline-flex;
+}
+
 .ui-badge--neutral.ui-badge--solid {
   --_background: var(--color-badge-neutral-solid-background);
   --_text: var(--color-badge-neutral-solid-text);

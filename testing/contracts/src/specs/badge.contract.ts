@@ -83,6 +83,17 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
     expect(tree.some((node) => node.role === 'image')).toBe(false);
   });
 
+  it('centres an icon in a wrapper element on the middle of the badge', async () => {
+    const component = await mount({ tone: 'success', leading: true });
+    const icon = component.element.querySelector('[data-contract-icon]')?.getBoundingClientRect();
+    const base = component.part('base').getBoundingClientRect();
+    expect(icon).toBeDefined();
+    // A wrapper with the height of a text line would lift the icon above the middle.
+    expect(
+      Math.abs((icon?.top ?? 0) - base.top - (base.bottom - (icon?.bottom ?? 0))),
+    ).toBeLessThan(1);
+  });
+
   it('draws its border and capitals from its tokens, without changing its size', async () => {
     const component = await mount({ tone: 'success', variant: 'subtle' });
     const base = component.part('base');
