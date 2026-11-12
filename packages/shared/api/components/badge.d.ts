@@ -11,13 +11,13 @@ export declare const badge: {
         readonly codeOnly: readonly [];
         readonly previews: {
             readonly content: {
-                readonly options: readonly ["label", "icon-label", "icon"];
+                readonly options: readonly ["label", "icon"];
                 readonly default: "label";
-                readonly note: "Chooses the layout of a badge with text, with an icon and text, or with only an icon. Code derives it from the content.";
+                readonly note: "Chooses the layout of a badge with text, or with only the leading content, such as an icon. Code derives it from the content.";
             };
         };
     };
-    readonly summary: "Marks a status, a category or a count with a short label, an icon or both.";
+    readonly summary: "Marks a status, a category or a count with a short label and any content before or after it.";
     readonly options: {
         readonly tone: {
             readonly options: readonly ["neutral", "brand", "info", "success", "warning", "error"];
@@ -37,10 +37,10 @@ export declare const badge: {
         };
     };
     readonly labels: readonly [];
-    readonly parts: readonly ["base", "icon", "label"];
-    readonly slots: readonly ["icon"];
+    readonly parts: readonly ["base", "leading", "label", "trailing"];
+    readonly slots: readonly ["leading", "trailing"];
     readonly events: readonly [];
-    readonly stories: readonly ["Playground", "Variants", "Shapes", "WithIcon", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Variants", "Shapes", "WithIcon", "StatusDot", "OnSurfaces"];
     readonly exceptions: readonly [];
 };
 export type BadgeTone = OptionOf<typeof badge, 'tone'>;

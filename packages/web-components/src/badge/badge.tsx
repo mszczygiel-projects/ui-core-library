@@ -15,17 +15,20 @@ import { hasAssignedContent, hasAssignedText, slotHasText } from '../internal/sl
 const { options } = badge;
 
 /**
- * Marks a status, a category or a count with a short label, an icon or both.
+ * Marks a status, a category or a count with a short label and any content before or after it.
  *
- * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
- * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
- * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+ * The badge is not interactive. Its text names it; a badge without text becomes an image named by
+ * `label`. The host belongs to the page: the component writes no role or ARIA attribute on it, and
+ * an `aria-label` that the page writes there names the image instead of `label`.
  *
  * @slot - The text of the badge.
- * @slot icon - A decorative icon before the text, or the only content of the badge.
- * @part base - The surface of the badge, its fill and corners.
- * @part icon - The box that sizes the icon.
+ * @slot leading - Decorative content before the text, such as an icon or a status dot, which the
+ * author styles. An icon takes the icon size of the badge.
+ * @slot trailing - Decorative content after the text, like `leading`.
+ * @part base - The surface of the badge, its fill, border and corners.
+ * @part leading - The box of the leading content.
  * @part label - The text of the badge.
+ * @part trailing - The box of the trailing content.
  */
 @Component({ tag: 'ui-badge', styleUrl: 'badge.css', shadow: true })
 export class UiBadge implements BadgeProps {
@@ -44,15 +47,17 @@ export class UiBadge implements BadgeProps {
   @Prop() shape: BadgeShape = 'rounded';
 
   /**
-   * The accessible name of a badge that shows only an icon. A badge with text is named by its
-   * text, and an author's `aria-label` wins.
+   * The accessible name of a badge that shows no text, only its leading or trailing content. A
+   * badge with text is named by its text, and an author's `aria-label` wins.
    */
   @Prop() label?: string;
 
   /** The `aria-label` that the page wrote on the host. */
   @State() private authorLabel: string | null = null;
 
-  @State() private hasIcon = false;
+  @State() private hasLeading = false;
+
+  @State() private hasTrailing = false;
 
   @State() private hasText = false;
 
@@ -84,7 +89,7 @@ export class UiBadge implements BadgeProps {
     const variant = oneOf(this.variant, options.variant.options, options.variant.default);
     const size = oneOf(this.size, options.size.options, options.size.default);
     const shape = oneOf(this.shape, options.shape.options, options.shape.default);
-    const iconOnly = this.hasIcon && !this.hasText;
+    const iconOnly = (this.hasLeading || this.hasTrailing) && !this.hasText;
     const name = this.authorLabel ?? this.label;
     const named = iconOnly && typeof name === 'string' && name !== '';
     return (
@@ -94,18 +99,25 @@ export class UiBadge implements BadgeProps {
         role={named ? 'img' : undefined}
         aria-label={named ? name : undefined}
       >
-        <span part="icon" class="icon" aria-hidden="true" hidden={!this.hasIcon}>
-          <slot name="icon" onSlotchange={this.onIconSlotChange} />
+        <span part="leading" class="adornment" aria-hidden="true" hidden={!this.hasLeading}>
+          <slot name="leading" onSlotchange={this.onLeadingSlotChange} />
         </span>
         <span part="label" class="label" hidden={iconOnly}>
           <slot onSlotchange={this.onTextSlotChange} />
+        </span>
+        <span part="trailing" class="adornment" aria-hidden="true" hidden={!this.hasTrailing}>
+          <slot name="trailing" onSlotchange={this.onTrailingSlotChange} />
         </span>
       </span>
     );
   }
 
-  private readonly onIconSlotChange = (event: Event): void => {
-    this.hasIcon = hasAssignedContent(event);
+  private readonly onLeadingSlotChange = (event: Event): void => {
+    this.hasLeading = hasAssignedContent(event);
+  };
+
+  private readonly onTrailingSlotChange = (event: Event): void => {
+    this.hasTrailing = hasAssignedContent(event);
   };
 
   private readonly onTextSlotChange = (event: Event): void => {

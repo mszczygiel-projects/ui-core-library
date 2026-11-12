@@ -24,6 +24,9 @@
   min-inline-size: var(--_block-size);
   padding-inline: var(--_padding-inline);
   border-radius: var(--_radius);
+
+  /* An inset shadow draws the border without changing the size of the badge. */
+  box-shadow: inset 0 0 0 var(--badge-border-width) var(--_border);
   background: var(--_background);
   color: var(--_text);
   font-family: var(--badge-font-family);
@@ -31,6 +34,7 @@
   font-weight: var(--badge-font-weight);
   line-height: var(--_line-height);
   letter-spacing: var(--badge-letter-spacing);
+  text-transform: var(--badge-text-uppercase);
   white-space: nowrap;
 }
 
@@ -46,24 +50,20 @@
   --_radius: var(--badge-square-radius);
 }
 
-/* A badge with only an icon is a square of its height. */
+/* A badge without text is a square of its height. */
 .icon-only {
   --_padding-inline: var(--badge-padding-inline-icon-only);
 }
 
-.icon {
+/* Icons are drawn at 1em, so the font size sizes them. Other content keeps its own size. */
+.adornment {
   display: inline-flex;
   flex: none;
+  align-items: center;
   font-size: var(--_icon-size);
 }
 
-.icon ::slotted(*) {
-  display: inline-flex;
-  inline-size: var(--_icon-size);
-  block-size: var(--_icon-size);
-}
-
-.icon[hidden],
+.adornment[hidden],
 .label[hidden] {
   display: none;
 }
@@ -71,61 +71,73 @@
 .neutral.solid {
   --_background: var(--color-badge-neutral-solid-background);
   --_text: var(--color-badge-neutral-solid-text);
+  --_border: var(--color-badge-neutral-solid-border);
 }
 
 .neutral.subtle {
   --_background: var(--color-badge-neutral-subtle-background);
   --_text: var(--color-badge-neutral-subtle-text);
+  --_border: var(--color-badge-neutral-subtle-border);
 }
 
 .brand.solid {
   --_background: var(--color-badge-brand-solid-background);
   --_text: var(--color-badge-brand-solid-text);
+  --_border: var(--color-badge-brand-solid-border);
 }
 
 .brand.subtle {
   --_background: var(--color-badge-brand-subtle-background);
   --_text: var(--color-badge-brand-subtle-text);
+  --_border: var(--color-badge-brand-subtle-border);
 }
 
 .info.solid {
   --_background: var(--color-badge-info-solid-background);
   --_text: var(--color-badge-info-solid-text);
+  --_border: var(--color-badge-info-solid-border);
 }
 
 .info.subtle {
   --_background: var(--color-badge-info-subtle-background);
   --_text: var(--color-badge-info-subtle-text);
+  --_border: var(--color-badge-info-subtle-border);
 }
 
 .success.solid {
   --_background: var(--color-badge-success-solid-background);
   --_text: var(--color-badge-success-solid-text);
+  --_border: var(--color-badge-success-solid-border);
 }
 
 .success.subtle {
   --_background: var(--color-badge-success-subtle-background);
   --_text: var(--color-badge-success-subtle-text);
+  --_border: var(--color-badge-success-subtle-border);
 }
 
 .warning.solid {
   --_background: var(--color-badge-warning-solid-background);
   --_text: var(--color-badge-warning-solid-text);
+  --_border: var(--color-badge-warning-solid-border);
 }
 
 .warning.subtle {
   --_background: var(--color-badge-warning-subtle-background);
   --_text: var(--color-badge-warning-subtle-text);
+  --_border: var(--color-badge-warning-subtle-border);
 }
 
 .error.solid {
   --_background: var(--color-badge-error-solid-background);
   --_text: var(--color-badge-error-solid-text);
+  --_border: var(--color-badge-error-solid-border);
 }
 
 .error.subtle {
   --_background: var(--color-badge-error-subtle-background);
   --_text: var(--color-badge-error-subtle-text);
+  --_border: var(--color-badge-error-subtle-border);
 }
 
 @media (forced-colors: active) {

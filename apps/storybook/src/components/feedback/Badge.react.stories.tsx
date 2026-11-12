@@ -7,7 +7,7 @@ import { iconOptions, svgMap } from '../icons.ts';
 
 const { options } = badge;
 
-/** Every icon as a node for the icon prop, its SVG string from the icons package only. */
+/** Every icon as a node for the leading prop, its SVG string from the icons package only. */
 const iconNodes = Object.fromEntries(
   iconOptions.map((name) => [
     name,
@@ -27,7 +27,8 @@ const meta = {
   },
   argTypes: {
     children: { control: 'text' },
-    icon: { control: 'select', options: iconOptions, mapping: iconNodes },
+    leading: { control: 'select', options: iconOptions, mapping: iconNodes },
+    trailing: { control: false },
     tone: { control: 'select', options: options.tone.options },
     variant: { control: 'inline-radio', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
@@ -75,11 +76,29 @@ export const Shapes: Story = {
 export const WithIcon: Story = {
   render: (args) => (
     <div className="sb-row">
-      <Badge {...args} tone="success" icon={iconNodes['iconCheck']}>
+      <Badge {...args} tone="success" leading={iconNodes['iconCheck']}>
         Verified
       </Badge>
-      <Badge {...args} tone="success" icon={iconNodes['iconCheck']} label="Verified">
+      <Badge {...args} tone="success" leading={iconNodes['iconCheck']} label="Verified">
         {undefined}
+      </Badge>
+    </div>
+  ),
+};
+
+export const StatusDot: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      <Badge {...args} tone="success" variant="subtle" leading={<span className="sb-status-dot" />}>
+        Live
+      </Badge>
+      <Badge
+        {...args}
+        tone="warning"
+        variant="subtle"
+        trailing={<span className="sb-status-dot" />}
+      >
+        Draft
       </Badge>
     </div>
   ),
