@@ -4,7 +4,7 @@ import { expect, it, vi } from 'vitest';
 import { commands, userEvent } from 'vitest/browser';
 
 import type { Mount, Mounted } from '../harness/types.ts';
-import { tokenNumber, tokenValue } from '../tokens.ts';
+import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 import { resolvedColor } from './action.contract.ts';
 
 /** A tab of the contract: the props of Tab, without its icon, and the text of its panel. */
@@ -268,7 +268,15 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
     expect(list.backgroundColor).toBe(
       resolvedColor(tokenValue('--color-tabs-segmented-background')),
     );
-    expect(getComputedStyle(first, '::after').content).toBe('none');
+    // The border of the selected tab, drawn inside it, and none on the others.
+    const border = getComputedStyle(first, '::after');
+    expect(pixels(border.borderTopWidth)).toBe(
+      pixels(tokenValue('--tabs-segmented-tab-border-width')),
+    );
+    expect(border.borderTopColor).toBe(
+      resolvedColor(tokenValue('--color-tabs-segmented-tab-border-selected')),
+    );
+    expect(getComputedStyle(second, '::after').content).toBe('none');
     await component.unmount();
   });
 

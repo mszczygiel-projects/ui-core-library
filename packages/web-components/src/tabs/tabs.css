@@ -135,10 +135,22 @@
 .segmented .tab.selected:not(:disabled) {
   --_text: var(--color-tabs-segmented-tab-text-selected);
   --_background: var(--color-tabs-segmented-tab-background-selected);
+  --_border: var(--color-tabs-segmented-tab-border-selected);
 }
 
 .segmented .tab.selected:disabled {
   --_background: var(--color-tabs-segmented-tab-background-disabled);
+  --_border: var(--color-tabs-segmented-tab-border-disabled);
+}
+
+/* The border of the selected tab lies inside it, so that selection never changes its size. */
+.segmented .tab.selected::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--tabs-segmented-tab-border-width) solid var(--_border);
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 /* The indicator of the selected tab covers the track. */
