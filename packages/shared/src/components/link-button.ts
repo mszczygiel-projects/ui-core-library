@@ -14,12 +14,13 @@ export const linkButton = defineComponent({
   options: {
     variant: button.options.variant,
     size: button.options.size,
+    shape: button.options.shape,
   },
   labels: [],
   parts: ['base', 'content', 'leading-icon', 'label', 'trailing-icon'],
   slots: ['leading-icon', 'trailing-icon'],
   events: [],
-  stories: ['Playground', 'Variants', 'WithIcons', 'OnSurfaces'],
+  stories: ['Playground', 'Variants', 'Shapes', 'WithIcons', 'OnSurfaces'],
   exceptions: [
     {
       items: ['render'],
@@ -33,6 +34,8 @@ export const linkButton = defineComponent({
 export type LinkButtonVariant = OptionOf<typeof linkButton, 'variant'>;
 /** The sizes of a link, the same as those of a button. */
 export type LinkButtonSize = OptionOf<typeof linkButton, 'size'>;
+/** The corners of a link, the same as those of a button. */
+export type LinkButtonShape = OptionOf<typeof linkButton, 'shape'>;
 
 /** The props both implementations of LinkButton share. */
 export interface LinkButtonProps {
@@ -54,6 +57,11 @@ export interface LinkButtonProps {
    * @default 'medium'
    */
   size?: LinkButtonSize;
+  /**
+   * The corners of the link: the radius of its size, or a pill when `rounded`.
+   * @default 'square'
+   */
+  shape?: LinkButtonShape;
   /**
    * Turns the link into text that cannot be focused or followed, by any pointer or key.
    * @default false

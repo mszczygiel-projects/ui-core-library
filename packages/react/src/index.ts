@@ -62,6 +62,7 @@ export {
   LinkButton,
   type LinkButtonProps,
   type LinkButtonRenderProps,
+  type LinkButtonShape,
   type LinkButtonSize,
   type LinkButtonVariant,
 } from './link-button/LinkButton.tsx';

@@ -6,7 +6,7 @@ import { appearance } from '../appearance.ts';
 import { iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions, required } from '../harness/types.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
-import { actionSurfaceContract, resolvedColor } from './action.contract.ts';
+import { actionShapeContract, actionSurfaceContract, resolvedColor } from './action.contract.ts';
 import { popupTriggerContract } from './popup-trigger.contract.ts';
 
 /**
@@ -43,6 +43,7 @@ export function linkButtonContract(adapter: Mount<LinkButtonContractProps>): voi
   }
 
   actionSurfaceContract(adapter, NAMED);
+  actionShapeContract(adapter, NAMED);
 
   afterEach(async () => {
     for (const link of mounted.splice(0)) {

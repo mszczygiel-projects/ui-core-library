@@ -21,12 +21,16 @@ export declare const linkButton: {
             readonly options: readonly ["small", "medium", "large"];
             readonly default: "medium";
         };
+        readonly shape: {
+            readonly options: readonly ["square", "rounded"];
+            readonly default: "square";
+        };
     };
     readonly labels: readonly [];
     readonly parts: readonly ["base", "content", "leading-icon", "label", "trailing-icon"];
     readonly slots: readonly ["leading-icon", "trailing-icon"];
     readonly events: readonly [];
-    readonly stories: readonly ["Playground", "Variants", "WithIcons", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Variants", "Shapes", "WithIcons", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["render"];
         readonly reason: "React applications navigate with the link component of their router, which the React prop renders. A web component cannot render another framework, and an application intercepts the native link instead.";
@@ -34,6 +38,7 @@ export declare const linkButton: {
 };
 export type LinkButtonVariant = OptionOf<typeof linkButton, 'variant'>;
 export type LinkButtonSize = OptionOf<typeof linkButton, 'size'>;
+export type LinkButtonShape = OptionOf<typeof linkButton, 'shape'>;
 export interface LinkButtonProps {
     href: string;
     target?: string;
@@ -41,6 +46,7 @@ export interface LinkButtonProps {
     download?: string;
     variant?: LinkButtonVariant;
     size?: LinkButtonSize;
+    shape?: LinkButtonShape;
     disabled?: boolean;
     label?: string;
 }

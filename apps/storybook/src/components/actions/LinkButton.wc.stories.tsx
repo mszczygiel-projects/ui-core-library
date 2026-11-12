@@ -2,6 +2,7 @@ import '@mszczygiel-projects/ui-core-web-components/link-button';
 
 import {
   linkButton,
+  type LinkButtonShape,
   type LinkButtonSize,
   type LinkButtonVariant,
 } from '@mszczygiel-projects/ui-core-shared/link-button';
@@ -19,6 +20,7 @@ interface LinkButtonArgs {
   readonly download?: string;
   readonly variant: LinkButtonVariant;
   readonly size: LinkButtonSize;
+  readonly shape: LinkButtonShape;
   readonly disabled: boolean;
   readonly label?: string;
   readonly leadingIcon?: IconName;
@@ -47,6 +49,7 @@ function UiLinkButton(args: LinkButtonArgs) {
       download={args.download}
       variant={args.variant}
       size={args.size}
+      shape={args.shape}
       disabled={args.disabled}
       label={optional(args.label)}
     >
@@ -70,6 +73,7 @@ const source = (args: LinkButtonArgs) =>
       download: args.download,
       variant: args.variant === options.variant.default ? undefined : args.variant,
       size: args.size === options.size.default ? undefined : args.size,
+      shape: args.shape === options.shape.default ? undefined : args.shape,
       disabled: args.disabled,
       label: args.label,
     },
@@ -84,6 +88,7 @@ const meta = {
     href: '#pricing',
     variant: options.variant.default,
     size: options.size.default,
+    shape: options.shape.default,
     disabled: false,
   },
   argTypes: {
@@ -94,6 +99,7 @@ const meta = {
     download: { control: 'text' },
     variant: { control: 'select', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
+    shape: { control: 'inline-radio', options: options.shape.options },
     disabled: { control: 'boolean' },
     label: { control: 'text' },
     leadingIcon: { control: 'select', options: iconOptions },
@@ -129,6 +135,25 @@ export const Variants: Story = {
       source: {
         code: options.variant.options
           .map((variant) => source({ ...meta.args, variant, children: variant }))
+          .join('\n'),
+      },
+    },
+  },
+};
+
+export const Shapes: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      {options.shape.options.map((shape) => (
+        <UiLinkButton key={shape} {...args} shape={shape} children={shape} />
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: options.shape.options
+          .map((shape) => source({ ...meta.args, shape, children: shape }))
           .join('\n'),
       },
     },

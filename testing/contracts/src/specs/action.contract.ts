@@ -350,7 +350,7 @@ export function actionFormContract<Props extends ActionFormProps>(
   });
 }
 
-/** The props of an action with corners of its own: Button, IconButton and SplitButton. */
+/** The props of an action with corners of its own: Button, IconButton, SplitButton and LinkButton. */
 export interface ActionShapeProps extends ActionSurfaceProps {
   readonly size?: ButtonSize;
   readonly shape?: ButtonShape;

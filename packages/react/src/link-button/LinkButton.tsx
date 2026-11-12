@@ -3,6 +3,7 @@
 import {
   linkButton,
   type LinkButtonProps as SharedLinkButtonProps,
+  type LinkButtonShape,
   type LinkButtonSize,
   type LinkButtonVariant,
 } from '@mszczygiel-projects/ui-core-shared/link-button';
@@ -13,7 +14,7 @@ import { useActionRef } from '../internal/action.ts';
 import { classNames } from '../internal/class-names.ts';
 import { rendersContent } from '../internal/renders-content.ts';
 
-export type { LinkButtonSize, LinkButtonVariant };
+export type { LinkButtonShape, LinkButtonSize, LinkButtonVariant };
 
 const { options } = linkButton;
 
@@ -66,6 +67,7 @@ export function LinkButton({
   download,
   variant = 'primary',
   size = 'medium',
+  shape = 'square',
   disabled = false,
   label,
   children,
@@ -100,6 +102,7 @@ export function LinkButton({
     'ui-action',
     `ui-action--${oneOf(variant, options.variant.options, options.variant.default)}`,
     `ui-action--${oneOf(size, options.size.options, options.size.default)}`,
+    `ui-action--${oneOf(shape, options.shape.options, options.shape.default)}`,
     disabled && 'ui-action--disabled',
     className,
   );

@@ -30,7 +30,7 @@ import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 import { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
 import { FileInputFieldReject, FileInputFieldValueChange } from "./file-input-field/events";
 import { IconButtonShape, IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
-import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
+import { LinkButtonShape, LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 import { WebMenuItems } from "./menu/menu";
@@ -80,7 +80,7 @@ export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 export { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
 export { FileInputFieldReject, FileInputFieldValueChange } from "./file-input-field/events";
 export { IconButtonShape, IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
-export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
+export { LinkButtonShape, LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
 export { WebMenuItems } from "./menu/menu";
@@ -969,6 +969,11 @@ export namespace Components {
           * The relationship to the linked resource, written as given.
          */
         "rel"?: string;
+        /**
+          * The corners of the link: the radius of its size, or a pill when `rounded`.
+          * @default 'square'
+         */
+        "shape": LinkButtonShape;
         /**
           * The size, which follows the density.
           * @default 'medium'
@@ -4033,6 +4038,11 @@ declare namespace LocalJSX {
          */
         "rel"?: string;
         /**
+          * The corners of the link: the radius of its size, or a pill when `rounded`.
+          * @default 'square'
+         */
+        "shape"?: LinkButtonShape;
+        /**
           * The size, which follows the density.
           * @default 'medium'
          */
@@ -5484,6 +5494,7 @@ declare namespace LocalJSX {
         "download": string;
         "variant": LinkButtonVariant;
         "size": LinkButtonSize;
+        "shape": LinkButtonShape;
         "disabled": boolean;
         "label": string;
     }
