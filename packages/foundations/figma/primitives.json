@@ -4138,6 +4138,24 @@
       }
     },
     "border-width": {
+      "0": {
+        "$value": 0,
+        "$type": "strokeWidth",
+        "$description": "No border width.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1117:2",
+            "collectionId": "VariableCollectionId:1:122",
+            "scopes": [
+              "STROKE_FLOAT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--border-width-0)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
       "1": {
         "$value": 1,
         "$type": "strokeWidth",

@@ -7623,6 +7623,31 @@
           ]
         }
       }
+    },
+    "none": {
+      "$value": {
+        "Light": "{Primitives Sizes.border-width.0}",
+        "Dark": "{Primitives Sizes.border-width.0}"
+      },
+      "$type": "strokeWidth",
+      "$description": "No stroke, for a border that a theme may switch on.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:1117:3",
+          "collectionId": "VariableCollectionId:1:238",
+          "scopes": [
+            "STROKE_FLOAT"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--stroke-none)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Light",
+            "Dark"
+          ]
+        }
+      }
     }
   },
   "shadow": {
