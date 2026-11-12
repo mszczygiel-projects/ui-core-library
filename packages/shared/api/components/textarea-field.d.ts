@@ -50,7 +50,7 @@ export declare const textareaField: {
     readonly parts: readonly ["base", "control", "input", "label-row", "label", "label-text", "label-hint", "hint", "hint-text"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change"];
-    readonly stories: readonly ["Playground", "Variants", "Resize", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "WithCharacterCount", "Variants", "Resize", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
         readonly reason: "The web component exposes its form-associated state. React exposes the native state through the ref of its textarea, and its form prop is the native form ID attribute.";

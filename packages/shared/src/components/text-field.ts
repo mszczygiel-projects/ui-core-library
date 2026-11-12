@@ -49,7 +49,7 @@ export const textField = defineComponent({
   ],
   slots: ['leading-icon', 'trailing-icon'],
   events: ['ui-value-change'],
-  stories: ['Playground', 'Variants', 'WithIcons', 'OnSurfaces'],
+  stories: ['Playground', 'Variants', 'HiddenLabel', 'WithIcons', 'OnSurfaces'],
   exceptions: [
     {
       items: ['form', 'validity', 'validationMessage', 'willValidate'],

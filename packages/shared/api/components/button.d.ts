@@ -40,7 +40,7 @@ export declare const button: {
     readonly parts: readonly ["base", "wrapper", "content", "leading-icon", "label", "trailing-icon", "loader"];
     readonly slots: readonly ["leading-icon", "trailing-icon"];
     readonly events: readonly [];
-    readonly stories: readonly ["Playground", "Variants", "WithIcons", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Variants", "Shapes", "WithIcons", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
         readonly reason: "The web component exposes its form-associated state as read-only properties. React exposes the native state through its ref, and its form prop is the native form ID attribute.";

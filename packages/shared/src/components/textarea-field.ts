@@ -36,7 +36,7 @@ export const textareaField = defineComponent({
   ],
   slots: [],
   events: ['ui-value-change'],
-  stories: ['Playground', 'Variants', 'Resize', 'OnSurfaces'],
+  stories: ['Playground', 'WithCharacterCount', 'Variants', 'Resize', 'OnSurfaces'],
   exceptions: [
     {
       items: ['form', 'validity', 'validationMessage', 'willValidate'],

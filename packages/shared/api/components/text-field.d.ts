@@ -49,7 +49,7 @@ export declare const textField: {
     readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-row", "label-text", "label-hint", "hint", "hint-text", "leading-icon", "trailing-icon"];
     readonly slots: readonly ["leading-icon", "trailing-icon"];
     readonly events: readonly ["ui-value-change"];
-    readonly stories: readonly ["Playground", "Variants", "WithIcons", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Variants", "HiddenLabel", "WithIcons", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
         readonly reason: "The web component exposes its form-associated state. React exposes the native state through the ref of its input, and its form prop is the native form ID attribute.";
