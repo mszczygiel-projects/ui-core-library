@@ -50,17 +50,23 @@
 }
 
 .ui-split-button__action.ui-action {
-  border-inline-end-width: 0;
   border-start-end-radius: 0;
   border-end-end-radius: 0;
+}
+
+.ui-split-button__action.ui-action::before {
+  border-inline-end-width: 0;
 }
 
 /* A square: the stack padding on every side around a box as tall as the line of a button. */
 .ui-split-button__toggle.ui-action {
   padding-inline: var(--_padding-stack);
-  border-inline-start-width: 0;
   border-start-start-radius: 0;
   border-end-start-radius: 0;
+}
+
+.ui-split-button__toggle.ui-action::before {
+  border-inline-start-width: 0;
 }
 
 /* The focus ring of a half stays above the other half. */

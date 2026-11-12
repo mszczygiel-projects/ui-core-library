@@ -138,8 +138,8 @@ export function iconButtonContract(adapter: Mount<IconButtonContractProps>): voi
         const side =
           // The line height is a ratio in CSS; its Figma number is the height of the line.
           tokenNumber(`${prefix}-line-height`, { density }) +
-          2 * pixels(tokenValue(`${prefix}-padding-stack`, { density })) +
-          2 * pixels(tokenValue('--button-border-width', { density }));
+          // The border lies inside the box.
+          2 * pixels(tokenValue(`${prefix}-padding-stack`, { density }));
         const base = button.part('base');
         expect(base.offsetHeight).toBe(side);
         expect(base.offsetWidth).toBe(side);

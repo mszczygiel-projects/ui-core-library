@@ -181,8 +181,8 @@ export function linkButtonContract(adapter: Mount<LinkButtonContractProps>): voi
         const height =
           // The line height is a ratio in CSS; its Figma number is the height of the line.
           tokenNumber(`${prefix}-line-height`, { density }) +
-          2 * pixels(tokenValue(`${prefix}-padding-stack`, { density })) +
-          2 * pixels(tokenValue('--button-border-width', { density }));
+          // The border lies inside the box.
+          2 * pixels(tokenValue(`${prefix}-padding-stack`, { density }));
         const style = getComputedStyle(link.part('base'));
         expect(link.part('base').offsetHeight).toBe(height);
         expect(Number.parseFloat(style.paddingInlineStart)).toBe(
