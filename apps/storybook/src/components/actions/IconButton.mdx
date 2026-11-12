@@ -31,7 +31,7 @@ IconButton has the variants of Button: `primary`, the default, gives the most em
 
 ## Sizes & density
 
-`small`, `medium` (the default) and `large` match the height of a Button of the same size, so both line up in one row. IconButton is a square: the stack padding of Button on every side around a box as tall as its line. Density changes the padding and the icon without changing the prop.
+`small`, `medium` (the default) and `large` match the height of a Button of the same size, so both line up in one row. IconButton is a square: the stack padding of Button on every side around a box as tall as its line. Density changes the padding and the icon without changing the prop. `shape="rounded"` makes a circle, with the radius of a rounded Button.
 
 ## States
 
@@ -52,7 +52,7 @@ While loading, `loadingLabel` describes the state. Without it, IconButton uses `
 
 - IconButton behaves as Button: pointer, Enter and Space produce the native `click`, and a click on a disabled or loading button stops at the button.
 - `type="button"` is the default. `submit` and `reset` act on the owning form, and `name` and `value` identify the submit action. Both implementations take part in a form as Button does, including an external `form` attribute, disabled fieldsets and dialog forms.
-- An unknown `type`, `variant` or `size`, or a removed attribute, falls back to the default.
+- An unknown `type`, `variant`, `size` or `shape`, or a removed attribute, falls back to the default.
 - IconButton does not manage the asynchronous action. Set `loading` when it begins and clear it when it finishes.
 
 ## Accessibility

@@ -2,6 +2,7 @@ import '@mszczygiel-projects/ui-core-web-components/icon-button';
 
 import {
   iconButton,
+  type IconButtonShape,
   type IconButtonSize,
   type IconButtonType,
   type IconButtonVariant,
@@ -17,6 +18,7 @@ interface IconButtonArgs {
   readonly icon?: IconName;
   readonly variant: IconButtonVariant;
   readonly size: IconButtonSize;
+  readonly shape: IconButtonShape;
   readonly disabled: boolean;
   readonly loading: boolean;
   readonly type: IconButtonType;
@@ -40,6 +42,7 @@ function UiIconButton(args: IconButtonArgs) {
       label={args.label}
       variant={args.variant}
       size={args.size}
+      shape={args.shape}
       disabled={args.disabled}
       loading={args.loading}
       type={args.type}
@@ -59,6 +62,7 @@ const source = (args: IconButtonArgs) =>
       label: args.label,
       variant: args.variant === options.variant.default ? undefined : args.variant,
       size: args.size === options.size.default ? undefined : args.size,
+      shape: args.shape === options.shape.default ? undefined : args.shape,
       type: args.type === options.type.default ? undefined : args.type,
       disabled: args.disabled,
       loading: args.loading,
@@ -77,6 +81,7 @@ const meta = {
     icon: 'iconClose',
     variant: options.variant.default,
     size: options.size.default,
+    shape: options.shape.default,
     disabled: false,
     loading: false,
     type: options.type.default,
@@ -86,6 +91,7 @@ const meta = {
     icon: { control: 'select', options: iconOptions },
     variant: { control: 'select', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
+    shape: { control: 'inline-radio', options: options.shape.options },
     disabled: { control: 'boolean' },
     loading: { control: 'boolean' },
     type: { control: 'inline-radio', options: options.type.options },

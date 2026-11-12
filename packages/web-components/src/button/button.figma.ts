@@ -12,6 +12,7 @@ const variant = instance.getEnum('variant', {
   danger: 'danger',
 });
 const size = instance.getEnum('size', { small: 'small', medium: 'medium', large: 'large' });
+const shape = instance.getEnum('shape', { square: 'square', rounded: 'rounded' });
 const disabled = instance.getEnum('disabled', { false: 'false', true: 'true' }) === 'true';
 const loading = instance.getEnum('loading', { false: 'false', true: 'true' }) === 'true';
 const children = instance
@@ -32,7 +33,7 @@ const trailing =
 
 // Interaction previews browser states; it is not an element attribute.
 export default {
-  example: figma.code`<ui-button${variant === 'primary' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${disabled ? ' disabled' : ''}${loading ? ' loading' : ''}>${leading ? figma.code`<span slot="leading-icon">${leading}</span>` : ''}${children}${trailing ? figma.code`<span slot="trailing-icon">${trailing}</span>` : ''}</ui-button>`,
+  example: figma.code`<ui-button${variant === 'primary' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${shape === 'square' ? '' : figma.code` shape="${shape}"`}${disabled ? ' disabled' : ''}${loading ? ' loading' : ''}>${leading ? figma.code`<span slot="leading-icon">${leading}</span>` : ''}${children}${trailing ? figma.code`<span slot="trailing-icon">${trailing}</span>` : ''}</ui-button>`,
   imports: ["import '@mszczygiel-projects/ui-core-web-components/button'"],
   id: 'ui-button',
   metadata: { nestable: true },

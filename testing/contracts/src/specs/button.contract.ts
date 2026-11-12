@@ -8,7 +8,12 @@ import { iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions, required } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { pixels, tokenValue } from '../tokens.ts';
-import { actionFormContract, actionSurfaceContract, formFixtures } from './action.contract.ts';
+import {
+  actionFormContract,
+  actionShapeContract,
+  actionSurfaceContract,
+  formFixtures,
+} from './action.contract.ts';
 import { popupTriggerContract } from './popup-trigger.contract.ts';
 
 /**
@@ -32,6 +37,7 @@ export function buttonContract(adapter: Mount<ButtonContractProps>): void {
   const { formFixture } = formFixtures();
   actionFormContract(adapter, { children: 'Save draft' });
   actionSurfaceContract(adapter, { children: 'Save draft' });
+  actionShapeContract(adapter, { children: 'Save draft' });
 
   afterEach(async () => {
     for (const button of mounted.splice(0)) {

@@ -27,6 +27,10 @@ export declare const iconButton: {
             readonly options: readonly ["small", "medium", "large"];
             readonly default: "medium";
         };
+        readonly shape: {
+            readonly options: readonly ["square", "rounded"];
+            readonly default: "square";
+        };
         readonly type: {
             readonly options: readonly ["button", "submit", "reset"];
             readonly default: "button";
@@ -44,11 +48,13 @@ export declare const iconButton: {
 };
 export type IconButtonVariant = OptionOf<typeof iconButton, 'variant'>;
 export type IconButtonSize = OptionOf<typeof iconButton, 'size'>;
+export type IconButtonShape = OptionOf<typeof iconButton, 'shape'>;
 export type IconButtonType = OptionOf<typeof iconButton, 'type'>;
 export interface IconButtonProps {
     label: string;
     variant?: IconButtonVariant;
     size?: IconButtonSize;
+    shape?: IconButtonShape;
     disabled?: boolean;
     loading?: boolean;
     type?: IconButtonType;

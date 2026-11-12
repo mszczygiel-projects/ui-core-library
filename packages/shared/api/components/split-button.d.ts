@@ -22,6 +22,10 @@ export declare const splitButton: {
             readonly options: readonly ["small", "medium", "large"];
             readonly default: "medium";
         };
+        readonly shape: {
+            readonly options: readonly ["square", "rounded"];
+            readonly default: "square";
+        };
         readonly type: {
             readonly options: readonly ["button", "submit", "reset"];
             readonly default: "button";

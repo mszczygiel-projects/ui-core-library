@@ -34,6 +34,8 @@ export const iconButton = defineComponent({
 export type IconButtonVariant = OptionOf<typeof iconButton, 'variant'>;
 /** The sizes of an icon action, each as tall as a button of that size. */
 export type IconButtonSize = OptionOf<typeof iconButton, 'size'>;
+/** The corners of an icon action, shared with Button. */
+export type IconButtonShape = OptionOf<typeof iconButton, 'shape'>;
 /** The native action performed after an uncancelled click. */
 export type IconButtonType = OptionOf<typeof iconButton, 'type'>;
 
@@ -51,6 +53,11 @@ export interface IconButtonProps {
    * @default 'medium'
    */
   size?: IconButtonSize;
+  /**
+   * The corners of the action; `rounded` makes a circle.
+   * @default 'square'
+   */
+  shape?: IconButtonShape;
   /**
    * Disables interaction and removes the control from keyboard navigation.
    * @default false

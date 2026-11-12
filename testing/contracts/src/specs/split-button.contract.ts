@@ -13,6 +13,7 @@ import { pseudoLabels } from '../pseudo.ts';
 import { tokenValue } from '../tokens.ts';
 import {
   actionFormContract,
+  actionShapeContract,
   actionSurfaceContract,
   formFixtures,
   resolvedColor,
@@ -96,6 +97,7 @@ export function splitButtonContract(adapter: Mount<SplitButtonContractProps>): v
   const named = { children: 'Save', options: SAVE_ACTIONS };
   actionFormContract(mainAction(adapter), named);
   actionSurfaceContract(mainAction(adapter), named);
+  actionShapeContract(mainAction(adapter), named);
   const { formFixture } = formFixtures();
 
   const mounted: Mounted<SplitButtonContractProps>[] = [];

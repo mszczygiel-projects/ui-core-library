@@ -3,6 +3,7 @@ import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config
 import {
   button,
   type ButtonProps,
+  type ButtonShape,
   type ButtonSize,
   type ButtonType,
   type ButtonVariant,
@@ -64,6 +65,9 @@ export class UiButton implements ButtonProps, FormAssociated {
 
   /** The size of the button, which follows the density. */
   @Prop() size: ButtonSize = 'medium';
+
+  /** The corners of the action. */
+  @Prop() shape: ButtonShape = 'square';
 
   /** Disables interaction and removes the native control from keyboard navigation. */
   @Prop({ reflect: true }) disabled = false;
@@ -203,6 +207,7 @@ export class UiButton implements ButtonProps, FormAssociated {
   render(): VNode {
     const variant = oneOf(this.variant, options.variant.options, options.variant.default);
     const size = oneOf(this.size, options.size.options, options.size.default);
+    const shape = oneOf(this.shape, options.shape.options, options.shape.default);
     const type = oneOf(this.type, options.type.options, options.type.default);
     const label = this.authorLabel ?? this.label;
     const named = typeof label === 'string' && label !== '';
@@ -215,7 +220,7 @@ export class UiButton implements ButtonProps, FormAssociated {
       <form role="none" onSubmit={this.onFormAction} onReset={this.onFormAction}>
         <button
           part="base"
-          class={`base action ${variant} ${size}${this.loading ? ' loading' : ''}`}
+          class={`base action ${variant} ${size} ${shape}${this.loading ? ' loading' : ''}`}
           type={type}
           disabled={this.isDisabled()}
           aria-label={named ? label : undefined}

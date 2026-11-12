@@ -27,6 +27,10 @@ export declare const button: {
             readonly options: readonly ["small", "medium", "large"];
             readonly default: "medium";
         };
+        readonly shape: {
+            readonly options: readonly ["square", "rounded"];
+            readonly default: "square";
+        };
         readonly type: {
             readonly options: readonly ["button", "submit", "reset"];
             readonly default: "button";
@@ -44,10 +48,12 @@ export declare const button: {
 };
 export type ButtonVariant = OptionOf<typeof button, 'variant'>;
 export type ButtonSize = OptionOf<typeof button, 'size'>;
+export type ButtonShape = OptionOf<typeof button, 'shape'>;
 export type ButtonType = OptionOf<typeof button, 'type'>;
 export interface ButtonProps {
     variant?: ButtonVariant;
     size?: ButtonSize;
+    shape?: ButtonShape;
     disabled?: boolean;
     loading?: boolean;
     type?: ButtonType;

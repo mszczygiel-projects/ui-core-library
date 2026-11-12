@@ -26,6 +26,7 @@ export const button = defineComponent({
       default: 'primary',
     },
     size: { options: ['small', 'medium', 'large'], default: 'medium' },
+    shape: { options: ['square', 'rounded'], default: 'square' },
     type: { options: ['button', 'submit', 'reset'], default: 'button' },
   },
   labels: ['loading'],
@@ -46,6 +47,8 @@ export const button = defineComponent({
 export type ButtonVariant = OptionOf<typeof button, 'variant'>;
 /** The sizes of an action, each following the density. */
 export type ButtonSize = OptionOf<typeof button, 'size'>;
+/** The corners of an action: the radius of the control family or a pill. */
+export type ButtonShape = OptionOf<typeof button, 'shape'>;
 /** The native action performed after an uncancelled click. */
 export type ButtonType = OptionOf<typeof button, 'type'>;
 
@@ -61,6 +64,11 @@ export interface ButtonProps {
    * @default 'medium'
    */
   size?: ButtonSize;
+  /**
+   * The corners of the action.
+   * @default 'square'
+   */
+  shape?: ButtonShape;
   /**
    * Disables interaction and removes the control from keyboard navigation.
    * @default false

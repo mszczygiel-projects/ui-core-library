@@ -3,6 +3,7 @@
 import {
   button,
   type ButtonProps as SharedButtonProps,
+  type ButtonShape,
   type ButtonSize,
   type ButtonType,
   type ButtonVariant,
@@ -16,7 +17,7 @@ import { rendersContent } from '../internal/renders-content.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
 import { Loader } from '../loader/Loader.tsx';
 
-export type { ButtonSize, ButtonType, ButtonVariant };
+export type { ButtonShape, ButtonSize, ButtonType, ButtonVariant };
 
 const { options } = button;
 
@@ -40,6 +41,7 @@ export interface ButtonProps
 export function Button({
   variant = 'primary',
   size = 'medium',
+  shape = 'square',
   disabled = false,
   loading = false,
   type = 'button',
@@ -75,6 +77,7 @@ export function Button({
         'ui-action',
         `ui-action--${oneOf(variant, options.variant.options, options.variant.default)}`,
         `ui-action--${buttonSize}`,
+        `ui-action--${oneOf(shape, options.shape.options, options.shape.default)}`,
         loading && 'ui-action--loading',
         className,
       )}
