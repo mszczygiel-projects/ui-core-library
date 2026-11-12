@@ -1272,9 +1272,11 @@ css --tabs-track-width
 css --text-2xl
 css --text-2xl--line-height
 css --text-2xs
+css --text-2xs--line-height
 css --text-3xl
 css --text-3xl--line-height
 css --text-3xs
+css --text-3xs--line-height
 css --text-4xl
 css --text-4xl--line-height
 css --text-5xl
@@ -2188,9 +2190,11 @@ tailwind --spacing-none
 tailwind --text-2xl
 tailwind --text-2xl--line-height
 tailwind --text-2xs
+tailwind --text-2xs--line-height
 tailwind --text-3xl
 tailwind --text-3xl--line-height
 tailwind --text-3xs
+tailwind --text-3xs--line-height
 tailwind --text-4xl
 tailwind --text-4xl--line-height
 tailwind --text-5xl

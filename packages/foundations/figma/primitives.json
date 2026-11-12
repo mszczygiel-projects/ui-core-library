@@ -3302,6 +3302,40 @@
       }
     },
     "text": {
+      "3xs": {
+        "$value": 10,
+        "$type": "fontSize",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:3",
+            "collectionId": "VariableCollectionId:1:122",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--text-3xs)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "2xs": {
+        "$value": 11,
+        "$type": "fontSize",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:2",
+            "collectionId": "VariableCollectionId:1:122",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--text-2xs)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
       "xs": {
         "$value": 12,
         "$type": "fontSize",
@@ -3744,35 +3778,35 @@
           }
         }
       },
-      "2xs": {
-        "$value": 11,
-        "$type": "fontSize",
+      "2xs-line-height": {
+        "$value": 14,
+        "$type": "lineHeight",
         "$extensions": {
           "com.figma": {
-            "variableId": "VariableID:1103:2",
+            "variableId": "VariableID:1111:2",
             "collectionId": "VariableCollectionId:1:122",
             "scopes": [
-              "FONT_SIZE"
+              "LINE_HEIGHT"
             ],
             "codeSyntax": {
-              "WEB": "var(--text-2xs)"
+              "WEB": "var(--text-2xs--line-height)"
             },
             "hiddenFromPublishing": false
           }
         }
       },
-      "3xs": {
-        "$value": 10,
-        "$type": "fontSize",
+      "3xs-line-height": {
+        "$value": 12,
+        "$type": "lineHeight",
         "$extensions": {
           "com.figma": {
-            "variableId": "VariableID:1103:3",
+            "variableId": "VariableID:1111:3",
             "collectionId": "VariableCollectionId:1:122",
             "scopes": [
-              "FONT_SIZE"
+              "LINE_HEIGHT"
             ],
             "codeSyntax": {
-              "WEB": "var(--text-3xs)"
+              "WEB": "var(--text-3xs--line-height)"
             },
             "hiddenFromPublishing": false
           }

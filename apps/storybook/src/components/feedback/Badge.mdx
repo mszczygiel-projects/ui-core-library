@@ -29,7 +29,7 @@ The **base** is the surface of the badge, its fill, border and corners. It holds
 
 `tone` says what a badge means: `neutral`, the default, for categories and counts; `brand` for a highlight; and `info`, `success`, `warning` and `error` for a status. `variant` sets the emphasis: `solid`, the default, is a strong fill for marks that must stand out, and `subtle` a light tint for statuses in lists and tables.
 
-A brand turns on a border or capitals with tokens, not props: `--badge-border-width` and `--color-badge-<tone>-<variant>-border` draw the border, which has the colour of the fill in the library, and `--badge-text-uppercase` sets capitals. The border is drawn inside the badge, so it never changes its size. Smaller text takes `--text-2xs` or `--text-3xs` through `--badge-<size>-font-size`.
+A brand turns on a border or capitals with tokens, not props: `--badge-border-width` and `--color-badge-<tone>-<variant>-border` draw the border, which has the colour of the fill in the library, and `--badge-text-uppercase` sets capitals. The border is drawn inside the badge, so it never changes its size. Smaller text takes `--text-2xs` or `--text-3xs` through `--badge-<size>-font-size`, with their line heights `--text-2xs--line-height` or `--text-3xs--line-height` through `--badge-<size>-line-height`.
 
 ## Sizes & density
 
