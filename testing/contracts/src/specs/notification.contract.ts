@@ -105,6 +105,15 @@ export function notificationContract(adapter: Mount<NotificationContractProps>):
       link.textContent = 'Details';
       (root.shadowRoot === null ? component.part('description') : root).append(link);
       expect(getComputedStyle(link).color).toBe('rgb(16, 17, 18)');
+      // Only a direct link: a link nested in a paragraph keeps the styles of the page.
+      const paragraph = document.createElement('p');
+      const nested = document.createElement('a');
+      nested.href = '#more';
+      nested.textContent = 'More';
+      paragraph.append(nested);
+      (root.shadowRoot === null ? component.part('description') : root).append(paragraph);
+      expect(getComputedStyle(nested).color).not.toBe('rgb(16, 17, 18)');
+      paragraph.remove();
       link.remove();
     }
   });

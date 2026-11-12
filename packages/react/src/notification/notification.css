@@ -144,11 +144,12 @@
   overflow-wrap: break-word;
 }
 
-.ui-notification__description a {
+/* A link directly in the description, the same API as the slot of the web component. */
+.ui-notification__description > a {
   color: var(--_link);
 }
 
-.ui-notification__description a:hover {
+.ui-notification__description > a:hover {
   color: var(--_link-hover);
 }
 

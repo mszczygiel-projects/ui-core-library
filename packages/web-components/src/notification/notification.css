@@ -147,6 +147,7 @@
   overflow-wrap: break-word;
 }
 
+/* A shadow root reaches only the elements assigned to the slot, so only a direct link takes its colours. */
 .description ::slotted(a) {
   color: var(--_link);
 }

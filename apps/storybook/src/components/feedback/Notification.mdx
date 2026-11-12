@@ -43,7 +43,7 @@ A notification itself is not interactive. Its dismiss button takes a tint on hov
 
 <FrameworkCanvas react={ReactStories.Dismissible} webComponents={WebComponentStories.Dismissible} />
 
-Write the heading in `heading`, and the details in the default slot, or as `children`. An empty description takes no room. A link in the description takes the link colour of the notification, so that it stands out from the text around it.
+Write the heading in `heading`, and the details in the default slot, or as `children`. An empty description takes no room. A link that is a direct child of the description takes the link colour of the notification, so that it stands out from the text around it. A link nested in another element, such as a paragraph, keeps the styles of the page: a shadow root reaches only the elements in its slot, and React follows the same rule.
 
 `dismissible` adds a button that asks to remove the notification. It is named by a word and the heading, such as “Dismiss Changes saved”, so that several buttons on a page have their own names. The word is `dismissLabel`, then `labels.notification.dismiss`, “Dismiss” in English.
 
