@@ -46,6 +46,7 @@ describe('ui-link-button', () => {
       download: 'pricing.pdf',
       variant: 'tertiary',
       size: 'huge',
+      shape: 'oval',
       label: 'Pricing plans',
     })) {
       link.setAttribute(name, value);
@@ -58,7 +59,7 @@ describe('ui-link-button', () => {
     expect(native?.getAttribute('rel')).toBe('external');
     expect(native?.getAttribute('download')).toBe('pricing.pdf');
     expect(native?.getAttribute('aria-label')).toBe('Pricing plans');
-    expect(native?.className).toBe('base action primary medium');
+    expect(native?.className).toBe('base action primary medium square');
   });
 
   it('forwards a changing aria-label without writing author attributes', async () => {
