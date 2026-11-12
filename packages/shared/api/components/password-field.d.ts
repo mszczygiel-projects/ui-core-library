@@ -32,7 +32,7 @@ export declare const passwordField: {
         };
     };
     readonly labels: readonly ["reveal"];
-    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-text", "hint", "hint-text", "reveal", "reveal-icon"];
+    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-row", "label-text", "label-hint", "hint", "hint-text", "reveal", "reveal-icon"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change", "ui-revealed-change"];
     readonly stories: readonly ["Playground", "Variants", "Revealed", "OnSurfaces"];

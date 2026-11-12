@@ -65,8 +65,10 @@ declare global {
  * @part control - The input surface, border and focus indicator.
  * @part input-row - The search icon, the input and the clear button.
  * @part input - The native editable input.
+ * @part label-row - The row of the label on top and its hint.
  * @part label - The visible label and its floating background.
  * @part label-text - The visible label text.
+ * @part label-hint - The short text at the end of the label row, such as a count.
  * @part hint - The help or feedback container.
  * @part hint-text - The help or feedback text.
  * @part leading-icon - The decorative search icon.
@@ -93,6 +95,9 @@ export class UiSearchField implements SearchFieldProps, FormAssociated {
   /** The position of the visible label. */
   @Prop() labelPlacement: TextFieldLabelPlacement = 'top';
 
+  /** Hides the visible label, which still names the control. */
+  @Prop() hideLabel = false;
+
   /** Visual feedback; `error` also sets `aria-invalid` without changing native validity. */
   @Prop() state: TextFieldState = 'default';
 
@@ -104,6 +109,9 @@ export class UiSearchField implements SearchFieldProps, FormAssociated {
 
   /** Help or validation feedback, connected to the description of the input. */
   @Prop() hint?: string;
+
+  /** Short text at the end of the label row, such as a count of characters, in the description. */
+  @Prop() labelHint?: string;
 
   /** Prevents interaction and submission. */
   @Prop({ reflect: true }) disabled = false;
@@ -279,7 +287,9 @@ export class UiSearchField implements SearchFieldProps, FormAssociated {
         classes={appearance.classes}
         placement={appearance.placement}
         label={this.label}
+        hideLabel={this.hideLabel}
         hint={this.hint}
+        labelHint={this.labelHint}
         onSubmit={this.control.onInnerSubmit}
       >
         <div part="input-row" class="input-row">
@@ -305,7 +315,7 @@ export class UiSearchField implements SearchFieldProps, FormAssociated {
             autoComplete={this.autoComplete}
             {...forwardedAttributes(this.hostAttributes)}
             aria-invalid={appearance.error ? 'true' : undefined}
-            aria-describedby={fieldDescription(this.hint)}
+            aria-describedby={fieldDescription(this.hint, this.labelHint)}
             onInput={this.onInput}
             onChange={this.onChange}
             onKeyDown={this.onKeyDown}

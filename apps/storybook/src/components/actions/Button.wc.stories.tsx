@@ -2,6 +2,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 
 import {
   button,
+  type ButtonShape,
   type ButtonSize,
   type ButtonType,
   type ButtonVariant,
@@ -16,6 +17,7 @@ interface ButtonArgs {
   readonly children: string;
   readonly variant: ButtonVariant;
   readonly size: ButtonSize;
+  readonly shape: ButtonShape;
   readonly disabled: boolean;
   readonly loading: boolean;
   readonly type: ButtonType;
@@ -43,6 +45,7 @@ function UiButton(args: ButtonArgs) {
     <ui-button
       variant={args.variant}
       size={args.size}
+      shape={args.shape}
       disabled={args.disabled}
       loading={args.loading}
       type={args.type}
@@ -67,6 +70,7 @@ const source = (args: ButtonArgs) =>
     {
       variant: args.variant === options.variant.default ? undefined : args.variant,
       size: args.size === options.size.default ? undefined : args.size,
+      shape: args.shape === options.shape.default ? undefined : args.shape,
       type: args.type === options.type.default ? undefined : args.type,
       disabled: args.disabled,
       loading: args.loading,
@@ -85,6 +89,7 @@ const meta = {
     children: 'Save changes',
     variant: options.variant.default,
     size: options.size.default,
+    shape: options.shape.default,
     disabled: false,
     loading: false,
     type: options.type.default,
@@ -93,6 +98,7 @@ const meta = {
     children: { control: 'text' },
     variant: { control: 'select', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
+    shape: { control: 'inline-radio', options: options.shape.options },
     disabled: { control: 'boolean' },
     loading: { control: 'boolean' },
     type: { control: 'inline-radio', options: options.type.options },
@@ -133,6 +139,25 @@ export const Variants: Story = {
       source: {
         code: options.variant.options
           .map((variant) => source({ ...meta.args, variant, children: variant }))
+          .join('\n'),
+      },
+    },
+  },
+};
+
+export const Shapes: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      {options.shape.options.map((shape) => (
+        <UiButton key={shape} {...args} shape={shape} children={shape} />
+      ))}
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: options.shape.options
+          .map((shape) => source({ ...meta.args, shape, children: shape }))
           .join('\n'),
       },
     },

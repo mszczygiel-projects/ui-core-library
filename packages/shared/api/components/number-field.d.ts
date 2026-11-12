@@ -38,7 +38,7 @@ export declare const numberField: {
         };
     };
     readonly labels: readonly ["decrement", "increment", "validationMessage"];
-    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-text", "hint", "hint-text", "decrement", "decrement-icon", "increment", "increment-icon"];
+    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-row", "label-text", "label-hint", "hint", "hint-text", "decrement", "decrement-icon", "increment", "increment-icon"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change"];
     readonly stories: readonly ["Playground", "Variants", "WithControls", "WithDecimals", "WithLocale", "OnSurfaces"];

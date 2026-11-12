@@ -917,6 +917,23 @@
             }
           }
         }
+      },
+      "shadow": {
+        "$value": "{Surfaces.color.background.transparent}",
+        "$type": "color",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:19",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "EFFECT_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-control-shadow)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
       }
     },
     "checkbox": {
@@ -1512,6 +1529,23 @@
                 "hiddenFromPublishing": false
               }
             }
+          },
+          "border": {
+            "$value": "{Components.color.badge.success.solid.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:12",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-success-solid-border)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
           }
         },
         "subtle": {
@@ -1547,6 +1581,23 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-badge-success-subtle-text)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          },
+          "border": {
+            "$value": "{Components.color.badge.success.subtle.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:13",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-success-subtle-border)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -1592,6 +1643,23 @@
                 "hiddenFromPublishing": false
               }
             }
+          },
+          "border": {
+            "$value": "{Components.color.badge.error.solid.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:16",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-error-solid-border)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
           }
         },
         "subtle": {
@@ -1627,6 +1695,23 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-badge-error-subtle-text)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          },
+          "border": {
+            "$value": "{Components.color.badge.error.subtle.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:17",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-error-subtle-border)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -1672,6 +1757,23 @@
                 "hiddenFromPublishing": false
               }
             }
+          },
+          "border": {
+            "$value": "{Components.color.badge.neutral.solid.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:6",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-neutral-solid-border)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
           }
         },
         "subtle": {
@@ -1707,6 +1809,23 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-badge-neutral-subtle-text)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          },
+          "border": {
+            "$value": "{Components.color.badge.neutral.subtle.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:7",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-neutral-subtle-border)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -1752,6 +1871,23 @@
                 "hiddenFromPublishing": false
               }
             }
+          },
+          "border": {
+            "$value": "{Components.color.badge.brand.solid.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:8",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-brand-solid-border)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
           }
         },
         "subtle": {
@@ -1787,6 +1923,23 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-badge-brand-subtle-text)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          },
+          "border": {
+            "$value": "{Components.color.badge.brand.subtle.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:9",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-brand-subtle-border)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -1832,6 +1985,23 @@
                 "hiddenFromPublishing": false
               }
             }
+          },
+          "border": {
+            "$value": "{Components.color.badge.warning.solid.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:14",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-warning-solid-border)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
           }
         },
         "subtle": {
@@ -1867,6 +2037,23 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-badge-warning-subtle-text)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          },
+          "border": {
+            "$value": "{Components.color.badge.warning.subtle.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:15",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-warning-subtle-border)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -1912,6 +2099,23 @@
                 "hiddenFromPublishing": false
               }
             }
+          },
+          "border": {
+            "$value": "{Components.color.badge.info.solid.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:10",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-info-solid-border)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
           }
         },
         "subtle": {
@@ -1947,6 +2151,23 @@
                 ],
                 "codeSyntax": {
                   "WEB": "var(--color-badge-info-subtle-text)"
+                },
+                "hiddenFromPublishing": false
+              }
+            }
+          },
+          "border": {
+            "$value": "{Components.color.badge.info.subtle.background}",
+            "$type": "color",
+            "$extensions": {
+              "com.figma": {
+                "variableId": "VariableID:1103:11",
+                "collectionId": "VariableCollectionId:600:2",
+                "scopes": [
+                  "STROKE_COLOR"
+                ],
+                "codeSyntax": {
+                  "WEB": "var(--color-badge-info-subtle-border)"
                 },
                 "hiddenFromPublishing": false
               }
@@ -7205,6 +7426,21 @@
           }
         }
       }
+    },
+    "shadow": {
+      "$value": "{Themes.shadow.inset.subtle}",
+      "$type": "string",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:1103:18",
+          "collectionId": "VariableCollectionId:600:2",
+          "scopes": [],
+          "codeSyntax": {
+            "WEB": "var(--control-shadow)"
+          },
+          "hiddenFromPublishing": false
+        }
+      }
     }
   },
   "button": {
@@ -7696,6 +7932,25 @@
             "scopes": [],
             "codeSyntax": {
               "WEB": "var(--button-shadow-active)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      }
+    },
+    "rounded": {
+      "radius": {
+        "$value": "{Themes.radius.pill}",
+        "$type": "borderRadius",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:20",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "CORNER_RADIUS"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--button-rounded-radius)"
             },
             "hiddenFromPublishing": false
           }
@@ -8877,6 +9132,42 @@
           "scopes": [],
           "codeSyntax": {
             "WEB": "var(--badge-letter-spacing)"
+          },
+          "hiddenFromPublishing": false
+        }
+      }
+    },
+    "border": {
+      "width": {
+        "$value": "{Themes.stroke.border}",
+        "$type": "strokeWidth",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:4",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "STROKE_FLOAT"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--badge-border-width)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      }
+    },
+    "text-uppercase": {
+      "$value": "{Themes.text-uppercase.caption}",
+      "$type": "boolean",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:1103:5",
+          "collectionId": "VariableCollectionId:600:2",
+          "scopes": [
+            "ALL_SCOPES"
+          ],
+          "codeSyntax": {
+            "WEB": "var(--badge-text-uppercase)"
           },
           "hiddenFromPublishing": false
         }

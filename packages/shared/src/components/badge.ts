@@ -13,13 +13,14 @@ export const badge = defineComponent({
     codeOnly: [],
     previews: {
       content: {
-        options: ['label', 'icon-label', 'icon'],
+        options: ['label', 'icon'],
         default: 'label',
-        note: 'Chooses the layout of a badge with text, with an icon and text, or with only an icon. Code derives it from the content.',
+        note: 'Chooses the layout of a badge with text, or with only the leading content, such as an icon. Code derives it from the content.',
       },
     },
   },
-  summary: 'Marks a status, a category or a count with a short label, an icon or both.',
+  summary:
+    'Marks a status, a category or a count with a short label and any content before or after it.',
   options: {
     tone: {
       options: ['neutral', 'brand', 'info', 'success', 'warning', 'error'],
@@ -30,10 +31,10 @@ export const badge = defineComponent({
     shape: { options: ['rounded', 'square'], default: 'rounded' },
   },
   labels: [],
-  parts: ['base', 'icon', 'label'],
-  slots: ['icon'],
+  parts: ['base', 'leading', 'label', 'trailing'],
+  slots: ['leading', 'trailing'],
   events: [],
-  stories: ['Playground', 'Variants', 'Shapes', 'WithIcon', 'OnSurfaces'],
+  stories: ['Playground', 'Variants', 'Shapes', 'WithIcon', 'StatusDot', 'OnSurfaces'],
   exceptions: [],
 });
 
@@ -69,8 +70,8 @@ export interface BadgeProps {
    */
   shape?: BadgeShape;
   /**
-   * The accessible name of a badge that shows only an icon. A badge with text is named by its
-   * text, and an author's `aria-label` wins.
+   * The accessible name of a badge that shows no text, only its leading or trailing content. A
+   * badge with text is named by its text, and an author's `aria-label` wins.
    */
   label?: string;
 }

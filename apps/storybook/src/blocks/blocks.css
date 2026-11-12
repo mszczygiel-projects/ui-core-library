@@ -161,6 +161,14 @@
   overflow-wrap: anywhere;
 }
 
+.sb-status-dot {
+  display: block;
+  inline-size: var(--size-2);
+  block-size: var(--size-2);
+  border-radius: var(--radius-full);
+  background: currentcolor;
+}
+
 .sb-row {
   display: flex;
   flex-wrap: wrap;

@@ -76,11 +76,13 @@ export function TextareaField({
   variant = 'outline',
   size = 'medium',
   labelPlacement = 'top',
+  hideLabel = false,
   state = 'default',
   resize = 'vertical',
   maxRows,
   label,
   hint,
+  labelHint,
   placeholder,
   value,
   onValueChange,
@@ -170,9 +172,11 @@ export function TextareaField({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={state}
       label={label}
       hint={hint}
+      labelHint={labelHint}
     >
       <textarea
         id={textareaId}
@@ -190,7 +194,7 @@ export function TextareaField({
             release();
           };
         }}
-        aria-describedby={fieldDescription(describedBy, hint, hintId)}
+        aria-describedby={fieldDescription(describedBy, hint, hintId, labelHint)}
         onChange={(event) => {
           const next = event.currentTarget.value;
           fitContent(event.currentTarget, auto);

@@ -27,6 +27,10 @@ export declare const button: {
             readonly options: readonly ["small", "medium", "large"];
             readonly default: "medium";
         };
+        readonly shape: {
+            readonly options: readonly ["square", "rounded"];
+            readonly default: "square";
+        };
         readonly type: {
             readonly options: readonly ["button", "submit", "reset"];
             readonly default: "button";
@@ -36,7 +40,7 @@ export declare const button: {
     readonly parts: readonly ["base", "wrapper", "content", "leading-icon", "label", "trailing-icon", "loader"];
     readonly slots: readonly ["leading-icon", "trailing-icon"];
     readonly events: readonly [];
-    readonly stories: readonly ["Playground", "Variants", "WithIcons", "OnSurfaces"];
+    readonly stories: readonly ["Playground", "Variants", "Shapes", "WithIcons", "OnSurfaces"];
     readonly exceptions: readonly [{
         readonly items: readonly ["form", "validity", "validationMessage", "willValidate"];
         readonly reason: "The web component exposes its form-associated state as read-only properties. React exposes the native state through its ref, and its form prop is the native form ID attribute.";
@@ -44,10 +48,12 @@ export declare const button: {
 };
 export type ButtonVariant = OptionOf<typeof button, 'variant'>;
 export type ButtonSize = OptionOf<typeof button, 'size'>;
+export type ButtonShape = OptionOf<typeof button, 'shape'>;
 export type ButtonType = OptionOf<typeof button, 'type'>;
 export interface ButtonProps {
     variant?: ButtonVariant;
     size?: ButtonSize;
+    shape?: ButtonShape;
     disabled?: boolean;
     loading?: boolean;
     type?: ButtonType;

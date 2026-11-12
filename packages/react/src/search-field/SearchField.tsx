@@ -66,9 +66,11 @@ export function SearchField({
   variant = 'outline',
   size = 'medium',
   labelPlacement = 'top',
+  hideLabel = false,
   state = 'default',
   label,
   hint,
+  labelHint,
   placeholder,
   clearLabel,
   value,
@@ -161,9 +163,11 @@ export function SearchField({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={state}
       label={label}
       hint={hint}
+      labelHint={labelHint}
     >
       <div className={fieldPart('search-field', 'input-row')}>
         <span
@@ -189,7 +193,7 @@ export function SearchField({
               release();
             };
           }}
-          aria-describedby={fieldDescription(describedBy, hint, hintId)}
+          aria-describedby={fieldDescription(describedBy, hint, hintId, labelHint)}
           onChange={(event) => {
             const next = event.currentTarget.value;
             setUncontrolled(next);

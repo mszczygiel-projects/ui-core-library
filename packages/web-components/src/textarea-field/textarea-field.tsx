@@ -60,8 +60,10 @@ const { options } = textareaField;
  * @part base - The field, label and hint.
  * @part control - The textarea surface, border and focus indicator.
  * @part input - The native textarea.
+ * @part label-row - The row of the label on top and its hint.
  * @part label - The visible label and its floating background.
  * @part label-text - The visible label text.
+ * @part label-hint - The short text at the end of the label row, such as a count.
  * @part hint - The help or feedback container.
  * @part hint-text - The help or feedback text.
  */
@@ -85,6 +87,9 @@ export class UiTextareaField implements TextareaFieldProps, FormAssociated {
   /** The position of the visible label. */
   @Prop() labelPlacement: TextFieldLabelPlacement = 'top';
 
+  /** Hides the visible label, which still names the control. */
+  @Prop() hideLabel = false;
+
   /** Visual feedback; `error` also sets `aria-invalid` without changing native validity. */
   @Prop() state: TextFieldState = 'default';
 
@@ -96,6 +101,9 @@ export class UiTextareaField implements TextareaFieldProps, FormAssociated {
 
   /** Help or validation feedback, connected to the description of the input. */
   @Prop() hint?: string;
+
+  /** Short text at the end of the label row, such as a count of characters, in the description. */
+  @Prop() labelHint?: string;
 
   /** Prevents interaction and submission. */
   @Prop({ reflect: true }) disabled = false;
@@ -267,7 +275,9 @@ export class UiTextareaField implements TextareaFieldProps, FormAssociated {
         classes={`${appearance.classes} resize-${resize}`}
         placement={appearance.placement}
         label={this.label}
+        hideLabel={this.hideLabel}
         hint={this.hint}
+        labelHint={this.labelHint}
       >
         <textarea
           id="input"
@@ -284,7 +294,7 @@ export class UiTextareaField implements TextareaFieldProps, FormAssociated {
           autoComplete={this.autoComplete}
           {...forwardedAttributes(this.hostAttributes)}
           aria-invalid={appearance.error ? 'true' : undefined}
-          aria-describedby={fieldDescription(this.hint)}
+          aria-describedby={fieldDescription(this.hint, this.labelHint)}
           onInput={this.onInput}
           onChange={this.onChange}
           ref={this.observeSize}

@@ -74,9 +74,11 @@ export function TextField({
   type = 'text',
   size = 'medium',
   labelPlacement = 'top',
+  hideLabel = false,
   state = 'default',
   label,
   hint,
+  labelHint,
   placeholder,
   leadingIcon,
   trailingIcon,
@@ -105,9 +107,11 @@ export function TextField({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={state}
       label={label}
       hint={hint}
+      labelHint={labelHint}
     >
       <div className={fieldPart('text-field', 'input-row')}>
         {rendersContent(leadingIcon) && (
@@ -122,7 +126,7 @@ export function TextField({
           placeholder={fieldPlaceholder(placeholder)}
           aria-invalid={state === 'error' || undefined}
           {...attributes.control}
-          aria-describedby={fieldDescription(describedBy, hint, hintId)}
+          aria-describedby={fieldDescription(describedBy, hint, hintId, labelHint)}
           onChange={(event) => {
             const value = event.currentTarget.value;
             onChange?.(event);

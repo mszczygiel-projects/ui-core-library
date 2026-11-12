@@ -24,6 +24,7 @@ const meta = {
     href: '#pricing',
     variant: 'primary',
     size: 'medium',
+    shape: 'square',
     disabled: false,
   },
   argTypes: {
@@ -34,6 +35,7 @@ const meta = {
     download: { control: 'text' },
     variant: { control: 'select', options: variants },
     size: { control: 'inline-radio', options: options.size.options },
+    shape: { control: 'inline-radio', options: options.shape.options },
     disabled: { control: 'boolean' },
     label: { control: 'text' },
     leadingIcon: { control: 'select', options: iconOptions, mapping: iconNodes },
@@ -54,6 +56,18 @@ export const Variants: Story = {
       {variants.map((variant) => (
         <LinkButton key={variant} {...args} variant={variant}>
           {variant}
+        </LinkButton>
+      ))}
+    </div>
+  ),
+};
+
+export const Shapes: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      {options.shape.options.map((shape) => (
+        <LinkButton key={shape} {...args} shape={shape}>
+          {shape}
         </LinkButton>
       ))}
     </div>

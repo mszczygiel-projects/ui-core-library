@@ -19,15 +19,20 @@ const { options } = badge;
 /** The props of Badge. Other attributes of a `span` go to its root element. */
 export interface BadgeProps
   extends SharedBadgeProps, Omit<ComponentPropsWithRef<'span'>, keyof SharedBadgeProps> {
-  /** A decorative icon before the text, or the only content of the badge. */
-  icon?: ReactNode;
+  /**
+   * Decorative content before the text, such as an icon or a status dot, which the author styles.
+   * An icon takes the icon size of the badge.
+   */
+  leading?: ReactNode;
+  /** Decorative content after the text, like `leading`. */
+  trailing?: ReactNode;
 }
 
 /**
- * Marks a status, a category or a count with a short label, an icon or both.
+ * Marks a status, a category or a count with a short label and any content before or after it.
  *
- * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
- * named by `label`, or by an `aria-label` of the author.
+ * The badge is not interactive. Its text names it; a badge without text becomes an image named by
+ * `label`, or by an `aria-label` of the author.
  */
 export function Badge({
   tone = 'neutral',
@@ -35,14 +40,16 @@ export function Badge({
   size = 'medium',
   shape = 'rounded',
   label,
-  icon,
+  leading,
+  trailing,
   className,
   children,
   'aria-label': ariaLabel,
   ...rest
 }: BadgeProps) {
-  const hasIcon = rendersContent(icon);
-  const iconOnly = hasIcon && !rendersContent(children);
+  const hasLeading = rendersContent(leading);
+  const hasTrailing = rendersContent(trailing);
+  const iconOnly = (hasLeading || hasTrailing) && !rendersContent(children);
   const name = ariaLabel ?? label;
   const named = iconOnly && name !== undefined && name !== '';
   return (
@@ -62,12 +69,17 @@ export function Badge({
       role={rest.role ?? (named ? 'img' : undefined)}
       aria-label={named ? name : iconOnly ? undefined : ariaLabel}
     >
-      {hasIcon && (
-        <span className="ui-badge__icon" aria-hidden="true">
-          {icon}
+      {hasLeading && (
+        <span className="ui-badge__leading" aria-hidden="true">
+          {leading}
         </span>
       )}
       {!iconOnly && <span className="ui-badge__label">{children}</span>}
+      {hasTrailing && (
+        <span className="ui-badge__trailing" aria-hidden="true">
+          {trailing}
+        </span>
+      )}
     </span>
   );
 }

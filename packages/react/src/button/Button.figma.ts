@@ -12,6 +12,7 @@ const variant = instance.getEnum('variant', {
   danger: 'danger',
 });
 const size = instance.getEnum('size', { small: 'small', medium: 'medium', large: 'large' });
+const shape = instance.getEnum('shape', { square: 'square', rounded: 'rounded' });
 const disabled = instance.getEnum('disabled', { false: 'false', true: 'true' }) === 'true';
 const loading = instance.getEnum('loading', { false: 'false', true: 'true' }) === 'true';
 const children = instance.getString('children');
@@ -28,7 +29,7 @@ const trailing =
 
 // Interaction previews browser states; it is not a component prop.
 export default {
-  example: figma.code`<Button${variant === 'primary' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${disabled ? ' disabled' : ''}${loading ? ' loading' : ''}${leading ? figma.code` leadingIcon={${leading}}` : ''}${trailing ? figma.code` trailingIcon={${trailing}}` : ''}>{${JSON.stringify(children)}}</Button>`,
+  example: figma.code`<Button${variant === 'primary' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${shape === 'square' ? '' : figma.code` shape="${shape}"`}${disabled ? ' disabled' : ''}${loading ? ' loading' : ''}${leading ? figma.code` leadingIcon={${leading}}` : ''}${trailing ? figma.code` trailingIcon={${trailing}}` : ''}>{${JSON.stringify(children)}}</Button>`,
   imports: ['import { Button } from "@mszczygiel-projects/ui-core-react"'],
   id: 'button',
   metadata: { nestable: true },

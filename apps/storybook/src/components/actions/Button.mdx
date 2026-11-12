@@ -33,6 +33,10 @@ The **base** is the native button. Its **wrapper** holds **content** and a centr
 
 Choose `small`, `medium` (the default) or `large` for the surrounding interface. Each size takes its padding, type and icon dimensions from tokens. Density changes them without changing the prop.
 
+`shape` chooses the corners: `square`, the default, takes the radius of the size, and `rounded` gives a pill from `--button-rounded-radius`. A product can use both shapes side by side, and a design system that wants rounded buttons everywhere points the size radii at the pill instead.
+
+<FrameworkCanvas react={ReactStories.Shapes} webComponents={WebComponentStories.Shapes} />
+
 ## States
 
 Hover and press use the same active colours. Focus adds the shared ring and keeps the default colours. Active primary, secondary, outline and danger buttons also gain the interactive shadow; ghost never has a shadow.
@@ -58,7 +62,7 @@ The uppercase token controls the appearance of text. It is not a component prop,
 
 - Pointer, Enter and Space produce native `click` / `onClick`. There is no second `ui-click` event. `preventDefault()` cancels the form action.
 - A click on a disabled or loading button stops at the button: the page sees it only in the capture phase, and `onClick` does not run. A click that starts on an active button completes, even when its handler sets `loading`.
-- `type="button"` is the default. Choose `submit` or `reset` explicitly. An unknown `type`, `variant` or `size`, or a removed attribute, falls back to the default.
+- `type="button"` is the default. Choose `submit` or `reset` explicitly. An unknown `type`, `variant`, `size` or `shape`, or a removed attribute, falls back to the default.
 - Loading keeps the same native button and the content's dimensions. Its transparent content remains the action's accessible name; the centred Loader follows the configured `loaderVariant` and inherits the text colour.
 - Button does not manage the asynchronous action. Set `loading` when it begins and clear it when it finishes, including on failure.
 

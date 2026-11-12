@@ -45,7 +45,7 @@ describe('TextField', () => {
     expect(ref.current?.style.width).toBe('');
     expect(ref.current?.getAttribute('aria-label')).toBe('Work email');
     expect(ref.current?.getAttribute('aria-describedby')).toBe(
-      `external ${screen.container.querySelector('.ui-text-field__hint')?.id ?? ''}`,
+      `external ${screen.container.querySelector('.ui-text-field__hint-text')?.id ?? ''}`,
     );
     expect([
       ref.current?.autocomplete,

@@ -63,9 +63,11 @@ export function PasswordField({
   variant = 'outline',
   size = 'medium',
   labelPlacement = 'top',
+  hideLabel = false,
   state = 'default',
   label,
   hint,
+  labelHint,
   placeholder,
   revealed,
   defaultRevealed = false,
@@ -145,9 +147,11 @@ export function PasswordField({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={state}
       label={label}
       hint={hint}
+      labelHint={labelHint}
     >
       <div className={fieldPart('password-field', 'input-row')}>
         <input
@@ -166,7 +170,7 @@ export function PasswordField({
               release();
             };
           }}
-          aria-describedby={fieldDescription(describedBy, hint, hintId)}
+          aria-describedby={fieldDescription(describedBy, hint, hintId, labelHint)}
           onChange={(event) => {
             const value = event.currentTarget.value;
             onChange?.(event);

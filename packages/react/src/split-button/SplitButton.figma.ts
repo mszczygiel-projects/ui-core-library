@@ -12,6 +12,7 @@ const variant = instance.getEnum('variant', {
   danger: 'danger',
 });
 const size = instance.getEnum('size', { small: 'small', medium: 'medium', large: 'large' });
+const shape = instance.getEnum('shape', { square: 'square', rounded: 'rounded' });
 const open = instance.getEnum('open', { false: 'false', true: 'true' }) === 'true';
 // Each variant holds an exposed Button, named action, whose label designers set.
 const nested = instance.findInstance('action');
@@ -19,7 +20,7 @@ const children = nested.type === 'INSTANCE' ? nested.getString('children') : '�
 
 // The actions of the menu are sample content; the page supplies its own.
 export default {
-  example: figma.code`<SplitButton${variant === 'primary' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${open ? ' defaultOpen' : ''}
+  example: figma.code`<SplitButton${variant === 'primary' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${shape === 'square' ? '' : figma.code` shape="${shape}"`}${open ? ' defaultOpen' : ''}
   options={[{ value: '…', label: '…' }]}
   onAction={(value) => {}}
 >{${JSON.stringify(children)}}</SplitButton>`,

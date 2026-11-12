@@ -19,7 +19,7 @@ Use NumberField for quantities that need arithmetic, constraints or a numeric fo
 
 ## Anatomy
 
-The **base** holds **control**, **label** and **hint**. Inside **control**, **input-row** holds the visible **input**, **decrement** and **increment** buttons. **label-text** and **hint-text** hold the text. Each button has a decrement-icon or increment-icon part. There are no slots. React uses `.ui-number-field__<part>`; the web component exposes the corresponding parts. Figma holds an exposed TextField instance named `field`.
+The **base** holds **control**, **label** and **hint**. A **label-row** holds the label and the optional **label-hint**; `labelHint` and `hideLabel` work as in TextField. Inside **control**, **input-row** holds the visible **input**, **decrement** and **increment** buttons. **label-text** and **hint-text** hold the text. Each button has a decrement-icon or increment-icon part. There are no slots. React uses `.ui-number-field__<part>`; the web component exposes the corresponding parts. Figma holds an exposed TextField instance named `field`.
 
 ## Variants & tone
 

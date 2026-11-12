@@ -45,7 +45,7 @@ describe('ui-badge', () => {
     await nextRender();
     Object.assign(element, { label: 'Ignored', tone: 'success' });
     element.textContent = '';
-    element.append(Object.assign(document.createElement('span'), { slot: 'icon' }));
+    element.append(Object.assign(document.createElement('span'), { slot: 'leading' }));
     await nextRender();
     expect(element.getAttribute('role')).toBe('status');
     expect(element.getAttribute('aria-label')).toBe('Build state');
@@ -54,7 +54,7 @@ describe('ui-badge', () => {
   it('shows text written into a text node it already holds', async () => {
     const element = Object.assign(document.createElement('ui-badge'), { label: 'Verified' });
     const text = document.createTextNode(' ');
-    element.append(Object.assign(document.createElement('span'), { slot: 'icon' }), text);
+    element.append(Object.assign(document.createElement('span'), { slot: 'leading' }), text);
     document.body.append(element);
     await nextRender();
     const label = element.shadowRoot?.querySelector('[part="label"]');
@@ -65,9 +65,9 @@ describe('ui-badge', () => {
     expect(element.shadowRoot?.querySelector('[part="base"]')?.hasAttribute('role')).toBe(false);
   });
 
-  it('becomes an image named by its label once only an icon is left', async () => {
+  it('becomes an image named by its label once only its leading content is left', async () => {
     const element = Object.assign(document.createElement('ui-badge'), { label: 'Verified' });
-    element.append(Object.assign(document.createElement('span'), { slot: 'icon' }), '  ');
+    element.append(Object.assign(document.createElement('span'), { slot: 'leading' }), '  ');
     document.body.append(element);
     await nextRender();
     const base = element.shadowRoot?.querySelector('[part="base"]');

@@ -85,9 +85,11 @@ export function DateField({
   variant,
   size,
   labelPlacement,
+  hideLabel = false,
   state,
   label,
   hint,
+  labelHint,
   placeholder,
   locale,
   value,
@@ -279,9 +281,11 @@ export function DateField({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={visualState}
       label={label}
       hint={visibleHint}
+      labelHint={labelHint}
       rootRef={rootRef}
       controlRef={controlRef}
       popup={
@@ -340,7 +344,7 @@ export function DateField({
           form={form}
           inputMode={rest.inputMode ?? 'numeric'}
           aria-invalid={visualState === 'error' ? true : rest['aria-invalid']}
-          aria-describedby={fieldDescription(describedBy, visibleHint, hintId)}
+          aria-describedby={fieldDescription(describedBy, visibleHint, hintId, labelHint)}
           ref={(input) => {
             inputRef.current = input;
             const release = setRef(ref, input);

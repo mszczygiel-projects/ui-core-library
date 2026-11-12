@@ -77,6 +77,7 @@ function ignoreReset(): void {
 export function SplitButton({
   variant = 'primary',
   size = 'medium',
+  shape = 'square',
   disabled = false,
   loading = false,
   open,
@@ -109,6 +110,7 @@ export function SplitButton({
   const fieldsetDisabled = useFormState(toggleRef, ignoreReset);
   const surface = oneOf(variant, specOptions.variant.options, specOptions.variant.default);
   const buttonSize = oneOf(size, specOptions.size.options, specOptions.size.default);
+  const buttonShape = oneOf(shape, specOptions.shape.options, specOptions.shape.default);
   const hasEnabledAction = firstEnabled(flattenOptions(options)) !== undefined;
   const available = !disabled && !fieldsetDisabled && !loading && hasEnabledAction;
   // A menu of an action that stops being available closes with it, as setting open does.
@@ -136,6 +138,7 @@ export function SplitButton({
         className="ui-split-button__action"
         variant={surface}
         size={buttonSize}
+        shape={buttonShape}
         disabled={disabled}
         loading={loading}
         loadingLabel={loadingLabel ?? labels.splitButton.loading}
@@ -171,6 +174,7 @@ export function SplitButton({
               'ui-action',
               `ui-action--${surface}`,
               `ui-action--${buttonSize}`,
+              `ui-action--${buttonShape}`,
               loading && 'ui-action--loading',
             )}
             disabled={disabled || !hasEnabledAction}

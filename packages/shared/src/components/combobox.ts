@@ -31,7 +31,9 @@ export const combobox = defineComponent({
   parts: [
     'base',
     'label',
+    'label-row',
     'label-text',
+    'label-hint',
     'control',
     'input-row',
     'chips',

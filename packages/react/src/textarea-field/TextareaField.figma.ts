@@ -21,10 +21,13 @@ const label = field.getString('label');
 const placeholder = field.getString('placeholder');
 const value = field.getString('value');
 const hint = field.getBoolean('showHint') ? field.getString('hint') : undefined;
+// showLabel stands for hideLabel inverted, since a Figma boolean can only show a layer.
+const hideLabel = !field.getBoolean('showLabel');
+const labelHint = field.getBoolean('showLabelHint') ? field.getString('labelHint') : undefined;
 // interaction (rest, active, focus) and valueState (empty, filled) preview browser-derived states.
 // Neither becomes a prop. Keep valueState consistent with value in Figma.
 export default {
-  example: figma.code`<TextareaField${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` labelPlacement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label={${JSON.stringify(label)}}` : ''}${placeholder ? figma.code` placeholder={${JSON.stringify(placeholder)}}` : ''}${value ? figma.code` defaultValue={${JSON.stringify(value)}}` : ''}${hint ? figma.code` hint={${JSON.stringify(hint)}}` : ''}${disabled ? ' disabled' : ''} />`,
+  example: figma.code`<TextareaField${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` labelPlacement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label={${JSON.stringify(label)}}` : ''}${placeholder ? figma.code` placeholder={${JSON.stringify(placeholder)}}` : ''}${value ? figma.code` defaultValue={${JSON.stringify(value)}}` : ''}${hint ? figma.code` hint={${JSON.stringify(hint)}}` : ''}${labelHint ? figma.code` labelHint={${JSON.stringify(labelHint)}}` : ''}${hideLabel ? ' hideLabel' : ''}${disabled ? ' disabled' : ''} />`,
   imports: ['import { TextareaField } from "@mszczygiel-projects/ui-core-react"'],
   id: 'textarea-field',
   metadata: { nestable: true },

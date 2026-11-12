@@ -7,13 +7,21 @@ import { iconSize } from '../harness/icon.tsx';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pixels, tokenValue } from '../tokens.ts';
 
-/** The props of the specification, plus the text and the icon as a flag, which each harness renders. */
+/**
+ * The props of the specification, plus the text and two flags, which each harness renders: an icon
+ * as leading content and a status dot of the author as trailing content.
+ */
 export interface BadgeContractProps extends BadgeProps {
   readonly children?: string;
-  readonly icon?: boolean;
+  readonly leading?: boolean;
+  readonly trailing?: boolean;
 }
 
 const { options } = badge;
+
+/** The status dot that the harnesses render as trailing content, sized by its author. */
+export const DOT_SELECTOR = '[data-contract-dot]';
+export const DOT_SIZE = 6;
 
 /** The behaviour of Badge, applied unchanged to the web component and the React component. */
 export function badgeContract(adapter: Mount<BadgeContractProps>): void {
@@ -55,7 +63,7 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
   });
 
   it('is named by its text, with a decorative icon', async () => {
-    const component = await mount({ icon: true, label: 'Ignored' });
+    const component = await mount({ leading: true, label: 'Ignored' });
     expect(component.element.textContent).toContain('Active');
     const tree = await component.accessibleTree();
     expect(tree.some((node) => node.name === 'Decorative star')).toBe(false);
@@ -63,8 +71,58 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
     expect(tree.some((node) => node.name === 'Ignored')).toBe(false);
   });
 
+  it('shows trailing content after the text at the size its author gives it', async () => {
+    const component = await mount({ trailing: true, label: 'Ignored' });
+    const dot = component.element.querySelector(DOT_SELECTOR);
+    expect(dot).not.toBeNull();
+    const label = component.part('label').getBoundingClientRect();
+    const box = dot?.getBoundingClientRect();
+    expect(box?.left).toBeGreaterThanOrEqual(label.right);
+    expect([box?.width, box?.height]).toEqual([DOT_SIZE, DOT_SIZE]);
+    const tree = await component.accessibleTree();
+    expect(tree.some((node) => node.role === 'image')).toBe(false);
+  });
+
+  it('centres an icon in a wrapper element on the middle of the badge', async () => {
+    const component = await mount({ tone: 'success', leading: true });
+    const icon = component.element.querySelector('[data-contract-icon]')?.getBoundingClientRect();
+    const base = component.part('base').getBoundingClientRect();
+    expect(icon).toBeDefined();
+    // A wrapper with the height of a text line would lift the icon above the middle.
+    expect(
+      Math.abs((icon?.top ?? 0) - base.top - (base.bottom - (icon?.bottom ?? 0))),
+    ).toBeLessThan(1);
+  });
+
+  it('keeps content hidden that its author hides, in the text and around it', async () => {
+    const component = await mount({ leading: true });
+    const wrapper = component.element.querySelector('[data-contract-icon]')?.parentElement;
+    expect(wrapper).toBeDefined();
+    wrapper?.toggleAttribute('hidden', true);
+    const draft = document.createElement('span');
+    draft.hidden = true;
+    draft.textContent = 'Draft';
+    component.element.append(draft);
+    expect(wrapper?.checkVisibility()).toBe(false);
+    expect(draft.checkVisibility()).toBe(false);
+  });
+
+  it('draws its border and capitals from its tokens, without changing its size', async () => {
+    const component = await mount({ tone: 'success', variant: 'subtle' });
+    const base = component.part('base');
+    const before = base.getBoundingClientRect();
+    const border = tokenValue('--color-badge-success-subtle-border');
+    expect(border).not.toBe('');
+    expect(getComputedStyle(base).textTransform).toBe('none');
+    component.element.style.setProperty('--badge-border-width', '2px');
+    component.element.style.setProperty('--badge-text-uppercase', 'uppercase');
+    expect(getComputedStyle(base).boxShadow).toContain('0px 0px 0px 2px inset');
+    expect(getComputedStyle(base).textTransform).toBe('uppercase');
+    expect(base.getBoundingClientRect().height).toBe(before.height);
+  });
+
   it('becomes one image named by its label when it shows only an icon', async () => {
-    const component = await mount({ icon: true, children: '', label: 'Verified' });
+    const component = await mount({ leading: true, children: '', label: 'Verified' });
     const images = (await component.accessibleTree()).filter((node) => node.role === 'image');
     expect(images).toEqual([{ role: 'image', name: 'Verified' }]);
     await component.update({ label: 'Checked' });
@@ -75,7 +133,7 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
 
   it('prefers an author aria-label to its label when it shows only an icon', async () => {
     const component = await mount(
-      { icon: true, children: '', label: 'Verified' },
+      { leading: true, children: '', label: 'Verified' },
       { attributes: { 'aria-label': 'Author name' } },
     );
     const images = (await component.accessibleTree()).filter((node) => node.role === 'image');
@@ -92,7 +150,7 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
       component.element.getAttribute('aria-label'),
     ];
     // With only an icon, the role of the page still wins over the image role.
-    await component.update({ label: 'Passing', icon: true, children: '' });
+    await component.update({ label: 'Passing', leading: true, children: '' });
     expect(kept()).toEqual(['status', 'Build state']);
     expect((await component.accessibleTree()).some((node) => node.role === 'status')).toBe(true);
     await component.update({ children: 'Passing' });
@@ -112,7 +170,7 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
         const height = pixels(tokenValue(`--badge-${size}-height`, context));
         const text = await mount({ size }, context);
         expect(text.part('base').getBoundingClientRect().height).toBe(height);
-        const icon = await mount({ size, icon: true, children: '', label: 'Verified' }, context);
+        const icon = await mount({ size, leading: true, children: '', label: 'Verified' }, context);
         const box = icon.part('base').getBoundingClientRect();
         expect(box.height).toBe(height);
         expect(box.width).toBe(height);

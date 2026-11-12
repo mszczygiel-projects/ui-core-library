@@ -23,10 +23,20 @@ export const textareaField = defineComponent({
     resize: { options: ['vertical', 'none', 'auto'], default: 'vertical' },
   },
   labels: [],
-  parts: ['base', 'control', 'input', 'label', 'label-text', 'hint', 'hint-text'],
+  parts: [
+    'base',
+    'control',
+    'input',
+    'label-row',
+    'label',
+    'label-text',
+    'label-hint',
+    'hint',
+    'hint-text',
+  ],
   slots: [],
   events: ['ui-value-change'],
-  stories: ['Playground', 'Variants', 'Resize', 'OnSurfaces'],
+  stories: ['Playground', 'WithCharacterCount', 'Variants', 'Resize', 'OnSurfaces'],
   exceptions: [
     {
       items: ['form', 'validity', 'validationMessage', 'willValidate'],

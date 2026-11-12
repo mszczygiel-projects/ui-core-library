@@ -38,7 +38,7 @@ export declare const combobox: {
         };
     };
     readonly labels: readonly ["clear", "create"];
-    readonly parts: readonly ["base", "label", "label-text", "control", "input-row", "chips", "chip", "input", "leading-icon", "indicator", "clear", "popup", "listbox", "group", "group-label", "option", "option-icon", "option-label", "option-mark", "create", "message", "hint", "hint-text"];
+    readonly parts: readonly ["base", "label", "label-row", "label-text", "label-hint", "control", "input-row", "chips", "chip", "input", "leading-icon", "indicator", "clear", "popup", "listbox", "group", "group-label", "option", "option-icon", "option-label", "option-mark", "create", "message", "hint", "hint-text"];
     readonly slots: readonly ["leading-icon"];
     readonly events: readonly ["ui-value-change", "ui-open-change", "ui-query-change", "ui-create"];
     readonly stories: readonly ["Playground", "Multiple", "RemoteFiltering", "Create", "OnSurfaces"];

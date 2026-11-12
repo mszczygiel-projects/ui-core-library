@@ -3,6 +3,7 @@
 import {
   iconButton,
   type IconButtonProps as SharedIconButtonProps,
+  type IconButtonShape,
   type IconButtonSize,
   type IconButtonType,
   type IconButtonVariant,
@@ -15,7 +16,7 @@ import { classNames } from '../internal/class-names.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
 import { Loader } from '../loader/Loader.tsx';
 
-export type { IconButtonSize, IconButtonType, IconButtonVariant };
+export type { IconButtonShape, IconButtonSize, IconButtonType, IconButtonVariant };
 
 const { options } = iconButton;
 
@@ -38,6 +39,7 @@ export function IconButton({
   label,
   variant = 'primary',
   size = 'medium',
+  shape = 'square',
   disabled = false,
   loading = false,
   type = 'button',
@@ -70,6 +72,7 @@ export function IconButton({
         'ui-action',
         `ui-action--${oneOf(variant, options.variant.options, options.variant.default)}`,
         `ui-action--${buttonSize}`,
+        `ui-action--${oneOf(shape, options.shape.options, options.shape.default)}`,
         loading && 'ui-action--loading',
         className,
       )}

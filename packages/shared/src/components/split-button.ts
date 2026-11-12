@@ -36,6 +36,7 @@ export const splitButton = defineComponent({
   options: {
     variant: button.options.variant,
     size: button.options.size,
+    shape: button.options.shape,
     type: button.options.type,
   },
   labels: ['menu', 'loading'],

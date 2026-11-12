@@ -151,9 +151,11 @@ export function Combobox({
   variant = 'outline',
   size = 'medium',
   labelPlacement = 'top',
+  hideLabel = false,
   state = 'default',
   label,
   hint,
+  labelHint,
   placeholder,
   disabled = false,
   required = false,
@@ -531,9 +533,11 @@ export function Combobox({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={state}
       label={label}
       hint={hint}
+      labelHint={labelHint}
       labelId={labelId}
       rootRef={rootRef}
       controlRef={controlRef}
@@ -626,7 +630,7 @@ export function Combobox({
             }
             aria-invalid={state === 'error' || undefined}
             aria-required={required || undefined}
-            aria-describedby={fieldDescription(describedBy, hint, hintId)}
+            aria-describedby={fieldDescription(describedBy, hint, hintId, labelHint)}
             onChange={handleChange}
             onCompositionEnd={(event) => {
               commitQuery(event.currentTarget.value, event.nativeEvent);

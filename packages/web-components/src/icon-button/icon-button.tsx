@@ -3,6 +3,7 @@ import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config
 import {
   iconButton,
   type IconButtonProps,
+  type IconButtonShape,
   type IconButtonSize,
   type IconButtonType,
   type IconButtonVariant,
@@ -59,6 +60,9 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
 
   /** The size, which follows the density and matches the height of a button. */
   @Prop() size: IconButtonSize = 'medium';
+
+  /** The corners of the action; `rounded` makes a circle. */
+  @Prop() shape: IconButtonShape = 'square';
 
   /** Disables interaction and removes the native control from keyboard navigation. */
   @Prop({ reflect: true }) disabled = false;
@@ -191,6 +195,7 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
   render(): VNode {
     const variant = oneOf(this.variant, options.variant.options, options.variant.default);
     const size = oneOf(this.size, options.size.options, options.size.default);
+    const shape = oneOf(this.shape, options.shape.options, options.shape.default);
     const type = oneOf(this.type, options.type.options, options.type.default);
     const label = this.authorLabel ?? this.label;
     // The internal form runs the action after the native click dispatch finishes, as a native
@@ -199,7 +204,7 @@ export class UiIconButton implements IconButtonProps, FormAssociated {
       <form role="none" onSubmit={this.onFormAction} onReset={this.onFormAction}>
         <button
           part="base"
-          class={`base action ${variant} ${size}${this.loading ? ' loading' : ''}`}
+          class={`base action ${variant} ${size} ${shape}${this.loading ? ' loading' : ''}`}
           type={type}
           disabled={this.isDisabled()}
           aria-label={label === '' ? undefined : label}

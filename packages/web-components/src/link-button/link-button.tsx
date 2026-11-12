@@ -1,6 +1,7 @@
 import {
   linkButton,
   type LinkButtonProps,
+  type LinkButtonShape,
   type LinkButtonSize,
   type LinkButtonVariant,
 } from '@mszczygiel-projects/ui-core-shared/link-button';
@@ -55,6 +56,9 @@ export class UiLinkButton implements LinkButtonProps {
 
   /** The size, which follows the density. */
   @Prop() size: LinkButtonSize = 'medium';
+
+  /** The corners of the link: the radius of its size, or a pill when `rounded`. */
+  @Prop() shape: LinkButtonShape = 'square';
 
   /** Turns the link into text that cannot be focused or followed, by any pointer or key. */
   @Prop({ reflect: true }) disabled = false;
@@ -113,6 +117,7 @@ export class UiLinkButton implements LinkButtonProps {
   render(): VNode {
     const variant = oneOf(this.variant, options.variant.options, options.variant.default);
     const size = oneOf(this.size, options.size.options, options.size.default);
+    const shape = oneOf(this.shape, options.shape.options, options.shape.default);
     const label = this.authorLabel ?? this.label;
     const named = typeof label === 'string' && label !== '';
     const { disabled } = this;
@@ -122,7 +127,7 @@ export class UiLinkButton implements LinkButtonProps {
     return (
       <a
         part="base"
-        class={`base action ${variant} ${size}${disabled ? ' disabled' : ''}`}
+        class={`base action ${variant} ${size} ${shape}${disabled ? ' disabled' : ''}`}
         href={disabled ? undefined : this.href}
         target={disabled ? undefined : this.target}
         rel={disabled ? undefined : this.rel}

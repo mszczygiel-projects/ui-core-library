@@ -33,6 +33,8 @@ SplitButton takes the variants of Button: `primary`, the default, `secondary`, `
 
 `small`, `medium`, the default, and `large` size both halves as Button, and the menu with them. Density changes them without changing the prop. The menu button is as tall as the main action and has the padding of its block on every side.
 
+`shape="rounded"` rounds the outer corners of both halves into a pill and keeps the inner corners where they meet square.
+
 ## States
 
 Each half shows the hover, press and focus states of Button on its own. `disabled`, or a disabled fieldset, blocks both halves and closes the menu. `loading` blocks both and keeps their focus and names, as in Button. Without an enabled action in `options`, only the menu button is disabled. When the menu is open, the menu button carries `aria-expanded="true"`.

@@ -33,7 +33,7 @@ export declare const dateField: {
         };
     };
     readonly labels: readonly ["formatHint", "validationMessage", "openCalendar"];
-    readonly parts: readonly ["base", "control", "input-row", "input", "calendar-button", "panel", "calendar", "label", "label-text", "hint", "hint-text"];
+    readonly parts: readonly ["base", "control", "input-row", "input", "calendar-button", "panel", "calendar", "label", "label-row", "label-text", "label-hint", "hint", "hint-text"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change", "ui-open-change"];
     readonly stories: readonly ["Playground", "Variants", "WithLocale", "WithConstraints", "OnSurfaces"];

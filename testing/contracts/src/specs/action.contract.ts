@@ -1,4 +1,9 @@
-import type { ButtonType, ButtonVariant } from '@mszczygiel-projects/ui-core-shared/button';
+import type {
+  ButtonShape,
+  ButtonSize,
+  ButtonType,
+  ButtonVariant,
+} from '@mszczygiel-projects/ui-core-shared/button';
 import { afterEach, expect, it, type Mock, vi } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 
@@ -342,5 +347,41 @@ export function actionFormContract<Props extends ActionFormProps>(
     expect([dialog.open, dialog.returnValue]).toEqual([true, '']);
     await page.elementLocator(action.part('base')).click();
     expect([dialog.open, dialog.returnValue]).toEqual([false, 'confirm']);
+  });
+}
+
+/** The props of an action with corners of its own: Button, IconButton, SplitButton and LinkButton. */
+export interface ActionShapeProps extends ActionSurfaceProps {
+  readonly size?: ButtonSize;
+  readonly shape?: ButtonShape;
+}
+
+/** The corners of an action: the radius of its size when square, the pill token when rounded. */
+export function actionShapeContract<Props extends ActionShapeProps>(
+  adapter: Mount<Props>,
+  named: Props,
+): void {
+  const mount = mounter(adapter, named);
+
+  it('takes the radius of its size when square and the rounded radius when rounded', async () => {
+    const radius = {
+      small: '--button-small-radius',
+      medium: '--button-radius',
+      large: '--button-large-radius',
+    } as const;
+    for (const size of ['small', 'medium', 'large'] as const) {
+      const square = await mount({ size } as Partial<Props>);
+      expect(pixels(getComputedStyle(square.part('base')).borderStartStartRadius)).toBe(
+        pixels(tokenValue(radius[size])),
+      );
+      await square.update({ shape: 'rounded' } as Partial<Props>);
+      expect(pixels(getComputedStyle(square.part('base')).borderStartStartRadius)).toBe(
+        pixels(tokenValue('--button-rounded-radius')),
+      );
+      await square.update({ shape: 'unsupported' } as unknown as Partial<Props>);
+      expect(pixels(getComputedStyle(square.part('base')).borderStartStartRadius)).toBe(
+        pixels(tokenValue(radius[size])),
+      );
+    }
   });
 }

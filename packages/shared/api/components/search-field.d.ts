@@ -32,7 +32,7 @@ export declare const searchField: {
         };
     };
     readonly labels: readonly ["clear"];
-    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-text", "hint", "hint-text", "leading-icon", "clear", "clear-icon"];
+    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-row", "label-text", "label-hint", "hint", "hint-text", "leading-icon", "clear", "clear-icon"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change", "ui-clear"];
     readonly stories: readonly ["Playground", "Variants", "InForm", "OnSurfaces"];

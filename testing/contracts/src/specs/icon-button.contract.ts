@@ -8,7 +8,12 @@ import { iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
-import { actionFormContract, actionSurfaceContract, formFixtures } from './action.contract.ts';
+import {
+  actionFormContract,
+  actionShapeContract,
+  actionSurfaceContract,
+  formFixtures,
+} from './action.contract.ts';
 import { popupTriggerContract } from './popup-trigger.contract.ts';
 
 /** The props of the specification, plus the icon as a flag, which each harness renders. */
@@ -30,6 +35,7 @@ export function iconButtonContract(adapter: Mount<IconButtonContractProps>): voi
 
   actionFormContract(adapter, NAMED);
   actionSurfaceContract(adapter, NAMED);
+  actionShapeContract(adapter, NAMED);
 
   afterEach(async () => {
     for (const button of mounted.splice(0)) {

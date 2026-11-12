@@ -50,6 +50,7 @@ describe('ui-icon-button', () => {
       type: 'submit',
       variant: 'tertiary',
       size: 'huge',
+      shape: 'oval',
       name: 'action',
       value: 'close',
     })) {
@@ -59,7 +60,7 @@ describe('ui-icon-button', () => {
     document.body.append(form);
     await nextRender();
     expect(button.loadingLabel).toBe('Closing panel');
-    expect(control(button)?.className).toBe('base action primary medium');
+    expect(control(button)?.className).toBe('base action primary medium square');
     expect(control(button)?.getAttribute('aria-label')).toBe('Close panel');
     control(button)?.click();
     expect(submitted).toHaveBeenCalledWith([['action', 'close']]);

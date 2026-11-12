@@ -19,7 +19,7 @@ Use TextField for a single line of text, an email address, a URL or a telephone 
 
 ## Anatomy
 
-The **base** holds the **label**, **control** and **hint**. Inside control, **input-row** holds the native **input** and the optional **leading-icon** and **trailing-icon**. **label-text** and **hint-text** hold their text. The web component exposes these parts; React uses `.ui-text-field__<part>` classes. The control draws the border and focus indicator. Figma's placeholder and value layers represent the single native input.
+The **base** holds the **label-row**, **control** and **hint**. The label row holds the **label** and the optional **label-hint**. Inside control, **input-row** holds the native **input** and the optional **leading-icon** and **trailing-icon**. **label-text** and **hint-text** hold their text. The web component exposes these parts; React uses `.ui-text-field__<part>` classes. The control draws the border and focus indicator. Figma's placeholder and value layers represent the single native input.
 
 ## Variants & tone
 
@@ -40,6 +40,12 @@ Hover and press share active styling. Keyboard focus uses the shared focus roles
 ## Content & labels
 
 Supply `label`, `placeholder` and `hint` in the language of the page. Include any required marker in the label text; `required` adds the native constraint, without inventing a marker or translated message. Browser validation messages come from the browser.
+
+`labelHint` adds a short text at the end of the label row, such as a character count, _optional_ or _Markdown_. The field shows it as given and counts nothing: the author updates it, as the story below does with the length of the value. Without a label row, with a `floating` or `inner` label or `hideLabel`, it sits at the end of the hint row. It joins the description of the control after `hint`, so a screen reader reads it on focus without announcing each change.
+
+`hideLabel` hides the label visually and keeps it as the accessible name. Use it only where the context names the field, such as a discount code next to its Apply button, and keep a placeholder that repeats it; the label placement no longer applies.
+
+<FrameworkCanvas react={ReactStories.HiddenLabel} webComponents={WebComponentStories.HiddenLabel} />
 
 `labelPlacement="top"` is the default. `inner` keeps the label inside, above the input. `floating` raises it while focused or nonempty, including after autofill, reset and programmatic changes. Its placeholder is hidden while the label rests inside. The raised underlined label aligns to the inline start without padding. Outline and filled use their respective label-background tokens to match the surrounding surface.
 
@@ -96,7 +102,7 @@ The web component takes the keyboard hints as the native `inputmode`, `enterkeyh
 
 <ComponentTokens component="control" />
 
-TextField uses the shared `control/*` and `color/control/*` Components families, plus the focus-ring roles. Underlined uses outline colours. It reads the default or active state names, never the redundant hover aliases. Set invariant tokens on `:root` and context-dependent overrides on the component's matching selector.
+TextField uses the shared `control/*` and `color/control/*` Components families, plus the focus-ring roles. Underlined uses outline colours. It reads the default or active state names, never the redundant hover aliases. Set invariant tokens on `:root` and context-dependent overrides on the component's matching selector. `--control-shadow` holds the shape of an inner shadow of the control and `--color-control-shadow` its colour; Core leaves it transparent.
 
 ## Implementation notes
 

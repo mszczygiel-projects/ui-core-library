@@ -57,6 +57,7 @@ describe('ui-button', () => {
       type: 'submit',
       variant: 'danger',
       size: 'large',
+      shape: 'rounded',
       value: 'save',
       name: 'action',
     })) {
@@ -66,11 +67,11 @@ describe('ui-button', () => {
     form.append(button);
     document.body.append(form);
     await nextRender();
-    for (const name of ['variant', 'size', 'value']) {
+    for (const name of ['variant', 'size', 'shape', 'value']) {
       button.removeAttribute(name);
     }
     await nextRender();
-    expect(control(button)?.className).toBe('base action primary medium');
+    expect(control(button)?.className).toBe('base action primary medium square');
     control(button)?.click();
     expect(submitted).toHaveBeenCalledWith([['action', '']]);
     Reflect.set(button, 'type', undefined);

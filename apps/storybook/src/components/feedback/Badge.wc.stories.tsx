@@ -15,7 +15,8 @@ import { type IconName, iconOptions, svgMap } from '../icons.ts';
 
 interface BadgeArgs {
   readonly text: string;
-  readonly icon?: IconName;
+  readonly leading?: IconName;
+  readonly dot?: 'leading' | 'trailing';
   readonly tone: BadgeTone;
   readonly variant: BadgeVariant;
   readonly size: BadgeSize;
@@ -28,9 +29,11 @@ const { options } = badge;
 /** The icon of the slot, its SVG string inserted unescaped: only the icons package supplies it. */
 function Icon({ name }: { readonly name: IconName | undefined }) {
   return name === undefined ? null : (
-    <span slot="icon" dangerouslySetInnerHTML={{ __html: svgMap[name] }} />
+    <span slot="leading" dangerouslySetInnerHTML={{ __html: svgMap[name] }} />
   );
 }
+
+const DOT = '<span class="sb-status-dot"></span>';
 
 function UiBadge(args: BadgeArgs) {
   return (
@@ -41,8 +44,10 @@ function UiBadge(args: BadgeArgs) {
       shape={args.shape}
       label={args.label === '' ? undefined : args.label}
     >
-      <Icon name={args.icon} />
+      <Icon name={args.leading} />
+      {args.dot === 'leading' && <span slot="leading" className="sb-status-dot" />}
       {args.text}
+      {args.dot === 'trailing' && <span slot="trailing" className="sb-status-dot" />}
     </ui-badge>
   );
 }
@@ -57,7 +62,7 @@ const source = (args: BadgeArgs) =>
       shape: args.shape === options.shape.default ? undefined : args.shape,
       label: args.label,
     },
-    `${args.icon === undefined ? '' : `<span slot="icon">${svgMap[args.icon]}</span>`}${args.text}`,
+    `${args.leading === undefined ? '' : `<span slot="leading">${svgMap[args.leading]}</span>`}${args.dot === 'leading' ? DOT.replace('<span', '<span slot="leading"') : ''}${args.text}${args.dot === 'trailing' ? DOT.replace('<span', '<span slot="trailing"') : ''}`,
   );
 
 const meta = {
@@ -72,7 +77,8 @@ const meta = {
   },
   argTypes: {
     text: { control: 'text' },
-    icon: { control: 'select', options: iconOptions },
+    leading: { control: 'select', options: iconOptions },
+    dot: { control: 'inline-radio', options: ['leading', 'trailing'] },
     tone: { control: 'select', options: options.tone.options },
     variant: { control: 'inline-radio', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
@@ -142,10 +148,41 @@ export const Shapes: Story = {
 export const WithIcon: Story = {
   render: (args) => (
     <div className="sb-row">
-      <UiBadge {...args} tone="success" icon="iconCheck" text="Verified" />
-      <UiBadge {...args} tone="success" icon="iconCheck" text="" label="Verified" />
+      <UiBadge {...args} tone="success" leading="iconCheck" text="Verified" />
+      <UiBadge {...args} tone="success" leading="iconCheck" text="" label="Verified" />
     </div>
   ),
+};
+
+export const StatusDot: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      <UiBadge {...args} tone="success" variant="subtle" dot="leading" text="Live" />
+      <UiBadge {...args} tone="warning" variant="subtle" dot="trailing" text="Draft" />
+    </div>
+  ),
+  parameters: {
+    docs: {
+      source: {
+        code: [
+          source({
+            ...meta.args,
+            tone: 'success',
+            variant: 'subtle',
+            dot: 'leading',
+            text: 'Live',
+          }),
+          source({
+            ...meta.args,
+            tone: 'warning',
+            variant: 'subtle',
+            dot: 'trailing',
+            text: 'Draft',
+          }),
+        ].join('\n'),
+      },
+    },
+  },
 };
 
 export const OnSurfaces: Story = { decorators: [onSurfaces], ...Variants };

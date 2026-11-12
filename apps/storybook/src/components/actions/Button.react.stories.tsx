@@ -23,6 +23,7 @@ const meta = {
     children: 'Save changes',
     variant: 'primary',
     size: 'medium',
+    shape: 'square',
     disabled: false,
     loading: false,
     type: 'button',
@@ -31,6 +32,7 @@ const meta = {
     children: { control: 'text' },
     variant: { control: 'select', options: variants },
     size: { control: 'inline-radio', options: options.size.options },
+    shape: { control: 'inline-radio', options: options.shape.options },
     disabled: { control: 'boolean' },
     loading: { control: 'boolean' },
     type: { control: 'inline-radio', options: options.type.options },
@@ -55,6 +57,18 @@ export const Variants: Story = {
       {variants.map((variant) => (
         <Button key={variant} {...args} variant={variant}>
           {variant}
+        </Button>
+      ))}
+    </div>
+  ),
+};
+
+export const Shapes: Story = {
+  render: (args) => (
+    <div className="sb-row">
+      {options.shape.options.map((shape) => (
+        <Button key={shape} {...args} shape={shape}>
+          {shape}
         </Button>
       ))}
     </div>

@@ -19,7 +19,7 @@ Use SearchField for a query that filters or searches content. Put it in a form i
 
 ## Anatomy
 
-The **base** holds the **label**, **control** and **hint**, as in TextField. Inside control, **input-row** holds the decorative **leading-icon**, the native **input** and the **clear** button with its **clear-icon**. The web component exposes these parts; React uses `.ui-search-field__<part>` classes. In Figma, the component holds an exposed TextField: set its properties there, and show the clear button with its trailing icon.
+The **base** holds the **label**, **control** and **hint**, as in TextField. A **label-row** holds the label and the optional **label-hint**; `labelHint` and `hideLabel` work as in TextField. Inside control, **input-row** holds the decorative **leading-icon**, the native **input** and the **clear** button with its **clear-icon**. The web component exposes these parts; React uses `.ui-search-field__<part>` classes. In Figma, the component holds an exposed TextField: set its properties there, and show the clear button with its trailing icon.
 
 ## Variants & tone
 

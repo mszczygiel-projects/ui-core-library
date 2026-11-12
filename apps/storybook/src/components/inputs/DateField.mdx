@@ -19,7 +19,7 @@ Use DateField for one Gregorian calendar date, typed or picked from a calendar. 
 
 ## Anatomy
 
-The **base** holds **control**, **label** and **hint**. Inside **control**, **input-row** holds the visible **input** and the **calendar-button**, which opens the **panel**, a dialog with the **calendar**. **label-text** and **hint-text** hold the text. There are no slots. React uses `.ui-date-field__<part>`; the web component exposes the corresponding parts. Figma holds an exposed TextField instance named `field`.
+The **base** holds **control**, **label** and **hint**. A **label-row** holds the label and the optional **label-hint**; `labelHint` and `hideLabel` work as in TextField. Inside **control**, **input-row** holds the visible **input** and the **calendar-button**, which opens the **panel**, a dialog with the **calendar**. **label-text** and **hint-text** hold the text. There are no slots. React uses `.ui-date-field__<part>`; the web component exposes the corresponding parts. Figma holds an exposed TextField instance named `field`.
 
 ## Variants & tone
 

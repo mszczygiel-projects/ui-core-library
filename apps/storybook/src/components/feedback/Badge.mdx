@@ -17,11 +17,11 @@ import * as ReactStories from './Badge.react.stories.tsx';
 
 Use Badge for a short, static mark next to the thing it describes: a status such as “Active” or “Failed”, a category, a count, or a highlight such as “New”. Keep its text to a word or two. Badge is not interactive: use Chip for a choice a user turns on and off or removes, and Notification for a message.
 
-Do not let colour carry the meaning alone. The text, or the `label` of a badge with only an icon, says what the colour means.
+Do not let colour carry the meaning alone. The text, or the `label` of a badge without text, says what the colour means.
 
 ## Anatomy
 
-The **base** is the surface of the badge, its fill and corners. It holds an optional **icon** and the **label**, the text. The web component exposes these as parts; React uses the matching `.ui-badge__<part>` classes, and Figma names the layers the same way.
+The **base** is the surface of the badge, its fill, border and corners. It holds optional **leading** content, the **label**, the text, and optional **trailing** content. The web component exposes these as parts; React uses the matching `.ui-badge__<part>` classes, and Figma names the layers the same way.
 
 ## Variants & tone
 
@@ -29,9 +29,11 @@ The **base** is the surface of the badge, its fill and corners. It holds an opti
 
 `tone` says what a badge means: `neutral`, the default, for categories and counts; `brand` for a highlight; and `info`, `success`, `warning` and `error` for a status. `variant` sets the emphasis: `solid`, the default, is a strong fill for marks that must stand out, and `subtle` a light tint for statuses in lists and tables.
 
+A brand turns on a border or capitals with tokens, not props: `--badge-border-width` and `--color-badge-<tone>-<variant>-border` draw the border, which has the colour of the fill in the library, and `--badge-text-uppercase` sets capitals. The border is drawn inside the badge, so it never changes its size. Smaller text takes `--text-2xs` or `--text-3xs` through `--badge-<size>-font-size`, with their line heights `--text-2xs--line-height` or `--text-3xs--line-height` through `--badge-<size>-line-height`.
+
 ## Sizes & density
 
-`medium`, the default, sits next to body text; `small` sits next to small text and inside dense rows. Density changes the height, the padding and the icon without changing the prop. `shape` gives a pill, `rounded` by default, or small corners with `square`.
+`medium`, the default, sits next to body text; `small` sits next to small text and inside dense rows. Density changes the height, the padding and the icon size without changing the prop. `shape` gives a pill, `rounded` by default, or small corners with `square`.
 
 <FrameworkCanvas react={ReactStories.Shapes} webComponents={WebComponentStories.Shapes} />
 
@@ -43,20 +45,24 @@ Badge has no interactive states. It does not take focus, and its colours change 
 
 <FrameworkCanvas react={ReactStories.WithIcon} webComponents={WebComponentStories.WithIcon} />
 
-Write the text in the default slot, or as `children`. Supply one trusted SVG in the `icon` slot, or in the `icon` prop; Badge sizes it, colours it with the text and hides it from assistive technology. The icons package provides SVG strings; insert them as markup, such as with `innerHTML` or React's `dangerouslySetInnerHTML`.
+Write the text in the default slot, or as `children`. Put content before the text in the `leading` slot, or the `leading` prop, and after it in `trailing`. Both take anything an author styles, such as a trusted SVG or a status dot, and Badge hides them from assistive technology. An icon of the icons package is drawn at 1em, so it takes the icon size of the badge and the colour of its text; insert its SVG string as markup, such as with `innerHTML` or React's `dangerouslySetInnerHTML`. Other content keeps the size its author gives it.
 
-A badge with an icon and no text is a square of its height. Give it a `label`, which names it as an image. Badge renders no text of its own, so it has no labels in the configuration.
+<FrameworkCanvas react={ReactStories.StatusDot} webComponents={WebComponentStories.StatusDot} />
+
+A status dot is an empty element that its author sizes and colours, such as with `currentColor` for the colour of the text.
+
+A badge with leading or trailing content and no text is a square of its height. Give it a `label`, which names it as an image. Badge renders no text of its own, so it has no labels in the configuration.
 
 ## Behaviour
 
-- Badge chooses its layout from its content: text, an icon and text, or only an icon. No prop switches it.
+- Badge chooses its layout from its content: text with optional leading and trailing content, or no text. No prop switches it.
 - An unknown `tone`, `variant`, `size` or `shape` falls back to the default.
 
 ## Accessibility
 
 - **Pattern.** No WAI-ARIA pattern applies: a badge is static text, read in the flow of the page.
-- **Name.** The text names a badge. A badge with only an icon has the role `img` and the name of `label`; an author's `aria-label` wins over it. The icon is decorative.
-- **Role of the page.** A role such as `status` that the page gives a badge stays, also when it shows only an icon, so that its changes are still announced. The web component writes no role or ARIA attribute on its host.
+- **Name.** The text names a badge. A badge without text has the role `img` and the name of `label`; an author's `aria-label` wins over it. Leading and trailing content is decorative.
+- **Role of the page.** A role such as `status` that the page gives a badge stays, also when it shows no text, so that its changes are still announced. The web component writes no role or ARIA attribute on its host.
 - **Contrast.** Text has a contrast of at least 4.5 to 1 with its fill for every tone and variant, in Light and Dark, on every surface.
 - **Preferences.** In forced colours, an outline keeps the shape of a badge whose fill disappears.
 
@@ -85,5 +91,5 @@ import '@mszczygiel-projects/ui-core-web-components/badge';`}
 ## Implementation notes
 
 - The web component watches its slots to choose its layout, and follows an `aria-label` on its host without writing one.
-- React chooses the layout from its `icon` and `children`, and passes other attributes of a `span` to its root.
-- The Figma set has the design-only property `content` for the three layouts, which code derives from the content.
+- React chooses the layout from its `leading`, `trailing` and `children`, and passes other attributes of a `span` to its root.
+- The Figma set has the design-only property `content` for the two layouts, which code derives from the content, and the instance swaps `leading` and `trailing`, each shown by a boolean property.

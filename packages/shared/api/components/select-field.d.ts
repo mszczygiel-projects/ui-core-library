@@ -33,7 +33,7 @@ export declare const selectField: {
         };
     };
     readonly labels: readonly ["clear"];
-    readonly parts: readonly ["base", "label", "label-text", "control", "trigger", "value", "leading-icon", "indicator", "clear", "popup", "listbox", "group", "group-label", "option", "option-icon", "option-label", "option-mark", "message", "hint", "hint-text"];
+    readonly parts: readonly ["base", "label", "label-row", "label-text", "label-hint", "control", "trigger", "value", "leading-icon", "indicator", "clear", "popup", "listbox", "group", "group-label", "option", "option-icon", "option-label", "option-mark", "message", "hint", "hint-text"];
     readonly slots: readonly ["leading-icon"];
     readonly events: readonly ["ui-value-change", "ui-open-change"];
     readonly stories: readonly ["Playground", "Variants", "Groups", "OnSurfaces"];

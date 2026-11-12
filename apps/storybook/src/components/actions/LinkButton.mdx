@@ -31,7 +31,9 @@ LinkButton has the variants of Button: `primary`, the default, `secondary`, `out
 
 ## Sizes & density
 
-`small`, `medium` (the default) and `large` take the geometry of Button of the same size, so a link and a button line up.
+`small`, `medium` (the default) and `large` take the geometry of Button of the same size, so a link and a button line up. `shape` works as on Button: `square`, the default, takes the radius of the size, and `rounded` gives a pill from `--button-rounded-radius`.
+
+<FrameworkCanvas react={ReactStories.Shapes} webComponents={WebComponentStories.Shapes} />
 
 ## States
 
@@ -47,7 +49,7 @@ Supply trusted SVG nodes in the `leading-icon` and `trailing-icon` slots, or in 
 
 - `href`, `target`, `rel` and `download` reach the native link as given. LinkButton adds no relationship: browsers already open `target="_blank"` without access to the opener, and whether to send the referrer is the page's choice.
 - Clicking follows the link natively, so a modified click, a middle click and the context menu work as on any link. A click on a disabled link stops at the link, as on a disabled button.
-- An unknown `variant` or `size` falls back to the default.
+- An unknown `variant`, `size` or `shape` falls back to the default.
 - In React, `render` renders the link with the link component of a router, which receives the props of the native link and must render an `<a>` with them. A disabled link ignores it.
 
 <Source

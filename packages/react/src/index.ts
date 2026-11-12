@@ -12,6 +12,7 @@ export { Breadcrumbs, type BreadcrumbsProps } from './breadcrumbs/Breadcrumbs.ts
 export {
   Button,
   type ButtonProps,
+  type ButtonShape,
   type ButtonSize,
   type ButtonType,
   type ButtonVariant,
@@ -52,6 +53,7 @@ export {
 export {
   IconButton,
   type IconButtonProps,
+  type IconButtonShape,
   type IconButtonSize,
   type IconButtonType,
   type IconButtonVariant,
@@ -60,6 +62,7 @@ export {
   LinkButton,
   type LinkButtonProps,
   type LinkButtonRenderProps,
+  type LinkButtonShape,
   type LinkButtonSize,
   type LinkButtonVariant,
 } from './link-button/LinkButton.tsx';

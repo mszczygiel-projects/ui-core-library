@@ -71,6 +71,11 @@
   --_radius: var(--button-large-radius);
 }
 
+/* After the sizes, so that a pill keeps its shape at every size. */
+.ui-action.ui-action--rounded {
+  --_radius: var(--button-rounded-radius);
+}
+
 .ui-action.ui-action--primary {
   --_background: var(--color-button-primary-background-default);
   --_border: var(--color-button-primary-border-default);

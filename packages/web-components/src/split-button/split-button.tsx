@@ -2,6 +2,7 @@ import type { UiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/conf
 import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config';
 import { iconChevronDown } from '@mszczygiel-projects/ui-core-icons';
 import type {
+  ButtonShape,
   ButtonSize,
   ButtonType,
   ButtonVariant,
@@ -88,6 +89,9 @@ export class UiSplitButton implements SplitButtonProps<string>, FormAssociated {
 
   /** The size of both halves and of the menu, which follows the density. */
   @Prop() size: ButtonSize = 'medium';
+
+  /** The corners of both halves. */
+  @Prop() shape: ButtonShape = 'square';
 
   /** Disables both halves and removes them from keyboard navigation. */
   @Prop({ reflect: true }) disabled = false;
@@ -243,12 +247,13 @@ export class UiSplitButton implements SplitButtonProps<string>, FormAssociated {
   render(): VNode {
     const variant = oneOf(this.variant, options.variant.options, options.variant.default);
     const size = oneOf(this.size, options.size.options, options.size.default);
+    const shape = oneOf(this.shape, options.shape.options, options.shape.default);
     const type = oneOf(this.type, options.type.options, options.type.default);
     const disabled = this.isDisabled();
     const label = this.authorLabel ?? this.label;
     const named = typeof label === 'string' && label !== '';
     const loading = this.loading ? ' loading' : '';
-    const surface = `action ${variant} ${size}${loading}`;
+    const surface = `action ${variant} ${size} ${shape}${loading}`;
     const toggleDisabled = disabled || !this.hasEnabledAction();
     // The internal form runs the action of the main button after the native click dispatch
     // finishes, as Button does; its role keeps it out of the accessibility tree.

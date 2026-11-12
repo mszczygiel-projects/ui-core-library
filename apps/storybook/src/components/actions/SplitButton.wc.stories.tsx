@@ -2,6 +2,7 @@ import '@mszczygiel-projects/ui-core-web-components/split-button';
 
 import { iconDelete } from '@mszczygiel-projects/ui-core-icons';
 import {
+  type ButtonShape,
   type ButtonSize,
   type ButtonType,
   type ButtonVariant,
@@ -19,6 +20,7 @@ interface SplitButtonArgs {
   readonly children: string;
   readonly variant: ButtonVariant;
   readonly size: ButtonSize;
+  readonly shape: ButtonShape;
   readonly disabled: boolean;
   readonly loading: boolean;
   readonly type: ButtonType;
@@ -70,6 +72,7 @@ function UiSplitButton({
     <ui-split-button
       variant={args.variant}
       size={args.size}
+      shape={args.shape}
       disabled={args.disabled}
       loading={args.loading}
       type={args.type}
@@ -102,6 +105,7 @@ const source = (args: SplitButtonArgs) =>
     {
       variant: args.variant === options.variant.default ? undefined : args.variant,
       size: args.size === options.size.default ? undefined : args.size,
+      shape: args.shape === options.shape.default ? undefined : args.shape,
       type: args.type === options.type.default ? undefined : args.type,
       disabled: args.disabled,
       loading: args.loading,
@@ -121,6 +125,7 @@ const meta = {
     children: 'Save',
     variant: options.variant.default,
     size: options.size.default,
+    shape: options.shape.default,
     disabled: false,
     loading: false,
     type: options.type.default,
@@ -129,6 +134,7 @@ const meta = {
     children: { control: 'text' },
     variant: { control: 'select', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
+    shape: { control: 'inline-radio', options: options.shape.options },
     disabled: { control: 'boolean' },
     loading: { control: 'boolean' },
     type: { control: 'inline-radio', options: options.type.options },

@@ -81,8 +81,10 @@ declare global {
  * @part calendar-button - The button that opens the calendar.
  * @part panel - The dialog that holds the calendar.
  * @part calendar - The calendar inside the dialog.
+ * @part label-row - The row of the label on top and its hint.
  * @part label - The visible label and its floating background.
  * @part label-text - The visible label text.
+ * @part label-hint - The short text at the end of the label row, such as a count.
  * @part hint - The help or feedback container.
  * @part hint-text - The help or feedback text.
  */
@@ -106,6 +108,9 @@ export class UiDateField implements DateFieldProps, FormAssociated {
   /** The position of the visible label. */
   @Prop() labelPlacement: TextFieldLabelPlacement = 'top';
 
+  /** Hides the visible label, which still names the control. */
+  @Prop() hideLabel = false;
+
   /** Visual feedback, independent of form validity. */
   @Prop() state: TextFieldState = 'default';
 
@@ -117,6 +122,9 @@ export class UiDateField implements DateFieldProps, FormAssociated {
 
   /** Help or feedback connected to the input. */
   @Prop() hint?: string;
+
+  /** Short text at the end of the label row, such as a count of characters, in the description. */
+  @Prop() labelHint?: string;
 
   /** Prevents interaction and submission. */
   @Prop({ reflect: true }) disabled = false;
@@ -420,7 +428,9 @@ export class UiDateField implements DateFieldProps, FormAssociated {
         classes={appearance.classes}
         placement={appearance.placement}
         label={this.label}
+        hideLabel={this.hideLabel}
         hint={hint}
+        labelHint={this.labelHint}
         onSubmit={this.control.onInnerSubmit}
       >
         <div part="input-row" class="input-row" onInput={this.onInput}>
@@ -438,7 +448,7 @@ export class UiDateField implements DateFieldProps, FormAssociated {
             {...forwardedAttributes(this.hostAttributes)}
             inputMode={this.hostAttributes['inputmode'] ?? 'numeric'}
             aria-invalid={appearance.error ? 'true' : undefined}
-            aria-describedby={fieldDescription(hint)}
+            aria-describedby={fieldDescription(hint, this.labelHint)}
             onFocus={() => {
               this.editing = true;
             }}
