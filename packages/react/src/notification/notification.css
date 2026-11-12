@@ -5,10 +5,13 @@
   align-items: flex-start;
   padding-block: var(--notification-padding-stack);
   padding-inline: var(--notification-padding-inline);
+
+  /* A border all around, and an accent of the tone on the side where reading starts. */
   border: var(--notification-border-width) solid var(--_border);
+  border-inline-start: var(--notification-border-accent-width) solid var(--_accent);
   border-radius: var(--notification-radius);
   background-color: var(--_background);
-  color: var(--_text);
+  color: var(--_heading);
 }
 
 /* The flex display above would otherwise show a notification that the page hides. */
@@ -16,59 +19,84 @@
   display: none;
 }
 
-/* A solid notification draws its border in its fill, so that both variants share one geometry. */
-.ui-notification.ui-notification--solid {
-  --_border: var(--_background);
-}
-
-/* A subtle notification marks its tone with an accent on the side where reading starts. */
-.ui-notification.ui-notification--subtle {
-  border-block-width: 0;
-  border-inline-end-width: 0;
-}
-
 .ui-notification--info.ui-notification--solid {
   --_background: var(--color-notification-info-solid-background);
-  --_text: var(--color-notification-info-solid-text);
+  --_border: var(--color-notification-info-solid-border-default);
+  --_accent: var(--color-notification-info-solid-border-accent);
+  --_heading: var(--color-notification-info-solid-text-heading);
+  --_description: var(--color-notification-info-solid-text-description);
+  --_link: var(--color-notification-info-solid-link-default);
+  --_link-hover: var(--color-notification-info-solid-link-hover);
 }
 
 .ui-notification--info.ui-notification--subtle {
   --_background: var(--color-notification-info-subtle-background);
-  --_text: var(--color-notification-info-subtle-text);
-  --_border: var(--color-notification-info-subtle-border);
+  --_border: var(--color-notification-info-subtle-border-default);
+  --_accent: var(--color-notification-info-subtle-border-accent);
+  --_heading: var(--color-notification-info-subtle-text-heading);
+  --_description: var(--color-notification-info-subtle-text-description);
+  --_link: var(--color-notification-info-subtle-link-default);
+  --_link-hover: var(--color-notification-info-subtle-link-hover);
 }
 
 .ui-notification--success.ui-notification--solid {
   --_background: var(--color-notification-success-solid-background);
-  --_text: var(--color-notification-success-solid-text);
+  --_border: var(--color-notification-success-solid-border-default);
+  --_accent: var(--color-notification-success-solid-border-accent);
+  --_heading: var(--color-notification-success-solid-text-heading);
+  --_description: var(--color-notification-success-solid-text-description);
+  --_link: var(--color-notification-success-solid-link-default);
+  --_link-hover: var(--color-notification-success-solid-link-hover);
 }
 
 .ui-notification--success.ui-notification--subtle {
   --_background: var(--color-notification-success-subtle-background);
-  --_text: var(--color-notification-success-subtle-text);
-  --_border: var(--color-notification-success-subtle-border);
+  --_border: var(--color-notification-success-subtle-border-default);
+  --_accent: var(--color-notification-success-subtle-border-accent);
+  --_heading: var(--color-notification-success-subtle-text-heading);
+  --_description: var(--color-notification-success-subtle-text-description);
+  --_link: var(--color-notification-success-subtle-link-default);
+  --_link-hover: var(--color-notification-success-subtle-link-hover);
 }
 
 .ui-notification--warning.ui-notification--solid {
   --_background: var(--color-notification-warning-solid-background);
-  --_text: var(--color-notification-warning-solid-text);
+  --_border: var(--color-notification-warning-solid-border-default);
+  --_accent: var(--color-notification-warning-solid-border-accent);
+  --_heading: var(--color-notification-warning-solid-text-heading);
+  --_description: var(--color-notification-warning-solid-text-description);
+  --_link: var(--color-notification-warning-solid-link-default);
+  --_link-hover: var(--color-notification-warning-solid-link-hover);
 }
 
 .ui-notification--warning.ui-notification--subtle {
   --_background: var(--color-notification-warning-subtle-background);
-  --_text: var(--color-notification-warning-subtle-text);
-  --_border: var(--color-notification-warning-subtle-border);
+  --_border: var(--color-notification-warning-subtle-border-default);
+  --_accent: var(--color-notification-warning-subtle-border-accent);
+  --_heading: var(--color-notification-warning-subtle-text-heading);
+  --_description: var(--color-notification-warning-subtle-text-description);
+  --_link: var(--color-notification-warning-subtle-link-default);
+  --_link-hover: var(--color-notification-warning-subtle-link-hover);
 }
 
 .ui-notification--error.ui-notification--solid {
   --_background: var(--color-notification-error-solid-background);
-  --_text: var(--color-notification-error-solid-text);
+  --_border: var(--color-notification-error-solid-border-default);
+  --_accent: var(--color-notification-error-solid-border-accent);
+  --_heading: var(--color-notification-error-solid-text-heading);
+  --_description: var(--color-notification-error-solid-text-description);
+  --_link: var(--color-notification-error-solid-link-default);
+  --_link-hover: var(--color-notification-error-solid-link-hover);
 }
 
 .ui-notification--error.ui-notification--subtle {
   --_background: var(--color-notification-error-subtle-background);
-  --_text: var(--color-notification-error-subtle-text);
-  --_border: var(--color-notification-error-subtle-border);
+  --_border: var(--color-notification-error-subtle-border-default);
+  --_accent: var(--color-notification-error-subtle-border-accent);
+  --_heading: var(--color-notification-error-subtle-text-heading);
+  --_description: var(--color-notification-error-subtle-text-description);
+  --_link: var(--color-notification-error-subtle-link-default);
+  --_link-hover: var(--color-notification-error-subtle-link-hover);
 }
 
 .ui-notification__content {
@@ -107,6 +135,7 @@
 }
 
 .ui-notification__description {
+  color: var(--_description);
   font-family: var(--notification-description-font-family);
   font-size: var(--notification-description-font-size);
   font-weight: var(--notification-description-font-weight);
@@ -116,7 +145,11 @@
 }
 
 .ui-notification__description a {
-  color: inherit;
+  color: var(--_link);
+}
+
+.ui-notification__description a:hover {
+  color: var(--_link-hover);
 }
 
 .ui-notification__header[hidden],
@@ -169,7 +202,9 @@
 }
 
 @media (forced-colors: active) {
+  /* Without fills, a frame on every side keeps the notification apart from the page. */
   .ui-notification {
+    border-width: var(--notification-border-accent-width);
     border-color: CanvasText;
   }
 

@@ -27,7 +27,7 @@ The **base** is the surface of the notification, its fill, border and corners. I
 
 <FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
 
-The `tone` says what kind of feedback it is: `info`, the default, for neutral information; `success` for a completed action; `warning` for something that needs attention soon; `error` for something that failed. The `variant` sets the emphasis: `solid`, the default, fills the notification with the tone; `subtle` gives a light tint with an accent border on the side where reading starts. Use `subtle` where several notifications or a long description would be heavy.
+The `tone` says what kind of feedback it is: `info`, the default, for neutral information; `success` for a completed action; `warning` for something that needs attention soon; `error` for something that failed. The `variant` sets the emphasis: `solid`, the default, fills the notification with the tone; `subtle` gives a light tint. Both draw an accent of the tone on the side where reading starts, in the fill colour for `solid`. Use `subtle` where several notifications or a long description would be heavy.
 
 `hasLeadingIcon` shows the icon of the tone before the heading. Warning and error share the danger icon, so let the heading say which it is.
 
@@ -43,7 +43,7 @@ A notification itself is not interactive. Its dismiss button takes a tint on hov
 
 <FrameworkCanvas react={ReactStories.Dismissible} webComponents={WebComponentStories.Dismissible} />
 
-Write the heading in `heading`, and the details in the default slot, or as `children`. An empty description takes no room.
+Write the heading in `heading`, and the details in the default slot, or as `children`. An empty description takes no room. A link in the description takes the link colour of the notification, so that it stands out from the text around it.
 
 `dismissible` adds a button that asks to remove the notification. It is named by a word and the heading, such as “Dismiss Changes saved”, so that several buttons on a page have their own names. The word is `dismissLabel`, then `labels.notification.dismiss`, “Dismiss” in English.
 
@@ -68,11 +68,18 @@ Write the heading in `heading`, and the details in the default slot, or as `chil
 - **Names.** The dismiss word and the heading name the dismiss button. The icon is decorative; the tone shows in the heading, the icon and the colour together.
 - **Target size.** The dismiss button takes a target of at least 24 by 24 pixels in every density.
 - **Contrast.** The heading and the description have a contrast of at least 4.5 to 1 for every tone and variant, in Light and Dark, on every surface.
-- **Preferences.** The border and the focus ring remain visible in forced colours.
+- **Preferences.** In forced colours a frame on every side replaces the fill, and the focus ring stays visible.
 
 ## Surfaces & themes
 
 Colours follow the surrounding theme and surface through the feedback roles: the base colour and its text for `solid`, the tint and the text for the tint for `subtle`.
+
+A theme styles each part through the Components tokens of the tone and variant, such as `--color-notification-info-subtle-<part>`:
+
+- `text-heading` colours the heading and the icon, and `text-description` the description;
+- `link-default` and `link-hover` colour a link in the description;
+- `border-accent` with `--notification-border-accent-width` draws the accent;
+- `border-default` with `--notification-border-width` draws a border on the other sides. Core sets that width to zero, so a theme switches the border on with one token.
 
 ## API
 

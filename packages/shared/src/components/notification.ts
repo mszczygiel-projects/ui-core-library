@@ -41,7 +41,7 @@ export const notification = defineComponent({
 
 /** The feedback a notification gives: information, a success, a warning or an error. */
 export type NotificationTone = OptionOf<typeof notification, 'tone'>;
-/** The emphasis of a notification: a strong fill or a light tint with an accent border. */
+/** The emphasis of a notification: a strong fill or a light tint, each with an accent of its tone. */
 export type NotificationVariant = OptionOf<typeof notification, 'variant'>;
 
 /** The live-region role of a notification, or none for one that is not announced. */
