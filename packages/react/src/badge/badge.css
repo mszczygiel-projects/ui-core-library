@@ -56,9 +56,9 @@
   font-size: var(--_icon-size);
 }
 
-/* A wrapper around an icon would otherwise take the height of a text line and lift the icon.
-   Without specificity, the author's own display wins. */
-:where(.ui-badge__leading, .ui-badge__trailing) > * {
+/* A wrapper around an icon would otherwise take the height of a text line and lift the icon. The
+   rule leaves hidden content alone and has no specificity, so the author's own display wins. */
+:where(.ui-badge__leading, .ui-badge__trailing) > :where(:not([hidden])) {
   display: inline-flex;
 }
 

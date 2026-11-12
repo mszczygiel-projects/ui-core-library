@@ -94,6 +94,19 @@ export function badgeContract(adapter: Mount<BadgeContractProps>): void {
     ).toBeLessThan(1);
   });
 
+  it('keeps content hidden that its author hides, in the text and around it', async () => {
+    const component = await mount({ leading: true });
+    const wrapper = component.element.querySelector('[data-contract-icon]')?.parentElement;
+    expect(wrapper).toBeDefined();
+    wrapper?.toggleAttribute('hidden', true);
+    const draft = document.createElement('span');
+    draft.hidden = true;
+    draft.textContent = 'Draft';
+    component.element.append(draft);
+    expect(wrapper?.checkVisibility()).toBe(false);
+    expect(draft.checkVisibility()).toBe(false);
+  });
+
   it('draws its border and capitals from its tokens, without changing its size', async () => {
     const component = await mount({ tone: 'success', variant: 'subtle' });
     const base = component.part('base');
