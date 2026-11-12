@@ -3743,6 +3743,40 @@
             "hiddenFromPublishing": false
           }
         }
+      },
+      "2xs": {
+        "$value": 11,
+        "$type": "fontSize",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:2",
+            "collectionId": "VariableCollectionId:1:122",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--text-2xs)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "3xs": {
+        "$value": 10,
+        "$type": "fontSize",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1103:3",
+            "collectionId": "VariableCollectionId:1:122",
+            "scopes": [
+              "FONT_SIZE"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--text-3xs)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
       }
     },
     "font-weight": {
