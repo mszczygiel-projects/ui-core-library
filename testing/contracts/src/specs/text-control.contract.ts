@@ -188,6 +188,20 @@ export function textControlContract<Props extends TextControlContractProps>(
     );
   });
 
+  it('gives its control the active border under keyboard focus, as under the pointer', async () => {
+    for (const variant of ['outline', 'filled'] as const) {
+      const field = await mount({ variant });
+      field.element.style.setProperty(`--color-control-${variant}-border-active`, 'rgb(1, 2, 3)');
+      await page.elementLocator(field.part('control')).unhover();
+      // Keyboard focus, so that :focus-visible applies without any global stylesheet.
+      await userEvent.keyboard('{Tab}');
+      controlOf(field).focus();
+      expect(getComputedStyle(field.part('control'), '::before').borderTopColor).toBe(
+        'rgb(1, 2, 3)',
+      );
+    }
+  });
+
   it('draws the inner shadow of its control from the tokens of the control family', async () => {
     const field = await mount();
     field.element.style.setProperty('--control-shadow', 'inset 0 1px 1px');

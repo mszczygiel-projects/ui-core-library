@@ -55,7 +55,12 @@
   --_radius: var(--control-large-radius);
 }
 
-.ui-field:where(:has(.ui-field__input:enabled:not(:focus-visible))):where(:hover, :active) {
+/* Under the pointer and under keyboard focus. */
+.ui-field:where(:has(.ui-field__input:enabled)):where(
+    :hover,
+    :active,
+    :has(.ui-field__input:focus-visible)
+  ) {
   --_border: var(--color-control-outline-border-active);
 }
 
@@ -94,8 +99,13 @@
   --_label-background: var(--color-control-filled-label-background);
 }
 
-.ui-field--filled:where(:has(.ui-field__input:enabled:not(:focus-visible))):where(:hover, :active) {
-  --_border: var(--color-control-filled-border-default);
+/* Under the pointer and under keyboard focus. */
+.ui-field--filled:where(:has(.ui-field__input:enabled)):where(
+    :hover,
+    :active,
+    :has(.ui-field__input:focus-visible)
+  ) {
+  --_border: var(--color-control-filled-border-active);
 }
 
 .ui-field--filled.ui-field--error {

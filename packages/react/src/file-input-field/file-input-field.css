@@ -104,6 +104,16 @@
   --_item-icon: var(--color-control-filled-icon-default);
 }
 
+.ui-file-input-field--filled:where(
+  :not(.ui-file-input-field--disabled):has(
+    .ui-file-input-field__dropzone:hover,
+    .ui-file-input-field__dropzone:active,
+    .ui-file-input-field__input:focus-visible
+  )
+) {
+  --_border: var(--color-control-filled-border-active);
+}
+
 .ui-file-input-field--filled.ui-file-input-field--success {
   --_border: var(--color-control-filled-border-success);
   --_label: var(--color-control-filled-label-success);
