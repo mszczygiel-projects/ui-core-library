@@ -278,6 +278,22 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
     );
     expect(getComputedStyle(second, '::after').content).toBe('none');
     await component.unmount();
+    // The border goes around the whole tab in both orientations, not as an indicator strip.
+    for (const orientation of ['horizontal', 'vertical'] as const) {
+      const oriented = await mount({ tabs: TABS, variant: 'segmented', orientation });
+      const [selected] = parts(oriented, 'tab');
+      if (selected === undefined) {
+        throw new Error('Missing the tabs');
+      }
+      const frame = getComputedStyle(selected, '::after');
+      expect(
+        Number.parseFloat(frame.height) + 2 * Number.parseFloat(frame.borderTopWidth),
+      ).toBeCloseTo(selected.offsetHeight, 0);
+      // The used size of the pseudo-element leaves out its own border.
+      const edge = 2 * Number.parseFloat(frame.borderTopWidth);
+      expect(Number.parseFloat(frame.width) + edge).toBeCloseTo(selected.offsetWidth, 0);
+      await oriented.unmount();
+    }
   });
 
   for (const variant of ['underline', 'segmented'] as const) {

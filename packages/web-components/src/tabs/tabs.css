@@ -164,13 +164,13 @@
   background: var(--color-tabs-indicator-disabled);
 }
 
-.horizontal .tab::after {
+.underline.horizontal .tab::after {
   inset-block-end: 0;
   inset-inline: 0;
   block-size: var(--tabs-indicator-width);
 }
 
-.vertical .tab::after {
+.underline.vertical .tab::after {
   inset-block: 0;
   inset-inline-end: 0;
   inline-size: var(--tabs-indicator-width);

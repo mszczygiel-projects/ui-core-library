@@ -168,13 +168,16 @@
   background: var(--color-tabs-indicator-disabled);
 }
 
-.ui-tabs--horizontal > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab::after {
+.ui-tabs--horizontal.ui-tabs--underline
+  > .ui-tabs__scroller
+  > .ui-tabs__list
+  > .ui-tabs__tab::after {
   inset-block-end: 0;
   inset-inline: 0;
   block-size: var(--tabs-indicator-width);
 }
 
-.ui-tabs--vertical > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab::after {
+.ui-tabs--vertical.ui-tabs--underline > .ui-tabs__scroller > .ui-tabs__list > .ui-tabs__tab::after {
   inset-block: 0;
   inset-inline-end: 0;
   inline-size: var(--tabs-indicator-width);
