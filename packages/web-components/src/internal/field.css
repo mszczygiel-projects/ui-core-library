@@ -141,6 +141,7 @@
   padding-block: var(--_padding-stack);
   padding-inline: var(--_padding-inline);
   border-radius: var(--_radius);
+  box-shadow: var(--control-shadow) var(--color-control-shadow);
   background: var(--_background);
   color: var(--_text);
 }
@@ -204,8 +205,29 @@
   overflow-wrap: anywhere;
 }
 
-.top > .label {
+.label-row {
+  display: flex;
+  gap: var(--control-label-inline-gap);
+  align-items: baseline;
+  justify-content: space-between;
   margin-block-end: var(--control-label-gap);
+}
+
+/* A hidden label still names the control, so it stays in the tree outside the layout. */
+.hidden-label-row {
+  position: absolute;
+  overflow: hidden;
+  white-space: nowrap;
+  clip-path: inset(50%);
+}
+
+.label-hint {
+  flex: none;
+  margin-inline-start: auto;
+  color: var(--_hint);
+  font-size: var(--control-hint-font-size);
+  font-weight: var(--control-hint-font-weight);
+  line-height: var(--control-hint-line-height);
 }
 
 .inner .label {
@@ -275,7 +297,9 @@
 }
 
 .hint {
-  display: block;
+  display: flex;
+  gap: var(--control-label-inline-gap);
+  align-items: baseline;
   margin-block-start: var(--control-hint-gap);
   color: var(--_hint);
   font-size: var(--control-hint-font-size);

@@ -10,7 +10,7 @@ import { AccordionItemOpenChange } from "./accordion-item/events";
 import { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 import { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 import { BreadcrumbsNavigate } from "./breadcrumbs/events";
-import { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+import { ButtonShape, ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 import { CalendarChange } from "./calendar/events";
 import { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
 import { CheckedChange } from "./checkbox-field/events";
@@ -29,7 +29,7 @@ import { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 import { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
 import { FileInputFieldReject, FileInputFieldValueChange } from "./file-input-field/events";
-import { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
+import { IconButtonShape, IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 import { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 import { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
 import { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
@@ -60,7 +60,7 @@ export { AccordionItemOpenChange } from "./accordion-item/events";
 export { BadgeShape, BadgeSize, BadgeTone, BadgeVariant } from "@mszczygiel-projects/ui-core-shared/badge";
 export { BreadcrumbsItem, BreadcrumbsSeparator, BreadcrumbsSize } from "@mszczygiel-projects/ui-core-shared/breadcrumbs";
 export { BreadcrumbsNavigate } from "./breadcrumbs/events";
-export { ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
+export { ButtonShape, ButtonSize, ButtonType, ButtonVariant } from "@mszczygiel-projects/ui-core-shared/button";
 export { CalendarChange } from "./calendar/events";
 export { ChoiceState } from "@mszczygiel-projects/ui-core-shared/checkbox-field";
 export { CheckedChange } from "./checkbox-field/events";
@@ -79,7 +79,7 @@ export { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 export { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
 export { FileInputFieldReject, FileInputFieldValueChange } from "./file-input-field/events";
-export { IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
+export { IconButtonShape, IconButtonSize, IconButtonType, IconButtonVariant } from "@mszczygiel-projects/ui-core-shared/icon-button";
 export { LinkButtonSize, LinkButtonVariant } from "@mszczygiel-projects/ui-core-shared/link-button";
 export { ListboxSize } from "@mszczygiel-projects/ui-core-shared/listbox";
 export { LoaderSize } from "@mszczygiel-projects/ui-core-shared/loader";
@@ -150,14 +150,14 @@ export namespace Components {
         "open": boolean;
     }
     /**
-     * Marks a status, a category or a count with a short label, an icon or both.
-     * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
-     * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
-     * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+     * Marks a status, a category or a count with a short label and any content before or after it.
+     * The badge is not interactive. Its text names it; a badge without text becomes an image named by
+     * `label`. The host belongs to the page: the component writes no role or ARIA attribute on it, and
+     * an `aria-label` that the page writes there names the image instead of `label`.
      */
     interface UiBadge {
         /**
-          * The accessible name of a badge that shows only an icon. A badge with text is named by its text, and an author's `aria-label` wins.
+          * The accessible name of a badge that shows no text, only its leading or trailing content. A badge with text is named by its text, and an author's `aria-label` wins.
          */
         "label"?: string;
         /**
@@ -242,6 +242,11 @@ export namespace Components {
           * The name of the form entry, submitted only when this button submits.
          */
         "name"?: string;
+        /**
+          * The corners of the action.
+          * @default 'square'
+         */
+        "shape": ButtonShape;
         /**
           * The size of the button, which follows the density.
           * @default 'medium'
@@ -499,6 +504,11 @@ export namespace Components {
          */
         "getCreateLabel"?: (query: string) => string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -506,6 +516,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -606,6 +620,11 @@ export namespace Components {
          */
         "hideCalendarButton": boolean;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or feedback connected to the input.
          */
         "hint"?: string;
@@ -613,6 +632,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -892,6 +915,11 @@ export namespace Components {
          */
         "name"?: string;
         /**
+          * The corners of the action; `rounded` makes a circle.
+          * @default 'square'
+         */
+        "shape": IconButtonShape;
+        /**
           * The size, which follows the density and matches the height of a button.
           * @default 'medium'
          */
@@ -1155,6 +1183,11 @@ export namespace Components {
     context: NumberValidationContext,
   ) => string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or feedback connected to the input.
          */
         "hint"?: string;
@@ -1166,6 +1199,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -1329,6 +1366,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -1336,6 +1378,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -1528,6 +1574,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -1535,6 +1586,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -1618,6 +1673,11 @@ export namespace Components {
          */
         "emptyLabel"?: string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or validation feedback, connected to the description of the trigger.
          */
         "hint"?: string;
@@ -1625,6 +1685,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -1715,6 +1779,11 @@ export namespace Components {
           * @default []
          */
         "options": MenuItems<string>;
+        /**
+          * The corners of both halves.
+          * @default 'square'
+         */
+        "shape": ButtonShape;
         /**
           * The size of both halves and of the menu, which follows the density.
           * @default 'medium'
@@ -1856,6 +1925,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -1863,6 +1937,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -1939,6 +2017,11 @@ export namespace Components {
          */
         "disabled": boolean;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -1946,6 +2029,10 @@ export namespace Components {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -2169,10 +2256,10 @@ declare global {
         new (): HTMLUiAccordionItemElement;
     };
     /**
-     * Marks a status, a category or a count with a short label, an icon or both.
-     * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
-     * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
-     * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+     * Marks a status, a category or a count with a short label and any content before or after it.
+     * The badge is not interactive. Its text names it; a badge without text becomes an image named by
+     * `label`. The host belongs to the page: the component writes no role or ARIA attribute on it, and
+     * an `aria-label` that the page writes there names the image instead of `label`.
      */
     interface HTMLUiBadgeElement extends Components.UiBadge, HTMLStencilElement {
     }
@@ -3030,14 +3117,14 @@ declare namespace LocalJSX {
         "open"?: boolean;
     }
     /**
-     * Marks a status, a category or a count with a short label, an icon or both.
-     * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
-     * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
-     * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+     * Marks a status, a category or a count with a short label and any content before or after it.
+     * The badge is not interactive. Its text names it; a badge without text becomes an image named by
+     * `label`. The host belongs to the page: the component writes no role or ARIA attribute on it, and
+     * an `aria-label` that the page writes there names the image instead of `label`.
      */
     interface UiBadge {
         /**
-          * The accessible name of a badge that shows only an icon. A badge with text is named by its text, and an author's `aria-label` wins.
+          * The accessible name of a badge that shows no text, only its leading or trailing content. A badge with text is named by its text, and an author's `aria-label` wins.
          */
         "label"?: string;
         /**
@@ -3130,6 +3217,11 @@ declare namespace LocalJSX {
           * The name of the form entry, submitted only when this button submits.
          */
         "name"?: string;
+        /**
+          * The corners of the action.
+          * @default 'square'
+         */
+        "shape"?: ButtonShape;
         /**
           * The size of the button, which follows the density.
           * @default 'medium'
@@ -3423,6 +3515,11 @@ declare namespace LocalJSX {
          */
         "getCreateLabel"?: (query: string) => string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -3430,6 +3527,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -3550,6 +3651,11 @@ declare namespace LocalJSX {
          */
         "hideCalendarButton"?: boolean;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or feedback connected to the input.
          */
         "hint"?: string;
@@ -3557,6 +3663,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -3868,6 +3978,11 @@ declare namespace LocalJSX {
          */
         "name"?: string;
         /**
+          * The corners of the action; `rounded` makes a circle.
+          * @default 'square'
+         */
+        "shape"?: IconButtonShape;
+        /**
           * The size, which follows the density and matches the height of a button.
           * @default 'medium'
          */
@@ -4167,6 +4282,11 @@ declare namespace LocalJSX {
     context: NumberValidationContext,
   ) => string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or feedback connected to the input.
          */
         "hint"?: string;
@@ -4178,6 +4298,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -4353,6 +4477,11 @@ declare namespace LocalJSX {
          */
         "form"?: string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -4360,6 +4489,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -4576,6 +4709,11 @@ declare namespace LocalJSX {
          */
         "form"?: string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -4583,6 +4721,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -4678,6 +4820,11 @@ declare namespace LocalJSX {
          */
         "form"?: string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or validation feedback, connected to the description of the trigger.
          */
         "hint"?: string;
@@ -4685,6 +4832,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -4795,6 +4946,11 @@ declare namespace LocalJSX {
           * @default []
          */
         "options"?: MenuItems<string>;
+        /**
+          * The corners of both halves.
+          * @default 'square'
+         */
+        "shape"?: ButtonShape;
         /**
           * The size of both halves and of the menu, which follows the density.
           * @default 'medium'
@@ -4952,6 +5108,11 @@ declare namespace LocalJSX {
          */
         "form"?: string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -4959,6 +5120,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -5043,6 +5208,11 @@ declare namespace LocalJSX {
          */
         "form"?: string;
         /**
+          * Hides the visible label, which still names the control.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
           * Help or validation feedback, connected to the description of the input.
          */
         "hint"?: string;
@@ -5050,6 +5220,10 @@ declare namespace LocalJSX {
           * A persistent visible name. Include any required marker in this text.
          */
         "label"?: string;
+        /**
+          * Short text at the end of the label row, such as a count of characters, in the description.
+         */
+        "labelHint"?: string;
         /**
           * The position of the visible label.
           * @default 'top'
@@ -5162,6 +5336,7 @@ declare namespace LocalJSX {
     interface UiButtonAttributes {
         "variant": ButtonVariant;
         "size": ButtonSize;
+        "shape": ButtonShape;
         "disabled": boolean;
         "loading": boolean;
         "type": ButtonType;
@@ -5211,10 +5386,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "required": boolean;
         "name": string;
@@ -5232,10 +5409,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "readOnly": boolean;
         "required": boolean;
@@ -5290,6 +5469,7 @@ declare namespace LocalJSX {
         "label": string;
         "variant": IconButtonVariant;
         "size": IconButtonSize;
+        "shape": IconButtonShape;
         "disabled": boolean;
         "loading": boolean;
         "type": IconButtonType;
@@ -5342,10 +5522,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "readOnly": boolean;
         "required": boolean;
@@ -5377,10 +5559,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "readOnly": boolean;
         "required": boolean;
@@ -5418,10 +5602,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "readOnly": boolean;
         "required": boolean;
@@ -5436,10 +5622,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "required": boolean;
         "name": string;
@@ -5451,6 +5639,7 @@ declare namespace LocalJSX {
     interface UiSplitButtonAttributes {
         "variant": ButtonVariant;
         "size": ButtonSize;
+        "shape": ButtonShape;
         "disabled": boolean;
         "loading": boolean;
         "type": ButtonType;
@@ -5487,10 +5676,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "readOnly": boolean;
         "required": boolean;
@@ -5505,10 +5696,12 @@ declare namespace LocalJSX {
         "variant": TextFieldVariant;
         "size": TextFieldSize;
         "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
         "state": TextFieldState;
         "label": string;
         "placeholder": string;
         "hint": string;
+        "labelHint": string;
         "disabled": boolean;
         "readOnly": boolean;
         "required": boolean;
@@ -5583,10 +5776,10 @@ declare module "@stencil/core" {
              */
             "ui-accordion-item": LocalJSX.IntrinsicElements["ui-accordion-item"] & JSXBase.HTMLAttributes<HTMLUiAccordionItemElement>;
             /**
-             * Marks a status, a category or a count with a short label, an icon or both.
-             * The badge is not interactive. Its text names it; a badge with only an icon becomes an image
-             * named by `label`. The host belongs to the page: the component writes no role or ARIA attribute
-             * on it, and an `aria-label` that the page writes there names the image instead of `label`.
+             * Marks a status, a category or a count with a short label and any content before or after it.
+             * The badge is not interactive. Its text names it; a badge without text becomes an image named by
+             * `label`. The host belongs to the page: the component writes no role or ARIA attribute on it, and
+             * an `aria-label` that the page writes there names the image instead of `label`.
              */
             "ui-badge": LocalJSX.IntrinsicElements["ui-badge"] & JSXBase.HTMLAttributes<HTMLUiBadgeElement>;
             /**

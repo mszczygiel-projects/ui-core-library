@@ -29,7 +29,9 @@ export const selectField = defineComponent({
   parts: [
     'base',
     'label',
+    'label-row',
     'label-text',
+    'label-hint',
     'control',
     'trigger',
     'value',

@@ -39,7 +39,9 @@ export const textField = defineComponent({
     'input-row',
     'input',
     'label',
+    'label-row',
     'label-text',
+    'label-hint',
     'hint',
     'hint-text',
     'leading-icon',
@@ -143,6 +145,18 @@ export interface FieldControlProps extends FieldBaseProps {
    * @default 'top'
    */
   labelPlacement?: TextFieldLabelPlacement;
+  /**
+   * Hides the visible label, which still names the control. Use it only where something visible,
+   * such as a heading or a column, already tells what to enter.
+   * @default false
+   */
+  hideLabel?: boolean;
+  /**
+   * Short text at the end of the label row, such as a count of characters that the author keeps
+   * or a note such as Optional. It joins the description of the control. Without a visible label
+   * on top, it closes the hint row.
+   */
+  labelHint?: string;
   /** An example or short prompt, never a replacement for the label. */
   placeholder?: string;
 }

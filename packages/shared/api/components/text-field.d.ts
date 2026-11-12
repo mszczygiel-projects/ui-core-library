@@ -46,7 +46,7 @@ export declare const textField: {
         };
     };
     readonly labels: readonly [];
-    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-text", "hint", "hint-text", "leading-icon", "trailing-icon"];
+    readonly parts: readonly ["base", "control", "input-row", "input", "label", "label-row", "label-text", "label-hint", "hint", "hint-text", "leading-icon", "trailing-icon"];
     readonly slots: readonly ["leading-icon", "trailing-icon"];
     readonly events: readonly ["ui-value-change"];
     readonly stories: readonly ["Playground", "Variants", "WithIcons", "OnSurfaces"];
@@ -84,6 +84,8 @@ export interface FieldBaseProps {
 }
 export interface FieldControlProps extends FieldBaseProps {
     labelPlacement?: TextFieldLabelPlacement;
+    hideLabel?: boolean;
+    labelHint?: string;
     placeholder?: string;
 }
 export interface TextControlProps extends FieldControlProps {

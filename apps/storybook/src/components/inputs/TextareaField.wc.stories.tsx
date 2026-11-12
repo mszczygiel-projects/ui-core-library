@@ -4,6 +4,7 @@ import type {
   TextFieldLabelPlacement,
   TextFieldSize,
   TextFieldState,
+  TextFieldValueChangeDetail,
   TextFieldVariant,
 } from '@mszczygiel-projects/ui-core-shared/text-field';
 import {
@@ -11,6 +12,7 @@ import {
   type TextareaFieldResize,
 } from '@mszczygiel-projects/ui-core-shared/textarea-field';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { onSurfaces } from '../decorators.tsx';
 import { htmlOf } from '../html.ts';
@@ -22,6 +24,8 @@ interface TextareaFieldArgs {
   readonly state: TextFieldState;
   readonly label?: string;
   readonly hint?: string;
+  readonly labelHint?: string;
+  readonly hideLabel?: boolean;
   readonly placeholder?: string;
   readonly value?: string;
   readonly name?: string;
@@ -33,6 +37,7 @@ interface TextareaFieldArgs {
   readonly autoComplete?: string;
   readonly resize: TextareaFieldResize;
   readonly maxRows?: number;
+  readonly onValueChange?: (event: CustomEvent<TextFieldValueChangeDetail<Event>>) => void;
 }
 
 const { options } = textareaField;
@@ -47,6 +52,8 @@ function UiTextareaField(args: TextareaFieldArgs) {
       state={args.state}
       label={args.label}
       hint={args.hint}
+      labelHint={args.labelHint}
+      hideLabel={args.hideLabel}
       placeholder={args.placeholder}
       name={args.name}
       required={args.required}
@@ -57,6 +64,7 @@ function UiTextareaField(args: TextareaFieldArgs) {
       autoComplete={args.autoComplete}
       resize={args.resize}
       maxRows={args.maxRows}
+      onui-value-change={args.onValueChange}
     />
   );
 }
@@ -70,6 +78,8 @@ const source = (args: TextareaFieldArgs) =>
     state: args.state === options.state.default ? undefined : args.state,
     label: args.label,
     hint: args.hint,
+    'label-hint': args.labelHint,
+    'hide-label': args.hideLabel,
     placeholder: args.placeholder,
     value: args.value,
     name: args.name,
@@ -101,6 +111,8 @@ const meta = {
   argTypes: {
     label: { control: 'text' },
     hint: { control: 'text' },
+    labelHint: { control: 'text' },
+    hideLabel: { control: 'boolean' },
     placeholder: { control: 'text' },
     variant: { control: 'select', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
@@ -133,6 +145,46 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+const LIMIT = 500;
+
+/** The author counts: the field only shows the text of `label-hint`. */
+export const WithCharacterCount: Story = {
+  args: { label: 'Description', hint: undefined, maxLength: LIMIT },
+  render: function Render(args) {
+    const [length, setLength] = useState(0);
+    return (
+      <UiTextareaField
+        {...args}
+        labelHint={`${String(length)} / ${String(LIMIT)}`}
+        onValueChange={({ detail }) => {
+          setLength(detail.value.length);
+        }}
+      />
+    );
+  },
+  parameters: {
+    docs: {
+      source: {
+        code: [
+          source({
+            ...meta.args,
+            label: 'Description',
+            hint: undefined,
+            maxLength: LIMIT,
+            labelHint: `0 / ${String(LIMIT)}`,
+          }),
+          '<script>',
+          "  const field = document.querySelector('ui-textarea-field');",
+          "  field.addEventListener('ui-value-change', ({ detail }) => {",
+          `    field.labelHint = \`\${detail.value.length} / ${String(LIMIT)}\`;`,
+          '  });',
+          '</script>',
+        ].join('\n'),
+      },
+    },
+  },
+};
 
 export const Variants: Story = {
   render: (args) => (

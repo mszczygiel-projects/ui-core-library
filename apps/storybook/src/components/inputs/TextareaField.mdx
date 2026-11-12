@@ -19,7 +19,7 @@ Use TextareaField for text of more than one line, such as a message or a descrip
 
 ## Anatomy
 
-The **base** holds the **label**, **control** and **hint**, as in TextField. The control holds the native textarea, the **input** part. The web component exposes these parts; React uses `.ui-textarea-field__<part>` classes. The Figma component set has the properties and layers of TextField without its icons.
+The **base** holds the **label-row**, with the **label** and the optional **label-hint**, the **control** and the **hint**, as in TextField. The control holds the native textarea, the **input** part. The web component exposes these parts; React uses `.ui-textarea-field__<part>` classes. The Figma component set has the properties and layers of TextField without its icons.
 
 ## Variants & tone
 
@@ -37,7 +37,12 @@ The **base** holds the **label**, **control** and **hint**, as in TextField. The
 
 ## Content & labels
 
-Supply `label`, `placeholder` and `hint` in the language of the page. Say a limit in the hint and set `maxLength`; the field shows no counter.
+Supply `label`, `placeholder` and `hint` in the language of the page. Set `maxLength` for a limit. `labelHint` and `hideLabel` work as in TextField; a character count is a `labelHint` the author keeps up to date:
+
+<FrameworkCanvas
+  react={ReactStories.WithCharacterCount}
+  webComponents={WebComponentStories.WithCharacterCount}
+/>
 
 ## Behaviour
 

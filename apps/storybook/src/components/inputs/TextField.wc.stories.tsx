@@ -22,6 +22,8 @@ interface TextFieldArgs {
   readonly state: TextFieldState;
   readonly label: string;
   readonly hint?: string;
+  readonly labelHint?: string;
+  readonly hideLabel?: boolean;
   readonly placeholder?: string;
   readonly value?: string;
   readonly name?: string;
@@ -60,6 +62,8 @@ function UiTextField({ value, ...args }: TextFieldArgs) {
       state={args.state}
       label={args.label}
       hint={args.hint}
+      labelHint={args.labelHint}
+      hideLabel={args.hideLabel}
       placeholder={args.placeholder}
       name={args.name}
       required={args.required}
@@ -93,6 +97,8 @@ const source = (args: TextFieldArgs) =>
       state: args.state === options.state.default ? undefined : args.state,
       label: args.label,
       hint: args.hint,
+      'label-hint': args.labelHint,
+      'hide-label': args.hideLabel,
       placeholder: args.placeholder,
       value: args.value,
       name: args.name,
@@ -128,6 +134,8 @@ const meta = {
   argTypes: {
     label: { control: 'text' },
     hint: { control: 'text' },
+    labelHint: { control: 'text' },
+    hideLabel: { control: 'boolean' },
     placeholder: { control: 'text' },
     variant: { control: 'select', options: options.variant.options },
     size: { control: 'inline-radio', options: options.size.options },
@@ -187,6 +195,16 @@ export const Variants: Story = {
           .join('\n'),
       },
     },
+  },
+};
+
+export const HiddenLabel: Story = {
+  args: {
+    label: 'Discount code',
+    placeholder: 'Discount code',
+    hint: undefined,
+    hideLabel: true,
+    type: 'text',
   },
 };
 

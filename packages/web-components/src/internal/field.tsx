@@ -14,11 +14,11 @@ export function fieldAppearance(props: FieldControlProps): {
   readonly placement: TextFieldLabelPlacement;
   readonly error: boolean;
 } {
-  const placement = oneOf(
-    props.labelPlacement,
-    options.labelPlacement.options,
-    options.labelPlacement.default,
-  );
+  // A hidden label leaves the control, so the field takes the layout of a label on top.
+  const placement =
+    props.hideLabel === true
+      ? 'top'
+      : oneOf(props.labelPlacement, options.labelPlacement.options, options.labelPlacement.default);
   const variant = oneOf(props.variant, options.variant.options, options.variant.default);
   const size = oneOf(props.size, options.size.options, options.size.default);
   const state = oneOf(props.state, options.state.options, options.state.default);
@@ -39,7 +39,9 @@ export interface FieldProps {
   readonly classes: string;
   readonly placement: TextFieldLabelPlacement;
   readonly label?: string;
+  readonly hideLabel?: boolean;
   readonly hint?: string;
+  readonly labelHint?: string;
   /**
    * The inner form of a single-line field, which receives Enter as a native default action. A
    * field without it, such as a textarea, renders its base as a plain element.
@@ -53,26 +55,47 @@ export interface FieldProps {
 }
 
 /**
- * The anatomy of every text field: the label, the control with its border, and the hint. The
- * children are the content of the control, whose native element has the id `input`. The label has
- * the id `label`, for a control that names something else with it, such as a list.
+ * The anatomy of every text field: the label row with the label and its hint, the control with its
+ * border, and the hint row. The children are the content of the control, whose native element has
+ * the id `input`. The label has the id `label`, for a control that names something else with it,
+ * such as a list.
  */
 export function Field(props: FieldProps, children: VNode[]): VNode {
-  const label =
-    props.label !== undefined && props.label !== '' ? (
-      <label id="label" part="label" class="label" htmlFor="input" onClick={props.onLabelClick}>
-        <span part="label-text">{props.label}</span>
-      </label>
-    ) : null;
+  const hasLabel = props.label !== undefined && props.label !== '';
+  const hasHint = props.hint !== undefined && props.hint !== '';
+  const hasLabelHint = props.labelHint !== undefined && props.labelHint !== '';
+  const hidden = props.hideLabel === true;
+  const label = hasLabel ? (
+    <label id="label" part="label" class="label" htmlFor="input" onClick={props.onLabelClick}>
+      <span part="label-text">{props.label}</span>
+    </label>
+  ) : null;
+  // The hint of the label sits in the label row above the control, or else closes the hint row.
+  const inLabelRow = props.placement === 'top' && hasLabel && !hidden;
+  const labelHint = hasLabelHint ? (
+    <span id="label-hint" part="label-hint" class="label-hint">
+      {props.labelHint}
+    </span>
+  ) : null;
   const content = [
-    props.placement === 'top' ? label : null,
+    props.placement === 'top' && hasLabel ? (
+      <div part="label-row" class={hidden ? 'label-row hidden-label-row' : 'label-row'}>
+        {label}
+        {inLabelRow ? labelHint : null}
+      </div>
+    ) : null,
     <div part="control" class="control">
       {props.placement === 'top' ? null : label}
       {children}
     </div>,
-    props.hint !== undefined && props.hint !== '' ? (
-      <span id="hint" part="hint" class="hint">
-        <span part="hint-text">{props.hint}</span>
+    hasHint || (hasLabelHint && !inLabelRow) ? (
+      <span part="hint" class="hint">
+        {hasHint ? (
+          <span id="hint" part="hint-text">
+            {props.hint}
+          </span>
+        ) : null}
+        {inLabelRow ? null : labelHint}
       </span>
     ) : null,
   ];
@@ -87,9 +110,13 @@ export function Field(props: FieldProps, children: VNode[]): VNode {
   );
 }
 
-/** The description of the control: the hint of the field. */
-export function fieldDescription(hint: string | undefined): string | undefined {
-  return hint !== undefined && hint !== '' ? 'hint' : undefined;
+/** The description of the control: the hint of the field, then the hint of its label. */
+export function fieldDescription(hint: string | undefined, labelHint?: string): string | undefined {
+  const ids = [
+    hint !== undefined && hint !== '' ? 'hint' : '',
+    labelHint !== undefined && labelHint !== '' ? 'label-hint' : '',
+  ].filter((id) => id !== '');
+  return ids.length === 0 ? undefined : ids.join(' ');
 }
 
 /** The attributes of the host that the native control receives, since no prop owns them. */

@@ -19,7 +19,7 @@ Use SelectField for one choice among options that need not stay in view, such as
 
 ## Anatomy
 
-The **base** holds the **label** with its **label-text**, the **control** and the **hint** with its **hint-text**. The control holds an optional **leading-icon**, the **trigger** with the **value**, the **clear** button and the **indicator** arrow. The open list is a **popup** that holds the **listbox** and its **option**, **group**, **group-label** and **message** parts, as in Listbox. The web component exposes these parts; React uses `.ui-select-field__<part>` classes.
+The **base** holds the **label** with its **label-text**, the **control** and the **hint** with its **hint-text**. A **label-row** holds the label and the optional **label-hint**; `labelHint` and `hideLabel` work as in TextField. The control holds an optional **leading-icon**, the **trigger** with the **value**, the **clear** button and the **indicator** arrow. The open list is a **popup** that holds the **listbox** and its **option**, **group**, **group-label** and **message** parts, as in Listbox. The web component exposes these parts; React uses `.ui-select-field__<part>` classes.
 
 ## Variants & tone
 

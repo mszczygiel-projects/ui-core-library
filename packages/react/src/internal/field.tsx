@@ -35,18 +35,28 @@ export function fieldPlaceholder(placeholder: string | undefined): string {
   return placeholder === undefined || placeholder === '' ? ' ' : placeholder;
 }
 
-/** The description of the control: the author's ids and the hint. */
+/** The description of the control: the author's ids, the hint and the hint of the label. */
 export function fieldDescription(
   describedBy: string | undefined,
   hint: string | undefined,
   hintId: string,
+  labelHint?: string,
 ): string | undefined {
-  return [describedBy, hint ? hintId : undefined].filter(Boolean).join(' ') || undefined;
+  return (
+    [describedBy, hint ? hintId : undefined, labelHint ? labelHintId(hintId) : undefined]
+      .filter(Boolean)
+      .join(' ') || undefined
+  );
+}
+
+/** The id of the hint of the label, derived from the id of the hint. */
+export function labelHintId(hintId: string): string {
+  return `${hintId}-label`;
 }
 
 export interface FieldProps extends Pick<
   FieldControlProps,
-  'variant' | 'size' | 'labelPlacement' | 'state' | 'label' | 'hint'
+  'variant' | 'size' | 'labelPlacement' | 'hideLabel' | 'state' | 'label' | 'hint' | 'labelHint'
 > {
   /** The block of the component, such as `text-field`. */
   readonly block: string;
@@ -75,7 +85,10 @@ export interface FieldProps extends Pick<
   readonly popup?: ReactNode;
 }
 
-/** The anatomy of every text field: the label, the control with its border, and the hint. */
+/**
+ * The anatomy of every text field: the label row with the label and its hint, the control with its
+ * border, and the hint row.
+ */
 export function Field({
   block,
   controlId,
@@ -88,20 +101,21 @@ export function Field({
   variant,
   size,
   labelPlacement,
+  hideLabel = false,
   state,
   label,
   hint,
+  labelHint,
   children,
   labelId,
   rootRef,
   controlRef,
   popup,
 }: FieldProps) {
-  const placement = oneOf(
-    labelPlacement,
-    options.labelPlacement.options,
-    options.labelPlacement.default,
-  );
+  // A hidden label leaves the control, so the field takes the layout of a label on top.
+  const placement = hideLabel
+    ? 'top'
+    : oneOf(labelPlacement, options.labelPlacement.options, options.labelPlacement.default);
   const appearance = [
     oneOf(variant, options.variant.options, options.variant.default),
     oneOf(size, options.size.options, options.size.default),
@@ -112,6 +126,14 @@ export function Field({
     <label id={labelId} className={fieldPart(block, 'label')} htmlFor={controlId}>
       <span className={fieldPart(block, 'label-text')}>{label}</span>
     </label>
+  ) : null;
+  // The hint of the label sits in the label row above the control, or else closes the hint row.
+  const inLabelRow = placement === 'top' && Boolean(label) && !hideLabel;
+  const hasHint = hint !== undefined && hint !== '';
+  const labelHintNode = labelHint ? (
+    <span id={labelHintId(hintId)} className={fieldPart(block, 'label-hint')}>
+      {labelHint}
+    </span>
   ) : null;
   return (
     <div
@@ -130,14 +152,29 @@ export function Field({
         ...modifiers,
       )}
     >
-      {placement === 'top' && labelNode}
+      {placement === 'top' && labelNode && (
+        <div
+          className={classNames(
+            fieldPart(block, 'label-row'),
+            hideLabel && 'ui-field__label-row--hidden',
+          )}
+        >
+          {labelNode}
+          {inLabelRow && labelHintNode}
+        </div>
+      )}
       <div ref={controlRef} className={fieldPart(block, 'control')}>
         {placement !== 'top' && labelNode}
         {children}
       </div>
-      {hint && (
-        <span id={hintId} className={fieldPart(block, 'hint')}>
-          <span className={fieldPart(block, 'hint-text')}>{hint}</span>
+      {(hasHint || (labelHintNode && !inLabelRow)) && (
+        <span className={fieldPart(block, 'hint')}>
+          {hasHint && (
+            <span id={hintId} className={fieldPart(block, 'hint-text')}>
+              {hint}
+            </span>
+          )}
+          {!inLabelRow && labelHintNode}
         </span>
       )}
       {popup}

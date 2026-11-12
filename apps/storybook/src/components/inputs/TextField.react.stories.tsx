@@ -40,6 +40,8 @@ const meta = {
   argTypes: {
     label: { control: 'text' },
     hint: { control: 'text' },
+    labelHint: { control: 'text' },
+    hideLabel: { control: 'boolean' },
     placeholder: { control: 'text' },
     variant: { control: 'select', options: variants },
     size: { control: 'inline-radio', options: options.size.options },
@@ -86,6 +88,16 @@ export const Variants: Story = {
       ))}
     </div>
   ),
+};
+
+export const HiddenLabel: Story = {
+  args: {
+    label: 'Discount code',
+    placeholder: 'Discount code',
+    hint: undefined,
+    hideLabel: true,
+    type: 'text',
+  },
 };
 
 export const WithIcons: Story = { args: { leadingIcon: 'iconUser', trailingIcon: 'iconInfo' } };

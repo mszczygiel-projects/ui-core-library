@@ -88,9 +88,11 @@ export function SelectField({
   variant = 'outline',
   size = 'medium',
   labelPlacement = 'top',
+  hideLabel = false,
   state = 'default',
   label,
   hint,
+  labelHint,
   placeholder,
   disabled = false,
   required = false,
@@ -331,9 +333,11 @@ export function SelectField({
       variant={variant}
       size={size}
       labelPlacement={labelPlacement}
+      hideLabel={hideLabel}
       state={state}
       label={label}
       hint={hint}
+      labelHint={labelHint}
       labelId={`${generatedId}-label`}
       rootRef={rootRef}
       controlRef={controlRef}
@@ -395,7 +399,7 @@ export function SelectField({
           }
           aria-invalid={state === 'error' || undefined}
           aria-required={required || undefined}
-          aria-describedby={fieldDescription(describedBy, hint, hintId)}
+          aria-describedby={fieldDescription(describedBy, hint, hintId, labelHint)}
           onClick={(event) => {
             onClick?.(event);
             // Any activation, by the pointer, a script or assistive technology, toggles the list.

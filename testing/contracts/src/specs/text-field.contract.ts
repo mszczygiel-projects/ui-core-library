@@ -136,7 +136,7 @@ export function textFieldContract(adapter: Mount<TextFieldContractProps>): void 
       false,
     );
     const input = inputOf(field);
-    expect(input.getAttribute('aria-describedby')).toBe(field.part('hint').id);
+    expect(input.getAttribute('aria-describedby')).toBe(field.part('hint-text').id);
     expect(field.part('hint').textContent).toBe('Use your work account');
     await page.elementLocator(field.part('label')).click();
     expect(input.matches(':focus')).toBe(true);

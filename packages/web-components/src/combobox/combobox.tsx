@@ -96,8 +96,10 @@ const MOVING_KEYS = new Set(['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp']);
  * @slot leading-icon - A decorative icon before the chips and the query, in reading order.
  *
  * @part base - The field, label and hint.
+ * @part label-row - The row of the label on top and its hint.
  * @part label - The visible label and its floating background.
  * @part label-text - The visible label text.
+ * @part label-hint - The short text at the end of the label row, such as a count.
  * @part control - The surface, border and focus indicator of the field.
  * @part input-row - The row of the leading icon, the chips and the query, and the buttons.
  * @part chips - The chips of a multiple choice and the input after them.
@@ -139,6 +141,9 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
   /** The position of the visible label. */
   @Prop() labelPlacement: TextFieldLabelPlacement = 'top';
 
+  /** Hides the visible label, which still names the control. */
+  @Prop() hideLabel = false;
+
   /** Visual feedback; `error` also sets `aria-invalid` without changing native validity. */
   @Prop() state: TextFieldState = 'default';
 
@@ -150,6 +155,9 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
 
   /** Help or validation feedback, connected to the description of the input. */
   @Prop() hint?: string;
+
+  /** Short text at the end of the label row, such as a count of characters, in the description. */
+  @Prop() labelHint?: string;
 
   /** Prevents interaction and submission. */
   @Prop({ reflect: true }) disabled = false;
@@ -425,7 +433,9 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
         classes={`${appearance.classes}${this.open ? ' open' : ''}`}
         placement={appearance.placement}
         label={this.label}
+        hideLabel={this.hideLabel}
         hint={this.hint}
+        labelHint={this.labelHint}
         onLabelClick={this.onLabelClick}
       >
         <div part="input-row" class="input-row" onClick={this.onRowClick}>
@@ -475,7 +485,7 @@ export class UiCombobox implements ComboboxProps<string>, FormAssociated {
               aria-label={this.ariaLabel ?? undefined}
               aria-invalid={appearance.error ? 'true' : undefined}
               aria-required={this.required ? 'true' : undefined}
-              aria-describedby={fieldDescription(this.hint)}
+              aria-describedby={fieldDescription(this.hint, this.labelHint)}
               onInput={this.onInput}
               onCompositionstart={this.onCompositionStart}
               onCompositionend={this.onCompositionEnd}

@@ -20,6 +20,11 @@ const label = instance.getString('label');
 const placeholder = instance.getString('placeholder');
 const value = instance.getString('value');
 const hint = instance.getBoolean('showHint') ? instance.getString('hint') : undefined;
+// showLabel stands for hideLabel inverted, since a Figma boolean can only show a layer.
+const hideLabel = !instance.getBoolean('showLabel');
+const labelHint = instance.getBoolean('showLabelHint')
+  ? instance.getString('labelHint')
+  : undefined;
 const leadingIcon = instance.getInstanceSwap('leadingIcon');
 const trailingIcon = instance.getInstanceSwap('trailingIcon');
 const leading =
@@ -39,7 +44,7 @@ const escape = (text: string) =>
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;');
 export default {
-  example: figma.code`<ui-text-field${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` label-placement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label="${escape(label)}"` : ''}${placeholder ? figma.code` placeholder="${escape(placeholder)}"` : ''}${value ? figma.code` value="${escape(value)}"` : ''}${hint ? figma.code` hint="${escape(hint)}"` : ''}${disabled ? ' disabled' : ''}>${leading ? figma.code`<span slot="leading-icon">${leading}</span>` : ''}${trailing ? figma.code`<span slot="trailing-icon">${trailing}</span>` : ''}</ui-text-field>`,
+  example: figma.code`<ui-text-field${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` label-placement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label="${escape(label)}"` : ''}${placeholder ? figma.code` placeholder="${escape(placeholder)}"` : ''}${value ? figma.code` value="${escape(value)}"` : ''}${hint ? figma.code` hint="${escape(hint)}"` : ''}${labelHint ? figma.code` label-hint="${escape(labelHint)}"` : ''}${hideLabel ? ' hide-label' : ''}${disabled ? ' disabled' : ''}>${leading ? figma.code`<span slot="leading-icon">${leading}</span>` : ''}${trailing ? figma.code`<span slot="trailing-icon">${trailing}</span>` : ''}</ui-text-field>`,
   imports: ["import '@mszczygiel-projects/ui-core-web-components/text-field'"],
   id: 'ui-text-field',
   metadata: { nestable: true },

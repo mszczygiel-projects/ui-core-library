@@ -1,6 +1,7 @@
 import { TextareaField } from '@mszczygiel-projects/ui-core-react';
 import { textareaField } from '@mszczygiel-projects/ui-core-shared/textarea-field';
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import { useState } from 'react';
 
 import { onSurfaces } from '../decorators.tsx';
 
@@ -25,6 +26,8 @@ const meta = {
   argTypes: {
     label: { control: 'text' },
     hint: { control: 'text' },
+    labelHint: { control: 'text' },
+    hideLabel: { control: 'boolean' },
     placeholder: { control: 'text' },
     variant: { control: 'select', options: variants },
     size: { control: 'inline-radio', options: options.size.options },
@@ -50,6 +53,26 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
+
+const LIMIT = 500;
+
+/** The author counts: the field only shows the text of `labelHint`. */
+export const WithCharacterCount: Story = {
+  args: { label: 'Description', hint: undefined, maxLength: LIMIT },
+  render: function Render(args) {
+    const [value, setValue] = useState('');
+    return (
+      <TextareaField
+        {...args}
+        value={value}
+        onValueChange={(next) => {
+          setValue(next);
+        }}
+        labelHint={`${String(value.length)} / ${String(LIMIT)}`}
+      />
+    );
+  },
+};
 
 export const Variants: Story = {
   render: (args) => (

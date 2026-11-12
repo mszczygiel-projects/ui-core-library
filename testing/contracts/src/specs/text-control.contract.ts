@@ -8,7 +8,7 @@ import { page, userEvent } from 'vitest/browser';
 import { appearance } from '../appearance.ts';
 import { contrastRatio } from '../contrast.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
-import { tokenValue } from '../tokens.ts';
+import { pixels, tokenValue } from '../tokens.ts';
 
 /** The props of a text field, plus what each harness translates: the initial value and callback. */
 export interface TextControlContractProps extends TextControlProps {
@@ -137,6 +137,63 @@ export function textControlContract<Props extends TextControlContractProps>(
     const field = await mount({ label: '' }, { attributes: { 'aria-label': 'Author name' } });
     expect((await field.accessibleTree()).find((node) => node.role === options.role)?.name).toBe(
       'Author name',
+    );
+  });
+
+  it('shows the hint of its label in the label row, or else in the hint row, and describes the control with it', async () => {
+    const field = await mount({ hint: 'Use your work account', labelHint: '12 / 40' });
+    const control = () =>
+      field.accessibleTree().then((tree) => tree.find((node) => node.role === options.role));
+    expect((await control())?.description).toBe('Use your work account 12 / 40');
+    expect(field.part('label-row').contains(field.part('label-hint'))).toBe(true);
+    const label = field.part('label').getBoundingClientRect();
+    const hint = field.part('label-hint').getBoundingClientRect();
+    expect(hint.top).toBeLessThan(field.part('control').getBoundingClientRect().top);
+    expect(hint.left).toBeGreaterThanOrEqual(label.right);
+    for (const labelPlacement of ['floating', 'inner'] as const) {
+      await field.update({ labelPlacement } as Partial<Props>);
+      expect(field.part('hint').contains(field.part('label-hint'))).toBe(true);
+      expect((await control())?.description).toBe('Use your work account 12 / 40');
+    }
+    await field.update({ hint: '' } as Partial<Props>);
+    expect(field.part('hint').contains(field.part('label-hint'))).toBe(true);
+    expect((await control())?.description).toBe('12 / 40');
+  });
+
+  it('hides its label from view and keeps it as the name of the control', async () => {
+    for (const labelPlacement of ['top', 'floating', 'inner'] as const) {
+      const field = await mount({ labelPlacement, hideLabel: true, labelHint: '0 / 40' });
+      const control = (await field.accessibleTree()).find((node) => node.role === options.role);
+      expect(control?.name).toBe(
+        tokenValue('--control-label-text-uppercase') === 'uppercase'
+          ? 'ACCOUNT NAME'
+          : 'Account name',
+      );
+      expect(control?.description).toBe('0 / 40');
+      const surface = field.part('control');
+      expect(surface.contains(field.part('label'))).toBe(false);
+      expect(surface.getBoundingClientRect().top).toBe(field.element.getBoundingClientRect().top);
+      expect(field.part('hint').contains(field.part('label-hint'))).toBe(true);
+    }
+  });
+
+  it('shows the focus ring on a filled field as on an empty one', async () => {
+    const field = await mount({ defaultValue: 'Ada' });
+    // Keyboard focus, so that :focus-visible applies without any global stylesheet.
+    await userEvent.keyboard('{Tab}');
+    controlOf(field).focus();
+    expect(controlOf(field).value).toBe('Ada');
+    expect(Number.parseFloat(getComputedStyle(field.part('control')).outlineWidth)).toBe(
+      pixels(tokenValue('--ring-width')),
+    );
+  });
+
+  it('draws the inner shadow of its control from the tokens of the control family', async () => {
+    const field = await mount();
+    field.element.style.setProperty('--control-shadow', 'inset 0 1px 1px');
+    field.element.style.setProperty('--color-control-shadow', 'rgb(255, 0, 0)');
+    expect(getComputedStyle(field.part('control')).boxShadow).toBe(
+      'rgb(255, 0, 0) 0px 1px 1px 0px inset',
     );
   });
 

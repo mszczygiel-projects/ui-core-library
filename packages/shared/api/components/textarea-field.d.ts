@@ -47,7 +47,7 @@ export declare const textareaField: {
         };
     };
     readonly labels: readonly [];
-    readonly parts: readonly ["base", "control", "input", "label", "label-text", "hint", "hint-text"];
+    readonly parts: readonly ["base", "control", "input", "label-row", "label", "label-text", "label-hint", "hint", "hint-text"];
     readonly slots: readonly [];
     readonly events: readonly ["ui-value-change"];
     readonly stories: readonly ["Playground", "Variants", "Resize", "OnSurfaces"];

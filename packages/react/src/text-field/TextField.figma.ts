@@ -20,6 +20,11 @@ const label = instance.getString('label');
 const placeholder = instance.getString('placeholder');
 const value = instance.getString('value');
 const hint = instance.getBoolean('showHint') ? instance.getString('hint') : undefined;
+// showLabel stands for hideLabel inverted, since a Figma boolean can only show a layer.
+const hideLabel = !instance.getBoolean('showLabel');
+const labelHint = instance.getBoolean('showLabelHint')
+  ? instance.getString('labelHint')
+  : undefined;
 const leadingIcon = instance.getInstanceSwap('leadingIcon');
 const trailingIcon = instance.getInstanceSwap('trailingIcon');
 const leading =
@@ -33,7 +38,7 @@ const trailing =
 // interaction (rest, active, focus) and valueState (empty, filled) preview browser-derived states.
 // Neither becomes a prop. Keep valueState consistent with value in Figma.
 export default {
-  example: figma.code`<TextField${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` labelPlacement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label={${JSON.stringify(label)}}` : ''}${placeholder ? figma.code` placeholder={${JSON.stringify(placeholder)}}` : ''}${value ? figma.code` defaultValue={${JSON.stringify(value)}}` : ''}${hint ? figma.code` hint={${JSON.stringify(hint)}}` : ''}${disabled ? ' disabled' : ''}${leading ? figma.code` leadingIcon={${leading}}` : ''}${trailing ? figma.code` trailingIcon={${trailing}}` : ''} />`,
+  example: figma.code`<TextField${variant === 'outline' ? '' : figma.code` variant="${variant}"`}${size === 'medium' ? '' : figma.code` size="${size}"`}${labelPlacement === 'top' ? '' : figma.code` labelPlacement="${labelPlacement}"`}${state === 'default' ? '' : figma.code` state="${state}"`}${label ? figma.code` label={${JSON.stringify(label)}}` : ''}${placeholder ? figma.code` placeholder={${JSON.stringify(placeholder)}}` : ''}${value ? figma.code` defaultValue={${JSON.stringify(value)}}` : ''}${hint ? figma.code` hint={${JSON.stringify(hint)}}` : ''}${labelHint ? figma.code` labelHint={${JSON.stringify(labelHint)}}` : ''}${hideLabel ? ' hideLabel' : ''}${disabled ? ' disabled' : ''}${leading ? figma.code` leadingIcon={${leading}}` : ''}${trailing ? figma.code` trailingIcon={${trailing}}` : ''} />`,
   imports: ['import { TextField } from "@mszczygiel-projects/ui-core-react"'],
   id: 'text-field',
   metadata: { nestable: true },
