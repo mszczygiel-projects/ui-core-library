@@ -22,6 +22,10 @@
   background: transparent;
 }
 
+.panel > ui-button {
+  margin-block-start: var(--date-field-panel-padding);
+}
+
 @media (forced-colors: active) {
   .panel {
     border-color: CanvasText;

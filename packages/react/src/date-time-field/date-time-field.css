@@ -22,6 +22,10 @@
   background: transparent;
 }
 
+.ui-date-time-field__panel .ui-date-time-field__done-button {
+  margin-block-start: var(--date-field-panel-padding);
+}
+
 @media (forced-colors: active) {
   .ui-date-time-field__panel {
     border-color: CanvasText;

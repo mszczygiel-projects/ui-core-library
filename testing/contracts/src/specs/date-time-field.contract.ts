@@ -144,6 +144,22 @@ export function dateTimeFieldContract(adapter: Mount<DateTimeFieldContractProps>
     form.remove();
   });
 
+  it('separates the done button from the time control', async () => {
+    const field = await mount({ label: 'Appointment', today: '2026-07-08' });
+    try {
+      await page.elementLocator(field.part('picker-button')).click();
+      await field.update({});
+      const panel = field.part('panel');
+      const done = field.part('done-button');
+      expect(getComputedStyle(done).marginBlockStart).toBe(
+        getComputedStyle(panel).paddingBlockStart,
+      );
+      expect(Number.parseFloat(getComputedStyle(done).marginBlockStart)).toBeGreaterThan(0);
+    } finally {
+      await field.unmount();
+    }
+  });
+
   it('checks inclusive date-time bounds and excluded dates', async () => {
     const form = document.createElement('form');
     document.body.append(form);
