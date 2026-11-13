@@ -19,6 +19,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Chip           | `Chip`           |
 | Combobox       | `Combobox`       |
 | DateField      | `DateField`      |
+| DateTimeField  | `DateTimeField`  |
 | Dialog         | `Dialog`         |
 | Drawer         | `Drawer`         |
 | FileInputField | `FileInputField` |
@@ -42,6 +43,7 @@ import '@mszczygiel-projects/ui-core-react/styles.css';
 | Tabs           | `Tabs`           |
 | TextField      | `TextField`      |
 | TextareaField  | `TextareaField`  |
+| TimeField      | `TimeField`      |
 | Tooltip        | `Tooltip`        |
 
 The components read the tokens of `@mszczygiel-projects/ui-core-foundations`, which a page loads once. `react` and `react-dom` 19 are peer dependencies. The documentation site documents [the components](https://mszczygiel-projects.github.io/ui-core-library/?path=/docs/components-status--docs), one page each. [Getting started](https://mszczygiel-projects.github.io/ui-core-library/?path=/docs/guides-getting-started--docs) renders the first one, and [Configuration](https://mszczygiel-projects.github.io/ui-core-library/?path=/docs/guides-configuration--docs) translates the texts they render.

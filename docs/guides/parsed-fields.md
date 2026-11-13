@@ -1,6 +1,6 @@
 # Parsed fields
 
-NumberField and DateField keep the text a user types, in their locale, apart from the canonical value the form submits. This guide holds what to keep in mind when you change them. [Decision 06](../decisions/06-component-api.md#forms) holds the rules, and [the components guide](components.md) the general steps.
+NumberField, DateField and DateTimeField keep the text a user types, in their locale, apart from the canonical value the form submits. This guide holds what to keep in mind when you change them. [Decision 06](../decisions/06-component-api.md#forms) holds the rules, and [the components guide](components.md) the general steps.
 
 ## Where the code goes
 
@@ -13,9 +13,10 @@ NumberField and DateField keep the text a user types, in their locale, apart fro
 - **React** uses `useParsedField` for the draft text and a named hidden input for the canonical form data. Its visible input owns focus and validity, and `ref.current.value` is the display text. The accepted value of a controlled parent owns the hidden entry.
 - **Web components** use `TextControl` with serialization and state callbacks, so that `ElementInternals` stores the canonical data and restores the draft with its locale.
 
-## The mask of DateField
+## The masks of DateField and DateTimeField
 
 - DateField attaches IMask directly to the input. `prepareDateText` changes the ISO ordering without correcting calendar parts, and `parseDateText` and `validateDate` decide validity.
+- DateTimeField uses the same mask adapters with `dateTimeMaskOptions`. Its one input adds a 24-hour time after the locale's date; shared parses and validates the complete local value. Its dialog retains the calendar and adds a time control and a Done button.
 - The pinned IMask package has a declaration-only pnpm patch that adds `.js` to relative type imports for NodeNext. Without it, the upstream declarations lose their types under the repository's module resolution. No runtime file is patched. Check the patch again when you update IMask.
 - IMask handles undo and redo without native input events. The package adapters observe its keyboard and `beforeinput` results, then synchronize the canonical data once.
 - Composition waits until it commits, and avoids a second notification when the browser sends a final input event.

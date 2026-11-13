@@ -24,6 +24,8 @@ import { SelectFieldOpenChange } from "./select-field/events";
 import { ComboboxQuery } from "./combobox/events";
 import { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
 import { DateFieldOpenChange, DateFieldValueChange } from "./date-field/events";
+import { DateTimeFieldValueChangeDetail, DateTimeValidationContext } from "@mszczygiel-projects/ui-core-shared/date-time-field";
+import { DateFieldOpenChangeDetail } from "@mszczygiel-projects/ui-core-shared/date-field";
 import { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 import { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
@@ -54,6 +56,7 @@ import { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/sw
 import { TabsOrientation, TabsVariant } from "@mszczygiel-projects/ui-core-shared/tabs";
 import { TabsValueChange as ValueChange } from "./tabs/events";
 import { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
+import { TimeFieldValueChangeDetail } from "@mszczygiel-projects/ui-core-shared/time-field";
 import { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export { AccordionHeadingLevel } from "@mszczygiel-projects/ui-core-shared/accordion-item";
 export { AccordionItemOpenChange } from "./accordion-item/events";
@@ -74,6 +77,8 @@ export { SelectFieldOpenChange } from "./select-field/events";
 export { ComboboxQuery } from "./combobox/events";
 export { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-core-shared/date";
 export { DateFieldOpenChange, DateFieldValueChange } from "./date-field/events";
+export { DateTimeFieldValueChangeDetail, DateTimeValidationContext } from "@mszczygiel-projects/ui-core-shared/date-time-field";
+export { DateFieldOpenChangeDetail } from "@mszczygiel-projects/ui-core-shared/date-field";
 export { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 export { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
@@ -104,6 +109,7 @@ export { SwitchFieldLabelPosition } from "@mszczygiel-projects/ui-core-shared/sw
 export { TabsOrientation, TabsVariant } from "@mszczygiel-projects/ui-core-shared/tabs";
 export { TabsValueChange as ValueChange } from "./tabs/events";
 export { TextareaFieldResize } from "@mszczygiel-projects/ui-core-shared/textarea-field";
+export { TimeFieldValueChangeDetail } from "@mszczygiel-projects/ui-core-shared/time-field";
 export { TooltipPlacement } from "@mszczygiel-projects/ui-core-shared/tooltip";
 export namespace Components {
     /**
@@ -696,6 +702,127 @@ export namespace Components {
         "today"?: string;
         /**
           * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+    /**
+     * A masked date and time input with a combined picker and a local value with minute precision.
+     */
+    interface UiDateTimeField {
+        /**
+          * The purpose of browser autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Dates excluded from the picker and submission.
+         */
+        "disabledDates"?: DateConstraints['disabledDates'];
+        /**
+          * First day of the week, from 1 for Monday to 7 for Sunday.
+         */
+        "firstDayOfWeek"?: number;
+        /**
+          * A complete sentence describing the input format.
+         */
+        "getFormatHintLabel"?: (example: string) => string;
+        /**
+          * A complete translated validation message.
+         */
+        "getValidationMessageLabel"?: (
+    context: DateTimeValidationContext,
+  ) => string;
+        /**
+          * Hides the button that opens the picker.
+          * @default false
+         */
+        "hideCalendarButton": boolean;
+        /**
+          * Hides the visible label while retaining its accessible name.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * The visible name of the input.
+         */
+        "label"?: string;
+        /**
+          * A short note in the label row.
+         */
+        "labelHint"?: string;
+        /**
+          * Position of the label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * BCP 47 locale before the configured locale and browser language.
+         */
+        "locale"?: string;
+        /**
+          * Latest inclusive local date and time.
+         */
+        "max"?: string;
+        /**
+          * Earliest inclusive local date and time.
+         */
+        "min"?: string;
+        /**
+          * The name of the canonical form entry.
+         */
+        "name"?: string;
+        /**
+          * Whether the picker is open.
+          * @default false
+         */
+        "open": boolean;
+        /**
+          * The name of the picker button and dialog.
+         */
+        "openCalendarLabel"?: string;
+        /**
+          * An example or short prompt.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a complete value.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * Size of the field.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback independent of native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The name of the time control inside the picker.
+         */
+        "timeLabel"?: string;
+        /**
+          * Today's ISO date for the calendar.
+         */
+        "today"?: string;
+        /**
+          * Surface and border treatment.
           * @default 'outline'
          */
         "variant": TextFieldVariant;
@@ -2095,6 +2222,79 @@ export namespace Components {
         "variant": TextFieldVariant;
     }
     /**
+     * A time input with a native time picker and a 24-hour value with minute precision.
+     */
+    interface UiTimeField {
+        /**
+          * The purpose of browser autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled": boolean;
+        /**
+          * Hides the visible label while keeping its accessible name.
+          * @default false
+         */
+        "hideLabel": boolean;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * The accessible name of the control.
+         */
+        "label"?: string;
+        /**
+          * A note at the end of the label row.
+         */
+        "labelHint"?: string;
+        /**
+          * The position of the label.
+          * @default 'top'
+         */
+        "labelPlacement": TextFieldLabelPlacement;
+        /**
+          * The latest permitted time.
+         */
+        "max"?: string;
+        /**
+          * The earliest permitted time.
+         */
+        "min"?: string;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * Prevents editing while keeping the form value.
+          * @default false
+         */
+        "readOnly": boolean;
+        /**
+          * Requires a value.
+          * @default false
+         */
+        "required": boolean;
+        /**
+          * The size of the field.
+          * @default 'medium'
+         */
+        "size": TextFieldSize;
+        /**
+          * Visual feedback independent of native validity.
+          * @default 'default'
+         */
+        "state": TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant": TextFieldVariant;
+    }
+    /**
      * A short text that names or describes an element while the pointer rests on it or the keyboard
      * focuses it.
      * The first element of the default slot is the trigger, which the text describes. The bubble shows
@@ -2149,6 +2349,10 @@ export interface UiComboboxCustomEvent<T> extends CustomEvent<T> {
 export interface UiDateFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiDateFieldElement;
+}
+export interface UiDateTimeFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiDateTimeFieldElement;
 }
 export interface UiDialogCustomEvent<T> extends CustomEvent<T> {
     detail: T;
@@ -2221,6 +2425,10 @@ export interface UiTextFieldCustomEvent<T> extends CustomEvent<T> {
 export interface UiTextareaFieldCustomEvent<T> extends CustomEvent<T> {
     detail: T;
     target: HTMLUiTextareaFieldElement;
+}
+export interface UiTimeFieldCustomEvent<T> extends CustomEvent<T> {
+    detail: T;
+    target: HTMLUiTimeFieldElement;
 }
 declare global {
     /**
@@ -2457,6 +2665,27 @@ declare global {
     var HTMLUiDateFieldElement: {
         prototype: HTMLUiDateFieldElement;
         new (): HTMLUiDateFieldElement;
+    };
+    interface HTMLUiDateTimeFieldElementEventMap {
+        "ui-value-change": DateTimeFieldValueChangeDetail<globalThis.Event>;
+        "ui-open-change": DateFieldOpenChangeDetail<globalThis.Event>;
+    }
+    /**
+     * A masked date and time input with a combined picker and a local value with minute precision.
+     */
+    interface HTMLUiDateTimeFieldElement extends Components.UiDateTimeField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiDateTimeFieldElementEventMap>(type: K, listener: (this: HTMLUiDateTimeFieldElement, ev: UiDateTimeFieldCustomEvent<HTMLUiDateTimeFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiDateTimeFieldElementEventMap>(type: K, listener: (this: HTMLUiDateTimeFieldElement, ev: UiDateTimeFieldCustomEvent<HTMLUiDateTimeFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiDateTimeFieldElement: {
+        prototype: HTMLUiDateTimeFieldElement;
+        new (): HTMLUiDateTimeFieldElement;
     };
     interface HTMLUiDialogElementEventMap {
         "ui-open-change": OpenChange;
@@ -3019,6 +3248,26 @@ declare global {
         prototype: HTMLUiTextareaFieldElement;
         new (): HTMLUiTextareaFieldElement;
     };
+    interface HTMLUiTimeFieldElementEventMap {
+        "ui-value-change": TimeFieldValueChangeDetail<globalThis.Event>;
+    }
+    /**
+     * A time input with a native time picker and a 24-hour value with minute precision.
+     */
+    interface HTMLUiTimeFieldElement extends Components.UiTimeField, HTMLStencilElement {
+        addEventListener<K extends keyof HTMLUiTimeFieldElementEventMap>(type: K, listener: (this: HTMLUiTimeFieldElement, ev: UiTimeFieldCustomEvent<HTMLUiTimeFieldElementEventMap[K]>) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | AddEventListenerOptions): void;
+        addEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | AddEventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLUiTimeFieldElementEventMap>(type: K, listener: (this: HTMLUiTimeFieldElement, ev: UiTimeFieldCustomEvent<HTMLUiTimeFieldElementEventMap[K]>) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof DocumentEventMap>(type: K, listener: (this: Document, ev: DocumentEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener<K extends keyof HTMLElementEventMap>(type: K, listener: (this: HTMLElement, ev: HTMLElementEventMap[K]) => any, options?: boolean | EventListenerOptions): void;
+        removeEventListener(type: string, listener: EventListenerOrEventListenerObject, options?: boolean | EventListenerOptions): void;
+    }
+    var HTMLUiTimeFieldElement: {
+        prototype: HTMLUiTimeFieldElement;
+        new (): HTMLUiTimeFieldElement;
+    };
     /**
      * A short text that names or describes an element while the pointer rests on it or the keyboard
      * focuses it.
@@ -3047,6 +3296,7 @@ declare global {
         "ui-chip": HTMLUiChipElement;
         "ui-combobox": HTMLUiComboboxElement;
         "ui-date-field": HTMLUiDateFieldElement;
+        "ui-date-time-field": HTMLUiDateTimeFieldElement;
         "ui-dialog": HTMLUiDialogElement;
         "ui-drawer": HTMLUiDrawerElement;
         "ui-file-input-field": HTMLUiFileInputFieldElement;
@@ -3070,6 +3320,7 @@ declare global {
         "ui-tabs": HTMLUiTabsElement;
         "ui-text-field": HTMLUiTextFieldElement;
         "ui-textarea-field": HTMLUiTextareaFieldElement;
+        "ui-time-field": HTMLUiTimeFieldElement;
         "ui-tooltip": HTMLUiTooltipElement;
     }
 }
@@ -3740,6 +3991,139 @@ declare namespace LocalJSX {
         "today"?: string;
         /**
           * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
+    /**
+     * A masked date and time input with a combined picker and a local value with minute precision.
+     */
+    interface UiDateTimeField {
+        /**
+          * The purpose of browser autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * Dates excluded from the picker and submission.
+         */
+        "disabledDates"?: DateConstraints['disabledDates'];
+        /**
+          * First day of the week, from 1 for Monday to 7 for Sunday.
+         */
+        "firstDayOfWeek"?: number;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * A complete sentence describing the input format.
+         */
+        "getFormatHintLabel"?: (example: string) => string;
+        /**
+          * A complete translated validation message.
+         */
+        "getValidationMessageLabel"?: (
+    context: DateTimeValidationContext,
+  ) => string;
+        /**
+          * Hides the button that opens the picker.
+          * @default false
+         */
+        "hideCalendarButton"?: boolean;
+        /**
+          * Hides the visible label while retaining its accessible name.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * The visible name of the input.
+         */
+        "label"?: string;
+        /**
+          * A short note in the label row.
+         */
+        "labelHint"?: string;
+        /**
+          * Position of the label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * BCP 47 locale before the configured locale and browser language.
+         */
+        "locale"?: string;
+        /**
+          * Latest inclusive local date and time.
+         */
+        "max"?: string;
+        /**
+          * Earliest inclusive local date and time.
+         */
+        "min"?: string;
+        /**
+          * The name of the canonical form entry.
+         */
+        "name"?: string;
+        /**
+          * A user request to open or close the picker.
+         */
+        "onUi-open-change"?: (event: UiDateTimeFieldCustomEvent<DateFieldOpenChangeDetail<globalThis.Event>>) => void;
+        /**
+          * A user edit, including partial or invalid text.
+         */
+        "onUi-value-change"?: (event: UiDateTimeFieldCustomEvent<DateTimeFieldValueChangeDetail<globalThis.Event>>) => void;
+        /**
+          * Whether the picker is open.
+          * @default false
+         */
+        "open"?: boolean;
+        /**
+          * The name of the picker button and dialog.
+         */
+        "openCalendarLabel"?: string;
+        /**
+          * An example or short prompt.
+         */
+        "placeholder"?: string;
+        /**
+          * Prevents editing but keeps submission.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a complete value.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * Size of the field.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback independent of native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The name of the time control inside the picker.
+         */
+        "timeLabel"?: string;
+        /**
+          * Today's ISO date for the calendar.
+         */
+        "today"?: string;
+        /**
+          * Surface and border treatment.
           * @default 'outline'
          */
         "variant"?: TextFieldVariant;
@@ -5295,6 +5679,87 @@ declare namespace LocalJSX {
         "variant"?: TextFieldVariant;
     }
     /**
+     * A time input with a native time picker and a 24-hour value with minute precision.
+     */
+    interface UiTimeField {
+        /**
+          * The purpose of browser autofill.
+         */
+        "autoComplete"?: string;
+        /**
+          * Prevents interaction and submission.
+          * @default false
+         */
+        "disabled"?: boolean;
+        /**
+          * The `id` of a `<form>` element to associate this element with.
+         */
+        "form"?: string;
+        /**
+          * Hides the visible label while keeping its accessible name.
+          * @default false
+         */
+        "hideLabel"?: boolean;
+        /**
+          * Help or feedback connected to the input.
+         */
+        "hint"?: string;
+        /**
+          * The accessible name of the control.
+         */
+        "label"?: string;
+        /**
+          * A note at the end of the label row.
+         */
+        "labelHint"?: string;
+        /**
+          * The position of the label.
+          * @default 'top'
+         */
+        "labelPlacement"?: TextFieldLabelPlacement;
+        /**
+          * The latest permitted time.
+         */
+        "max"?: string;
+        /**
+          * The earliest permitted time.
+         */
+        "min"?: string;
+        /**
+          * The name of the form entry.
+         */
+        "name"?: string;
+        /**
+          * A user edit and the event that caused it.
+         */
+        "onUi-value-change"?: (event: UiTimeFieldCustomEvent<TimeFieldValueChangeDetail<globalThis.Event>>) => void;
+        /**
+          * Prevents editing while keeping the form value.
+          * @default false
+         */
+        "readOnly"?: boolean;
+        /**
+          * Requires a value.
+          * @default false
+         */
+        "required"?: boolean;
+        /**
+          * The size of the field.
+          * @default 'medium'
+         */
+        "size"?: TextFieldSize;
+        /**
+          * Visual feedback independent of native validity.
+          * @default 'default'
+         */
+        "state"?: TextFieldState;
+        /**
+          * The surface and border treatment.
+          * @default 'outline'
+         */
+        "variant"?: TextFieldVariant;
+    }
+    /**
      * A short text that names or describes an element while the pointer rests on it or the keyboard
      * focuses it.
      * The first element of the default slot is the trigger, which the text describes. The bubble shows
@@ -5438,6 +5903,31 @@ declare namespace LocalJSX {
         "firstDayOfWeek": number;
         "today": string;
         "openCalendarLabel": string;
+    }
+    interface UiDateTimeFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
+        "state": TextFieldState;
+        "label": string;
+        "hint": string;
+        "labelHint": string;
+        "placeholder": string;
+        "disabled": boolean;
+        "readOnly": boolean;
+        "required": boolean;
+        "name": string;
+        "autoComplete": string;
+        "locale": string;
+        "min": string;
+        "max": string;
+        "open": boolean;
+        "hideCalendarButton": boolean;
+        "firstDayOfWeek": number;
+        "today": string;
+        "openCalendarLabel": string;
+        "timeLabel": string;
     }
     interface UiDialogAttributes {
         "open": boolean;
@@ -5723,6 +6213,23 @@ declare namespace LocalJSX {
         "resize": TextareaFieldResize;
         "maxRows": number;
     }
+    interface UiTimeFieldAttributes {
+        "variant": TextFieldVariant;
+        "size": TextFieldSize;
+        "labelPlacement": TextFieldLabelPlacement;
+        "hideLabel": boolean;
+        "state": TextFieldState;
+        "label": string;
+        "hint": string;
+        "labelHint": string;
+        "readOnly": boolean;
+        "required": boolean;
+        "min": string;
+        "max": string;
+        "autoComplete": string;
+        "name": string;
+        "disabled": boolean;
+    }
     interface UiTooltipAttributes {
         "content": string;
         "placement": TooltipPlacement;
@@ -5740,6 +6247,7 @@ declare namespace LocalJSX {
         "ui-chip": Omit<UiChip, keyof UiChipAttributes> & { [K in keyof UiChip & keyof UiChipAttributes]?: UiChip[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `attr:${K}`]?: UiChipAttributes[K] } & { [K in keyof UiChip & keyof UiChipAttributes as `prop:${K}`]?: UiChip[K] };
         "ui-combobox": Omit<UiCombobox, keyof UiComboboxAttributes> & { [K in keyof UiCombobox & keyof UiComboboxAttributes]?: UiCombobox[K] } & { [K in keyof UiCombobox & keyof UiComboboxAttributes as `attr:${K}`]?: UiComboboxAttributes[K] } & { [K in keyof UiCombobox & keyof UiComboboxAttributes as `prop:${K}`]?: UiCombobox[K] };
         "ui-date-field": Omit<UiDateField, keyof UiDateFieldAttributes> & { [K in keyof UiDateField & keyof UiDateFieldAttributes]?: UiDateField[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `attr:${K}`]?: UiDateFieldAttributes[K] } & { [K in keyof UiDateField & keyof UiDateFieldAttributes as `prop:${K}`]?: UiDateField[K] };
+        "ui-date-time-field": Omit<UiDateTimeField, keyof UiDateTimeFieldAttributes> & { [K in keyof UiDateTimeField & keyof UiDateTimeFieldAttributes]?: UiDateTimeField[K] } & { [K in keyof UiDateTimeField & keyof UiDateTimeFieldAttributes as `attr:${K}`]?: UiDateTimeFieldAttributes[K] } & { [K in keyof UiDateTimeField & keyof UiDateTimeFieldAttributes as `prop:${K}`]?: UiDateTimeField[K] };
         "ui-dialog": Omit<UiDialog, keyof UiDialogAttributes> & { [K in keyof UiDialog & keyof UiDialogAttributes]?: UiDialog[K] } & { [K in keyof UiDialog & keyof UiDialogAttributes as `attr:${K}`]?: UiDialogAttributes[K] } & { [K in keyof UiDialog & keyof UiDialogAttributes as `prop:${K}`]?: UiDialog[K] };
         "ui-drawer": Omit<UiDrawer, keyof UiDrawerAttributes> & { [K in keyof UiDrawer & keyof UiDrawerAttributes]?: UiDrawer[K] } & { [K in keyof UiDrawer & keyof UiDrawerAttributes as `attr:${K}`]?: UiDrawerAttributes[K] } & { [K in keyof UiDrawer & keyof UiDrawerAttributes as `prop:${K}`]?: UiDrawer[K] };
         "ui-file-input-field": Omit<UiFileInputField, keyof UiFileInputFieldAttributes> & { [K in keyof UiFileInputField & keyof UiFileInputFieldAttributes]?: UiFileInputField[K] } & { [K in keyof UiFileInputField & keyof UiFileInputFieldAttributes as `attr:${K}`]?: UiFileInputFieldAttributes[K] } & { [K in keyof UiFileInputField & keyof UiFileInputFieldAttributes as `prop:${K}`]?: UiFileInputField[K] };
@@ -5763,6 +6271,7 @@ declare namespace LocalJSX {
         "ui-tabs": Omit<UiTabs, keyof UiTabsAttributes> & { [K in keyof UiTabs & keyof UiTabsAttributes]?: UiTabs[K] } & { [K in keyof UiTabs & keyof UiTabsAttributes as `attr:${K}`]?: UiTabsAttributes[K] } & { [K in keyof UiTabs & keyof UiTabsAttributes as `prop:${K}`]?: UiTabs[K] };
         "ui-text-field": Omit<UiTextField, keyof UiTextFieldAttributes> & { [K in keyof UiTextField & keyof UiTextFieldAttributes]?: UiTextField[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `attr:${K}`]?: UiTextFieldAttributes[K] } & { [K in keyof UiTextField & keyof UiTextFieldAttributes as `prop:${K}`]?: UiTextField[K] };
         "ui-textarea-field": Omit<UiTextareaField, keyof UiTextareaFieldAttributes> & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes]?: UiTextareaField[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `attr:${K}`]?: UiTextareaFieldAttributes[K] } & { [K in keyof UiTextareaField & keyof UiTextareaFieldAttributes as `prop:${K}`]?: UiTextareaField[K] };
+        "ui-time-field": Omit<UiTimeField, keyof UiTimeFieldAttributes> & { [K in keyof UiTimeField & keyof UiTimeFieldAttributes]?: UiTimeField[K] } & { [K in keyof UiTimeField & keyof UiTimeFieldAttributes as `attr:${K}`]?: UiTimeFieldAttributes[K] } & { [K in keyof UiTimeField & keyof UiTimeFieldAttributes as `prop:${K}`]?: UiTimeField[K] };
         "ui-tooltip": Omit<UiTooltip, keyof UiTooltipAttributes> & { [K in keyof UiTooltip & keyof UiTooltipAttributes]?: UiTooltip[K] } & { [K in keyof UiTooltip & keyof UiTooltipAttributes as `attr:${K}`]?: UiTooltipAttributes[K] } & { [K in keyof UiTooltip & keyof UiTooltipAttributes as `prop:${K}`]?: UiTooltip[K] };
     }
 }
@@ -5872,6 +6381,10 @@ declare module "@stencil/core" {
              * it without reaching the page. The reflected `open` attribute shows whether the calendar is open.
              */
             "ui-date-field": LocalJSX.IntrinsicElements["ui-date-field"] & JSXBase.HTMLAttributes<HTMLUiDateFieldElement>;
+            /**
+             * A masked date and time input with a combined picker and a local value with minute precision.
+             */
+            "ui-date-time-field": LocalJSX.IntrinsicElements["ui-date-time-field"] & JSXBase.HTMLAttributes<HTMLUiDateTimeFieldElement>;
             /**
              * A modal window over the page that asks the user to read, decide or enter something before going
              * on.
@@ -6114,6 +6627,10 @@ declare module "@stencil/core" {
              * textarea.
              */
             "ui-textarea-field": LocalJSX.IntrinsicElements["ui-textarea-field"] & JSXBase.HTMLAttributes<HTMLUiTextareaFieldElement>;
+            /**
+             * A time input with a native time picker and a 24-hour value with minute precision.
+             */
+            "ui-time-field": LocalJSX.IntrinsicElements["ui-time-field"] & JSXBase.HTMLAttributes<HTMLUiTimeFieldElement>;
             /**
              * A short text that names or describes an element while the pointer rests on it or the keyboard
              * focuses it.

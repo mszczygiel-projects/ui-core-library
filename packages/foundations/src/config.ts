@@ -27,6 +27,20 @@ export interface FieldValidationContext {
  * value is a function of that value, so that a whole sentence is translated at once.
  */
 export interface UiCoreLabels {
+  readonly dateTimeField: {
+    /** The name of the button and dialog of the combined picker. */
+    readonly openPicker: string;
+    /** The visible name of the time control. */
+    readonly timeLabel: string;
+    /** The name of the button that closes the date-time picker. */
+    readonly done: string;
+    /** A complete sentence describing the failed constraint. */
+    readonly validationMessage: (context: FieldValidationContext) => string;
+  };
+  readonly timeField: {
+    /** A complete sentence for inconsistent time limits. */
+    readonly inconsistentLimits: string;
+  };
   readonly numberField: {
     /** The name of the decrement button. */
     readonly decrement: string;
@@ -169,6 +183,28 @@ export interface UiCoreConfigInput {
 
 /** The English labels that the packages ship. */
 export const defaultLabels: UiCoreLabels = freezeLabels({
+  dateTimeField: {
+    openPicker: 'Choose date and time',
+    timeLabel: 'Time',
+    done: 'Done',
+    validationMessage: ({ reason, min, max }) => {
+      switch (reason) {
+        case 'incomplete':
+          return 'Complete the date and time.';
+        case 'min':
+          return `Enter a date and time on or after ${String(min)}.`;
+        case 'max':
+          return `Enter a date and time on or before ${String(max)}.`;
+        case 'disabled':
+          return 'This date is unavailable.';
+        case 'constraints':
+          return 'The date and time limits are inconsistent.';
+        default:
+          return 'Enter a valid date and time.';
+      }
+    },
+  },
+  timeField: { inconsistentLimits: 'The time limits are inconsistent.' },
   numberField: {
     decrement: 'Decrease value',
     increment: 'Increase value',

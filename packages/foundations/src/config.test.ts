@@ -113,6 +113,8 @@ describe('the configuration', () => {
     Reflect.set(state, 'version', Number(Reflect.get(state, 'version')) + 1);
     expect(getUiCoreConfig()).toEqual({
       labels: {
+        dateTimeField: defaultLabels.dateTimeField,
+        timeField: defaultLabels.timeField,
         numberField: defaultLabels.numberField,
         dateField: defaultLabels.dateField,
         button: { loading: 'Loading' },

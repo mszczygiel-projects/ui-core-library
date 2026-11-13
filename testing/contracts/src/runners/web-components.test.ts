@@ -8,6 +8,7 @@ import '@mszczygiel-projects/ui-core-web-components/checkbox-field';
 import '@mszczygiel-projects/ui-core-web-components/chip';
 import '@mszczygiel-projects/ui-core-web-components/combobox';
 import '@mszczygiel-projects/ui-core-web-components/date-field';
+import '@mszczygiel-projects/ui-core-web-components/date-time-field';
 import '@mszczygiel-projects/ui-core-web-components/dialog';
 import '@mszczygiel-projects/ui-core-web-components/drawer';
 import '@mszczygiel-projects/ui-core-web-components/file-input-field';
@@ -31,6 +32,7 @@ import '@mszczygiel-projects/ui-core-web-components/tab';
 import '@mszczygiel-projects/ui-core-web-components/tabs';
 import '@mszczygiel-projects/ui-core-web-components/text-field';
 import '@mszczygiel-projects/ui-core-web-components/textarea-field';
+import '@mszczygiel-projects/ui-core-web-components/time-field';
 import '@mszczygiel-projects/ui-core-web-components/tooltip';
 
 import { describe } from 'vitest';
@@ -45,6 +47,7 @@ import { mountWebComponentCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountWebComponentChip } from '../harness/chip.tsx';
 import { mountWebComponentCombobox } from '../harness/combobox.tsx';
 import { mountWebComponentDateField } from '../harness/date-field.tsx';
+import { mountWebComponentDateTimeField } from '../harness/date-time-field.tsx';
 import { mountWebComponentDialog } from '../harness/dialog.tsx';
 import { mountWebComponentDrawer } from '../harness/drawer.tsx';
 import { mountWebComponentFileInputField } from '../harness/file-input-field.tsx';
@@ -67,6 +70,7 @@ import { mountWebComponentTab } from '../harness/tab.tsx';
 import { mountWebComponentTabs } from '../harness/tabs.tsx';
 import { mountWebComponentTextField } from '../harness/text-field.tsx';
 import { mountWebComponentTextareaField } from '../harness/textarea-field.tsx';
+import { mountWebComponentTimeField } from '../harness/time-field.tsx';
 import { mountWebComponentTooltip } from '../harness/tooltip.tsx';
 import { webComponentMount } from '../harness/web-component.ts';
 import { accordionContract } from '../specs/accordion.contract.ts';
@@ -79,6 +83,7 @@ import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
+import { dateTimeFieldContract } from '../specs/date-time-field.contract.ts';
 import { dialogContract } from '../specs/dialog.contract.ts';
 import { drawerContract } from '../specs/drawer.contract.ts';
 import { fileInputFieldContract } from '../specs/file-input-field.contract.ts';
@@ -103,6 +108,7 @@ import { tabContract } from '../specs/tab.contract.ts';
 import { tabsContract } from '../specs/tabs.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
+import { timeFieldContract } from '../specs/time-field.contract.ts';
 import { tooltipContract } from '../specs/tooltip.contract.ts';
 
 describe('Loader, web component', () => {
@@ -245,4 +251,12 @@ describe('Tabs, web component', () => {
 
 describe('Tab, web component', () => {
   tabContract(mountWebComponentTab);
+});
+
+describe('TimeField, web component', () => {
+  timeFieldContract(mountWebComponentTimeField);
+});
+
+describe('DateTimeField, web component', () => {
+  dateTimeFieldContract(mountWebComponentDateTimeField);
 });

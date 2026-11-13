@@ -1,0 +1,29 @@
+.ui-date-time-field__panel {
+  --_offset: var(--date-field-panel-offset);
+  --_anchor-inline-size: auto;
+  --_available-block-size: none;
+
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  max-inline-size: none;
+  max-block-size: var(--_available-block-size);
+  margin: 0;
+  padding: var(--date-field-panel-padding);
+  overflow: auto;
+  border: var(--date-field-panel-border-width) solid var(--color-date-field-panel-border);
+  border-radius: var(--date-field-panel-radius);
+  background: var(--color-date-field-panel-background);
+  box-shadow: var(--date-field-panel-shadow);
+  color: inherit;
+}
+
+.ui-date-time-field__panel::backdrop {
+  background: transparent;
+}
+
+@media (forced-colors: active) {
+  .ui-date-time-field__panel {
+    border-color: CanvasText;
+  }
+}

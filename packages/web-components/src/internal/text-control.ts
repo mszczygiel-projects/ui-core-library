@@ -11,6 +11,7 @@ const TEXT_FIELD_TAGS = [
   'ui-search-field',
   'ui-number-field',
   'ui-date-field',
+  'ui-time-field',
 ];
 
 /** The input types that a native form counts when it decides on implicit submission. */

@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as ReactStories from './DateTimeField.react.stories.tsx';
+import * as WebComponentStories from './DateTimeField.wc.stories.tsx';
+
+<Meta title="Components/Inputs/DateTimeField/Docs" />
+
+# DateTimeField
+
+<ComponentOverview name="DateTimeField" />
+
+## Usage
+
+Use DateTimeField to enter one Gregorian date and a time of day together. Use DateField or TimeField when only one part is needed. The value has no time zone; an application that schedules an instant must supply the intended zone separately.
+
+## Anatomy
+
+The base contains one label, one editable date-time input and its picker button. The button opens a panel containing a calendar, a time control and a Done button. There are no slots.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+The field supports the `outline`, `filled` and `underlined` variants. There is no separate tone.
+
+## Sizes & density
+
+The field supports `small`, `medium` or `large` size and follows the surrounding density. The default is `medium`. Label placement is `top`, `floating` or `inner`.
+
+## States
+
+`state` controls visual feedback. Disabled fields are excluded from submission; read-only fields retain their value. A partially completed date and time cannot be submitted.
+
+## Content & labels
+
+`label` names the date-time input. `openCalendarLabel` names the picker button and dialog and falls back to `labels.dateTimeField.openPicker`. Inside the panel, `timeLabel` names the time control; it falls back to `labels.dateTimeField.timeLabel`. `labels.dateTimeField.done` names the button that closes the panel. The calendar and format hint use the labels of DateField and Calendar. `getValidationMessageLabel` can override the date-time validation message; configure labels with `configureUiCore` to translate whole sentences.
+
+## Behaviour
+
+A complete value is `YYYY-MM-DDTHH:mm`, without an offset or time zone; an empty string is no value. The visible text uses the locale's numeric date followed by a 24-hour time, such as `31.12.2026 09:30` in Polish. Both parts are needed for a complete value. `min` and `max` use the canonical format and are inclusive. `disabledDates` excludes whole ISO calendar dates and is a property on the web component. The calendar, locale and open-state options follow DateField.
+
+A user edit reports one `onValueChange` callback in React or `ui-value-change` in the web component, with the complete value or an empty string, the editable text, its parse state, the validation result and the native event. In the panel, choosing a date or a time updates the same input; Done closes the panel. React accepts `defaultValue` or controlled `value`. The web component uses the value attribute as its initial and reset value and its property as its current value. A form receives one named entry.
+
+## Accessibility
+
+The field is a native textbox followed by a button that opens a modal dialog. The dialog contains Calendar, a separately labelled native time input and a Done button. The keys for the calendar are those of Calendar; the browser provides the time control's keyboard interaction. Escape closes the dialog. Check the picker with the assistive technology and browsers used by the application.
+
+## Surfaces & themes
+
+The controls reuse the field palette in Light and Dark and on each surface. The browser draws its native time picker.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="DateTimeField" />}
+  webComponents={<WebComponentApi tag="ui-date-time-field" />}
+/>
+
+## Tokens
+
+<ComponentTokens component="control" />
+
+The controls use the shared control tokens. The calendar and its panel use the tokens of DateField and Calendar.
+
+## Implementation notes
+
+Both implementations share parsing and validation. React submits a hidden canonical entry; the web component uses ElementInternals. Neither converts the value to an instant.

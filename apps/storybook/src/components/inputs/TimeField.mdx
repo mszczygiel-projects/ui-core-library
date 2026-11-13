@@ -1,0 +1,72 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+import { ReactApi, WebComponentApi } from '../../blocks/ApiTable.tsx';
+import { ComponentOverview } from '../../blocks/ComponentStatus.tsx';
+import { ComponentTokens } from '../../blocks/ComponentTokens.tsx';
+import { FrameworkCanvas, FrameworkTabs } from '../../blocks/Framework.tsx';
+import * as ReactStories from './TimeField.react.stories.tsx';
+import * as WebComponentStories from './TimeField.wc.stories.tsx';
+
+<Meta title="Components/Inputs/TimeField/Docs" />
+
+# TimeField
+
+<ComponentOverview name="TimeField" />
+
+## Usage
+
+Use TimeField for one time of day without a date or time zone. For a date and a time together, use DateTimeField. Provide a visible label.
+
+## Anatomy
+
+The base contains the label, control and optional hint. The input inside the control is a native time input. React names the parts with `.ui-time-field__<part>`; the web component exposes parts. There are no slots.
+
+## Variants & tone
+
+<FrameworkCanvas react={ReactStories.Variants} webComponents={WebComponentStories.Variants} />
+
+The `outline`, `filled` and `underlined` variants follow TextField. There is no separate tone.
+
+## Sizes & density
+
+`small`, `medium` and `large` follow the surrounding density; `medium` is the default. The label supports `top`, `floating` and `inner` placement.
+
+## States
+
+`state` provides visual feedback; `error` also sets `aria-invalid`. Disabled fields do not submit; read-only fields keep their values. Native required and range constraints block submission.
+
+## Content & labels
+
+Supply the label and hint in the language of the page. `labels.timeField.inconsistentLimits` is a complete message for reversed bounds and can be configured with `configureUiCore`.
+
+## Behaviour
+
+The value is `HH:mm` in 24-hour notation or an empty string. The browser presents and edits the time in its own locale and may show its own picker. The picker and its keys differ between browsers. `min` and `max` are inclusive and use the same format. A range across midnight is not supported. Seconds and a custom step are not supported.
+
+Each user edit calls React's `onValueChange(value, details)` or emits `ui-value-change` with `detail.value`; the details include the native event. React supports `defaultValue` or controlled `value`. The web component uses the value attribute for its initial and reset value and the property for the current value.
+
+## Accessibility
+
+The input uses the native time control rather than an ARIA pattern. Its keyboard interaction is provided by the browser. Associate a visible label with the control and test the picker with the browsers and assistive technology used by the application.
+
+## Surfaces & themes
+
+The field uses the shared control palette for Light and Dark and each surface. The browser owns the appearance of its native picker.
+
+## API
+
+<FrameworkTabs
+  of={ReactStories.Playground}
+  react={<ReactApi component="TimeField" />}
+  webComponents={<WebComponentApi tag="ui-time-field" />}
+/>
+
+## Tokens
+
+<ComponentTokens component="control" />
+
+The field uses the control family of tokens; the native picker is drawn by the browser.
+
+## Implementation notes
+
+React submits its native input. The web component associates its host with a form using ElementInternals and exposes `form`, `validity`, `validationMessage`, `willValidate`, `checkValidity()`, `reportValidity()` and `setCustomValidity(message)`.
