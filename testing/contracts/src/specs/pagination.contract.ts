@@ -160,7 +160,8 @@ export function paginationContract(adapter: Mount<PaginationContractProps>): voi
     await component.update({ cancelChange: false });
     await userEvent.click(component.screen.getByRole('link', { name: 'Page 4' }));
     expect(window.location.hash).toBe('#page-4');
-    expect(current(component)).toBe('4');
+    // The address changes at once, but the page is re-rendered a moment later.
+    await expect.poll(() => current(component)).toBe('4');
     await userEvent.click(component.screen.getByRole('link', { name: 'Next page' }));
     await expect.poll(() => window.location.hash).toBe('#page-5');
   });
