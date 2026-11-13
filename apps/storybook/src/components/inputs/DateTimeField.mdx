@@ -41,7 +41,7 @@ The field supports `small`, `medium` or `large` size and follows the surrounding
 
 ## Behaviour
 
-A complete value is `YYYY-MM-DDTHH:mm`, without an offset or time zone; an empty string is no value. The visible text uses the locale's numeric date followed by a 24-hour time, such as `31.12.2026 09:30` in Polish. Both parts are needed for a complete value. `min` and `max` use the canonical format and are inclusive. `disabledDates` excludes whole ISO calendar dates and is a property on the web component. The calendar, locale and open-state options follow DateField.
+A complete value is `YYYY-MM-DDTHH:mm`, without an offset or time zone; an empty string is no value. The visible text uses the locale's numeric date followed by a 24-hour time, such as `31.12.2026 09:30` in Polish. Both parts are needed for a complete value. `min` and `max` are inclusive and must be complete valid date-times in this canonical format; malformed or date-only limits are ignored. A time picked before a date remains in the picker until a date is selected. `disabledDates` excludes whole ISO calendar dates and is a property on the web component. The calendar, locale and open-state options follow DateField.
 
 A user edit reports one `onValueChange` callback in React or `ui-value-change` in the web component, with the complete value or an empty string, the editable text, its parse state, the validation result and the native event. In the panel, choosing a date or a time updates the same input; Done closes the panel. React accepts `defaultValue` or controlled `value`. The web component uses the value attribute as its initial and reset value and its property as its current value. A form receives one named entry.
 

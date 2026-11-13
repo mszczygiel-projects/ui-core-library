@@ -170,6 +170,86 @@ export function dateTimeFieldContract(adapter: Mount<DateTimeFieldContractProps>
     form.remove();
   });
 
+  it('applies the selected date’s time bounds inside the picker', async () => {
+    const field = await mount({
+      label: 'Appointment',
+      today: '2026-04-01',
+      defaultValue: '2026-04-01T10:00',
+      min: '2026-04-01T09:00',
+      max: '2026-04-03T17:00',
+    });
+    await page.elementLocator(field.part('picker-button')).click();
+    await field.update({});
+    const time = nativeInside(field.part('time'), 'input');
+    if (!(time instanceof HTMLInputElement)) {
+      throw new Error('Missing native time input');
+    }
+    expect(time.min).toBe('09:00');
+    expect(time.max).toBe('');
+    await page
+      .elementLocator(nativeInside(field.part('calendar'), '[data-date="2026-04-02"]'))
+      .click();
+    await field.update({});
+    expect(time.min).toBe('');
+    expect(time.max).toBe('');
+    await page
+      .elementLocator(nativeInside(field.part('calendar'), '[data-date="2026-04-03"]'))
+      .click();
+    await field.update({});
+    expect(time.min).toBe('');
+    expect(time.max).toBe('17:00');
+    await field.unmount();
+  });
+
+  it('keeps a time chosen before a date when the picker is reopened', async () => {
+    const field = await mount({ label: 'Appointment', locale: 'pl-PL', today: '2026-04-01' });
+    await page.elementLocator(field.part('picker-button')).click();
+    await field.update({});
+    await page.elementLocator(nativeInside(field.part('time'), 'input')).fill('10:45');
+    const donePart = field.part('done-button');
+    await page
+      .elementLocator(
+        donePart instanceof HTMLButtonElement ? donePart : nativeInside(donePart, 'button'),
+      )
+      .click();
+    await field.update({});
+    await page.elementLocator(field.part('picker-button')).click();
+    await field.update({});
+    const time = nativeInside(field.part('time'), 'input');
+    if (!(time instanceof HTMLInputElement)) {
+      throw new Error('Missing native time input');
+    }
+    expect(time.value).toBe('10:45');
+    await page
+      .elementLocator(nativeInside(field.part('calendar'), '[data-date="2026-04-01"]'))
+      .click();
+    await field.update({});
+    expect(inputOf(field).value).toBe('01.04.2026 10:45');
+    await field.unmount();
+  });
+
+  it('clears a pending time on form reset', async () => {
+    const form = document.createElement('form');
+    document.body.append(form);
+    const field = await mount({ label: 'Appointment', today: '2026-04-01' }, { parent: form });
+    await page.elementLocator(field.part('picker-button')).click();
+    await field.update({});
+    await page.elementLocator(nativeInside(field.part('time'), 'input')).fill('10:45');
+    form.reset();
+    await expect
+      .poll(() => field.part('picker-button').getAttribute('aria-expanded'))
+      .toBe('false');
+    await page.elementLocator(field.part('picker-button')).click();
+    await field.update({});
+    const time = nativeInside(field.part('time'), 'input');
+    if (!(time instanceof HTMLInputElement)) {
+      throw new Error('Missing native time input');
+    }
+    expect(time.value).toBe('');
+    await field.unmount();
+    form.remove();
+  });
+
   it('restores the default after reset without emitting an edit', async () => {
     const form = document.createElement('form');
     document.body.append(form);

@@ -104,6 +104,10 @@ export interface DateTimeFieldValueChangeDetail<
 export interface DateTimeFieldProps extends Omit<DateFieldProps, 'getValidationMessageLabel'> {
   /** The local date and time, YYYY-MM-DDTHH:mm, without an offset. @default '' */
   value?: string;
+  /** Inclusive lower bound in YYYY-MM-DDTHH:mm; malformed values are ignored. */
+  min?: string;
+  /** Inclusive upper bound in YYYY-MM-DDTHH:mm; malformed values are ignored. */
+  max?: string;
   /** The accessible and visible name of the time control inside the picker. */
   timeLabel?: string;
   /** The name of the combined picker button and dialog. */

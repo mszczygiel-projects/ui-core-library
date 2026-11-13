@@ -96,6 +96,7 @@ export function prepareDateTimeText(text: string, locale: string): string {
 export function dateTimeMaskOptions(locale: string): DateMaskOptions {
   return {
     ...dateMaskOptions(locale),
+    // Keep the time separator in place when deleting digits on either side of it.
     mask: `${dateMaskPattern(locale)}\` 00\`:00`,
     prepare: (text) => prepareDateTimeText(text, locale),
   };

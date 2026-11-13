@@ -60,6 +60,8 @@ export interface DateTimeFieldValueChangeDetail<OriginalEvent> extends DateTimeF
 }
 export interface DateTimeFieldProps extends Omit<DateFieldProps, 'getValidationMessageLabel'> {
     value?: string;
+    min?: string;
+    max?: string;
     timeLabel?: string;
     openCalendarLabel?: string;
     getValidationMessageLabel?: (context: DateTimeValidationContext) => string;

@@ -769,11 +769,11 @@ export namespace Components {
          */
         "locale"?: string;
         /**
-          * Latest inclusive local date and time.
+          * Latest inclusive local date-time, YYYY-MM-DDTHH:mm; malformed values are ignored.
          */
         "max"?: string;
         /**
-          * Earliest inclusive local date and time.
+          * Earliest inclusive local date-time, YYYY-MM-DDTHH:mm; malformed values are ignored.
          */
         "min"?: string;
         /**
@@ -4062,11 +4062,11 @@ declare namespace LocalJSX {
          */
         "locale"?: string;
         /**
-          * Latest inclusive local date and time.
+          * Latest inclusive local date-time, YYYY-MM-DDTHH:mm; malformed values are ignored.
          */
         "max"?: string;
         /**
-          * Earliest inclusive local date and time.
+          * Earliest inclusive local date-time, YYYY-MM-DDTHH:mm; malformed values are ignored.
          */
         "min"?: string;
         /**

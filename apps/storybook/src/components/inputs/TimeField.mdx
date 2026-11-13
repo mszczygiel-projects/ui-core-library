@@ -41,7 +41,7 @@ Supply the label and hint in the language of the page. `labels.timeField.inconsi
 
 ## Behaviour
 
-The value is `HH:mm` in 24-hour notation or an empty string. The browser presents and edits the time in its own locale and may show its own picker. The picker and its keys differ between browsers. `min` and `max` are inclusive and use the same format. A range across midnight is not supported. Seconds and a custom step are not supported.
+The value is `HH:mm` in 24-hour notation or an empty string. The browser presents and edits the time in its own locale and may show its own picker. The picker and its keys differ between browsers. `min` and `max` are inclusive and use the same format; malformed limits are ignored. A range across midnight is not supported. Seconds and a custom step are not supported.
 
 Each user edit calls React's `onValueChange(value, details)` or emits `ui-value-change` with `detail.value`; the details include the native event. React supports `defaultValue` or controlled `value`. The web component uses the value attribute for its initial and reset value and the property for the current value.
 

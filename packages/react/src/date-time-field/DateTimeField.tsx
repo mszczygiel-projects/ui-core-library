@@ -17,6 +17,7 @@ import {
   isIsoLocalDateTime,
   joinLocalDateTime,
   splitLocalDateTime,
+  timeBoundsForDate,
 } from '@mszczygiel-projects/ui-core-shared/time';
 import {
   type ComponentPropsWithRef,
@@ -156,6 +157,9 @@ export function DateTimeField({
     );
   const visualState = state === 'error' || field.invalid ? 'error' : state;
   const notify = (text: string, originalEvent: Event) => {
+    if (!isOpen) {
+      setPicker({ date: '', time: '' });
+    }
     const { value: next, ...details } = field.edit(text);
     onValueChange?.(next, { ...details, originalEvent });
   };
@@ -167,6 +171,7 @@ export function DateTimeField({
   const [picker, setPicker] = useState(() => splitLocalDateTime(value ?? defaultValue));
   const formDisabled = useFormState(inputRef, () => {
     setUncontrolledOpen(false);
+    setPicker(splitLocalDateTime(value ?? defaultValue));
   });
   const canOpen = disabled !== true && readOnly !== true && !formDisabled;
   const isOpen = (open ?? uncontrolledOpen) && canOpen;
@@ -177,9 +182,11 @@ export function DateTimeField({
   if (seenOpen !== isOpen) {
     setSeenOpen(isOpen);
     if (isOpen) {
-      setPicker(dateTimeDraftParts(field.text, field.locale));
+      const parts = dateTimeDraftParts(field.text, field.locale);
+      setPicker(parts.date === '' && field.text === '' ? { ...parts, time: picker.time } : parts);
     }
-  } else if (seenValue !== value) {
+  }
+  if (seenValue !== value) {
     setSeenValue(value);
     if (isOpen && value !== undefined) {
       setPicker(splitLocalDateTime(value));
@@ -196,9 +203,6 @@ export function DateTimeField({
   const setOpen = (next: boolean, event: Event) => {
     if ((next && !canOpen) || next === isOpen) {
       return;
-    }
-    if (next) {
-      setPicker(dateTimeDraftParts(field.text, field.locale));
     }
     setUncontrolledOpen(next);
     onOpenChange?.(next, { originalEvent: event });
@@ -294,6 +298,7 @@ export function DateTimeField({
   );
   const dateMin = min !== undefined && isIsoLocalDateTime(min) ? min.slice(0, 10) : undefined;
   const dateMax = max !== undefined && isIsoLocalDateTime(max) ? max.slice(0, 10) : undefined;
+  const timeBounds = timeBoundsForDate(picker.date, { min, max });
   return (
     <Field
       block="date-time-field"
@@ -349,6 +354,8 @@ export function DateTimeField({
               className={fieldPart('date-time-field', 'time')}
               label={timeLabel ?? labels.dateTimeField.timeLabel}
               value={picker.time}
+              min={timeBounds.min}
+              max={timeBounds.max}
               onValueChange={(time, details) => {
                 pick({ ...picker, time }, details.originalEvent);
               }}

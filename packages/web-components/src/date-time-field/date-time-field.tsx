@@ -24,7 +24,11 @@ import type {
   TextFieldState,
   TextFieldVariant,
 } from '@mszczygiel-projects/ui-core-shared/text-field';
-import { isIsoLocalDateTime, joinLocalDateTime } from '@mszczygiel-projects/ui-core-shared/time';
+import {
+  isIsoLocalDateTime,
+  joinLocalDateTime,
+  timeBoundsForDate,
+} from '@mszczygiel-projects/ui-core-shared/time';
 import {
   AttachInternals,
   Component,
@@ -139,10 +143,10 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
   /** BCP 47 locale before the configured locale and browser language. */
   @Prop() locale?: string;
 
-  /** Earliest inclusive local date and time. */
+  /** Earliest inclusive local date-time, YYYY-MM-DDTHH:mm; malformed values are ignored. */
   @Prop() min?: string;
 
-  /** Latest inclusive local date and time. */
+  /** Latest inclusive local date-time, YYYY-MM-DDTHH:mm; malformed values are ignored. */
   @Prop() max?: string;
 
   /** Dates excluded from the picker and submission. */
@@ -256,6 +260,7 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
       this.displayLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
     }
     this.control.set(formatDateTimeText(value, this.displayLocale));
+    this.pickerTime = '';
     if (this.open) {
       this.preparePicker();
     }
@@ -345,7 +350,7 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
   @Watch('open')
   protected openChanged(open: boolean): void {
     if (open) {
-      this.preparePicker();
+      this.preparePicker(true);
       this.focusCalendar = true;
     }
   }
@@ -362,6 +367,7 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
     this.touched = false;
     this.editing = false;
     this.open = false;
+    this.pickerTime = '';
     this.displayLocale = resolveLocale(this.locale, this.config.locale, navigator.language);
     this.control.reset();
   }
@@ -444,6 +450,7 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
       this.min !== undefined && isIsoLocalDateTime(this.min) ? this.min.slice(0, 10) : undefined;
     const max =
       this.max !== undefined && isIsoLocalDateTime(this.max) ? this.max.slice(0, 10) : undefined;
+    const timeBounds = timeBoundsForDate(this.pickerDate, { min: this.min, max: this.max });
     return [
       <Field
         classes={appearance.classes}
@@ -525,6 +532,8 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
               <ui-time-field
                 part="time"
                 label={this.timeLabel ?? this.config.labels.dateTimeField.timeLabel}
+                min={timeBounds.min}
+                max={timeBounds.max}
                 onUi-value-change={this.onTimePick}
               />,
               <ui-button
@@ -571,10 +580,12 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
     return this.host.shadowRoot?.querySelector('.picker-button') ?? null;
   }
 
-  private preparePicker(): void {
+  private preparePicker(preservePending = false): void {
     const parts = dateTimeDraftParts(this.control.value, this.displayLocale);
     this.pickerDate = parts.date;
-    this.pickerTime = parts.time;
+    if (!preservePending || parts.date !== '' || this.control.value !== '') {
+      this.pickerTime = parts.time;
+    }
   }
 
   private setOpen(open: boolean, originalEvent: globalThis.Event): void {
@@ -629,6 +640,9 @@ export class UiDateTimeField implements DateTimeFieldProps, FormAssociated {
   }
 
   private notify(text: string, originalEvent: globalThis.Event): void {
+    if (!this.open) {
+      this.pickerTime = '';
+    }
     this.control.edit(text);
     const parsed = parseDateTimeText(text, this.displayLocale);
     this.valueChange.emit({
