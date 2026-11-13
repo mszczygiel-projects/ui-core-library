@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: 'The version, such as 1.0.0. Empty: derived from the Conventional Commits since the last release.'
+        description: 'The version, such as 1.0.0 or 1.0.0-alpha.0. Empty: a stable version derived from the Conventional Commits since the last release.'
         required: false
         default: ''
       dry-run:
@@ -60,9 +60,25 @@ jobs:
         run: |
           # Without a release tag, the versions on disk are the starting point.
           first=$([ -z "$(git tag --list 'v*')" ] && echo '--first-release' || true)
+          if [ -n "$VERSION" ] && ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta|rc)\.[0-9]+)?$'; then
+            echo "::error::The version must look like 1.0.0 or 1.0.0-alpha.0 (identifiers: alpha, beta, rc)."
+            exit 1
+          fi
+          # Nx cannot derive the next pre-release from commits, so the version is always named.
+          if [ -z "$VERSION" ] && git describe --tags --abbrev=0 --match 'v*' 2>/dev/null | grep -q -- '-'; then
+            echo "::error::The last release is a pre-release. Enter the next version, such as 1.0.0-alpha.1."
+            exit 1
+          fi
           pnpm nx release version $VERSION $first
-          echo "version=$(node -p "require('./packages/foundations/package.json').version")" >> "$GITHUB_OUTPUT"
+          version=$(node -p "require('./packages/foundations/package.json').version")
+          echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "first=$first" >> "$GITHUB_OUTPUT"
+          # A pre-release is published under the tag of its identifier, never under latest.
+          case "$version" in
+            *-*) tag=$(echo "$version" | sed -E 's/^[^-]+-([a-z]+)\..*$/\1/') ;;
+            *) tag=latest ;;
+          esac
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
 
       - name: Tag and GitHub Release
         env:
@@ -75,4 +91,4 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           NPM_CONFIG_PROVENANCE: 'true'
           DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}
-        run: pnpm nx release publish ${{ steps.version.outputs.first }} $DRY_RUN
+        run: pnpm nx release publish --tag ${{ steps.version.outputs.tag }} ${{ steps.version.outputs.first }} $DRY_RUN

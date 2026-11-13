@@ -58,13 +58,14 @@ A project arrives with its first need. Nx project names are the folder names.
 ### Releases
 
 - Every published package has the same version and is released together with `nx release` under one tag, such as `v1.0.0`. Internal dependencies use `workspace:^`.
-- Nothing is published before 1.0.0. That release comes once every planned component is done. There are no pre-releases.
+- The stable line starts at 1.0.0, which comes once every planned component is done. Before it, a consumer that needs the library can get a pre-release, named `1.0.0-alpha.N`, then `1.0.0-beta.N` and `1.0.0-rc.N`. Alpha means the public API may still break without notice, beta that the set of components is complete and the API stable apart from corrections, and rc that only bug fixes remain.
+- A pre-release is published under the npm dist-tag named after its identifier (`alpha`, `beta`, `rc`), never under `latest`, so a plain install never picks it. The first `latest` is 1.0.0. Consumers pin a pre-release to its exact version.
 - `release.yml` publishes, and only when started by hand, never by a push or a merge. It runs on `main`, runs `pnpm verify` first and is a dry run unless that option is turned off. The [release guide](../guides/releases.md) holds the steps.
 - Packages go to npmjs.com as public packages with provenance, which links each tarball to the workflow run that built it. The token in the secret `NPM_TOKEN` publishes them until the packages exist on npm. After that, trusted publishing through the workflow's identity replaces it.
-- The version comes from the Conventional Commits since the last tag. The first release names `1.0.0` explicitly, because without an earlier tag Nx starts at 0.0.1.
+- The version comes from the Conventional Commits since the last tag. A pre-release always names its version explicitly, and so does the first release, such as `1.0.0-alpha.0`, because without an earlier tag Nx starts at 0.0.1.
 - The packages carry the licence `UNLICENSED` until a licence is chosen. They are public to read and install, but give no rights to reuse.
 - A release changes nothing on `main`: the versions are set on the runner, the tag marks the released commit, and the changelog is the notes of the GitHub Release. The `package.json` files of the repository keep `0.0.0`, and the next version starts from the last tag.
-- Semantic versioning applies from 1.0.0, and the changelog starts there. Token names, icon names and component APIs are public API.
+- Semantic versioning applies from 1.0.0, and compatibility is promised only from there. The pre-releases promise none. Token names, icon names and component APIs are public API.
 
 ### Agent tooling
 
