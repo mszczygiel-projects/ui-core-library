@@ -9,6 +9,7 @@ import { chip } from './chip.ts';
 import { combobox } from './combobox.ts';
 import type { ComponentSpec } from './component.ts';
 import { dateField } from './date-field.ts';
+import { dateTimeField } from './date-time-field.ts';
 import { dialog } from './dialog.ts';
 import { drawer } from './drawer.ts';
 import { fileInputField } from './file-input-field.ts';
@@ -32,6 +33,7 @@ import { tab } from './tab.ts';
 import { tabs } from './tabs.ts';
 import { textField } from './text-field.ts';
 import { textareaField } from './textarea-field.ts';
+import { timeField } from './time-field.ts';
 import { tooltip } from './tooltip.ts';
 
 /** The specifications of every component the library has, for documentation and tooling. */
@@ -70,4 +72,6 @@ export const specs: readonly ComponentSpec[] = [
   accordionItem,
   tabs,
   tab,
+  timeField,
+  dateTimeField,
 ];

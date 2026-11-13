@@ -1,4 +1,4 @@
-import { dateMaskOptions } from '@mszczygiel-projects/ui-core-shared/date';
+import { type DateMaskOptions, dateMaskOptions } from '@mszczygiel-projects/ui-core-shared/date';
 import IMask from 'imask';
 import { type RefObject, useEffect, useLayoutEffect, useRef } from 'react';
 
@@ -9,6 +9,7 @@ export function useDateMask(
   text: string,
   onMaskEdit: (event: Event) => void,
   enabled: boolean,
+  optionsForLocale: (locale: string) => DateMaskOptions = dateMaskOptions,
 ): void {
   const maskRef = useRef<ReturnType<typeof IMask> | null>(null);
   const composing = useRef(false);
@@ -21,7 +22,7 @@ export function useDateMask(
     if (input === null || !enabled) {
       return;
     }
-    const mask = IMask(input, { ...dateMaskOptions(locale) });
+    const mask = IMask(input, { ...optionsForLocale(locale) });
     maskRef.current = mask;
     const events = new AbortController();
     const options = { signal: events.signal };
@@ -79,7 +80,7 @@ export function useDateMask(
       mask.destroy();
       maskRef.current = null;
     };
-  }, [inputRef, locale, enabled]);
+  }, [inputRef, locale, enabled, optionsForLocale]);
   // Programmatic updates must also update IMask's saved selection and undo state.
   useEffect(() => {
     if (!composing.current) {

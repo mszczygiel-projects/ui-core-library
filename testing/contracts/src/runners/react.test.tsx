@@ -13,6 +13,7 @@ import { mountReactCheckboxField } from '../harness/checkbox-field.tsx';
 import { mountReactChip } from '../harness/chip.tsx';
 import { mountReactCombobox } from '../harness/combobox.tsx';
 import { mountReactDateField } from '../harness/date-field.tsx';
+import { mountReactDateTimeField } from '../harness/date-time-field.tsx';
 import { mountReactDialog } from '../harness/dialog.tsx';
 import { mountReactDrawer, mountWebComponentDrawer } from '../harness/drawer.tsx';
 import { mountReactFileInputField } from '../harness/file-input-field.tsx';
@@ -36,6 +37,7 @@ import { mountReactTab } from '../harness/tab.tsx';
 import { mountReactTabs } from '../harness/tabs.tsx';
 import { mountReactTextField } from '../harness/text-field.tsx';
 import { mountReactTextareaField } from '../harness/textarea-field.tsx';
+import { mountReactTimeField } from '../harness/time-field.tsx';
 import { mountReactTooltip } from '../harness/tooltip.tsx';
 import { accordionContract } from '../specs/accordion.contract.ts';
 import { accordionItemContract } from '../specs/accordion-item.contract.ts';
@@ -47,6 +49,7 @@ import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
+import { dateTimeFieldContract } from '../specs/date-time-field.contract.ts';
 import { dialogContract } from '../specs/dialog.contract.ts';
 import { drawerContract } from '../specs/drawer.contract.ts';
 import { fileInputFieldContract } from '../specs/file-input-field.contract.ts';
@@ -71,6 +74,7 @@ import { tabContract } from '../specs/tab.contract.ts';
 import { tabsContract } from '../specs/tabs.contract.ts';
 import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
+import { timeFieldContract } from '../specs/time-field.contract.ts';
 import { tooltipContract } from '../specs/tooltip.contract.ts';
 
 describe('Loader, React', () => {
@@ -219,4 +223,12 @@ describe('Tabs, React', () => {
 
 describe('Tab, React', () => {
   tabContract(mountReactTab);
+});
+
+describe('TimeField, React', () => {
+  timeFieldContract(mountReactTimeField);
+});
+
+describe('DateTimeField, React', () => {
+  dateTimeFieldContract(mountReactDateTimeField);
 });

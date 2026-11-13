@@ -7,6 +7,7 @@ checkmark
 chevron-down
 chevron-left
 chevron-right
+clock
 close
 danger
 delete

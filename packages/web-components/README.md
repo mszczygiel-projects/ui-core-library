@@ -18,6 +18,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Chip           | `ui-chip`             | `./chip`             |
 | Combobox       | `ui-combobox`         | `./combobox`         |
 | DateField      | `ui-date-field`       | `./date-field`       |
+| DateTimeField  | `ui-date-time-field`  | `./date-time-field`  |
 | Dialog         | `ui-dialog`           | `./dialog`           |
 | Drawer         | `ui-drawer`           | `./drawer`           |
 | FileInputField | `ui-file-input-field` | `./file-input-field` |
@@ -41,6 +42,7 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 | Tabs           | `ui-tabs`             | `./tabs`             |
 | TextField      | `ui-text-field`       | `./text-field`       |
 | TextareaField  | `ui-textarea-field`   | `./textarea-field`   |
+| TimeField      | `ui-time-field`       | `./time-field`       |
 | Tooltip        | `ui-tooltip`          | `./tooltip`          |
 
 The components read the tokens of `@mszczygiel-projects/ui-core-foundations`, which a page loads once. `custom-elements.json` describes their API. The documentation site documents [the components](https://mszczygiel-projects.github.io/ui-core-library/?path=/docs/components-status--docs), one page each. [Getting started](https://mszczygiel-projects.github.io/ui-core-library/?path=/docs/guides-getting-started--docs) renders the first one, and [Configuration](https://mszczygiel-projects.github.io/ui-core-library/?path=/docs/guides-configuration--docs) translates the texts they render.

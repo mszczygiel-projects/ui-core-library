@@ -17,6 +17,7 @@ import type {
   ComboboxQueryDetail,
 } from '@mszczygiel-projects/ui-core-shared/combobox';
 import type { DateFieldProps } from '@mszczygiel-projects/ui-core-shared/date-field';
+import type { DateTimeFieldProps } from '@mszczygiel-projects/ui-core-shared/date-time-field';
 import type {
   DialogProps,
   OverlayOpenChangeDetail,
@@ -60,6 +61,7 @@ import type { TabProps } from '@mszczygiel-projects/ui-core-shared/tab';
 import type { TabsProps } from '@mszczygiel-projects/ui-core-shared/tabs';
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import type { TextareaFieldProps } from '@mszczygiel-projects/ui-core-shared/textarea-field';
+import type { TimeFieldProps } from '@mszczygiel-projects/ui-core-shared/time-field';
 import type { TooltipProps } from '@mszczygiel-projects/ui-core-shared/tooltip';
 import type { DetailedHTMLProps, HTMLAttributes } from 'react';
 
@@ -79,6 +81,8 @@ type FileElement<Props> = Omit<
 declare module 'react' {
   namespace JSX {
     interface IntrinsicElements {
+      'ui-date-time-field': CustomElement<DateTimeFieldProps>;
+      'ui-time-field': CustomElement<TimeFieldProps>;
       'ui-tab': CustomElement<TabProps>;
       'ui-tabs': CustomElement<TabsProps>;
       'ui-accordion-item': CustomElement<AccordionItemProps>;

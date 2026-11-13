@@ -31,6 +31,7 @@ export {
   type DateFieldProps,
   type DateFieldValueChangeDetails,
 } from './date-field/DateField.tsx';
+export { DateTimeField, type DateTimeFieldProps } from './date-time-field/DateTimeField.tsx';
 export {
   Dialog,
   type DialogProps,
@@ -154,4 +155,5 @@ export {
   type TextareaFieldProps,
   type TextareaFieldResize,
 } from './textarea-field/TextareaField.tsx';
+export { TimeField, type TimeFieldProps } from './time-field/TimeField.tsx';
 export { Tooltip, type TooltipProps } from './tooltip/Tooltip.tsx';

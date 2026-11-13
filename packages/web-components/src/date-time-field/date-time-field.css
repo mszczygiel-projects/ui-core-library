@@ -1,0 +1,37 @@
+.panel {
+  --_offset: var(--date-field-panel-offset);
+  --_anchor-inline-size: auto;
+  --_available-block-size: none;
+
+  position: fixed;
+  inset: auto;
+  box-sizing: border-box;
+  max-inline-size: none;
+  max-block-size: var(--_available-block-size);
+  margin: 0;
+  padding: var(--date-field-panel-padding);
+  overflow: auto;
+  border: var(--date-field-panel-border-width) solid var(--color-date-field-panel-border);
+  border-radius: var(--date-field-panel-radius);
+  background: var(--color-date-field-panel-background);
+  box-shadow: var(--date-field-panel-shadow);
+  color: inherit;
+}
+
+.panel::backdrop {
+  background: transparent;
+}
+
+.panel > ui-button {
+  margin-block-start: var(--date-field-panel-padding);
+}
+
+.panel > ui-time-field {
+  margin-block-start: var(--date-field-panel-padding);
+}
+
+@media (forced-colors: active) {
+  .panel {
+    border-color: CanvasText;
+  }
+}
