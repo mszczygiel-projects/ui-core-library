@@ -4,7 +4,7 @@ import { expect, it, vi } from 'vitest';
 import { commands, userEvent } from 'vitest/browser';
 
 import type { Mount, Mounted } from '../harness/types.ts';
-import { tokenNumber, tokenValue } from '../tokens.ts';
+import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 import { resolvedColor } from './action.contract.ts';
 
 /** A tab of the contract: the props of Tab, without its icon, and the text of its panel. */
@@ -268,8 +268,32 @@ export function tabsContract(mount: Mount<TabsContractProps>): void {
     expect(list.backgroundColor).toBe(
       resolvedColor(tokenValue('--color-tabs-segmented-background')),
     );
-    expect(getComputedStyle(first, '::after').content).toBe('none');
+    // The border of the selected tab, drawn inside it, and none on the others.
+    const border = getComputedStyle(first, '::after');
+    expect(pixels(border.borderTopWidth)).toBe(
+      pixels(tokenValue('--tabs-segmented-tab-border-width')),
+    );
+    expect(border.borderTopColor).toBe(
+      resolvedColor(tokenValue('--color-tabs-segmented-tab-border-selected')),
+    );
+    expect(getComputedStyle(second, '::after').content).toBe('none');
     await component.unmount();
+    // The border goes around the whole tab in both orientations, not as an indicator strip.
+    for (const orientation of ['horizontal', 'vertical'] as const) {
+      const oriented = await mount({ tabs: TABS, variant: 'segmented', orientation });
+      const [selected] = parts(oriented, 'tab');
+      if (selected === undefined) {
+        throw new Error('Missing the tabs');
+      }
+      const frame = getComputedStyle(selected, '::after');
+      expect(
+        Number.parseFloat(frame.height) + 2 * Number.parseFloat(frame.borderTopWidth),
+      ).toBeCloseTo(selected.offsetHeight, 0);
+      // The used size of the pseudo-element leaves out its own border.
+      const edge = 2 * Number.parseFloat(frame.borderTopWidth);
+      expect(Number.parseFloat(frame.width) + edge).toBeCloseTo(selected.offsetWidth, 0);
+      await oriented.unmount();
+    }
   });
 
   for (const variant of ['underline', 'segmented'] as const) {

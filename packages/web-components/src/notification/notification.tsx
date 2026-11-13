@@ -55,7 +55,9 @@ declare global {
  * or ARIA attribute on it. The host is form-associated only to follow a disabled fieldset, which
  * disables the dismiss button as it does a native one; it submits nothing.
  *
- * @slot - The description below the heading.
+ * @slot - The description below the heading. A link takes the link colours of the notification
+ *   when it is a direct child of the notification; a link nested in another element keeps the
+ *   styles of the page.
  * @part base - The surface of the notification, its fill, border and corners.
  * @part content - The heading and the description, and the live region of an announced notification.
  * @part header - The row of the icon and the heading.

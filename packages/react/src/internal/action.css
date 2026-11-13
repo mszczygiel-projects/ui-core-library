@@ -23,7 +23,7 @@
   margin: 0;
   padding-block: var(--_padding-stack);
   padding-inline: var(--_padding-inline);
-  border: var(--button-border-width) solid var(--_border);
+  border: 0;
   border-radius: var(--_radius);
   background: var(--_background);
   color: var(--_text);
@@ -36,6 +36,16 @@
   text-align: center;
   white-space: nowrap;
   cursor: pointer;
+}
+
+/* The border lies inside the box, so that an action is as tall as a field of the same size. */
+.ui-action::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: var(--button-border-width) solid var(--_border);
+  border-radius: inherit;
+  pointer-events: none;
 }
 
 .ui-action:focus-visible {
@@ -197,11 +207,17 @@
 @media (forced-colors: active) {
   .ui-action {
     color: ButtonText;
+  }
+
+  .ui-action::before {
     border-color: ButtonText;
   }
 
   .ui-action:is(:disabled, .ui-action--disabled) {
     color: GrayText;
+  }
+
+  .ui-action:is(:disabled, .ui-action--disabled)::before {
     border-color: GrayText;
   }
 

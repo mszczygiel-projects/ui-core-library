@@ -8,11 +8,12 @@ import { afterEach, expect, it, type Mock, vi } from 'vitest';
 import { commands, page, userEvent } from 'vitest/browser';
 
 import { type Mount, type Mounted, type MountOptions, required } from '../harness/types.ts';
-import { pixels, tokenValue } from '../tokens.ts';
+import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 
 /** The props that every action shares: Button, IconButton and LinkButton. */
 export interface ActionSurfaceProps {
   readonly variant?: ButtonVariant;
+  readonly size?: ButtonSize;
   readonly disabled?: boolean;
 }
 
@@ -156,7 +157,26 @@ export function actionSurfaceContract<Props extends ActionSurfaceProps>(
     );
     await commands.emulateMedia({ forcedColors: 'active', reducedMotion: 'reduce' });
     expect(getComputedStyle(base).outlineStyle).not.toBe('none');
-    expect(Number.parseFloat(getComputedStyle(base).borderWidth)).toBeGreaterThan(0);
+    expect(Number.parseFloat(getComputedStyle(base, '::before').borderTopWidth)).toBeGreaterThan(0);
+  });
+
+  it('draws its border inside, so that it is as tall as a text field of its size', async () => {
+    for (const size of ['small', 'medium', 'large'] as const) {
+      const action = await mount({ variant: 'outline', size } as Partial<Props>);
+      const base = action.part('base');
+      const border = getComputedStyle(base, '::before');
+      expect(border.borderTopWidth).toBe(
+        `${String(pixels(tokenValue('--button-border-width')))}px`,
+      );
+      expect(border.borderTopColor).toBe(
+        resolvedColor(tokenValue('--color-button-outline-border-default')),
+      );
+      const control = size === 'medium' ? '--control' : `--control-${size}`;
+      const field =
+        // The line height is a ratio in CSS; its Figma number is the height of the line.
+        tokenNumber(`${control}-line-height`) + 2 * pixels(tokenValue(`${control}-padding-stack`));
+      expect(base.offsetHeight).toBe(field);
+    }
   });
 }
 
@@ -352,7 +372,6 @@ export function actionFormContract<Props extends ActionFormProps>(
 
 /** The props of an action with corners of its own: Button, IconButton, SplitButton and LinkButton. */
 export interface ActionShapeProps extends ActionSurfaceProps {
-  readonly size?: ButtonSize;
   readonly shape?: ButtonShape;
 }
 

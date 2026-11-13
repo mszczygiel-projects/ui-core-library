@@ -82,14 +82,51 @@ export function notificationContract(adapter: Mount<NotificationContractProps>):
     for (const variant of options.variant.options) {
       const component = await mount({ tone: 'warning', variant });
       const root = component.element;
-      root.style.setProperty(`--color-notification-warning-${variant}-background`, 'rgb(1, 2, 3)');
-      root.style.setProperty(`--color-notification-warning-${variant}-text`, 'rgb(4, 5, 6)');
-      root.style.setProperty('--color-notification-warning-subtle-border', 'rgb(7, 8, 9)');
+      const token = `--color-notification-warning-${variant}`;
+      root.style.setProperty(`${token}-background`, 'rgb(1, 2, 3)');
+      root.style.setProperty(`${token}-text-heading`, 'rgb(4, 5, 6)');
+      root.style.setProperty(`${token}-text-description`, 'rgb(7, 8, 9)');
+      root.style.setProperty(`${token}-border-default`, 'rgb(10, 11, 12)');
+      root.style.setProperty(`${token}-border-accent`, 'rgb(13, 14, 15)');
+      root.style.setProperty(`${token}-link-default`, 'rgb(16, 17, 18)');
+      root.style.setProperty('--notification-border-width', '3px');
       const base = getComputedStyle(component.part('base'));
       expect(base.backgroundColor).toBe('rgb(1, 2, 3)');
       expect(base.color).toBe('rgb(4, 5, 6)');
-      expect(base.borderInlineStartColor).toBe(
-        variant === 'solid' ? 'rgb(1, 2, 3)' : 'rgb(7, 8, 9)',
+      expect(getComputedStyle(component.part('heading')).color).toBe('rgb(4, 5, 6)');
+      expect(getComputedStyle(component.part('description')).color).toBe('rgb(7, 8, 9)');
+      expect(base.borderBlockStartColor).toBe('rgb(10, 11, 12)');
+      expect(base.borderInlineEndColor).toBe('rgb(10, 11, 12)');
+      expect(base.borderBlockStartWidth).toBe('3px');
+      expect(base.borderInlineStartColor).toBe('rgb(13, 14, 15)');
+      // A link that the page puts in the description: light DOM of a web component, markup in React.
+      const link = document.createElement('a');
+      link.href = '#details';
+      link.textContent = 'Details';
+      (root.shadowRoot === null ? component.part('description') : root).append(link);
+      expect(getComputedStyle(link).color).toBe('rgb(16, 17, 18)');
+      // Only a direct link: a link nested in a paragraph keeps the styles of the page.
+      const paragraph = document.createElement('p');
+      const nested = document.createElement('a');
+      nested.href = '#more';
+      nested.textContent = 'More';
+      paragraph.append(nested);
+      (root.shadowRoot === null ? component.part('description') : root).append(paragraph);
+      expect(getComputedStyle(nested).color).not.toBe('rgb(16, 17, 18)');
+      paragraph.remove();
+      link.remove();
+    }
+  });
+
+  it('draws in Core only the accent of its tone, with no border on the other sides', async () => {
+    for (const variant of options.variant.options) {
+      const component = await mount({ tone: 'info', variant });
+      const base = getComputedStyle(component.part('base'));
+      expect(base.borderBlockStartWidth).toBe(
+        `${String(pixels(tokenValue('--notification-border-width')))}px`,
+      );
+      expect(pixels(base.borderInlineStartWidth)).toBe(
+        pixels(tokenValue('--notification-border-accent-width')),
       );
     }
   });

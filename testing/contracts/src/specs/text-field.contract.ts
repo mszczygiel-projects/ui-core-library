@@ -453,6 +453,10 @@ export function textFieldContract(adapter: Mount<TextFieldContractProps>): void 
           pixels(tokenValue('--ring-width')),
         );
         expect(getComputedStyle(field.part('label')).backgroundColor).not.toBe('rgba(0, 0, 0, 0)');
+        // The focused control keeps its active border after the pointer leaves it.
+        field.element.style.setProperty(`--color-control-${variant}-border-active`, 'rgb(1, 2, 3)');
+        await page.elementLocator(control).unhover();
+        expect(getComputedStyle(control, '::before').borderTopColor).toBe('rgb(1, 2, 3)');
       }
     }
   });

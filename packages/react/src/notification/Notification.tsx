@@ -41,7 +41,8 @@ export interface NotificationProps
  * Tells the user about the state of the page or the result of an action, in one of the feedback
  * tones.
  *
- * The heading gives the message in one line, and the children describe it further. A
+ * The heading gives the message in one line, and the children describe it further. A link that
+ * is a direct child takes the link colours of the notification. A
  * notification with `announce` is a live region, an alert for an error and a status for any other
  * tone; it shows its content one frame after it mounts, so that a screen reader reads a
  * notification that the page inserts. A dismissible notification adds a button named by the
