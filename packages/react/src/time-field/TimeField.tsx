@@ -1,5 +1,6 @@
 'use client';
 
+import { iconClock } from '@mszczygiel-projects/ui-core-icons';
 import { isIsoTime } from '@mszczygiel-projects/ui-core-shared/time';
 import type {
   TimeFieldProps as SharedProps,
@@ -126,6 +127,11 @@ export function TimeField({
             onChange?.(event);
             onValueChange?.(event.currentTarget.value, { originalEvent: event.nativeEvent });
           }}
+        />
+        <span
+          className="ui-time-field__picker-icon"
+          aria-hidden="true"
+          dangerouslySetInnerHTML={{ __html: iconClock }}
         />
       </div>
     </Field>

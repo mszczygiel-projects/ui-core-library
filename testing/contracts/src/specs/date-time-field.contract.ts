@@ -160,6 +160,22 @@ export function dateTimeFieldContract(adapter: Mount<DateTimeFieldContractProps>
     }
   });
 
+  it('separates the time control from the calendar', async () => {
+    const field = await mount({ label: 'Appointment', today: '2026-07-08' });
+    try {
+      await page.elementLocator(field.part('picker-button')).click();
+      await field.update({});
+      const panel = field.part('panel');
+      const time = field.part('time');
+      expect(getComputedStyle(time).marginBlockStart).toBe(
+        getComputedStyle(panel).paddingBlockStart,
+      );
+      expect(Number.parseFloat(getComputedStyle(time).marginBlockStart)).toBeGreaterThan(0);
+    } finally {
+      await field.unmount();
+    }
+  });
+
   it('checks inclusive date-time bounds and excluded dates', async () => {
     const form = document.createElement('form');
     document.body.append(form);

@@ -26,6 +26,10 @@
   margin-block-start: var(--date-field-panel-padding);
 }
 
+.ui-date-time-field__panel .ui-date-time-field__time {
+  margin-block-start: var(--date-field-panel-padding);
+}
+
 @media (forced-colors: active) {
   .ui-date-time-field__panel {
     border-color: CanvasText;

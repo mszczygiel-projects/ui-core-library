@@ -10,8 +10,10 @@ import { expect, it, vi } from 'vitest';
 import { page } from 'vitest/browser';
 
 import { appearance } from '../appearance.ts';
+import { contrastRatio } from '../contrast.ts';
 import type { Mount } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
+import { tokenValue } from '../tokens.ts';
 
 /** The props of the specification, plus what each harness translates. */
 export interface TimeFieldContractProps extends TimeFieldProps {
@@ -22,6 +24,70 @@ export interface TimeFieldContractProps extends TimeFieldProps {
 
 /** The behaviour of TimeField, applied unchanged to the web component and the React component. */
 export function timeFieldContract(mount: Mount<TimeFieldContractProps>): void {
+  it('aligns the icon with the native picker in both text directions', async () => {
+    for (const dir of ['ltr', 'rtl'] as const) {
+      const field = await mount({ label: 'Time' }, { dir });
+      try {
+        const input = field.part('input');
+        const icon = field.part('input-row').querySelector<HTMLElement>('[aria-hidden="true"]');
+        expect(icon).not.toBeNull();
+        if (icon === null) {
+          throw new Error('Missing the time picker icon');
+        }
+        const iconBox = icon.getBoundingClientRect();
+        const inputBox = input.getBoundingClientRect();
+        expect(Math.abs(iconBox.right - inputBox.right)).toBeLessThan(1);
+        const root = icon.getRootNode();
+        if (!(root instanceof Document || root instanceof ShadowRoot)) {
+          throw new Error('Missing picker root');
+        }
+        expect(
+          root.elementFromPoint(iconBox.x + iconBox.width / 2, iconBox.y + iconBox.height / 2),
+        ).toBe(input);
+      } finally {
+        await field.unmount();
+      }
+    }
+  });
+  it('colours the picker icon from the field palette on every surface', async () => {
+    for (const theme of ['light', 'dark'] as const) {
+      for (const surface of ['default', 'subtle', 'inverse', 'primary'] as const) {
+        for (const variant of ['outline', 'filled'] as const) {
+          const field = await mount({ label: 'Time', variant }, { theme, surface });
+          try {
+            const row = field.part('input-row');
+            const icon = row.querySelector<HTMLElement>('[aria-hidden="true"]');
+            expect(icon).not.toBeNull();
+            if (icon === null) {
+              throw new Error('Missing the time picker icon');
+            }
+            const probe = document.createElement('span');
+            probe.style.color = tokenValue(`--color-control-${variant}-icon-default`, {
+              theme,
+              surface,
+            });
+            document.body.append(probe);
+            expect(getComputedStyle(icon).display).not.toBe('none');
+            expect(getComputedStyle(icon).color).toBe(getComputedStyle(probe).color);
+            const background =
+              variant === 'filled'
+                ? getComputedStyle(field.part('control')).backgroundColor
+                : tokenValue('--color-background-default', { theme, surface });
+            probe.style.backgroundColor = background;
+            expect(
+              contrastRatio(getComputedStyle(icon).color, getComputedStyle(probe).backgroundColor),
+              `${theme}/${surface}/${variant}`,
+            ).toBeGreaterThanOrEqual(3);
+            expect(getComputedStyle(icon).pointerEvents).toBe('none');
+            expect(icon.querySelector('svg')).not.toBeNull();
+            probe.remove();
+          } finally {
+            await field.unmount();
+          }
+        }
+      }
+    }
+  });
   it('renders the default appearance as the explicit field defaults', async () => {
     const implicit = await mount({ label: 'Time' });
     const explicit = await mount({

@@ -1,1 +1,45 @@
-/* TimeField uses the shared field anatomy and the browser's time picker. */
+.ui-time-field__input-row {
+  position: relative;
+}
+
+.ui-time-field__picker-icon {
+  display: none;
+}
+
+/* Keep the native picker and its hit target while giving the icon the field's colour. */
+@supports selector(input::-webkit-calendar-picker-indicator) {
+  .ui-time-field__input::-webkit-calendar-picker-indicator {
+    inline-size: var(--_icon-size);
+    block-size: var(--_icon-size);
+    margin: 0;
+    padding: 0;
+    opacity: 0;
+    cursor: pointer;
+  }
+
+  .ui-time-field__picker-icon {
+    position: absolute;
+    direction: ltr;
+    inset-block: 0;
+    inset-inline-end: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--_icon-size);
+    block-size: var(--_icon-size);
+    margin-block: auto;
+    color: var(--_icon);
+    font-size: var(--_icon-size);
+    pointer-events: none;
+  }
+}
+
+@media (forced-colors: active) {
+  .ui-time-field__picker-icon {
+    color: CanvasText;
+  }
+
+  .ui-time-field__input:disabled + .ui-time-field__picker-icon {
+    color: GrayText;
+  }
+}

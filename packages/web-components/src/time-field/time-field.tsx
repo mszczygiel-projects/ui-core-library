@@ -2,6 +2,7 @@ import {
   getUiCoreConfig,
   type UiCoreConfig,
 } from '@mszczygiel-projects/ui-core-foundations/config';
+import { iconClock } from '@mszczygiel-projects/ui-core-icons';
 import type {
   TextFieldLabelPlacement,
   TextFieldSize,
@@ -295,6 +296,7 @@ export class UiTimeField implements TimeFieldProps, FormAssociated {
             aria-describedby={fieldDescription(this.hint, this.labelHint)}
             onInput={this.onInput}
           />
+          <span class="picker-icon" aria-hidden="true" innerHTML={iconClock} />
         </div>
       </Field>
     );
