@@ -1,9 +1,11 @@
 import { dialog, type DialogProps } from '@mszczygiel-projects/ui-core-shared/dialog';
-import { afterEach, beforeEach, expect, it } from 'vitest';
+import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { page } from 'vitest/browser';
 
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import {
+  dragDown,
+  focused,
   modalNode,
   NARROW,
   nativeDialog,
@@ -44,8 +46,12 @@ export function dialogContract(adapter: Mount<DialogContractProps>): void {
   });
 
   afterEach(async () => {
-    for (const modal of mounted.splice(0)) {
-      await modal.unmount();
+    try {
+      for (const modal of mounted.splice(0)) {
+        await modal.unmount();
+      }
+    } finally {
+      await page.viewport(WIDE.width, WIDE.height);
     }
   });
 
@@ -146,6 +152,91 @@ export function dialogContract(adapter: Mount<DialogContractProps>): void {
     body.dispatchEvent(new Event('scroll'));
     await expect.poll(() => shadowOf(header)).not.toBe('none');
     await expect.poll(() => shadowOf(footer)).toBe('none');
+  });
+
+  it('changes presentation while open without refocusing or asking to close', async () => {
+    await page.viewport(1023, WIDE.height);
+    const changed = vi.fn<NonNullable<DialogContractProps['onOpenChange']>>();
+    const modal = await mount({
+      content: 'fields',
+      footer: 'OK',
+      dragToDismiss: true,
+      onOpenChange: changed,
+    });
+    const panel = nativeDialog(modal);
+    const focus = focused();
+    const focusEvents = vi.fn();
+    modal.element.addEventListener('focus', focusEvents, true);
+    const direction = () => getComputedStyle(modal.part('footer')).flexDirection;
+    expect(panel.offsetWidth).toBe(window.innerWidth);
+    expect(direction()).toBe('column-reverse');
+    await page.viewport(1024, WIDE.height);
+    expect(panel.offsetWidth).toBeLessThan(window.innerWidth);
+    expect(direction()).toBe('row');
+
+    await page.viewport(NARROW.width, NARROW.height);
+    await modal.update({ presentation: 'dialog' });
+    expect(panel.offsetWidth).toBeLessThan(window.innerWidth);
+    expect(direction()).toBe('row');
+    expect(modal.part('grabber').checkVisibility()).toBe(false);
+    await modal.update({ presentation: 'unsupported' } as unknown as DialogContractProps);
+    expect(panel.offsetWidth).toBe(window.innerWidth);
+
+    await page.viewport(WIDE.width, WIDE.height);
+    await modal.update({ presentation: 'sheet' });
+    expect(panel.offsetWidth).toBe(window.innerWidth);
+    expect(restingBox(panel).bottom).toBe(window.innerHeight);
+    expect(direction()).toBe('column-reverse');
+    expect(modal.part('grabber').checkVisibility()).toBe(true);
+    expect(panel.open).toBe(true);
+    expect(focused()).toBe(focus);
+    expect(focusEvents).not.toHaveBeenCalled();
+    expect(changed).not.toHaveBeenCalled();
+
+    await dragDown(modal.part('grabber'), panel.offsetHeight / 2, 200);
+    await expect.poll(() => panel.open).toBe(false);
+    expect(changed.mock.lastCall?.[1].reason).toBe('drag');
+  });
+
+  it('ignores dragToDismiss when forced to a centered dialog or fullscreen', async () => {
+    await page.viewport(NARROW.width, NARROW.height);
+    const changed = vi.fn<NonNullable<DialogContractProps['onOpenChange']>>();
+    const modal = await mount({
+      presentation: 'dialog',
+      dragToDismiss: true,
+      onOpenChange: changed,
+    });
+    const panel = nativeDialog(modal);
+    for (const props of [
+      { presentation: 'dialog' },
+      { presentation: 'sheet', size: 'fullscreen' },
+    ] as const) {
+      await modal.update(props);
+      expect(modal.part('grabber').checkVisibility()).toBe(false);
+      const header = modal.part('header');
+      expect(getComputedStyle(header).touchAction).toBe('auto');
+      await dragDown(header, panel.offsetHeight / 2, 200);
+      expect(panel.open).toBe(true);
+      expect(panel.style.getPropertyValue('--_drag-offset')).toBe('');
+      expect(changed).not.toHaveBeenCalled();
+    }
+  });
+
+  it('keeps a fullscreen dialog and its responsive footer in every presentation', async () => {
+    const modal = await mount({ size: 'fullscreen', footer: 'OK', dragToDismiss: true });
+    const panel = nativeDialog(modal);
+    for (const viewport of [WIDE, NARROW]) {
+      await page.viewport(viewport.width, viewport.height);
+      for (const presentation of options.presentation.options) {
+        await modal.update({ presentation });
+        expect(panel.offsetWidth).toBe(window.innerWidth);
+        expect(panel.offsetHeight).toBe(window.innerHeight);
+        expect(modal.part('grabber').checkVisibility()).toBe(false);
+        expect(getComputedStyle(modal.part('footer')).flexDirection).toBe(
+          viewport === NARROW ? 'column-reverse' : 'row',
+        );
+      }
+    }
   });
 
   it('rises from the bottom of a narrow window as a sheet, with a handle when it can be dragged', async () => {

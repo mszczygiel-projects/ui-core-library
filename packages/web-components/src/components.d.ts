@@ -26,7 +26,7 @@ import { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-
 import { DateFieldOpenChange, DateFieldValueChange } from "./date-field/events";
 import { DateTimeFieldValueChangeDetail, DateTimeValidationContext } from "@mszczygiel-projects/ui-core-shared/date-time-field";
 import { DateFieldOpenChangeDetail } from "@mszczygiel-projects/ui-core-shared/date-field";
-import { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
+import { DialogPresentation, DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 import { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 import { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 import { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
@@ -79,7 +79,7 @@ export { DateConstraints, DateValidationContext } from "@mszczygiel-projects/ui-
 export { DateFieldOpenChange, DateFieldValueChange } from "./date-field/events";
 export { DateTimeFieldValueChangeDetail, DateTimeValidationContext } from "@mszczygiel-projects/ui-core-shared/date-time-field";
 export { DateFieldOpenChangeDetail } from "@mszczygiel-projects/ui-core-shared/date-field";
-export { DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
+export { DialogPresentation, DialogSize } from "@mszczygiel-projects/ui-core-shared/dialog";
 export { OverlayOpenChange as OpenChange } from "./internal/overlay-events";
 export { DrawerPlacement } from "@mszczygiel-projects/ui-core-shared/drawer";
 export { FileInputFieldVariant } from "@mszczygiel-projects/ui-core-shared/file-input-field";
@@ -835,8 +835,8 @@ export namespace Components {
      * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
      * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
      * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
-     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
-     * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. In
+     * automatic presentation it becomes a sheet below the breakpoint. The heading names the dialog,
      * and the description describes it; without a heading, `label` or an author's `aria-label` names
      * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
      * attribute on it.
@@ -856,7 +856,7 @@ export namespace Components {
          */
         "description"?: string;
         /**
-          * Lets a user drag the sheet down to close it, below the breakpoint.
+          * Enables drag dismissal in the bottom sheet layout.
           * @default false
          */
         "dragToDismiss": boolean;
@@ -878,6 +878,11 @@ export namespace Components {
           * @default false
          */
         "open": boolean;
+        /**
+          * Chooses a centered dialog, a bottom sheet, or automatic presentation at the breakpoint.
+          * @default 'auto'
+         */
+        "presentation": DialogPresentation;
         /**
           * The width of the window, or the whole window.
           * @default 'medium'
@@ -2698,8 +2703,8 @@ declare global {
      * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
      * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
      * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
-     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
-     * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. In
+     * automatic presentation it becomes a sheet below the breakpoint. The heading names the dialog,
      * and the description describes it; without a heading, `label` or an author's `aria-label` names
      * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
      * attribute on it.
@@ -4136,8 +4141,8 @@ declare namespace LocalJSX {
      * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
      * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
      * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
-     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
-     * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+     * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. In
+     * automatic presentation it becomes a sheet below the breakpoint. The heading names the dialog,
      * and the description describes it; without a heading, `label` or an author's `aria-label` names
      * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
      * attribute on it.
@@ -4157,7 +4162,7 @@ declare namespace LocalJSX {
          */
         "description"?: string;
         /**
-          * Lets a user drag the sheet down to close it, below the breakpoint.
+          * Enables drag dismissal in the bottom sheet layout.
           * @default false
          */
         "dragToDismiss"?: boolean;
@@ -4183,6 +4188,11 @@ declare namespace LocalJSX {
           * @default false
          */
         "open"?: boolean;
+        /**
+          * Chooses a centered dialog, a bottom sheet, or automatic presentation at the breakpoint.
+          * @default 'auto'
+         */
+        "presentation"?: DialogPresentation;
         /**
           * The width of the window, or the whole window.
           * @default 'medium'
@@ -5932,6 +5942,7 @@ declare namespace LocalJSX {
     interface UiDialogAttributes {
         "open": boolean;
         "size": DialogSize;
+        "presentation": DialogPresentation;
         "alert": boolean;
         "heading": string;
         "description": string;
@@ -6393,8 +6404,8 @@ declare module "@stencil/core" {
              * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
              * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
              * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
-             * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
-             * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+             * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. In
+             * automatic presentation it becomes a sheet below the breakpoint. The heading names the dialog,
              * and the description describes it; without a heading, `label` or an author's `aria-label` names
              * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
              * attribute on it.

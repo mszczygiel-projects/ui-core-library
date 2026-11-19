@@ -13966,5 +13966,25 @@
         }
       }
     }
+  },
+  "overlay": {
+    "backdrop": {
+      "blur": {
+        "$value": "{Themes.effect.backdrop-blur}",
+        "$type": "number",
+        "$description": "The backdrop blur radius shared by Dialog and Drawer.",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1130:3",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [],
+            "codeSyntax": {
+              "WEB": "var(--overlay-backdrop-blur)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      }
+    }
   }
 }

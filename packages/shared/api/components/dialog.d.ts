@@ -8,7 +8,7 @@ export declare const dialog: {
     readonly design: {
         readonly flags: readonly ["hideCloseButton"];
         readonly booleans: readonly [];
-        readonly codeOnly: readonly ["open", "alert", "label", "closeLabel", "dragToDismiss"];
+        readonly codeOnly: readonly ["open", "alert", "label", "closeLabel", "dragToDismiss", "presentation"];
         readonly previews: {
             readonly hasDescription: {
                 readonly options: readonly ["true", "false"];
@@ -27,6 +27,10 @@ export declare const dialog: {
         readonly size: {
             readonly options: readonly ["small", "medium", "large", "fullscreen"];
             readonly default: "medium";
+        };
+        readonly presentation: {
+            readonly options: readonly ["auto", "dialog", "sheet"];
+            readonly default: "auto";
         };
     };
     readonly labels: readonly ["close"];
@@ -49,6 +53,7 @@ export declare const dialog: {
     }];
 };
 export type DialogSize = OptionOf<typeof dialog, 'size'>;
+export type DialogPresentation = OptionOf<typeof dialog, 'presentation'>;
 export type OverlayCloseReason = 'escape' | 'backdrop' | 'close-button' | 'drag' | 'form';
 export interface OverlayOpenChangeDetails<OriginalEvent> {
     readonly reason: OverlayCloseReason;
@@ -66,6 +71,8 @@ export interface OverlayProps {
 }
 export interface DialogProps extends OverlayProps {
     size?: DialogSize;
+    presentation?: DialogPresentation;
+    dragToDismiss?: boolean;
     alert?: boolean;
     heading?: string;
     description?: string;

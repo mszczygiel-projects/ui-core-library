@@ -44,6 +44,13 @@ export function webComponentContent(content: OverlayContent): Element[] {
       pageForm.append(element('button', { formmethod: 'dialog', value: 'done' }, 'Done'));
       return [dialogForm, pageForm];
     }
+    case 'filters':
+      return [
+        element('input', { type: 'search', 'aria-label': 'Search' }),
+        element('button', { hidden: '', 'data-autofocus': '' }, 'Hidden'),
+        element('button', { disabled: '', 'data-autofocus': '' }, 'Disabled'),
+        element('div', { tabindex: '-1', 'data-autofocus': '' }, 'Filters'),
+      ];
     case 'reading':
       return [
         element('p', { tabindex: '-1', 'data-autofocus': '' }, 'Read this first'),
@@ -105,6 +112,21 @@ export function reactContent(content: OverlayContent | undefined): ReactNode {
               Done
             </button>
           </form>
+        </>
+      );
+    case 'filters':
+      return (
+        <>
+          <input type="search" aria-label="Search" />
+          <button hidden data-autofocus="">
+            Hidden
+          </button>
+          <button disabled data-autofocus="">
+            Disabled
+          </button>
+          <div tabIndex={-1} data-autofocus="">
+            Filters
+          </div>
         </>
       );
     case 'reading':

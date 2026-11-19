@@ -7864,5 +7864,30 @@
         }
       }
     }
+  },
+  "effect": {
+    "backdrop-blur": {
+      "$value": {
+        "Light": "{Primitives Sizes.size.0}",
+        "Dark": "{Primitives Sizes.size.0}"
+      },
+      "$type": "number",
+      "$description": "The radius of the blur behind modal overlays.",
+      "$extensions": {
+        "com.figma": {
+          "variableId": "VariableID:1130:2",
+          "collectionId": "VariableCollectionId:1:238",
+          "scopes": [],
+          "codeSyntax": {
+            "WEB": "var(--effect-backdrop-blur)"
+          },
+          "hiddenFromPublishing": false,
+          "modes": [
+            "Light",
+            "Dark"
+          ]
+        }
+      }
+    }
   }
 }

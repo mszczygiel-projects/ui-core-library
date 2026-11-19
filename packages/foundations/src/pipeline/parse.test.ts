@@ -254,11 +254,11 @@ describe('the exports of the library', () => {
 
   it('hold every collection', () => {
     const count = (collection: string) => tokens.filter((t) => t.collection === collection).length;
-    expect(tokens).toHaveLength(1478);
+    expect(tokens).toHaveLength(1480);
     expect(count('Primitives Colors')).toBe(116);
-    expect(count('Themes')).toBe(334);
+    expect(count('Themes')).toBe(335);
     expect(count('Surfaces')).toBe(64);
-    expect(count('Components')).toBe(750);
+    expect(count('Components')).toBe(751);
     expect(count('Sizes')).toBe(85);
   });
 });

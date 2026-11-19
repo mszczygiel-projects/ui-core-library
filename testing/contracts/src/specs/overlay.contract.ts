@@ -9,6 +9,7 @@ import { commands, page, userEvent } from 'vitest/browser';
 import type { AccessibleNode } from '../browser.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
+import { tokenNumber } from '../tokens.ts';
 
 /**
  * The content a harness renders inside a modal, with the components of its own framework:
@@ -16,10 +17,20 @@ import { pseudoLabels } from '../pseudo.ts';
  * a form with `method="dialog"` and two native submit buttons, `buttons` the same with two Buttons
  * of the library, `methods` a button of method post in a dialog form and a button of method dialog
  * in a form of the page, `reading` a marked paragraph outside the order of Tab before a field,
- * `select` a SelectField and `long` enough paragraphs to scroll.
+ * `filters` a search field before a marked panel, `select` a SelectField and `long` enough
+ * paragraphs to scroll.
  */
 export type OverlayContent =
-  'text' | 'fields' | 'autofocus' | 'form' | 'buttons' | 'methods' | 'reading' | 'select' | 'long';
+  | 'text'
+  | 'fields'
+  | 'autofocus'
+  | 'form'
+  | 'buttons'
+  | 'methods'
+  | 'filters'
+  | 'reading'
+  | 'select'
+  | 'long';
 
 /** The props of a modal in a contract, plus what each harness translates. */
 export interface OverlayContractProps extends OverlayProps {
@@ -192,6 +203,30 @@ export function overlayContract<Props extends OverlayContractProps>(
     }
   });
 
+  it('takes its backdrop blur radius from the shared modal token', async () => {
+    const modal = await mount();
+    const dialog = nativeDialog(modal);
+    const name = '--overlay-backdrop-blur';
+    const filter = () => getComputedStyle(dialog, '::backdrop').backdropFilter;
+    expect(tokenNumber(name)).toBe(0);
+    expect(filter()).toBe('none');
+
+    const themedScope = modal.element.closest<HTMLElement>('[data-theme]');
+    if (themedScope === null) {
+      throw new Error('The modal fixture needs a theme scope');
+    }
+    const previous = themedScope.style.getPropertyValue(name);
+    const priority = themedScope.style.getPropertyPriority(name);
+    try {
+      themedScope.style.setProperty(name, '6px');
+      expect(filter()).toBe('blur(6px)');
+      themedScope.style.setProperty(name, '0rem');
+      expect(filter()).toBe('none');
+    } finally {
+      themedScope.style.setProperty(name, previous, priority);
+    }
+  });
+
   it('gives the focus to the first field of its content, not to the close button', async () => {
     const modal = await mount({ content: 'fields' });
     await expect.poll(() => focused()?.getAttribute('aria-label')).toBe('First');
@@ -207,6 +242,57 @@ export function overlayContract<Props extends OverlayContractProps>(
     await mount({ content: 'reading' });
     await expect.poll(() => focused()?.textContent).toBe('Read this first');
   });
+
+  it.each([
+    { label: 'in light DOM', nested: false },
+    { label: 'in an open shadow root', nested: true },
+  ])(
+    'focuses the marked filters $label before native autofocus on every opening',
+    async ({ nested }) => {
+      const button = opener();
+      const modal = await mount({ open: false, hideCloseButton: true, content: 'filters' });
+      const search = modal.element.querySelector('input');
+      const filters = modal.element.querySelector('[tabindex="-1"][data-autofocus]');
+      const disabled = modal.element.querySelector('button:disabled');
+      if (search === null || filters === null || disabled === null) {
+        throw new Error(
+          'The filters fixture needs a search field, a disabled button and a marked panel',
+        );
+      }
+      search.setAttribute('autofocus', 'autofocus');
+      disabled.setAttribute('autofocus', '');
+      if (nested) {
+        const host = document.createElement('div');
+        filters.replaceWith(host);
+        host.attachShadow({ mode: 'open' }).append(filters);
+      }
+
+      const receivedFocus = vi.fn<(target: EventTarget | undefined) => void>();
+      modal.element.addEventListener(
+        'focus',
+        (event) => {
+          receivedFocus(event.composedPath()[0]);
+        },
+        true,
+      );
+      for (const open of [true, false, true]) {
+        await modal.update({ open } as Partial<Props>);
+        if (open) {
+          expect(focused()).toBe(filters);
+          expect(receivedFocus.mock.calls).toEqual([[filters]]);
+          expect(filters.hasAttribute('autofocus')).toBe(false);
+          expect(search.getAttribute('autofocus')).toBe('autofocus');
+          expect(disabled.getAttribute('autofocus')).toBe('');
+        } else {
+          expect(focused()).toBe(button);
+        }
+        receivedFocus.mockClear();
+      }
+      await page.elementLocator(search).click();
+      expect(focused()).toBe(search);
+      expect(receivedFocus.mock.calls).toEqual([[search]]);
+    },
+  );
 
   it('gives the focus to its content inside a shadow root', async () => {
     const host = document.createElement('div');

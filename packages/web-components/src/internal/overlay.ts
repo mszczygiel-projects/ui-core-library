@@ -74,7 +74,7 @@ export class Overlay {
       return;
     }
     if (!dialog.open) {
-      dialog.showModal();
+      showModal(dialog, this.options.content());
     }
     lockPage(this);
     this.events = new AbortController();
@@ -145,13 +145,12 @@ export class Overlay {
    */
   private focusContent(dialog: HTMLDialogElement): void {
     const content = this.options.content();
-    const marked = content.flatMap((root) => [
-      ...(root.matches(AUTOFOCUS) ? [root] : []),
-      ...root.querySelectorAll(AUTOFOCUS),
-    ]);
+    const marked = content.flatMap((root) => [...autofocusElements(root)]);
+    const preferred = marked.filter((element) => element.hasAttribute('data-autofocus'));
+    const native = marked.filter((element) => !element.hasAttribute('data-autofocus'));
     // A marked element takes the focus outside the order of Tab too, such as a paragraph with
     // `tabindex="-1"` to read first.
-    for (const candidate of marked) {
+    for (const candidate of [...preferred, ...native]) {
       if (tryFocus(candidate, true)) {
         return;
       }
@@ -312,6 +311,60 @@ function submittedValue(
   );
   const value: unknown = custom === undefined ? undefined : Reflect.get(custom, 'value');
   return typeof value === 'string' ? value : '';
+}
+
+/** The marked elements in rendered order, including slots and open shadow roots. */
+function* autofocusElements(root: Element): Iterable<HTMLElement> {
+  if (root instanceof HTMLElement && root.matches(AUTOFOCUS)) {
+    yield root;
+  }
+  const children =
+    root instanceof HTMLSlotElement
+      ? root.assignedElements({ flatten: true })
+      : (root.shadowRoot ?? root).children;
+  for (const child of children) {
+    yield* autofocusElements(child);
+  }
+}
+
+/** Gives the browser the preferred targets during native opening, then restores author markup. */
+function showModal(dialog: HTMLDialogElement, content: readonly Element[]): void {
+  const preferred = new Set(
+    content
+      .flatMap((root) => [...autofocusElements(root)])
+      .filter((element) => element.hasAttribute('data-autofocus')),
+  );
+  if (preferred.size === 0) {
+    dialog.showModal();
+    return;
+  }
+
+  const changed = new Map<HTMLElement, string | null>();
+  try {
+    // An earlier native autofocus would otherwise beat a preferred target and can open the keyboard.
+    for (const element of autofocusElements(dialog)) {
+      const native = element.getAttribute('autofocus');
+      if (native !== null && !preferred.has(element)) {
+        changed.set(element, native);
+        element.removeAttribute('autofocus');
+      }
+    }
+    for (const element of preferred) {
+      if (!element.hasAttribute('autofocus')) {
+        changed.set(element, null);
+        element.setAttribute('autofocus', '');
+      }
+    }
+    dialog.showModal();
+  } finally {
+    for (const [element, native] of changed) {
+      if (native === null) {
+        element.removeAttribute('autofocus');
+      } else {
+        element.setAttribute('autofocus', native);
+      }
+    }
+  }
 }
 
 /** A root of the content and every element inside it, in the order of the document. */

@@ -2,7 +2,11 @@ import '@mszczygiel-projects/ui-core-web-components/button';
 import '@mszczygiel-projects/ui-core-web-components/dialog';
 import '@mszczygiel-projects/ui-core-web-components/text-field';
 
-import { dialog, type DialogSize } from '@mszczygiel-projects/ui-core-shared/dialog';
+import {
+  dialog,
+  type DialogPresentation,
+  type DialogSize,
+} from '@mszczygiel-projects/ui-core-shared/dialog';
 import type { Meta, StoryObj } from '@storybook/react-vite';
 import { type ReactNode, useState } from 'react';
 
@@ -14,6 +18,7 @@ interface DialogArgs {
   readonly description: string;
   readonly text: string;
   readonly size: DialogSize;
+  readonly presentation: DialogPresentation;
   readonly alert: boolean;
   readonly hideCloseButton: boolean;
   readonly closeLabel?: string;
@@ -60,6 +65,7 @@ function UiDialog({
         heading={args.heading}
         description={args.description === '' ? undefined : args.description}
         size={args.size}
+        presentation={args.presentation}
         alert={args.alert}
         hideCloseButton={args.hideCloseButton}
         closeLabel={args.closeLabel === '' ? undefined : args.closeLabel}
@@ -94,6 +100,8 @@ const source = (args: DialogArgs) =>
       heading: args.heading,
       description: args.description,
       size: args.size === options.size.default ? undefined : args.size,
+      presentation:
+        args.presentation === options.presentation.default ? undefined : args.presentation,
       alert: args.alert,
       'hide-close-button': args.hideCloseButton,
       'close-label': args.closeLabel,
@@ -111,6 +119,7 @@ const meta = {
     description: 'The file moves to the bin for 30 days.',
     text: 'Anyone it is shared with loses access to it.',
     size: options.size.default,
+    presentation: options.presentation.default,
     alert: false,
     hideCloseButton: false,
     dragToDismiss: false,
@@ -120,6 +129,7 @@ const meta = {
     description: { control: 'text' },
     text: { control: 'text' },
     size: { control: 'inline-radio', options: options.size.options },
+    presentation: { control: 'inline-radio', options: options.presentation.options },
     alert: { control: 'boolean' },
     hideCloseButton: { control: 'boolean' },
     closeLabel: { control: 'text' },

@@ -36,6 +36,19 @@
 
 .overlay::backdrop {
   background: var(--_backdrop);
+
+  /* stylelint-disable-next-line plugin/use-baseline -- the backdrop keeps its color without the filter */
+  backdrop-filter: blur(var(--overlay-backdrop-blur));
+}
+
+/* stylelint-disable-next-line plugin/use-baseline -- older browsers use the blur declaration above */
+@supports (backdrop-filter: if(style(--overlay-backdrop-blur = 0): none; else: none)) {
+  .overlay::backdrop {
+    /* stylelint-disable-next-line plugin/use-baseline -- older browsers use the blur declaration above */
+    backdrop-filter: if(
+      style(--overlay-backdrop-blur = 0): none; else: blur(var(--overlay-backdrop-blur))
+    );
+  }
 }
 
 .dialog {

@@ -46,6 +46,20 @@ describe('ui-dialog', () => {
     expect(dialog?.open).toBe(false);
   });
 
+  it('reads the presentation attribute and keeps property changes off the host', async () => {
+    const element = document.createElement('ui-dialog');
+    element.setAttribute('presentation', 'sheet');
+    document.body.append(element);
+    await nextRender();
+    expect(element.presentation).toBe('sheet');
+    element.presentation = 'dialog';
+    await nextRender();
+    expect(element.getAttribute('presentation')).toBe('sheet');
+    element.removeAttribute('presentation');
+    await nextRender();
+    expect(element.shadowRoot?.querySelector('dialog')?.classList).toContain('presentation-auto');
+  });
+
   it('stays open when the page cancels its ui-open-change', async () => {
     const element = document.createElement('ui-dialog');
     element.heading = 'Delete';
