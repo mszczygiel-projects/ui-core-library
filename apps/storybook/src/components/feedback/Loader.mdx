@@ -25,11 +25,11 @@ Do not use a loader:
 
 ## Anatomy
 
-One part, the **indicator**: an arc that turns. The web component exposes it as `::part(indicator)`, the React component as `.ui-loader__indicator`, and the Figma component as the layer `indicator`.
+The **indicator** holds the loading visual. The web component exposes it as `::part(indicator)`, the React component as `.ui-loader__indicator`, and the Figma component as the layer `indicator`.
 
 ## Variants & tone
 
-Does not apply: every loader on a page has the same look. `loaderVariant` in `configureUiCore` chooses it for the Loader and for the loading states of other components at once, and this version of the library draws `spinner`. The colour follows the surface, or the text of the component that shows the loader.
+`loaderVariant` in `configureUiCore` selects the visual for Loader and for internal loading states. The default is `spinner`. Register a custom visual with `loaderVariants` as shown in the [Configuration guide](?path=/docs/guides-configuration--docs). The colour follows the surface or the text of the component that shows the loader.
 
 ## Sizes & density
 
@@ -48,8 +48,8 @@ A loader renders no visible text. Its accessible name is `label`, or without it 
 ## Behaviour
 
 - The loader takes no focus and answers no keys.
-- The arc turns once every 700 milliseconds, at a constant speed.
-- When the user prefers reduced motion, the arc stops and the loader fades in and out slowly instead.
+- The built-in spinner turns once every 700 milliseconds at a constant speed. When the user prefers reduced motion, it fades in and out slowly.
+- A custom variant shows its static counterpart or a stationary spinner when the user prefers reduced motion.
 - Remove the loader when the wait ends. While it lasts, mark the region that loads with `aria-busy="true"`.
 
 ## Accessibility

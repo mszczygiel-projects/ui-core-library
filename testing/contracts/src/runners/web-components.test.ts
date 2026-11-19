@@ -82,6 +82,7 @@ import { calendarContract } from '../specs/calendar.contract.ts';
 import { checkboxFieldContract } from '../specs/checkbox-field.contract.ts';
 import { chipContract } from '../specs/chip.contract.ts';
 import { comboboxContract } from '../specs/combobox.contract.ts';
+import { customLoaderContract } from '../specs/custom-loader.contract.tsx';
 import { dateFieldContract } from '../specs/date-field.contract.ts';
 import { dateTimeFieldContract } from '../specs/date-time-field.contract.ts';
 import { dialogContract } from '../specs/dialog.contract.ts';
@@ -113,6 +114,16 @@ import { tooltipContract } from '../specs/tooltip.contract.ts';
 
 describe('Loader, web component', () => {
   loaderContract(webComponentMount('ui-loader'));
+});
+
+describe('Custom loaders, web components', () => {
+  customLoaderContract({
+    loader: webComponentMount('ui-loader'),
+    button: mountWebComponentButton,
+    iconButton: mountWebComponentIconButton,
+    splitButton: mountWebComponentSplitButton,
+    combobox: mountWebComponentCombobox,
+  });
 });
 
 describe('Button, web component', () => {

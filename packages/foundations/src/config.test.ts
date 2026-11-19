@@ -86,6 +86,43 @@ describe('the configuration', () => {
     expect(listener).not.toHaveBeenCalled();
   });
 
+  it('registers, selects and replaces a custom loader in the same snapshot', () => {
+    const listener = vi.fn(getUiCoreConfig);
+    const unsubscribe = subscribeUiCoreConfig(listener);
+    const custom = { webComponent: { component: 'brand-loader' } };
+    configureUiCore({ loaderVariant: 'brand', loaderVariants: { brand: custom } });
+    expect(listener).toHaveReturnedWith(
+      expect.objectContaining({ loaderVariant: 'brand', loader: custom }),
+    );
+    expect(listener).toHaveBeenCalledOnce();
+    expect(Object.isFrozen(getUiCoreConfig().loader?.webComponent)).toBe(true);
+    custom.webComponent.component = 'changed-outside-configuration';
+    expect(getUiCoreConfig().loader?.webComponent?.component).toBe('brand-loader');
+
+    const replacement = { webComponent: { component: 'brand-loader-new' } };
+    const dots = { webComponent: { component: 'dots-loader' } };
+    configureUiCore({ loaderVariants: { brand: replacement, dots } });
+    expect(getUiCoreConfig().loader).toEqual(replacement);
+    configureUiCore({ loaderVariant: 'dots' });
+    expect(getUiCoreConfig().loader).toEqual(dots);
+    configureUiCore({ loaderVariant: 'brand' });
+    expect(getUiCoreConfig().loader).toEqual(replacement);
+    unsubscribe();
+  });
+
+  it('keeps the built-in spinner reserved and clears the registry on reset', () => {
+    const custom = { webComponent: { component: 'brand-loader' } };
+    configureUiCore({ loaderVariants: { spinner: custom, brand: custom } });
+    expect(getUiCoreConfig().loaderVariant).toBe('spinner');
+    expect(getUiCoreConfig().loader).toBeUndefined();
+    configureUiCore({ loaderVariant: 'unknown' });
+    expect(getUiCoreConfig().loaderVariant).toBe('spinner');
+    resetUiCoreConfig();
+    configureUiCore({ loaderVariant: 'brand' });
+    expect(getUiCoreConfig().loaderVariant).toBe('spinner');
+    expect(getUiCoreConfig().loader).toBeUndefined();
+  });
+
   it('resets to the defaults and notifies its listeners', () => {
     configureUiCore({ labels: { loader: { label: 'Wait' } } });
     const listener = vi.fn();

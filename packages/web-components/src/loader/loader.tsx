@@ -1,19 +1,16 @@
-import type { LoaderVariant, UiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config';
-import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config';
+import {
+  getUiCoreConfig,
+  type UiCoreConfig,
+} from '@mszczygiel-projects/ui-core-foundations/config';
 import {
   loader,
   type LoaderProps,
   type LoaderSize,
 } from '@mszczygiel-projects/ui-core-shared/loader';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
-import { AttachInternals, Component, h, Prop, State, type VNode } from '@stencil/core';
+import { AttachInternals, Component, Element, h, Prop, State, type VNode } from '@stencil/core';
 
 import { followConfig } from '../internal/config.ts';
-
-/** The markup of each look of a loader, chosen by `loaderVariant` in the configuration. */
-const looks: Readonly<Record<LoaderVariant, (size: LoaderSize) => VNode>> = {
-  spinner: (size) => <span part="indicator" class={`indicator ${size}`} />,
-};
 
 /**
  * Shows that content is loading or that an action is in progress.
@@ -22,7 +19,7 @@ const looks: Readonly<Record<LoaderVariant, (size: LoaderSize) => VNode>> = {
  * `ElementInternals`, so an `aria-label` that the page sets on the element wins. It draws the
  * look that `loaderVariant` of `configureUiCore` chooses.
  *
- * @part indicator - The arc that turns while something loads.
+ * @part indicator - The visual indicator shown while something loads.
  */
 @Component({ tag: 'ui-loader', styleUrl: 'loader.css', shadow: true })
 export class UiLoader implements LoaderProps {
@@ -37,19 +34,35 @@ export class UiLoader implements LoaderProps {
 
   @AttachInternals() internals?: ElementInternals;
 
+  @Element() host!: HTMLUiLoaderElement;
+
   @State() config: UiCoreConfig = getUiCoreConfig();
 
+  @State() reducedMotion = false;
+
   private stopConfig?: () => void;
+
+  private motion?: MediaQueryList;
 
   connectedCallback(): void {
     this.stopConfig = followConfig((config) => {
       this.config = config;
     });
+    this.motion = this.host.ownerDocument.defaultView?.matchMedia(
+      '(prefers-reduced-motion: reduce)',
+    );
+    this.motion?.addEventListener('change', this.updateMotion);
+    this.updateMotion();
   }
 
   disconnectedCallback(): void {
     this.stopConfig?.();
+    this.motion?.removeEventListener('change', this.updateMotion);
   }
+
+  private readonly updateMotion = (): void => {
+    this.reducedMotion = this.motion?.matches ?? false;
+  };
 
   componentWillRender(): void {
     if (this.internals !== undefined) {
@@ -60,7 +73,30 @@ export class UiLoader implements LoaderProps {
 
   render(): VNode {
     const size = oneOf(this.size, loader.options.size.options, loader.options.size.default);
-    return looks[this.config.loaderVariant](size);
+    const presentation = this.config.loader?.webComponent;
+    const registry = this.host.ownerDocument.defaultView?.customElements;
+    if (
+      presentation === undefined ||
+      presentation.component === 'ui-loader' ||
+      registry?.get(presentation.component) === undefined
+    ) {
+      return <span part="indicator" class={`indicator ${size}`} />;
+    }
+
+    const tag = this.reducedMotion ? presentation.reducedMotion : presentation.component;
+    if (tag === undefined || tag === 'ui-loader' || registry.get(tag) === undefined) {
+      return <span part="indicator" class={`indicator ${size} fallback`} />;
+    }
+    return (
+      <span
+        part="indicator"
+        class={`indicator ${size} custom${this.reducedMotion ? '' : ' animated'}`}
+        aria-hidden="true"
+        inert
+      >
+        {h(tag, { 'attr:size': size })}
+      </span>
+    );
   }
 }
 

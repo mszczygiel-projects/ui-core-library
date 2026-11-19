@@ -55,7 +55,9 @@
 
 ### Configuration
 
-- `configureUiCore({ labels, loaderVariant, locale })`, from `@mszczygiel-projects/ui-core-foundations/config`, configures every component on the page. Reset clears the configured locale.
+- `configureUiCore({ labels, loaderVariant, loaderVariants, locale })`, from `@mszczygiel-projects/ui-core-foundations/config`, configures every component on the page. Reset clears the configured locale and the custom loader definitions.
+- The loader registry replaces definitions by name and reserves `spinner` for the built-in indicator. A definition can supply a React component and an autonomous custom element registered by the application. Loader renders the selected visual inside its token-sized, decorative indicator. Its consumers use the same selection.
+- A custom visual has an optional static counterpart. With reduced motion, Loader mounts the static counterpart or shows a stationary spinner. React renders the built-in visual on the server and during hydration, before it reads the motion preference.
 - Validation labels are whole-sentence functions. Foundations accepts a generic validation context without depending on shared; the field specification gives its override the precise reason and constraint types.
 - Its state lives under `globalThis[Symbol.for('ui-core.config')]` and holds only what the application set. Each copy of a package merges that over its own defaults.
 - Components subscribe to changes: Stencil through its state, React through `useSyncExternalStore`.

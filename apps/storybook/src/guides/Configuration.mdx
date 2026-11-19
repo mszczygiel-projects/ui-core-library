@@ -30,7 +30,7 @@ configureUiCore({
 - One configuration serves the web components and the React components, and every copy of the packages on the page.
 - Give only what you change. A label you leave out stays English, and each call merges into what earlier calls set.
 - Components already on the page follow a change at once, so a language switch needs no reload.
-- `resetUiCoreConfig()` restores the English labels, the default loader and the automatic locale. `getUiCoreConfig()` returns the configuration as the components read it.
+- `resetUiCoreConfig()` restores the English labels, the default loader and the automatic locale, and clears custom loader registrations. `getUiCoreConfig()` returns the configuration as the components read it.
 
 ## Labels
 
@@ -60,7 +60,46 @@ The locale changes formats only. The labels stay as you configured them, so tran
 
 ## Loaders
 
-`loaderVariant` chooses the look of every loader: the Loader component and the loading state of buttons and lists. This version draws one look, `spinner`, the default.
+`loaderVariant` selects the visual for Loader and the loading states of Button, IconButton, SplitButton and Combobox. The default is `spinner`. Register a custom name with `loaderVariants` and supply the implementation for each framework your application uses. One call can both register and select a variant. Later calls replace definitions by name. An unknown name or a missing framework implementation uses the built-in spinner.
+
+### React
+
+Pass the component itself so it can use React hooks. It receives `size` as `'small'`, `'medium'` or `'large'`. Type its props with `CustomLoaderProps` from the React package. Size the artwork to `1em` to fit the indicator and use `currentColor` to follow the surface or control.
+
+```tsx
+import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations/config';
+import { BrandLoader, BrandLoaderStatic } from './brand-loader';
+
+configureUiCore({
+  loaderVariant: 'brand',
+  loaderVariants: {
+    brand: { react: { component: BrandLoader, reducedMotion: BrandLoaderStatic } },
+  },
+});
+```
+
+### Web Components
+
+Register your elements before configuring the loader. The custom elements receive the same size as a `size` attribute. Bundle styles with the elements, for example inside their own shadow roots, so they work inside Loader's shadow root.
+
+```ts
+import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations/config';
+import { BrandLoaderElement, BrandLoaderStaticElement } from './brand-loader';
+
+customElements.define('brand-loader', BrandLoaderElement);
+customElements.define('brand-loader-static', BrandLoaderStaticElement);
+
+configureUiCore({
+  loaderVariant: 'brand',
+  loaderVariants: {
+    brand: {
+      webComponent: { component: 'brand-loader', reducedMotion: 'brand-loader-static' },
+    },
+  },
+});
+```
+
+For a page with both frameworks, combine `react` and `webComponent` in the same definition. Supply decorative content inside the indicator and let UI Core provide the accessible name and loading state. When the user requests reduced motion, UI Core only mounts the optional `reducedMotion` component. Make that component static. Without it, UI Core shows a stationary spinner. React shows the built-in indicator during server rendering and hydration, then picks the visual for the user's motion preference.
 
 ## Server rendering
 

@@ -30,6 +30,20 @@
   --_size: var(--loader-large-size);
 }
 
+.custom {
+  display: grid;
+  place-items: center;
+  font-size: var(--_size);
+  border: 0;
+  animation: none;
+}
+
+.custom > * {
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+}
+
 @keyframes spin {
   to {
     transform: rotate(1turn);
@@ -40,6 +54,15 @@
 @media (prefers-reduced-motion: reduce) {
   .indicator {
     animation: fade calc(var(--duration-1000) * 2) var(--ease-in-out) infinite;
+  }
+
+  .custom,
+  .fallback {
+    animation: none;
+  }
+
+  .animated {
+    opacity: 0;
   }
 }
 
