@@ -4,6 +4,20 @@
  * `ui-action--disabled` where its element has no native disabled state.
  */
 
+/* An icon wrapper can contain artwork with a size of its own. */
+:is(
+    .ui-button__leading-icon,
+    .ui-button__trailing-icon,
+    .ui-icon-button__icon,
+    .ui-link-button__leading-icon,
+    .ui-link-button__trailing-icon
+  )
+  > * {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .ui-action {
   --_font-size: var(--button-font-size);
   --_line-height: var(--button-line-height);

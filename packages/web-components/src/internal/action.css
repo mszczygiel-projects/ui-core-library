@@ -4,6 +4,13 @@
  * native disabled state.
  */
 
+/* A slotted wrapper can contain artwork with a size of its own. */
+.icon ::slotted(*) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .action {
   --_font-size: var(--button-font-size);
   --_line-height: var(--button-line-height);

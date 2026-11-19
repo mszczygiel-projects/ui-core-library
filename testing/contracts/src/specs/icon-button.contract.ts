@@ -4,7 +4,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import { appearance } from '../appearance.ts';
-import { iconSize } from '../harness/icon.tsx';
+import { type IconFixture, iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
@@ -18,7 +18,7 @@ import { popupTriggerContract } from './popup-trigger.contract.ts';
 
 /** The props of the specification, plus the icon as a flag, which each harness renders. */
 export interface IconButtonContractProps extends IconButtonProps {
-  readonly icon?: boolean;
+  readonly icon?: IconFixture;
 }
 
 const NAMED: IconButtonContractProps = { label: 'Close panel', icon: true };

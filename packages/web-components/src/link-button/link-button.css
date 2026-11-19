@@ -31,9 +31,6 @@
 }
 
 .icon ::slotted(*) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   inline-size: 100%;
   block-size: 100%;
 }

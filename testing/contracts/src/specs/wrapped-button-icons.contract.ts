@@ -15,10 +15,14 @@ export function wrappedButtonIconsContract(mounts: {
   readonly splitButton: Mount<SplitButtonContractProps>;
   readonly linkButton: Mount<LinkButtonContractProps>;
 }): void {
-  const twoIcons = { children: 'New item', leadingIcon: true, trailingIcon: true };
+  const twoIcons = {
+    children: 'New item',
+    leadingIcon: 'wrapped',
+    trailingIcon: 'wrapped',
+  } as const;
   const cases = [
     ['Button', 2, () => mounts.button(twoIcons)],
-    ['IconButton', 1, () => mounts.iconButton({ label: 'New item', icon: true })],
+    ['IconButton', 1, () => mounts.iconButton({ label: 'New item', icon: 'wrapped' })],
     ['SplitButton', 2, () => mounts.splitButton(twoIcons)],
     ['LinkButton', 2, () => mounts.linkButton({ ...twoIcons, href: '#new' })],
   ] as const;

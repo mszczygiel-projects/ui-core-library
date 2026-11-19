@@ -26,9 +26,6 @@
 }
 
 :is(.ui-button__leading-icon, .ui-button__trailing-icon) > * {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
   inline-size: 100%;
   block-size: 100%;
 }
