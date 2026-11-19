@@ -15,7 +15,7 @@ A dry run, the default, does steps 1 and 2 on the runner only, prints the change
 
 1. Check that `main` is green and that the pull requests of the release are merged.
 2. In GitHub, open Actions → Release → Run workflow, on `main`.
-3. Leave the version empty to derive a stable version from the commits since the last tag, or enter it, such as `1.0.0`. Enter it always for the first release, since without a tag the version would start at 0.0.1, and for every pre-release, such as `1.0.0-alpha.0` and then `1.0.0-alpha.1`. The workflow refuses an empty version when the last tag is a pre-release.
+3. Leave the version empty to derive a stable version from the commits since the last tag, or enter it, such as `1.0.0`. Enter it always for the first release, since without a tag the version would start at 0.0.1, and for every pre-release, such as `1.0.0-alpha.0` and then `1.0.0-alpha.1`. The workflow refuses an empty version when the last tag is a pre-release. The changelog of a release lists the commits since the last tag of any kind, so the notes of `1.0.0` cover the time since the last pre-release.
 4. Keep "dry run" on and run it. Read the version, the changelog and the list of files of each package in the log.
 5. Run it again with "dry run" off.
 6. Check the GitHub Release and the packages on npmjs.com. After the first publication of a package, run `npm dist-tag ls <package>`. A pre-release must not be under `latest`; if it is, remove it with `npm dist-tag rm <package> latest`.

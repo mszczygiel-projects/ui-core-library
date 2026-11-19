@@ -58,8 +58,18 @@ jobs:
         env:
           VERSION: ${{ inputs.version }}
         run: |
-          # Without a release tag, the versions on disk are the starting point.
-          first=$([ -z "$(git tag --list 'v*')" ] && echo '--first-release' || true)
+          # Nx finds only stable tags unless it is told the pre-release identifier, and it never
+          # derives a pre-release from commits. So a named pre-release, and the first stable
+          # version after pre-releases, start from the versions on disk (the first-release option),
+          # and the changelog starts from the last tag of any kind.
+          stable_tags=$(git tag --list 'v*' | grep -v -- '-' || true)
+          last_tag=$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || true)
+          first=''
+          if [ -z "$last_tag" ]; then
+            first='--first-release'
+          elif [ -n "$VERSION" ] && { [[ "$VERSION" == *-* ]] || [ -z "$stable_tags" ]; }; then
+            first='--first-release'
+          fi
           if [ -n "$VERSION" ] && ! echo "$VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+(-(alpha|beta|rc)\.[0-9]+)?$'; then
             echo "::error::The version must look like 1.0.0 or 1.0.0-alpha.0 (identifiers: alpha, beta, rc)."
             exit 1
@@ -73,6 +83,7 @@ jobs:
           version=$(node -p "require('./packages/foundations/package.json').version")
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "first=$first" >> "$GITHUB_OUTPUT"
+          echo "from=${last_tag:+--from $last_tag}" >> "$GITHUB_OUTPUT"
           # A pre-release is published under the tag of its identifier, never under latest.
           case "$version" in
             *-*) tag=$(echo "$version" | sed -E 's/^[^-]+-([a-z]+)\..*$/\1/') ;;
@@ -84,7 +95,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           DRY_RUN: ${{ inputs.dry-run && '--dry-run' || '' }}
-        run: pnpm nx release changelog ${{ steps.version.outputs.version }} ${{ steps.version.outputs.first }} $DRY_RUN
+        run: pnpm nx release changelog ${{ steps.version.outputs.version }} ${{ steps.version.outputs.first }} ${{ steps.version.outputs.from }} $DRY_RUN
 
       - name: Publish
         env:
