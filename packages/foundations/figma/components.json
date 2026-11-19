@@ -4046,6 +4046,25 @@
             "hiddenFromPublishing": false
           }
         }
+      },
+      "popup": {
+        "shadow": {
+          "$value": "{Themes.color.shadow.default}",
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1136:2",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "EFFECT_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-listbox-popup-shadow)"
+              },
+              "hiddenFromPublishing": false
+            }
+          }
+        }
       }
     },
     "calendar": {
@@ -4947,6 +4966,23 @@
             ],
             "codeSyntax": {
               "WEB": "var(--color-popover-border)"
+            },
+            "hiddenFromPublishing": false
+          }
+        }
+      },
+      "shadow": {
+        "$value": "{Themes.color.shadow.default}",
+        "$type": "color",
+        "$extensions": {
+          "com.figma": {
+            "variableId": "VariableID:1136:4",
+            "collectionId": "VariableCollectionId:600:2",
+            "scopes": [
+              "EFFECT_COLOR"
+            ],
+            "codeSyntax": {
+              "WEB": "var(--color-popover-shadow)"
             },
             "hiddenFromPublishing": false
           }
@@ -6419,6 +6455,23 @@
               "hiddenFromPublishing": false
             }
           }
+        },
+        "shadow": {
+          "$value": "{Themes.color.shadow.default}",
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1136:3",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "EFFECT_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-date-field-panel-shadow)"
+              },
+              "hiddenFromPublishing": false
+            }
+          }
         }
       }
     },
@@ -6590,6 +6643,25 @@
                 },
                 "hiddenFromPublishing": false
               }
+            }
+          }
+        }
+      },
+      "popup": {
+        "shadow": {
+          "$value": "{Components.color.listbox.popup.shadow}",
+          "$type": "color",
+          "$extensions": {
+            "com.figma": {
+              "variableId": "VariableID:1136:5",
+              "collectionId": "VariableCollectionId:600:2",
+              "scopes": [
+                "EFFECT_COLOR"
+              ],
+              "codeSyntax": {
+                "WEB": "var(--color-menu-popup-shadow)"
+              },
+              "hiddenFromPublishing": false
             }
           }
         }

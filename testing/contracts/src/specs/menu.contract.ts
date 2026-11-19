@@ -7,6 +7,7 @@ import type {
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import { expectTokenShadow } from '../appearance.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { tokenValue } from '../tokens.ts';
 import { resolvedColor } from './action.contract.ts';
@@ -100,6 +101,11 @@ export function menuContract(adapter: Mount<MenuContractProps>): void {
     for (const parent of parents.splice(0)) {
       parent.remove();
     }
+  });
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const menu = await mount({ open: true }, { parent: spot(), theme });
+    expectTokenShadow(menu, 'menu', '--menu-popup-shadow', '--color-menu-popup-shadow', theme);
   });
 
   it('opens from its trigger, which announces the menu that its name labels', async () => {

@@ -30,7 +30,7 @@
   border-radius: var(--menu-radius);
   outline: none;
   background: var(--color-menu-background);
-  box-shadow: var(--menu-popup-shadow);
+  box-shadow: var(--menu-popup-shadow) var(--color-menu-popup-shadow);
   color: var(--color-menu-item-text-default);
   font-family: var(--control-font-family);
   font-size: var(--_font-size);

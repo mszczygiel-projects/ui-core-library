@@ -11,6 +11,7 @@ import type {
 import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import { expectTokenShadow } from '../appearance.ts';
 import { contrastRatio, textContrast } from '../contrast.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
@@ -84,6 +85,17 @@ export function listboxContract(adapter: Mount<ListboxContractProps>): void {
     for (const fixture of fixtures.splice(0)) {
       fixture.remove();
     }
+  });
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const list = await mount({}, { theme });
+    expectTokenShadow(
+      list,
+      'base',
+      '--listbox-popup-shadow',
+      '--color-listbox-popup-shadow',
+      theme,
+    );
   });
 
   it('uses the documented defaults and falls back after invalid runtime settings', async () => {

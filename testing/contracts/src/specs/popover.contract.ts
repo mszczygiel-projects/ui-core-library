@@ -5,6 +5,7 @@ import type {
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import { expectTokenShadow } from '../appearance.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { tokenNumber } from '../tokens.ts';
 
@@ -100,6 +101,11 @@ export function popoverContract(adapter: Mount<PopoverContractProps>): void {
     for (const parent of parents.splice(0)) {
       parent.remove();
     }
+  });
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const popover = await mount({ open: true }, { parent: spot(), theme });
+    expectTokenShadow(popover, 'panel', '--popover-shadow', '--color-popover-shadow', theme);
   });
 
   it('opens from its trigger, which announces the panel, and reports each request', async () => {

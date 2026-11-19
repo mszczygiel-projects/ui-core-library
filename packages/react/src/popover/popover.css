@@ -14,7 +14,7 @@
   border: var(--_border-width) solid var(--_border-color);
   border-radius: var(--popover-radius);
   background: var(--color-popover-background);
-  box-shadow: var(--popover-shadow);
+  box-shadow: var(--popover-shadow) var(--color-popover-shadow);
   color: inherit;
 }
 

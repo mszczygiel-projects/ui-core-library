@@ -10,6 +10,7 @@ import type {
 import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import { expectTokenShadow } from '../appearance.ts';
 import type { Mount, Mounted } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { parsedFieldAppearanceContract } from './parsed-field-appearance.contract.ts';
@@ -142,6 +143,19 @@ export function dateTimeFieldContract(adapter: Mount<DateTimeFieldContractProps>
     expect(field.part('picker-button').getAttribute('aria-expanded')).toBe('false');
     await field.unmount();
     form.remove();
+  });
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const field = await mount({ today: '2026-07-19' }, { theme });
+    await page.elementLocator(field.part('picker-button')).click();
+    await field.update({});
+    expectTokenShadow(
+      field,
+      'panel',
+      '--date-field-panel-shadow',
+      '--color-date-field-panel-shadow',
+      theme,
+    );
   });
 
   it('separates the done button from the time control', async () => {

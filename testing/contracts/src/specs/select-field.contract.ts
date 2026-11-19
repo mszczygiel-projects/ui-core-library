@@ -13,7 +13,7 @@ import type {
 import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
-import { appearance } from '../appearance.ts';
+import { appearance, expectTokenShadow } from '../appearance.ts';
 import { textContrast } from '../contrast.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
@@ -62,6 +62,18 @@ export function selectFieldContract(adapter: Mount<SelectFieldContractProps>): v
   });
 
   const trigger = (field: Field) => field.part('trigger');
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const field = await mount({}, { theme });
+    await userEvent.click(trigger(field));
+    expectTokenShadow(
+      field,
+      'popup',
+      '--listbox-popup-shadow',
+      '--color-listbox-popup-shadow',
+      theme,
+    );
+  });
 
   it('uses the documented defaults and falls back after invalid runtime settings', async () => {
     const field = await mount();
