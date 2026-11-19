@@ -3,13 +3,29 @@
   --_margin: var(--dialog-margin);
   --_radius: var(--dialog-radius);
 
-  inline-size: var(--_max-width);
-  max-inline-size: calc(100% - 2 * var(--_margin));
-  max-block-size: calc(100% - 2 * var(--_margin));
-  margin: auto;
+  /* Only one layout contributes values. The empty var() fallback survives CSS minification. */
+  --_empty-layout: initial;
+  --_centered-layout: initial;
+  --_sheet-layout: var(--_empty-layout,);
+  --_enter-from: var(--_centered-layout, 0 0) var(--_sheet-layout, 0 100%);
+
+  inline-size: var(--_centered-layout, var(--_max-width)) var(--_sheet-layout, 100%);
+  max-inline-size: var(--_centered-layout, calc(100% - 2 * var(--_margin)))
+    var(--_sheet-layout, 100%);
+  max-block-size: var(--_centered-layout, calc(100% - 2 * var(--_margin)))
+    var(--_sheet-layout, calc(100% - var(--_margin)));
+  margin-block: var(--_centered-layout, auto) var(--_sheet-layout, auto 0);
+  margin-inline: var(--_centered-layout, auto) var(--_sheet-layout, 0);
   padding-block: var(--_padding-stack);
-  border-width: var(--_border-width);
-  border-radius: var(--_radius);
+  border-block-start-width: var(--_border-width);
+  border-block-end-width: var(--_centered-layout, var(--_border-width)) var(--_sheet-layout, 0);
+  border-inline-width: var(--_centered-layout, var(--_border-width)) var(--_sheet-layout, 0);
+  border-start-start-radius: var(--_centered-layout, var(--_radius))
+    var(--_sheet-layout, var(--dialog-sheet-radius));
+  border-start-end-radius: var(--_centered-layout, var(--_radius))
+    var(--_sheet-layout, var(--dialog-sheet-radius));
+  border-end-start-radius: var(--_centered-layout, var(--_radius)) var(--_sheet-layout, 0);
+  border-end-end-radius: var(--_centered-layout, var(--_radius)) var(--_sheet-layout, 0);
 }
 
 .ui-dialog.ui-dialog--small {
@@ -21,6 +37,9 @@
 }
 
 .ui-dialog.ui-dialog--fullscreen {
+  --_enter-from: 0 0;
+
+  margin: auto;
   inline-size: 100%;
   block-size: 100%;
   max-inline-size: 100%;
@@ -72,7 +91,7 @@
 .ui-dialog__footer {
   display: flex;
   flex: none;
-  flex-wrap: wrap;
+  flex-flow: var(--_centered-layout, row) var(--_sheet-layout, column-reverse) wrap;
   justify-content: flex-end;
   gap: var(--dialog-footer-gap);
   padding-inline: var(--_padding-inline);
@@ -104,59 +123,31 @@
   display: none;
 }
 
-.ui-dialog.ui-dialog__base.ui-dialog--presentation-sheet {
-  --_enter-from: 0 100%;
-
-  inline-size: 100%;
-  max-inline-size: 100%;
-  max-block-size: calc(100% - var(--_margin));
-  margin-block: auto 0;
-  margin-inline: 0;
-  border-block-end-width: 0;
-  border-inline-width: 0;
-  border-start-start-radius: var(--dialog-sheet-radius);
-  border-start-end-radius: var(--dialog-sheet-radius);
-  border-end-start-radius: 0;
-  border-end-end-radius: 0;
+.ui-dialog .ui-dialog__grabber ~ .ui-dialog__header {
+  touch-action: var(--_centered-layout, auto) var(--_sheet-layout, none);
 }
 
-.ui-dialog--presentation-sheet .ui-dialog__grabber {
-  display: block;
+.ui-dialog--fullscreen .ui-dialog__grabber ~ .ui-dialog__header {
+  touch-action: auto;
 }
 
-.ui-dialog--presentation-sheet .ui-dialog__footer {
-  flex-direction: column-reverse;
+.ui-dialog:not(.ui-dialog--fullscreen) .ui-dialog__grabber {
+  display: var(--_centered-layout, none) var(--_sheet-layout, block);
 }
 
 .ui-dialog--presentation-sheet .ui-dialog__footer > * {
   inline-size: 100%;
 }
 
-/* Automatic presentation also uses the sheet layout below the library breakpoint. */
+.ui-dialog.ui-dialog__base.ui-dialog--presentation-sheet {
+  --_centered-layout: var(--_empty-layout,);
+  --_sheet-layout: initial;
+}
+
 @media (width < 64rem) {
-  .ui-dialog.ui-dialog__base.ui-dialog--presentation-auto:not(.ui-dialog--fullscreen) {
-    --_enter-from: 0 100%;
-
-    inline-size: 100%;
-    max-inline-size: 100%;
-    max-block-size: calc(100% - var(--_margin));
-    margin-block: auto 0;
-    margin-inline: 0;
-    border-block-end-width: 0;
-    border-inline-width: 0;
-    border-start-start-radius: var(--dialog-sheet-radius);
-    border-start-end-radius: var(--dialog-sheet-radius);
-    border-end-start-radius: 0;
-    border-end-end-radius: 0;
-  }
-
-  .ui-dialog.ui-dialog__base.ui-dialog--presentation-auto:not(.ui-dialog--fullscreen)
-    .ui-dialog__grabber {
-    display: block;
-  }
-
-  .ui-dialog--presentation-auto .ui-dialog__footer {
-    flex-direction: column-reverse;
+  .ui-dialog.ui-dialog__base.ui-dialog--presentation-auto {
+    --_centered-layout: var(--_empty-layout,);
+    --_sheet-layout: initial;
   }
 
   .ui-dialog--presentation-auto .ui-dialog__footer > * {

@@ -856,7 +856,7 @@ export namespace Components {
          */
         "description"?: string;
         /**
-          * Lets a user drag the sheet down to close it.
+          * Enables drag dismissal in the bottom sheet layout.
           * @default false
          */
         "dragToDismiss": boolean;
@@ -4162,7 +4162,7 @@ declare namespace LocalJSX {
          */
         "description"?: string;
         /**
-          * Lets a user drag the sheet down to close it.
+          * Enables drag dismissal in the bottom sheet layout.
           * @default false
          */
         "dragToDismiss"?: boolean;

@@ -46,8 +46,12 @@ export function dialogContract(adapter: Mount<DialogContractProps>): void {
   });
 
   afterEach(async () => {
-    for (const modal of mounted.splice(0)) {
-      await modal.unmount();
+    try {
+      for (const modal of mounted.splice(0)) {
+        await modal.unmount();
+      }
+    } finally {
+      await page.viewport(WIDE.width, WIDE.height);
     }
   });
 
@@ -192,6 +196,30 @@ export function dialogContract(adapter: Mount<DialogContractProps>): void {
     await dragDown(modal.part('grabber'), panel.offsetHeight / 2, 200);
     await expect.poll(() => panel.open).toBe(false);
     expect(changed.mock.lastCall?.[1].reason).toBe('drag');
+  });
+
+  it('ignores dragToDismiss when forced to a centered dialog or fullscreen', async () => {
+    await page.viewport(NARROW.width, NARROW.height);
+    const changed = vi.fn<NonNullable<DialogContractProps['onOpenChange']>>();
+    const modal = await mount({
+      presentation: 'dialog',
+      dragToDismiss: true,
+      onOpenChange: changed,
+    });
+    const panel = nativeDialog(modal);
+    for (const props of [
+      { presentation: 'dialog' },
+      { presentation: 'sheet', size: 'fullscreen' },
+    ] as const) {
+      await modal.update(props);
+      expect(modal.part('grabber').checkVisibility()).toBe(false);
+      const header = modal.part('header');
+      expect(getComputedStyle(header).touchAction).toBe('auto');
+      await dragDown(header, panel.offsetHeight / 2, 200);
+      expect(panel.open).toBe(true);
+      expect(panel.style.getPropertyValue('--_drag-offset')).toBe('');
+      expect(changed).not.toHaveBeenCalled();
+    }
   });
 
   it('keeps a fullscreen dialog and its responsive footer in every presentation', async () => {

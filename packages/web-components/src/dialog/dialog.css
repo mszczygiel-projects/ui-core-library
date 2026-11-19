@@ -3,13 +3,29 @@
   --_margin: var(--dialog-margin);
   --_radius: var(--dialog-radius);
 
-  inline-size: var(--_max-width);
-  max-inline-size: calc(100% - 2 * var(--_margin));
-  max-block-size: calc(100% - 2 * var(--_margin));
-  margin: auto;
+  /* Only one layout contributes values. The empty var() fallback survives CSS minification. */
+  --_empty-layout: initial;
+  --_centered-layout: initial;
+  --_sheet-layout: var(--_empty-layout,);
+  --_enter-from: var(--_centered-layout, 0 0) var(--_sheet-layout, 0 100%);
+
+  inline-size: var(--_centered-layout, var(--_max-width)) var(--_sheet-layout, 100%);
+  max-inline-size: var(--_centered-layout, calc(100% - 2 * var(--_margin)))
+    var(--_sheet-layout, 100%);
+  max-block-size: var(--_centered-layout, calc(100% - 2 * var(--_margin)))
+    var(--_sheet-layout, calc(100% - var(--_margin)));
+  margin-block: var(--_centered-layout, auto) var(--_sheet-layout, auto 0);
+  margin-inline: var(--_centered-layout, auto) var(--_sheet-layout, 0);
   padding-block: var(--_padding-stack);
-  border-width: var(--_border-width);
-  border-radius: var(--_radius);
+  border-block-start-width: var(--_border-width);
+  border-block-end-width: var(--_centered-layout, var(--_border-width)) var(--_sheet-layout, 0);
+  border-inline-width: var(--_centered-layout, var(--_border-width)) var(--_sheet-layout, 0);
+  border-start-start-radius: var(--_centered-layout, var(--_radius))
+    var(--_sheet-layout, var(--dialog-sheet-radius));
+  border-start-end-radius: var(--_centered-layout, var(--_radius))
+    var(--_sheet-layout, var(--dialog-sheet-radius));
+  border-end-start-radius: var(--_centered-layout, var(--_radius)) var(--_sheet-layout, 0);
+  border-end-end-radius: var(--_centered-layout, var(--_radius)) var(--_sheet-layout, 0);
 }
 
 .small {
@@ -21,6 +37,9 @@
 }
 
 .fullscreen {
+  --_enter-from: 0 0;
+
+  margin: auto;
   inline-size: 100%;
   block-size: 100%;
   max-inline-size: 100%;
@@ -72,7 +91,7 @@
 .footer {
   display: flex;
   flex: none;
-  flex-wrap: wrap;
+  flex-flow: var(--_centered-layout, row) var(--_sheet-layout, column-reverse) wrap;
   justify-content: flex-end;
   gap: var(--dialog-footer-gap);
   padding-inline: var(--_padding-inline);
@@ -103,58 +122,31 @@
   display: none;
 }
 
-.base.presentation-sheet {
-  --_enter-from: 0 100%;
-
-  inline-size: 100%;
-  max-inline-size: 100%;
-  max-block-size: calc(100% - var(--_margin));
-  margin-block: auto 0;
-  margin-inline: 0;
-  border-block-end-width: 0;
-  border-inline-width: 0;
-  border-start-start-radius: var(--dialog-sheet-radius);
-  border-start-end-radius: var(--dialog-sheet-radius);
-  border-end-start-radius: 0;
-  border-end-end-radius: 0;
+.dialog .grabber ~ .header {
+  touch-action: var(--_centered-layout, auto) var(--_sheet-layout, none);
 }
 
-.presentation-sheet .grabber {
-  display: block;
+.fullscreen .grabber ~ .header {
+  touch-action: auto;
 }
 
-.presentation-sheet .footer {
-  flex-direction: column-reverse;
+.base:not(.fullscreen) .grabber {
+  display: var(--_centered-layout, none) var(--_sheet-layout, block);
 }
 
 .presentation-sheet ::slotted([slot='footer']) {
   inline-size: 100%;
 }
 
-/* Automatic presentation also uses the sheet layout below the library breakpoint. */
+.base.presentation-sheet {
+  --_centered-layout: var(--_empty-layout,);
+  --_sheet-layout: initial;
+}
+
 @media (width < 64rem) {
-  .base.presentation-auto:not(.fullscreen) {
-    --_enter-from: 0 100%;
-
-    inline-size: 100%;
-    max-inline-size: 100%;
-    max-block-size: calc(100% - var(--_margin));
-    margin-block: auto 0;
-    margin-inline: 0;
-    border-block-end-width: 0;
-    border-inline-width: 0;
-    border-start-start-radius: var(--dialog-sheet-radius);
-    border-start-end-radius: var(--dialog-sheet-radius);
-    border-end-start-radius: 0;
-    border-end-end-radius: 0;
-  }
-
-  .base.presentation-auto:not(.fullscreen) .grabber {
-    display: block;
-  }
-
-  .presentation-auto .footer {
-    flex-direction: column-reverse;
+  .base.presentation-auto {
+    --_centered-layout: var(--_empty-layout,);
+    --_sheet-layout: initial;
   }
 
   .presentation-auto ::slotted([slot='footer']) {

@@ -72,6 +72,7 @@ export interface OverlayProps {
 export interface DialogProps extends OverlayProps {
     size?: DialogSize;
     presentation?: DialogPresentation;
+    dragToDismiss?: boolean;
     alert?: boolean;
     heading?: string;
     description?: string;

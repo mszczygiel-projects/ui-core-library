@@ -98,7 +98,7 @@ export class UiDialog implements DialogProps {
   /** The name of the close button, falling back to `labels.dialog.close`. */
   @Prop() closeLabel?: string;
 
-  /** Lets a user drag the sheet down to close it. */
+  /** Enables drag dismissal in the bottom sheet layout. */
   @Prop() dragToDismiss = false;
 
   /**

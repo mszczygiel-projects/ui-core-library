@@ -130,6 +130,11 @@ export interface DialogProps extends OverlayProps {
    */
   presentation?: DialogPresentation;
   /**
+   * Enables drag dismissal in the bottom sheet layout.
+   * @default false
+   */
+  dragToDismiss?: boolean;
+  /**
    * Makes the dialog an alert dialog, which interrupts the user with an urgent question. A press
    * on the backdrop does not close it.
    * @default false
