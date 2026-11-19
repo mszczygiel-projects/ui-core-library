@@ -19,6 +19,7 @@
 
   display: block;
   min-inline-size: 0;
+  box-shadow: var(--listbox-popup-shadow) var(--color-listbox-popup-shadow);
   font-family: var(--control-font-family);
 }
 

@@ -12,7 +12,7 @@ import type { SelectFieldOpenChangeDetails } from '@mszczygiel-projects/ui-core-
 import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
-import { appearance } from '../appearance.ts';
+import { appearance, expectTokenShadow } from '../appearance.ts';
 import { textContrast } from '../contrast.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
@@ -93,6 +93,18 @@ export function comboboxContract(adapter: Mount<ComboboxContractProps>): void {
     input(field).select();
     await userEvent.keyboard(text);
   }
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const field = await mount({}, { theme });
+    await type(field, 'ch');
+    expectTokenShadow(
+      field,
+      'popup',
+      '--listbox-popup-shadow',
+      '--color-listbox-popup-shadow',
+      theme,
+    );
+  });
 
   it('uses the documented defaults and falls back after invalid runtime settings', async () => {
     const field = await mount();

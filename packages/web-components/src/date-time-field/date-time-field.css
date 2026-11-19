@@ -14,7 +14,7 @@
   border: var(--date-field-panel-border-width) solid var(--color-date-field-panel-border);
   border-radius: var(--date-field-panel-radius);
   background: var(--color-date-field-panel-background);
-  box-shadow: var(--date-field-panel-shadow);
+  box-shadow: var(--date-field-panel-shadow) var(--color-date-field-panel-shadow);
   color: inherit;
 }
 

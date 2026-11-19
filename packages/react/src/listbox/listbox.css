@@ -14,6 +14,10 @@
   font-family: var(--control-font-family);
 }
 
+.ui-listbox__base {
+  box-shadow: var(--listbox-popup-shadow) var(--color-listbox-popup-shadow);
+}
+
 .ui-listbox--error {
   --_label: var(--color-control-outline-label-error);
   --_hint: var(--color-control-outline-hint-error);

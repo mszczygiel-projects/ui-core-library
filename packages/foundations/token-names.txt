@@ -436,6 +436,7 @@ css --color-control-outline-text-error
 css --color-control-shadow
 css --color-date-field-panel-background
 css --color-date-field-panel-border
+css --color-date-field-panel-shadow
 css --color-dialog-backdrop
 css --color-dialog-background
 css --color-dialog-border
@@ -515,6 +516,7 @@ css --color-listbox-option-icon-disabled
 css --color-listbox-option-mark-default
 css --color-listbox-option-text-default
 css --color-listbox-option-text-disabled
+css --color-listbox-popup-shadow
 css --color-loader-indicator
 css --color-menu-background
 css --color-menu-border
@@ -524,6 +526,7 @@ css --color-menu-item-icon-default
 css --color-menu-item-icon-disabled
 css --color-menu-item-text-default
 css --color-menu-item-text-disabled
+css --color-menu-popup-shadow
 css --color-menu-separator
 css --color-notification-dismiss-background-active
 css --color-notification-error-solid-background
@@ -801,6 +804,7 @@ css --color-pagination-item-selected-foreground
 css --color-pagination-status-foreground
 css --color-popover-background
 css --color-popover-border
+css --color-popover-shadow
 css --color-radio-background-default
 css --color-radio-background-disabled
 css --color-radio-border-active
@@ -1734,6 +1738,7 @@ tailwind --color-control-outline-text-error
 tailwind --color-control-shadow
 tailwind --color-date-field-panel-background
 tailwind --color-date-field-panel-border
+tailwind --color-date-field-panel-shadow
 tailwind --color-dialog-backdrop
 tailwind --color-dialog-background
 tailwind --color-dialog-border
@@ -1813,6 +1818,7 @@ tailwind --color-listbox-option-icon-disabled
 tailwind --color-listbox-option-mark-default
 tailwind --color-listbox-option-text-default
 tailwind --color-listbox-option-text-disabled
+tailwind --color-listbox-popup-shadow
 tailwind --color-loader-indicator
 tailwind --color-menu-background
 tailwind --color-menu-border
@@ -1822,6 +1828,7 @@ tailwind --color-menu-item-icon-default
 tailwind --color-menu-item-icon-disabled
 tailwind --color-menu-item-text-default
 tailwind --color-menu-item-text-disabled
+tailwind --color-menu-popup-shadow
 tailwind --color-menu-separator
 tailwind --color-notification-dismiss-background-active
 tailwind --color-notification-error-solid-background
@@ -2099,6 +2106,7 @@ tailwind --color-pagination-item-selected-foreground
 tailwind --color-pagination-status-foreground
 tailwind --color-popover-background
 tailwind --color-popover-border
+tailwind --color-popover-shadow
 tailwind --color-radio-background-default
 tailwind --color-radio-background-disabled
 tailwind --color-radio-border-active
@@ -2622,6 +2630,7 @@ ts tokens.components.color.control.outline.text.error
 ts tokens.components.color.control.shadow
 ts tokens.components.color.dateField.panel.background
 ts tokens.components.color.dateField.panel.border
+ts tokens.components.color.dateField.panel.shadow
 ts tokens.components.color.dialog.backdrop
 ts tokens.components.color.dialog.background
 ts tokens.components.color.dialog.border
@@ -2656,6 +2665,7 @@ ts tokens.components.color.listbox.option.icon.disabled
 ts tokens.components.color.listbox.option.mark.default
 ts tokens.components.color.listbox.option.text.default
 ts tokens.components.color.listbox.option.text.disabled
+ts tokens.components.color.listbox.popup.shadow
 ts tokens.components.color.loader.indicator
 ts tokens.components.color.menu.background
 ts tokens.components.color.menu.border
@@ -2665,6 +2675,7 @@ ts tokens.components.color.menu.item.icon.default
 ts tokens.components.color.menu.item.icon.disabled
 ts tokens.components.color.menu.item.text.default
 ts tokens.components.color.menu.item.text.disabled
+ts tokens.components.color.menu.popup.shadow
 ts tokens.components.color.menu.separator
 ts tokens.components.color.notification.dismiss.background.active
 ts tokens.components.color.notification.error.solid.background
@@ -2738,6 +2749,7 @@ ts tokens.components.color.pagination.item.selected.foreground
 ts tokens.components.color.pagination.status.foreground
 ts tokens.components.color.popover.background
 ts tokens.components.color.popover.border
+ts tokens.components.color.popover.shadow
 ts tokens.components.color.radio.background.default
 ts tokens.components.color.radio.background.disabled
 ts tokens.components.color.radio.border.active

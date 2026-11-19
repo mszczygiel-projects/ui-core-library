@@ -10,6 +10,7 @@ import type {
 import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import { expectTokenShadow } from '../appearance.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { parsedFieldAppearanceContract } from './parsed-field-appearance.contract.ts';
@@ -390,6 +391,18 @@ export function dateFieldContract(adapter: Mount<DateFieldContractProps>): void 
     await field.update({});
     await expect.poll(focusedDate).toBeDefined();
   }
+
+  it.each(['light', 'dark'] as const)('uses the shadow tokens in %s', async (theme) => {
+    const field = await mount({ today: '2026-07-19' }, { theme });
+    await openCalendar(field);
+    expectTokenShadow(
+      field,
+      'panel',
+      '--date-field-panel-shadow',
+      '--color-date-field-panel-shadow',
+      theme,
+    );
+  });
 
   it('opens a named calendar dialog with the focus on the date of the value', async () => {
     const opened = vi.fn<OpenChange>();

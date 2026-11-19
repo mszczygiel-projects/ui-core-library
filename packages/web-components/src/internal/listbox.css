@@ -213,7 +213,7 @@
   border: var(--listbox-border-width) solid var(--color-listbox-border);
   border-radius: var(--listbox-radius);
   background: var(--color-listbox-background);
-  box-shadow: var(--listbox-popup-shadow);
+  box-shadow: var(--listbox-popup-shadow) var(--color-listbox-popup-shadow);
   color: var(--color-listbox-option-text-default);
 }
 
