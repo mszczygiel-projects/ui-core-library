@@ -81,4 +81,35 @@ describe('ui-loader', () => {
     expect(loader.label).toBe('Saving');
     loader.remove();
   });
+
+  it('picks up a late definition and ignores a definition for a variant it no longer uses', async () => {
+    const oldTag = 'test-old-loader';
+    const newTag = 'test-new-loader';
+    configureUiCore({
+      loaderVariant: 'old',
+      loaderVariants: {
+        old: { webComponent: { component: oldTag } },
+        current: { webComponent: { component: newTag } },
+      },
+    });
+    const loader = await mount();
+    try {
+      expect(loader.shadowRoot?.querySelector('[part="indicator"]')?.childElementCount).toBe(0);
+      configureUiCore<'old' | 'current'>({ loaderVariant: 'current' });
+      await nextRender();
+
+      customElements.define(oldTag, class extends HTMLElement {});
+      await nextRender();
+      expect(loader.shadowRoot?.querySelector(oldTag)).toBeNull();
+      expect(loader.shadowRoot?.querySelector('[part="indicator"]')?.childElementCount).toBe(0);
+
+      customElements.define(newTag, class extends HTMLElement {});
+      await expect
+        .poll(() => loader.shadowRoot?.querySelector(newTag)?.getAttribute('size'))
+        .toBe('medium');
+    } finally {
+      loader.remove();
+      resetUiCoreConfig();
+    }
+  });
 });

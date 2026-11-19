@@ -6,11 +6,27 @@
  * every label its components need.
  */
 
-/** The look of every loader: the Loader component and the loading state of other components. */
-export type LoaderVariant = 'spinner';
+/** The built-in loader variants. */
+export const loaderVariants = ['spinner'] as const;
 
-/** The looks of loaders that this version of the library draws. */
-export const loaderVariants: readonly LoaderVariant[] = ['spinner'];
+/** A built-in loader variant. */
+export type LoaderVariant = (typeof loaderVariants)[number];
+
+/** The normal and optional static versions of a loader in one framework. */
+export interface LoaderPresentation<Component> {
+  /** The visual component shown when motion is allowed. */
+  readonly component: Component;
+  /** A static visual component shown when the user requests reduced motion. */
+  readonly reducedMotion?: Component;
+}
+
+/** A named loader's implementations. */
+export interface LoaderVariantDefinition {
+  /** Names of autonomous custom elements registered by the application. */
+  readonly webComponent?: LoaderPresentation<string>;
+  /** Framework adapters store their own components under their adapter key. */
+  readonly [adapter: symbol]: LoaderPresentation<unknown> | undefined;
+}
 
 /** Data for a whole validation sentence; each field specifies its own reason vocabulary. */
 export interface FieldValidationContext {
@@ -168,17 +184,23 @@ export interface UiCoreConfig {
   /** The preferred locale; a field's locale prop takes precedence. */
   readonly locale?: string;
   readonly labels: UiCoreLabels;
-  readonly loaderVariant: LoaderVariant;
+  /** The selected registered variant or the built-in default. */
+  readonly loaderVariant: string;
+  /** The selected custom definition, when there is one. */
+  readonly loader?: LoaderVariantDefinition;
 }
 
-/** What {@link configureUiCore} takes: any group of labels and any label in it, alone. */
-export interface UiCoreConfigInput {
+/** The labels, locale and loader settings accepted by {@link configureUiCore}. */
+export interface UiCoreConfigInput<CustomVariant extends string = never> {
   /** BCP 47 locale used before the browser language. Reset clears it. */
   readonly locale?: string;
   readonly labels?: {
     readonly [Group in keyof UiCoreLabels]?: Partial<UiCoreLabels[Group]>;
   };
-  readonly loaderVariant?: LoaderVariant;
+  /** The name of the loader variant to use everywhere. */
+  readonly loaderVariant?: LoaderVariant | NoInfer<CustomVariant>;
+  /** Custom variants to register or replace by name. The name `spinner` is reserved. */
+  readonly loaderVariants?: Readonly<Partial<Record<CustomVariant, LoaderVariantDefinition>>>;
 }
 
 /** The English labels that the packages ship. */
@@ -300,6 +322,7 @@ interface SharedState {
   version: number;
   labels: LabelGroups;
   loaderVariant: string | undefined;
+  loaderVariants?: ReadonlyMap<string, LoaderVariantDefinition>;
   readonly listeners: Set<() => void>;
 }
 
@@ -328,14 +351,15 @@ let cached: { readonly version: number; readonly config: UiCoreConfig } | undefi
 export function getUiCoreConfig(): UiCoreConfig {
   const state = sharedState();
   if (cached?.version !== state.version) {
+    const name = state.loaderVariant ?? DEFAULT_CONFIG.loaderVariant;
+    const loader = state.loaderVariants?.get(name);
     cached = {
       version: state.version,
       config: Object.freeze({
         locale: state.locale,
         labels: mergeLabels(defaultLabels, state.labels),
-        loaderVariant: isLoaderVariant(state.loaderVariant)
-          ? state.loaderVariant
-          : DEFAULT_CONFIG.loaderVariant,
+        loaderVariant: loader === undefined ? DEFAULT_CONFIG.loaderVariant : name,
+        ...(loader === undefined ? {} : { loader }),
       }),
     };
   }
@@ -344,38 +368,51 @@ export function getUiCoreConfig(): UiCoreConfig {
 
 /**
  * Sets labels, locale and the look of loaders for every component on the page, those already rendered
- * included. Labels merge one by one over the earlier configuration, so setting one label keeps
- * the others.
+ * included. Labels merge one by one. Each custom loader entry replaces the earlier definition
+ * with the same name.
+ *
+ * @throws {TypeError} A loader variant registration has a blank or reserved name.
  *
  * @example
  * configureUiCore({ labels: { loader: { label: 'Ładowanie' } } });
  */
-export function configureUiCore(input: UiCoreConfigInput): void {
+export function configureUiCore<const CustomVariant extends string = never>(
+  input: UiCoreConfigInput<CustomVariant>,
+): void {
   const state = sharedState();
   const labels = mergeOverrides(state.labels, input.labels ?? {});
   const loaderVariant = input.loaderVariant ?? state.loaderVariant;
+  const variants = mergeLoaderVariants(state.loaderVariants, input.loaderVariants);
   const locale = input.locale ?? state.locale;
-  if (labels === state.labels && loaderVariant === state.loaderVariant && locale === state.locale) {
+  if (
+    labels === state.labels &&
+    loaderVariant === state.loaderVariant &&
+    variants === state.loaderVariants &&
+    locale === state.locale
+  ) {
     return;
   }
   state.labels = labels;
   state.loaderVariant = loaderVariant;
+  state.loaderVariants = variants;
   state.locale = locale;
   changed(state);
 }
 
-/** Restores English labels, the default loader and automatic locale selection. */
+/** Restores English labels, the default loader and automatic locale selection. Clears custom loaders. */
 export function resetUiCoreConfig(): void {
   const state = sharedState();
   if (
     Object.keys(state.labels).length === 0 &&
     state.loaderVariant === undefined &&
+    state.loaderVariants === undefined &&
     state.locale === undefined
   ) {
     return;
   }
   state.labels = {};
   state.loaderVariant = undefined;
+  state.loaderVariants = undefined;
   state.locale = undefined;
   changed(state);
 }
@@ -400,8 +437,35 @@ function changed(state: SharedState): void {
   }
 }
 
-function isLoaderVariant(value: string | undefined): value is LoaderVariant {
-  return loaderVariants.some((variant) => variant === value);
+function mergeLoaderVariants(
+  earlier: SharedState['loaderVariants'],
+  input: UiCoreConfigInput<string>['loaderVariants'],
+): SharedState['loaderVariants'] {
+  let merged: Map<string, LoaderVariantDefinition> | undefined;
+  for (const [name, definition] of Object.entries(input ?? {})) {
+    if (definition === undefined) {
+      continue;
+    }
+    if (name.trim() === '' || name === DEFAULT_CONFIG.loaderVariant) {
+      throw new TypeError(
+        `Invalid loader variant name ${JSON.stringify(name)}. Use a non-empty name other than "spinner".`,
+      );
+    }
+    // Copy presentation records so the application's later mutations cannot change a snapshot.
+    const adapters = Object.getOwnPropertySymbols(definition).map(
+      (key) => [key, Object.freeze({ ...definition[key] })] as const,
+    );
+    const { webComponent } = definition;
+    merged ??= new Map(earlier);
+    merged.set(
+      name,
+      Object.freeze({
+        ...Object.fromEntries(adapters),
+        ...(webComponent === undefined ? {} : { webComponent: Object.freeze({ ...webComponent }) }),
+      }),
+    );
+  }
+  return merged ?? earlier;
 }
 
 /**

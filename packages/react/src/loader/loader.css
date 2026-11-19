@@ -30,6 +30,14 @@
   animation: ui-loader-spin var(--duration-700) var(--ease-linear) infinite;
 }
 
+.ui-loader__indicator--custom {
+  display: grid;
+  place-items: center;
+  font-size: var(--_size);
+  border: 0;
+  animation: none;
+}
+
 @keyframes ui-loader-spin {
   to {
     transform: rotate(1turn);
@@ -40,6 +48,11 @@
 @media (prefers-reduced-motion: reduce) {
   .ui-loader__indicator {
     animation: ui-loader-fade calc(var(--duration-1000) * 2) var(--ease-in-out) infinite;
+  }
+
+  .ui-loader__indicator--custom,
+  .ui-loader__indicator--fallback {
+    animation: none;
   }
 }
 
