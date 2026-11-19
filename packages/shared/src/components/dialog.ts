@@ -10,7 +10,7 @@ export const dialog = defineComponent({
   design: {
     flags: ['hideCloseButton'],
     booleans: [],
-    codeOnly: ['open', 'alert', 'label', 'closeLabel', 'dragToDismiss'],
+    codeOnly: ['open', 'alert', 'label', 'closeLabel', 'dragToDismiss', 'presentation'],
     previews: {
       hasDescription: {
         options: ['true', 'false'],
@@ -28,6 +28,7 @@ export const dialog = defineComponent({
     'A modal window over the page that asks the user to read, decide or enter something before going on.',
   options: {
     size: { options: ['small', 'medium', 'large', 'fullscreen'], default: 'medium' },
+    presentation: { options: ['auto', 'dialog', 'sheet'], default: 'auto' },
   },
   labels: ['close'],
   parts: ['base', 'grabber', 'header', 'heading', 'description', 'close', 'body', 'footer'],
@@ -59,6 +60,9 @@ export const dialog = defineComponent({
 
 /** The width of a dialog: three widths, or the whole window. */
 export type DialogSize = OptionOf<typeof dialog, 'size'>;
+
+/** How the dialog is laid out relative to the window. */
+export type DialogPresentation = OptionOf<typeof dialog, 'presentation'>;
 
 /**
  * Why a modal closed: Escape or another close request of the platform, a press on the backdrop,
@@ -115,11 +119,16 @@ export interface OverlayProps {
 /** The props both implementations of Dialog share. */
 export interface DialogProps extends OverlayProps {
   /**
-   * The width of the window. Below the breakpoint, the dialog rises from the bottom of the window
-   * as a sheet, at its full width.
+   * The width of a centered dialog, or the whole window with `fullscreen`.
    * @default 'medium'
    */
   size?: DialogSize;
+  /**
+   * Chooses a centered dialog or a full-width bottom sheet. With `auto`, it is a sheet below
+   * the library breakpoint. A fullscreen dialog fills the window in every presentation.
+   * @default 'auto'
+   */
+  presentation?: DialogPresentation;
   /**
    * Makes the dialog an alert dialog, which interrupts the user with an urgent question. A press
    * on the backdrop does not close it.

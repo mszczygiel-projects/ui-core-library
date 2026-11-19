@@ -9,6 +9,7 @@ import { commands, page, userEvent } from 'vitest/browser';
 import type { AccessibleNode } from '../browser.ts';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
+import { tokenNumber } from '../tokens.ts';
 
 /**
  * The content a harness renders inside a modal, with the components of its own framework:
@@ -16,10 +17,19 @@ import { pseudoLabels } from '../pseudo.ts';
  * a form with `method="dialog"` and two native submit buttons, `buttons` the same with two Buttons
  * of the library, `methods` a button of method post in a dialog form and a button of method dialog
  * in a form of the page, `reading` a marked paragraph outside the order of Tab before a field,
- * `select` a SelectField and `long` enough paragraphs to scroll.
+ * `filters` a search field before a marked panel, `select` a SelectField and `long` enough paragraphs to scroll.
  */
 export type OverlayContent =
-  'text' | 'fields' | 'autofocus' | 'form' | 'buttons' | 'methods' | 'reading' | 'select' | 'long';
+  | 'text'
+  | 'fields'
+  | 'autofocus'
+  | 'form'
+  | 'buttons'
+  | 'methods'
+  | 'filters'
+  | 'reading'
+  | 'select'
+  | 'long';
 
 /** The props of a modal in a contract, plus what each harness translates. */
 export interface OverlayContractProps extends OverlayProps {
@@ -192,6 +202,21 @@ export function overlayContract<Props extends OverlayContractProps>(
     }
   });
 
+  it('takes its backdrop blur radius from the shared modal token', async () => {
+    const modal = await mount();
+    const dialog = nativeDialog(modal);
+    const name = '--overlay-backdrop-blur';
+    const filter = () => getComputedStyle(dialog, '::backdrop').backdropFilter;
+    expect(filter()).toBe(`blur(${String(tokenNumber(name))}px)`);
+
+    const themedScope = modal.element.closest<HTMLElement>('[data-theme]');
+    if (themedScope === null) {
+      throw new Error('The modal fixture needs a theme scope');
+    }
+    themedScope.style.setProperty(name, '6px');
+    expect(filter()).toBe('blur(6px)');
+  });
+
   it('gives the focus to the first field of its content, not to the close button', async () => {
     const modal = await mount({ content: 'fields' });
     await expect.poll(() => focused()?.getAttribute('aria-label')).toBe('First');
@@ -206,6 +231,36 @@ export function overlayContract<Props extends OverlayContractProps>(
   it('gives the focus to a marked element outside the order of Tab', async () => {
     await mount({ content: 'reading' });
     await expect.poll(() => focused()?.textContent).toBe('Read this first');
+  });
+
+  it('focuses the marked filters before any editable field, on every opening', async () => {
+    const button = opener();
+    const modal = await mount({ open: false, hideCloseButton: true, content: 'filters' });
+    const search = modal.element.querySelector('input');
+    const filters = modal.element.querySelector('[tabindex="-1"][data-autofocus]');
+    if (search === null || filters === null) {
+      throw new Error('The filters fixture needs a search field and a marked panel');
+    }
+    // Preserve the author's native attribute, even on a target that cannot take focus.
+    const disabled = modal.element.querySelector('button:disabled');
+    disabled?.setAttribute('autofocus', '');
+    const receivedFocus = vi.fn<(event: FocusEvent) => void>();
+    modal.element.addEventListener('focus', receivedFocus, true);
+    for (const open of [true, false, true]) {
+      await modal.update({ open } as Partial<Props>);
+      if (open) {
+        expect(focused()).toBe(filters);
+        expect(receivedFocus.mock.calls.map(([event]) => event.target)).toEqual([filters]);
+        expect(filters.hasAttribute('autofocus')).toBe(false);
+        expect(disabled?.hasAttribute('autofocus')).toBe(true);
+      } else {
+        expect(focused()).toBe(button);
+      }
+      receivedFocus.mockClear();
+    }
+    await page.elementLocator(search).click();
+    expect(focused()).toBe(search);
+    expect(receivedFocus.mock.calls.map(([event]) => event.target)).toEqual([search]);
   });
 
   it('gives the focus to its content inside a shadow root', async () => {

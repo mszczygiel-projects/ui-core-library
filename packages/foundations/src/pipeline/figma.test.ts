@@ -68,6 +68,15 @@ describe('scopesOf', () => {
     expect(scopes('Components', 'chip/target/min-size', 'number', 24)).toEqual(['WIDTH_HEIGHT']);
   });
 
+  it('keeps the backdrop blur role and its component alias out of Figma fields', () => {
+    expect(scopes('Themes', 'effect/backdrop-blur', 'number', '{Primitives Sizes.size.0}')).toEqual(
+      [],
+    );
+    expect(
+      scopes('Components', 'overlay/backdrop/blur', 'number', '{Themes.effect.backdrop-blur}'),
+    ).toEqual([]);
+  });
+
   it('keeps component shadow shapes out of fields that cannot bind strings', () => {
     expect(
       scopes('Components', 'button/shadow/active', 'string', '{Themes.shadow.interactive.hover}'),
@@ -252,9 +261,9 @@ describe('variableMetadata', () => {
   it('knows every variable of the library', () => {
     const { variables, unknown } = variableMetadata(parseExports(readExports(EXPORTS_DIR)));
     expect(unknown).toEqual([]);
-    expect(variables).toHaveLength(1478);
+    expect(variables).toHaveLength(1480);
     expect(variables.filter((v) => v.scopes === null)).toHaveLength(13);
-    expect(variables.filter((v) => v.scopes?.length === 0)).toHaveLength(347);
-    expect(variables.filter((v) => v.needsDescription)).toHaveLength(291);
+    expect(variables.filter((v) => v.scopes?.length === 0)).toHaveLength(349);
+    expect(variables.filter((v) => v.needsDescription)).toHaveLength(292);
   });
 });

@@ -34,6 +34,7 @@ export {
 export { DateTimeField, type DateTimeFieldProps } from './date-time-field/DateTimeField.tsx';
 export {
   Dialog,
+  type DialogPresentation,
   type DialogProps,
   type DialogSize,
   type OverlayCloseReason,

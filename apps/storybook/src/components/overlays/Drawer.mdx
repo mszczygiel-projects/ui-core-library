@@ -50,7 +50,7 @@ The close button is named by `closeLabel`, then `labels.drawer.close`, â€œCloseâ
 <FrameworkCanvas react={ReactStories.WithForm} webComponents={WebComponentStories.WithForm} />
 
 - The page opens the drawer with `open`. It opens as a modal in the top layer, the rest of the page becomes inert and stops scrolling, and the width of the page stays.
-- The focus moves to the element marked with `autofocus` or `data-autofocus`, which may be outside the order of Tab with `tabindex="-1"`, else to the first focusable element of the content, else to the panel. It returns where it was when the drawer closes.
+- On opening, focus goes directly to a focusable element marked with `autofocus` or `data-autofocus`, including a container marked with `tabindex="-1"`. The fallback is the first focusable element of the content, then the panel. Focus returns to its previous location when the drawer closes.
 - Escape, a press on the backdrop, the close button, a form with `method="dialog"` and a drag down of a bottom drawer ask it to close, with a `reason`, as Dialog does. The web component closes itself after `ui-open-change`, which the page may cancel; React reports `onOpenChange(false, details)`.
 - `dragToDismiss` lets the user drag a bottom drawer down by its grabber or its header: past a quarter of its height, or with a flick, it closes; otherwise it returns. It has no effect on a side drawer.
 - Setting `open` does not report a request. A drawer and a dialog open together share one lock of the scroll.
@@ -69,6 +69,8 @@ The close button is named by `closeLabel`, then `labels.drawer.close`, â€œCloseâ
 
 The panel, its text and the backdrop follow the theme through the Components tokens of the drawer.
 
+Set `--overlay-backdrop-blur` on the theme scope to set the blur radius behind both Dialog and Drawer. The default radius is zero. The backdrop keeps its theme color on browsers without support for the filter.
+
 ## API
 
 <FrameworkTabs
@@ -86,6 +88,8 @@ import '@mszczygiel-projects/ui-core-web-components/drawer';`}
 ## Tokens
 
 <ComponentTokens component="drawer" />
+
+<ComponentTokens component="overlay" />
 
 ## Implementation notes
 

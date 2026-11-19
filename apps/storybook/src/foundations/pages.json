@@ -510,5 +510,11 @@
       "lead": "Brand the library in three tiers. The first one, the brand ramps and the brand values, is enough to brand everything; the other two refine it."
     }
   ],
-  "exempt": []
+  "exempt": [
+    {
+      "collections": ["Themes"],
+      "prefix": "--effect-backdrop-blur",
+      "reason": "The browser applies this effect to the modal backdrop. Dialog and Drawer document its shared Components token."
+    }
+  ]
 }

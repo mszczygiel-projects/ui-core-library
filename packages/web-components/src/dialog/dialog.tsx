@@ -3,6 +3,7 @@ import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config
 import { iconClose } from '@mszczygiel-projects/ui-core-icons';
 import {
   dialog,
+  type DialogPresentation,
   type DialogProps,
   type DialogSize,
 } from '@mszczygiel-projects/ui-core-shared/dialog';
@@ -42,8 +43,8 @@ declare global {
  * content marked with `autofocus` or `data-autofocus`, else to its first focusable element, and
  * returns where it was when the dialog closes. Escape, a press on the backdrop (except for an
  * alert), the close button, a form with `method="dialog"` and a drag down of a sheet close the
- * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. Below
- * the breakpoint it rises from the bottom of the window as a sheet. The heading names the dialog,
+ * dialog: it dispatches `ui-open-change` first, which an author may cancel to keep it open. In
+ * automatic presentation it becomes a sheet below the breakpoint. The heading names the dialog,
  * and the description describes it; without a heading, `label` or an author's `aria-label` names
  * it. The host belongs to the page: the component reflects only `open` and writes no role or ARIA
  * attribute on it.
@@ -76,6 +77,9 @@ export class UiDialog implements DialogProps {
   /** The width of the window, or the whole window. */
   @Prop() size: DialogSize = 'medium';
 
+  /** Chooses a centered dialog, a bottom sheet, or automatic presentation at the breakpoint. */
+  @Prop() presentation: DialogPresentation = 'auto';
+
   /** Makes the dialog an alert dialog, which a press on the backdrop does not close. */
   @Prop() alert = false;
 
@@ -94,7 +98,7 @@ export class UiDialog implements DialogProps {
   /** The name of the close button, falling back to `labels.dialog.close`. */
   @Prop() closeLabel?: string;
 
-  /** Lets a user drag the sheet down to close it, below the breakpoint. */
+  /** Lets a user drag the sheet down to close it. */
   @Prop() dragToDismiss = false;
 
   /**
@@ -197,6 +201,10 @@ export class UiDialog implements DialogProps {
 
   render(): VNode {
     const size = oneOf(this.size, options.size.options, options.size.default);
+    const presentation =
+      size === 'fullscreen'
+        ? options.presentation.default
+        : oneOf(this.presentation, options.presentation.options, options.presentation.default);
     const hasHeading = this.heading !== undefined && this.heading !== '';
     const hasDescription = this.description !== undefined && this.description !== '';
     const classes = [
@@ -204,6 +212,7 @@ export class UiDialog implements DialogProps {
       'dialog',
       'base',
       size,
+      `presentation-${presentation}`,
       this.scrolledFromStart ? 'scrolled-from-start' : '',
       this.scrolledToEnd ? '' : 'scrolled-before-end',
       this.dragging ? 'dragging' : '',

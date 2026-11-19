@@ -21,7 +21,7 @@ Use Drawer for secondary content beside the page, such as filters or details, No
 
 ## Anatomy
 
-The **base** is the panel, a native `<dialog>`; its backdrop is `::backdrop`, which a page styles as `ui-dialog::part(base)::backdrop`. The **header** holds the **heading**, the **description** and the **close** button. The **body** holds the content and scrolls. The **footer** holds the actions. Below the breakpoint, the **grabber** shows above the header when the dialog can be dragged. The web component exposes these as parts; React uses the matching `.ui-dialog__<part>` classes, and Figma names the layers the same way.
+The **base** is the panel, a native `<dialog>`; its backdrop is `::backdrop`, which a page styles as `ui-dialog::part(base)::backdrop`. The **header** holds the **heading**, the **description** and the **close** button. The **body** holds the content and scrolls. The **footer** holds the actions. In a draggable sheet, the **grabber** shows above the header when the dialog can be dragged. The web component exposes these as parts; React uses the matching `.ui-dialog__<part>` classes, and Figma names the layers the same way.
 
 ## Variants & tone
 
@@ -35,7 +35,23 @@ Dialog has no visual variants. `alert` makes it an alert dialog, which asks for 
 
 `size` sets the width: `small`, `medium`, the default, and `large` have the widths of their tokens and keep a margin from the edges of the window; `fullscreen` fills the window. The height follows the content up to the window, and the body scrolls beyond it. Density changes the padding and the gaps.
 
-Below the breakpoint, 64rem, every size but `fullscreen` rises from the bottom of the window as a sheet: the full width, rounded at the top, with the actions stacked.
+`presentation` defaults to `auto`. Below `64rem` it uses a full-width bottom sheet with rounded top corners and stacked actions. At `64rem` and above it uses a centered dialog. Use `dialog` or `sheet` to choose the layout directly. `fullscreen` fills the window in every presentation.
+
+An application can apply its own breakpoint by updating the component when its media query changes. This example assumes the page contains a `ui-dialog`. In React, store the same value in state and pass it as the `presentation` prop. Remove the listener when the dialog's page is disposed.
+
+```js
+const breakpoint = window.matchMedia('(width < 80rem)');
+const dialog = document.querySelector('ui-dialog');
+
+if (dialog) {
+  const update = () => {
+    dialog.presentation = breakpoint.matches ? 'sheet' : 'dialog';
+  };
+
+  update();
+  breakpoint.addEventListener('change', update);
+}
+```
 
 ## States
 
@@ -54,7 +70,7 @@ The close button is named by `closeLabel`, then `labels.dialog.close`, â€œCloseâ
 <FrameworkCanvas react={ReactStories.WithForm} webComponents={WebComponentStories.WithForm} />
 
 - The page opens the dialog with `open`. It opens as a modal in the top layer, the rest of the page becomes inert and stops scrolling, and the width of the page stays.
-- The focus moves to the element marked with `autofocus` or `data-autofocus`, which may be outside the order of Tab with `tabindex="-1"`, else to the first focusable element of the content and the footer, else to the panel. It returns where it was when the dialog closes.
+- On opening, focus goes directly to a focusable element marked with `autofocus` or `data-autofocus`. A container marked with `tabindex="-1" data-autofocus` can take initial focus when the dialog opens with a search field. The fallback is the first focusable element of the content and the footer, then the panel. Focus returns to its previous location when the dialog closes.
 - Escape, a press on the backdrop, the close button, a form with `method="dialog"` and a drag down of the sheet ask the dialog to close, with a `reason`: `escape`, `backdrop`, `close-button`, `form` or `drag`. A form gives the `value` of its submit button as `returnValue`, a Button of the library included. The `formmethod` of a submit button wins over the method of its form, and a form handler that cancels the submission keeps the dialog open.
 - The web component closes itself and reflects `open`, after `ui-open-change`, which the page may cancel to keep it open. React reports `onOpenChange(false, details)`: an uncontrolled dialog closes, a controlled one when its parent sets `open` to false.
 - The browser may close a dialog after repeated presses of Escape, which no page can refuse; the dialog follows it and reports `escape`.
@@ -76,6 +92,8 @@ The close button is named by `closeLabel`, then `labels.dialog.close`, â€œCloseâ
 
 The panel, its text and the backdrop follow the theme through the Components tokens of the dialog. A dialog in the top layer still takes the surface of the element it is placed in.
 
+Set `--overlay-backdrop-blur` on the theme scope to set the blur radius behind both Dialog and Drawer. The default radius is zero. The backdrop keeps its theme color on browsers without support for the filter.
+
 ## API
 
 <FrameworkTabs
@@ -93,6 +111,8 @@ import '@mszczygiel-projects/ui-core-web-components/dialog';`}
 ## Tokens
 
 <ComponentTokens component="dialog" />
+
+<ComponentTokens component="overlay" />
 
 ## Implementation notes
 

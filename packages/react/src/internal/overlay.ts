@@ -74,7 +74,25 @@ export class Overlay {
       return;
     }
     if (!dialog.open) {
-      dialog.showModal();
+      const temporaryAutofocus = this.options
+        .content()
+        .flatMap((root) =>
+          [root, ...root.querySelectorAll('[data-autofocus]')].filter(
+            (element) =>
+              element.hasAttribute('data-autofocus') && !element.hasAttribute('autofocus'),
+          ),
+        );
+      // Let the browser pick the marked target before it can focus an editable field.
+      try {
+        for (const element of temporaryAutofocus) {
+          element.setAttribute('autofocus', '');
+        }
+        dialog.showModal();
+      } finally {
+        for (const element of temporaryAutofocus) {
+          element.removeAttribute('autofocus');
+        }
+      }
     }
     lockPage(this);
     this.events = new AbortController();

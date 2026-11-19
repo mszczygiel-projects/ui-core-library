@@ -1007,6 +1007,7 @@ css --ease-in
 css --ease-in-out
 css --ease-linear
 css --ease-out
+css --effect-backdrop-blur
 css --file-input-actions-gap
 css --file-input-border-width
 css --file-input-gap
@@ -1172,6 +1173,7 @@ css --notification-line-height
 css --notification-padding-inline
 css --notification-padding-stack
 css --notification-radius
+css --overlay-backdrop-blur
 css --padding-inline-lg
 css --padding-inline-md
 css --padding-inline-sm
@@ -2997,6 +2999,7 @@ ts tokens.components.notification.lineHeight
 ts tokens.components.notification.padding.inline
 ts tokens.components.notification.padding.stack
 ts tokens.components.notification.radius
+ts tokens.components.overlay.backdrop.blur
 ts tokens.components.pagination.gap
 ts tokens.components.pagination.item.size
 ts tokens.components.pagination.jump.gap
@@ -3399,6 +3402,7 @@ ts tokens.themes.color.onSubtle.text.secondary
 ts tokens.themes.color.shadow.default
 ts tokens.themes.color.shadow.soft
 ts tokens.themes.color.shadow.strong
+ts tokens.themes.effect.backdropBlur
 ts tokens.themes.font.body
 ts tokens.themes.font.heading
 ts tokens.themes.font.mono

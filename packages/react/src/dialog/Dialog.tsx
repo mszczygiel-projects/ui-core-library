@@ -3,6 +3,7 @@
 import { iconClose } from '@mszczygiel-projects/ui-core-icons';
 import {
   dialog as dialogSpec,
+  type DialogPresentation,
   type DialogProps as SharedDialogProps,
   type DialogSize,
   type OverlayCloseReason,
@@ -28,7 +29,7 @@ import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
 
 const { options } = dialogSpec;
 
-export type { DialogSize, OverlayCloseReason };
+export type { DialogPresentation, DialogSize, OverlayCloseReason };
 
 /** What asked a modal to close, with the native event before React wraps it. */
 export type OverlayOpenChangeDetails = SharedOpenChangeDetails<Event>;
@@ -62,8 +63,8 @@ export interface DialogProps
  * to the element of the content marked with `data-autofocus`, else to its first focusable
  * element, and returns where it was when the dialog closes. Escape, a press on the backdrop
  * (except for an alert), the close button, a form with `method="dialog"` and a drag down of a
- * sheet ask it to close through `onOpenChange`. Below the breakpoint it rises from the bottom of
- * the window as a sheet. The heading names the dialog, and the description describes it; without
+ * sheet ask it to close through `onOpenChange`. In automatic presentation it becomes a sheet
+ * below the breakpoint. The heading names the dialog, and the description describes it; without
  * a heading, `label` or `aria-label` names it. The ref is the native dialog: open and close it
  * through `open`, never with its methods.
  */
@@ -72,6 +73,7 @@ export function Dialog({
   defaultOpen = false,
   onOpenChange,
   size = 'medium',
+  presentation = 'auto',
   alert = false,
   heading,
   description,
@@ -99,6 +101,10 @@ export function Dialog({
   const [dragging, setDragging] = useState(false);
   const [edges, setEdges] = useState({ fromStart: false, toEnd: true });
   const resolvedSize = oneOf(size, options.size.options, options.size.default);
+  const resolvedPresentation =
+    resolvedSize === 'fullscreen'
+      ? options.presentation.default
+      : oneOf(presentation, options.presentation.options, options.presentation.default);
   const hasHeading = heading !== undefined && heading !== '';
   const hasDescription = description !== undefined && description !== '';
   const hasFooter = rendersContent(footer);
@@ -161,6 +167,7 @@ export function Dialog({
         'ui-dialog',
         'ui-dialog__base',
         `ui-dialog--${resolvedSize}`,
+        `ui-dialog--presentation-${resolvedPresentation}`,
         edges.fromStart && 'ui-dialog--scrolled-from-start',
         !edges.toEnd && 'ui-dialog--scrolled-before-end',
         dragging && 'ui-overlay--dragging',

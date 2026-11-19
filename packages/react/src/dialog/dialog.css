@@ -104,9 +104,37 @@
   display: none;
 }
 
-/* Below the breakpoint, the dialog rises from the bottom of the window as a sheet. */
+.ui-dialog.ui-dialog__base.ui-dialog--presentation-sheet {
+  --_enter-from: 0 100%;
+
+  inline-size: 100%;
+  max-inline-size: 100%;
+  max-block-size: calc(100% - var(--_margin));
+  margin-block: auto 0;
+  margin-inline: 0;
+  border-block-end-width: 0;
+  border-inline-width: 0;
+  border-start-start-radius: var(--dialog-sheet-radius);
+  border-start-end-radius: var(--dialog-sheet-radius);
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.ui-dialog--presentation-sheet .ui-dialog__grabber {
+  display: block;
+}
+
+.ui-dialog--presentation-sheet .ui-dialog__footer {
+  flex-direction: column-reverse;
+}
+
+.ui-dialog--presentation-sheet .ui-dialog__footer > * {
+  inline-size: 100%;
+}
+
+/* Automatic presentation also uses the sheet layout below the library breakpoint. */
 @media (width < 64rem) {
-  .ui-dialog.ui-dialog__base:not(.ui-dialog--fullscreen) {
+  .ui-dialog.ui-dialog__base.ui-dialog--presentation-auto:not(.ui-dialog--fullscreen) {
     --_enter-from: 0 100%;
 
     inline-size: 100%;
@@ -122,15 +150,16 @@
     border-end-end-radius: 0;
   }
 
-  .ui-dialog.ui-dialog__base:not(.ui-dialog--fullscreen) .ui-dialog__grabber {
+  .ui-dialog.ui-dialog__base.ui-dialog--presentation-auto:not(.ui-dialog--fullscreen)
+    .ui-dialog__grabber {
     display: block;
   }
 
-  .ui-dialog__footer {
+  .ui-dialog--presentation-auto .ui-dialog__footer {
     flex-direction: column-reverse;
   }
 
-  .ui-dialog__footer > * {
+  .ui-dialog--presentation-auto .ui-dialog__footer > * {
     inline-size: 100%;
   }
 }

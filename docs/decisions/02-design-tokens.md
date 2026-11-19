@@ -7,7 +7,7 @@
 The variables of [Core] Foundations live in these collections:
 
 - **Primitives**, in four collections: Colors, Sizes, Motions and Shadows. They hold raw values, the brand ramps among them (`--color-brand-{primary,secondary,tertiary}-*`).
-- **Themes**: colour roles with their hidden copies per surface, plus brand values, the typography that does not change with size, strokes and shadows.
+- **Themes**: colour roles with their hidden copies per surface, plus brand values, the typography that does not change with size, strokes, shadows and the role for modal backdrop blur.
 - **Surfaces**, with the modes Default, Subtle, Inverse and Primary.
 - **Sizes**, with the modes Mobile, Desktop, Mobile Compact and Desktop Compact. It holds everything that changes with the screen or the density: type sizes, line heights, gaps, paddings, icon sizes, heights and page layout.
 - **Components**: the tokens of components and of component families such as `control/*`.
