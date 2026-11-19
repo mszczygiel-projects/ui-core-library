@@ -1,7 +1,7 @@
 import { Button } from '@mszczygiel-projects/ui-core-react';
 
 import type { ButtonContractProps } from '../specs/button.contract.ts';
-import { iconElement, IconNode } from './icon.tsx';
+import { wrappedIconElement, WrappedIconNode } from './icon.tsx';
 import { reactMount } from './react.tsx';
 import { webComponentMount } from './web-component.ts';
 
@@ -29,7 +29,7 @@ export const mountWebComponentButton = webComponentMount<ButtonContractProps>(
       }
       element.querySelector(`[slot="${name}"]`)?.remove();
       if (enabled) {
-        element.append(iconElement(name));
+        element.append(wrappedIconElement(name));
       }
     }
   },
@@ -37,7 +37,7 @@ export const mountWebComponentButton = webComponentMount<ButtonContractProps>(
 
 /** The same content recipe, expressed as React nodes instead of named slots. */
 function ReactButton({ leadingIcon, trailingIcon, ...props }: ButtonContractProps) {
-  const icon = <IconNode />;
+  const icon = <WrappedIconNode />;
   return (
     <Button
       {...props}

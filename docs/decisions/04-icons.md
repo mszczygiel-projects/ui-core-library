@@ -17,8 +17,9 @@
 
 ### Using icons in components
 
-- The consumer renders an icon. A web component takes it in the `leading-icon` or `trailing-icon` slot, and a React component takes a node in `leadingIcon` or `trailingIcon`.
+- The consumer renders an icon. A web component takes it in the `leading-icon` or `trailing-icon` slot, and a React component takes a node in `leadingIcon` or `trailingIcon`. IconButton uses `icon` in both implementations.
 - The receiving component sets the size and the colour, and hides the icon from assistive technology. An icon that carries meaning alone takes the component's `label`.
+- Button, IconButton, SplitButton and LinkButton centre the artwork in the icon wrapper. A wrapper that inherits `font-size` sizes its `1em` artwork from the action's icon token. A wrapper can set its own artwork size within the token-sized box.
 - The consumer mirrors directional artwork. A component never mirrors every icon.
 
 ### The consumer's icon set

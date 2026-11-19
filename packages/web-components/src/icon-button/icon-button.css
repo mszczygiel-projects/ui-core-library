@@ -28,6 +28,8 @@ form {
 
 .icon ::slotted(*) {
   display: inline-flex;
+  align-items: center;
+  justify-content: center;
   inline-size: var(--_icon-size);
   block-size: var(--_icon-size);
 }

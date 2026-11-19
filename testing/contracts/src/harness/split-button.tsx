@@ -6,7 +6,7 @@ import type {
 import { useState } from 'react';
 
 import type { SplitButtonContractProps } from '../specs/split-button.contract.ts';
-import { iconElement, IconNode } from './icon.tsx';
+import { wrappedIconElement, WrappedIconNode } from './icon.tsx';
 import { reactMount } from './react.tsx';
 import { webComponentMount } from './web-component.ts';
 
@@ -56,7 +56,7 @@ export const mountWebComponentSplitButton = webComponentMount<SplitButtonContrac
       }
       element.querySelector(`[slot="${name}"]`)?.remove();
       if (enabled) {
-        element.append(iconElement(name));
+        element.append(wrappedIconElement(name));
       }
     }
   },
@@ -77,7 +77,7 @@ function ControlledSplitButton({
     setRequested(open);
     setShown(open);
   }
-  const icon = <IconNode />;
+  const icon = <WrappedIconNode />;
   return (
     <SplitButton
       {...props}

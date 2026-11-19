@@ -1,7 +1,7 @@
 import { IconButton } from '@mszczygiel-projects/ui-core-react';
 
 import type { IconButtonContractProps } from '../specs/icon-button.contract.ts';
-import { iconElement, IconNode } from './icon.tsx';
+import { wrappedIconElement, WrappedIconNode } from './icon.tsx';
 import { reactMount } from './react.tsx';
 import { webComponentMount } from './web-component.ts';
 
@@ -14,7 +14,7 @@ export const mountWebComponentIconButton = webComponentMount<IconButtonContractP
     if (icon !== undefined) {
       element.querySelector('[slot="icon"]')?.remove();
       if (icon) {
-        element.append(iconElement('icon'));
+        element.append(wrappedIconElement('icon'));
       }
     }
   },
@@ -22,7 +22,7 @@ export const mountWebComponentIconButton = webComponentMount<IconButtonContractP
 
 /** The same icon, expressed as a React node instead of a named slot. */
 function ReactIconButton({ icon, ...props }: IconButtonContractProps) {
-  return <IconButton {...props} icon={icon === true ? <IconNode /> : undefined} />;
+  return <IconButton {...props} icon={icon === true ? <WrappedIconNode /> : undefined} />;
 }
 
 export const mountReactIconButton = reactMount(ReactIconButton, 'ui-icon-button');

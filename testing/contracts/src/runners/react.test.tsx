@@ -77,6 +77,7 @@ import { textFieldContract } from '../specs/text-field.contract.ts';
 import { textareaFieldContract } from '../specs/textarea-field.contract.ts';
 import { timeFieldContract } from '../specs/time-field.contract.ts';
 import { tooltipContract } from '../specs/tooltip.contract.ts';
+import { wrappedButtonIconsContract } from '../specs/wrapped-button-icons.contract.ts';
 
 describe('Loader, React', () => {
   loaderContract(reactMount(Loader, 'ui-loader'));
@@ -94,6 +95,15 @@ describe('Custom loaders, React', () => {
 
 describe('Button, React', () => {
   buttonContract(mountReactButton);
+});
+
+describe('Wrapped button icons, React', () => {
+  wrappedButtonIconsContract({
+    button: mountReactButton,
+    iconButton: mountReactIconButton,
+    splitButton: mountReactSplitButton,
+    linkButton: mountReactLinkButton,
+  });
 });
 
 describe('TextField, React', () => {
