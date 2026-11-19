@@ -76,12 +76,8 @@ export {
   type ListboxValue,
   type ListboxValueChangeDetails,
 } from './listbox/Listbox.tsx';
-export {
-  type CustomLoaderProps,
-  Loader,
-  type LoaderProps,
-  type LoaderSize,
-} from './loader/Loader.tsx';
+export { type CustomLoaderProps, defineReactLoader } from './loader/define-react-loader.ts';
+export { Loader, type LoaderProps, type LoaderSize } from './loader/Loader.tsx';
 export {
   Menu,
   type MenuActionDetails,

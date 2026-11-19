@@ -3,7 +3,7 @@ import {
   type LoaderVariantDefinition,
   resetUiCoreConfig,
 } from '@mszczygiel-projects/ui-core-foundations/config';
-import type { CustomLoaderProps } from '@mszczygiel-projects/ui-core-react';
+import { type CustomLoaderProps, defineReactLoader } from '@mszczygiel-projects/ui-core-react';
 import type { LoaderProps } from '@mszczygiel-projects/ui-core-shared/loader';
 import { beforeAll, expect, it, vi } from 'vitest';
 import { commands, userEvent } from 'vitest/browser';
@@ -58,7 +58,7 @@ function defineLoader(tag: string, onMount?: () => void): void {
 }
 
 const fullVariant: LoaderVariantDefinition = {
-  react: { component: AnimatedLoader, reducedMotion: StaticLoader },
+  ...defineReactLoader(AnimatedLoader, StaticLoader),
   webComponent: { component: animatedId, reducedMotion: staticId },
 };
 
@@ -102,10 +102,10 @@ export function customLoaderContract(mounts: {
 
       await loader.update({ size: 'small' });
       await expect.element(visual).toHaveAttribute('data-loader-size', 'small');
-      configureUiCore({ loaderVariant: 'unknown' });
+      configureUiCore<'brand' | 'unknown'>({ loaderVariant: 'unknown' });
       await expect.element(visual).not.toBeInTheDocument();
       expect(loader.part('indicator').getAnimations()).not.toHaveLength(0);
-      configureUiCore({ loaderVariant: 'brand' });
+      configureUiCore<'brand'>({ loaderVariant: 'brand' });
       await expect.element(visual).toBeInTheDocument();
       resetUiCoreConfig();
       await expect.element(visual).not.toBeInTheDocument();
@@ -127,7 +127,7 @@ export function customLoaderContract(mounts: {
         .toHaveAttribute('data-loader-size', 'medium');
       await expect.element(loader.screen.getByTestId(animatedId)).not.toBeInTheDocument();
       expect(animationMounted).not.toHaveBeenCalled();
-      register({ react: { component: AnimatedLoader }, webComponent: { component: animatedId } });
+      register({ ...defineReactLoader(AnimatedLoader), webComponent: { component: animatedId } });
       await expect.element(loader.screen.getByTestId(staticId)).not.toBeInTheDocument();
       expect(loader.part('indicator').getAnimations()).toHaveLength(0);
       await commands.emulateMedia({ reducedMotion: 'no-preference' });

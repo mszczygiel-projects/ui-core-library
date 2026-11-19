@@ -60,10 +60,6 @@
   .fallback {
     animation: none;
   }
-
-  .animated {
-    opacity: 0;
-  }
 }
 
 @keyframes fade {

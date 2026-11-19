@@ -60,27 +60,30 @@ The locale changes formats only. The labels stay as you configured them, so tran
 
 ## Loaders
 
-`loaderVariant` selects the visual for Loader and the loading states of Button, IconButton, SplitButton and Combobox. The default is `spinner`. Register a custom name with `loaderVariants` and supply the implementation for each framework your application uses. One call can both register and select a variant. Later calls replace definitions by name. An unknown name or a missing framework implementation uses the built-in spinner.
+`loaderVariant` selects the visual for Loader and the loading states of Button, IconButton, SplitButton and Combobox. The default is `spinner`. Register a custom name with `loaderVariants` and supply the implementation for each framework your application uses. One call can both register and select a variant. Later calls replace definitions by name. Use a non-blank custom name other than `spinner`. An invalid registration throws a `TypeError` before applying the configuration. A selected name without a definition or a missing framework implementation uses the built-in spinner.
+
+TypeScript checks the selected name against the keys registered in the same call. To select a custom variant in a separate call, pass the union of custom names, for example `configureUiCore<'brand' | 'dots'>({ loaderVariant: 'brand' })`.
 
 ### React
 
-Pass the component itself so it can use React hooks. It receives `size` as `'small'`, `'medium'` or `'large'`. Type its props with `CustomLoaderProps` from the React package. Size the artwork to `1em` to fit the indicator and use `currentColor` to follow the surface or control.
+Pass the component itself to `defineReactLoader` so it can use React hooks. It receives `size` as `'small'`, `'medium'` or `'large'`. Type its props with `CustomLoaderProps` from the React package. Size the artwork to `1em` to fit the indicator and use `currentColor` to follow the surface or control.
 
 ```tsx
 import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations/config';
+import { defineReactLoader } from '@mszczygiel-projects/ui-core-react';
 import { BrandLoader, BrandLoaderStatic } from './brand-loader';
 
 configureUiCore({
   loaderVariant: 'brand',
   loaderVariants: {
-    brand: { react: { component: BrandLoader, reducedMotion: BrandLoaderStatic } },
+    brand: defineReactLoader(BrandLoader, BrandLoaderStatic),
   },
 });
 ```
 
 ### Web Components
 
-Register your elements before configuring the loader. The custom elements receive the same size as a `size` attribute. Bundle styles with the elements, for example inside their own shadow roots, so they work inside Loader's shadow root.
+Register your elements with `customElements.define`. A lazily registered element replaces the spinner when its definition loads, even if the loader is already on the page. The custom elements receive the same size as a `size` attribute. Bundle styles with the elements, for example inside their own shadow roots, so they work inside Loader's shadow root.
 
 ```ts
 import { configureUiCore } from '@mszczygiel-projects/ui-core-foundations/config';
@@ -99,7 +102,7 @@ configureUiCore({
 });
 ```
 
-For a page with both frameworks, combine `react` and `webComponent` in the same definition. Supply decorative content inside the indicator and let UI Core provide the accessible name and loading state. When the user requests reduced motion, UI Core only mounts the optional `reducedMotion` component. Make that component static. Without it, UI Core shows a stationary spinner. React shows the built-in indicator during server rendering and hydration, then picks the visual for the user's motion preference.
+For a page with both frameworks, spread `...defineReactLoader(BrandLoader, BrandLoaderStatic)` into the definition with `webComponent`. Supply decorative content inside the indicator and let UI Core provide the accessible name and loading state. When the user requests reduced motion, UI Core only mounts the optional static counterpart. Make that component static. Without it, UI Core shows a stationary spinner. React shows the built-in indicator during server rendering and hydration, then picks the visual for the user's motion preference.
 
 ## Server rendering
 

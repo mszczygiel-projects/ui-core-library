@@ -8,7 +8,8 @@ import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-react';
 
-import { type CustomLoaderProps, Loader } from './Loader.tsx';
+import { type CustomLoaderProps, defineReactLoader } from './define-react-loader.ts';
+import { Loader } from './Loader.tsx';
 
 function nextFrame(): Promise<void> {
   return new Promise((resolve) => {
@@ -74,7 +75,7 @@ describe('Loader', () => {
     }
     configureUiCore({
       loaderVariant: 'brand',
-      loaderVariants: { brand: { react: { component: BrandLoader } } },
+      loaderVariants: { brand: defineReactLoader(BrandLoader) },
     });
     const html = renderToString(<Loader size="large" label="Saving" />);
     expect(html).toContain('ui-loader__indicator');

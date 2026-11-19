@@ -54,10 +54,6 @@
   .ui-loader__indicator--fallback {
     animation: none;
   }
-
-  .ui-loader__indicator--animated {
-    opacity: 0;
-  }
 }
 
 @keyframes ui-loader-fade {

@@ -7,6 +7,7 @@ import {
   type LoaderVariant,
   resetUiCoreConfig,
   subscribeUiCoreConfig,
+  type UiCoreConfigInput,
 } from './config.ts';
 
 const STATE_KEY = Symbol.for('ui-core.config');
@@ -103,24 +104,57 @@ describe('the configuration', () => {
     const dots = { webComponent: { component: 'dots-loader' } };
     configureUiCore({ loaderVariants: { brand: replacement, dots } });
     expect(getUiCoreConfig().loader).toEqual(replacement);
-    configureUiCore({ loaderVariant: 'dots' });
+    configureUiCore<'brand' | 'dots'>({ loaderVariant: 'dots' });
     expect(getUiCoreConfig().loader).toEqual(dots);
-    configureUiCore({ loaderVariant: 'brand' });
+    configureUiCore<'brand' | 'dots'>({ loaderVariant: 'brand' });
     expect(getUiCoreConfig().loader).toEqual(replacement);
     unsubscribe();
   });
 
-  it('keeps the built-in spinner reserved and clears the registry on reset', () => {
+  it('rejects reserved and blank names without applying any part of the configuration', () => {
     const custom = { webComponent: { component: 'brand-loader' } };
-    configureUiCore({ loaderVariants: { spinner: custom, brand: custom } });
+    const before = getUiCoreConfig();
+    for (const name of ['spinner', '', '   ']) {
+      expect(() => {
+        configureUiCore({
+          locale: 'pl-PL',
+          loaderVariant: 'brand',
+          loaderVariants: { brand: custom, [name]: custom },
+        });
+      }).toThrow(TypeError);
+      expect(getUiCoreConfig()).toBe(before);
+    }
+  });
+
+  it('uses the spinner for a selected name without a definition and clears the registry on reset', () => {
+    const custom = { webComponent: { component: 'brand-loader' } };
+    configureUiCore({ loaderVariants: { brand: custom } });
     expect(getUiCoreConfig().loaderVariant).toBe('spinner');
     expect(getUiCoreConfig().loader).toBeUndefined();
-    configureUiCore({ loaderVariant: 'unknown' });
+    configureUiCore<'brand' | 'unknown'>({ loaderVariant: 'unknown' });
     expect(getUiCoreConfig().loaderVariant).toBe('spinner');
     resetUiCoreConfig();
-    configureUiCore({ loaderVariant: 'brand' });
+    configureUiCore<'brand'>({ loaderVariant: 'brand' });
     expect(getUiCoreConfig().loaderVariant).toBe('spinner');
     expect(getUiCoreConfig().loader).toBeUndefined();
+  });
+
+  it('type-checks names inferred from the registry or declared by the application', () => {
+    const custom = { webComponent: { component: 'brand-loader' } };
+    const input = {
+      loaderVariant: 'brand',
+      loaderVariants: { brand: custom },
+    } satisfies UiCoreConfigInput<'brand'>;
+    configureUiCore(input);
+    const check = () => {
+      // @ts-expect-error The selection cannot add a name to the inferred registry.
+      configureUiCore({ loaderVariant: 'brnad', loaderVariants: { brand: custom } });
+      // @ts-expect-error Unregistered names require an explicit application type.
+      configureUiCore({ loaderVariant: 'brnad' });
+      // @ts-expect-error The name is outside the application type.
+      configureUiCore<'brand'>({ loaderVariant: 'brnad' });
+    };
+    expect(check).toBeTypeOf('function');
   });
 
   it('resets to the defaults and notifies its listeners', () => {

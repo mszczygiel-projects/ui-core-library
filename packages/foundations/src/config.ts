@@ -6,11 +6,11 @@
  * every label its components need.
  */
 
-/** A built-in loader variant. */
-export type LoaderVariant = 'spinner';
-
 /** The built-in loader variants. */
-export const loaderVariants: readonly LoaderVariant[] = ['spinner'];
+export const loaderVariants = ['spinner'] as const;
+
+/** A built-in loader variant. */
+export type LoaderVariant = (typeof loaderVariants)[number];
 
 /** The normal and optional static versions of a loader in one framework. */
 export interface LoaderPresentation<Component> {
@@ -20,10 +20,12 @@ export interface LoaderPresentation<Component> {
   readonly reducedMotion?: Component;
 }
 
-/** A named loader's implementations. The React package adds its own component type. */
+/** A named loader's implementations. */
 export interface LoaderVariantDefinition {
   /** Names of autonomous custom elements registered by the application. */
   readonly webComponent?: LoaderPresentation<string>;
+  /** Framework adapters store their own components under their adapter key. */
+  readonly [adapter: symbol]: LoaderPresentation<unknown> | undefined;
 }
 
 /** Data for a whole validation sentence; each field specifies its own reason vocabulary. */
@@ -189,16 +191,16 @@ export interface UiCoreConfig {
 }
 
 /** The labels, locale and loader settings accepted by {@link configureUiCore}. */
-export interface UiCoreConfigInput {
+export interface UiCoreConfigInput<CustomVariant extends string = never> {
   /** BCP 47 locale used before the browser language. Reset clears it. */
   readonly locale?: string;
   readonly labels?: {
     readonly [Group in keyof UiCoreLabels]?: Partial<UiCoreLabels[Group]>;
   };
   /** The name of the loader variant to use everywhere. */
-  readonly loaderVariant?: string;
+  readonly loaderVariant?: LoaderVariant | NoInfer<CustomVariant>;
   /** Custom variants to register or replace by name. The name `spinner` is reserved. */
-  readonly loaderVariants?: Readonly<Record<string, LoaderVariantDefinition>>;
+  readonly loaderVariants?: Readonly<Partial<Record<CustomVariant, LoaderVariantDefinition>>>;
 }
 
 /** The English labels that the packages ship. */
@@ -369,10 +371,14 @@ export function getUiCoreConfig(): UiCoreConfig {
  * included. Labels merge one by one. Each custom loader entry replaces the earlier definition
  * with the same name.
  *
+ * @throws {TypeError} A loader variant registration has a blank or reserved name.
+ *
  * @example
  * configureUiCore({ labels: { loader: { label: 'Ładowanie' } } });
  */
-export function configureUiCore(input: UiCoreConfigInput): void {
+export function configureUiCore<const CustomVariant extends string = never>(
+  input: UiCoreConfigInput<CustomVariant>,
+): void {
   const state = sharedState();
   const labels = mergeOverrides(state.labels, input.labels ?? {});
   const loaderVariant = input.loaderVariant ?? state.loaderVariant;
@@ -433,21 +439,31 @@ function changed(state: SharedState): void {
 
 function mergeLoaderVariants(
   earlier: SharedState['loaderVariants'],
-  input: UiCoreConfigInput['loaderVariants'],
+  input: UiCoreConfigInput<string>['loaderVariants'],
 ): SharedState['loaderVariants'] {
   let merged: Map<string, LoaderVariantDefinition> | undefined;
   for (const [name, definition] of Object.entries(input ?? {})) {
-    if (name === '' || name === DEFAULT_CONFIG.loaderVariant) {
+    if (definition === undefined) {
       continue;
     }
-    // Copy the presentation records without copying the client components they refer to.
-    const presentations = entriesOf(definition).flatMap(([framework, presentation]) =>
-      typeof presentation === 'object' && presentation !== null
-        ? [[framework, Object.freeze({ ...presentation })] as const]
-        : [],
+    if (name.trim() === '' || name === DEFAULT_CONFIG.loaderVariant) {
+      throw new TypeError(
+        `Invalid loader variant name ${JSON.stringify(name)}. Use a non-empty name other than "spinner".`,
+      );
+    }
+    // Copy presentation records so the application's later mutations cannot change a snapshot.
+    const adapters = Object.getOwnPropertySymbols(definition).map(
+      (key) => [key, Object.freeze({ ...definition[key] })] as const,
     );
+    const { webComponent } = definition;
     merged ??= new Map(earlier);
-    merged.set(name, Object.freeze(Object.fromEntries(presentations)));
+    merged.set(
+      name,
+      Object.freeze({
+        ...Object.fromEntries(adapters),
+        ...(webComponent === undefined ? {} : { webComponent: Object.freeze({ ...webComponent }) }),
+      }),
+    );
   }
   return merged ?? earlier;
 }

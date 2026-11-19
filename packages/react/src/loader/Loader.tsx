@@ -1,16 +1,18 @@
 'use client';
 
 import type { LoaderPresentation } from '@mszczygiel-projects/ui-core-foundations/config';
+import { getReducedMotionStore } from '@mszczygiel-projects/ui-core-foundations/motion-preference';
 import {
   loader,
   type LoaderProps as SharedLoaderProps,
   type LoaderSize,
 } from '@mszczygiel-projects/ui-core-shared/loader';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
-import { type ComponentPropsWithRef, type ComponentType, useEffect, useState } from 'react';
+import { type ComponentPropsWithRef, type ComponentType, useSyncExternalStore } from 'react';
 
 import { classNames } from '../internal/class-names.ts';
 import { useUiCoreConfig } from '../internal/use-ui-core-config.ts';
+import { type CustomLoaderProps, reactLoaderPresentation } from './define-react-loader.ts';
 
 export type { LoaderSize };
 
@@ -20,17 +22,10 @@ export interface LoaderProps
     SharedLoaderProps,
     Omit<ComponentPropsWithRef<'span'>, keyof SharedLoaderProps | 'children'> {}
 
-/** The token-based size given to a custom React loader. */
-export interface CustomLoaderProps {
-  readonly size: LoaderSize;
-}
-
-declare module '@mszczygiel-projects/ui-core-foundations/config' {
-  interface LoaderVariantDefinition {
-    /** Decorative React components supplied by the application. */
-    readonly react?: LoaderPresentation<ComponentType<CustomLoaderProps>>;
-  }
-}
+const browserReducedMotion = () => getReducedMotionStore(window).getSnapshot();
+const serverReducedMotion = () => undefined;
+const subscribeToReducedMotion = (listener: () => void) =>
+  getReducedMotionStore(window).subscribe(listener);
 
 function CustomIndicator({
   presentation,
@@ -40,19 +35,11 @@ function CustomIndicator({
   readonly size: LoaderSize;
 }) {
   // The server and first hydration render use the spinner until the preference is known.
-  const [reducedMotion, setReducedMotion] = useState<boolean>();
-
-  useEffect(() => {
-    const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const update = () => {
-      setReducedMotion(media.matches);
-    };
-    media.addEventListener('change', update);
-    update();
-    return () => {
-      media.removeEventListener('change', update);
-    };
-  }, []);
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    browserReducedMotion,
+    serverReducedMotion,
+  );
 
   const Visual =
     reducedMotion === undefined
@@ -63,14 +50,7 @@ function CustomIndicator({
   return Visual === undefined ? (
     <span className="ui-loader__indicator ui-loader__indicator--fallback" />
   ) : (
-    <span
-      aria-hidden="true"
-      inert
-      className={classNames(
-        'ui-loader__indicator ui-loader__indicator--custom',
-        !reducedMotion && 'ui-loader__indicator--animated',
-      )}
-    >
+    <span aria-hidden="true" inert className="ui-loader__indicator ui-loader__indicator--custom">
       <Visual size={size} />
     </span>
   );
@@ -86,6 +66,7 @@ function CustomIndicator({
 export function Loader({ size, label, className, ...rest }: LoaderProps) {
   const { labels, loader: customLoader } = useUiCoreConfig();
   const visualSize = oneOf(size, loader.options.size.options, loader.options.size.default);
+  const presentation = reactLoaderPresentation(customLoader);
   return (
     <span
       role="progressbar"
@@ -93,10 +74,10 @@ export function Loader({ size, label, className, ...rest }: LoaderProps) {
       className={classNames('ui-loader', `ui-loader--${visualSize}`, className)}
       {...rest}
     >
-      {customLoader?.react === undefined ? (
+      {presentation === undefined ? (
         <span className="ui-loader__indicator" />
       ) : (
-        <CustomIndicator presentation={customLoader.react} size={visualSize} />
+        <CustomIndicator presentation={presentation} size={visualSize} />
       )}
     </span>
   );

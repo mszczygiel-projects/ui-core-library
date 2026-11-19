@@ -16,6 +16,10 @@
       "types": "./dist/config.d.ts",
       "default": "./dist/config.js"
     },
+    "./motion-preference": {
+      "types": "./dist/motion-preference.d.ts",
+      "default": "./dist/motion-preference.js"
+    },
     "./tokens.css": "./dist/tokens.css",
     "./tailwind.css": "./dist/tailwind.css",
     "./typography.css": "./dist/typography.css",

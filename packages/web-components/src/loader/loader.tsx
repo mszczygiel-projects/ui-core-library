@@ -2,6 +2,7 @@ import {
   getUiCoreConfig,
   type UiCoreConfig,
 } from '@mszczygiel-projects/ui-core-foundations/config';
+import { getReducedMotionStore } from '@mszczygiel-projects/ui-core-foundations/motion-preference';
 import {
   loader,
   type LoaderProps,
@@ -11,6 +12,7 @@ import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import { AttachInternals, Component, Element, h, Prop, State, type VNode } from '@stencil/core';
 
 import { followConfig } from '../internal/config.ts';
+import { followLoaderDefinition } from './loader-definition.ts';
 
 /**
  * Shows that content is loading or that an action is in progress.
@@ -38,30 +40,50 @@ export class UiLoader implements LoaderProps {
 
   @State() config: UiCoreConfig = getUiCoreConfig();
 
-  @State() reducedMotion = false;
+  @State() customTag?: string;
 
   private stopConfig?: () => void;
 
-  private motion?: MediaQueryList;
+  private motion?: ReturnType<typeof getReducedMotionStore>;
+
+  private stopMotion?: () => void;
+
+  private stopDefinition?: () => void;
 
   connectedCallback(): void {
+    const view = this.host.ownerDocument.defaultView;
+    this.motion = view === null ? undefined : getReducedMotionStore(view);
+    this.stopMotion = this.motion?.subscribe(this.updateVisual);
     this.stopConfig = followConfig((config) => {
       this.config = config;
+      this.updateVisual();
     });
-    this.motion = this.host.ownerDocument.defaultView?.matchMedia(
-      '(prefers-reduced-motion: reduce)',
-    );
-    this.motion?.addEventListener('change', this.updateMotion);
-    this.updateMotion();
   }
 
   disconnectedCallback(): void {
     this.stopConfig?.();
-    this.motion?.removeEventListener('change', this.updateMotion);
+    this.stopMotion?.();
+    this.stopDefinition?.();
+    this.stopDefinition = undefined;
   }
 
-  private readonly updateMotion = (): void => {
-    this.reducedMotion = this.motion?.matches ?? false;
+  private readonly updateVisual = (): void => {
+    this.stopDefinition?.();
+    this.stopDefinition = undefined;
+    const presentation = this.config.loader?.webComponent;
+    const tag = this.motion?.getSnapshot() ? presentation?.reducedMotion : presentation?.component;
+    const registry = this.host.ownerDocument.defaultView?.customElements;
+    if (tag === undefined || tag === 'ui-loader' || registry === undefined) {
+      this.customTag = undefined;
+    } else if (registry.get(tag) === undefined) {
+      this.customTag = undefined;
+      this.stopDefinition = followLoaderDefinition(registry, tag, () => {
+        this.stopDefinition = undefined;
+        this.customTag = tag;
+      });
+    } else {
+      this.customTag = tag;
+    }
   };
 
   componentWillRender(): void {
@@ -73,28 +95,13 @@ export class UiLoader implements LoaderProps {
 
   render(): VNode {
     const size = oneOf(this.size, loader.options.size.options, loader.options.size.default);
-    const presentation = this.config.loader?.webComponent;
-    const registry = this.host.ownerDocument.defaultView?.customElements;
-    if (
-      presentation === undefined ||
-      presentation.component === 'ui-loader' ||
-      registry?.get(presentation.component) === undefined
-    ) {
-      return <span part="indicator" class={`indicator ${size}`} />;
-    }
-
-    const tag = this.reducedMotion ? presentation.reducedMotion : presentation.component;
-    if (tag === undefined || tag === 'ui-loader' || registry.get(tag) === undefined) {
-      return <span part="indicator" class={`indicator ${size} fallback`} />;
+    if (this.customTag === undefined) {
+      const fallback = this.config.loader?.webComponent === undefined ? '' : ' fallback';
+      return <span part="indicator" class={`indicator ${size}${fallback}`} />;
     }
     return (
-      <span
-        part="indicator"
-        class={`indicator ${size} custom${this.reducedMotion ? '' : ' animated'}`}
-        aria-hidden="true"
-        inert
-      >
-        {h(tag, { 'attr:size': size })}
+      <span part="indicator" class={`indicator ${size} custom`} aria-hidden="true" inert>
+        {h(this.customTag, { 'attr:size': size })}
       </span>
     );
   }
