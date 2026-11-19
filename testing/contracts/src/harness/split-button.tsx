@@ -56,7 +56,7 @@ export const mountWebComponentSplitButton = webComponentMount<SplitButtonContrac
       }
       element.querySelector(`[slot="${name}"]`)?.remove();
       if (enabled) {
-        element.append(iconElement(name));
+        element.append(iconElement(name, enabled));
       }
     }
   },
@@ -77,13 +77,12 @@ function ControlledSplitButton({
     setRequested(open);
     setShown(open);
   }
-  const icon = <IconNode />;
   return (
     <SplitButton
       {...props}
       open={shown}
-      leadingIcon={leadingIcon ? icon : undefined}
-      trailingIcon={trailingIcon ? icon : undefined}
+      leadingIcon={leadingIcon ? <IconNode fixture={leadingIcon} /> : undefined}
+      trailingIcon={trailingIcon ? <IconNode fixture={trailingIcon} /> : undefined}
       onClick={(event) => {
         onPress?.(event.nativeEvent);
       }}

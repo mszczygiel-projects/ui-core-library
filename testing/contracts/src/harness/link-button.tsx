@@ -29,7 +29,7 @@ export const mountWebComponentLinkButton = webComponentMount<LinkButtonContractP
       }
       element.querySelector(`[slot="${name}"]`)?.remove();
       if (enabled) {
-        element.append(iconElement(name));
+        element.append(iconElement(name, enabled));
       }
     }
   },
@@ -37,12 +37,11 @@ export const mountWebComponentLinkButton = webComponentMount<LinkButtonContractP
 
 /** The same content recipe, expressed as React nodes instead of named slots. */
 function ReactLinkButton({ leadingIcon, trailingIcon, ...props }: LinkButtonContractProps) {
-  const icon = <IconNode />;
   return (
     <LinkButton
       {...props}
-      leadingIcon={leadingIcon === true ? icon : undefined}
-      trailingIcon={trailingIcon === true ? icon : undefined}
+      leadingIcon={leadingIcon ? <IconNode fixture={leadingIcon} /> : undefined}
+      trailingIcon={trailingIcon ? <IconNode fixture={trailingIcon} /> : undefined}
     />
   );
 }

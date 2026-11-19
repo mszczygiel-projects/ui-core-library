@@ -49,3 +49,56 @@ Several brands live in one file as modes of Themes: `Club Light` and `Club Dark`
    npm uses `overrides` and Yarn `resolutions` with the same entry.
 
 The set must hold every icon the components render; the package lists them in `required-icons.txt`, and the build names any that are missing. An icon may hold only plain shapes: paths, lines, circles and the like, painted in colours. Scripts, links, images, styles and ids stop the build. An icon drawn off the 24 × 24 grid, in more than one colour or with strokes is built with a warning, since the components size and colour it themselves. Every icon is minified, painted in `currentColor` and sized `1em`.
+
+### Wrapped icons in buttons
+
+When a custom element wraps an SVG, assign the wrapper to `icon`, `leading-icon` or `trailing-icon`. The button sets the size of the icon box from its size and density tokens and centres the artwork inside the wrapper. Give the SVG a width and height of `1em` and let the wrapper inherit its font size so the artwork scales with the box.
+
+If your icon component also has a standalone size, set the inheritance rule in its own shadow stylesheet:
+
+```css
+:host {
+  display: inline-flex;
+  flex: none;
+  font-size: var(--app-icon-size, 1.5rem);
+  line-height: 0;
+}
+
+:host([slot='icon']),
+:host([slot='leading-icon']),
+:host([slot='trailing-icon']) {
+  font-size: var(--app-icon-size, 1em);
+}
+
+svg {
+  inline-size: 1em;
+  block-size: 1em;
+  flex: none;
+}
+```
+
+`--app-icon-size` is an application property. Setting it gives the artwork an explicit size while the button keeps its token-sized box. In a `font-size` declaration, `1em` uses the inherited font size.
+
+In React, pass the wrapper to `icon`, `leadingIcon` or `trailingIcon`. The wrapper can inherit the button's icon size explicitly:
+
+```tsx
+import { Button } from '@mszczygiel-projects/ui-core-react';
+
+<Button
+  leadingIcon={
+    <span style={{ fontSize: 'inherit' }}>
+      <svg
+        width="1em"
+        height="1em"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        style={{ flex: 'none' }}
+      >
+        <path d="M10 4h4v6h6v4h-6v6h-4v-6H4v-4h6z" />
+      </svg>
+    </span>
+  }
+>
+  New item
+</Button>;
+```

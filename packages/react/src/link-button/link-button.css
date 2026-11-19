@@ -19,7 +19,6 @@
 }
 
 :is(.ui-link-button__leading-icon, .ui-link-button__trailing-icon) > * {
-  display: inline-flex;
   inline-size: 100%;
   block-size: 100%;
 }

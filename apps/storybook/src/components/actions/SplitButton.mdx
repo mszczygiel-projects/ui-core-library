@@ -45,6 +45,8 @@ Each half shows the hover, press and focus states of Button on its own. `disable
 
 The default slot or `children` names the main action, and `label` can replace that name, as in Button. `menuLabel` names the menu button and its menu; without it, SplitButton uses `labels.splitButton.menu`, “More actions” in English. While loading, `loadingLabel` describes the state, falling back to `labels.splitButton.loading`.
 
+For custom SVG wrappers in the main action's icon slots or props, see “Wrapped icons in buttons” in the [Custom tokens and icons guide](?path=/docs/guides-custom-tokens-and-icons--docs).
+
 <Source
   language="ts"
   code={`configureUiCore({ labels: { splitButton: { menu: 'Więcej akcji', loading: 'Zapisywanie' } } });`}

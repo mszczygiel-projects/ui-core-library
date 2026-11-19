@@ -14,7 +14,7 @@ export const mountWebComponentIconButton = webComponentMount<IconButtonContractP
     if (icon !== undefined) {
       element.querySelector('[slot="icon"]')?.remove();
       if (icon) {
-        element.append(iconElement('icon'));
+        element.append(iconElement('icon', icon));
       }
     }
   },
@@ -22,7 +22,7 @@ export const mountWebComponentIconButton = webComponentMount<IconButtonContractP
 
 /** The same icon, expressed as a React node instead of a named slot. */
 function ReactIconButton({ icon, ...props }: IconButtonContractProps) {
-  return <IconButton {...props} icon={icon === true ? <IconNode /> : undefined} />;
+  return <IconButton {...props} icon={icon ? <IconNode fixture={icon} /> : undefined} />;
 }
 
 export const mountReactIconButton = reactMount(ReactIconButton, 'ui-icon-button');

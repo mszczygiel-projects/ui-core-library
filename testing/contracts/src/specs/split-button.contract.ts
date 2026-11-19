@@ -8,6 +8,7 @@ import type {
 import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
+import type { IconFixture } from '../harness/icon.tsx';
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
 import { pseudoLabels } from '../pseudo.ts';
 import { tokenValue } from '../tokens.ts';
@@ -27,8 +28,8 @@ import {
  */
 export interface SplitButtonContractProps extends Omit<SplitButtonProps<never>, 'options'> {
   readonly children?: string;
-  readonly leadingIcon?: boolean;
-  readonly trailingIcon?: boolean;
+  readonly leadingIcon?: IconFixture;
+  readonly trailingIcon?: IconFixture;
   readonly options?: MenuItems;
   readonly onPress?: (event: Event) => void;
   readonly onOpenChange?: (

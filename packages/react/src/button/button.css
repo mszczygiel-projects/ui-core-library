@@ -26,7 +26,6 @@
 }
 
 :is(.ui-button__leading-icon, .ui-button__trailing-icon) > * {
-  display: inline-flex;
   inline-size: 100%;
   block-size: 100%;
 }

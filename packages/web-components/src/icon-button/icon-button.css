@@ -27,7 +27,6 @@ form {
 }
 
 .icon ::slotted(*) {
-  display: inline-flex;
   inline-size: var(--_icon-size);
   block-size: var(--_icon-size);
 }

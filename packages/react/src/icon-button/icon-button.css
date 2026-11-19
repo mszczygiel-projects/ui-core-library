@@ -16,7 +16,6 @@
 }
 
 .ui-icon-button__icon > * {
-  display: inline-flex;
   inline-size: var(--_icon-size);
   block-size: var(--_icon-size);
 }

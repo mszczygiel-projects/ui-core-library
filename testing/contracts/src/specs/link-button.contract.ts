@@ -3,7 +3,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
 import { appearance } from '../appearance.ts';
-import { iconSize } from '../harness/icon.tsx';
+import { type IconFixture, iconSize } from '../harness/icon.tsx';
 import { type Mount, type Mounted, type MountOptions, required } from '../harness/types.ts';
 import { pixels, tokenNumber, tokenValue } from '../tokens.ts';
 import { actionShapeContract, actionSurfaceContract, resolvedColor } from './action.contract.ts';
@@ -15,8 +15,8 @@ import { popupTriggerContract } from './popup-trigger.contract.ts';
  */
 export interface LinkButtonContractProps extends LinkButtonProps {
   readonly children?: string;
-  readonly leadingIcon?: boolean;
-  readonly trailingIcon?: boolean;
+  readonly leadingIcon?: IconFixture;
+  readonly trailingIcon?: IconFixture;
 }
 
 // A fragment of the test page, so that following the link never leaves it.
