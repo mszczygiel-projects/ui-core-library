@@ -1,8 +1,10 @@
 import '../../dist/components/ui-text-field.js';
+import '../../dist/components/ui-button.js';
+import '../../dist/components/ui-password-field.js';
 
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { page } from 'vitest/browser';
+import { page, userEvent } from 'vitest/browser';
 
 import { nextRender } from '../internal/test-utils.ts';
 
@@ -38,6 +40,81 @@ afterEach(() => {
 });
 
 describe('ui-text-field', () => {
+  it('activates the custom submit button on Enter in either field and respects validity', async () => {
+    const form = document.createElement('form');
+    form.dataset['textFieldTest'] = '';
+    const username = Object.assign(create(), { name: 'username', value: 'Ada', required: true });
+    const password = Object.assign(document.createElement('ui-password-field'), {
+      name: 'password',
+      value: 'secret',
+      required: true,
+    });
+    const button = Object.assign(document.createElement('ui-button'), {
+      type: 'submit' as const,
+      name: 'action',
+      value: 'login',
+    });
+    form.append(username, password, button);
+    document.body.append(form);
+    await nextRender();
+    const submitted = vi.fn((event: SubmitEvent) => {
+      event.preventDefault();
+      return [...new FormData(form)];
+    });
+    form.addEventListener('submit', submitted);
+    const passwordInput = password.shadowRoot?.querySelector('input');
+    if (!passwordInput) {
+      throw new Error('Missing password input');
+    }
+    await page.elementLocator(inputOf(username)).click();
+    await userEvent.keyboard('{Enter}');
+    await page.elementLocator(passwordInput).click();
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).toHaveBeenCalledTimes(2);
+    expect(submitted.mock.results[0]?.value).toEqual([
+      ['username', 'Ada'],
+      ['password', 'secret'],
+      ['action', 'login'],
+    ]);
+    password.value = '';
+    await nextRender();
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).toHaveBeenCalledTimes(2);
+    password.value = 'secret';
+    button.disabled = true;
+    await nextRender();
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).toHaveBeenCalledTimes(2);
+  });
+
+  it('uses the first submit button and respects a cancelled custom button click', async () => {
+    const form = document.createElement('form');
+    form.dataset['textFieldTest'] = '';
+    const field = create();
+    const custom = Object.assign(document.createElement('ui-button'), { type: 'submit' as const });
+    const native = document.createElement('button');
+    native.type = 'submit';
+    form.append(field, custom, native);
+    document.body.append(form);
+    await nextRender();
+    const submitted = vi.fn((event: SubmitEvent) => {
+      event.preventDefault();
+    });
+    const customClick = vi.fn((event: MouseEvent) => {
+      event.preventDefault();
+    });
+    form.addEventListener('submit', submitted);
+    custom.addEventListener('click', customClick);
+    await page.elementLocator(inputOf(field)).click();
+    await userEvent.keyboard('{Enter}');
+    expect(customClick).toHaveBeenCalledOnce();
+    expect(submitted).not.toHaveBeenCalled();
+    form.insertBefore(native, custom);
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).toHaveBeenCalledOnce();
+    expect(customClick).toHaveBeenCalledOnce();
+  });
+
   it('reflects only name, disabled and readonly to its host', async () => {
     const field = await mount({
       label: 'Name',

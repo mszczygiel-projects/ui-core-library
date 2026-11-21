@@ -186,7 +186,7 @@ export class TextControl {
     if (form === null || !this.options.host().isConnected || this.options.disabled()) {
       return;
     }
-    const submitter = defaultSubmitter(form);
+    const submitter = defaultSubmitter(form, true);
     if (submitter !== undefined) {
       if (!submitter.matches(':disabled')) {
         submitter.click();
@@ -259,17 +259,20 @@ export class TextControl {
   };
 }
 
-function defaultSubmitter(form: HTMLFormElement): HTMLButtonElement | HTMLInputElement | undefined {
+function defaultSubmitter(form: HTMLFormElement, includeCustom = false): HTMLElement | undefined {
   const root = form.getRootNode();
   if (!(root instanceof Document || root instanceof ShadowRoot)) {
     return undefined;
   }
-  return Array.from(root.querySelectorAll('button, input')).find(
-    (node): node is HTMLButtonElement | HTMLInputElement =>
-      (node instanceof HTMLButtonElement || node instanceof HTMLInputElement) &&
-      node.form === form &&
-      (node.type === 'submit' || node.type === 'image'),
-  );
+  const selector = includeCustom
+    ? 'button, input, ui-button, ui-icon-button, ui-split-button'
+    : 'button, input';
+  return Array.from(root.querySelectorAll<HTMLElement>(selector)).find((node) => {
+    if (node instanceof HTMLButtonElement || node instanceof HTMLInputElement) {
+      return node.form === form && (node.type === 'submit' || node.type === 'image');
+    }
+    return Reflect.get(node, 'form') === form && Reflect.get(node, 'type') === 'submit';
+  });
 }
 
 function blocksImplicitSubmission(node: Element): boolean {
