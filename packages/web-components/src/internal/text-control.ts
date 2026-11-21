@@ -11,6 +11,7 @@ const TEXT_FIELD_TAGS = [
   'ui-search-field',
   'ui-number-field',
   'ui-date-field',
+  'ui-date-time-field',
   'ui-time-field',
 ];
 
@@ -252,8 +253,18 @@ export class TextControl {
     ) {
       return;
     }
-    // Native implicit submission does not count form-associated custom elements.
-    if (defaultSubmitter(form) === undefined && blockingFields(form).length > 1) {
+    const submitter = defaultSubmitter(form, true);
+    if (
+      submitter !== undefined &&
+      !(submitter instanceof HTMLButtonElement || submitter instanceof HTMLInputElement)
+    ) {
+      // Preventing the default also prevents other fields' listeners from activating it again.
+      event.preventDefault();
+      if (!submitter.matches(':disabled')) {
+        submitter.click();
+      }
+    } else if (submitter === undefined && blockingFields(form).length > 1) {
+      // Native implicit submission does not count form-associated custom elements.
       event.preventDefault();
     }
   };

@@ -1,6 +1,9 @@
 import '../../dist/components/ui-text-field.js';
 import '../../dist/components/ui-button.js';
 import '../../dist/components/ui-password-field.js';
+import '../../dist/components/ui-date-time-field.js';
+import '../../dist/components/ui-icon-button.js';
+import '../../dist/components/ui-split-button.js';
 
 import type { TextFieldProps } from '@mszczygiel-projects/ui-core-shared/text-field';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -114,6 +117,92 @@ describe('ui-text-field', () => {
     expect(submitted).toHaveBeenCalledOnce();
     expect(customClick).toHaveBeenCalledOnce();
   });
+
+  it('activates the same custom action once from native and UI Core fields', async () => {
+    const form = document.createElement('form');
+    form.dataset['textFieldTest'] = '';
+    const first = create();
+    const second = create();
+    const native = document.createElement('input');
+    const action = Object.assign(document.createElement('ui-button'), {
+      type: 'submit' as const,
+      name: 'action',
+      value: 'custom',
+    });
+    const fallback = document.createElement('button');
+    fallback.type = 'submit';
+    fallback.name = 'action';
+    fallback.value = 'native';
+    form.append(native, first, second, action, fallback);
+    document.body.append(form);
+    await nextRender();
+    const submitted = vi.fn((event: SubmitEvent) => {
+      event.preventDefault();
+      return [...new FormData(form, event.submitter)];
+    });
+    form.addEventListener('submit', submitted);
+    await page.elementLocator(native).click();
+    await userEvent.keyboard('{Enter}');
+    await page.elementLocator(inputOf(first)).click();
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).toHaveBeenCalledTimes(2);
+    expect(submitted.mock.results[0]?.value).toEqual([['action', 'custom']]);
+    expect(submitted.mock.results[1]?.value).toEqual([['action', 'custom']]);
+    action.loading = true;
+    await nextRender();
+    await page.elementLocator(native).click();
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).toHaveBeenCalledTimes(2);
+  });
+
+  it('counts a date-time field when deciding whether a form without a submitter may submit', async () => {
+    const form = document.createElement('form');
+    form.dataset['textFieldTest'] = '';
+    const field = create();
+    const dateTime = document.createElement('ui-date-time-field');
+    form.append(field, dateTime);
+    document.body.append(form);
+    await nextRender();
+    const submitted = vi.fn((event: SubmitEvent) => {
+      event.preventDefault();
+    });
+    form.addEventListener('submit', submitted);
+    await page.elementLocator(inputOf(field)).click();
+    await userEvent.keyboard('{Enter}');
+    expect(submitted).not.toHaveBeenCalled();
+  });
+
+  it.each(['ui-icon-button', 'ui-split-button'] as const)(
+    'activates an external %s associated with its form',
+    async (tag) => {
+      const form = document.createElement('form');
+      form.dataset['textFieldTest'] = '';
+      form.id = 'external-action-form';
+      const field = create();
+      form.append(field);
+      const action = Object.assign(document.createElement(tag), {
+        type: 'submit' as const,
+        name: 'action',
+        value: 'save',
+      });
+      action.setAttribute('form', form.id);
+      document.body.append(action, form);
+      await nextRender();
+      const submitted = vi.fn((event: SubmitEvent) => {
+        event.preventDefault();
+        return [...new FormData(form)];
+      });
+      form.addEventListener('submit', submitted);
+      try {
+        await page.elementLocator(inputOf(field)).click();
+        await userEvent.keyboard('{Enter}');
+        expect(submitted).toHaveBeenCalledOnce();
+        expect(submitted.mock.results[0]?.value).toEqual([['action', 'save']]);
+      } finally {
+        action.remove();
+      }
+    },
+  );
 
   it('reflects only name, disabled and readonly to its host', async () => {
     const field = await mount({
