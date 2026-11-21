@@ -59,7 +59,7 @@ An author's `aria-label` overrides the visible label as the accessible name. Pre
 - Each user edit emits one native `input` and one `ui-value-change` in the web component. The custom event contains `detail.value` and `detail.originalEvent`. Native `change` crosses the shadow boundary once on commit. React calls `onValueChange(value, details)` and preserves native `onInput` and `onChange` conventions; `details.originalEvent` is the native event.
 - Programmatic updates, reset and restoration emit no edit callback. `name` contributes the current string to FormData. Disabling the field or its fieldset excludes it.
 - `required`, `minLength`, `maxLength`, `pattern` and the type participate in native validation. Length constraints follow browser rules for user edits; programmatic assignments are not user input. Use `setCustomValidity('')` to clear a custom error.
-- Enter follows native implicit submission: it activates the form's first native submit button, respecting disabled state and cancelled clicks. Without a default button, one blocking field submits and multiple blocking fields do not. Cancelling the key cancels submission. Composition uses the browser's IME handling. A Button web component cannot be the browser's implicit default submitter.
+- Enter activates the form's first submit button, respecting disabled state and cancelled clicks. The web component also recognizes Button, IconButton and SplitButton web components as submit buttons. Without a default button, one blocking field submits and multiple blocking fields do not. Cancelling the key cancels submission. Composition uses the browser's IME handling.
 
 <Source
   language="tsx"

@@ -11,6 +11,7 @@ const TEXT_FIELD_TAGS = [
   'ui-search-field',
   'ui-number-field',
   'ui-date-field',
+  'ui-date-time-field',
   'ui-time-field',
 ];
 
@@ -186,7 +187,7 @@ export class TextControl {
     if (form === null || !this.options.host().isConnected || this.options.disabled()) {
       return;
     }
-    const submitter = defaultSubmitter(form);
+    const submitter = defaultSubmitter(form, true);
     if (submitter !== undefined) {
       if (!submitter.matches(':disabled')) {
         submitter.click();
@@ -252,24 +253,37 @@ export class TextControl {
     ) {
       return;
     }
-    // Native implicit submission does not count form-associated custom elements.
-    if (defaultSubmitter(form) === undefined && blockingFields(form).length > 1) {
+    const submitter = defaultSubmitter(form, true);
+    if (
+      submitter !== undefined &&
+      !(submitter instanceof HTMLButtonElement || submitter instanceof HTMLInputElement)
+    ) {
+      // Preventing the default also prevents other fields' listeners from activating it again.
+      event.preventDefault();
+      if (!submitter.matches(':disabled')) {
+        submitter.click();
+      }
+    } else if (submitter === undefined && blockingFields(form).length > 1) {
+      // Native implicit submission does not count form-associated custom elements.
       event.preventDefault();
     }
   };
 }
 
-function defaultSubmitter(form: HTMLFormElement): HTMLButtonElement | HTMLInputElement | undefined {
+function defaultSubmitter(form: HTMLFormElement, includeCustom = false): HTMLElement | undefined {
   const root = form.getRootNode();
   if (!(root instanceof Document || root instanceof ShadowRoot)) {
     return undefined;
   }
-  return Array.from(root.querySelectorAll('button, input')).find(
-    (node): node is HTMLButtonElement | HTMLInputElement =>
-      (node instanceof HTMLButtonElement || node instanceof HTMLInputElement) &&
-      node.form === form &&
-      (node.type === 'submit' || node.type === 'image'),
-  );
+  const selector = includeCustom
+    ? 'button, input, ui-button, ui-icon-button, ui-split-button'
+    : 'button, input';
+  return Array.from(root.querySelectorAll<HTMLElement>(selector)).find((node) => {
+    if (node instanceof HTMLButtonElement || node instanceof HTMLInputElement) {
+      return node.form === form && (node.type === 'submit' || node.type === 'image');
+    }
+    return Reflect.get(node, 'form') === form && Reflect.get(node, 'type') === 'submit';
+  });
 }
 
 function blocksImplicitSubmission(node: Element): boolean {
