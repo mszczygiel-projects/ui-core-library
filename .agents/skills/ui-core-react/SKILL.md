@@ -10,7 +10,7 @@ description: Use when writing or changing a React component of UI Core Library i
 ## Writing a component
 
 - `src/<name>/<Name>.tsx` exports the component and `<Name>Props`. The props extend the props of the specification in `@mszczygiel-projects/ui-core-shared/<name>` and the attributes of the root or native element, minus the keys of the specification. Export both from `src/index.ts`, with the types of the specification.
-- A module that uses hooks, state, refs or handlers starts with `'use client'`. Reading the configuration with `useUiCoreConfig` is a hook.
+- A module that uses hooks, state, refs or handlers starts with `'use client'`. Reading the configuration with `useUiCoreConfig` is a hook. LinkButton is the exception that only passes its `ref` on: it stays without the directive ([05](../../../docs/decisions/05-components.md)), and `scripts/server-modules.test.ts` guards it.
 - `ref` is a prop and reaches the native control, or the root element. Spread the remaining attributes after the props of the component, so that an attribute of the page, such as `aria-label`, wins.
 - Classes follow BEM with the prefix `ui-`: `ui-<name>__<part>` for the parts of the specification, `ui-<name>--<modifier>`. Join them with `classNames`.
 - Render enumerated props through `oneOf` with the options of the specification.

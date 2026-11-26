@@ -37,7 +37,7 @@ A search engine indexes what it finds in the HTML of a page and, when it runs sc
 ## Links
 
 - Navigation renders `<a href>`, which a crawler follows. Give LinkButton an `href`, give each item of Breadcrumbs an `href`, and give Pagination `getPageHref`: its pages, previous and next are then links, and previous and next carry `rel="prev"` and `rel="next"`.
-- Client-side routing keeps the addresses. Cancel the move and route on your own: `ui-navigate` or `onNavigate` for Breadcrumbs, `ui-page-change` or `onPageChange` for Pagination, or the `render` prop of the React LinkButton for the link of a router.
+- Client-side routing keeps the addresses. Cancel the move and route on your own: `ui-navigate` or `onNavigate` for Breadcrumbs, `ui-page-change` or `onPageChange` for Pagination, or the `render` prop of the React LinkButton for the link of a router. `render` works in a server component too, while the callbacks of Breadcrumbs and Pagination need a client component.
 
 ```tsx
 <Pagination

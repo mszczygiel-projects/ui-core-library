@@ -52,6 +52,7 @@
 - One root export and one stylesheet, `styles.css`, joined from the stylesheet of each component.
 - Components are safe for server rendering. They read no browser state while rendering, and their ids come from `useId`. Each component's tests render it on the server and hydrate it without a warning, because consumers render React on the server, as Next.js does.
 - A module with state, effects, refs or handlers starts with `'use client'`.
+- LinkButton has no `'use client'`, so that a server component can give it `render`: a function cannot cross into a client component, and the link of a router needs one. It calls no hook and only passes `ref` and the other props on. Its native link, which cancels clicks while disabled, is a client module.
 
 ### Configuration
 
