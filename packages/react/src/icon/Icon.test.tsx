@@ -1,6 +1,7 @@
 import '@mszczygiel-projects/ui-core-foundations/tokens.css';
 import './icon.css';
 import '../internal/action.css';
+import '../button/button.css';
 import '../icon-button/icon-button.css';
 
 import { iconSearch } from '@mszczygiel-projects/ui-core-icons';
@@ -10,6 +11,7 @@ import { renderToString } from 'react-dom/server';
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-react';
 
+import { Button } from '../button/Button.tsx';
 import { IconButton } from '../icon-button/IconButton.tsx';
 import { Icon, type IconSize } from './Icon.tsx';
 
@@ -68,6 +70,43 @@ describe('Icon', () => {
       </div>,
     );
     expect(artworkWidth(screen.container)).toBe(28);
+  });
+
+  it.each(['leadingIcon', 'trailingIcon'] as const)(
+    'takes the icon size of Button in %s',
+    async (slot) => {
+      const screen = await render(
+        <div style={{ fontSize: '40px', ['--button-icon-size' as string]: '28px' }}>
+          <Button {...{ [slot]: <Icon svg={iconSearch} /> }}>Search</Button>
+        </div>,
+      );
+      expect(artworkWidth(screen.container)).toBe(28);
+    },
+  );
+
+  it('keeps the box of a slot, and draws no wider than it, with a larger size of its own', async () => {
+    const screen = await render(
+      <Button leadingIcon={<Icon svg={iconSearch} size="lg" />}>Search</Button>,
+    );
+    const box = screen.container.querySelector('.ui-icon')?.getBoundingClientRect();
+    expect([box?.width, box?.height]).toEqual([20, 20]);
+    // The square view box keeps the drawing as wide as the narrower side of the svg.
+    expect(artworkWidth(screen.container)).toBe(20);
+  });
+
+  it('ignores a size it does not know', async () => {
+    const screen = await render(
+      <div style={{ fontSize: '40px' }}>
+        <Icon svg={iconSearch} size={'large' as IconSize} />
+      </div>,
+    );
+    expect(screen.container.querySelector('.ui-icon')?.getAttribute('class')).toBe('ui-icon');
+    expect(artworkWidth(screen.container)).toBe(40);
+  });
+
+  it('renders an empty span for an empty string', async () => {
+    const screen = await render(<Icon svg="" />);
+    expect(screen.container.querySelector('.ui-icon')?.childNodes).toHaveLength(0);
   });
 
   it('renders on the server and hydrates without a warning', async () => {

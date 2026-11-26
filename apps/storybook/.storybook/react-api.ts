@@ -61,7 +61,9 @@ export function readReactApi(): ReactComponentApi[] {
       shouldExtractLiteralValuesFromEnum: true,
       shouldRemoveUndefinedFromOptional: true,
       savePropValueAsString: true,
-      propFilter: (prop) => !prop.parent?.fileName.includes('node_modules'),
+      // A prop typed `never` only makes the compiler reject an attribute, so it is no part of the API.
+      propFilter: (prop) =>
+        !prop.parent?.fileName.includes('node_modules') && prop.type.name !== 'undefined',
     },
   );
   return parser.parse(typesEntry()).map((component) => ({

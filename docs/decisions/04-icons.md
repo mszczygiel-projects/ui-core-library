@@ -26,9 +26,9 @@
 
 - `ui-core-react` exports `Icon`, which renders a string of SVG in a span: React shows a string as text, so every application would otherwise write the same `dangerouslySetInnerHTML` wrapper.
 - It is a helper, not a component of the library ([05](05-components.md)), and has no web counterpart.
-- The span is always `aria-hidden`. A name goes on the element around it.
+- The span is always `aria-hidden`. A name goes on the element around it, so the types reject a role, a name, a description and `tabIndex`.
 - Without `size`, the icon takes the font size around it, so in a slot it takes the icon size of the receiving component. A default size would override that.
-- `size` is a step of the icon roles, `2xs` to `lg`, and follows the density.
+- `size` is a step of the icon roles, `2xs` to `lg`, and follows the density. An unknown value is ignored.
 - `svg` is any string and is inserted as markup. The consumer passes only trusted strings, since the checks of the CLI run when a set is built, never at run time.
 
 ### The consumer's icon set

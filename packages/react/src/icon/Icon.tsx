@@ -2,14 +2,31 @@ import type { ComponentPropsWithRef } from 'react';
 
 import { classNames } from '../internal/class-names.ts';
 
-/** A step of the icon size roles: `sm` is `--icon-sm`. */
-export type IconSize = '2xs' | 'xs' | 'sm' | 'md' | 'lg';
+const SIZES = ['2xs', 'xs', 'sm', 'md', 'lg'] as const;
 
-/** The props of Icon. Remaining attributes and ref reach its span. */
+/** A step of the icon size roles: `sm` is `--icon-sm`. */
+export type IconSize = (typeof SIZES)[number];
+
+/**
+ * The props of Icon. Remaining attributes and ref reach its span, apart from those that would name
+ * it or focus it, since it is hidden from assistive technology.
+ */
 export interface IconProps extends Omit<
   ComponentPropsWithRef<'span'>,
-  'aria-hidden' | 'children' | 'dangerouslySetInnerHTML'
+  | 'aria-describedby'
+  | 'aria-hidden'
+  | 'aria-label'
+  | 'aria-labelledby'
+  | 'children'
+  | 'dangerouslySetInnerHTML'
+  | 'role'
+  | 'tabIndex'
 > {
+  // TypeScript accepts any hyphenated attribute that a type leaves out, so these are `never`.
+  'aria-describedby'?: never;
+  'aria-hidden'?: never;
+  'aria-label'?: never;
+  'aria-labelledby'?: never;
   /**
    * The SVG of the icon, such as `iconSearch` of the icons package. It is inserted as markup, so
    * pass only a string you trust, never text from a user or from a response of a server.
@@ -29,10 +46,12 @@ export interface IconProps extends Omit<
  * the element around it.
  */
 export function Icon({ svg, size, className, ...rest }: IconProps) {
+  // There is no default to fall back to: an unknown size leaves the icon to the font around it.
+  const step = SIZES.find((candidate) => candidate === size);
   return (
     <span
       {...rest}
-      className={classNames('ui-icon', size !== undefined && `ui-icon--${size}`, className)}
+      className={classNames('ui-icon', step !== undefined && `ui-icon--${step}`, className)}
       aria-hidden="true"
       dangerouslySetInnerHTML={{ __html: svg }}
     />
