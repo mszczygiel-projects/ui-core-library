@@ -1,6 +1,7 @@
 import type { UiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config';
 import { getUiCoreConfig } from '@mszczygiel-projects/ui-core-foundations/config';
 import { iconChevronLeft, iconChevronRight } from '@mszczygiel-projects/ui-core-icons';
+import { isModifiedClick } from '@mszczygiel-projects/ui-core-shared/modified-click';
 import { pageBounds, paginate } from '@mszczygiel-projects/ui-core-shared/paginate';
 import type {
   PaginationChangeReason,
@@ -112,7 +113,8 @@ export class UiPagination implements PaginationProps {
   // Stencil events are cancelable by default.
   /**
    * A user moved to another page. Cancel it to keep the page, and in link mode to keep the
-   * browser from loading the address, as a page with client-side routing does.
+   * browser from loading the address, as a page with client-side routing does. A press on a link
+   * with Meta, Ctrl, Shift or Alt is left to the browser: it dispatches nothing and keeps the page.
    */
   @Event({ eventName: 'ui-page-change' }) pageChange!: EventEmitter<PaginationPageChange>;
 
@@ -295,7 +297,11 @@ export class UiPagination implements PaginationProps {
         href={href(page)}
         rel={step === 'previous' ? 'prev' : 'next'}
         aria-label={label}
-        onClick={onClick}
+        onClick={(event) => {
+          if (!isModifiedClick(event)) {
+            onClick(event);
+          }
+        }}
       >
         {icon}
       </a>
@@ -330,7 +336,9 @@ export class UiPagination implements PaginationProps {
           aria-current={isCurrent ? 'page' : undefined}
           aria-label={name}
           onClick={(event) => {
-            this.move(page, 'page', event, false);
+            if (!isModifiedClick(event)) {
+              this.move(page, 'page', event, false);
+            }
           }}
         >
           {page}

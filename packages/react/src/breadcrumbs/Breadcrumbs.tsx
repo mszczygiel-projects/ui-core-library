@@ -9,6 +9,7 @@ import {
   type BreadcrumbsSeparator,
   type BreadcrumbsSize,
 } from '@mszczygiel-projects/ui-core-shared/breadcrumbs';
+import { isModifiedClick } from '@mszczygiel-projects/ui-core-shared/modified-click';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import type { ComponentPropsWithRef, ReactNode } from 'react';
 
@@ -27,6 +28,8 @@ export interface BreadcrumbsProps
   /**
    * Called when a user presses the link of an item. Call `preventDefault()` on the original
    * event to keep the browser from following the link, as a page with client-side routing does.
+   * A press with Meta, Ctrl, Shift or Alt is left to the browser and not reported; `onClick`
+   * receives every native click.
    */
   onNavigate?: (details: BreadcrumbsNavigateDetails<MouseEvent, ReactNode>) => void;
 }
@@ -119,7 +122,9 @@ export function Breadcrumbs({
                 className="ui-breadcrumbs__link"
                 href={item.href}
                 onClick={(event) => {
-                  onNavigate?.({ item, index, originalEvent: event.nativeEvent });
+                  if (!isModifiedClick(event)) {
+                    onNavigate?.({ item, index, originalEvent: event.nativeEvent });
+                  }
                 }}
               >
                 {content}

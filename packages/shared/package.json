@@ -130,6 +130,10 @@
       "types": "./dist/utils/menu-navigation.d.ts",
       "default": "./dist/utils/menu-navigation.js"
     },
+    "./modified-click": {
+      "types": "./dist/utils/modified-click.d.ts",
+      "default": "./dist/utils/modified-click.js"
+    },
     "./notification": {
       "types": "./dist/components/notification.d.ts",
       "default": "./dist/components/notification.js"

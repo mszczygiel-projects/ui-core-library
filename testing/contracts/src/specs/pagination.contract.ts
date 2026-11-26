@@ -7,6 +7,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { page, userEvent } from 'vitest/browser';
 
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
+import { modifiedClick, MODIFIERS } from '../modified-click.ts';
 import { tokenNumber } from '../tokens.ts';
 
 /**
@@ -190,6 +191,28 @@ export function paginationContract(adapter: Mount<PaginationContractProps>): voi
     expect(window.location.hash).toBe('');
     const tree = await first.accessibleTree();
     expect(tree.some((node) => node.role === 'link' && node.name === 'Previous page')).toBe(true);
+  });
+
+  it('leaves a modified click on a link to the browser, and keeps its page', async () => {
+    const getPageHref = (page: number) => `#new-tab-${String(page)}`;
+    const onPageChange = vi.fn<NonNullable<PaginationContractProps['onPageChange']>>();
+    const component = await mount({ getPageHref, onPageChange, cancelChange: true });
+    for (const name of ['Page 6', 'Previous page', 'Next page']) {
+      const link = component.screen.getByRole('link', { name }).element();
+      for (const modifier of MODIFIERS) {
+        expect(modifiedClick(link, modifier), `${name}, ${modifier}`).toBe(false);
+      }
+    }
+    expect(onPageChange).not.toHaveBeenCalled();
+    expect(current(component)).toBe('5');
+  });
+
+  it('moves on a modified click of a button, which has nowhere else to open', async () => {
+    const onPageChange = vi.fn<NonNullable<PaginationContractProps['onPageChange']>>();
+    const component = await mount({ onPageChange });
+    modifiedClick(component.screen.getByRole('button', { name: 'Page 6' }).element(), 'metaKey');
+    await expect.poll(() => current(component)).toBe('6');
+    expect(onPageChange).toHaveBeenCalledTimes(1);
   });
 
   it('gives the previous and next links the size of the buttons', async () => {

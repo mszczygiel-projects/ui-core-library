@@ -8,6 +8,7 @@ import {
   type BreadcrumbsSeparator,
   type BreadcrumbsSize,
 } from '@mszczygiel-projects/ui-core-shared/breadcrumbs';
+import { isModifiedClick } from '@mszczygiel-projects/ui-core-shared/modified-click';
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import {
   Component,
@@ -82,7 +83,8 @@ export class UiBreadcrumbs implements BreadcrumbsProps<string> {
   // Stencil events are cancelable by default.
   /**
    * The user pressed the link of an item. Cancel it to keep the browser from following the link,
-   * as a page with client-side routing does.
+   * as a page with client-side routing does. A press with Meta, Ctrl, Shift or Alt is left to the
+   * browser and dispatches nothing; the native `click` reports every one.
    */
   @Event({ eventName: 'ui-navigate' }) navigate!: EventEmitter<BreadcrumbsNavigate>;
 
@@ -174,7 +176,9 @@ export class UiBreadcrumbs implements BreadcrumbsProps<string> {
         class="link"
         href={item.href}
         onClick={(event) => {
-          this.onLinkClick(event, item, index);
+          if (!isModifiedClick(event)) {
+            this.onLinkClick(event, item, index);
+          }
         }}
       >
         {content}
