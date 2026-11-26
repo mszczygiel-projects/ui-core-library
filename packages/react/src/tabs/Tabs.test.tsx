@@ -108,8 +108,8 @@ describe('Tabs', () => {
     const screen = await render(<Controlled />);
     const panel = screen.container.querySelectorAll<HTMLElement>('[role="tabpanel"]')[2];
     panel?.dispatchEvent(new Event('beforematch'));
-    await nextFrame();
-    expect(panel?.hasAttribute('hidden')).toBe(false);
+    // `beforematch` is no discrete event, so React may render after the next frame.
+    await expect.poll(() => panel?.hasAttribute('hidden')).toBe(false);
   });
 
   it('renders the icon of a tab before its label, hidden from assistive technology', async () => {
