@@ -52,6 +52,8 @@ Supply the label of each item in the language of the page, short and as the page
 
 - `items` lists the steps, each with a `label`, an optional `href` and an optional `icon`. `iconOnly` shows the icon alone: the label still names the item for a screen reader but takes no space. An item with `href` is a link; the last item is the current page and never links, whatever its `href`.
 - A press on a link emits the cancelable `ui-navigate` in the web component, with `detail.item`, `detail.index` and `detail.originalEvent`; canceling it keeps the browser from following the link. React calls `onNavigate(details)` with the same details, and `details.originalEvent.preventDefault()` does the same. A page with client-side routing cancels the press and moves on its own.
+- A press on a link with Meta, Ctrl, Shift or Alt asks the browser for a new tab or window, or a download. Neither `onNavigate` nor `ui-navigate` reports it, so a page that always cancels leaves it alone.
+- To measure presses, listen to the native `click`: `onClick` in React, and `addEventListener('click', …)` on the element of the web component. It receives the modified presses too, and any press inside the navigation, so look for the link: `event.target.closest('a')` in React, and the `A` in `event.composedPath()` for the web component. A middle click fires `auxclick` instead, and opening a link from the context menu fires neither.
 - The width of the container alone decides the collapse: there is no prop for it.
 
 <Source
