@@ -2,9 +2,11 @@ import { readFileSync } from 'node:fs';
 
 import { describe, expect, it } from 'vitest';
 
-// A server component passes no function to a client component, so these modules stay free of the
-// directive: LinkButton takes `render` from a server component only while it runs on the server.
+// These modules stay free of the directive. A server component passes no function to a client
+// component, so LinkButton takes `render` from one only while it runs on the server, and Icon, which
+// is markup alone, adds no code to the client.
 const SERVER_MODULES = [
+  'icon/Icon.tsx',
   'link-button/LinkButton.tsx',
   'internal/class-names.ts',
   'internal/renders-content.ts',

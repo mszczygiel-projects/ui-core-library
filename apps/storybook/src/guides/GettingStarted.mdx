@@ -119,13 +119,24 @@ The theme and the brand belong on `<html>`. Without `data-theme`, the page follo
 
 ## Render an icon
 
+In React, give the string to `Icon`:
+
+```tsx
+import { iconClose } from '@mszczygiel-projects/ui-core-icons';
+import { Icon } from '@mszczygiel-projects/ui-core-react';
+
+<Icon svg={iconClose} />;
+```
+
+Without the React components, insert the string as markup:
+
 ```ts
 import { iconClose } from '@mszczygiel-projects/ui-core-icons';
 
 element.innerHTML = `<span aria-hidden="true">${iconClose}</span>`;
 ```
 
-An icon is `1em` square and painted in `currentColor`, so it follows the font size and colour of its parent. Import only the icons you render; a bundler leaves out the rest.
+An icon is `1em` square and painted in `currentColor`, so it follows the font size and colour of its parent. [Icons](?path=/docs/foundations-icons--docs) shows the sizes. Import only the icons you render; a bundler leaves out the rest.
 
 ## Configure the components
 

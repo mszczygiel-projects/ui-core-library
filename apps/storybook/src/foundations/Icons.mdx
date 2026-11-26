@@ -1,5 +1,6 @@
 import { Meta, Story } from '@storybook/addon-docs/blocks';
 
+import { ReactApi } from '../blocks/ApiTable.tsx';
 import * as IconStories from './Icons.stories.tsx';
 
 <Meta title="Foundations/Icons" />
@@ -13,6 +14,27 @@ import { iconClose } from '@mszczygiel-projects/ui-core-icons';
 ```
 
 An icon is `1em` square and painted in `currentColor`, so it takes the size and the colour of the text around it until a style sets them. An icon beside a text is decoration and stays hidden from assistive technology; an icon that stands alone needs an accessible name on the element around it.
+
+## Icon in React
+
+`Icon` of `@mszczygiel-projects/ui-core-react` renders the string in a span hidden from assistive technology. It needs `styles.css`, as the components do. It inserts the string as markup, so pass only a string you trust, such as an icon of your set, never text from a user or a server.
+
+```tsx
+import { iconSearch } from '@mszczygiel-projects/ui-core-icons';
+import { Icon, IconButton } from '@mszczygiel-projects/ui-core-react';
+
+// In a slot of a component, leave the size out: the component sets it.
+<IconButton label="Search" icon={<Icon svg={iconSearch} />} />;
+
+// On its own, name a size, or let the icon follow the text around it.
+<Icon svg={iconSearch} size="sm" />;
+```
+
+<ReactApi component="Icon" />
+
+There is no web component: set the string as the `innerHTML` of an element.
+
+## Sizes
 
 Components size their icons with the Sizes roles `--icon-2xs` to `--icon-lg`, which tighten in the compact density.
 

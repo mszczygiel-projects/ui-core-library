@@ -22,6 +22,15 @@
 - Button, IconButton, SplitButton and LinkButton centre the artwork in the icon wrapper. A wrapper that inherits `font-size` sizes its `1em` artwork from the action's icon token. A wrapper can set its own artwork size within the token-sized box.
 - The consumer mirrors directional artwork. A component never mirrors every icon.
 
+### `Icon` in React
+
+- `ui-core-react` exports `Icon`, which renders a string of SVG in a span: React shows a string as text, so every application would otherwise write the same `dangerouslySetInnerHTML` wrapper.
+- It is a helper, not a component of the library ([05](05-components.md)), and has no web counterpart.
+- The span is always `aria-hidden`. A name goes on the element around it, so the types reject a role, a name, a description and `tabIndex`.
+- Without `size`, the icon takes the font size around it, so in a slot it takes the icon size of the receiving component. A default size would override that.
+- `size` is a step of the icon roles, `2xs` to `lg`, and follows the density. An unknown value is ignored.
+- `svg` is any string and is inserted as markup. The consumer passes only trusted strings, since the checks of the CLI run when a set is built, never at run time.
+
 ### The consumer's icon set
 
 - `ui-core-icons build --input <dir> --output <dir>` builds a package directory, with the same name and exports, from the consumer's SVG files, after the same checks.
@@ -32,11 +41,14 @@
 
 ## Why
 
-One string per icon works in both frameworks without svgr or an icon component. Checking at build time stops unsafe or broken SVG before it reaches a component.
+One string per icon works in both frameworks without svgr or a component per icon. Checking at build time stops unsafe or broken SVG before it reaches a component.
 
 A fill gives one convention for colour: a component in Figma binds the colour to the fill of the vector, so any set of icons drawn with fills takes it, whichever library it comes from. A fill also scales with the icon in Figma, as it does in code; a stroke keeps its weight in Figma.
 
 ## Rejected
 
-- An `Icon` component: it would add API without a need, since consumers already render markup.
+- A `ui-icon` web component: its prop would hold a whole SVG, while a prop holds only short text, and `innerHTML` already renders the string.
+- A default size of `Icon`: it overrides the icon size of the slot that holds the icon.
+- A size in pixels: it bypasses the tokens and the density.
+- A type of its own for the strings of a set: it complicates the icons package and the CLI, and cannot prove where a string came from.
 - Renaming bad file names automatically: names would change without a decision.
