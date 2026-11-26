@@ -7,6 +7,7 @@ import { afterEach, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 
 import type { Mount, Mounted, MountOptions } from '../harness/types.ts';
+import { modifiedClick, MODIFIERS } from '../modified-click.ts';
 import { tokenNumber } from '../tokens.ts';
 
 /** One item of a contract: the icon is a flag that each harness turns into its own icon. */
@@ -164,6 +165,19 @@ export function breadcrumbsContract(adapter: Mount<BreadcrumbsContractProps>): v
     await userEvent.click(component.screen.getByRole('link', { name: 'Category' }));
     expect(window.location.hash).toBe('#category');
     window.history.replaceState(null, '', window.location.pathname + window.location.search);
+  });
+
+  it('leaves a modified click on a link to the browser, and reports nothing', async () => {
+    const onNavigate = vi.fn<NonNullable<BreadcrumbsContractProps['onNavigate']>>();
+    const component = await mount(
+      { onNavigate, cancelNavigation: true },
+      { parent: column('800px') },
+    );
+    const link = component.screen.getByRole('link', { name: 'Products' }).element();
+    for (const modifier of MODIFIERS) {
+      expect(modifiedClick(link, modifier), modifier).toBe(false);
+    }
+    expect(onNavigate).not.toHaveBeenCalled();
   });
 
   it('follows the density in its sizes, and sizes the icon from its tokens', async () => {

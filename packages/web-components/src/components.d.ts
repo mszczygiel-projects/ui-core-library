@@ -3431,7 +3431,7 @@ declare namespace LocalJSX {
          */
         "label"?: string;
         /**
-          * The user pressed the link of an item. Cancel it to keep the browser from following the link, as a page with client-side routing does.
+          * The user pressed the link of an item. Cancel it to keep the browser from following the link, as a page with client-side routing does. A press with Meta, Ctrl, Shift or Alt is left to the browser and dispatches nothing; the native `click` reports every one.
          */
         "onUi-navigate"?: (event: UiBreadcrumbsCustomEvent<BreadcrumbsNavigate>) => void;
         /**
@@ -4824,7 +4824,7 @@ declare namespace LocalJSX {
          */
         "nextLabel"?: string;
         /**
-          * A user moved to another page. Cancel it to keep the page, and in link mode to keep the browser from loading the address, as a page with client-side routing does.
+          * A user moved to another page. Cancel it to keep the page, and in link mode to keep the browser from loading the address, as a page with client-side routing does. A press on a link with Meta, Ctrl, Shift or Alt is left to the browser: it dispatches nothing and keeps the page.
          */
         "onUi-page-change"?: (event: UiPaginationCustomEvent<PaginationPageChange>) => void;
         /**

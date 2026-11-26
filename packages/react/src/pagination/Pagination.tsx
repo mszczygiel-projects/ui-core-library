@@ -1,6 +1,7 @@
 'use client';
 
 import { iconChevronLeft, iconChevronRight } from '@mszczygiel-projects/ui-core-icons';
+import { isModifiedClick } from '@mszczygiel-projects/ui-core-shared/modified-click';
 import { pageBounds, paginate } from '@mszczygiel-projects/ui-core-shared/paginate';
 import type {
   PaginationChangeReason,
@@ -38,7 +39,9 @@ export interface PaginationProps
    * page with client-side routing does. A move from the jump field passes a cancelable copy of
    * its key or focus event, since the field has already handled the key and a focus event cannot
    * be canceled. A press on a link calls it inside a transition, so the state it sets renders
-   * after the browser has read the address of the link.
+   * after the browser has read the address of the link. A press on a link with Meta, Ctrl, Shift
+   * or Alt is left to the browser: it calls nothing and keeps the page. `onClick` receives every
+   * native click.
    */
   onPageChange?: (page: number, details: PaginationPageChangeDetails<Event>) => void;
 }
@@ -198,7 +201,9 @@ export function Pagination({
         rel={step === 'previous' ? 'prev' : 'next'}
         aria-label={name}
         onClick={(event) => {
-          move(target, step, event.nativeEvent, false);
+          if (!isModifiedClick(event)) {
+            move(target, step, event.nativeEvent, false);
+          }
         }}
       >
         {icon}
@@ -284,7 +289,9 @@ export function Pagination({
                     aria-current={isCurrent ? 'page' : undefined}
                     aria-label={name}
                     onClick={(event) => {
-                      move(entry, 'page', event.nativeEvent, false);
+                      if (!isModifiedClick(event)) {
+                        move(entry, 'page', event.nativeEvent, false);
+                      }
                     }}
                   >
                     {entry}
