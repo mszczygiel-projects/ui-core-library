@@ -39,7 +39,7 @@ The states follow Button. Hover and press use the active colours, and every vari
 
 ## Content & labels
 
-`label` names the action. An author's `aria-label` wins over it. In Figma, name the instance layer after the action: Code Connect writes that name as `label`. Supply one trusted SVG in the `icon` slot, or in the `icon` prop; IconButton sizes it, colours it with the text colour and hides it from assistive technology. The icons package provides SVG strings; insert them as markup, such as with `innerHTML` or React's `dangerouslySetInnerHTML`, using only those trusted strings. Choose mirrored artwork yourself when the symbol has a direction.
+`label` names the action. An author's `aria-label` wins over it. In Figma, name the instance layer after the action: Code Connect writes that name as `label`. Supply one trusted SVG in the `icon` slot, or in the `icon` prop; IconButton sizes it, colours it with the text colour and hides it from assistive technology. The icons package provides SVG strings; insert them as markup, such as with `innerHTML` or `Icon` of React, using only those trusted strings. Choose mirrored artwork yourself when the symbol has a direction.
 
 While loading, `loadingLabel` describes the state. Without it, IconButton uses `labels.iconButton.loading`, “Loading” in English.
 

@@ -1,4 +1,4 @@
-/** Every React component of the library. Their styles are in `styles.css`, imported once. */
+/** Every React component of the library, and Icon. Their styles are in `styles.css`, imported once. */
 export { Accordion, type AccordionProps } from './accordion/Accordion.tsx';
 export {
   type AccordionHeadingLevel,
@@ -52,6 +52,7 @@ export {
   type FileInputFieldValueChangeDetails,
   type FileInputFieldVariant,
 } from './file-input-field/FileInputField.tsx';
+export { Icon, type IconProps, type IconSize } from './icon/Icon.tsx';
 export {
   IconButton,
   type IconButtonProps,

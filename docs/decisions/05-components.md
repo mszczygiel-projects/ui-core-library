@@ -5,6 +5,7 @@
 ### Two native implementations, one specification
 
 - Every component is implemented twice: as a Stencil web component and as a React component. Neither wraps or imports the other.
+- A helper for one framework is not a component: it has no specification, contract, stories, page, Figma set or Code Connect, and `component:new` does not create it. The only one is `Icon` of React ([04](04-icons.md)).
 - `packages/shared` holds what both implementations share. Neither duplicates it.
 - **A specification per component**, in `src/components/<name>.ts` and the subpath `./<name>`, holds:
   - the props both implementations share, as an interface, and the arrays of allowed values with their defaults;

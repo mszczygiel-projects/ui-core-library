@@ -8,7 +8,7 @@
 
   | Concept         | Rule                                                                                                                                                                                                                              |
   | --------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-  | Size            | `size`: `small`, `medium` (default) or `large`, or a subset                                                                                                                                                                       |
+  | Size            | `size`: `small`, `medium` (default) or `large`, or a subset. `Icon` of React names the icon roles instead ([04](04-icons.md))                                                                                                     |
   | Visual style    | `variant` only. Buttons: `primary`, `secondary`, `outline`, `ghost`, `danger`. Fields: `outline`, `filled`, `underlined`. Badges and notifications: `solid`, `subtle`. Chips: `outline`, `subtle`. Tabs: `underline`, `segmented` |
   | Tone            | `tone`: `neutral`, `brand`, `info`, `success`, `warning`, `error`                                                                                                                                                                 |
   | Shape           | `shape`: `square` or `rounded`, the corners. Badge defaults to `rounded`, the actions to `square`                                                                                                                                 |

@@ -5,6 +5,7 @@
 ### What component CSS reads and writes
 
 - Component CSS reads only the Components layer, the focus-ring roles and the motion primitives. It writes no raw value apart from keywords and zero.
+- `Icon` of React is the one exception: it reads the icon size roles of Sizes, since its `size` names them ([04](04-icons.md)).
 - A component declares only private custom properties, `--_*`. It sets them from tokens, switches them by state, and never declares a token of the library.
 - **The tokens are the styling API.** A consumer sets them on `:root` for values that no mode changes, or on a selector that matches the components. There are no other hooks.
 

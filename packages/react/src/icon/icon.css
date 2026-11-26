@@ -1,0 +1,29 @@
+.ui-icon {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Icon has no tokens of its own: its sizes are the icon roles themselves, which follow the density. */
+/* stylelint-disable ui-core/token-layer -- decision 07 lets Icon read the icon size roles */
+.ui-icon--2xs {
+  font-size: var(--icon-2xs);
+}
+
+.ui-icon--xs {
+  font-size: var(--icon-xs);
+}
+
+.ui-icon--sm {
+  font-size: var(--icon-sm);
+}
+
+.ui-icon--md {
+  font-size: var(--icon-md);
+}
+
+.ui-icon--lg {
+  font-size: var(--icon-lg);
+}
+/* stylelint-enable ui-core/token-layer */
