@@ -1,5 +1,3 @@
-'use client';
-
 import {
   linkButton,
   type LinkButtonProps as SharedLinkButtonProps,
@@ -10,8 +8,8 @@ import {
 import { oneOf } from '@mszczygiel-projects/ui-core-shared/one-of';
 import type { ComponentPropsWithRef, ReactElement, ReactNode } from 'react';
 
-import { useActionRef } from '../internal/action.ts';
 import { classNames } from '../internal/class-names.ts';
+import { NativeLink } from '../internal/native-link.tsx';
 import { rendersContent } from '../internal/renders-content.ts';
 
 export type { LinkButtonShape, LinkButtonSize, LinkButtonVariant };
@@ -46,7 +44,8 @@ export interface LinkButtonProps
   trailingIcon?: ReactNode;
   /**
    * Renders the link with another component, such as the link of a router, which must render an
-   * `<a>` with the props it receives. A disabled link has no address and ignores it.
+   * `<a>` with the props it receives. A disabled link has no address and ignores it. It also
+   * works in a server component, since LinkButton calls it there.
    *
    * @example
    * <LinkButton href="/pricing" render={(props) => <Link {...props} />}>Pricing</LinkButton>
@@ -79,8 +78,6 @@ export function LinkButton({
   ref,
   ...rest
 }: LinkButtonProps) {
-  // Not named as a ref: render receives it as the ref prop of the link it renders.
-  const attachLink = useActionRef(ref);
   const content = (
     <span className="ui-link-button__content">
       {rendersContent(leadingIcon) && (
@@ -110,8 +107,8 @@ export function LinkButton({
     // A link without an address has no role of its own, so a disabled one states it. An
     // author's tabIndex would bring the link back into the focus order, so it is left out.
     return (
-      <a
-        ref={attachLink}
+      <NativeLink
+        ref={ref}
         role="link"
         aria-disabled="true"
         aria-label={label}
@@ -119,7 +116,7 @@ export function LinkButton({
         {...rest}
       >
         {content}
-      </a>
+      </NativeLink>
     );
   }
   const props: Omit<LinkButtonRenderProps, 'ref' | 'children'> = {
@@ -133,11 +130,11 @@ export function LinkButton({
     ...rest,
   };
   return render === undefined ? (
-    <a ref={attachLink} {...props}>
+    <NativeLink ref={ref} {...props}>
       {content}
-    </a>
+    </NativeLink>
   ) : (
-    <RenderedLink ref={attachLink} render={render} {...props}>
+    <RenderedLink ref={ref} render={render} {...props}>
       {content}
     </RenderedLink>
   );

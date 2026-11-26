@@ -53,6 +53,7 @@ For centring and sizing an SVG inside your own component, see “Wrapped icons i
 - Clicking follows the link natively, so a modified click, a middle click and the context menu work as on any link. A click on a disabled link stops at the link, as on a disabled button.
 - An unknown `variant`, `size` or `shape` falls back to the default.
 - In React, `render` renders the link with the link component of a router, which receives the props of the native link and must render an `<a>` with them. A disabled link ignores it.
+- `render` also works in a server component, such as a page of Next.js, with no `'use client'` of your own. A server component cannot pass `onClick` or `ref`.
 
 <Source
   language="tsx"
