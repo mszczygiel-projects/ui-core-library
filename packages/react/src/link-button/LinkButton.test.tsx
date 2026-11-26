@@ -128,6 +128,33 @@ describe('LinkButton', () => {
     expect(document.activeElement).not.toBe(disabled);
   });
 
+  it('keeps its link element while disabled turns on and off', async () => {
+    const screen = await render(<LinkButton href="/pricing">Pricing</LinkButton>);
+    const link = screen.container.querySelector('a');
+    await screen.rerender(
+      <LinkButton href="/pricing" disabled>
+        Pricing
+      </LinkButton>,
+    );
+    expect(screen.container.querySelector('a')).toBe(link);
+    await screen.rerender(<LinkButton href="/pricing">Pricing</LinkButton>);
+    expect(screen.container.querySelector('a')).toBe(link);
+  });
+
+  it('keeps a click on a disabled link from onClick and the page', async () => {
+    const clicked = vi.fn();
+    const bubbled = vi.fn();
+    const screen = await render(
+      <LinkButton href="/pricing" disabled onClick={clicked}>
+        Pricing
+      </LinkButton>,
+    );
+    screen.container.addEventListener('click', bubbled);
+    screen.container.querySelector('a')?.click();
+    expect(clicked).not.toHaveBeenCalled();
+    expect(bubbled).not.toHaveBeenCalled();
+  });
+
   it('gives its link to a callback ref and takes it back on unmount', async () => {
     const ref = vi.fn();
     const screen = await render(
